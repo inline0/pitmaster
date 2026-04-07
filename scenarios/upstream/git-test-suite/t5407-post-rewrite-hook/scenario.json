@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5407-post-rewrite-hook",
+    "category": "upstream",
+    "description": "git t/: t5407-post-rewrite-hook",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

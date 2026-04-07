@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2402-worktree-list",
+    "category": "upstream",
+    "description": "git t/: t2402-worktree-list",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5705-session-id-in-capabilities",
+    "category": "upstream",
+    "description": "git t/: t5705-session-id-in-capabilities",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

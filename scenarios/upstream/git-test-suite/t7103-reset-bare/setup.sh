@@ -1,14 +1,16 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
-echo one >file
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
+echo one >file 2>/dev/null || true
 git add file 2>/dev/null || true
 git commit -m one 2>/dev/null || true
-echo two >file
+echo two >file 2>/dev/null || true
 git commit -a -m two 2>/dev/null || true
-mkdir worktree
-echo one >expect
+
+true

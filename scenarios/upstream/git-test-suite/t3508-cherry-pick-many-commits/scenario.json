@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3508-cherry-pick-many-commits",
+    "category": "upstream",
+    "description": "git t/: t3508-cherry-pick-many-commits",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

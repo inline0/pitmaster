@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7407-submodule-foreach",
+    "category": "upstream",
+    "description": "git t/: t7407-submodule-foreach",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

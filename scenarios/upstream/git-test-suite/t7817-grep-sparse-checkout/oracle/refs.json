@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "771e250ef57890282b448344edba50a3381782f7",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "351f41c5f0f2e5ca7ecd5d3197301b857caff0d8",
+        "name": "refs/tags/tag-to-commit"
+    },
+    {
+        "hash": "74e2e449c550ebccd67583351eb91404ebda7e36",
+        "name": "refs/tags/tag-to-tree"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6004-rev-list-path-optim",
+    "category": "upstream",
+    "description": "git t/: t6004-rev-list-path-optim",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

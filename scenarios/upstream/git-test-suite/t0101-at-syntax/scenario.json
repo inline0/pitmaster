@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0101-at-syntax",
+    "category": "upstream",
+    "description": "git t/: t0101-at-syntax",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3427-rebase-subtree",
+    "category": "upstream",
+    "description": "git t/: t3427-rebase-subtree",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

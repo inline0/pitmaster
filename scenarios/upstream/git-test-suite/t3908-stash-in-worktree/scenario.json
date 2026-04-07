@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3908-stash-in-worktree",
+    "category": "upstream",
+    "description": "git t/: t3908-stash-in-worktree",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

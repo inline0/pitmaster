@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "8195598b3cd9cca2fbb13a58faf8444e6834af0c",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "8195598b3cd9cca2fbb13a58faf8444e6834af0c",
+        "name": "refs/heads/openpgp-signing"
+    },
+    {
+        "hash": "8195598b3cd9cca2fbb13a58faf8444e6834af0c",
+        "name": "refs/tags/first"
+    }
+]

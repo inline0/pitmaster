@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "b45004b7be805943b7e7e750018f5a4ceda62b01",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "c4dac030e2b7c9b13f4b9509253c66dbfb1bc4c5",
+        "name": "refs/heads/topic"
+    },
+    {
+        "hash": "a0fe5ae6e089e3dd7b3a01b1cb069f6381c5c272",
+        "name": "refs/tags/commit-new-file-F1"
+    },
+    {
+        "hash": "b45004b7be805943b7e7e750018f5a4ceda62b01",
+        "name": "refs/tags/commit-new-file-F2"
+    },
+    {
+        "hash": "c4dac030e2b7c9b13f4b9509253c66dbfb1bc4c5",
+        "name": "refs/tags/commit-new-file-F2-on-topic-branch"
+    }
+]

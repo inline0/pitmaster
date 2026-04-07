@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7001-mv",
+    "category": "upstream",
+    "description": "git t/: t7001-mv",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

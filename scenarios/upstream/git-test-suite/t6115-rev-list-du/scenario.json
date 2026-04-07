@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6115-rev-list-du",
+    "category": "upstream",
+    "description": "git t/: t6115-rev-list-du",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

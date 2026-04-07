@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7512-status-help",
+    "category": "upstream",
+    "description": "git t/: t7512-status-help",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

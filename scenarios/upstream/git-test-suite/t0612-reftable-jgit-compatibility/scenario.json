@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0612-reftable-jgit-compatibility",
+    "category": "upstream",
+    "description": "git t/: t0612-reftable-jgit-compatibility",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

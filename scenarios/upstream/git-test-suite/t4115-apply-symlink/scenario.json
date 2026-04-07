@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4115-apply-symlink",
+    "category": "upstream",
+    "description": "git t/: t4115-apply-symlink",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

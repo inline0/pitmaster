@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3406-rebase-message",
+    "category": "upstream",
+    "description": "git t/: t3406-rebase-message",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

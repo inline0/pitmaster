@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3451-history-reword",
+    "category": "upstream",
+    "description": "git t/: t3451-history-reword",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t8010-cat-file-filters",
+    "category": "upstream",
+    "description": "git t/: t8010-cat-file-filters",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

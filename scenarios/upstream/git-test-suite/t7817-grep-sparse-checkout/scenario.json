@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7817-grep-sparse-checkout",
+    "category": "upstream",
+    "description": "git t/: t7817-grep-sparse-checkout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1407-worktree-ref-store",
+    "category": "upstream",
+    "description": "git t/: t1407-worktree-ref-store",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

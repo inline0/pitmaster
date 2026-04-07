@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7503-pre-commit-and-pre-merge-commit-hooks",
+    "category": "upstream",
+    "description": "git t/: t7503-pre-commit-and-pre-merge-commit-hooks",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

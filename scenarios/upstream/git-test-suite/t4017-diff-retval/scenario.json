@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4017-diff-retval",
+    "category": "upstream",
+    "description": "git t/: t4017-diff-retval",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

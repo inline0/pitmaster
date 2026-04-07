@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4208-log-magic-pathspec",
+    "category": "upstream",
+    "description": "git t/: t4208-log-magic-pathspec",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

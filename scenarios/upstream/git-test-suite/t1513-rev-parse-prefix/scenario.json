@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1513-rev-parse-prefix",
+    "category": "upstream",
+    "description": "git t/: t1513-rev-parse-prefix",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

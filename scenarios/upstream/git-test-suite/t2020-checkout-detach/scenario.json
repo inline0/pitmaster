@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2020-checkout-detach",
+    "category": "upstream",
+    "description": "git t/: t2020-checkout-detach",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

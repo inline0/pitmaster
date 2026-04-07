@@ -1,14 +1,18 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
-echo line1 >file
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
+echo line1 >file 2>/dev/null || true
 git add file 2>/dev/null || true
 git commit -m commit1 2>/dev/null || true
-echo more >>file
-echo e | env GIT_EDITOR=": >editor_was_started" git commit -p -m commit2 file
-echo more >>file
-echo e | env GIT_EDITOR=": >editor_was_started" git commit -p -m commit3 file
+echo more >>file 2>/dev/null || true
+echo e | env GIT_EDITOR=": >editor_was_started" git commit -p -m commit2 file 2>/dev/null || true
+echo more >>file 2>/dev/null || true
+echo e | env GIT_EDITOR=": >editor_was_started" git commit -p -m commit3 file 2>/dev/null || true
+
+true

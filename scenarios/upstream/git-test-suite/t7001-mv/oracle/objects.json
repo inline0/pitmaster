@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "257cc5642cb1a054f08cc83f2d943e56fd3ebe99",
+        "type": "blob",
+        "size": 4,
+        "content": "foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3f6a2fce2f3740689f4b20f2d252ca526cbb70f3",
+        "type": "commit",
+        "size": 145,
+        "content": "tree 701ce0a12c61f997c092d30121a256d17144766a\nauthor Test <test@test.com> 1775599857 +0200\ncommitter Test <test@test.com> 1775599857 +0200\n\ntest\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "701ce0a12c61f997c092d30121a256d17144766a",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob 9daeafb9864cf43055ae93beb0afd6c7d144bfa4\tbar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9daeafb9864cf43055ae93beb0afd6c7d144bfa4",
+        "type": "blob",
+        "size": 5,
+        "content": "test\n",
+        "encoding": "utf-8"
+    }
+]

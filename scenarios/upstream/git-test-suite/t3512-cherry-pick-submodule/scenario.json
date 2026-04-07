@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3512-cherry-pick-submodule",
+    "category": "upstream",
+    "description": "git t/: t3512-cherry-pick-submodule",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

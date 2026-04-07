@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "55936910e1349c1714223048d175342c189f31bd",
+        "name": "refs/heads/expref"
+    },
+    {
+        "hash": "2890ceb1aff0441c5c97d02acc7438b1ec13b056",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "3bf9da19fa113cf6e8f7ae37965b15ed168f00e2",
+        "name": "refs/heads/modref"
+    },
+    {
+        "hash": "4de76b8435d6ef77895a5b4d13e48fb036741d01",
+        "name": "refs/heads/ref"
+    },
+    {
+        "hash": "91675f774140653f40f0879ceb69e4277ed292ef",
+        "name": "refs/tags/blob-tag"
+    },
+    {
+        "hash": "15e670668f86e98c3d1351a1a76c94775cb0d768",
+        "name": "refs/tags/commit-tag"
+    }
+]

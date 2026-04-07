@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t8004-blame-with-conflicts",
+    "category": "upstream",
+    "description": "git t/: t8004-blame-with-conflicts",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

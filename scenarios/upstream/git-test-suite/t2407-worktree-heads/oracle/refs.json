@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "eedb39daeeb7d432004d79294257333dc5533d09",
+        "name": "refs/heads/conflict-"
+    },
+    {
+        "hash": "eedb39daeeb7d432004d79294257333dc5533d09",
+        "name": "refs/heads/fake-"
+    },
+    {
+        "hash": "9b0f3304dd22c4d18a9dfea7ac9e5301c0103271",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "eedb39daeeb7d432004d79294257333dc5533d09",
+        "name": "refs/heads/wt-"
+    },
+    {
+        "hash": "9b0f3304dd22c4d18a9dfea7ac9e5301c0103271",
+        "name": "refs/tags/init"
+    }
+]

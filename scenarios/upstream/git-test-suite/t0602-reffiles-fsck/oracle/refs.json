@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "33999d238d0cc921d5f98f2d0e1eada4fa59af2e",
+        "name": "refs/heads/default-branch"
+    },
+    {
+        "hash": "33999d238d0cc921d5f98f2d0e1eada4fa59af2e",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "33999d238d0cc921d5f98f2d0e1eada4fa59af2e",
+        "name": "refs/tags/default-tag"
+    },
+    {
+        "hash": "33999d238d0cc921d5f98f2d0e1eada4fa59af2e",
+        "name": "refs/tags/multi_hierarchy/default-tag"
+    }
+]

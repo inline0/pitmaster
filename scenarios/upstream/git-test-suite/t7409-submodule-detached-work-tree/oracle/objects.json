@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "06a82e772b7436ff1acc38ac49b8b641c53b5af2",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 1e737d2ca0cea42144198d63ab879777e1c8004f\nparent 63d483aeeb6d7ffc0bfa083ff04c615f8df8038c\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\nsogood\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "130726ecc3248b15e8486ce4e9fea61602040c3d",
+        "type": "blob",
+        "size": 6,
+        "content": "shoot\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e737d2ca0cea42144198d63ab879777e1c8004f",
+        "type": "tree",
+        "size": 71,
+        "content": "100644 blob 130726ecc3248b15e8486ce4e9fea61602040c3d\tshoot.t\n100644 blob 5c7c69e91f59da02be89558286241037ab1d8b6c\tsogood.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "47989d83014782478e4a42cd954845cf6a696344",
+        "type": "commit",
+        "size": 193,
+        "content": "tree aa5e322f8ed30cefd66ba86bbc44c8f6fc453f1b\nparent 06a82e772b7436ff1acc38ac49b8b641c53b5af2\nauthor Test <test@test.com> 1112912113 -0700\ncommitter Test <test@test.com> 1112912113 -0700\n\ndupe\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5c7c69e91f59da02be89558286241037ab1d8b6c",
+        "type": "blob",
+        "size": 7,
+        "content": "sogood\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63d483aeeb6d7ffc0bfa083ff04c615f8df8038c",
+        "type": "commit",
+        "size": 146,
+        "content": "tree ab3dd8b3d61571b5d1e28814bcacc96f731ba261\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nshoot\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aa5e322f8ed30cefd66ba86bbc44c8f6fc453f1b",
+        "type": "tree",
+        "size": 105,
+        "content": "100644 blob c35e410720685f77cf572c25f72fcb9278d970aa\tdupe.t\n100644 blob 130726ecc3248b15e8486ce4e9fea61602040c3d\tshoot.t\n100644 blob 5c7c69e91f59da02be89558286241037ab1d8b6c\tsogood.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab3dd8b3d61571b5d1e28814bcacc96f731ba261",
+        "type": "tree",
+        "size": 35,
+        "content": "100644 blob 130726ecc3248b15e8486ce4e9fea61602040c3d\tshoot.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c35e410720685f77cf572c25f72fcb9278d970aa",
+        "type": "blob",
+        "size": 5,
+        "content": "dupe\n",
+        "encoding": "utf-8"
+    }
+]

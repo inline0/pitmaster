@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7111-reset-table",
+    "category": "upstream",
+    "description": "git t/: t7111-reset-table",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

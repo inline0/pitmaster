@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "350de763c694f6ccf443989eb9766ad9bb7ae170",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d21861ae90a97b6c089f47c838640979cfb519a4",
+        "name": "refs/notes/x"
+    },
+    {
+        "hash": "365fe73671ebfee19f94b303606de8621ac662c2",
+        "name": "refs/notes/y"
+    },
+    {
+        "hash": "350de763c694f6ccf443989eb9766ad9bb7ae170",
+        "name": "refs/tags/tantrum"
+    }
+]

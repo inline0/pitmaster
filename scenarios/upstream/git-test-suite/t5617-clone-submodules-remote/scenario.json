@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5617-clone-submodules-remote",
+    "category": "upstream",
+    "description": "git t/: t5617-clone-submodules-remote",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

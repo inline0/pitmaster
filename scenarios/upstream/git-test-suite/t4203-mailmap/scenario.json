@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4203-mailmap",
+    "category": "upstream",
+    "description": "git t/: t4203-mailmap",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

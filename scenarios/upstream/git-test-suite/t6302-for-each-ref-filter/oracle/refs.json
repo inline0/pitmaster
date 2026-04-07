@@ -1,0 +1,46 @@
+[
+    {
+        "hash": "15f44f8dee129fdd232f6d143cb616b5b0e0ce62",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d1769567e29877d6958e909c08927a1cf12f74b3",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "15f44f8dee129fdd232f6d143cb616b5b0e0ce62",
+        "name": "refs/odd/spot"
+    },
+    {
+        "hash": "6f80546f418d486caadd44a1caf34ffb1311606f",
+        "name": "refs/tags/annotated-tag"
+    },
+    {
+        "hash": "3a464a99f8c61347387991384012150f6bf27313",
+        "name": "refs/tags/doubly-annotated-tag"
+    },
+    {
+        "hash": "f8183b52bae4cfb8decc2ab8a89aaf83c26df3b4",
+        "name": "refs/tags/doubly-signed-tag"
+    },
+    {
+        "hash": "d1769567e29877d6958e909c08927a1cf12f74b3",
+        "name": "refs/tags/four"
+    },
+    {
+        "hash": "6654c7058a34c77ba2acbd5ee15dd4449dff6182",
+        "name": "refs/tags/one"
+    },
+    {
+        "hash": "626f4cc39d141b1eb6a617249cf3e309d94299aa",
+        "name": "refs/tags/signed-tag"
+    },
+    {
+        "hash": "15f44f8dee129fdd232f6d143cb616b5b0e0ce62",
+        "name": "refs/tags/three"
+    },
+    {
+        "hash": "5aa213fc2d8b4f745f3ec1b910371c0b082d5bdb",
+        "name": "refs/tags/two"
+    }
+]

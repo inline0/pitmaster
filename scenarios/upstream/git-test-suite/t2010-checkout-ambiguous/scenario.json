@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2010-checkout-ambiguous",
+    "category": "upstream",
+    "description": "git t/: t2010-checkout-ambiguous",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

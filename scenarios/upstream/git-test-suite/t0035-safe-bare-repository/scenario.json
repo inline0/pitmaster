@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0035-safe-bare-repository",
+    "category": "upstream",
+    "description": "git t/: t0035-safe-bare-repository",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5814-proto-disable-ext",
+    "category": "upstream",
+    "description": "git t/: t5814-proto-disable-ext",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

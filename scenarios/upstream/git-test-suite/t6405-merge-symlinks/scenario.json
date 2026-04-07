@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6405-merge-symlinks",
+    "category": "upstream",
+    "description": "git t/: t6405-merge-symlinks",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

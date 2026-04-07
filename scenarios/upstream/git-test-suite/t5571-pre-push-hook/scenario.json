@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5571-pre-push-hook",
+    "category": "upstream",
+    "description": "git t/: t5571-pre-push-hook",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

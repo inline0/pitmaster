@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1406-submodule-ref-store",
+    "category": "upstream",
+    "description": "git t/: t1406-submodule-ref-store",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "00e30c9e3516b5b19584af1a1d7521a09d723725",
+        "type": "commit",
+        "size": 203,
+        "content": "tree 348ac95f8736c77ce3b0a0ae5663374843681e95\nparent 99ecb18f2035841123bc7a093c70a53d2a521ca3\nauthor Test <test@test.com> 1775599713 +0200\ncommitter Test <test@test.com> 1775599713 +0200\n\nSecond commit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "348ac95f8736c77ce3b0a0ae5663374843681e95",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob f9264f7fbd31ae7a18b7931ed8946fb0aebb0af3\tA\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "44f20c6ab9e182773b55e8ef09511854f9870c92",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob e965047ad7c57865823c7d992b1d046ea66edf78\tA\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "99ecb18f2035841123bc7a093c70a53d2a521ca3",
+        "type": "commit",
+        "size": 156,
+        "content": "tree 44f20c6ab9e182773b55e8ef09511854f9870c92\nauthor Test <test@test.com> 1775599713 +0200\ncommitter Test <test@test.com> 1775599713 +0200\n\nInitial commit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e965047ad7c57865823c7d992b1d046ea66edf78",
+        "type": "blob",
+        "size": 6,
+        "content": "Hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9264f7fbd31ae7a18b7931ed8946fb0aebb0af3",
+        "type": "blob",
+        "size": 12,
+        "content": "Hello\nWorld\n",
+        "encoding": "utf-8"
+    }
+]

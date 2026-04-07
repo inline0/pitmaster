@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "8e35846d01583f8dd4e9990f725cc27095298823",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "4a7f6b3a921d84f48896ab1980c51481ccd3acda",
+        "name": "refs/notes/x"
+    },
+    {
+        "hash": "4a7f6b3a921d84f48896ab1980c51481ccd3acda",
+        "name": "refs/notes/y"
+    },
+    {
+        "hash": "8e35846d01583f8dd4e9990f725cc27095298823",
+        "name": "refs/tags/commit"
+    }
+]

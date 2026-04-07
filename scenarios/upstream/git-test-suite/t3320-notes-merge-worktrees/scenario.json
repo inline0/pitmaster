@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3320-notes-merge-worktrees",
+    "category": "upstream",
+    "description": "git t/: t3320-notes-merge-worktrees",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

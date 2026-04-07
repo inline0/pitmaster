@@ -1,0 +1,40 @@
+[
+    {
+        "hash": "54b51ae813ba64748b0db67f840f4f1238a494ad",
+        "tree": "653b3560655fbf5aaa4110eb3274125fa10a9510",
+        "parents": [
+            "f7b51ff567846dbc251a5a2efe6c5b6a953eb962"
+        ],
+        "author": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "conflict-main"
+    },
+    {
+        "hash": "4f806074a60798a3a5fb4aa0a6a9bfdb64d8c593",
+        "tree": "9e824cb6b2f8ff5616c4cb03e801ab338d52d144",
+        "parents": [
+            "530bd9986e96609af48d360d9abee966a87d6e94"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "conflict-patch"
+    },
+    {
+        "hash": "530bd9986e96609af48d360d9abee966a87d6e94",
+        "tree": "2878f8a8c906e965e8c05d8a8e7ce479ec8ef564",
+        "parents": [
+            "f7b51ff567846dbc251a5a2efe6c5b6a953eb962"
+        ],
+        "author": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "no-conflict"
+    },
+    {
+        "hash": "f7b51ff567846dbc251a5a2efe6c5b6a953eb962",
+        "tree": "cb3634452b5692abe351c8ef5f971c115edfcb1b",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "unrelated"
+    }
+]

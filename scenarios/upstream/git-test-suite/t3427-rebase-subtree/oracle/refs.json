@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "c873fd8b75c4878550834d0b7197be387b01c59c",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "dbfa3924a5d58ea892dfe665694d071cf9bef403",
+        "name": "refs/heads/rebase-merges-onto"
+    },
+    {
+        "hash": "dbfa3924a5d58ea892dfe665694d071cf9bef403",
+        "name": "refs/heads/rebase-onto"
+    },
+    {
+        "hash": "dbfa3924a5d58ea892dfe665694d071cf9bef403",
+        "name": "refs/heads/to-rebase"
+    },
+    {
+        "hash": "c873fd8b75c4878550834d0b7197be387b01c59c",
+        "name": "refs/tags/README"
+    }
+]

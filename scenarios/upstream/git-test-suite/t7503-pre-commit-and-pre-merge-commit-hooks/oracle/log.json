@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "83e791b01a4a4eba1be902ac4a743a72ba2ed1ea",
+        "tree": "c4917077e04977a3b23e4cd6afa0707cdaf8a0ed",
+        "parents": [
+            "8876ff46ecb9b733b6a20166112d4eef9ec68797"
+        ],
+        "author": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "committer": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "message": "conflicting-a"
+    },
+    {
+        "hash": "a7d9c446de89833fd7e0f9aa1e1f643e84be4266",
+        "tree": "d3d004e5b85907959c8a2fb223d5e7e57b2c6681",
+        "parents": [
+            "4d26429b5bde3da2040c89985442cc3a11e1c796"
+        ],
+        "author": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "committer": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "message": "first"
+    },
+    {
+        "hash": "8876ff46ecb9b733b6a20166112d4eef9ec68797",
+        "tree": "44c47b5c46d0b84e2c4f9b847ddd595c66179067",
+        "parents": [],
+        "author": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "committer": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "message": "zeroth"
+    },
+    {
+        "hash": "6f3a9a827ad00d4bdf4db292a60668e900a994f6",
+        "tree": "14cb1522d1584baa7f7fcf5d061d36c51428c7eb",
+        "parents": [
+            "8876ff46ecb9b733b6a20166112d4eef9ec68797"
+        ],
+        "author": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "committer": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "message": "make it non-ff"
+    },
+    {
+        "hash": "4d26429b5bde3da2040c89985442cc3a11e1c796",
+        "tree": "05ed35603b232c94dbc4c3a7c4ab38e98d850f42",
+        "parents": [
+            "8876ff46ecb9b733b6a20166112d4eef9ec68797"
+        ],
+        "author": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "committer": "Test <test@test.com> 1775599883 2026-04-08 00:11:23 +0200",
+        "message": "conflicting-b"
+    }
+]

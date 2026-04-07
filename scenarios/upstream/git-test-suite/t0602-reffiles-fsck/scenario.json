@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0602-reffiles-fsck",
+    "category": "upstream",
+    "description": "git t/: t0602-reffiles-fsck",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

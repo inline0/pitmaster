@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4215-log-skewed-merges",
+    "category": "upstream",
+    "description": "git t/: t4215-log-skewed-merges",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

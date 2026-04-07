@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3310-notes-merge-manual-resolve",
+    "category": "upstream",
+    "description": "git t/: t3310-notes-merge-manual-resolve",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

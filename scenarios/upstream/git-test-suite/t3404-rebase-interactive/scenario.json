@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3404-rebase-interactive",
+    "category": "upstream",
+    "description": "git t/: t3404-rebase-interactive",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

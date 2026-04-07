@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "17f635d4dbcd695e91f37aa736fa69ff1eceac20",
+        "name": "refs/heads/ambiguity"
+    },
+    {
+        "hash": "88fb4083ff279424323f2f25c96ac28a1269a8a6",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "17f635d4dbcd695e91f37aa736fa69ff1eceac20",
+        "name": "refs/heads/vagueness"
+    },
+    {
+        "hash": "c635c50adb157394687e6ec209901c0bf2123133",
+        "name": "refs/tags/ambiguity"
+    },
+    {
+        "hash": "17f635d4dbcd695e91f37aa736fa69ff1eceac20",
+        "name": "refs/tags/branch"
+    },
+    {
+        "hash": "88fb4083ff279424323f2f25c96ac28a1269a8a6",
+        "name": "refs/tags/other"
+    },
+    {
+        "hash": "c635c50adb157394687e6ec209901c0bf2123133",
+        "name": "refs/tags/tag"
+    },
+    {
+        "hash": "42c7c82cc86a07a73cb4499345eff2eccfe668bc",
+        "name": "refs/tags/vagueness"
+    }
+]

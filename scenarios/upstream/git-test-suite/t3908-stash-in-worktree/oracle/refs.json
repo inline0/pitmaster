@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "95428386890e2e1ff2116a2c72305b55d498fe3b",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "69c278caa40e7e9262a31a24492ae909cc8a17ef",
+        "name": "refs/heads/wt"
+    },
+    {
+        "hash": "69c278caa40e7e9262a31a24492ae909cc8a17ef",
+        "name": "refs/tags/in-worktree"
+    },
+    {
+        "hash": "95428386890e2e1ff2116a2c72305b55d498fe3b",
+        "name": "refs/tags/initial"
+    }
+]

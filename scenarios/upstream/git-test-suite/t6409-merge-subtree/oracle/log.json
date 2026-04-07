@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "caf9ea327c12aed581948ea6f7e15a1a9f718620",
+        "tree": "6d6be7b87e3bbcca7def60d82e3a8205f72070d5",
+        "parents": [
+            "dee55f8b9f0789e890a9c6ffd5157167fc66fa58"
+        ],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "initial merge of sub into topic"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "tree": "64fd3796c57084e7b8cbae358ce37970b8e954f6",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "foo"
+    }
+]

@@ -1,10 +1,18 @@
 [
     {
-        "hash": "deef60ae4c6ae2ac9168c1b17b01579c9a6914f6",
-        "name": "refs/heads/main"
+        "hash": "ae7bf552b12b4dbdad0c97c924fdf6ccfcdc11f0",
+        "name": "refs/heads/nondeterminism"
     },
     {
-        "hash": "1bdbebeacd2de887ed0ab8d0a3e328d35eb2883d",
+        "hash": "71bdd52793b18e939431fe800ca377340893c7d7",
+        "name": "refs/heads/with_notes"
+    },
+    {
+        "hash": "d093ca9799afad8ba4eea4b5b7cf8e90367609a4",
         "name": "refs/notes/commits"
+    },
+    {
+        "hash": "ae7bf552b12b4dbdad0c97c924fdf6ccfcdc11f0",
+        "name": "refs/tags/A"
     }
 ]

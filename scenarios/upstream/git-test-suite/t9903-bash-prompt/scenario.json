@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9903-bash-prompt",
+    "category": "upstream",
+    "description": "git t/: t9903-bash-prompt",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

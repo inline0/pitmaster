@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "aa93090cf317ecdd5593feb6acbd75e4914ee01c",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "fb7af423e2fc3c4dfeadd8912175af775eb19e7c",
+        "name": "refs/heads/topic"
+    },
+    {
+        "hash": "dae568f8e6e0e10c374edadbf33f2ad055ffe133",
+        "name": "refs/tags/commit1"
+    },
+    {
+        "hash": "da81e013cd36100450d00785948b198abd435ab4",
+        "name": "refs/tags/commit2"
+    },
+    {
+        "hash": "fb7af423e2fc3c4dfeadd8912175af775eb19e7c",
+        "name": "refs/tags/commit3"
+    },
+    {
+        "hash": "aa93090cf317ecdd5593feb6acbd75e4914ee01c",
+        "name": "refs/tags/main"
+    },
+    {
+        "hash": "e388f95da1ddc6d816f0382aefe33ae85e256594",
+        "name": "refs/tags/side"
+    }
+]

@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "580c64fee2f0ce3919b31eefd260fda60f31395a",
+        "name": "refs/heads/conflicts"
+    },
+    {
+        "hash": "4fe09ccb521e26a45e8b7226e305896b71fda355",
+        "name": "refs/heads/fast-forward"
+    },
+    {
+        "hash": "2bd64db30cf38c2962386c50c9e72fb0d93baa86",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "a47e46d6a83a261c4940d0b8f828fa1dcb35ff6d",
+        "name": "refs/heads/topic"
+    },
+    {
+        "hash": "3dad8972abe5e45936b9419313fdc8c9ff1d8c90",
+        "name": "refs/tags/A"
+    },
+    {
+        "hash": "902ea4b7c7bf6caae5136ef5021e7accf9cc1471",
+        "name": "refs/tags/B"
+    },
+    {
+        "hash": "d1d0f9e7a1fb915a33bdc13ef9e51bf702741b25",
+        "name": "refs/tags/O"
+    },
+    {
+        "hash": "eb5cc517c7e17c4bcfe2a9c0d75daeee5173b6bd",
+        "name": "refs/tags/P"
+    },
+    {
+        "hash": "580c64fee2f0ce3919b31eefd260fda60f31395a",
+        "name": "refs/tags/Q"
+    },
+    {
+        "hash": "4fe09ccb521e26a45e8b7226e305896b71fda355",
+        "name": "refs/tags/X"
+    },
+    {
+        "hash": "2bd64db30cf38c2962386c50c9e72fb0d93baa86",
+        "name": "refs/tags/Y"
+    },
+    {
+        "hash": "966a65ca37383a2f4a397a563fb6502dd3a489ed",
+        "name": "refs/tags/Z"
+    },
+    {
+        "hash": "6f5ae1ed0a690b5c39c2d4da7592dce47888abc8",
+        "name": "refs/tags/conflict-X"
+    },
+    {
+        "hash": "966a65ca37383a2f4a397a563fb6502dd3a489ed",
+        "name": "refs/tags/start"
+    }
+]

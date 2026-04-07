@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6022-rev-list-missing",
+    "category": "upstream",
+    "description": "git t/: t6022-rev-list-missing",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0027-auto-crlf",
+    "category": "upstream",
+    "description": "git t/: t0027-auto-crlf",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

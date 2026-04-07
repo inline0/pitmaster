@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5526-fetch-submodules",
+    "category": "upstream",
+    "description": "git t/: t5526-fetch-submodules",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

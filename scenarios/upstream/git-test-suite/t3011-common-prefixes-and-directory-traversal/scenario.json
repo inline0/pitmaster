@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3011-common-prefixes-and-directory-traversal",
+    "category": "upstream",
+    "description": "git t/: t3011-common-prefixes-and-directory-traversal",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4006-diff-mode",
+    "category": "upstream",
+    "description": "git t/: t4006-diff-mode",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

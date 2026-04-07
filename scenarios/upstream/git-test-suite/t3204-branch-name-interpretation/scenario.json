@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3204-branch-name-interpretation",
+    "category": "upstream",
+    "description": "git t/: t3204-branch-name-interpretation",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

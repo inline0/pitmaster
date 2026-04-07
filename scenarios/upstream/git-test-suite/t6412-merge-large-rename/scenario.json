@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6412-merge-large-rename",
+    "category": "upstream",
+    "description": "git t/: t6412-merge-large-rename",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "54b51ae813ba64748b0db67f840f4f1238a494ad",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "54b51ae813ba64748b0db67f840f4f1238a494ad",
+        "name": "refs/tags/base"
+    },
+    {
+        "hash": "4f806074a60798a3a5fb4aa0a6a9bfdb64d8c593",
+        "name": "refs/tags/conflict-patch"
+    },
+    {
+        "hash": "530bd9986e96609af48d360d9abee966a87d6e94",
+        "name": "refs/tags/no-conflict"
+    },
+    {
+        "hash": "f7b51ff567846dbc251a5a2efe6c5b6a953eb962",
+        "name": "refs/tags/unrelated"
+    }
+]

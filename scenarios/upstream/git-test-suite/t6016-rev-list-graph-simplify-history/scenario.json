@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6016-rev-list-graph-simplify-history",
+    "category": "upstream",
+    "description": "git t/: t6016-rev-list-graph-simplify-history",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

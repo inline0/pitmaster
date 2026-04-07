@@ -1,0 +1,107 @@
+[
+    {
+        "hash": "035bee95e2902249faa02ea9b5aa528206226e57",
+        "type": "tree",
+        "size": 35,
+        "content": "040000 tree 12ac9c2eda0a998d2f4ae36adae56f9faeb2f400\twildcard\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0f12c44fb89c4bc5f599101301f355ac36ad1535",
+        "type": "tree",
+        "size": 293,
+        "content": "040000 tree 465bf006aefc07517b769fe7fe316daaf20ab159\tdeep\n100644 blob ea10ec85c10797d76afeef56f8bfc26da40913bb\tignored\n040000 tree bb21475a459f08123c4e1e0f5f96ae36e344df25\tignored-only-if-dir\n040000 tree 12ac9c2eda0a998d2f4ae36adae56f9faeb2f400\tignored-without-slash\n040000 tree a14ad0b490fa5ed313ce9605ce2499c92a4d78a7\tnot-ignored-dir\n040000 tree d0cd526d761e60b8f6d9fef732d5ac251aad93a7\tone-level-lower\n040000 tree 12ac9c2eda0a998d2f4ae36adae56f9faeb2f400\twildcard-without-slash\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12ac9c2eda0a998d2f4ae36adae56f9faeb2f400",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob c69a28fbfd95994107e901f967c458e9a97d9d37\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16c5f287a4332468883d3172149643d4d4dc8d29",
+        "type": "tree",
+        "size": 36,
+        "content": "040000 tree 12ac9c2eda0a998d2f4ae36adae56f9faeb2f400\tslashless\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2250b80a77dbdad0653b2da0b2e926fb7b91464a",
+        "type": "blob",
+        "size": 23,
+        "content": "ignored by ignored dir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42a30466c0fec537ed478c3679cc4589712c55e6",
+        "type": "commit",
+        "size": 142,
+        "content": "tree 0f12c44fb89c4bc5f599101301f355ac36ad1535\nauthor Test <test@test.com> 1775599792 +0200\ncommitter Test <test@test.com> 1775599792 +0200\n\n.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "465bf006aefc07517b769fe7fe316daaf20ab159",
+        "type": "tree",
+        "size": 61,
+        "content": "040000 tree 16c5f287a4332468883d3172149643d4d4dc8d29\tand\n040000 tree 035bee95e2902249faa02ea9b5aa528206226e57\twith\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7404092866ca99adb91b159cff4d7c78a88d4c88",
+        "type": "blob",
+        "size": 20,
+        "content": "not-ignored-in-tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "94ebfcffabb8ce04dc9b6afe0fd45764d82e955a",
+        "type": "tree",
+        "size": 46,
+        "content": "040000 tree bb21475a459f08123c4e1e0f5f96ae36e344df25\tignored-only-if-dir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bea77b8d59312f6c8ad73689c8ba2326835df86",
+        "type": "blob",
+        "size": 16,
+        "content": "ignored-in-tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a14ad0b490fa5ed313ce9605ce2499c92a4d78a7",
+        "type": "tree",
+        "size": 82,
+        "content": "100644 blob 9bea77b8d59312f6c8ad73689c8ba2326835df86\tignored\n100644 blob 7404092866ca99adb91b159cff4d7c78a88d4c88\tignored-only-if-dir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb21475a459f08123c4e1e0f5f96ae36e344df25",
+        "type": "tree",
+        "size": 50,
+        "content": "100644 blob 2250b80a77dbdad0653b2da0b2e926fb7b91464a\tignored-by-ignored-dir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c69a28fbfd95994107e901f967c458e9a97d9d37",
+        "type": "blob",
+        "size": 22,
+        "content": "ignored without slash\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d0cd526d761e60b8f6d9fef732d5ac251aad93a7",
+        "type": "tree",
+        "size": 43,
+        "content": "040000 tree 94ebfcffabb8ce04dc9b6afe0fd45764d82e955a\ttwo-levels-lower\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea10ec85c10797d76afeef56f8bfc26da40913bb",
+        "type": "blob",
+        "size": 8,
+        "content": "ignored\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5319-multi-pack-index",
+    "category": "upstream",
+    "description": "git t/: t5319-multi-pack-index",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

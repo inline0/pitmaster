@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0028-working-tree-encoding",
+    "category": "upstream",
+    "description": "git t/: t0028-working-tree-encoding",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

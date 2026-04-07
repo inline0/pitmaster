@@ -1,6 +1,30 @@
 [
     {
-        "hash": "f42a01f9ff1fa42ef7c0b2b0784b6f75f2c0e74d",
+        "hash": "3c8e3e01a38487a6aa1a7641c58c1df484929027",
+        "name": "refs/heads/conflict-branch"
+    },
+    {
+        "hash": "52ed58733c9fec3e88059a773831a2bd99f28674",
         "name": "refs/heads/main"
+    },
+    {
+        "hash": "9a7366ea0b72bc35d890209df244b22efca124fa",
+        "name": "refs/tags/conflict"
+    },
+    {
+        "hash": "ec84c070de1ec8703c8580cd2675c09a45203e12",
+        "name": "refs/tags/file-2"
+    },
+    {
+        "hash": "daf9fdcd84c3d972b5c45993c30a1ad8280aa720",
+        "name": "refs/tags/first"
+    },
+    {
+        "hash": "52ed58733c9fec3e88059a773831a2bd99f28674",
+        "name": "refs/tags/second"
+    },
+    {
+        "hash": "3c8e3e01a38487a6aa1a7641c58c1df484929027",
+        "name": "refs/tags/third"
     }
 ]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3500-cherry",
+    "category": "upstream",
+    "description": "git t/: t3500-cherry",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

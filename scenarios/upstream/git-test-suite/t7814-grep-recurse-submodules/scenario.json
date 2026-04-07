@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7814-grep-recurse-submodules",
+    "category": "upstream",
+    "description": "git t/: t7814-grep-recurse-submodules",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

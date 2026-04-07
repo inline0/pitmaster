@@ -1,6 +1,26 @@
 [
     {
-        "hash": "7ce6ed5956361b16c5cebaa0ec6ae923270b5807",
+        "hash": "0d19dfd249a33a1fca88eb5a0e3d09c42820469d",
+        "name": "refs/heads/branch"
+    },
+    {
+        "hash": "75a2149b55a6ee3a9d1eea48d82a4dadc1642f85",
         "name": "refs/heads/main"
+    },
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "name": "refs/tags/base"
+    },
+    {
+        "hash": "0d19dfd249a33a1fca88eb5a0e3d09c42820469d",
+        "name": "refs/tags/initial"
+    },
+    {
+        "hash": "75a2149b55a6ee3a9d1eea48d82a4dadc1642f85",
+        "name": "refs/tags/ours"
+    },
+    {
+        "hash": "7c93b577c07d71596d1795d08033e4f96b68ad31",
+        "name": "refs/tags/theirs"
     }
 ]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3211-peel-ref",
+    "category": "upstream",
+    "description": "git t/: t3211-peel-ref",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

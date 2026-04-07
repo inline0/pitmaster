@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "8f7a305e4c361546238cc05c273086dc9fc66e25",
+        "tree": "c9a14fec5fe7bc597e4bd8c903c4485d75254502",
+        "parents": [
+            "490a6ae078e29becb407f8839e8878872cfc23ad"
+        ],
+        "author": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "committer": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "message": "subdir/xyzzy"
+    },
+    {
+        "hash": "490a6ae078e29becb407f8839e8878872cfc23ad",
+        "tree": "278623275e86f6d63446f357b3a931ac8b7c7d69",
+        "parents": [
+            "ebf46dccf81a99604b585f6c2dc2617d6285c0cb"
+        ],
+        "author": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "subdir/bar"
+    },
+    {
+        "hash": "948c662a30f8452eaebfcdb441688fc680ed2ff5",
+        "tree": "09d3f5f57de05453aac8f28941d2a55d5e873410",
+        "parents": [
+            "ebf46dccf81a99604b585f6c2dc2617d6285c0cb"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "retain-me"
+    },
+    {
+        "hash": "ebf46dccf81a99604b585f6c2dc2617d6285c0cb",
+        "tree": "a3c13b873b7fe5ec935801fb2d01c4298e840b24",
+        "parents": [
+            "e10f2a4f2693d1f680b1e51dafda322513707970"
+        ],
+        "author": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "foo"
+    },
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "tree": "ce6131022c3a48a15f4b7a68afb6ecf3b3bcb0cd",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "base"
+    }
+]

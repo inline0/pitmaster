@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "7f77f6c17d90a238964040a769110837bbaf8278",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "8e152013feab4fde4ca1c1b69586584e2ebaa3bd",
+        "name": "refs/tags/have_custom_hook"
+    },
+    {
+        "hash": "757cbff9ea500472264078a315484930e1522b91",
+        "name": "refs/tags/have_custom_hook_abs_path"
+    },
+    {
+        "hash": "7f77f6c17d90a238964040a769110837bbaf8278",
+        "name": "refs/tags/have_custom_hook_abs_path_trailing_slash"
+    },
+    {
+        "hash": "364f0286fb6e66f0ce8a2867d82c456dda21cd2f",
+        "name": "refs/tags/have_custom_hook_trailing_slash"
+    },
+    {
+        "hash": "44cb1ea83fedf048d212cee4b7b7e57f825152cc",
+        "name": "refs/tags/no_custom_hook"
+    }
+]

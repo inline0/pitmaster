@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6060-merge-index",
+    "category": "upstream",
+    "description": "git t/: t6060-merge-index",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

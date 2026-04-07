@@ -1,0 +1,46 @@
+[
+    {
+        "hash": "dbd23a61b64ee62c7fbf659013bb3d2b05628168",
+        "name": "refs/heads/branchB"
+    },
+    {
+        "hash": "68710aee988e8ccbf667b7ff1adc79258b2d2ce5",
+        "name": "refs/heads/branchX"
+    },
+    {
+        "hash": "a0556f36232ade0878b785fa6625bd65fb422f66",
+        "name": "refs/heads/branchZ"
+    },
+    {
+        "hash": "d02f51eb5e3e80aafb0d139a4919c9a4e48d86fe",
+        "name": "refs/heads/topic"
+    },
+    {
+        "hash": "a9d6bd7cf619c8038506bfaeeb214f2c8991c0fe",
+        "name": "refs/tags/A"
+    },
+    {
+        "hash": "dbd23a61b64ee62c7fbf659013bb3d2b05628168",
+        "name": "refs/tags/B"
+    },
+    {
+        "hash": "d8db0d88b7f1f8c6bc2c764486b13ef44be9fa93",
+        "name": "refs/tags/C"
+    },
+    {
+        "hash": "452c4495c2e3f99bdf5bd827e61bf31c69554906",
+        "name": "refs/tags/I"
+    },
+    {
+        "hash": "68710aee988e8ccbf667b7ff1adc79258b2d2ce5",
+        "name": "refs/tags/X"
+    },
+    {
+        "hash": "94a65962194a61f84096b9cecf956903cd7618b3",
+        "name": "refs/tags/Y"
+    },
+    {
+        "hash": "a0556f36232ade0878b785fa6625bd65fb422f66",
+        "name": "refs/tags/Z"
+    }
+]

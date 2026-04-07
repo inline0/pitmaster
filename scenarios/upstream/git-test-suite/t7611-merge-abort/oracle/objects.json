@@ -1,0 +1,107 @@
+[
+    {
+        "hash": "135dad4e8c8645151928d6f1c1fd1406e050c149",
+        "type": "commit",
+        "size": 194,
+        "content": "tree e9abbaa324044e9422619abeda250312320710b3\nparent 2a66f6991250aa94c4585a8b5f85c1a752a63eb5\nauthor Test <test@test.com> 1775599903 +0200\ncommitter Test <test@test.com> 1775599903 +0200\n\nclean\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "257cc5642cb1a054f08cc83f2d943e56fd3ebe99",
+        "type": "blob",
+        "size": 4,
+        "content": "foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a66f6991250aa94c4585a8b5f85c1a752a63eb5",
+        "type": "commit",
+        "size": 148,
+        "content": "tree e03c0f3158ec6b1432c83e2c093a8a293a4f58e5\nauthor Test <test@test.com> 1775599902 +0200\ncommitter Test <test@test.com> 1775599902 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5716ca5987cbf97d6bb54920bea6adde242d87e6",
+        "type": "blob",
+        "size": 4,
+        "content": "bar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6bdd34e3e9ab26062ab881adb1024923923b5f8e",
+        "type": "blob",
+        "size": 5,
+        "content": "bazz\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76018072e09c5d31c8c6e3113b8aa0fe625195ca",
+        "type": "blob",
+        "size": 4,
+        "content": "baz\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9845bc0a06a153937e15fbb209f560f86e25c44f",
+        "type": "commit",
+        "size": 195,
+        "content": "tree a2e7c2ef82c7194d05cb708830c1e88ce6875f1c\nparent 2a66f6991250aa94c4585a8b5f85c1a752a63eb5\nauthor Test <test@test.com> 1775599902 +0200\ncommitter Test <test@test.com> 1775599902 +0200\n\nsecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a2e7c2ef82c7194d05cb708830c1e88ce6875f1c",
+        "type": "tree",
+        "size": 93,
+        "content": "100644 blob 5716ca5987cbf97d6bb54920bea6adde242d87e6\tbar\n100644 blob 6bdd34e3e9ab26062ab881adb1024923923b5f8e\tbaz\n100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "abea744efbdcab1aeae53d0990d2140bdeb15bd4",
+        "type": "tree",
+        "size": 93,
+        "content": "100644 blob bca77a6ee30673963739f02f040389a6dc61a921\tbar\n100644 blob ce1b313db79d5e45e9aac33190e5869f005eadd9\tbaz\n100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bca77a6ee30673963739f02f040389a6dc61a921",
+        "type": "blob",
+        "size": 5,
+        "content": "barf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce1b313db79d5e45e9aac33190e5869f005eadd9",
+        "type": "blob",
+        "size": 5,
+        "content": "bazf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d93942aeb41bfdb94245e111849b2d42e0f04bac",
+        "type": "commit",
+        "size": 197,
+        "content": "tree abea744efbdcab1aeae53d0990d2140bdeb15bd4\nparent 2a66f6991250aa94c4585a8b5f85c1a752a63eb5\nauthor Test <test@test.com> 1775599903 +0200\ncommitter Test <test@test.com> 1775599903 +0200\n\nconflict\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e00ddae83bdab443f4267426623aa34636c935f2",
+        "type": "blob",
+        "size": 5,
+        "content": "bart\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e03c0f3158ec6b1432c83e2c093a8a293a4f58e5",
+        "type": "tree",
+        "size": 93,
+        "content": "100644 blob 5716ca5987cbf97d6bb54920bea6adde242d87e6\tbar\n100644 blob 76018072e09c5d31c8c6e3113b8aa0fe625195ca\tbaz\n100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e9abbaa324044e9422619abeda250312320710b3",
+        "type": "tree",
+        "size": 93,
+        "content": "100644 blob e00ddae83bdab443f4267426623aa34636c935f2\tbar\n100644 blob 76018072e09c5d31c8c6e3113b8aa0fe625195ca\tbaz\n100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tfoo\n",
+        "encoding": "utf-8"
+    }
+]

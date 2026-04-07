@@ -1,0 +1,38 @@
+[
+    {
+        "hash": "1b082aca780549e5ae473846ce2da4dca1c299c9",
+        "name": "refs/heads/apply-backend"
+    },
+    {
+        "hash": "1b082aca780549e5ae473846ce2da4dca1c299c9",
+        "name": "refs/heads/conflict-branch"
+    },
+    {
+        "hash": "1b082aca780549e5ae473846ce2da4dca1c299c9",
+        "name": "refs/heads/empty-trailer"
+    },
+    {
+        "hash": "7ed86c530290587c3300e6fea92b7de5918199d4",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "dbaba5c00da72d22037537a04feaa9f4f2c25b90",
+        "name": "refs/tags/conflict"
+    },
+    {
+        "hash": "8891104cc6f8905867ce6a50b62f42358021dcad",
+        "name": "refs/tags/file-2"
+    },
+    {
+        "hash": "7701cb3c115f48d445f1146672d400481fddd130",
+        "name": "refs/tags/first"
+    },
+    {
+        "hash": "7ed86c530290587c3300e6fea92b7de5918199d4",
+        "name": "refs/tags/second"
+    },
+    {
+        "hash": "1b082aca780549e5ae473846ce2da4dca1c299c9",
+        "name": "refs/tags/third"
+    }
+]

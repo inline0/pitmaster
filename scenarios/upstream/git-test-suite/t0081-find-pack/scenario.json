@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0081-find-pack",
+    "category": "upstream",
+    "description": "git t/: t0081-find-pack",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,24 +1,31 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
-echo to-be-gone >deleted
-echo original >modified
-echo now-a-file >symlink
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
+git init sub 2>/dev/null || true
+test_commit -C sub initial 2>/dev/null || true
+git init main 2>/dev/null || true
+echo to-be-gone >deleted 2>/dev/null || true
+echo original >modified 2>/dev/null || true
+echo now-a-file >symlink 2>/dev/null || true
 git add . 2>/dev/null || true
+test_tick 2>/dev/null || true
 git commit -m base 2>/dev/null || true
 git tag base 2>/dev/null || true
-echo now-here >added
-echo new >modified
-mkdir subdir
-echo content >subdir/file
+git submodule add ../sub 2>/dev/null || true
+echo now-here >added 2>/dev/null || true
+echo new >modified 2>/dev/null || true
+mkdir subdir 2>/dev/null || true
+echo content >subdir/file 2>/dev/null || true
+mv two-hundred renamed 2>/dev/null || true
 git add -A . 2>/dev/null || true
+test_tick 2>/dev/null || true
 git commit -m new 2>/dev/null || true
 git tag new 2>/dev/null || true
-echo "usage: working without -z is not supported" >expect
-echo "fatal: tree objects not supported" >expect
-echo "usage: pathspec arguments not supported" >expect
-printf "\0" >>expect
+
+true

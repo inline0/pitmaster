@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3307-notes-man",
+    "category": "upstream",
+    "description": "git t/: t3307-notes-man",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

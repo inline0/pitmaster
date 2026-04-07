@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3506-cherry-pick-ff",
+    "category": "upstream",
+    "description": "git t/: t3506-cherry-pick-ff",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

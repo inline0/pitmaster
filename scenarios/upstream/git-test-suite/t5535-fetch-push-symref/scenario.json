@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5535-fetch-push-symref",
+    "category": "upstream",
+    "description": "git t/: t5535-fetch-push-symref",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3421-rebase-topology-linear",
+    "category": "upstream",
+    "description": "git t/: t3421-rebase-topology-linear",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

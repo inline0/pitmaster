@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7418-submodule-sparse-gitmodules",
+    "category": "upstream",
+    "description": "git t/: t7418-submodule-sparse-gitmodules",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "0aad189cf1933192dd4e0510d8407b3652da4db6",
+        "type": "blob",
+        "size": 15,
+        "content": "cached content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2f47613ec04e314ca346ebf69590277bf947bdd5",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 3d568d6fbc5be79e53974a72e0ca1bcf45c5fc32\nauthor Test <test@test.com> 1775599690 +0200\ncommitter Test <test@test.com> 1775599690 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3d568d6fbc5be79e53974a72e0ca1bcf45c5fc32",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 0aad189cf1933192dd4e0510d8407b3652da4db6\tracy-file\n",
+        "encoding": "utf-8"
+    }
+]

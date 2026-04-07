@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4258-am-quoted-cr",
+    "category": "upstream",
+    "description": "git t/: t4258-am-quoted-cr",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

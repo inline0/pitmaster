@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5507-remote-environment",
+    "category": "upstream",
+    "description": "git t/: t5507-remote-environment",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

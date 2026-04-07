@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3103-ls-tree-misc",
+    "category": "upstream",
+    "description": "git t/: t3103-ls-tree-misc",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

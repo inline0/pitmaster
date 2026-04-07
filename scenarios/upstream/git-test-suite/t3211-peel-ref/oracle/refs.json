@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "294998a447bd00ebf3f6295c006da889f853eac5",
+        "name": "refs/outside/foo"
+    },
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "name": "refs/tags/base"
+    },
+    {
+        "hash": "294998a447bd00ebf3f6295c006da889f853eac5",
+        "name": "refs/tags/foo"
+    }
+]

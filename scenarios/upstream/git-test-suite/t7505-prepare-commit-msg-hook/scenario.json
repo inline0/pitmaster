@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7505-prepare-commit-msg-hook",
+    "category": "upstream",
+    "description": "git t/: t7505-prepare-commit-msg-hook",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

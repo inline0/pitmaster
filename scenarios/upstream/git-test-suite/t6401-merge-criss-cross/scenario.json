@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6401-merge-criss-cross",
+    "category": "upstream",
+    "description": "git t/: t6401-merge-criss-cross",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

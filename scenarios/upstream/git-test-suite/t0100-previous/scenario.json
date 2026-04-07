@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0100-previous",
+    "category": "upstream",
+    "description": "git t/: t0100-previous",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

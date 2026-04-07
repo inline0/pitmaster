@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3435-rebase-gpg-sign",
+    "category": "upstream",
+    "description": "git t/: t3435-rebase-gpg-sign",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

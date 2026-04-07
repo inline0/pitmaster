@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "3cd8b4ea9f93dcbb29118aa2fa4031db9590ee3b",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "b9fa107ab944ad3e291a85b732e3dc497ac34d18",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "3cd8b4ea9f93dcbb29118aa2fa4031db9590ee3b",
+        "name": "refs/tags/first"
+    },
+    {
+        "hash": "95981b91bac70bcab7dc0d624c46e6bca5c0c4ab",
+        "name": "refs/tags/initial"
+    },
+    {
+        "hash": "c323b53cf426b412bea357de279b76f1f7461219",
+        "name": "refs/tags/renamed-file"
+    },
+    {
+        "hash": "1eee1133c813137147c6619f2b659bfa56aca9cd",
+        "name": "refs/tags/side1"
+    },
+    {
+        "hash": "b9fa107ab944ad3e291a85b732e3dc497ac34d18",
+        "name": "refs/tags/side2"
+    }
+]

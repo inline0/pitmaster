@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t8011-blame-split-file",
+    "category": "upstream",
+    "description": "git t/: t8011-blame-split-file",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

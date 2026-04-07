@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "5a558bce3dcf7486b02dfe6ad42f61fb6fc2656d",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "df5bdba62022366215bdc5ffa93c8c9d3d600c7f",
+        "name": "refs/heads/wer"
+    },
+    {
+        "hash": "07d22d74bef3d1aecf447a3565a4911f2a4a7eff",
+        "name": "refs/tags/muss"
+    },
+    {
+        "hash": "5a558bce3dcf7486b02dfe6ad42f61fb6fc2656d",
+        "name": "refs/tags/rein"
+    }
+]

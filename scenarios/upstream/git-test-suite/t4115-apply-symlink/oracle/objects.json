@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "191381ee74dec49c89f99a62d055cb1058ba0de9",
+        "type": "blob",
+        "size": 4,
+        "content": ".git",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "375146740b032d30f32b96c4a1378da8ec3c347f",
+        "type": "tree",
+        "size": 35,
+        "content": "120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tsymlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9f4f89a8dc7ef223922ba15f57a6a9681698f6de",
+        "type": "commit",
+        "size": 152,
+        "content": "tree 375146740b032d30f32b96c4a1378da8ec3c347f\nauthor Test <test@test.com> 1775599773 +0200\ncommitter Test <test@test.com> 1775599773 +0200\n\nadd symlink\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7612-merge-verify-signatures",
+    "category": "upstream",
+    "description": "git t/: t7612-merge-verify-signatures",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

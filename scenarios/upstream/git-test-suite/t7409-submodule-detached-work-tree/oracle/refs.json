@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "47989d83014782478e4a42cd954845cf6a696344",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "47989d83014782478e4a42cd954845cf6a696344",
+        "name": "refs/tags/dupe"
+    },
+    {
+        "hash": "63d483aeeb6d7ffc0bfa083ff04c615f8df8038c",
+        "name": "refs/tags/shoot"
+    },
+    {
+        "hash": "06a82e772b7436ff1acc38ac49b8b641c53b5af2",
+        "name": "refs/tags/sogood"
+    }
+]

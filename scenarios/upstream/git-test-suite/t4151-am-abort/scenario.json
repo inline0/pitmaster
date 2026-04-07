@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4151-am-abort",
+    "category": "upstream",
+    "description": "git t/: t4151-am-abort",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

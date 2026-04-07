@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1011-read-tree-sparse-checkout",
+    "category": "upstream",
+    "description": "git t/: t1011-read-tree-sparse-checkout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

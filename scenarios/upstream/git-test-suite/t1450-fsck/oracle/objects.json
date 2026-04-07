@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "error:",
+        "type": "unable",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22d8f5b233a4da4b558f9c860cafda416b45a507",
+        "type": "commit",
+        "size": 142,
+        "content": "error: unable to normalize alternate object path: /private/var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-2f994a4053982318/.git/objects/../../../.git/objects\ntree f0425ffffae982b9eb592ed2537397e58a7332d3\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nC\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5626abf0f72e58d7a153368ba57db4c673c0e171",
+        "type": "blob",
+        "size": 4,
+        "content": "error: unable to normalize alternate object path: /private/var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-2f994a4053982318/.git/objects/../../../.git/objects\none\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f0425ffffae982b9eb592ed2537397e58a7332d3",
+        "type": "tree",
+        "size": 33,
+        "content": "error: unable to normalize alternate object path: /private/var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-2f994a4053982318/.git/objects/../../../.git/objects\n100644 blob 5626abf0f72e58d7a153368ba57db4c673c0e171\tfileC\n",
+        "encoding": "utf-8"
+    }
+]

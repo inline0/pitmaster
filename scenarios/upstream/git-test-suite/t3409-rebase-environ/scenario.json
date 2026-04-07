@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3409-rebase-environ",
+    "category": "upstream",
+    "description": "git t/: t3409-rebase-environ",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

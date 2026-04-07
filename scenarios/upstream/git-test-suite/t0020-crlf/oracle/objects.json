@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "03ba6c20ab5f83339911a47bffb5a162b1c7d26c",
+        "type": "blob",
+        "size": 12,
+        "content": "I\nam\nall\nLF\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "243407bb8a162d6bd218fc32d4514a8141522793",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 03ba6c20ab5f83339911a47bffb5a162b1c7d26c\tdoublewarn\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e74b73977e4432e9050ec2eecc5e5cdb85cdeef2",
+        "type": "commit",
+        "size": 147,
+        "content": "tree 243407bb8a162d6bd218fc32d4514a8141522793\nauthor Test <test@test.com> 1775599660 +0200\ncommitter Test <test@test.com> 1775599660 +0200\n\nnowarn\n",
+        "encoding": "utf-8"
+    }
+]

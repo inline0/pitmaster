@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "b367655d6e814eeec2816541e0d091b1c3701b80",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "b367655d6e814eeec2816541e0d091b1c3701b80",
+        "name": "refs/tags/bracket"
+    },
+    {
+        "hash": "945529a084325c3c2ff23651ccb1529273c33cee",
+        "name": "refs/tags/unrelated"
+    },
+    {
+        "hash": "bd529e9b8f42f25105a8415af90716c49532cc72",
+        "name": "refs/tags/vanilla"
+    }
+]

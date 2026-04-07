@@ -1,6 +1,10 @@
 [
     {
-        "hash": "d16c54896d4f276a7be952391103c07c130c43d0",
+        "hash": "81f7e2ae621bcea9f95d64f4a86409d04b54c4b4",
         "name": "refs/heads/main"
+    },
+    {
+        "hash": "81f7e2ae621bcea9f95d64f4a86409d04b54c4b4",
+        "name": "refs/tags/second"
     }
 ]

@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "c74f56789c7e15477a5dd113a9fd9a55fd208c7f",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "244e38c4df6d4bbbb2ad4ded3e567dffb9491951",
+        "name": "refs/heads/my-topic-branch"
+    }
+]

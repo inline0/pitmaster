@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6601-path-walk",
+    "category": "upstream",
+    "description": "git t/: t6601-path-walk",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "6654c7058a34c77ba2acbd5ee15dd4449dff6182",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "ded7e3cfdcc7e6cbfa3a506484678751f54121d0",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "6654c7058a34c77ba2acbd5ee15dd4449dff6182",
+        "name": "refs/tags/one"
+    },
+    {
+        "hash": "64b33d9358d3ddd7567a19d143652c49043adf62",
+        "name": "refs/tags/side1"
+    },
+    {
+        "hash": "0411be89f0ced52db50589799331f8f8c6b127a2",
+        "name": "refs/tags/side2"
+    },
+    {
+        "hash": "910f73be728385a0fd01a22ae4a1d84dd891ff74",
+        "name": "refs/tags/three"
+    },
+    {
+        "hash": "ded7e3cfdcc7e6cbfa3a506484678751f54121d0",
+        "name": "refs/tags/tip"
+    },
+    {
+        "hash": "55481c5019c11998a6772d768d97f4244f6c7e81",
+        "name": "refs/tags/two"
+    }
+]

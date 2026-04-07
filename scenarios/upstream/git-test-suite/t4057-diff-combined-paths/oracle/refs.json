@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "07057a174aa3749b5c6fb69d2bfb8a83039b19d1",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "6801cae45f3113ebcf6d22d179ca90c4db121374",
+        "name": "refs/heads/side"
+    }
+]

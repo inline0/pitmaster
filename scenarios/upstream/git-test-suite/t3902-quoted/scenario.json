@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3902-quoted",
+    "category": "upstream",
+    "description": "git t/: t3902-quoted",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

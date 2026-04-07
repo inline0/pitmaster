@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5544-pack-objects-hook",
+    "category": "upstream",
+    "description": "git t/: t5544-pack-objects-hook",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "caf9ea327c12aed581948ea6f7e15a1a9f718620",
+        "name": "refs/heads/sub"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "name": "refs/tags/foo"
+    }
+]

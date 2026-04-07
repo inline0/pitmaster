@@ -1,5 +1,12 @@
 [
     {
+        "hash": "0b901597e316f581dc1d87f3f6841fc0ecc7d0af",
+        "type": "commit",
+        "size": 194,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nparent f0393c6ac9500efcdc9c938bcd1daada4837ef95\nauthor Test <test@test.com> 1775599812 +0200\ncommitter Test <test@test.com> 1775599812 +0200\n\nFirst\n",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
         "type": "tree",
         "size": 0,
@@ -7,17 +14,10 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "70b502986f3a99485455a6c5a5c6bd74c45f744d",
+        "hash": "f0393c6ac9500efcdc9c938bcd1daada4837ef95",
         "type": "commit",
         "size": 148,
-        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775598445 +0200\ncommitter Test <test@test.com> 1775598445 +0200\n\nInitial\n",
-        "encoding": "utf-8"
-    },
-    {
-        "hash": "c8bbf6886e9e72dd3e04ed9ab2ded5a6fcde939a",
-        "type": "commit",
-        "size": 194,
-        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nparent 70b502986f3a99485455a6c5a5c6bd74c45f744d\nauthor Test <test@test.com> 1775598445 +0200\ncommitter Test <test@test.com> 1775598445 +0200\n\nFirst\n",
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775599812 +0200\ncommitter Test <test@test.com> 1775599812 +0200\n\nInitial\n",
         "encoding": "utf-8"
     }
 ]

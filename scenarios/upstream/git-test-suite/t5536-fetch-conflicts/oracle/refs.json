@@ -1,22 +1,22 @@
 [
     {
-        "hash": "70b502986f3a99485455a6c5a5c6bd74c45f744d",
+        "hash": "f0393c6ac9500efcdc9c938bcd1daada4837ef95",
         "name": "refs/heads/branch1"
     },
     {
-        "hash": "c8bbf6886e9e72dd3e04ed9ab2ded5a6fcde939a",
+        "hash": "0b901597e316f581dc1d87f3f6841fc0ecc7d0af",
         "name": "refs/heads/branch2"
     },
     {
-        "hash": "c8bbf6886e9e72dd3e04ed9ab2ded5a6fcde939a",
+        "hash": "0b901597e316f581dc1d87f3f6841fc0ecc7d0af",
         "name": "refs/heads/main"
     },
     {
-        "hash": "70b502986f3a99485455a6c5a5c6bd74c45f744d",
+        "hash": "f0393c6ac9500efcdc9c938bcd1daada4837ef95",
         "name": "refs/tags/tag1"
     },
     {
-        "hash": "c8bbf6886e9e72dd3e04ed9ab2ded5a6fcde939a",
+        "hash": "0b901597e316f581dc1d87f3f6841fc0ecc7d0af",
         "name": "refs/tags/tag2"
     }
 ]

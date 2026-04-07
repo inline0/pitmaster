@@ -1,20 +1,50 @@
 [
     {
-        "hash": "dd3d58e5d884cf285a04770e7326bfca5587a771",
-        "tree": "dae353d282845dd316038b4c21f90ce76290b968",
+        "hash": "51cd1884f159095b35a1fa6939d095338e3d2baa",
+        "tree": "4f746d3ff4abb1c2bacb04033ea2ab91ee1a15ba",
         "parents": [
-            "7ee99676a96b26270066e35c48d16e67bcc9ce60"
+            "79c3cdc674f3e338ed3d3bd64ba1479e3b8c4b00"
         ],
-        "author": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
-        "committer": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
-        "message": "recommend non shallow for sub"
+        "author": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "committer": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "message": "subcommit3"
     },
     {
-        "hash": "7ee99676a96b26270066e35c48d16e67bcc9ce60",
-        "tree": "7f174689826e38397d6df334707b2d3893bc120a",
+        "hash": "79c3cdc674f3e338ed3d3bd64ba1479e3b8c4b00",
+        "tree": "5429619a17b1dd2f0529a878680d68dae1a26527",
+        "parents": [
+            "2f8cfa0a9603bd07e292d6659bb92d413b6f9d60"
+        ],
+        "author": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "subcommit2"
+    },
+    {
+        "hash": "2f8cfa0a9603bd07e292d6659bb92d413b6f9d60",
+        "tree": "708b566169d560ceb2b9accf377195d26cf77df6",
+        "parents": [
+            "382dbbd21a99349b5defe6ebb9642a962fd69e00"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "subcommit1"
+    },
+    {
+        "hash": "382dbbd21a99349b5defe6ebb9642a962fd69e00",
+        "tree": "795ce1db4066f9c0e54944cde34c21588ed1b853",
+        "parents": [
+            "1816979a81688121823d6963fe6c76b62e320aa8"
+        ],
+        "author": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "commit2"
+    },
+    {
+        "hash": "1816979a81688121823d6963fe6c76b62e320aa8",
+        "tree": "55ec632b35c6d6689ad5cdc3acb09bbca365bdf1",
         "parents": [],
-        "author": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
-        "committer": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
-        "message": "recommend shallow for sub"
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "commit1"
     }
 ]

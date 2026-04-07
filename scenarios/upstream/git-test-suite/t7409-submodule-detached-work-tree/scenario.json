@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7409-submodule-detached-work-tree",
+    "category": "upstream",
+    "description": "git t/: t7409-submodule-detached-work-tree",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "15d20443ee80fe9e40fadf444f428b31a6a30cf3",
+        "type": "commit",
+        "size": 151,
+        "content": "tree 93881640cc63f2423700905c7825b6368d817c9f\nauthor Old Line <ol@localhost> 1775599910 +0200\ncommitter Test <test@test.com> 1775599910 +0200\n\nfile1.a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28d7e29dcd116a3b9c835b0df8912fba1ddb6ee6",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 8671cec51fee5cd4ba4c911f512caf19fd3d674f\tfile2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "71b3e518f024494dfa3d297903c1dbdf14fa1c04",
+        "type": "blob",
+        "size": 9,
+        "content": "Old line\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8671cec51fee5cd4ba4c911f512caf19fd3d674f",
+        "type": "blob",
+        "size": 26,
+        "content": "New line ...\n... and more\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "93881640cc63f2423700905c7825b6368d817c9f",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 71b3e518f024494dfa3d297903c1dbdf14fa1c04\tfile1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2c485bba6dacbad262d492ddce2cfcd1069bf0e",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 28d7e29dcd116a3b9c835b0df8912fba1ddb6ee6\nparent 15d20443ee80fe9e40fadf444f428b31a6a30cf3\nauthor U Gly <ug@localhost> 1775599910 +0200\ncommitter Test <test@test.com> 1775599910 +0200\n\nugly\n",
+        "encoding": "utf-8"
+    }
+]

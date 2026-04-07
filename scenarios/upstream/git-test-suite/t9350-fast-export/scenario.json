@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9350-fast-export",
+    "category": "upstream",
+    "description": "git t/: t9350-fast-export",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

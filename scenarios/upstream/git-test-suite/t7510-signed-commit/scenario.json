@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7510-signed-commit",
+    "category": "upstream",
+    "description": "git t/: t7510-signed-commit",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

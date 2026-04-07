@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "d01b2fbda83ac2ee410bc6778638486799b75b15",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d01b2fbda83ac2ee410bc6778638486799b75b15",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "d01b2fbda83ac2ee410bc6778638486799b75b15",
+        "name": "refs/tags/branch-point"
+    }
+]

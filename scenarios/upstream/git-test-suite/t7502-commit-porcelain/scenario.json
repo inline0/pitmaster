@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7502-commit-porcelain",
+    "category": "upstream",
+    "description": "git t/: t7502-commit-porcelain",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

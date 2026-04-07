@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "40896652a6d5d9f1f53022866ea6b74a43c5aa16",
+        "type": "blob",
+        "size": 24,
+        "content": "*.txt eol=crlf diff=txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cb10c50d355030b3c45f804d9ad198faab376d80",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 40896652a6d5d9f1f53022866ea6b74a43c5aa16\t.gitattributes\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tworld.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f7daa716d507ac87fb4b057ab8eed079139e14b0",
+        "type": "commit",
+        "size": 155,
+        "content": "tree cb10c50d355030b3c45f804d9ad198faab376d80\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    }
+]

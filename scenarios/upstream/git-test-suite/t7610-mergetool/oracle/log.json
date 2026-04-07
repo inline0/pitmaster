@@ -1,0 +1,90 @@
+[
+    {
+        "hash": "1891df7755ba15635b43815c438c7bd65152d6be",
+        "tree": "82559e543f6022b4803471879d7180805688fff4",
+        "parents": [
+            "f7b1af228fe39b3f96e95decc3b322ce0cda4bd8"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "Add bar on main"
+    },
+    {
+        "hash": "d869db0879341e2e4d42e221cc2f0e170f6f05c1",
+        "tree": "161db6aec0618f3ee713ada4b4c4d5eea4a26cfc",
+        "parents": [
+            "1891df7755ba15635b43815c438c7bd65152d6be"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "start"
+    },
+    {
+        "hash": "8f6bbbb930d3a53c6b224ce07728b900a2ed3941",
+        "tree": "6396efe774a56dedb66e8331c7e6a852644d8191",
+        "parents": [
+            "f7b1af228fe39b3f96e95decc3b322ce0cda4bd8"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "stash1 changes"
+    },
+    {
+        "hash": "537cc6e37f4d324db6561969764c06133f0ed1d0",
+        "tree": "037f5387691802feb4231109d5afa28b39141022",
+        "parents": [
+            "f7b1af228fe39b3f96e95decc3b322ce0cda4bd8"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "stash2 changes"
+    },
+    {
+        "hash": "d1cd5bd55d1dab3db8132db189cbc09251ff932e",
+        "tree": "795689bcec8eb64670d7311cd18159ee3baad80d",
+        "parents": [
+            "5fb55175c50baa154e44b73f1ed39c188ded3225"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "move to b"
+    },
+    {
+        "hash": "0730bab027d99d360aa61f14d7eb8c48a4693563",
+        "tree": "4c596dde60c2ec55450f52a0d964ddcc99f34ab3",
+        "parents": [
+            "1891df7755ba15635b43815c438c7bd65152d6be"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "main updates"
+    },
+    {
+        "hash": "f7b1af228fe39b3f96e95decc3b322ce0cda4bd8",
+        "tree": "7267f978795e3587692e8e51f85b4120679a78f3",
+        "parents": [],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "Add bar on branch1"
+    },
+    {
+        "hash": "5fb55175c50baa154e44b73f1ed39c188ded3225",
+        "tree": "e5963b7afe375c276c356dbdfc6ec59aaf811362",
+        "parents": [
+            "89720626c63e4d2590a21da4521437fe5085a6a7"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "base file"
+    },
+    {
+        "hash": "89720626c63e4d2590a21da4521437fe5085a6a7",
+        "tree": "c8d910b1b69b6e271d9a489110cb6c14c154f3bf",
+        "parents": [
+            "f7b1af228fe39b3f96e95decc3b322ce0cda4bd8"
+        ],
+        "author": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "committer": "Test <test@test.com> 1775599901 2026-04-08 00:11:41 +0200",
+        "message": "branch1 changes"
+    }
+]

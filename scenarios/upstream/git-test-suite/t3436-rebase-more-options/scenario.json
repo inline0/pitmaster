@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3436-rebase-more-options",
+    "category": "upstream",
+    "description": "git t/: t3436-rebase-more-options",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

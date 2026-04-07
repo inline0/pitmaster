@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5328-commit-graph-64bit-time",
+    "category": "upstream",
+    "description": "git t/: t5328-commit-graph-64bit-time",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

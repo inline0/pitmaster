@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3321-notes-stripspace",
+    "category": "upstream",
+    "description": "git t/: t3321-notes-stripspace",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "eedb39daeeb7d432004d79294257333dc5533d09",
+        "tree": "581357654d8bc6a5ef63c4cf9f6f9f1b101493a4",
+        "parents": [
+            "9b0f3304dd22c4d18a9dfea7ac9e5301c0103271"
+        ],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "will conflict"
+    },
+    {
+        "hash": "9b0f3304dd22c4d18a9dfea7ac9e5301c0103271",
+        "tree": "fc6e6ff6d2141cd9dacb824e8b1c0d826a866a88",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "init"
+    }
+]

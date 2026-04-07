@@ -1,10 +1,51 @@
 [
     {
-        "hash": "330bb1b7e565772dd3799f55f84258ebe55e0677",
-        "tree": "ea9aa5e615e913cdc7bea1258fe429c072f102e0",
+        "hash": "5e2e9bd7ef5a7b5aab2597e722c8e0ca124d4e15",
+        "tree": "fef1498e05f83c404c6026b64f0d33d5d3e24b6b",
+        "parents": [
+            "7a4b97f6239b87f3f096fbcbd99d8e0213093a27"
+        ],
+        "author": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "committer": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "message": "change_a"
+    },
+    {
+        "hash": "4e058bfe4f8970f8585904dc4aaa620ebd4b5dd4",
+        "tree": "b9b09d62cbf141dda2462e4ec879076c9d062e22",
+        "parents": [
+            "f64eb131b4fac135a914d899480c499dfae25364",
+            "f5898a703d754804870685cc25eb7971a9681062"
+        ],
+        "author": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "committer": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "message": "Merge branch 'feature_c' into bc_resolution"
+    },
+    {
+        "hash": "f64eb131b4fac135a914d899480c499dfae25364",
+        "tree": "a2749a21fee45185bcc8fd005ef601403178a94e",
+        "parents": [
+            "7a4b97f6239b87f3f096fbcbd99d8e0213093a27"
+        ],
+        "author": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "committer": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "message": "change_b"
+    },
+    {
+        "hash": "f5898a703d754804870685cc25eb7971a9681062",
+        "tree": "75a3e2be4ba4a7062d21fba0206758f5518d6ead",
+        "parents": [
+            "7a4b97f6239b87f3f096fbcbd99d8e0213093a27"
+        ],
+        "author": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "committer": "Test <test@test.com> 1775599770 2026-04-08 00:09:30 +0200",
+        "message": "change_c"
+    },
+    {
+        "hash": "7a4b97f6239b87f3f096fbcbd99d8e0213093a27",
+        "tree": "1bca5a50a49b95064d1cc62fb623a0a7f1aa2017",
         "parents": [],
-        "author": "Test <test@test.com> 1775598435 2026-04-07 23:47:15 +0200",
-        "committer": "Test <test@test.com> 1775598435 2026-04-07 23:47:15 +0200",
-        "message": "side2"
+        "author": "Test <test@test.com> 1775599769 2026-04-08 00:09:29 +0200",
+        "committer": "Test <test@test.com> 1775599769 2026-04-08 00:09:29 +0200",
+        "message": "base"
     }
 ]

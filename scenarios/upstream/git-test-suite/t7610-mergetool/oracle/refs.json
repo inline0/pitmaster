@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "1891df7755ba15635b43815c438c7bd65152d6be",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d869db0879341e2e4d42e221cc2f0e170f6f05c1",
+        "name": "refs/heads/order-file-side1"
+    },
+    {
+        "hash": "d869db0879341e2e4d42e221cc2f0e170f6f05c1",
+        "name": "refs/heads/order-file-start"
+    },
+    {
+        "hash": "8f6bbbb930d3a53c6b224ce07728b900a2ed3941",
+        "name": "refs/heads/stash1"
+    },
+    {
+        "hash": "537cc6e37f4d324db6561969764c06133f0ed1d0",
+        "name": "refs/heads/stash2"
+    },
+    {
+        "hash": "d1cd5bd55d1dab3db8132db189cbc09251ff932e",
+        "name": "refs/heads/submod-branch1"
+    },
+    {
+        "hash": "0730bab027d99d360aa61f14d7eb8c48a4693563",
+        "name": "refs/heads/submod-main"
+    }
+]

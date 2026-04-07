@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1304-default-acl",
+    "category": "upstream",
+    "description": "git t/: t1304-default-acl",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7610-mergetool",
+    "category": "upstream",
+    "description": "git t/: t7610-mergetool",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

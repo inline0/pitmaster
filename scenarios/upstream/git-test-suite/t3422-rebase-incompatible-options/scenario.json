@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3422-rebase-incompatible-options",
+    "category": "upstream",
+    "description": "git t/: t3422-rebase-incompatible-options",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

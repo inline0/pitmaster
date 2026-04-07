@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4216-log-bloom",
+    "category": "upstream",
+    "description": "git t/: t4216-log-bloom",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

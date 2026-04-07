@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "f090d72a9138f493330ea695a31eba6c0f52d8aa",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "19c1688a04a99f2bae1341cf6a3cf4a94f05453a",
+        "name": "refs/tags/main-branch-2"
+    },
+    {
+        "hash": "f090d72a9138f493330ea695a31eba6c0f52d8aa",
+        "name": "refs/tags/main-branch-3"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7113-post-index-change-hook",
+    "category": "upstream",
+    "description": "git t/: t7113-post-index-change-hook",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

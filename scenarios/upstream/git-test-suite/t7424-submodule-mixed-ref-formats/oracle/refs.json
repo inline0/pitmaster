@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "1c3a546d7cb465a1a29a7d228cb6cfd3c14be967",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "1fa123819a22f4e909f496e876ffe8f2796f5483",
+        "name": "refs/tags/parent"
+    },
+    {
+        "hash": "1c3a546d7cb465a1a29a7d228cb6cfd3c14be967",
+        "name": "refs/tags/submodule"
+    }
+]

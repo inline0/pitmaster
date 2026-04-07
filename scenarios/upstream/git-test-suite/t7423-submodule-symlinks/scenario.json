@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7423-submodule-symlinks",
+    "category": "upstream",
+    "description": "git t/: t7423-submodule-symlinks",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

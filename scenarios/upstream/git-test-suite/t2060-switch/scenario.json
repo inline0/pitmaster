@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2060-switch",
+    "category": "upstream",
+    "description": "git t/: t2060-switch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

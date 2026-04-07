@@ -1,0 +1,156 @@
+[
+    {
+        "hash": "07193989308c972f8a2d0f1b3a15c29ea4ac565b",
+        "type": "blob",
+        "size": 18,
+        "content": "1\n2\n3\n4\n5\n6\n7\n8\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1db1390210f8af29040dfd6530a4756bfeffa37b",
+        "type": "commit",
+        "size": 191,
+        "content": "tree 6089668a2f23b04c329851130055d0fe3e193f42\nparent d6267eb0e9ca294ebe329b5eedef3799c4fb48fe\nauthor Test <test@test.com> 1775599841 +0200\ncommitter Test <test@test.com> 1775599841 +0200\n\nB8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "37fcb2a0b2b9061024c35ff5341cb05e47fd9e15",
+        "type": "commit",
+        "size": 191,
+        "content": "tree d9869a5557c962e9632d39beed9272fb51e53842\nparent 4c0e1319627f126db871b24dc015d5fe069d9e53\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\nE3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c0e1319627f126db871b24dc015d5fe069d9e53",
+        "type": "commit",
+        "size": 249,
+        "content": "tree 83dbcf214d621d24cd5acec722d09010830fcd6a\nparent 70e694475cdcd06bab0991dbdc8a83c9c58866e7\nparent 1db1390210f8af29040dfd6530a4756bfeffa37b\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\npre E3 merge\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59212425f79d9432144046d7152860b854425a60",
+        "type": "commit",
+        "size": 248,
+        "content": "tree 9bae6005326aff04ca42887e1f2e76d5f2af33c5\nparent 877c27a813f19fb6894c8f20109aa596e81d98c9\nparent 37fcb2a0b2b9061024c35ff5341cb05e47fd9e15\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\nfinal merge\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6089668a2f23b04c329851130055d0fe3e193f42",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob c4ad051be706ca1f06bd3df97f24888d3b0bbcd0\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70e694475cdcd06bab0991dbdc8a83c9c58866e7",
+        "type": "commit",
+        "size": 191,
+        "content": "tree e4db79ce02ebfadbec8e800ee1a292320d05920d\nparent d6267eb0e9ca294ebe329b5eedef3799c4fb48fe\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\nC3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83dbcf214d621d24cd5acec722d09010830fcd6a",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob cf9a437061c48e6f62fa3fbf9312f13efe3b9ce5\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "877c27a813f19fb6894c8f20109aa596e81d98c9",
+        "type": "commit",
+        "size": 191,
+        "content": "tree aafac865cb3b31f5e093c573a0e902e8ecc01670\nparent b4b9226f2d6282fb13c9b3223217050e3b31e972\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\nD8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bae6005326aff04ca42887e1f2e76d5f2af33c5",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob c4109e3afeadb7846fc1c21b3c89cc6a5d3f6f5b\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aafac865cb3b31f5e093c573a0e902e8ecc01670",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob cffd792a7852cfb229231b73d98a3f41dd2ecf19\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b4b9226f2d6282fb13c9b3223217050e3b31e972",
+        "type": "commit",
+        "size": 249,
+        "content": "tree 83dbcf214d621d24cd5acec722d09010830fcd6a\nparent 1db1390210f8af29040dfd6530a4756bfeffa37b\nparent 70e694475cdcd06bab0991dbdc8a83c9c58866e7\nauthor Test <test@test.com> 1775599842 +0200\ncommitter Test <test@test.com> 1775599842 +0200\n\npre D8 merge\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c4109e3afeadb7846fc1c21b3c89cc6a5d3f6f5b",
+        "type": "blob",
+        "size": 98,
+        "content": "1\n2\n3 changed in E3, branch B. New file size\n4\n5\n6\n7\n8 changed in D8, branch A. New file size 2\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c4ad051be706ca1f06bd3df97f24888d3b0bbcd0",
+        "type": "blob",
+        "size": 42,
+        "content": "1\n2\n3\n4\n5\n6\n7\n8 changed in B8, branch A\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cf9a437061c48e6f62fa3fbf9312f13efe3b9ce5",
+        "type": "blob",
+        "size": 66,
+        "content": "1\n2\n3 changed in C3, branch B\n4\n5\n6\n7\n8 changed in B8, branch A\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cffd792a7852cfb229231b73d98a3f41dd2ecf19",
+        "type": "blob",
+        "size": 83,
+        "content": "1\n2\n3 changed in C3, branch B\n4\n5\n6\n7\n8 changed in D8, branch A. New file size 2\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d6267eb0e9ca294ebe329b5eedef3799c4fb48fe",
+        "type": "commit",
+        "size": 155,
+        "content": "tree ec103796f9a6ca8367bd90cd88edf39c5dd2ae26\nauthor Test <test@test.com> 1775599841 +0200\ncommitter Test <test@test.com> 1775599841 +0200\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9869a5557c962e9632d39beed9272fb51e53842",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob df1cd78d8a4607fac347f17f92d67e68ed13eeed\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dcddfbc42db16653198686aa4be54725a42070aa",
+        "type": "blob",
+        "size": 42,
+        "content": "1\n2\n3 changed in C3, branch B\n4\n5\n6\n7\n8\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "df1cd78d8a4607fac347f17f92d67e68ed13eeed",
+        "type": "blob",
+        "size": 81,
+        "content": "1\n2\n3 changed in E3, branch B. New file size\n4\n5\n6\n7\n8 changed in B8, branch A\n9\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e4db79ce02ebfadbec8e800ee1a292320d05920d",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob dcddfbc42db16653198686aa4be54725a42070aa\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ec103796f9a6ca8367bd90cd88edf39c5dd2ae26",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 07193989308c972f8a2d0f1b3a15c29ea4ac565b\tfile\n",
+        "encoding": "utf-8"
+    }
+]

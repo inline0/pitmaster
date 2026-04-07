@@ -1,0 +1,72 @@
+[
+    {
+        "hash": "0d3314c7a499b5d1ccd0da17d957af2cd73386dd",
+        "type": "tree",
+        "size": 42,
+        "content": "100644 blob 7141d2983cc055b4200147c42c29b63bdc9f2f2a\t.gitattributes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "133fec54a85880d850a5a07650eba1ec2753fc2f",
+        "type": "blob",
+        "size": 16,
+        "content": "ignored by tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1a6d806869d3b19262fb90cbd040a529beb6d7db",
+        "type": "blob",
+        "size": 19,
+        "content": "A not substituted O",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c005998e6fcb8a87d4ac4cc10f15c14f0b6cc6d",
+        "type": "blob",
+        "size": 20,
+        "content": "ignored by worktree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4dc4463cdbee4ebcdbd1aad90f144d16d4d95c89",
+        "type": "commit",
+        "size": 142,
+        "content": "tree a864574dc2d546d73f07852920001ade89ed577d\nauthor Test <test@test.com> 1775599791 +0200\ncommitter Test <test@test.com> 1775599791 +0200\n\n.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7141d2983cc055b4200147c42c29b63bdc9f2f2a",
+        "type": "blob",
+        "size": 33,
+        "content": "ignored-by-subtree export-ignore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d47e0b3c9c0c1f5cb56a9446027707b09a15fab",
+        "type": "blob",
+        "size": 11,
+        "content": "A$Format:$O",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a864574dc2d546d73f07852920001ade89ed577d",
+        "type": "tree",
+        "size": 315,
+        "content": "100644 blob fefd5665092c6fded3d50a4260d8b8c547fa11cf\t.gitattributes\n100644 blob ea10ec85c10797d76afeef56f8bfc26da40913bb\tignored\n100644 blob 133fec54a85880d850a5a07650eba1ec2753fc2f\tignored-by-tree\n100644 blob 4c005998e6fcb8a87d4ac4cc10f15c14f0b6cc6d\tignored-by-worktree\n100644 blob 8d47e0b3c9c0c1f5cb56a9446027707b09a15fab\tnosubstfile\n040000 tree 0d3314c7a499b5d1ccd0da17d957af2cd73386dd\tsubdir\n100644 blob 8d47e0b3c9c0c1f5cb56a9446027707b09a15fab\tsubstfile1\n100644 blob 1a6d806869d3b19262fb90cbd040a529beb6d7db\tsubstfile2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea10ec85c10797d76afeef56f8bfc26da40913bb",
+        "type": "blob",
+        "size": 8,
+        "content": "ignored\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fefd5665092c6fded3d50a4260d8b8c547fa11cf",
+        "type": "blob",
+        "size": 62,
+        "content": "ignored-by-tree export-ignore\nignored-by-tree.d export-ignore\n",
+        "encoding": "utf-8"
+    }
+]

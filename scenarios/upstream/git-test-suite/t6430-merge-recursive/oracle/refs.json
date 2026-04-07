@@ -1,0 +1,42 @@
+[
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/copy"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/df-1"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/df-2"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/df-3"
+    },
+    {
+        "hash": "6288190445ecb8fbeb24a2b1307e1d9dcbfed181",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/remove"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/rename"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/rename-ln"
+    },
+    {
+        "hash": "6e9c9a4f114c511187e1d4b079413d276b10fcb9",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "e699baa732decf20d4549e3e1563a260e2097656",
+        "name": "refs/heads/submod"
+    }
+]

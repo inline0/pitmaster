@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "e568f5bfbd7dbe4aaa117d5bfba0746f41819414",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d7774a1934d3d3ba3946db9ec17a5df1000b4986",
+        "name": "refs/heads/rebase-me"
+    },
+    {
+        "hash": "52d58a9516b7648a4a9110ad0269a7bf76773a94",
+        "name": "refs/tags/a"
+    },
+    {
+        "hash": "e568f5bfbd7dbe4aaa117d5bfba0746f41819414",
+        "name": "refs/tags/b"
+    },
+    {
+        "hash": "d7774a1934d3d3ba3946db9ec17a5df1000b4986",
+        "name": "refs/tags/rebase-"
+    },
+    {
+        "hash": "cb4ed632a6acd04711958092bd497f6ebbfe2c8b",
+        "name": "refs/tags/rebase-a"
+    },
+    {
+        "hash": "ebbffb7de56e8590c053a48a8c8336293e3f27fc",
+        "name": "refs/tags/rebase-b"
+    },
+    {
+        "hash": "8fe75474705923b3603b593c08d9f8b966234ddf",
+        "name": "refs/tags/root"
+    }
+]

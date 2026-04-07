@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "7617212b6984f368a993d29452ba161380d5bdf9",
+        "name": "refs/heads/local-branch"
+    },
+    {
+        "hash": "ce74517cdf72d6340e71ad6b1e984c197ccc0c2f",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "84a550999f86964ebd1bf2339a05b79d322d5ffa",
+        "name": "refs/heads/octopus-a"
+    },
+    {
+        "hash": "47276089b3a3a6d7947beb1c9900dd7974a06d00",
+        "name": "refs/heads/octopus-b"
+    },
+    {
+        "hash": "e2be67d2e737b1a832fc8ca6774529b91da9bfb4",
+        "name": "refs/heads/tag-branch"
+    },
+    {
+        "hash": "7617212b6984f368a993d29452ba161380d5bdf9",
+        "name": "refs/tags/branch-1"
+    },
+    {
+        "hash": "acb00ec3ca0bb0d713e09437f52a9bfa7cc3fb4c",
+        "name": "refs/tags/main-1"
+    },
+    {
+        "hash": "5435b6cb164a1458facad30a2d09ebcb475075ec",
+        "name": "refs/tags/main-2"
+    },
+    {
+        "hash": "a2b1d30ded559e91ef9d6b0682ef73215c7c1a35",
+        "name": "refs/tags/main-3"
+    },
+    {
+        "hash": "84a550999f86964ebd1bf2339a05b79d322d5ffa",
+        "name": "refs/tags/octopus-1"
+    },
+    {
+        "hash": "47276089b3a3a6d7947beb1c9900dd7974a06d00",
+        "name": "refs/tags/octopus-2"
+    },
+    {
+        "hash": "e2be67d2e737b1a832fc8ca6774529b91da9bfb4",
+        "name": "refs/tags/tag-1"
+    }
+]

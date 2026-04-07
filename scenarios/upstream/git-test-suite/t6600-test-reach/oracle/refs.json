@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "fe21863a8421c82c258eaf346655e4721a50906c",
+        "name": "refs/heads/commit--"
+    },
+    {
+        "hash": "fe21863a8421c82c258eaf346655e4721a50906c",
+        "name": "refs/heads/commit--1"
+    },
+    {
+        "hash": "0652d9bc4371c761ee3f3b56cd24ed8ddc268877",
+        "name": "refs/heads/commit-1-"
+    },
+    {
+        "hash": "fe21863a8421c82c258eaf346655e4721a50906c",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "0652d9bc4371c761ee3f3b56cd24ed8ddc268877",
+        "name": "refs/tags/1-"
+    },
+    {
+        "hash": "ebcd41d36b7ea6fc0b53c58c3a6e2b62037d6e35",
+        "name": "refs/tags/tag--"
+    },
+    {
+        "hash": "b8a1742fe87a711da1db0afc4d8bd0a25b831788",
+        "name": "refs/tags/tag--1"
+    },
+    {
+        "hash": "53430e0051c38e31210abae74b2bd7086207cda9",
+        "name": "refs/tags/tag-1-"
+    }
+]

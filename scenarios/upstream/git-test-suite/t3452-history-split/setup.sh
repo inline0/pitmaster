@@ -1,20 +1,23 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
-git add . 2>/dev/null || true
-git commit -m split-me 2>/dev/null || true
-git add . 2>/dev/null || true
-git commit -m split-me 2>/dev/null || true
-git add . 2>/dev/null || true
-git commit -m split-me 2>/dev/null || true
-echo a >a
-echo b >b
-git add . 2>/dev/null || true
-git commit -m "initial commit" 2>/dev/null || true
-echo a-modified >a
-echo b-modified >b
-git add b 2>/dev/null || true
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
+git init repo 2>/dev/null || true
+test_commit base 2>/dev/null || true
+git branch branch 2>/dev/null || true
+test_commit ours 2>/dev/null || true
+git switch branch 2>/dev/null || true
+test_commit theirs 2>/dev/null || true
+git switch - 2>/dev/null || true
+git merge theirs 2>/dev/null || true
+git init repo 2>/dev/null || true
+test_commit initial 2>/dev/null || true
+git init repo 2>/dev/null || true
+test_commit initial 2>/dev/null || true
+
+true

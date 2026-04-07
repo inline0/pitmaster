@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4204-patch-id",
+    "category": "upstream",
+    "description": "git t/: t4204-patch-id",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

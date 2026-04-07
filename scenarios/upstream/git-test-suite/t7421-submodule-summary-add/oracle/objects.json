@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "0caf226492b63bae68899a0b7a6ce576a696c14a",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob aea2dc10e0a838cacd7cb53c903c0311ae4e7fd8\t.gitmodules\n160000 commit 54eee3f5fe5eee1b2fadcd2ebc8d8a9353735967\tmy-subm\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "452af618dfcb1a6eda72b56b97beb2d4765f929d",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob aea2dc10e0a838cacd7cb53c903c0311ae4e7fd8\t.gitmodules\n160000 commit 0d58c6601239c41dcd829cdb18e1de9ad51b54cc\tmy-subm\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6eca107360e2d80b4ee6cce73df8add55784f90d",
+        "type": "commit",
+        "size": 205,
+        "content": "tree 0caf226492b63bae68899a0b7a6ce576a696c14a\nparent bd1745d9b102ae4e263bd1254028d3ca7175b567\nauthor Test <test@test.com> 1112912173 -0700\ncommitter Test <test@test.com> 1112912173 -0700\n\nupdate submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aea2dc10e0a838cacd7cb53c903c0311ae4e7fd8",
+        "type": "blob",
+        "size": 50,
+        "content": "[submodule \"my-subm\"]\n\tpath = my-subm\n\turl = ./sm\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bd1745d9b102ae4e263bd1254028d3ca7175b567",
+        "type": "commit",
+        "size": 154,
+        "content": "tree 452af618dfcb1a6eda72b56b97beb2d4765f929d\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\nadd submodule\n",
+        "encoding": "utf-8"
+    }
+]

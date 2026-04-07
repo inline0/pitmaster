@@ -1,5 +1,12 @@
 [
     {
+        "hash": "13e302f98123634b09dd97a62426877e25666996",
+        "type": "commit",
+        "size": 192,
+        "content": "tree 434a0cdfc3e3699d70cb8b546392c98ca3303201\nparent d9f8eb6fdf7658173a158d316b2879f1d0c58890\nauthor Test <test@test.com> 1775599766 +0200\ncommitter Test <test@test.com> 1775599766 +0200\n\none\n",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "25c05ef3639d2d270e7fe765a67668f098092bc5",
         "type": "blob",
         "size": 14,
@@ -28,24 +35,17 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "616cc85f6908f92dc654a98425a0e1d6b0c533d8",
-        "type": "commit",
-        "size": 192,
-        "content": "tree 434a0cdfc3e3699d70cb8b546392c98ca3303201\nparent bfb9aad7afa3a6b7b43ef67278be721c55353ae2\nauthor Test <test@test.com> 1775598432 +0200\ncommitter Test <test@test.com> 1775598432 +0200\n\none\n",
-        "encoding": "utf-8"
-    },
-    {
-        "hash": "bfb9aad7afa3a6b7b43ef67278be721c55353ae2",
-        "type": "commit",
-        "size": 146,
-        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775598432 +0200\ncommitter Test <test@test.com> 1775598432 +0200\n\nempty\n",
-        "encoding": "utf-8"
-    },
-    {
         "hash": "d95f3ad14dee633a758d2e331151e950dd13e4ed",
         "type": "blob",
         "size": 8,
         "content": "content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9f8eb6fdf7658173a158d316b2879f1d0c58890",
+        "type": "commit",
+        "size": 146,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775599766 +0200\ncommitter Test <test@test.com> 1775599766 +0200\n\nempty\n",
         "encoding": "utf-8"
     }
 ]

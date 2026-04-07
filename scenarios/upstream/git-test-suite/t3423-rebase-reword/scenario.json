@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3423-rebase-reword",
+    "category": "upstream",
+    "description": "git t/: t3423-rebase-reword",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3650-replay-basics",
+    "category": "upstream",
+    "description": "git t/: t3650-replay-basics",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

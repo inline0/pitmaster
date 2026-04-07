@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7701-repack-unpack-unreachable",
+    "category": "upstream",
+    "description": "git t/: t7701-repack-unpack-unreachable",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

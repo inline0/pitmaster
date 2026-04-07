@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9306-fast-import-signed-tags",
+    "category": "upstream",
+    "description": "git t/: t9306-fast-import-signed-tags",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

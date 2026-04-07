@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "135dad4e8c8645151928d6f1c1fd1406e050c149",
+        "name": "refs/heads/clean_branch"
+    },
+    {
+        "hash": "d93942aeb41bfdb94245e111849b2d42e0f04bac",
+        "name": "refs/heads/conflict_branch"
+    },
+    {
+        "hash": "9845bc0a06a153937e15fbb209f560f86e25c44f",
+        "name": "refs/heads/main"
+    }
+]

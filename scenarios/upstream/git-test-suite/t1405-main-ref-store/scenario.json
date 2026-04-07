@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1405-main-ref-store",
+    "category": "upstream",
+    "description": "git t/: t1405-main-ref-store",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

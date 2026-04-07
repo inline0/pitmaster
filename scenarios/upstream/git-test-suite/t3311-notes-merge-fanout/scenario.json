@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3311-notes-merge-fanout",
+    "category": "upstream",
+    "description": "git t/: t3311-notes-merge-fanout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

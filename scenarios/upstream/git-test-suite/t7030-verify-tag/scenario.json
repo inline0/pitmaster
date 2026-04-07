@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7030-verify-tag",
+    "category": "upstream",
+    "description": "git t/: t7030-verify-tag",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

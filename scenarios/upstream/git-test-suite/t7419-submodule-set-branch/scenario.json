@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7419-submodule-set-branch",
+    "category": "upstream",
+    "description": "git t/: t7419-submodule-set-branch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

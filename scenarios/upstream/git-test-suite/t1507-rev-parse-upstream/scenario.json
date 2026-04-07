@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1507-rev-parse-upstream",
+    "category": "upstream",
+    "description": "git t/: t1507-rev-parse-upstream",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5543-atomic-push",
+    "category": "upstream",
+    "description": "git t/: t5543-atomic-push",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

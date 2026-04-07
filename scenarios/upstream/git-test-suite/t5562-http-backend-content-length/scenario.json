@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5562-http-backend-content-length",
+    "category": "upstream",
+    "description": "git t/: t5562-http-backend-content-length",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

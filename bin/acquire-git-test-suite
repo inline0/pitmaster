@@ -4,124 +4,154 @@
 declare(strict_types=1);
 
 /**
- * Extract test repos from git's own test suite (t/*.sh).
+ * Extract test repos from git's test suite using the shim approach.
  *
- * Strategy: For each test script, extract the setup/initialization block
- * that creates the test repository. Run it to generate a repo. If it
- * produces a valid git repo, capture it as an oracle scenario.
- *
- * We focus on scripts that create interesting repo states (not scripts
- * that test git commands on existing repos).
+ * For each test script: extract all test body contents, filter for
+ * repo-creating commands, build a setup.sh, run it with the shim,
+ * capture if it produces a valid repo.
  */
 
 $root = dirname(__DIR__);
 $gitTestDir = '/tmp/git-source/t';
+$shimPath = realpath($root . '/bin/git-test-shim.sh');
+$upstreamDir = $root . '/scenarios/upstream/git-test-suite';
 
 if (!is_dir($gitTestDir)) {
-    fwrite(STDERR, "Git test suite not found at {$gitTestDir}\n");
+    fwrite(STDERR, "Git test suite not found\n");
     exit(1);
 }
-
-$upstreamDir = $root . '/scenarios/upstream/git-test-suite';
 
 if (!is_dir($upstreamDir)) {
     mkdir($upstreamDir, 0777, true);
 }
 
-// Scan test scripts and extract ones that create repos with interesting states
 $scripts = glob($gitTestDir . '/t[0-9]*.sh');
+sort($scripts);
+
 $imported = 0;
 $skipped = 0;
 $failed = 0;
-$maxScenarios = 200; // cap to keep manageable
+$existing = 0;
+
+// Infrastructure we can't provide
+$skipWords = ['httpd', 'daemon', 'git-svn', 'git-p4', 'cvs', 'gitweb',
+    'credential', 'terminal', 'lib-perl', 'lib-pager', 'gettext', 'lib-sudo',
+    'test_set_port', 'start_httpd', 'GIT_VALGRIND', 'test_external'];
 
 foreach ($scripts as $scriptPath) {
-    if ($imported >= $maxScenarios) {
-        break;
+    $basename = basename($scriptPath, '.sh');
+    $scenarioDir = $upstreamDir . '/' . $basename;
+
+    if (is_dir($scenarioDir)) {
+        $existing++;
+        continue;
     }
 
-    $basename = basename($scriptPath, '.sh');
-    $content = file_get_contents($scriptPath);
+    $content = @file_get_contents($scriptPath);
 
     if ($content === false) {
         continue;
     }
 
-    // Skip very large/complex tests, interactive tests, and tests requiring special setup
-    if (str_contains($content, 'lib-httpd') || str_contains($content, 'lib-git-daemon')
-        || str_contains($content, 'lib-git-svn') || str_contains($content, 'lib-git-p4')
-        || str_contains($content, 'lib-cvs') || str_contains($content, 'lib-gitweb')
-        || str_contains($content, 'GIT_TEST_') || str_contains($content, 'test_external')
-        || str_contains($content, 'lib-credential') || str_contains($content, 'lib-terminal')
-        || str_contains($content, 'lib-perl')
-    ) {
-        $skipped++;
-        continue;
-    }
+    $skip = false;
 
-    $scenarioDir = $upstreamDir . '/' . $basename;
-
-    if (is_dir($scenarioDir)) {
-        continue;
-    }
-
-    // Build a setup script from the test's initialization:
-    // Extract everything before the first test_expect block, plus the first
-    // test_expect_success that creates commits.
-    $setup = buildSetupScript($content, $basename);
-
-    if ($setup === null) {
-        $skipped++;
-        continue;
-    }
-
-    // Try running it
-    $tmpDir = sys_get_temp_dir() . '/git-suite-extract-' . bin2hex(random_bytes(4));
-    mkdir($tmpDir, 0777, true);
-
-    $cmd = sprintf(
-        'cd %s && bash -e -c %s 2>&1',
-        escapeshellarg($tmpDir),
-        escapeshellarg($setup),
-    );
-
-    $output = [];
-    exec($cmd, $output, $exitCode);
-
-    // Check if a valid git repo was created
-    $hasGit = is_dir($tmpDir . '/.git') && is_file($tmpDir . '/.git/HEAD');
-
-    if (!$hasGit) {
-        // Check subdirs
-        foreach (scandir($tmpDir) as $entry) {
-            if ($entry !== '.' && $entry !== '..' && is_dir($tmpDir . '/' . $entry . '/.git')) {
-                // Move it up
-                exec("mv " . escapeshellarg($tmpDir . '/' . $entry . '/.git') . " " . escapeshellarg($tmpDir . '/.git'));
-                $hasGit = true;
-                break;
-            }
+    foreach ($skipWords as $w) {
+        if (stripos($content, $w) !== false) {
+            $skip = true;
+            break;
         }
     }
 
-    // Check it has at least one object
-    $objectCount = 0;
-
-    if ($hasGit) {
-        exec("cd " . escapeshellarg($tmpDir) . " && git rev-parse HEAD 2>/dev/null", $headOut, $headCode);
-        $objectCount = $headCode === 0 ? 1 : 0;
-    }
-
-    exec('rm -rf ' . escapeshellarg($tmpDir));
-
-    if (!$hasGit || $objectCount === 0) {
+    if ($skip) {
         $skipped++;
         continue;
     }
 
-    // Valid repo produced — create scenario
-    mkdir($scenarioDir, 0777, true);
+    // Extract only the first few test bodies (setup + first real test)
+    $bodies = extractTestBodies($content);
+    $commands = [];
+    $bodiesUsed = 0;
 
-    file_put_contents($scenarioDir . '/setup.sh', "#!/bin/bash\nset -e\n\n" . $setup . "\n");
+    foreach ($bodies as $body) {
+        foreach (explode("\n", $body) as $line) {
+            $cmd = filterCommand(trim($line));
+
+            if ($cmd !== null) {
+                $commands[] = $cmd;
+            }
+        }
+
+        $bodiesUsed++;
+
+        // Stop after enough bodies to create a repo with interesting state
+        // Usually the first 1-3 bodies set up the repo
+        $hasCommit = false;
+
+        foreach ($commands as $c) {
+            if (str_contains($c, 'commit') || str_contains($c, 'test_commit') || str_contains($c, 'test_merge')) {
+                $hasCommit = true;
+                break;
+            }
+        }
+
+        if ($hasCommit && $bodiesUsed >= 3) {
+            break;
+        }
+
+        if ($bodiesUsed >= 5) {
+            break;
+        }
+    }
+
+    // Must have at least one commit-creating command
+    $hasCommit = false;
+
+    foreach ($commands as $cmd) {
+        if (str_contains($cmd, 'commit') || str_contains($cmd, 'test_commit') || str_contains($cmd, 'test_merge')) {
+            $hasCommit = true;
+            break;
+        }
+    }
+
+    if (!$hasCommit || count($commands) < 2) {
+        $skipped++;
+        continue;
+    }
+
+    // Cap at 80 commands to prevent huge scripts
+    $commands = array_slice($commands, 0, 80);
+
+    // Build setup.sh
+    $setup = "#!/bin/bash\n\n"
+        . "git init . >/dev/null 2>&1\n"
+        . "git config user.email \"test@test.com\"\n"
+        . "git config user.name \"Test\"\n"
+        . "git config protocol.file.allow always 2>/dev/null || true\n\n"
+        . "source " . escapeshellarg($shimPath) . "\n\n"
+        . implode("\n", $commands) . "\n\ntrue\n";
+
+    // Test it
+    $tmpDir = sys_get_temp_dir() . '/git-suite-' . bin2hex(random_bytes(4));
+    mkdir($tmpDir, 0777, true);
+    file_put_contents($tmpDir . '/setup.sh', $setup);
+
+    // Run setup and check validity (no timeout on macOS; use perl alarm)
+    $result = shell_exec(sprintf(
+        'cd %s && perl -e "alarm 15; exec @ARGV" bash setup.sh >/dev/null 2>&1; git rev-parse HEAD 2>/dev/null',
+        escapeshellarg($tmpDir),
+    ));
+
+    $valid = ($result !== null && strlen(trim($result)) === 40);
+    exec('rm -rf ' . escapeshellarg($tmpDir));
+
+    if (!$valid) {
+        $failed++;
+        continue;
+    }
+
+    // Save
+    mkdir($scenarioDir, 0777, true);
+    file_put_contents($scenarioDir . '/setup.sh', $setup);
     chmod($scenarioDir . '/setup.sh', 0755);
 
     file_put_contents($scenarioDir . '/scenario.json', json_encode([
@@ -134,149 +164,104 @@ foreach ($scripts as $scriptPath) {
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
 
     $imported++;
-    fwrite(STDOUT, "  OK    {$basename}\n");
+
+    if ($imported % 25 === 0) {
+        fwrite(STDOUT, "  ... {$imported} imported ({$basename})\n");
+    }
 }
 
-fwrite(STDOUT, "\nImported {$imported} scenarios, skipped {$skipped}\n");
+fwrite(STDOUT, "Done: {$imported} new, {$existing} existed, {$skipped} skipped, {$failed} no valid repo\n");
+fwrite(STDOUT, "Total: " . count(glob($upstreamDir . '/*/scenario.json')) . " git-test-suite scenarios\n");
 
 /**
- * Extract a setup script from a git test file.
+ * Extract all test_expect_success/test_expect_failure body contents.
+ *
+ * Bodies are delimited by single quotes: test_expect_success 'desc' '...body...'
+ *
+ * @return array<int, string>
  */
-function buildSetupScript(string $content, string $name): ?string
+function extractTestBodies(string $content): array
 {
+    $bodies = [];
     $lines = explode("\n", $content);
-    $setup = [];
-    $inSetup = false;
-    $depth = 0;
-    $foundCommit = false;
+    $inBody = false;
+    $currentBody = '';
+    $sq = "\x27"; // single quote character
 
-    // Always start with git init and config
-    $setup[] = 'git init .';
-    $setup[] = 'git config user.email "test@test.com"';
-    $setup[] = 'git config user.name "Test"';
-    $setup[] = 'git config init.defaultBranch main';
+    for ($i = 0; $i < count($lines); $i++) {
+        $line = $lines[$i];
 
-    // Look for the first test_expect_success block that creates content
-    foreach ($lines as $line) {
-        $trimmed = trim($line);
+        if (!$inBody) {
+            if (preg_match('/test_expect_(success|failure)\s/', $line)) {
+                $trimmed = rtrim($line);
 
-        // Skip sourcing test-lib
-        if (str_contains($trimmed, 'test-lib.sh') || str_contains($trimmed, 'test_description')) {
-            continue;
-        }
+                if (strlen($trimmed) > 0 && $trimmed[strlen($trimmed) - 1] === $sq) {
+                    $before = substr($trimmed, 0, -1);
 
-        // Look for setup blocks
-        if (preg_match('/test_expect_success\s+.*(?:setup|init|creat|first|initial)/i', $trimmed)) {
-            $inSetup = true;
-            $depth = 0;
-            continue;
-        }
-
-        if ($inSetup) {
-            // Track quote depth
-            if (str_contains($trimmed, "'")) {
-                $depth += substr_count($trimmed, "'");
-            }
-
-            // Extract git commands
-            if (preg_match('/^\s*(git\s+(?:add|commit|tag|branch|checkout|merge|mv|rm|config|update-ref|symbolic-ref|notes|stash)\b.*)/', $trimmed, $m)) {
-                $cmd = $m[1];
-                // Clean up test framework artifacts
-                $cmd = str_replace('test_tick &&', '', $cmd);
-                $cmd = str_replace('&&', '', $cmd);
-                $cmd = trim($cmd);
-
-                if ($cmd !== '') {
-                    $setup[] = $cmd . ' 2>/dev/null || true';
-
-                    if (str_contains($cmd, 'commit')) {
-                        $foundCommit = true;
+                    if (strrpos($before, $sq) !== false) {
+                        $inBody = true;
+                        $currentBody = '';
+                        continue;
                     }
                 }
             }
 
-            // Extract file creation
-            if (preg_match('/^\s*(echo\s+.+\s*>\s*.+)/', $trimmed, $m)) {
-                $cmd = str_replace('&&', '', $m[1]);
-                $setup[] = trim($cmd);
-            }
-
-            if (preg_match('/^\s*(printf\s+.+\s*>\s*.+)/', $trimmed, $m)) {
-                $cmd = str_replace('&&', '', $m[1]);
-                $setup[] = trim($cmd);
-            }
-
-            if (preg_match('/^\s*(mkdir\s+.+)/', $trimmed, $m)) {
-                $cmd = str_replace('&&', '', $m[1]);
-                $setup[] = trim($cmd);
-            }
-
-            if (preg_match('/^\s*(cat\s+>\s*.+)/', $trimmed, $m)) {
-                $cmd = str_replace('&&', '', $m[1]);
-                // Skip heredocs, too complex
-            }
-
-            // End of block
-            if ($trimmed === "'" && $depth % 2 === 0) {
-                $inSetup = false;
-
-                if ($foundCommit) {
-                    break;
-                }
-            }
+            continue;
         }
+
+        if (trim($line) === $sq) {
+            $bodies[] = $currentBody;
+            $inBody = false;
+            $currentBody = '';
+            continue;
+        }
+
+        $currentBody .= $line . "\n";
     }
 
-    // If we didn't find any setup block, try a simpler approach:
-    // just extract all git commands from the first 50 lines after test-lib
-    if (!$foundCommit) {
-        $setup = [
-            'git init .',
-            'git config user.email "test@test.com"',
-            'git config user.name "Test"',
-        ];
+    return $bodies;
+}
 
-        $afterLib = false;
-        $cmdCount = 0;
+/**
+ * Filter a line to only keep repo-creating commands.
+ */
+function filterCommand(string $line): ?string
+{
+    // Strip trailing &&
+    $line = preg_replace('/\s*&&\s*$/', '', $line);
+    $line = trim($line);
 
-        foreach ($lines as $line) {
-            if (str_contains($line, 'test-lib.sh')) {
-                $afterLib = true;
-                continue;
-            }
-
-            if (!$afterLib) {
-                continue;
-            }
-
-            $trimmed = trim($line);
-
-            // Extract echo/file creation
-            if (preg_match('/^\s*(echo\s+[^|]+\s*>\s*\S+)/', $trimmed, $m)) {
-                $setup[] = str_replace('&&', '', trim($m[1]));
-                $cmdCount++;
-            }
-
-            // Extract git commands
-            if (preg_match('/^\s*(git\s+(?:add|commit|tag|branch|checkout|merge)\b[^|]*)/', $trimmed, $m)) {
-                $cmd = str_replace('&&', '', trim($m[1]));
-                $setup[] = $cmd . ' 2>/dev/null || true';
-                $cmdCount++;
-
-                if (str_contains($cmd, 'commit')) {
-                    $foundCommit = true;
-                }
-            }
-
-            if ($cmdCount > 15 || ($foundCommit && $cmdCount > 5)) {
-                break;
-            }
-        }
-    }
-
-    if (!$foundCommit) {
+    if ($line === '' || $line === 'true' || $line === 'false' || $line[0] === '#') {
         return null;
     }
 
-    return implode("\n", $setup);
+    // Test framework helpers that create content
+    if (preg_match('/^(test_commit|test_merge|test_tick|test_commit_bulk|test_create_repo)\b/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // Git commands that modify repo state
+    if (preg_match('/^git\s+(init|add|commit|tag|branch|checkout|merge|mv|rm|config|update-index|update-ref|symbolic-ref|notes|stash|rebase|cherry-pick|revert|switch|restore|reset|gc|pack-refs|submodule|worktree|hash-object|mktree|read-tree|write-tree|commit-tree|mktag)\b/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // File creation/modification
+    if (preg_match('/^(echo|printf|cat)\b.*>/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    if (preg_match('/^(mkdir|touch|ln|cp|mv)\b/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    if (preg_match('/^test_write_lines\b/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // Variable assignments that might be needed
+    if (preg_match('/^[A-Z_]+=\$\(git /', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    return null;
 }

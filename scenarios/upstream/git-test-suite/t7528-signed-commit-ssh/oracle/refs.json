@@ -1,0 +1,74 @@
+[
+    {
+        "hash": "9c1fc5c5905b6212d9b0bbd0933cf8c54629cb52",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/eighth-signed-alt"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/eleventh-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/expired-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/fifth-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/fourth-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/fourth-unsigned"
+    },
+    {
+        "hash": "87eafc1b35a5554e3873d5fd40e4b60a64ea7ef6",
+        "name": "refs/tags/merge"
+    },
+    {
+        "hash": "b1c17f948f25d2e785b4a6459971507a3df03bce",
+        "name": "refs/tags/ninth-unsigned"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/notyetvalid-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/seventh-signed"
+    },
+    {
+        "hash": "9c1fc5c5905b6212d9b0bbd0933cf8c54629cb52",
+        "name": "refs/tags/seventh-unsigned"
+    },
+    {
+        "hash": "832cd91309a3dc6dc0a28392e1e5550d4b59d9b2",
+        "name": "refs/tags/sixth-unsigned"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/tenth-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/thirteenth-signed-ecdsa"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/timeboxedinvalid-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/timeboxedvalid-signed"
+    },
+    {
+        "hash": "8e4883e842eaa04aeae40c07365e6e12b2950502",
+        "name": "refs/tags/twelfth-signed-alt"
+    }
+]

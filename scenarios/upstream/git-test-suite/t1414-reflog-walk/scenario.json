@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1414-reflog-walk",
+    "category": "upstream",
+    "description": "git t/: t1414-reflog-walk",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

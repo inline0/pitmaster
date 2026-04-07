@@ -1,30 +1,41 @@
 [
     {
-        "hash": "efa826ea73819186b6b0a2c5ebc8f100ee6d0444",
+        "hash": "852c10d441e9e7a9dce901f2fe93896e82c55154",
         "tree": "2049ae5a1f6d17e4a87ca585c9aef2e0c14cac1b",
         "parents": [
-            "4bc64deadbdb616c280070998b689692f1f79393"
+            "68b106a38447a0a73975fe3a0d5ce29a8c65c89c",
+            "92d11f698c3a0beea9a5f991fa6bc8f68015eccd"
         ],
-        "author": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
-        "committer": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
-        "message": "c2"
+        "author": "Test <test@test.com> 1775599897 2026-04-08 00:11:37 +0200",
+        "committer": "Test <test@test.com> 1775599897 2026-04-08 00:11:37 +0200",
+        "message": "* tag 'c2':\n  c2"
     },
     {
-        "hash": "e63176d6e527098d386ef759def5ad9220a2aca5",
+        "hash": "c92c969d5262ddddc1a438d8ec0fa919789367c5",
         "tree": "f3c82d8080720758f10d1b1ab0884ef20525f69a",
         "parents": [],
-        "author": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
-        "committer": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
+        "author": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
+        "committer": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
         "message": "c0"
     },
     {
-        "hash": "4bc64deadbdb616c280070998b689692f1f79393",
+        "hash": "68b106a38447a0a73975fe3a0d5ce29a8c65c89c",
         "tree": "93035bc44e71dc037ede30e10867527070f66364",
         "parents": [
-            "e63176d6e527098d386ef759def5ad9220a2aca5"
+            "c92c969d5262ddddc1a438d8ec0fa919789367c5"
         ],
-        "author": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
-        "committer": "Test <test@test.com> 1775598470 2026-04-07 23:47:50 +0200",
+        "author": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
+        "committer": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
         "message": "c1"
+    },
+    {
+        "hash": "92d11f698c3a0beea9a5f991fa6bc8f68015eccd",
+        "tree": "223e2079392406e13c1b247476ccf8c658dbaaaf",
+        "parents": [
+            "c92c969d5262ddddc1a438d8ec0fa919789367c5"
+        ],
+        "author": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
+        "committer": "Test <test@test.com> 1775599896 2026-04-08 00:11:36 +0200",
+        "message": "c2"
     }
 ]

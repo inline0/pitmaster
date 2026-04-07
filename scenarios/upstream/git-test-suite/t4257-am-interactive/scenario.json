@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4257-am-interactive",
+    "category": "upstream",
+    "description": "git t/: t4257-am-interactive",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

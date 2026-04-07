@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1511-rev-parse-caret",
+    "category": "upstream",
+    "description": "git t/: t1511-rev-parse-caret",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

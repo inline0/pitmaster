@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6009-rev-list-parent",
+    "category": "upstream",
+    "description": "git t/: t6009-rev-list-parent",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

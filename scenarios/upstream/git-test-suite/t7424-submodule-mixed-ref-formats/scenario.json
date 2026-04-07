@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7424-submodule-mixed-ref-formats",
+    "category": "upstream",
+    "description": "git t/: t7424-submodule-mixed-ref-formats",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1060-object-corruption",
+    "category": "upstream",
+    "description": "git t/: t1060-object-corruption",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

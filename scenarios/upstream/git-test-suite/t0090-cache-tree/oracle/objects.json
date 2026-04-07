@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "257cc5642cb1a054f08cc83f2d943e56fd3ebe99",
+        "type": "blob",
+        "size": 4,
+        "content": "foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "64fd3796c57084e7b8cbae358ce37970b8e954f6",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tfoo.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d238b40d1657b1cc3ebd9a3c55ef04f303c694ae",
+        "type": "blob",
+        "size": 20,
+        "content": "I changed this file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "type": "commit",
+        "size": 144,
+        "content": "tree 64fd3796c57084e7b8cbae358ce37970b8e954f6\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nfoo\n",
+        "encoding": "utf-8"
+    }
+]

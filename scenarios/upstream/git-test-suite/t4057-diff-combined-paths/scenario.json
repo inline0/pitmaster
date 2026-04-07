@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4057-diff-combined-paths",
+    "category": "upstream",
+    "description": "git t/: t4057-diff-combined-paths",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

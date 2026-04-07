@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6113-rev-list-bitmap-filters",
+    "category": "upstream",
+    "description": "git t/: t6113-rev-list-bitmap-filters",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1508-at-combinations",
+    "category": "upstream",
+    "description": "git t/: t1508-at-combinations",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

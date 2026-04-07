@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7412-submodule-absorbgitdirs",
+    "category": "upstream",
+    "description": "git t/: t7412-submodule-absorbgitdirs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

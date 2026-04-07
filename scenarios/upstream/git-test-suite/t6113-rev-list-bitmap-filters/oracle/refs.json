@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "a098995f36439e86c884dcc7a65b9112474c3159",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "5f8becaaac14fcc1e37e761d329bd7157b207e0e",
+        "name": "refs/tags/much-larger-blob-one"
+    },
+    {
+        "hash": "a098995f36439e86c884dcc7a65b9112474c3159",
+        "name": "refs/tags/much-larger-blob-two"
+    },
+    {
+        "hash": "6654c7058a34c77ba2acbd5ee15dd4449dff6182",
+        "name": "refs/tags/one"
+    },
+    {
+        "hash": "a098995f36439e86c884dcc7a65b9112474c3159",
+        "name": "refs/tags/tag"
+    },
+    {
+        "hash": "0b05a053f8d0db8b9693b6bfaf5d69dd5081d9a3",
+        "name": "refs/tags/two"
+    }
+]

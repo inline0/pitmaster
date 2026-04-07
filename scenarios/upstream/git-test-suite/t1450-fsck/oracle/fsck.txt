@@ -1,0 +1,2 @@
+error: unable to normalize alternate object path: /private/var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-2f994a4053982318/.git/objects/../../../.git/objects
+error: unable to normalize alternate object path: /private/var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-2f994a4053982318/.git/objects/../../../.git/objects

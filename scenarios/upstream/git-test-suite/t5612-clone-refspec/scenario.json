@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5612-clone-refspec",
+    "category": "upstream",
+    "description": "git t/: t5612-clone-refspec",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

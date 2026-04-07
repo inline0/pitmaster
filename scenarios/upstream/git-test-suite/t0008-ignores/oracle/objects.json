@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "4d129781642138521ed02b08e7fd775dc10966f1",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 661b8d54c0b0443976f42ef1a293f435ceb20933\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63d8dbd40c23542e740659a7168a0ce3138ea748",
+        "type": "blob",
+        "size": 1,
+        "content": "b",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "661b8d54c0b0443976f42ef1a293f435ceb20933",
+        "type": "tree",
+        "size": 35,
+        "content": "120000 blob 63d8dbd40c23542e740659a7168a0ce3138ea748\tsymlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "75aa3bab45bf7e6e3c3cd0d2e55e49ee256c393e",
+        "type": "commit",
+        "size": 160,
+        "content": "tree 4d129781642138521ed02b08e7fd775dc10966f1\nauthor Test <test@test.com> 1775599660 +0200\ncommitter Test <test@test.com> 1775599660 +0200\n\ncommit in submodule\n",
+        "encoding": "utf-8"
+    }
+]

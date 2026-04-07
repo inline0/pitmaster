@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7501-commit-basic-functionality",
+    "category": "upstream",
+    "description": "git t/: t7501-commit-basic-functionality",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

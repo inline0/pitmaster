@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3430-rebase-merges",
+    "category": "upstream",
+    "description": "git t/: t3430-rebase-merges",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

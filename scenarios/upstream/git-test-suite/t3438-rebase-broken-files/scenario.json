@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3438-rebase-broken-files",
+    "category": "upstream",
+    "description": "git t/: t3438-rebase-broken-files",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

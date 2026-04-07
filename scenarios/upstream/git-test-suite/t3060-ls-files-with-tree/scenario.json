@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3060-ls-files-with-tree",
+    "category": "upstream",
+    "description": "git t/: t3060-ls-files-with-tree",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

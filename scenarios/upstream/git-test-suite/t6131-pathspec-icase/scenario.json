@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6131-pathspec-icase",
+    "category": "upstream",
+    "description": "git t/: t6131-pathspec-icase",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

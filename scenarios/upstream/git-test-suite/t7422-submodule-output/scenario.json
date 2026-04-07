@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7422-submodule-output",
+    "category": "upstream",
+    "description": "git t/: t7422-submodule-output",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

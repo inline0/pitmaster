@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3102-ls-tree-wildcards",
+    "category": "upstream",
+    "description": "git t/: t3102-ls-tree-wildcards",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

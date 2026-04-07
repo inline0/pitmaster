@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "114f7875d36b83999c11ea46518520b964ea9dde",
+        "type": "commit",
+        "size": 146,
+        "content": "tree ab1c61d2a1a4b9e09b24c4e14a939e5045b2c200\nauthor Test <test@test.com> 1775599868 +0200\ncommitter Test <test@test.com> 1775599868 +0200\n\nsetup\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7353e7e145139bbcfb99384df098facea1844fb9",
+        "type": "blob",
+        "size": 10,
+        "content": "build\n*.o\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab1c61d2a1a4b9e09b24c4e14a939e5045b2c200",
+        "type": "tree",
+        "size": 104,
+        "content": "100644 blob 7353e7e145139bbcfb99384df098facea1844fb9\t.gitignore\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tMakefile\n040000 tree db0c62dc009a1f6efd31fb50984b21137d6ed3ea\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "db0c62dc009a1f6efd31fb50984b21137d6ed3ea",
+        "type": "tree",
+        "size": 35,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tpart1.c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

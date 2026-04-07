@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "a3545b1913966c68508a1db5ced3d7a24dcc95b3",
+        "name": "refs/heads/branch1"
+    },
+    {
+        "hash": "a3545b1913966c68508a1db5ced3d7a24dcc95b3",
+        "name": "refs/tags/change1"
+    },
+    {
+        "hash": "b801bcebd5c6ae43f33483eae877d1cdc26c35d1",
+        "name": "refs/tags/initial"
+    }
+]

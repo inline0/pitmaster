@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7608-merge-messages",
+    "category": "upstream",
+    "description": "git t/: t7608-merge-messages",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

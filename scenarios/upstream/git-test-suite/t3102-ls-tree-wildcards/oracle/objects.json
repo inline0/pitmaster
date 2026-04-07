@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "539c016e956b7867cc0a084b2ebc2e013d122eec",
+        "type": "tree",
+        "size": 88,
+        "content": "040000 tree 5fcffbd6e4c5c5b8d81f5e9314b20e338e3ffff5\ta\n040000 tree a7dbeaec1a658e611be35c1961e5e23de0b54a61\ta[a]\n040000 tree eea8fc2805f9275841541d7a3c76f63d51c94b5f\taa\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5fcffbd6e4c5c5b8d81f5e9314b20e338e3ffff5",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tone\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a7dbeaec1a658e611be35c1961e5e23de0b54a61",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tthree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e19a8fcbf1b71ebb9567ffbc02b9eeccbe29dec0",
+        "type": "commit",
+        "size": 145,
+        "content": "tree 539c016e956b7867cc0a084b2ebc2e013d122eec\nauthor Test <test@test.com> 1775599712 +0200\ncommitter Test <test@test.com> 1775599712 +0200\n\ntest\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eea8fc2805f9275841541d7a3c76f63d51c94b5f",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttwo\n",
+        "encoding": "utf-8"
+    }
+]

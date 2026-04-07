@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3514-cherry-pick-revert-gpg",
+    "category": "upstream",
+    "description": "git t/: t3514-cherry-pick-revert-gpg",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

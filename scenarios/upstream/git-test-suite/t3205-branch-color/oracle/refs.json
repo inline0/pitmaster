@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "name": "refs/heads/other"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "name": "refs/remotes/origin/main"
+    },
+    {
+        "hash": "dee55f8b9f0789e890a9c6ffd5157167fc66fa58",
+        "name": "refs/tags/foo"
+    }
+]

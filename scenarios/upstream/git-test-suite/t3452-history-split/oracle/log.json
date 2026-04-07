@@ -1,10 +1,40 @@
 [
     {
-        "hash": "7ce6ed5956361b16c5cebaa0ec6ae923270b5807",
-        "tree": "3683f870be446c7cc05ffaef9fa06415276e1828",
+        "hash": "0d19dfd249a33a1fca88eb5a0e3d09c42820469d",
+        "tree": "a8c92d8770035fe7cdaf4a7cb90080c20b0af5bc",
+        "parents": [
+            "7c93b577c07d71596d1795d08033e4f96b68ad31"
+        ],
+        "author": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "initial"
+    },
+    {
+        "hash": "7c93b577c07d71596d1795d08033e4f96b68ad31",
+        "tree": "11e8f197431c9692777a0450fca42078cfe6510b",
+        "parents": [
+            "e10f2a4f2693d1f680b1e51dafda322513707970"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "theirs"
+    },
+    {
+        "hash": "75a2149b55a6ee3a9d1eea48d82a4dadc1642f85",
+        "tree": "7cb14ef69688daffa67be0d7041c4e85f7ab142c",
+        "parents": [
+            "e10f2a4f2693d1f680b1e51dafda322513707970"
+        ],
+        "author": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "ours"
+    },
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "tree": "ce6131022c3a48a15f4b7a68afb6ecf3b3bcb0cd",
         "parents": [],
-        "author": "Test <test@test.com> 1775598421 2026-04-07 23:47:01 +0200",
-        "committer": "Test <test@test.com> 1775598421 2026-04-07 23:47:01 +0200",
-        "message": "initial commit"
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "base"
     }
 ]

@@ -1,18 +1,58 @@
 [
     {
-        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
+        "hash": "65e27ed3c0b2d0bad7801c396b491ef77d36f1a0",
+        "name": "refs/heads/ambiguous_branch_and_file"
+    },
+    {
+        "hash": "91048da846a928c07c7870e434716acbfc6541b3",
+        "name": "refs/heads/bar"
+    },
+    {
+        "hash": "f34c00e7a01ba8eb311bb908eab1f509c6bcc226",
+        "name": "refs/heads/baz"
+    },
+    {
+        "hash": "8a99a4ff36cf12f51a90326480a7dec1d538023c",
+        "name": "refs/heads/foo"
+    },
+    {
+        "hash": "f34c00e7a01ba8eb311bb908eab1f509c6bcc226",
         "name": "refs/heads/main"
     },
     {
-        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
-        "name": "refs/remotes/foo/dwim-arg"
+        "hash": "9159fe9ded1c4098c835dc380e647564781b3622",
+        "name": "refs/tags/a_ambiguous_branch_and_file"
     },
     {
-        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
-        "name": "refs/remotes/foo/dwim-arg1"
+        "hash": "91048da846a928c07c7870e434716acbfc6541b3",
+        "name": "refs/tags/a_bar"
     },
     {
-        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
-        "name": "refs/remotes/foo/dwim-arg2"
+        "hash": "8a99a4ff36cf12f51a90326480a7dec1d538023c",
+        "name": "refs/tags/a_foo"
+    },
+    {
+        "hash": "7358f08453647353cc6ae2911fa4749b42fe9f13",
+        "name": "refs/tags/a_main"
+    },
+    {
+        "hash": "f34c00e7a01ba8eb311bb908eab1f509c6bcc226",
+        "name": "refs/tags/b_ambiguous_branch_and_file"
+    },
+    {
+        "hash": "7346e9659f20fd4c937bc5f1453894fd75350d1e",
+        "name": "refs/tags/b_baz"
+    },
+    {
+        "hash": "65e27ed3c0b2d0bad7801c396b491ef77d36f1a0",
+        "name": "refs/tags/b_foo"
+    },
+    {
+        "hash": "45c9f3e14c78a27347ed392333665c5226f193ca",
+        "name": "refs/tags/b_main"
+    },
+    {
+        "hash": "b37bd62b1757a55a1783c2a3939e52ad5e52be90",
+        "name": "refs/tags/my_main"
     }
 ]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7421-submodule-summary-add",
+    "category": "upstream",
+    "description": "git t/: t7421-submodule-summary-add",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

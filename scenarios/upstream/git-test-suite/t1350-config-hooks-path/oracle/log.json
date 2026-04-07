@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "7f77f6c17d90a238964040a769110837bbaf8278",
+        "tree": "a6bf11b3b7be7442b2ca62374400a1fdf938a95c",
+        "parents": [
+            "757cbff9ea500472264078a315484930e1522b91"
+        ],
+        "author": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "committer": "Test <test@test.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "message": "have_custom_hook_abs_path_trailing_slash"
+    },
+    {
+        "hash": "757cbff9ea500472264078a315484930e1522b91",
+        "tree": "0c265beb0a78c0121fa23b10c6b36917de91604d",
+        "parents": [
+            "364f0286fb6e66f0ce8a2867d82c456dda21cd2f"
+        ],
+        "author": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "have_custom_hook_abs_path"
+    },
+    {
+        "hash": "364f0286fb6e66f0ce8a2867d82c456dda21cd2f",
+        "tree": "00e1b07b641b0821ffc8bbc3966e83f6a1860d35",
+        "parents": [
+            "8e152013feab4fde4ca1c1b69586584e2ebaa3bd"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "have_custom_hook_trailing_slash"
+    },
+    {
+        "hash": "8e152013feab4fde4ca1c1b69586584e2ebaa3bd",
+        "tree": "c2da5045aaa8e56b035295ff01d353f328a06518",
+        "parents": [
+            "44cb1ea83fedf048d212cee4b7b7e57f825152cc"
+        ],
+        "author": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "Test <test@test.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "have_custom_hook"
+    },
+    {
+        "hash": "44cb1ea83fedf048d212cee4b7b7e57f825152cc",
+        "tree": "23ce86b5ef468931ef7ead1a66c4914450e141cf",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "no_custom_hook"
+    }
+]

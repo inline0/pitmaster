@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "882089b4f67f5e2cfedde8c3b7b222e4954b30d8",
+        "name": "refs/heads/conflicts"
+    },
+    {
+        "hash": "00b0506177d7f562cf544e886b43bdecfc487491",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "08c21bef3eda13e07c3ebc2f328b6ef46a169f59",
+        "name": "refs/tags/init"
+    },
+    {
+        "hash": "882089b4f67f5e2cfedde8c3b7b222e4954b30d8",
+        "name": "refs/tags/on_conflicts"
+    },
+    {
+        "hash": "00b0506177d7f562cf544e886b43bdecfc487491",
+        "name": "refs/tags/on_main"
+    }
+]

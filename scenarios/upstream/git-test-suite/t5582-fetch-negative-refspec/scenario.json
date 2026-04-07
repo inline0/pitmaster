@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5582-fetch-negative-refspec",
+    "category": "upstream",
+    "description": "git t/: t5582-fetch-negative-refspec",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

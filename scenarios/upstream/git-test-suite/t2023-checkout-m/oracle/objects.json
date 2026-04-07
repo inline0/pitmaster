@@ -1,0 +1,79 @@
+[
+    {
+        "hash": "2ab19ae607aabda796309682e0448237aab03047",
+        "type": "blob",
+        "size": 9,
+        "content": "resolved\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61780798228d17af2d34fce4cfbdf35556832472",
+        "type": "blob",
+        "size": 2,
+        "content": "b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "69616c6bb10b928da48a56104c6ce33274f33389",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob 72d0ddab46156b74b780fee809fe3e541f212ab4\ta\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\tboth.txt\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\teach.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "72d0ddab46156b74b780fee809fe3e541f212ab4",
+        "type": "blob",
+        "size": 39,
+        "content": "<<<<<<< main\nb\n=======\nc\n>>>>>>> local\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78981922613b2afb6025042ff6bd878ac1994e85",
+        "type": "blob",
+        "size": 2,
+        "content": "a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81c4753d683b5248981f8f50f05cc7a208bdbb59",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob f2ad6c76f0115a6ba5b00456a849810e7ec0af20\ta\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\tboth.txt\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\teach.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a76ffbcbc896580949892eafede1349c92b300f2",
+        "type": "commit",
+        "size": 190,
+        "content": "tree c075b67803f398107b1dd739e5a2592299edf68d\nparent ab287f7ea9af236449fd5d2a4832ee14c0bbde38\nauthor Test <test@test.com> 1775599695 +0200\ncommitter Test <test@test.com> 1775599695 +0200\n\nb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab287f7ea9af236449fd5d2a4832ee14c0bbde38",
+        "type": "commit",
+        "size": 142,
+        "content": "tree cc204514b7fb9222fccbfbb0606e434e5ab75b7f\nauthor Test <test@test.com> 1775599695 +0200\ncommitter Test <test@test.com> 1775599695 +0200\n\na\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c075b67803f398107b1dd739e5a2592299edf68d",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob 61780798228d17af2d34fce4cfbdf35556832472\ta\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\tboth.txt\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\teach.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cc204514b7fb9222fccbfbb0606e434e5ab75b7f",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\tboth.txt\n100644 blob 2ab19ae607aabda796309682e0448237aab03047\teach.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2ad6c76f0115a6ba5b00456a849810e7ec0af20",
+        "type": "blob",
+        "size": 2,
+        "content": "c\n",
+        "encoding": "utf-8"
+    }
+]

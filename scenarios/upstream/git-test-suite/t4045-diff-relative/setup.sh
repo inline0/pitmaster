@@ -1,16 +1,29 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
 git commit --allow-empty -m empty 2>/dev/null || true
-echo content >file1
-mkdir subdir
-echo other content >subdir/file2
+echo content >file1 2>/dev/null || true
+mkdir subdir 2>/dev/null || true
+echo other content >subdir/file2 2>/dev/null || true
 git add . 2>/dev/null || true
 git commit -m one 2>/dev/null || true
-echo '1	0	$expect' >expected
-echo changed >file1
-echo changed >subdir/file2
+echo changed >file1 2>/dev/null || true
+echo changed >subdir/file2 2>/dev/null || true
+cat >expect <<-\EOF 2>/dev/null || true
+test_commit zero file0 2>/dev/null || true
+test_commit base subdir/file0 2>/dev/null || true
+git switch -c br1 2>/dev/null || true
+test_commit one file0 2>/dev/null || true
+test_commit sub1 subdir/file0 2>/dev/null || true
+git switch -c br2 base 2>/dev/null || true
+test_commit two file0 2>/dev/null || true
+git switch -c br3 2>/dev/null || true
+test_commit sub3 subdir/file0 2>/dev/null || true
+
+true

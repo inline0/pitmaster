@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3020-ls-files-error-unmatch",
+    "category": "upstream",
+    "description": "git t/: t3020-ls-files-error-unmatch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

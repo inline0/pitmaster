@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "a92b1471c91a21b44c36fa633c1158cde6f6a97b",
+        "name": "refs/heads/recursive-a"
+    },
+    {
+        "hash": "6450bd86ada6ed1080247ee33afd862c102b249d",
+        "name": "refs/heads/recursive-b"
+    },
+    {
+        "hash": "2dae52cfe06b7f18db7023ff83b70fd183f2f0ce",
+        "name": "refs/heads/recursive-base"
+    },
+    {
+        "hash": "2dae52cfe06b7f18db7023ff83b70fd183f2f0ce",
+        "name": "refs/tags/base"
+    },
+    {
+        "hash": "a92b1471c91a21b44c36fa633c1158cde6f6a97b",
+        "name": "refs/tags/commit-a"
+    },
+    {
+        "hash": "6450bd86ada6ed1080247ee33afd862c102b249d",
+        "name": "refs/tags/commit-b"
+    }
+]

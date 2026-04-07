@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2206-add-submodule-ignored",
+    "category": "upstream",
+    "description": "git t/: t2206-add-submodule-ignored",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

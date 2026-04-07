@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "c208d0e90ce34454e1f7cc0ceb3241c5068b09c1",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "e10f2a4f2693d1f680b1e51dafda322513707970",
+        "name": "refs/tags/base"
+    },
+    {
+        "hash": "110e3609f5c11a393a2a63aba0d66531a1536928",
+        "name": "refs/tags/other"
+    },
+    {
+        "hash": "c208d0e90ce34454e1f7cc0ceb3241c5068b09c1",
+        "name": "refs/tags/squash"
+    }
+]

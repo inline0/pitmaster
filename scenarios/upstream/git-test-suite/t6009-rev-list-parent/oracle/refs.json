@@ -1,0 +1,38 @@
+[
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/heads/newroot"
+    },
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/heads/tetrabranch"
+    },
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/tags/eight"
+    },
+    {
+        "hash": "7043e047fff4b953833280dd3542d2dbfe32dfbf",
+        "name": "refs/tags/five"
+    },
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/tags/normalmerge"
+    },
+    {
+        "hash": "94fce74b139c38acef4c9baa54318a3cd343c67c",
+        "name": "refs/tags/seven"
+    },
+    {
+        "hash": "68945cc0eed3d24d78a13288e46547a539974eb8",
+        "name": "refs/tags/six"
+    },
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/tags/tetrapus"
+    },
+    {
+        "hash": "ca16817b6a566f3d0ef1f60d0c604379c5905fd5",
+        "name": "refs/tags/tripus"
+    }
+]

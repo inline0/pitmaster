@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1090-sparse-checkout-scope",
+    "category": "upstream",
+    "description": "git t/: t1090-sparse-checkout-scope",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

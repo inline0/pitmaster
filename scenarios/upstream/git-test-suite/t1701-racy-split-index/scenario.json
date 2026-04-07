@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1701-racy-split-index",
+    "category": "upstream",
+    "description": "git t/: t1701-racy-split-index",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

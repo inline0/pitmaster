@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7517-per-repo-email",
+    "category": "upstream",
+    "description": "git t/: t7517-per-repo-email",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

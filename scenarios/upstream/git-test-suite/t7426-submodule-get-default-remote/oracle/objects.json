@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "5d514019e35f5108a3442fce9d3bca83b89f9cd4",
+        "type": "blob",
+        "size": 14,
+        "content": "super content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a21bc56ac73c7aa55f7909450b2c820c594c8743",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 5d514019e35f5108a3442fce9d3bca83b89f9cd4\tmain.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a83b2d3dc801b983cf730084ee35aa66b4d00801",
+        "type": "commit",
+        "size": 164,
+        "content": "tree aa92d5712636676372ee6cf0d9be07d96c67ff26\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\ninitial commit in super\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aa92d5712636676372ee6cf0d9be07d96c67ff26",
+        "type": "tree",
+        "size": 33,
+        "content": "040000 tree a21bc56ac73c7aa55f7909450b2c820c594c8743\tsubdir\n",
+        "encoding": "utf-8"
+    }
+]

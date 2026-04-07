@@ -1,0 +1,40 @@
+[
+    {
+        "hash": "135dad4e8c8645151928d6f1c1fd1406e050c149",
+        "tree": "e9abbaa324044e9422619abeda250312320710b3",
+        "parents": [
+            "2a66f6991250aa94c4585a8b5f85c1a752a63eb5"
+        ],
+        "author": "Test <test@test.com> 1775599903 2026-04-08 00:11:43 +0200",
+        "committer": "Test <test@test.com> 1775599903 2026-04-08 00:11:43 +0200",
+        "message": "clean"
+    },
+    {
+        "hash": "d93942aeb41bfdb94245e111849b2d42e0f04bac",
+        "tree": "abea744efbdcab1aeae53d0990d2140bdeb15bd4",
+        "parents": [
+            "2a66f6991250aa94c4585a8b5f85c1a752a63eb5"
+        ],
+        "author": "Test <test@test.com> 1775599903 2026-04-08 00:11:43 +0200",
+        "committer": "Test <test@test.com> 1775599903 2026-04-08 00:11:43 +0200",
+        "message": "conflict"
+    },
+    {
+        "hash": "9845bc0a06a153937e15fbb209f560f86e25c44f",
+        "tree": "a2e7c2ef82c7194d05cb708830c1e88ce6875f1c",
+        "parents": [
+            "2a66f6991250aa94c4585a8b5f85c1a752a63eb5"
+        ],
+        "author": "Test <test@test.com> 1775599902 2026-04-08 00:11:42 +0200",
+        "committer": "Test <test@test.com> 1775599902 2026-04-08 00:11:42 +0200",
+        "message": "second"
+    },
+    {
+        "hash": "2a66f6991250aa94c4585a8b5f85c1a752a63eb5",
+        "tree": "e03c0f3158ec6b1432c83e2c093a8a293a4f58e5",
+        "parents": [],
+        "author": "Test <test@test.com> 1775599902 2026-04-08 00:11:42 +0200",
+        "committer": "Test <test@test.com> 1775599902 2026-04-08 00:11:42 +0200",
+        "message": "initial"
+    }
+]

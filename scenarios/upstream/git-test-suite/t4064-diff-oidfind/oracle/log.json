@@ -1,80 +1,50 @@
 [
     {
-        "hash": "d89432e7c6a938a68fb8222676bfb035d65af139",
-        "tree": "b10fc82e747ef519a995a82826c5876dfcf5a3a2",
+        "hash": "a6f25a5394e31d94c4c0b1646190893c2c8d3191",
+        "tree": "9db8a475d6e5d9f59d54e802d3ac6959012795f6",
         "parents": [
-            "abe227b66b1a817a1be9dd3e24c6bdbde9644a1b"
+            "28a1082b9c0f61ed53fa7cc4c5a737d7d5fc029e"
         ],
-        "author": "Test <test@test.com> 1775598434 2026-04-07 23:47:14 +0200",
-        "committer": "Test <test@test.com> 1775598434 2026-04-07 23:47:14 +0200",
-        "message": "remove blob"
-    },
-    {
-        "hash": "abe227b66b1a817a1be9dd3e24c6bdbde9644a1b",
-        "tree": "8123b3d76c5f4679ce49127721bff14386c33690",
-        "parents": [
-            "41b18f16e83a9696e5f68438701ccd6c6fd4772c"
-        ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "message": "interesting"
-    },
-    {
-        "hash": "41b18f16e83a9696e5f68438701ccd6c6fd4772c",
-        "tree": "b10fc82e747ef519a995a82826c5876dfcf5a3a2",
-        "parents": [
-            "cf0c228d137b89949063014f72db197a4ddb17a4"
-        ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "message": "boring"
-    },
-    {
-        "hash": "cf0c228d137b89949063014f72db197a4ddb17a4",
-        "tree": "507ff24674121a0e2bca5d8b0ae0dcae4f95bc67",
-        "parents": [
-            "c60a013289a74ac8f900b5babc1c8ca3e88269c2"
-        ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "message": "add a file in a subdirectory"
-    },
-    {
-        "hash": "c60a013289a74ac8f900b5babc1c8ca3e88269c2",
-        "tree": "0c3c399b18ae8496f4661492b64fbfdfba77d838",
-        "parents": [
-            "b3700920c0c1dab2b7cc3b38301c783a9a2490ef"
-        ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
+        "author": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "committer": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
         "message": "another unrelated commit"
     },
     {
-        "hash": "b3700920c0c1dab2b7cc3b38301c783a9a2490ef",
+        "hash": "28a1082b9c0f61ed53fa7cc4c5a737d7d5fc029e",
+        "tree": "9db8a475d6e5d9f59d54e802d3ac6959012795f6",
+        "parents": [
+            "0a00c5f039745725437cca218bedcbf7fb728305"
+        ],
+        "author": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "committer": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "message": "Revert \"add the greeting blob\"\n\nThis reverts commit 60a0bbc1457172c913e91ba36abf7949edff6eb5."
+    },
+    {
+        "hash": "0a00c5f039745725437cca218bedcbf7fb728305",
         "tree": "0c3c399b18ae8496f4661492b64fbfdfba77d838",
         "parents": [
-            "17c7c40e5d448a5e70eb75fda7df324259e436d7"
+            "60a0bbc1457172c913e91ba36abf7949edff6eb5"
         ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
+        "author": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "committer": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
         "message": "unrelated history"
     },
     {
-        "hash": "17c7c40e5d448a5e70eb75fda7df324259e436d7",
+        "hash": "60a0bbc1457172c913e91ba36abf7949edff6eb5",
         "tree": "0563f77d884e4f79ce95117e2d686d7d6e282887",
         "parents": [
-            "a8727f0b2b54229bab5ff848c608963dc07ed50d"
+            "0b6478468a92f6250806f6c11d3ae2f1d3ba0ab3"
         ],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
+        "author": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "committer": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
         "message": "add the greeting blob"
     },
     {
-        "hash": "a8727f0b2b54229bab5ff848c608963dc07ed50d",
+        "hash": "0b6478468a92f6250806f6c11d3ae2f1d3ba0ab3",
         "tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
         "parents": [],
-        "author": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
-        "committer": "Test <test@test.com> 1775598433 2026-04-07 23:47:13 +0200",
+        "author": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
+        "committer": "Test <test@test.com> 1775599768 2026-04-08 00:09:28 +0200",
         "message": "empty initial commit"
     }
 ]

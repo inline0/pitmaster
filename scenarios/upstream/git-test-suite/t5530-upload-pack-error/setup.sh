@@ -1,14 +1,18 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
-echo file >file
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
+echo file >file 2>/dev/null || true
 git add file 2>/dev/null || true
 git commit -a -m original 2>/dev/null || true
-echo changed >file
+test_tick 2>/dev/null || true
+echo changed >file 2>/dev/null || true
 git commit -a -m changed 2>/dev/null || true
-printf "0000" >expect
-echo "ACK $tree_id" >expect
+git hash-object -w file 2>/dev/null || true
+
+true

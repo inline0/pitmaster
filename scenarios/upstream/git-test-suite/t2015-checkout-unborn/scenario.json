@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2015-checkout-unborn",
+    "category": "upstream",
+    "description": "git t/: t2015-checkout-unborn",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

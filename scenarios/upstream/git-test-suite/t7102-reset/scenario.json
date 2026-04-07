@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7102-reset",
+    "category": "upstream",
+    "description": "git t/: t7102-reset",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

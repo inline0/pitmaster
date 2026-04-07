@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2403-worktree-move",
+    "category": "upstream",
+    "description": "git t/: t2403-worktree-move",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

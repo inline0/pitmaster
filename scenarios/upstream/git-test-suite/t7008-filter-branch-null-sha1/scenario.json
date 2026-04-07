@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7008-filter-branch-null-sha1",
+    "category": "upstream",
+    "description": "git t/: t7008-filter-branch-null-sha1",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

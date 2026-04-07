@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7704-repack-cruft",
+    "category": "upstream",
+    "description": "git t/: t7704-repack-cruft",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

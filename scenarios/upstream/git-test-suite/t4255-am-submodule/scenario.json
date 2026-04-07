@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4255-am-submodule",
+    "category": "upstream",
+    "description": "git t/: t4255-am-submodule",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

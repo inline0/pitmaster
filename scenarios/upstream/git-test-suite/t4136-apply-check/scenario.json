@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4136-apply-check",
+    "category": "upstream",
+    "description": "git t/: t4136-apply-check",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

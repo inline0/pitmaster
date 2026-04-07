@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0008-ignores",
+    "category": "upstream",
+    "description": "git t/: t0008-ignores",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5547-push-quarantine",
+    "category": "upstream",
+    "description": "git t/: t5547-push-quarantine",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

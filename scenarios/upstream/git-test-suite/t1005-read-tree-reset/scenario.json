@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1005-read-tree-reset",
+    "category": "upstream",
+    "description": "git t/: t1005-read-tree-reset",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

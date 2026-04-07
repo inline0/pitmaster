@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "9fa4a4c6ee40a1ad0538686318eb861708a53247",
+        "type": "tree",
+        "size": 123,
+        "content": "100644 blob c7bc0e9ea9f22feb838c22b7b757f2c79ba9daf8\t.gitattributes\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest.utf16\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest.utf16lebom\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c14b051febcece6ae7e980a27cc5f9a0f4b4186a",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 9fa4a4c6ee40a1ad0538686318eb861708a53247\nauthor Test <test@test.com> 1775599662 +0200\ncommitter Test <test@test.com> 1775599662 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c7bc0e9ea9f22feb838c22b7b757f2c79ba9daf8",
+        "type": "blob",
+        "size": 95,
+        "content": "*.utf16 text working-tree-encoding=utf-16\n*.utf16lebom text working-tree-encoding=UTF-16LE-BOM\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

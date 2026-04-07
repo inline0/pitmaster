@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7011-skip-worktree-reading",
+    "category": "upstream",
+    "description": "git t/: t7011-skip-worktree-reading",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

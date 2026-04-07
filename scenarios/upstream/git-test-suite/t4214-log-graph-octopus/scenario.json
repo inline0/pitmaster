@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4214-log-graph-octopus",
+    "category": "upstream",
+    "description": "git t/: t4214-log-graph-octopus",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

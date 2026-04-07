@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5504-fetch-receive-strict",
+    "category": "upstream",
+    "description": "git t/: t5504-fetch-receive-strict",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

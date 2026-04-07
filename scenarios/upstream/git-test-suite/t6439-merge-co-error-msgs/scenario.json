@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6439-merge-co-error-msgs",
+    "category": "upstream",
+    "description": "git t/: t6439-merge-co-error-msgs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

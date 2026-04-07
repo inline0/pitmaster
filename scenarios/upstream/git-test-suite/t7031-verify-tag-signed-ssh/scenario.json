@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7031-verify-tag-signed-ssh",
+    "category": "upstream",
+    "description": "git t/: t7031-verify-tag-signed-ssh",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

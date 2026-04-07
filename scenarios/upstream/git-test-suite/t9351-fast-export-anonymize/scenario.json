@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9351-fast-export-anonymize",
+    "category": "upstream",
+    "description": "git t/: t9351-fast-export-anonymize",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

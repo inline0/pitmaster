@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5329-pack-objects-cruft",
+    "category": "upstream",
+    "description": "git t/: t5329-pack-objects-cruft",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

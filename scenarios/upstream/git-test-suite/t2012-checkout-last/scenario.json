@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2012-checkout-last",
+    "category": "upstream",
+    "description": "git t/: t2012-checkout-last",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

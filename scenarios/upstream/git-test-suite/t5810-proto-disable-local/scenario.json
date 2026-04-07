@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5810-proto-disable-local",
+    "category": "upstream",
+    "description": "git t/: t5810-proto-disable-local",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

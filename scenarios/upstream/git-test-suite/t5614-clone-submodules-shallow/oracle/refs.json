@@ -1,6 +1,26 @@
 [
     {
-        "hash": "dd3d58e5d884cf285a04770e7326bfca5587a771",
+        "hash": "51cd1884f159095b35a1fa6939d095338e3d2baa",
         "name": "refs/heads/main"
+    },
+    {
+        "hash": "1816979a81688121823d6963fe6c76b62e320aa8",
+        "name": "refs/tags/commit1"
+    },
+    {
+        "hash": "382dbbd21a99349b5defe6ebb9642a962fd69e00",
+        "name": "refs/tags/commit2"
+    },
+    {
+        "hash": "2f8cfa0a9603bd07e292d6659bb92d413b6f9d60",
+        "name": "refs/tags/subcommit1"
+    },
+    {
+        "hash": "79c3cdc674f3e338ed3d3bd64ba1479e3b8c4b00",
+        "name": "refs/tags/subcommit2"
+    },
+    {
+        "hash": "51cd1884f159095b35a1fa6939d095338e3d2baa",
+        "name": "refs/tags/subcommit3"
     }
 ]

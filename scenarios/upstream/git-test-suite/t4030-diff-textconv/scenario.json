@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4030-diff-textconv",
+    "category": "upstream",
+    "description": "git t/: t4030-diff-textconv",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

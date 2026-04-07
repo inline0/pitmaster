@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1411-reflog-show",
+    "category": "upstream",
+    "description": "git t/: t1411-reflog-show",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

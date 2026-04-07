@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "5f7dda061d99844b1560e24324fcb6c5470aed8a",
+        "name": "refs/heads/bad-upstream"
+    },
+    {
+        "hash": "5f7dda061d99844b1560e24324fcb6c5470aed8a",
+        "name": "refs/heads/local-main"
+    },
+    {
+        "hash": "5f7dda061d99844b1560e24324fcb6c5470aed8a",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d9101921b748cbeee5d9bb3f59dd217f50397763",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "5a0c35f240812ea71c56e8a1faa522339fb95f61",
+        "name": "refs/tags/1"
+    },
+    {
+        "hash": "d9101921b748cbeee5d9bb3f59dd217f50397763",
+        "name": "refs/tags/2"
+    },
+    {
+        "hash": "c60db80b34a1a6eb8817150d2f1eebcd5e6f611b",
+        "name": "refs/tags/3"
+    },
+    {
+        "hash": "5f7dda061d99844b1560e24324fcb6c5470aed8a",
+        "name": "refs/tags/4"
+    }
+]

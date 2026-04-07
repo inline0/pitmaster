@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5527-fetch-odd-refs",
+    "category": "upstream",
+    "description": "git t/: t5527-fetch-odd-refs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

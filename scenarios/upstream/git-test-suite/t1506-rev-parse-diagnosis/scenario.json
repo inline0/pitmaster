@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1506-rev-parse-diagnosis",
+    "category": "upstream",
+    "description": "git t/: t1506-rev-parse-diagnosis",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4066-diff-emit-delay",
+    "category": "upstream",
+    "description": "git t/: t4066-diff-emit-delay",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

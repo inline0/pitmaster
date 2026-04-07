@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "d1769567e29877d6958e909c08927a1cf12f74b3",
+        "name": "refs/heads/branch"
+    },
+    {
+        "hash": "d1769567e29877d6958e909c08927a1cf12f74b3",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "6654c7058a34c77ba2acbd5ee15dd4449dff6182",
+        "name": "refs/tags/one"
+    },
+    {
+        "hash": "d1769567e29877d6958e909c08927a1cf12f74b3",
+        "name": "refs/tags/tag"
+    },
+    {
+        "hash": "5aa213fc2d8b4f745f3ec1b910371c0b082d5bdb",
+        "name": "refs/tags/two"
+    }
+]

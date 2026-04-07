@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5573-pull-verify-signatures",
+    "category": "upstream",
+    "description": "git t/: t5573-pull-verify-signatures",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

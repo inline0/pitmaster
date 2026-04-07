@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6302-for-each-ref-filter",
+    "category": "upstream",
+    "description": "git t/: t6302-for-each-ref-filter",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

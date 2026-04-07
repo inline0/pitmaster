@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6416-recursive-corner-cases",
+    "category": "upstream",
+    "description": "git t/: t6416-recursive-corner-cases",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

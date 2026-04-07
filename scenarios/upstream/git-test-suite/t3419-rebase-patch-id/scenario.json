@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3419-rebase-patch-id",
+    "category": "upstream",
+    "description": "git t/: t3419-rebase-patch-id",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

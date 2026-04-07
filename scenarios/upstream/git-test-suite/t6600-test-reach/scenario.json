@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6600-test-reach",
+    "category": "upstream",
+    "description": "git t/: t6600-test-reach",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

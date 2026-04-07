@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "7b420bd44d257af792382bdf703fdff40cdb204f",
+        "type": "tree",
+        "size": 42,
+        "content": "100644 blob 8b137891791fe96927ad78e64b0aad7bded08bdc\t.gitattributes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+        "type": "blob",
+        "size": 1,
+        "content": "\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d6b1afe2efbcfc884457d6d67bd5c0d4b83f0e11",
+        "type": "commit",
+        "size": 159,
+        "content": "tree 7b420bd44d257af792382bdf703fdff40cdb204f\nauthor Test <test@test.com> 1775599662 +0200\ncommitter Test <test@test.com> 1775599662 +0200\n\nadd .gitattributes\n",
+        "encoding": "utf-8"
+    }
+]

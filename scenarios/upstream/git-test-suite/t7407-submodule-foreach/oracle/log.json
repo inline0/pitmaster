@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "58d1db4432515d330e4c0ffafc0d10160accd65b",
+        "tree": "d008bacce70c59e67f0d1eb19050f1efaf91ce1d",
+        "parents": [
+            "b0a0994bad76e242b67f88507fc49134cc386122"
+        ],
+        "author": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "Test <test@test.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "different"
+    },
+    {
+        "hash": "b0a0994bad76e242b67f88507fc49134cc386122",
+        "tree": "bec63e37d08c454ad3a60cde90b70f3f7d077852",
+        "parents": [],
+        "author": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "committer": "Test <test@test.com> 1112911993 2005-04-07 15:13:13 -0700",
+        "message": "upstream"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3309-notes-merge-auto-resolve",
+    "category": "upstream",
+    "description": "git t/: t3309-notes-merge-auto-resolve",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

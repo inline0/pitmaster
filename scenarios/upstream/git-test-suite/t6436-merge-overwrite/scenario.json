@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6436-merge-overwrite",
+    "category": "upstream",
+    "description": "git t/: t6436-merge-overwrite",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

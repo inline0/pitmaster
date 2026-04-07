@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7003-filter-branch",
+    "category": "upstream",
+    "description": "git t/: t7003-filter-branch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

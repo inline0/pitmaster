@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5404-tracking-branches",
+    "category": "upstream",
+    "description": "git t/: t5404-tracking-branches",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

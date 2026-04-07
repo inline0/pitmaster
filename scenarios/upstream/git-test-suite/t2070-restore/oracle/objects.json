@@ -1,0 +1,72 @@
+[
+    {
+        "hash": "0a562d7b4100233136f867b2f7c5fc4206133535",
+        "type": "tree",
+        "size": 71,
+        "content": "100644 blob 3a6b11559bf54fe21e4288fac9bf02b19bf47776\tfirst.t\n100644 blob e019be006cf33489e2d0177a3837a2384eddebc5\tsecond.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3a6b11559bf54fe21e4288fac9bf02b19bf47776",
+        "type": "blob",
+        "size": 23,
+        "content": "first\nfirst-and-a-half\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5626abf0f72e58d7a153368ba57db4c673c0e171",
+        "type": "blob",
+        "size": 4,
+        "content": "one\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "579b9ebeca38a5379ae68092be439f543b8425df",
+        "type": "tree",
+        "size": 35,
+        "content": "100644 blob 9c59e24b8393179a5d712de4f990178df5734d99\tfirst.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8195598b3cd9cca2fbb13a58faf8444e6834af0c",
+        "type": "commit",
+        "size": 146,
+        "content": "tree 579b9ebeca38a5379ae68092be439f543b8425df\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nfirst\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9c59e24b8393179a5d712de4f990178df5734d99",
+        "type": "blob",
+        "size": 6,
+        "content": "first\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e019be006cf33489e2d0177a3837a2384eddebc5",
+        "type": "blob",
+        "size": 7,
+        "content": "second\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef85f5efdfb68cbad3c41b802892c7ee09478699",
+        "type": "blob",
+        "size": 9,
+        "content": "/ignored\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f719efd430d52bcfc8566a43b2eb655688d38871",
+        "type": "blob",
+        "size": 4,
+        "content": "two\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fad32f5ed1a8ecc04abe0ef5edad71a36b035b97",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 0a562d7b4100233136f867b2f7c5fc4206133535\nparent 8195598b3cd9cca2fbb13a58faf8444e6834af0c\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\nsecond\n",
+        "encoding": "utf-8"
+    }
+]

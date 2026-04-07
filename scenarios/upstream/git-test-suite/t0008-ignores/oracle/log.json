@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "75aa3bab45bf7e6e3c3cd0d2e55e49ee256c393e",
+        "tree": "4d129781642138521ed02b08e7fd775dc10966f1",
+        "parents": [],
+        "author": "Test <test@test.com> 1775599660 2026-04-08 00:07:40 +0200",
+        "committer": "Test <test@test.com> 1775599660 2026-04-08 00:07:40 +0200",
+        "message": "commit in submodule"
+    }
+]

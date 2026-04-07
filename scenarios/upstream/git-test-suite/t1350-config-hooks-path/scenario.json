@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1350-config-hooks-path",
+    "category": "upstream",
+    "description": "git t/: t1350-config-hooks-path",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

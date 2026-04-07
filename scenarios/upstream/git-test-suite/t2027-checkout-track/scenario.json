@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2027-checkout-track",
+    "category": "upstream",
+    "description": "git t/: t2027-checkout-track",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "12ce114fb3ee3e61a3c7e98a82634e3d8635b09d",
+        "tree": "b015e4374d2964ebbb89f43b3ccd3e2f8373aa6a",
+        "parents": [
+            "a0988c32ccccd23658371afb33d40460615f2b50"
+        ],
+        "author": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "committer": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "message": "foo back to file"
+    },
+    {
+        "hash": "320bec5e0eb2a471d4bf96dbcba12993c887d303",
+        "tree": "6be94f7a4060e7da433db823872929e0619fb21d",
+        "parents": [
+            "12ce114fb3ee3e61a3c7e98a82634e3d8635b09d"
+        ],
+        "author": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "committer": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "message": "foo becomes binary"
+    },
+    {
+        "hash": "a0988c32ccccd23658371afb33d40460615f2b50",
+        "tree": "051c88ca6feb78c7342495a3709e8cd4774c3b79",
+        "parents": [],
+        "author": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "committer": "Test <test@test.com> 1775599772 2026-04-08 00:09:32 +0200",
+        "message": "initial"
+    }
+]

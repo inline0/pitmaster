@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "61190eba913ad0d3212828f61142b2c59f98b6e4",
+        "name": "refs/heads/filemove"
+    },
+    {
+        "hash": "5269276bd432aa1e1c981520ca6d59f22c6113e4",
+        "name": "refs/heads/force-3way"
+    },
+    {
+        "hash": "3280eecd4fc1976b73ea3985a738965bf5bbbba4",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "a049d6d43680bc0269d78169b74d621d2dc59f98",
+        "name": "refs/heads/my-topic-branch"
+    },
+    {
+        "hash": "0c0a0309d98356ea695d9e01221bb0f8cc3a0d3e",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "5d1976c4c7c9436bd69771ca767da346ef371cee",
+        "name": "refs/tags/First"
+    },
+    {
+        "hash": "a049d6d43680bc0269d78169b74d621d2dc59f98",
+        "name": "refs/tags/Second"
+    },
+    {
+        "hash": "a049d6d43680bc0269d78169b74d621d2dc59f98",
+        "name": "refs/tags/topic"
+    }
+]

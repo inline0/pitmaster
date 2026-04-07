@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6012-rev-list-simplify",
+    "category": "upstream",
+    "description": "git t/: t6012-rev-list-simplify",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

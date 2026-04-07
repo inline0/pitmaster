@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2021-checkout-overwrite",
+    "category": "upstream",
+    "description": "git t/: t2021-checkout-overwrite",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

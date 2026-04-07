@@ -7,6 +7,27 @@
         "encoding": "utf-8"
     },
     {
+        "hash": "06666ab82b92c86ae6492228e6b10df56487e8f5",
+        "type": "tree",
+        "size": 100,
+        "content": "100644 blob 1cd9fad54ad6006b5a63003a049c7bec7e957779\t.gitattributes\n100644 blob 753673f4e5f8160dd93529713bfdda2b185879b6\tA\n100644 blob 753673f4e5f8160dd93529713bfdda2b185879b6\tB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1cd9fad54ad6006b5a63003a049c7bec7e957779",
+        "type": "blob",
+        "size": 11,
+        "content": "A eol=crlf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "59b8292527d075f9432011ab7f0374a4fda34882",
         "type": "blob",
         "size": 8,
@@ -14,17 +35,24 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "660347003268c79bfe04cf9ed4ef82417e4aae97",
-        "type": "commit",
-        "size": 143,
-        "content": "tree 8423981aadadcb2e336bf38735f6cea88df799c5\nauthor Test <test@test.com> 1775598413 +0200\ncommitter Test <test@test.com> 1775598413 +0200\n\nid\n",
+        "hash": "753673f4e5f8160dd93529713bfdda2b185879b6",
+        "type": "blob",
+        "size": 15,
+        "content": "multi\nline\ntext",
         "encoding": "utf-8"
     },
     {
-        "hash": "8423981aadadcb2e336bf38735f6cea88df799c5",
-        "type": "tree",
-        "size": 100,
-        "content": "100644 blob 59b8292527d075f9432011ab7f0374a4fda34882\t.gitattributes\n100644 blob 055c8729cdcc372500a08db659c045e16c4409fb\tA\n100644 blob 055c8729cdcc372500a08db659c045e16c4409fb\tB\n",
+        "hash": "a69dbed6da30ed325c089371cd233bc717d20427",
+        "type": "commit",
+        "size": 144,
+        "content": "tree 06666ab82b92c86ae6492228e6b10df56487e8f5\nauthor Test <test@test.com> 1775599702 +0200\ncommitter Test <test@test.com> 1775599702 +0200\n\neol\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cdae4f21af166e0283195b6c1011928ce05d364d",
+        "type": "blob",
+        "size": 31,
+        "content": "A working-tree-encoding=UTF-16\n",
         "encoding": "utf-8"
     }
 ]

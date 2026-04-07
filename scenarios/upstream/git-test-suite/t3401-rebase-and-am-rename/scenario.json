@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3401-rebase-and-am-rename",
+    "category": "upstream",
+    "description": "git t/: t3401-rebase-and-am-rename",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

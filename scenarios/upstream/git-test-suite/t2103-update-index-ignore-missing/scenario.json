@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2103-update-index-ignore-missing",
+    "category": "upstream",
+    "description": "git t/: t2103-update-index-ignore-missing",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "b8d4d76481b6d0c31e2b4a1c1616d1163585efa9",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "d045c752ad6ea5e7e5875bb7fd6a0cff8122b4ca",
+        "name": "refs/heads/side"
+    },
+    {
+        "hash": "b8d4d76481b6d0c31e2b4a1c1616d1163585efa9",
+        "name": "refs/tags/fifth-unsigned"
+    },
+    {
+        "hash": "a14e96fb269d396236c8d222c35e0657efde8f60",
+        "name": "refs/tags/fourth-unsigned"
+    },
+    {
+        "hash": "a04e477a75541640a194869b2761ee2c7317ad06",
+        "name": "refs/tags/sixth-unsigned"
+    }
+]

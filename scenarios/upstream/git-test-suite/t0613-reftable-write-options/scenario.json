@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0613-reftable-write-options",
+    "category": "upstream",
+    "description": "git t/: t0613-reftable-write-options",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

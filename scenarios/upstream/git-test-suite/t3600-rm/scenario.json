@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3600-rm",
+    "category": "upstream",
+    "description": "git t/: t3600-rm",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

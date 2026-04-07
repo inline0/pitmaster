@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1408-packed-refs",
+    "category": "upstream",
+    "description": "git t/: t1408-packed-refs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

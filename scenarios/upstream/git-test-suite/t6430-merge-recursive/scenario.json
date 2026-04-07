@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6430-merge-recursive",
+    "category": "upstream",
+    "description": "git t/: t6430-merge-recursive",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

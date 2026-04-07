@@ -7,17 +7,10 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "283c06cac9575468b7a51855e0967400313fc0ed",
+        "hash": "3396fcc6f6b4baf52e608dfe0fafd75e492d4608",
         "type": "commit",
         "size": 145,
-        "content": "tree c3bc70390773852368c74c6cd2a1a52e69410be8\nauthor Test <test@test.com> 1775598418 +0200\ncommitter Test <test@test.com> 1775598418 +0200\n\nbase\n",
-        "encoding": "utf-8"
-    },
-    {
-        "hash": "6ce591777e55d1c0aaad7db7c49cb4323c352c3e",
-        "type": "blob",
-        "size": 3,
-        "content": "o7\n",
+        "content": "tree c3bc70390773852368c74c6cd2a1a52e69410be8\nauthor Test <test@test.com> 1775599711 +0200\ncommitter Test <test@test.com> 1775599711 +0200\n\nbase\n",
         "encoding": "utf-8"
     },
     {

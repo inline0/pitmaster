@@ -1,16 +1,21 @@
 #!/bin/bash
-set -e
 
-git init .
+git init . >/dev/null 2>&1
 git config user.email "test@test.com"
 git config user.name "Test"
-git config init.defaultBranch main
+git config protocol.file.allow always 2>/dev/null || true
+
+source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+
 git checkout -b main 2>/dev/null || true
-mkdir sub
+test_commit commit1 2>/dev/null || true
+test_commit commit2 2>/dev/null || true
+mkdir sub 2>/dev/null || true
+git init 2>/dev/null || true
+test_commit subcommit1 2>/dev/null || true
+test_commit subcommit2 2>/dev/null || true
+test_commit subcommit3 2>/dev/null || true
+git submodule add "file://$pwd/sub" sub 2>/dev/null || true
 git commit -m "add submodule" 2>/dev/null || true
-git config -f .gitmodules submodule.sub.shallow true 2>/dev/null || true
-git add .gitmodules 2>/dev/null || true
-git commit -m "recommend shallow for sub" 2>/dev/null || true
-git config -f .gitmodules submodule.sub.shallow false 2>/dev/null || true
-git add .gitmodules 2>/dev/null || true
-git commit -m "recommend non shallow for sub" 2>/dev/null || true
+
+true

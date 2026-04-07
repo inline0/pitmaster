@@ -7,6 +7,34 @@
         "encoding": "utf-8"
     },
     {
+        "hash": "564b12f45becba5fb2f70e270af067c1f13b3aab",
+        "type": "blob",
+        "size": 5,
+        "content": "head\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6246cf86644427a788e5aa4f1831d97142da3b19",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob 564b12f45becba5fb2f70e270af067c1f13b3aab\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81f7e2ae621bcea9f95d64f4a86409d04b54c4b4",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 9657bbbb9af23b5a9a629f66dd23b9c7cc5dfc00\nparent ff3da12488e8b5b51ca4e9517ab103795ec42e40\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\nsecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9657bbbb9af23b5a9a629f66dd23b9c7cc5dfc00",
+        "type": "tree",
+        "size": 61,
+        "content": "100644 blob 421376db9e8aee847e9d774891e73098a7415e94\tbar\n040000 tree 6246cf86644427a788e5aa4f1831d97142da3b19\tdir\n",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "9676f5bfe4a9ea8b7d15ea602e14acd1ef67e3c0",
         "type": "blob",
         "size": 7,
@@ -21,17 +49,17 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "d16c54896d4f276a7be952391103c07c130c43d0",
-        "type": "commit",
-        "size": 148,
-        "content": "tree c33014e1dbe536fd6f182b8c415f8416b601f7fc\nauthor Test <test@test.com> 1775598410 +0200\ncommitter Test <test@test.com> 1775598410 +0200\n\ninitial\n",
-        "encoding": "utf-8"
-    },
-    {
         "hash": "e2307e7eeb8b6c37299d04efbe2f3238388a281d",
         "type": "tree",
         "size": 31,
         "content": "100644 blob 9676f5bfe4a9ea8b7d15ea602e14acd1ef67e3c0\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ff3da12488e8b5b51ca4e9517ab103795ec42e40",
+        "type": "commit",
+        "size": 148,
+        "content": "tree c33014e1dbe536fd6f182b8c415f8416b601f7fc\nauthor Test <test@test.com> 1775599700 +0200\ncommitter Test <test@test.com> 1775599700 +0200\n\ninitial\n",
         "encoding": "utf-8"
     }
 ]

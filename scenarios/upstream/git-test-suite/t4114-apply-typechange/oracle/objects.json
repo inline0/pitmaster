@@ -1,0 +1,72 @@
+[
+    {
+        "hash": "051c88ca6feb78c7342495a3709e8cd4774c3b79",
+        "type": "tree",
+        "size": 62,
+        "content": "100644 blob bfb757465a453028ef8e114cbc4c7785672dfd9d\tbar\n100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12ce114fb3ee3e61a3c7e98a82634e3d8635b09d",
+        "type": "commit",
+        "size": 205,
+        "content": "tree b015e4374d2964ebbb89f43b3ccd3e2f8373aa6a\nparent a0988c32ccccd23658371afb33d40460615f2b50\nauthor Test <test@test.com> 1775599772 +0200\ncommitter Test <test@test.com> 1775599772 +0200\n\nfoo back to file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "320bec5e0eb2a471d4bf96dbcba12993c887d303",
+        "type": "commit",
+        "size": 207,
+        "content": "tree 6be94f7a4060e7da433db823872929e0619fb21d\nparent 12ce114fb3ee3e61a3c7e98a82634e3d8635b09d\nauthor Test <test@test.com> 1775599772 +0200\ncommitter Test <test@test.com> 1775599772 +0200\n\nfoo becomes binary\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b18e512dba79e4c8300dd08aeb37f8e728b8dad",
+        "type": "blob",
+        "size": 12,
+        "content": "hello world\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6be94f7a4060e7da433db823872929e0619fb21d",
+        "type": "tree",
+        "size": 62,
+        "content": "100644 blob bfb757465a453028ef8e114cbc4c7785672dfd9d\tbar\n100644 blob f76dd238ade08917e6712764a16a22005a50573d\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0988c32ccccd23658371afb33d40460615f2b50",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 051c88ca6feb78c7342495a3709e8cd4774c3b79\nauthor Test <test@test.com> 1775599772 +0200\ncommitter Test <test@test.com> 1775599772 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab26de581304415e08212ef87c7cd93d56b0f64e",
+        "type": "blob",
+        "size": 20,
+        "content": "how far is the sun?\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b015e4374d2964ebbb89f43b3ccd3e2f8373aa6a",
+        "type": "tree",
+        "size": 62,
+        "content": "100644 blob bfb757465a453028ef8e114cbc4c7785672dfd9d\tbar\n100644 blob ab26de581304415e08212ef87c7cd93d56b0f64e\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bfb757465a453028ef8e114cbc4c7785672dfd9d",
+        "type": "blob",
+        "size": 10,
+        "content": "hi planet\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f76dd238ade08917e6712764a16a22005a50573d",
+        "type": "blob",
+        "size": 1,
+        "content": "AA==",
+        "encoding": "base64"
+    }
+]

@@ -1,40 +1,30 @@
 [
     {
-        "hash": "7298b0384e15455eb5aea060de2d995e9cd10bd3",
-        "tree": "42f965597626852b7811ede26a094d36562043fd",
-        "parents": [
-            "f9e8c4fbc177b5534edab0f378fb7830b0c4abff"
-        ],
-        "author": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "committer": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "message": "directory and edit"
-    },
-    {
-        "hash": "5a1e182cb621c9d0ab16ce98ec91909ca6c8882b",
-        "tree": "a96c288cc0cd8209ab8cb16d799208bb81e27264",
-        "parents": [
-            "f9e8c4fbc177b5534edab0f378fb7830b0c4abff"
-        ],
-        "author": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "committer": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "message": "file and edit"
-    },
-    {
-        "hash": "f9e8c4fbc177b5534edab0f378fb7830b0c4abff",
+        "hash": "436f06d05f915da78ca19ed709b73223b5e2eecc",
         "tree": "229edcb32b209194267977f0ab9d8c95ceeb86e7",
         "parents": [
-            "c12efd88d33509103af507341a3ddafda96e18c0"
+            "d6093b6ee2c451937857ef4bcd71bc5358ea870b"
         ],
-        "author": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "committer": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
+        "author": "Test <test@test.com> 1775599673 2026-04-08 00:07:53 +0200",
+        "committer": "Test <test@test.com> 1775599673 2026-04-08 00:07:53 +0200",
         "message": "deleted"
     },
     {
-        "hash": "c12efd88d33509103af507341a3ddafda96e18c0",
-        "tree": "ef92b566cd0b3b81856c6606cf56983f906607e9",
+        "hash": "d6093b6ee2c451937857ef4bcd71bc5358ea870b",
+        "tree": "ed017abf65606e807edd60d140df51a4cdd9b151",
         "parents": [],
-        "author": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
-        "committer": "Test <test@test.com> 1775598402 2026-04-07 23:46:42 +0200",
+        "author": "Test <test@test.com> 1775599672 2026-04-08 00:07:52 +0200",
+        "committer": "Test <test@test.com> 1775599672 2026-04-08 00:07:52 +0200",
+        "message": "initial"
+    },
+    {
+        "hash": "b58ff7250372d45f011f45df34685d969f690b14",
+        "tree": "f7337b24d698c45f0ceda3d5fd41684a4ae5c329",
+        "parents": [
+            "d6093b6ee2c451937857ef4bcd71bc5358ea870b"
+        ],
+        "author": "Test <test@test.com> 1775599672 2026-04-08 00:07:52 +0200",
+        "committer": "Test <test@test.com> 1775599672 2026-04-08 00:07:52 +0200",
         "message": "modified"
     }
 ]

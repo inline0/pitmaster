@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "89eac5d4b09c06955b9f7588cf4baec133b4eeff",
+        "type": "tree",
+        "size": 71,
+        "content": "100644 blob cbcff7a7e03f21eb62be7b94267991108287e322\t.gitmodules\n160000 commit d890e67e1bbcf578b462035776b5004520876997\tsub1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cbcff7a7e03f21eb62be7b94267991108287e322",
+        "type": "blob",
+        "size": 46,
+        "content": "[submodule \"sub1\"]\n\tpath = sub1\n\turl = ./sub1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cffc4158fcb4a6514d7ee73d31cc5292da3d0b67",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 89eac5d4b09c06955b9f7588cf4baec133b4eeff\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\nsuperproject\n",
+        "encoding": "utf-8"
+    }
+]

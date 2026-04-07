@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7607-merge-state",
+    "category": "upstream",
+    "description": "git t/: t7607-merge-state",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

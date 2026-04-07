@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9305-fast-import-signatures",
+    "category": "upstream",
+    "description": "git t/: t9305-fast-import-signatures",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

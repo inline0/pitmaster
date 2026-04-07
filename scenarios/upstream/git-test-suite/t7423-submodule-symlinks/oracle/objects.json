@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "69cdf080691168cfd7c3b1e6256092cc6285ac69",
+        "type": "commit",
+        "size": 198,
+        "content": "tree cbad8a465c86b1970c3362aafd0726c5d693450e\nparent 95428386890e2e1ff2116a2c72305b55d498fe3b\nauthor Test <test@test.com> 1112912113 -0700\ncommitter Test <test@test.com> 1112912113 -0700\n\nsubmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9351ffa1fbcc36d9afdb297abc55b9e0239739d0",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob e79c5e8f964493290a409888d5413a737e8e5dd5\tinitial.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "95428386890e2e1ff2116a2c72305b55d498fe3b",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 9351ffa1fbcc36d9afdb297abc55b9e0239739d0\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a5caa83f9ea14010f7ceb36d28dd9230d170aebd",
+        "type": "blob",
+        "size": 50,
+        "content": "[submodule \"a/sm\"]\n\tpath = a/sm\n\turl = ./upstream\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b93f8480639d2791e2683b751f900b4ba3fafd7f",
+        "type": "tree",
+        "size": 30,
+        "content": "160000 commit dd199c79293be2a3782d6ed1ab7812266ab3e103\tsm\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cbad8a465c86b1970c3362aafd0726c5d693450e",
+        "type": "tree",
+        "size": 104,
+        "content": "100644 blob a5caa83f9ea14010f7ceb36d28dd9230d170aebd\t.gitmodules\n040000 tree b93f8480639d2791e2683b751f900b4ba3fafd7f\ta\n100644 blob e79c5e8f964493290a409888d5413a737e8e5dd5\tinitial.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e79c5e8f964493290a409888d5413a737e8e5dd5",
+        "type": "blob",
+        "size": 8,
+        "content": "initial\n",
+        "encoding": "utf-8"
+    }
+]
