@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Pitmaster\Diff;
 
 /**
- * Myers-optimized diff algorithm (line-level).
+ * Myers O(ND) diff algorithm (line-level).
  *
- * Uses prefix/suffix stripping to minimize the comparison region, then
- * LCS on the reduced middle for correctness. The prefix/suffix optimization
- * gives O(N) best case for similar files while the LCS fallback handles
- * the reduced middle region efficiently.
+ * Implementation of Eugene W. Myers' "An O(ND) Difference Algorithm and Its
+ * Variations" (Algorithmica 1986). This is the same algorithm git uses.
  *
- * Produces byte-identical output to git diff.
+ * O(ND) time and space where D is the edit distance. For similar files
+ * (small D), this is dramatically faster than O(NM) LCS.
  */
 final class MyersDiff
 {
@@ -45,148 +44,143 @@ final class MyersDiff
             return [];
         }
 
-        // Strip common prefix
-        $prefix = 0;
+        if ($n === 0) {
+            $ops = array_map(fn (string $l): array => ['type' => 'insert', 'line' => $l], $b);
 
-        while ($prefix < $n && $prefix < $m && $a[$prefix] === $b[$prefix]) {
-            $prefix++;
+            return self::opsToHunks($ops, $context);
         }
 
-        // Strip common suffix
-        $suffix = 0;
+        if ($m === 0) {
+            $ops = array_map(fn (string $l): array => ['type' => 'delete', 'line' => $l], $a);
 
-        while ($suffix < ($n - $prefix) && $suffix < ($m - $prefix)
-            && $a[$n - 1 - $suffix] === $b[$m - 1 - $suffix]) {
-            $suffix++;
+            return self::opsToHunks($ops, $context);
         }
 
-        if ($prefix + $suffix >= $n && $prefix + $suffix >= $m) {
-            return [];
-        }
-
-        $midA = array_slice($a, $prefix, $n - $prefix - $suffix);
-        $midB = array_slice($b, $prefix, $m - $prefix - $suffix);
-
-        // LCS on the reduced middle
-        $midOps = self::lcsOps($midA, $midB);
-
-        // Build full ops
-        $ops = [];
-
-        for ($i = 0; $i < $prefix; $i++) {
-            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
-        }
-
-        foreach ($midOps as $op) {
-            $ops[] = $op;
-        }
-
-        for ($i = $n - $suffix; $i < $n; $i++) {
-            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
-        }
-
-        // Git shows deletes before inserts
+        $ops = self::myers($a, $b, $n, $m);
         $ops = self::reorderDeletesBeforeInserts($ops);
 
         return self::opsToHunks($ops, $context);
     }
 
     /**
-     * LCS-based edit script for the middle region.
+     * Myers O(ND) shortest edit script.
      *
-     * @param array<int, string> $a
-     * @param array<int, string> $b
+     * @param array<int, string> $a Old lines
+     * @param array<int, string> $b New lines
      * @return array<int, array{type: string, line: string}>
      */
-    private static function lcsOps(array $a, array $b): array
+    private static function myers(array $a, array $b, int $n, int $m): array
     {
-        $n = count($a);
-        $m = count($b);
+        $max = $n + $m;
+        $off = $max + 1;
+        $v = array_fill(0, 2 * $max + 2, 0);
+        $v[$off + 1] = 0;
+        $trace = [];
 
-        if ($n === 0) {
-            return array_map(fn (string $l): array => ['type' => 'insert', 'line' => $l], $b);
-        }
+        // Forward pass: find shortest edit distance d
+        for ($d = 0; $d <= $max; $d++) {
+            // Save V BEFORE this round modifies it.
+            // trace[d] = V state that includes modifications from rounds 0..d-1.
+            $trace[$d] = $v;
 
-        if ($m === 0) {
-            return array_map(fn (string $l): array => ['type' => 'delete', 'line' => $l], $a);
-        }
-
-        // DP table
-        $dp = [];
-
-        for ($i = 0; $i <= $n; $i++) {
-            $dp[$i] = array_fill(0, $m + 1, 0);
-        }
-
-        for ($i = 1; $i <= $n; $i++) {
-            for ($j = 1; $j <= $m; $j++) {
-                if ($a[$i - 1] === $b[$j - 1]) {
-                    $dp[$i][$j] = $dp[$i - 1][$j - 1] + 1;
+            for ($k = -$d; $k <= $d; $k += 2) {
+                if ($k === -$d || ($k !== $d && $v[$off + $k - 1] < $v[$off + $k + 1])) {
+                    $x = $v[$off + $k + 1]; // insert (from diagonal k+1)
                 } else {
-                    $dp[$i][$j] = max($dp[$i - 1][$j], $dp[$i][$j - 1]);
+                    $x = $v[$off + $k - 1] + 1; // delete (from diagonal k-1)
+                }
+
+                $y = $x - $k;
+
+                // Follow snake (diagonal = matching lines)
+                while ($x < $n && $y < $m && $a[$x] === $b[$y]) {
+                    $x++;
+                    $y++;
+                }
+
+                $v[$off + $k] = $x;
+
+                if ($x >= $n && $y >= $m) {
+                    return self::backtrace($trace, $off, $d, $a, $b, $n, $m);
                 }
             }
         }
 
-        // Backtrace to get LCS indices
-        $lcs = [];
-        $i = $n;
-        $j = $m;
-
-        while ($i > 0 && $j > 0) {
-            if ($a[$i - 1] === $b[$j - 1]) {
-                $lcs[] = [$i - 1, $j - 1];
-                $i--;
-                $j--;
-            } elseif ($dp[$i - 1][$j] >= $dp[$i][$j - 1]) {
-                $i--;
-            } else {
-                $j--;
-            }
-        }
-
-        $lcs = array_reverse($lcs);
-
-        // Build ops from LCS
-        $ops = [];
-        $ai = 0;
-        $bi = 0;
-        $li = 0;
-
-        while ($ai < $n || $bi < $m) {
-            if ($li < count($lcs) && $ai === $lcs[$li][0] && $bi === $lcs[$li][1]) {
-                $ops[] = ['type' => 'equal', 'line' => $a[$ai]];
-                $ai++;
-                $bi++;
-                $li++;
-            } elseif ($li < count($lcs)) {
-                while ($ai < $lcs[$li][0]) {
-                    $ops[] = ['type' => 'delete', 'line' => $a[$ai]];
-                    $ai++;
-                }
-
-                while ($bi < $lcs[$li][1]) {
-                    $ops[] = ['type' => 'insert', 'line' => $b[$bi]];
-                    $bi++;
-                }
-            } else {
-                while ($ai < $n) {
-                    $ops[] = ['type' => 'delete', 'line' => $a[$ai]];
-                    $ai++;
-                }
-
-                while ($bi < $m) {
-                    $ops[] = ['type' => 'insert', 'line' => $b[$bi]];
-                    $bi++;
-                }
-            }
-        }
-
-        return $ops;
+        return [];
     }
 
     /**
-     * Reorder: deletes before inserts in each change region.
+     * Backtrace through V snapshots to reconstruct the edit script.
+     *
+     * Key insight: trace[d] = V saved at the START of round d = V after
+     * rounds 0..d-1 finished. For backtrace at step s, we need V after
+     * round s-1 finished = trace[s] (NOT trace[s-1]).
+     *
+     * @return array<int, array{type: string, line: string}>
+     */
+    private static function backtrace(
+        array $trace,
+        int $off,
+        int $d,
+        array $a,
+        array $b,
+        int $n,
+        int $m,
+    ): array {
+        $edits = [];
+        $x = $n;
+        $y = $m;
+
+        for ($step = $d; $step > 0; $step--) {
+            // V after round step-1 finished = trace[step]
+            $v = $trace[$step];
+            $k = $x - $y;
+
+            // Which diagonal did we come from?
+            if ($k === -$step || ($k !== $step && $v[$off + $k - 1] < $v[$off + $k + 1])) {
+                $prevK = $k + 1;
+                $isInsert = true;
+            } else {
+                $prevK = $k - 1;
+                $isInsert = false;
+            }
+
+            $prevX = $v[$off + $prevK];
+            $prevY = $prevX - $prevK;
+
+            // Position after the edit
+            $afterX = $isInsert ? $prevX : $prevX + 1;
+            $afterY = $isInsert ? $prevY + 1 : $prevY;
+
+            // Snake: equal lines from (afterX,afterY) to (x,y)
+            while ($x > $afterX && $y > $afterY) {
+                $x--;
+                $y--;
+                $edits[] = ['type' => 'equal', 'line' => $a[$x]];
+            }
+
+            // The edit step
+            if ($isInsert) {
+                $y--;
+                $edits[] = ['type' => 'insert', 'line' => $b[$y]];
+            } else {
+                $x--;
+                $edits[] = ['type' => 'delete', 'line' => $a[$x]];
+            }
+        }
+
+        // Initial snake from (0,0) to first edit
+        while ($x > 0 && $y > 0) {
+            $x--;
+            $y--;
+            $edits[] = ['type' => 'equal', 'line' => $a[$x]];
+        }
+
+        return array_reverse($edits);
+    }
+
+    /**
+     * Git convention: deletes before inserts in each change region.
      *
      * @param array<int, array{type: string, line: string}> $ops
      * @return array<int, array{type: string, line: string}>
