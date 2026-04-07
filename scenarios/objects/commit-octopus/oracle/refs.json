@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "6171201b7717ae65b6d6195888b0dd75a861a5bf",
+        "name": "refs/heads/branch-a"
+    },
+    {
+        "hash": "51fe37299f4cc4ea823234cad29fdb77661ad7a5",
+        "name": "refs/heads/branch-b"
+    },
+    {
+        "hash": "4f301836be54f1bfab8ea1a3cc57370d527f326b",
+        "name": "refs/heads/main"
+    }
+]

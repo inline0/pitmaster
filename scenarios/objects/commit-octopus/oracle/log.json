@@ -1,0 +1,41 @@
+[
+    {
+        "hash": "6171201b7717ae65b6d6195888b0dd75a861a5bf",
+        "tree": "bba92235fa98577206cd338405fb3b08da003110",
+        "parents": [
+            "90549140c2a50da23ad5c66cc7f6aed5215ccf86"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "message": "Add file on branch-a"
+    },
+    {
+        "hash": "51fe37299f4cc4ea823234cad29fdb77661ad7a5",
+        "tree": "d44418cc35686c7ab67b4ff74d2eb17746d8bde1",
+        "parents": [
+            "90549140c2a50da23ad5c66cc7f6aed5215ccf86"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "message": "Add file on branch-b"
+    },
+    {
+        "hash": "4f301836be54f1bfab8ea1a3cc57370d527f326b",
+        "tree": "016ec8a35d42a12753aadc3cdb29ba52900508ea",
+        "parents": [
+            "6171201b7717ae65b6d6195888b0dd75a861a5bf",
+            "51fe37299f4cc4ea823234cad29fdb77661ad7a5"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "message": "Octopus merge of branch-a and branch-b"
+    },
+    {
+        "hash": "90549140c2a50da23ad5c66cc7f6aed5215ccf86",
+        "tree": "d2f08d149f643b48750d19c8236027794ee20c05",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775568348 2026-04-07 15:25:48 +0200",
+        "message": "Base commit"
+    }
+]

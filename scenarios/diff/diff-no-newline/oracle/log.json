@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "ef83f5435cb4be5a8c7c6501a57679d069a38eb9",
+        "tree": "fa00b3976b474afb639a7cc333df6414e0a86003",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775568389 2026-04-07 15:26:29 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775568389 2026-04-07 15:26:29 +0200",
+        "message": "Initial commit without trailing newline"
+    }
+]

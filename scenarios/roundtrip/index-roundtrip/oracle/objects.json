@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "07af83987e2a38e48b24b1b06c4881cab95ae393",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 73ef1156325417881361d07992ed5f5ee01883d7\tutils.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "175fe7cbe5e4a29d7349ec00a439b436da68ca5b",
+        "type": "tree",
+        "size": 97,
+        "content": "100644 blob 3af2ef30dfa55f2fb07e68fd56e6e1a01341a307\tREADME.md\n040000 tree 07af83987e2a38e48b24b1b06c4881cab95ae393\tlib\n040000 tree 439e1ce9bf9d237648768e609ed524b967f224c1\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3af2ef30dfa55f2fb07e68fd56e6e1a01341a307",
+        "type": "blob",
+        "size": 77,
+        "content": "# Pitmaster Test\nA simple test repository for index round-trip verification.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "439e1ce9bf9d237648768e609ed524b967f224c1",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob f9a764b1d4b8856d8094767dce1a5752856df670\tmain.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "73ef1156325417881361d07992ed5f5ee01883d7",
+        "type": "blob",
+        "size": 58,
+        "content": "<?php\nfunction helper(): string {\n    return \"utility\";\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f32a812cf234147c3304b017a99b3284e5d76bd9",
+        "type": "commit",
+        "size": 192,
+        "content": "tree 175fe7cbe5e4a29d7349ec00a439b436da68ca5b\nauthor Test User <test@pitmaster.dev> 1775568388 +0200\ncommitter Test User <test@pitmaster.dev> 1775568388 +0200\n\nInitial commit with three files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9a764b1d4b8856d8094767dce1a5752856df670",
+        "type": "blob",
+        "size": 35,
+        "content": "<?php\necho \"Hello from Pitmaster\";\n",
+        "encoding": "utf-8"
+    }
+]

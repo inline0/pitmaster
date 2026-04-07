@@ -1,0 +1,11 @@
+{
+    "name": "objects/commit-octopus",
+    "category": "objects",
+    "description": "Octopus merge commit with three or more parents",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

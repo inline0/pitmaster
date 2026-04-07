@@ -1,0 +1,13 @@
+{
+    "name": "diff/diff-staged",
+    "category": "diff",
+    "description": "Diff of staged changes against HEAD after modifying and adding a file",
+    "operations": ["diff-staged"],
+    "oracle_commands": {
+        "diff-staged": "git diff --cached"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

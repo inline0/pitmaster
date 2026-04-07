@@ -1,0 +1,13 @@
+{
+    "name": "roundtrip/index-roundtrip",
+    "category": "roundtrip",
+    "description": "Pitmaster reads the index after staging files across nested directories",
+    "operations": ["index"],
+    "oracle_commands": {
+        "index": "git ls-files --stage"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

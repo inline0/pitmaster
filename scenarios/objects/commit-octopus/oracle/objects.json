@@ -1,0 +1,79 @@
+[
+    {
+        "hash": "016ec8a35d42a12753aadc3cdb29ba52900508ea",
+        "type": "tree",
+        "size": 102,
+        "content": "100644 blob 2cfb669134f0f1a36fba98fd0ff4dc6de70cae74\ta.txt\n100644 blob b6e36e26b4d1eeba0383cb46ef410cfb36771948\tb.txt\n100644 blob 1523f2885e163cc42476113a185b33b5c5153793\tbase.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1523f2885e163cc42476113a185b33b5c5153793",
+        "type": "blob",
+        "size": 13,
+        "content": "base content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2cfb669134f0f1a36fba98fd0ff4dc6de70cae74",
+        "type": "blob",
+        "size": 22,
+        "content": "content from branch a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4f301836be54f1bfab8ea1a3cc57370d527f326b",
+        "type": "commit",
+        "size": 295,
+        "content": "tree 016ec8a35d42a12753aadc3cdb29ba52900508ea\nparent 6171201b7717ae65b6d6195888b0dd75a861a5bf\nparent 51fe37299f4cc4ea823234cad29fdb77661ad7a5\nauthor Test User <test@pitmaster.dev> 1775568348 +0200\ncommitter Test User <test@pitmaster.dev> 1775568348 +0200\n\nOctopus merge of branch-a and branch-b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "51fe37299f4cc4ea823234cad29fdb77661ad7a5",
+        "type": "commit",
+        "size": 229,
+        "content": "tree d44418cc35686c7ab67b4ff74d2eb17746d8bde1\nparent 90549140c2a50da23ad5c66cc7f6aed5215ccf86\nauthor Test User <test@pitmaster.dev> 1775568348 +0200\ncommitter Test User <test@pitmaster.dev> 1775568348 +0200\n\nAdd file on branch-b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6171201b7717ae65b6d6195888b0dd75a861a5bf",
+        "type": "commit",
+        "size": 229,
+        "content": "tree bba92235fa98577206cd338405fb3b08da003110\nparent 90549140c2a50da23ad5c66cc7f6aed5215ccf86\nauthor Test User <test@pitmaster.dev> 1775568348 +0200\ncommitter Test User <test@pitmaster.dev> 1775568348 +0200\n\nAdd file on branch-a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90549140c2a50da23ad5c66cc7f6aed5215ccf86",
+        "type": "commit",
+        "size": 172,
+        "content": "tree d2f08d149f643b48750d19c8236027794ee20c05\nauthor Test User <test@pitmaster.dev> 1775568348 +0200\ncommitter Test User <test@pitmaster.dev> 1775568348 +0200\n\nBase commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b6e36e26b4d1eeba0383cb46ef410cfb36771948",
+        "type": "blob",
+        "size": 22,
+        "content": "content from branch b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bba92235fa98577206cd338405fb3b08da003110",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob 2cfb669134f0f1a36fba98fd0ff4dc6de70cae74\ta.txt\n100644 blob 1523f2885e163cc42476113a185b33b5c5153793\tbase.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d2f08d149f643b48750d19c8236027794ee20c05",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 1523f2885e163cc42476113a185b33b5c5153793\tbase.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d44418cc35686c7ab67b4ff74d2eb17746d8bde1",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob b6e36e26b4d1eeba0383cb46ef410cfb36771948\tb.txt\n100644 blob 1523f2885e163cc42476113a185b33b5c5153793\tbase.txt\n",
+        "encoding": "utf-8"
+    }
+]

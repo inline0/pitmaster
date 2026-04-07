@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "135baa5079d091aa28290081ac1aa1496eda2cc0",
+        "type": "commit",
+        "size": 166,
+        "content": "tree bf22c908a8aef33003acc28506ca860f664cf066\nauthor Test User <test@pitmaster.dev> 1775568346 +0200\ncommitter Test User <test@pitmaster.dev> 1775568346 +0200\n\nFirst\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22de8d69c9026be2a49f540fda12f3e755a33e6c",
+        "type": "blob",
+        "size": 14,
+        "content": "first version\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28888584670ee29fcb7de1395f7a9779067a383c",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob ad7ac37bb280ccd34b350a59ba440614d9106e41\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a39072558a09507f496935b477056db47713643",
+        "type": "commit",
+        "size": 215,
+        "content": "tree 28888584670ee29fcb7de1395f7a9779067a383c\nparent 135baa5079d091aa28290081ac1aa1496eda2cc0\nauthor Test User <test@pitmaster.dev> 1775568346 +0200\ncommitter Test User <test@pitmaster.dev> 1775568346 +0200\n\nSecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ad7ac37bb280ccd34b350a59ba440614d9106e41",
+        "type": "blob",
+        "size": 15,
+        "content": "second version\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bf22c908a8aef33003acc28506ca860f664cf066",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 22de8d69c9026be2a49f540fda12f3e755a33e6c\tfile.txt\n",
+        "encoding": "utf-8"
+    }
+]

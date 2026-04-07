@@ -1,0 +1,11 @@
+{
+    "name": "merge/merge-fast-forward",
+    "category": "merge",
+    "description": "Feature branch ahead of main with no divergence, allowing fast-forward merge",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

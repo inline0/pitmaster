@@ -1,0 +1,11 @@
+{
+    "name": "roundtrip/commit-write",
+    "category": "roundtrip",
+    "description": "Two-commit history where Pitmaster reads both commits and verifies the chain",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

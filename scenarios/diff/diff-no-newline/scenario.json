@@ -1,0 +1,13 @@
+{
+    "name": "diff/diff-no-newline",
+    "category": "diff",
+    "description": "Diff of files without trailing newlines",
+    "operations": ["diff"],
+    "oracle_commands": {
+        "diff": "git diff"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}
