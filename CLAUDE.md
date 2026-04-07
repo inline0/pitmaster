@@ -51,7 +51,7 @@ All without `exec('git ...')`. The only PHP requirements are `sha1()` (built-in)
 
 ## What This Is Not
 
-Not a full `git` CLI replacement. Pitmaster targets the operations that agents in an agentic IDE need: read repo state, create commits, diff, merge, status, and push. It does not implement submodules, worktrees, rerere, bisect, stash, sparse checkout, or fsmonitor.
+Not a wrapper around the `git` binary. Pitmaster is a full, standalone git client implemented entirely in PHP. Every operation that canonical `git` supports is in scope: submodules, worktrees, rerere, bisect, stash, sparse checkout, fsmonitor, hooks, LFS, SSH transport, and the git:// protocol.
 
 ## Project Structure
 

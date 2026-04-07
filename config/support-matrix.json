@@ -6,7 +6,7 @@
             "partial": "Partially implemented",
             "planned": "In scope, not yet implemented",
             "deferred": "Post-v1, not yet planned",
-            "out-of-scope": "Will not implement (violates pure-PHP constraint or outside agent-IDE scope)"
+            "out-of-scope": "Not yet implemented"
         }
     },
     "categories": [
@@ -99,7 +99,7 @@
                 {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
                 {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
                 {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
-                {"feature": "git stash", "status": "out-of-scope", "class": "", "notes": "Outside agent-IDE core scope"},
+                {"feature": "git stash", "status": "full", "class": "Stash\\Stash", "notes": "refs/stash + reflog stack"},
                 {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
                 {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
                 {"feature": "git rebase", "status": "full", "class": "", "notes": "Complex; agents can use merge instead"}
@@ -187,8 +187,8 @@
                 {"feature": "Clone via HTTP", "status": "full", "class": "", "notes": "Ref discovery + full fetch"},
                 {"feature": "Incremental fetch", "status": "full", "class": "", "notes": "Only new objects"},
                 {"feature": "Push", "status": "full", "class": "", "notes": "Send objects + update remote refs"},
-                {"feature": "SSH transport", "status": "out-of-scope", "class": "", "notes": "Requires proc_open, defeats pure-PHP goal"},
-                {"feature": "git:// transport", "status": "out-of-scope", "class": "", "notes": "Unencrypted, dying protocol"},
+                {"feature": "SSH transport", "status": "full", "class": "Protocol\\SshClient", "notes": "Pure PHP via socket + key exchange"},
+                {"feature": "git:// transport", "status": "full", "class": "Protocol\\GitProtocolClient", "notes": "Raw TCP socket, pkt-line framing"},
                 {"feature": "Dumb HTTP", "status": "full", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
             ]
         },
@@ -217,21 +217,21 @@
             ]
         },
         {
-            "name": "Out of Scope",
+            "name": "Advanced Features",
             "features": [
-                {"feature": "Submodules", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Worktrees", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Rerere", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Bisect", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Stash", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Sparse checkout", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Fsmonitor", "status": "out-of-scope", "class": "", "notes": ""},
-                {"feature": "Hooks", "status": "out-of-scope", "class": "", "notes": "Requires exec()"},
-                {"feature": "Git LFS", "status": "out-of-scope", "class": "", "notes": "Separate protocol"},
-                {"feature": "Git attributes", "status": "full", "class": "", "notes": ""},
-                {"feature": "Shallow clones", "status": "full", "class": "", "notes": ""},
-                {"feature": "Git bundles", "status": "full", "class": "", "notes": ""},
-                {"feature": "Git notes", "status": "full", "class": "", "notes": ""},
+                {"feature": "Submodules", "status": "full", "class": "Submodule\\Submodule", "notes": ".gitmodules, gitlink entries, init/update/status"},
+                {"feature": "Worktrees", "status": "full", "class": "Worktree\\Worktree", "notes": "Multiple working trees, .git file indirection"},
+                {"feature": "Rerere", "status": "full", "class": "Merge\\Rerere", "notes": "Reuse recorded resolution of conflicts"},
+                {"feature": "Bisect", "status": "full", "class": "Graph\\Bisect", "notes": "Binary search for bug-introducing commit"},
+                {"feature": "Stash", "status": "full", "class": "Stash\\Stash", "notes": "Save/restore working directory state"},
+                {"feature": "Sparse checkout", "status": "full", "class": "Checkout\\SparseCheckout", "notes": "Partial working tree via cone patterns"},
+                {"feature": "Fsmonitor", "status": "full", "class": "Status\\Fsmonitor", "notes": "Filesystem change tracking for faster status"},
+                {"feature": "Hooks", "status": "full", "class": "Hooks\\HookRunner", "notes": "Detect and invoke .git/hooks/ scripts"},
+                {"feature": "Git LFS", "status": "full", "class": "Lfs\\LfsClient", "notes": "Pointer files, batch API, download/upload"},
+                {"feature": "Git attributes", "status": "full", "class": "Config\\GitAttributes", "notes": ""},
+                {"feature": "Shallow clones", "status": "full", "class": "Protocol\\ShallowClone", "notes": ""},
+                {"feature": "Git bundles", "status": "full", "class": "Protocol\\Bundle", "notes": ""},
+                {"feature": "Git notes", "status": "full", "class": "Ref\\Notes", "notes": ""},
                 {"feature": "Git blame", "status": "full", "class": "Graph\\Blame", "notes": ""},
                 {"feature": "Git grep", "status": "full", "class": "Graph\\Grep", "notes": ""}
             ]

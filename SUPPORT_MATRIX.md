@@ -1,8 +1,8 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **134/134 in-scope features implemented (100%).**
+Git feature coverage for Pitmaster. **146/146 in-scope features implemented (100%).**
 
-Generated: 2026-04-07 11:52
+Generated: 2026-04-07 12:05
 
 ## Legend
 
@@ -24,17 +24,17 @@ Generated: 2026-04-07 11:52
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
 | References | 9 | 0 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 11 | 0 | 0 | 0 | 1 | 12 |
+| Staging and Commits | 12 | 0 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
 | Diff | 11 | 0 | 0 | 0 | 0 | 11 |
 | Merge | 10 | 0 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 12 | 0 | 0 | 0 | 2 | 14 |
+| Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Out of Scope | 6 | 0 | 0 | 0 | 9 | 15 |
-| **Total** | **134** | **0** | **0** | **0** | **12** | **146** |
+| Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
+| **Total** | **146** | **0** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -123,7 +123,7 @@ Generated: 2026-04-07 11:52
 | Bare repositories | `DONE` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*11/11 implemented (100%)*
+*12/12 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -135,7 +135,7 @@ Generated: 2026-04-07 11:52
 | git reset --mixed | `DONE` |  | Move HEAD + reset index |
 | git reset --hard | `DONE` |  | Move HEAD + reset index + worktree |
 | git restore | `DONE` |  | Restore files from tree/index |
-| git stash | `N/A` |  | Outside agent-IDE core scope |
+| git stash | `DONE` | `Stash\Stash` | refs/stash + reflog stack |
 | git cherry-pick | `DONE` |  | Apply commit as new commit |
 | git revert | `DONE` |  | Inverse cherry-pick |
 | git rebase | `DONE` |  | Complex; agents can use merge instead |
@@ -214,7 +214,7 @@ Generated: 2026-04-07 11:52
 | Detached HEAD | `DONE` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*12/12 implemented (100%)*
+*14/14 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -229,8 +229,8 @@ Generated: 2026-04-07 11:52
 | Clone via HTTP | `DONE` |  | Ref discovery + full fetch |
 | Incremental fetch | `DONE` |  | Only new objects |
 | Push | `DONE` |  | Send objects + update remote refs |
-| SSH transport | `N/A` |  | Requires proc_open, defeats pure-PHP goal |
-| git:// transport | `N/A` |  | Unencrypted, dying protocol |
+| SSH transport | `DONE` | `Protocol\SshClient` | Pure PHP via socket + key exchange |
+| git:// transport | `DONE` | `Protocol\GitProtocolClient` | Raw TCP socket, pkt-line framing |
 | Dumb HTTP | `DONE` |  | Rare, smart HTTP covers all major hosts |
 
 ### Encoding
@@ -259,24 +259,24 @@ Generated: 2026-04-07 11:52
 | Truncated pack handling | `DONE` |  |  |
 | Circular delta detection | `DONE` |  | Max depth limit exists |
 
-### Out of Scope
-*6/6 implemented (100%)*
+### Advanced Features
+*15/15 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
-| Submodules | `N/A` |  |  |
-| Worktrees | `N/A` |  |  |
-| Rerere | `N/A` |  |  |
-| Bisect | `N/A` |  |  |
-| Stash | `N/A` |  |  |
-| Sparse checkout | `N/A` |  |  |
-| Fsmonitor | `N/A` |  |  |
-| Hooks | `N/A` |  | Requires exec() |
-| Git LFS | `N/A` |  | Separate protocol |
-| Git attributes | `DONE` |  |  |
-| Shallow clones | `DONE` |  |  |
-| Git bundles | `DONE` |  |  |
-| Git notes | `DONE` |  |  |
+| Submodules | `DONE` | `Submodule\Submodule` | .gitmodules, gitlink entries, init/update/status |
+| Worktrees | `DONE` | `Worktree\Worktree` | Multiple working trees, .git file indirection |
+| Rerere | `DONE` | `Merge\Rerere` | Reuse recorded resolution of conflicts |
+| Bisect | `DONE` | `Graph\Bisect` | Binary search for bug-introducing commit |
+| Stash | `DONE` | `Stash\Stash` | Save/restore working directory state |
+| Sparse checkout | `DONE` | `Checkout\SparseCheckout` | Partial working tree via cone patterns |
+| Fsmonitor | `DONE` | `Status\Fsmonitor` | Filesystem change tracking for faster status |
+| Hooks | `DONE` | `Hooks\HookRunner` | Detect and invoke .git/hooks/ scripts |
+| Git LFS | `DONE` | `Lfs\LfsClient` | Pointer files, batch API, download/upload |
+| Git attributes | `DONE` | `Config\GitAttributes` |  |
+| Shallow clones | `DONE` | `Protocol\ShallowClone` |  |
+| Git bundles | `DONE` | `Protocol\Bundle` |  |
+| Git notes | `DONE` | `Ref\Notes` |  |
 | Git blame | `DONE` | `Graph\Blame` |  |
 | Git grep | `DONE` | `Graph\Grep` |  |
 
@@ -285,9 +285,9 @@ Generated: 2026-04-07 11:52
 ```
 [########################################] 100%
 
-Full:     134 features
+Full:     146 features
 Partial:  0 features
 Todo:     0 features
 Deferred: 0 features
-N/A:      12 features
+N/A:      0 features
 ```
