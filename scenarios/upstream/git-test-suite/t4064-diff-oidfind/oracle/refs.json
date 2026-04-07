@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "d89432e7c6a938a68fb8222676bfb035d65af139",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "3856b5eb746c2c2702ce3285ae635179aed3bccd",
+        "name": "refs/tags/greeting"
+    }
+]

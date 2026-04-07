@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6408-merge-up-to-date",
+    "category": "upstream",
+    "description": "git t/: t6408-merge-up-to-date",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7525-status-rename",
+    "category": "upstream",
+    "description": "git t/: t7525-status-rename",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

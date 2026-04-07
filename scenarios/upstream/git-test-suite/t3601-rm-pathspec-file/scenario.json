@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3601-rm-pathspec-file",
+    "category": "upstream",
+    "description": "git t/: t3601-rm-pathspec-file",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

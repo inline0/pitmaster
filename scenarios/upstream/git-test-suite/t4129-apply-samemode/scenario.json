@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4129-apply-samemode",
+    "category": "upstream",
+    "description": "git t/: t4129-apply-samemode",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2106-update-index-assume-unchanged",
+    "category": "upstream",
+    "description": "git t/: t2106-update-index-assume-unchanged",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

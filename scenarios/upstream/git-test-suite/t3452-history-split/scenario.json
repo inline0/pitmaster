@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3452-history-split",
+    "category": "upstream",
+    "description": "git t/: t3452-history-split",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

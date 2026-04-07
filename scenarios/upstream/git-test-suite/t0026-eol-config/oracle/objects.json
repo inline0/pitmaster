@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "01e480ca6143f03a9627f851120bed78771d7b12",
+        "type": "commit",
+        "size": 194,
+        "content": "tree af2aecdc528cd9e89f9adea512c465379e759343\nparent 5a54993fee9fb2d943e227cc4c7e9b268b139615\nauthor Test <test@test.com> 1775598399 +0200\ncommitter Test <test@test.com> 1775598399 +0200\n\nfirst\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0f6a4e6354e536514412ba38ab50ad6264a4d323",
+        "type": "blob",
+        "size": 9,
+        "content": "one text\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4cb29ea38f70d7c61b2a3a25b02e3bdf44905402",
+        "type": "blob",
+        "size": 14,
+        "content": "one\ntwo\nthree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5a54993fee9fb2d943e227cc4c7e9b268b139615",
+        "type": "commit",
+        "size": 148,
+        "content": "tree fd84ddd8ba9999e8482f74f81016ef56abeb3e1e\nauthor Test <test@test.com> 1775598399 +0200\ncommitter Test <test@test.com> 1775598399 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "af2aecdc528cd9e89f9adea512c465379e759343",
+        "type": "tree",
+        "size": 121,
+        "content": "100644 blob 0f6a4e6354e536514412ba38ab50ad6264a4d323\t.gitattributes\n100644 blob 4cb29ea38f70d7c61b2a3a25b02e3bdf44905402\tfiledos.txt\n100644 blob 4cb29ea38f70d7c61b2a3a25b02e3bdf44905402\tfileunix.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fd84ddd8ba9999e8482f74f81016ef56abeb3e1e",
+        "type": "tree",
+        "size": 42,
+        "content": "100644 blob 0f6a4e6354e536514412ba38ab50ad6264a4d323\t.gitattributes\n",
+        "encoding": "utf-8"
+    }
+]

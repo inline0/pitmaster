@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2203-add-intent",
+    "category": "upstream",
+    "description": "git t/: t2203-add-intent",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

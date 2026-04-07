@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2071-restore-patch",
+    "category": "upstream",
+    "description": "git t/: t2071-restore-patch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

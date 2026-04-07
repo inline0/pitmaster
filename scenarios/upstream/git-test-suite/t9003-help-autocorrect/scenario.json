@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9003-help-autocorrect",
+    "category": "upstream",
+    "description": "git t/: t9003-help-autocorrect",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4020-diff-external",
+    "category": "upstream",
+    "description": "git t/: t4020-diff-external",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

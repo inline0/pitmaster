@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "dd3d58e5d884cf285a04770e7326bfca5587a771",
+        "tree": "dae353d282845dd316038b4c21f90ce76290b968",
+        "parents": [
+            "7ee99676a96b26270066e35c48d16e67bcc9ce60"
+        ],
+        "author": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
+        "committer": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
+        "message": "recommend non shallow for sub"
+    },
+    {
+        "hash": "7ee99676a96b26270066e35c48d16e67bcc9ce60",
+        "tree": "7f174689826e38397d6df334707b2d3893bc120a",
+        "parents": [],
+        "author": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
+        "committer": "Test <test@test.com> 1775598446 2026-04-07 23:47:26 +0200",
+        "message": "recommend shallow for sub"
+    }
+]

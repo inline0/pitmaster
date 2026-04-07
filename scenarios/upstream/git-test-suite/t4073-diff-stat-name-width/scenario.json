@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4073-diff-stat-name-width",
+    "category": "upstream",
+    "description": "git t/: t4073-diff-stat-name-width",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t8008-blame-formats",
+    "category": "upstream",
+    "description": "git t/: t8008-blame-formats",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

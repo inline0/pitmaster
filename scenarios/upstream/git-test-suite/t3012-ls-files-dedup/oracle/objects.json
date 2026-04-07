@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "0835e4f9714005ed591f68d306eea0d6d2ae8fd7",
+        "type": "blob",
+        "size": 7,
+        "content": "change\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "10401982e6cd0fae46f428a70e917dc86de7b9f5",
+        "type": "tree",
+        "size": 104,
+        "content": "100644 blob 0835e4f9714005ed591f68d306eea0d6d2ae8fd7\ta.txt\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb.txt\n100644 blob c8b1b42336f7e2c26898b5b99441d324f2de5412\tdelete.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "524ea062c845fae0ec74927247bd46b471248879",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 10401982e6cd0fae46f428a70e917dc86de7b9f5\nparent a9a086945286b4f88824954521d13872e4fadb1e\nauthor Test <test@test.com> 1775598417 +0200\ncommitter Test <test@test.com> 1775598417 +0200\n\nside\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61780798228d17af2d34fce4cfbdf35556832472",
+        "type": "blob",
+        "size": 2,
+        "content": "b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78981922613b2afb6025042ff6bd878ac1994e85",
+        "type": "blob",
+        "size": 2,
+        "content": "a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9a086945286b4f88824954521d13872e4fadb1e",
+        "type": "commit",
+        "size": 144,
+        "content": "tree ba45a8c1331ccef2dd9de819872426fc4add56cf\nauthor Test <test@test.com> 1775598417 +0200\ncommitter Test <test@test.com> 1775598417 +0200\n\ntip\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba45a8c1331ccef2dd9de819872426fc4add56cf",
+        "type": "tree",
+        "size": 104,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta.txt\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb.txt\n100644 blob c8b1b42336f7e2c26898b5b99441d324f2de5412\tdelete.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c8b1b42336f7e2c26898b5b99441d324f2de5412",
+        "type": "blob",
+        "size": 7,
+        "content": "delete\n",
+        "encoding": "utf-8"
+    }
+]

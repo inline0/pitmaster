@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "9701d6685393337f83ea899f24f3594a8113b5db",
+        "tree": "b3ed1bf09387fc393e839afbcb24d14d5e7f34c3",
+        "parents": [],
+        "author": "Test <test@test.com> 1775598431 2026-04-07 23:47:11 +0200",
+        "committer": "Test <test@test.com> 1775598431 2026-04-07 23:47:11 +0200",
+        "message": "worktree state"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6429-merge-sequence-rename-caching",
+    "category": "upstream",
+    "description": "git t/: t6429-merge-sequence-rename-caching",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

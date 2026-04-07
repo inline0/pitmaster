@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2080-parallel-checkout-basics",
+    "category": "upstream",
+    "description": "git t/: t2080-parallel-checkout-basics",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4070-diff-pairs",
+    "category": "upstream",
+    "description": "git t/: t4070-diff-pairs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

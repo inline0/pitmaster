@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4064-diff-oidfind",
+    "category": "upstream",
+    "description": "git t/: t4064-diff-oidfind",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

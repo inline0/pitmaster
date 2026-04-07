@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "105d7d9ad3afc7bb78a0dec4d829880831605dfb",
+        "type": "blob",
+        "size": 3,
+        "content": "100",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "339e367dcb5d48c175d4a203e2a695cd51ef7b6a",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob 105d7d9ad3afc7bb78a0dec4d829880831605dfb\tseq\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "420201136f42027c6f971934cc73615082d65160",
+        "type": "blob",
+        "size": 14,
+        "content": "to be deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "af30419e6a142e17c338a3f6215c3927c0d0c628",
+        "type": "tree",
+        "size": 64,
+        "content": "100644 blob 105d7d9ad3afc7bb78a0dec4d829880831605dfb\tseq\n100644 blob 420201136f42027c6f971934cc73615082d65160\ttest2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f26d33712a67e51dd452a2b365701266ef59fada",
+        "type": "commit",
+        "size": 144,
+        "content": "tree 339e367dcb5d48c175d4a203e2a695cd51ef7b6a\nauthor Test <test@test.com> 1775598428 +0200\ncommitter Test <test@test.com> 1775598428 +0200\n\nseq\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "2152e7720cd48959ba98a5b4683a1cf5c326be00",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 32549866c1bec57b3647b7a62d583977d31952cb\nparent b07b5d93442ffc3f8b528611a0e2bbda855a55c8\nauthor Test <test@test.com> 1775598464 +0200\ncommitter Test <test@test.com> 1775598464 +0200\n\nsecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "32549866c1bec57b3647b7a62d583977d31952cb",
+        "type": "tree",
+        "size": 61,
+        "content": "040000 tree 9a87f0f6163b43e4332fdd2e01b0e7f61e626605\tcopy\n040000 tree 93f903b32dbf9bf3d3b58437e52d4a2664d6cf35\tdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "587be6b4c3f93f93c489c0111bba5596147a26cb",
+        "type": "blob",
+        "size": 2,
+        "content": "x\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "93f903b32dbf9bf3d3b58437e52d4a2664d6cf35",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 587be6b4c3f93f93c489c0111bba5596147a26cb\tfile1\n100644 blob 975fbec8256d3e8a3797e7a3611380f27c49f4ac\tfile2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "975fbec8256d3e8a3797e7a3611380f27c49f4ac",
+        "type": "blob",
+        "size": 2,
+        "content": "y\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9a87f0f6163b43e4332fdd2e01b0e7f61e626605",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob b848282869f738b5defb57409eca52a558fa3bee\tfile2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b07b5d93442ffc3f8b528611a0e2bbda855a55c8",
+        "type": "commit",
+        "size": 148,
+        "content": "tree f2eac69422e27a0b757f3e2d94a5f52ad05034f0\nauthor Test <test@test.com> 1775598464 +0200\ncommitter Test <test@test.com> 1775598464 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b848282869f738b5defb57409eca52a558fa3bee",
+        "type": "blob",
+        "size": 16,
+        "content": "changed in copy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2eac69422e27a0b757f3e2d94a5f52ad05034f0",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 93f903b32dbf9bf3d3b58437e52d4a2664d6cf35\tdir\n",
+        "encoding": "utf-8"
+    }
+]

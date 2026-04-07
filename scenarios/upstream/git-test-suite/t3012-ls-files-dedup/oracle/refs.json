@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "524ea062c845fae0ec74927247bd46b471248879",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "524ea062c845fae0ec74927247bd46b471248879",
+        "name": "refs/tags/side"
+    },
+    {
+        "hash": "a9a086945286b4f88824954521d13872e4fadb1e",
+        "name": "refs/tags/tip"
+    }
+]

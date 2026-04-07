@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3428-rebase-signoff",
+    "category": "upstream",
+    "description": "git t/: t3428-rebase-signoff",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7604-merge-custom-message",
+    "category": "upstream",
+    "description": "git t/: t7604-merge-custom-message",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

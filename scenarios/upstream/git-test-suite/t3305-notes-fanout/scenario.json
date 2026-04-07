@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3305-notes-fanout",
+    "category": "upstream",
+    "description": "git t/: t3305-notes-fanout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

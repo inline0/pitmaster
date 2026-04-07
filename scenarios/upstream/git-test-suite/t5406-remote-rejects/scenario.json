@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5406-remote-rejects",
+    "category": "upstream",
+    "description": "git t/: t5406-remote-rejects",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

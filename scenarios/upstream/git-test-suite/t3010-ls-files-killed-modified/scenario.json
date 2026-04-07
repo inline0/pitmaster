@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3010-ls-files-killed-modified",
+    "category": "upstream",
+    "description": "git t/: t3010-ls-files-killed-modified",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

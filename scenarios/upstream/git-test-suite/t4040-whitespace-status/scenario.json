@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4040-whitespace-status",
+    "category": "upstream",
+    "description": "git t/: t4040-whitespace-status",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

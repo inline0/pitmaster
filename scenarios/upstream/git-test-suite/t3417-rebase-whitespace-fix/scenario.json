@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3417-rebase-whitespace-fix",
+    "category": "upstream",
+    "description": "git t/: t3417-rebase-whitespace-fix",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

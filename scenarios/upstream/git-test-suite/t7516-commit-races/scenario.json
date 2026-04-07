@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7516-commit-races",
+    "category": "upstream",
+    "description": "git t/: t7516-commit-races",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

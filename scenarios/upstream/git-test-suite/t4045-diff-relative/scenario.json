@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4045-diff-relative",
+    "category": "upstream",
+    "description": "git t/: t4045-diff-relative",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

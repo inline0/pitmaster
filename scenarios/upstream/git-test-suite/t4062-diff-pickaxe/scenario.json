@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4062-diff-pickaxe",
+    "category": "upstream",
+    "description": "git t/: t4062-diff-pickaxe",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2024-checkout-dwim",
+    "category": "upstream",
+    "description": "git t/: t2024-checkout-dwim",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

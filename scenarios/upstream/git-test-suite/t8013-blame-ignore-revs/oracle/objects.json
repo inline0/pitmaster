@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "0ae6a002dbbdd0600caa4c6e5131f19182ce0fcd",
+        "type": "tag",
+        "size": 127,
+        "content": "object 8195fef0775ec90245e3705e09a4552a4df469cf\ntype commit\ntag XT\ntagger Test <test@test.com> 1775598472 +0200\n\nX (annotated)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8195fef0775ec90245e3705e09a4552a4df469cf",
+        "type": "commit",
+        "size": 142,
+        "content": "tree cd892d60c827e6c5d888d2850deb24201f8794c9\nauthor Test <test@test.com> 1775598472 +0200\ncommitter Test <test@test.com> 1775598472 +0200\n\nB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8a6a2d098ecaf90105f1cf2fa90fc4608bb08067",
+        "type": "blob",
+        "size": 6,
+        "content": "line2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd892d60c827e6c5d888d2850deb24201f8794c9",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 8a6a2d098ecaf90105f1cf2fa90fc4608bb08067\tfile\n",
+        "encoding": "utf-8"
+    }
+]

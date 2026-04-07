@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
+        "name": "refs/remotes/foo/dwim-arg"
+    },
+    {
+        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
+        "name": "refs/remotes/foo/dwim-arg1"
+    },
+    {
+        "hash": "63b9639029652fc3cc75b8fcfa5dc317e86f0c5c",
+        "name": "refs/remotes/foo/dwim-arg2"
+    }
+]

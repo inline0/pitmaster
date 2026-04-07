@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4039-diff-assume-unchanged",
+    "category": "upstream",
+    "description": "git t/: t4039-diff-assume-unchanged",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

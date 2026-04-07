@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1015-read-index-unmerged",
+    "category": "upstream",
+    "description": "git t/: t1015-read-index-unmerged",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

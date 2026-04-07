@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7420-submodule-set-url",
+    "category": "upstream",
+    "description": "git t/: t7420-submodule-set-url",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

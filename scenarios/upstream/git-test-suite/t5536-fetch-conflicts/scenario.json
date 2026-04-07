@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5536-fetch-conflicts",
+    "category": "upstream",
+    "description": "git t/: t5536-fetch-conflicts",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

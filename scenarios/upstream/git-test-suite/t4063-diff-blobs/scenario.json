@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4063-diff-blobs",
+    "category": "upstream",
+    "description": "git t/: t4063-diff-blobs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

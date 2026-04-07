@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7413-submodule-is-active",
+    "category": "upstream",
+    "description": "git t/: t7413-submodule-is-active",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

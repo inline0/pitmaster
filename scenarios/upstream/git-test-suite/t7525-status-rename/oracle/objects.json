@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "03bebeb2493a78e3ae9b3ebff1771e9a9494d504",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob d00491fd7e5bb6fa28c517a0bb32b8b506539d4d\toriginal\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0cfbf08886fca9a91cb753ec8734c84fcbe52c9f",
+        "type": "blob",
+        "size": 2,
+        "content": "2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "64ff6af985c0a01df84e69fb6403db29f443d790",
+        "type": "commit",
+        "size": 162,
+        "content": "tree 03bebeb2493a78e3ae9b3ebff1771e9a9494d504\nauthor Test <test@test.com> 1775598466 +0200\ncommitter Test <test@test.com> 1775598466 +0200\n\nAdding original file.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d00491fd7e5bb6fa28c517a0bb32b8b506539d4d",
+        "type": "blob",
+        "size": 2,
+        "content": "1\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4069-remerge-diff",
+    "category": "upstream",
+    "description": "git t/: t4069-remerge-diff",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

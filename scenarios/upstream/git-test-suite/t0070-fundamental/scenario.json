@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0070-fundamental",
+    "category": "upstream",
+    "description": "git t/: t0070-fundamental",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

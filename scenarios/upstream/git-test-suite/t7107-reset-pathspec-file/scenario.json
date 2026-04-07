@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7107-reset-pathspec-file",
+    "category": "upstream",
+    "description": "git t/: t7107-reset-pathspec-file",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

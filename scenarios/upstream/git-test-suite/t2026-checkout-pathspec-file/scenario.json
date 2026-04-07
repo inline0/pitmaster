@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2026-checkout-pathspec-file",
+    "category": "upstream",
+    "description": "git t/: t2026-checkout-pathspec-file",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

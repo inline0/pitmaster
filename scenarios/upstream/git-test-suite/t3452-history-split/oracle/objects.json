@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "3683f870be446c7cc05ffaef9fa06415276e1828",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "37be7cc4e1e1e932f0e4a34132b76c957387be2a",
+        "type": "blob",
+        "size": 11,
+        "content": "b-modified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61780798228d17af2d34fce4cfbdf35556832472",
+        "type": "blob",
+        "size": 2,
+        "content": "b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78981922613b2afb6025042ff6bd878ac1994e85",
+        "type": "blob",
+        "size": 2,
+        "content": "a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ce6ed5956361b16c5cebaa0ec6ae923270b5807",
+        "type": "commit",
+        "size": 155,
+        "content": "tree 3683f870be446c7cc05ffaef9fa06415276e1828\nauthor Test <test@test.com> 1775598421 +0200\ncommitter Test <test@test.com> 1775598421 +0200\n\ninitial commit\n",
+        "encoding": "utf-8"
+    }
+]

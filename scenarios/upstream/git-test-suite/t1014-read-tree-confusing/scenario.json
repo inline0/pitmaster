@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1014-read-tree-confusing",
+    "category": "upstream",
+    "description": "git t/: t1014-read-tree-confusing",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5530-upload-pack-error",
+    "category": "upstream",
+    "description": "git t/: t5530-upload-pack-error",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

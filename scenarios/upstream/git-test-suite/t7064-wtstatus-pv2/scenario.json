@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7064-wtstatus-pv2",
+    "category": "upstream",
+    "description": "git t/: t7064-wtstatus-pv2",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

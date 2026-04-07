@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7408-submodule-reference",
+    "category": "upstream",
+    "description": "git t/: t7408-submodule-reference",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

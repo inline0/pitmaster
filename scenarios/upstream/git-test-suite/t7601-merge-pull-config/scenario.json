@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7601-merge-pull-config",
+    "category": "upstream",
+    "description": "git t/: t7601-merge-pull-config",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

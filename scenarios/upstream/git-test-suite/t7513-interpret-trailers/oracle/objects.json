@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "aeefa5ded3911c89865cecf6646c4d6c00b38891",
+        "type": "commit",
+        "size": 155,
+        "content": "tree d8a7a96371a2b06052040499a27a360c4d7dde76\nauthor Test <test@test.com> 1775598463 +0200\ncommitter Test <test@test.com> 1775598463 +0200\n\nAdd file a.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ccdf75f1b0871fb6936c1fabde922a6dec3741d7",
+        "type": "blob",
+        "size": 29,
+        "content": "Content of the first commit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d8a7a96371a2b06052040499a27a360c4d7dde76",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob ccdf75f1b0871fb6936c1fabde922a6dec3741d7\ta.txt\n",
+        "encoding": "utf-8"
+    }
+]

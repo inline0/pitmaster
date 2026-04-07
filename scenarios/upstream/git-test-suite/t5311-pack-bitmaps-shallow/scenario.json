@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5311-pack-bitmaps-shallow",
+    "category": "upstream",
+    "description": "git t/: t5311-pack-bitmaps-shallow",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

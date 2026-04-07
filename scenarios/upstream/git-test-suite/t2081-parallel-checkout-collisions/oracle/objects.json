@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a8f123e8f3e5fede389b26fc62901d9959bcc72",
+        "type": "tree",
+        "size": 42,
+        "content": "100644 blob 8a977e435bd5a274e6637a7b954deb857dfb68d0\t.gitattributes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8a977e435bd5a274e6637a7b954deb857dfb68d0",
+        "type": "blob",
+        "size": 21,
+        "content": "file_x filter=logger\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "afc7cb6188f5d1cbd0b67478fbe1c41232b6b31d",
+        "type": "commit",
+        "size": 158,
+        "content": "tree 6a8f123e8f3e5fede389b26fc62901d9959bcc72\nauthor Test <test@test.com> 1775598412 +0200\ncommitter Test <test@test.com> 1775598412 +0200\n\nfilter for file_x\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7514-commit-patch",
+    "category": "upstream",
+    "description": "git t/: t7514-commit-patch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

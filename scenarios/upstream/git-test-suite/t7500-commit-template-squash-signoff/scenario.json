@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7500-commit-template-squash-signoff",
+    "category": "upstream",
+    "description": "git t/: t7500-commit-template-squash-signoff",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

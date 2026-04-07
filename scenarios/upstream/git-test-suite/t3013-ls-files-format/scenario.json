@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3013-ls-files-format",
+    "category": "upstream",
+    "description": "git t/: t3013-ls-files-format",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

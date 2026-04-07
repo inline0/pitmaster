@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7103-reset-bare",
+    "category": "upstream",
+    "description": "git t/: t7103-reset-bare",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

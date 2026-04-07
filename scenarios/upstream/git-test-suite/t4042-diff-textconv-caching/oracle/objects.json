@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "1345db2c9189a61ef9932f66b656afc986bee58f",
+        "type": "blob",
+        "size": 14,
+        "content": "foo content 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28283d51eeb71548ff81d02404b90103b494b983",
+        "type": "blob",
+        "size": 14,
+        "content": "bar content 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59e128da80d28bfd77c27efe6f74d63908894e3d",
+        "type": "commit",
+        "size": 192,
+        "content": "tree a495474ae25a6f2a8de1a7b721625b73667731bc\nparent 917047b1cede1cf16757563e39f61519d51c1c1e\nauthor Test <test@test.com> 1775598431 +0200\ncommitter Test <test@test.com> 1775598431 +0200\n\ntwo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "917047b1cede1cf16757563e39f61519d51c1c1e",
+        "type": "commit",
+        "size": 144,
+        "content": "tree eb924d644d5ac1b3410014127b1cdafa136cefa5\nauthor Test <test@test.com> 1775598431 +0200\ncommitter Test <test@test.com> 1775598431 +0200\n\none\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a495474ae25a6f2a8de1a7b721625b73667731bc",
+        "type": "tree",
+        "size": 70,
+        "content": "100644 blob 28283d51eeb71548ff81d02404b90103b494b983\tbar.bin\n100644 blob 1345db2c9189a61ef9932f66b656afc986bee58f\tfoo.bin\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d5b9fe314e6004caf906e730045d20689167b3fb",
+        "type": "blob",
+        "size": 14,
+        "content": "foo content 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eb924d644d5ac1b3410014127b1cdafa136cefa5",
+        "type": "tree",
+        "size": 70,
+        "content": "100644 blob fcf91668044fda4a569b9374589b26dada7adc49\tbar.bin\n100644 blob d5b9fe314e6004caf906e730045d20689167b3fb\tfoo.bin\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fcf91668044fda4a569b9374589b26dada7adc49",
+        "type": "blob",
+        "size": 14,
+        "content": "bar content 1\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7603-merge-reduce-heads",
+    "category": "upstream",
+    "description": "git t/: t7603-merge-reduce-heads",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

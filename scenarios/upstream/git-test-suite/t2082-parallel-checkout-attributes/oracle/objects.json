@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "055c8729cdcc372500a08db659c045e16c4409fb",
+        "type": "blob",
+        "size": 5,
+        "content": "$Id$\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59b8292527d075f9432011ab7f0374a4fda34882",
+        "type": "blob",
+        "size": 8,
+        "content": "A ident\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "660347003268c79bfe04cf9ed4ef82417e4aae97",
+        "type": "commit",
+        "size": 143,
+        "content": "tree 8423981aadadcb2e336bf38735f6cea88df799c5\nauthor Test <test@test.com> 1775598413 +0200\ncommitter Test <test@test.com> 1775598413 +0200\n\nid\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8423981aadadcb2e336bf38735f6cea88df799c5",
+        "type": "tree",
+        "size": 100,
+        "content": "100644 blob 59b8292527d075f9432011ab7f0374a4fda34882\t.gitattributes\n100644 blob 055c8729cdcc372500a08db659c045e16c4409fb\tA\n100644 blob 055c8729cdcc372500a08db659c045e16c4409fb\tB\n",
+        "encoding": "utf-8"
+    }
+]

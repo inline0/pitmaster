@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1451-fsck-buffer",
+    "category": "upstream",
+    "description": "git t/: t1451-fsck-buffer",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

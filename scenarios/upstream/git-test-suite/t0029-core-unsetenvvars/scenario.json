@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0029-core-unsetenvvars",
+    "category": "upstream",
+    "description": "git t/: t0029-core-unsetenvvars",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

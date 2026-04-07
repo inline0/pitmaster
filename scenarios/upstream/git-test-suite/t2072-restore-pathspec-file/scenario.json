@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2072-restore-pathspec-file",
+    "category": "upstream",
+    "description": "git t/: t2072-restore-pathspec-file",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

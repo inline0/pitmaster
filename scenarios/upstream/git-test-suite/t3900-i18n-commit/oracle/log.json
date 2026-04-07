@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "ec5a5e97b9ce7f7a8c798accc70d75c88131593a",
+        "tree": "5f33a7c64acd905009b81c32f450548d866434d9",
+        "parents": [
+            "84f4f483e36eefd513b5a21715819c46d8da6341"
+        ],
+        "author": "Test <test@test.com> 1775598424 2026-04-07 23:47:04 +0200",
+        "committer": "Test <test@test.com> 1775598424 2026-04-07 23:47:04 +0200",
+        "message": "intermediate commit"
+    },
+    {
+        "hash": "84f4f483e36eefd513b5a21715819c46d8da6341",
+        "tree": "80922987e615579646fe7e534f9121524fbee244",
+        "parents": [],
+        "author": "Test <test@test.com> 1775598424 2026-04-07 23:47:04 +0200",
+        "committer": "Test <test@test.com> 1775598424 2026-04-07 23:47:04 +0200",
+        "message": "intermediate commit"
+    }
+]

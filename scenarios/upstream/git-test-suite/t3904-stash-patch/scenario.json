@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3904-stash-patch",
+    "category": "upstream",
+    "description": "git t/: t3904-stash-patch",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t2025-checkout-no-overlay",
+    "category": "upstream",
+    "description": "git t/: t2025-checkout-no-overlay",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

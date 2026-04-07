@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4254-am-corrupt",
+    "category": "upstream",
+    "description": "git t/: t4254-am-corrupt",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

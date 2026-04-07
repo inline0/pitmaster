@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4135-apply-weird-filenames",
+    "category": "upstream",
+    "description": "git t/: t4135-apply-weird-filenames",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

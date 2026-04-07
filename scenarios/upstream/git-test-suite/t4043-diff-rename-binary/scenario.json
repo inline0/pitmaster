@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4043-diff-rename-binary",
+    "category": "upstream",
+    "description": "git t/: t4043-diff-rename-binary",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

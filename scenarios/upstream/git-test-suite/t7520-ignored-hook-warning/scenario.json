@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7520-ignored-hook-warning",
+    "category": "upstream",
+    "description": "git t/: t7520-ignored-hook-warning",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

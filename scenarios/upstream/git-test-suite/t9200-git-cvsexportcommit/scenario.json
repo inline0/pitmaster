@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9200-git-cvsexportcommit",
+    "category": "upstream",
+    "description": "git t/: t9200-git-cvsexportcommit",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

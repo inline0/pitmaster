@@ -1,0 +1,79 @@
+[
+    {
+        "hash": "05c1e3e0c6b207e636b5093bf24b90e518085be0",
+        "type": "blob",
+        "size": 11,
+        "content": "now-a-file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "07753f428765ac1afe2020b24e40785869bd4a85",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob d95f3ad14dee633a758d2e331151e950dd13e4ed\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0bd8eb6401bfc0555cf4e3d566e712e91bb43a40",
+        "type": "blob",
+        "size": 9,
+        "content": "now-here\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "362b7a4bb0fb0569f6b5ed44d5dad7f99440112e",
+        "type": "commit",
+        "size": 192,
+        "content": "tree bf4e3634e7072b7f270b059f38f7dbd11aba6232\nparent b2eacfe9ad0528f2c0c334beface9874ca377870\nauthor Test <test@test.com> 1775598436 +0200\ncommitter Test <test@test.com> 1775598436 +0200\n\nnew\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e757656cf36eca53338e520d134963a44f793f8",
+        "type": "blob",
+        "size": 4,
+        "content": "new\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b48deed3a433909bfd6b6ab3d4b91348b6af464",
+        "type": "blob",
+        "size": 9,
+        "content": "original\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2eacfe9ad0528f2c0c334beface9874ca377870",
+        "type": "commit",
+        "size": 145,
+        "content": "tree ea50070ed7721386c949d32d986cb485887eed16\nauthor Test <test@test.com> 1775598436 +0200\ncommitter Test <test@test.com> 1775598436 +0200\n\nbase\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bf4e3634e7072b7f270b059f38f7dbd11aba6232",
+        "type": "tree",
+        "size": 172,
+        "content": "100644 blob 0bd8eb6401bfc0555cf4e3d566e712e91bb43a40\tadded\n100644 blob cdcf01a13968b6c5fb9dd99a82d73b0550b65470\tdeleted\n100644 blob 3e757656cf36eca53338e520d134963a44f793f8\tmodified\n040000 tree 07753f428765ac1afe2020b24e40785869bd4a85\tsubdir\n100644 blob 05c1e3e0c6b207e636b5093bf24b90e518085be0\tsymlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cdcf01a13968b6c5fb9dd99a82d73b0550b65470",
+        "type": "blob",
+        "size": 11,
+        "content": "to-be-gone\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d95f3ad14dee633a758d2e331151e950dd13e4ed",
+        "type": "blob",
+        "size": 8,
+        "content": "content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea50070ed7721386c949d32d986cb485887eed16",
+        "type": "tree",
+        "size": 106,
+        "content": "100644 blob cdcf01a13968b6c5fb9dd99a82d73b0550b65470\tdeleted\n100644 blob 4b48deed3a433909bfd6b6ab3d4b91348b6af464\tmodified\n100644 blob 05c1e3e0c6b207e636b5093bf24b90e518085be0\tsymlink\n",
+        "encoding": "utf-8"
+    }
+]
