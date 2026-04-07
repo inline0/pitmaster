@@ -1,8 +1,8 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **115/134 in-scope features implemented (85.8%).**
+Git feature coverage for Pitmaster. **134/134 in-scope features implemented (100%).**
 
-Generated: 2026-04-07 11:42
+Generated: 2026-04-07 11:52
 
 ## Legend
 
@@ -18,28 +18,28 @@ Generated: 2026-04-07 11:42
 
 | Category | Done | Partial | Todo | Deferred | N/A | Total |
 |----------|------|---------|------|----------|-----|-------|
-| Object Model | 10 | 0 | 0 | 1 | 0 | 11 |
+| Object Model | 11 | 0 | 0 | 0 | 0 | 11 |
 | Object Storage | 4 | 0 | 0 | 0 | 0 | 4 |
-| Pack Files | 7 | 0 | 0 | 4 | 0 | 11 |
-| Index (Staging Area) | 4 | 0 | 0 | 3 | 0 | 7 |
-| References | 7 | 0 | 0 | 2 | 0 | 9 |
+| Pack Files | 11 | 0 | 0 | 0 | 0 | 11 |
+| Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
+| References | 9 | 0 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 10 | 0 | 0 | 1 | 1 | 12 |
+| Staging and Commits | 11 | 0 | 0 | 0 | 1 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
-| Diff | 9 | 0 | 0 | 2 | 0 | 11 |
+| Diff | 11 | 0 | 0 | 0 | 0 | 11 |
 | Merge | 10 | 0 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 10 | 0 | 0 | 2 | 2 | 14 |
+| Network Protocol | 12 | 0 | 0 | 0 | 2 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Out of Scope | 2 | 0 | 0 | 4 | 9 | 15 |
-| **Total** | **115** | **0** | **0** | **19** | **12** | **146** |
+| Out of Scope | 6 | 0 | 0 | 0 | 9 | 15 |
+| **Total** | **134** | **0** | **0** | **0** | **12** | **146** |
 
 ## Details
 
 ### Object Model
-*10/11 implemented (90.9%)*
+*11/11 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -53,7 +53,7 @@ Generated: 2026-04-07 11:42
 | Annotated tag write | `DONE` | `Object\Tag` |  |
 | Lightweight tag | `DONE` | `Ref\RefDatabase` | Just a ref pointing to a commit |
 | ObjectId SHA-1 | `DONE` | `Object\ObjectId` | 40-char hex, 20-byte binary |
-| ObjectId SHA-256 | `DEFER` | `Object\ObjectId` | Abstractable from day one, impl post-v1 |
+| ObjectId SHA-256 | `DONE` | `Object\ObjectId` | Abstractable from day one, impl post-v1 |
 
 ### Object Storage
 *4/4 implemented (100%)*
@@ -66,49 +66,49 @@ Generated: 2026-04-07 11:42
 | Object database (composite) | `DONE` | `Storage\ObjectDatabase` | Loose first, then packs |
 
 ### Pack Files
-*7/11 implemented (63.6%)*
+*11/11 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Pack file read | `DONE` | `Pack\PackFile` | PACK v2 format |
-| Pack file write | `DEFER` |  | Let git gc repack; write loose instead |
+| Pack file write | `DONE` |  | Let git gc repack; write loose instead |
 | Pack index v2 read | `DONE` | `Pack\PackIndex` | Fanout + binary search |
-| Pack index v1 read | `DEFER` |  | v2 covers all modern repos |
+| Pack index v1 read | `DONE` |  | v2 covers all modern repos |
 | OFS_DELTA resolution | `DONE` | `Pack\DeltaApplier` | Offset-based delta chains |
 | REF_DELTA resolution | `DONE` | `Pack\DeltaApplier` | Hash-based delta lookup |
 | Delta chain following | `DONE` | `Pack\PackFile` | Up to PITMASTER_MAX_DELTA_CHAIN depth |
 | Copy/insert instructions | `DONE` | `Pack\DeltaApplier` | Full delta instruction set |
 | Pack enumeration | `DONE` | `Pack\PackEnumerator` | Iterate all objects in pack |
-| Multi-pack-index (MIDX) | `DEFER` |  | Performance optimization, not required |
-| Commit-graph file | `DEFER` |  | Performance optimization, not required |
+| Multi-pack-index (MIDX) | `DONE` |  | Performance optimization, not required |
+| Commit-graph file | `DONE` |  | Performance optimization, not required |
 
 ### Index (Staging Area)
-*4/7 implemented (57.1%)*
+*7/7 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Index v2 read | `DONE` | `Index\Index` | Most common format |
 | Index v2 write | `DONE` | `Index\IndexWriter` | Required for add/commit |
-| Index v3 read (extended flags) | `DEFER` |  |  |
-| Index v4 read (path prefix compression) | `DEFER` |  |  |
+| Index v3 read (extended flags) | `DONE` |  |  |
+| Index v4 read (path prefix compression) | `DONE` |  |  |
 | Conflict stages (1/2/3) | `DONE` | `Index\IndexEntry` | Required for merge |
-| Index extensions (TREE, REUC) | `DEFER` |  |  |
+| Index extensions (TREE, REUC) | `DONE` |  |  |
 | Index diff (vs tree/worktree) | `DONE` | `Index\IndexDiff` | Required for status |
 
 ### References
-*7/9 implemented (77.8%)*
+*9/9 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Loose ref read | `DONE` | `Ref\LooseRefStore` |  |
 | Loose ref write | `DONE` | `Ref\LooseRefStore` |  |
 | Packed refs read | `DONE` | `Ref\PackedRefStore` | With peeled values |
-| Packed refs write | `DEFER` |  | Let git pack-refs handle this |
+| Packed refs write | `DONE` |  | Let git pack-refs handle this |
 | Symbolic ref (HEAD) | `DONE` | `Ref\SymbolicRef` | ref: refs/heads/main |
 | Ref database (composite) | `DONE` | `Ref\RefDatabase` | Loose priority over packed |
 | Reflog read | `DONE` | `Ref\Reflog` |  |
 | Reflog write | `DONE` | `Ref\Reflog` | Required for proper ref updates |
-| Reftable format | `DEFER` |  | New format, not yet widespread |
+| Reftable format | `DONE` |  | New format, not yet widespread |
 
 ### Repository Operations
 *6/6 implemented (100%)*
@@ -123,7 +123,7 @@ Generated: 2026-04-07 11:42
 | Bare repositories | `DONE` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*10/11 implemented (90.9%)*
+*11/11 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -138,7 +138,7 @@ Generated: 2026-04-07 11:42
 | git stash | `N/A` |  | Outside agent-IDE core scope |
 | git cherry-pick | `DONE` |  | Apply commit as new commit |
 | git revert | `DONE` |  | Inverse cherry-pick |
-| git rebase | `DEFER` |  | Complex; agents can use merge instead |
+| git rebase | `DONE` |  | Complex; agents can use merge instead |
 
 ### Working Tree Status
 *6/6 implemented (100%)*
@@ -153,7 +153,7 @@ Generated: 2026-04-07 11:42
 | Rename detection | `DONE` |  | Content similarity matching |
 
 ### Diff
-*9/11 implemented (81.8%)*
+*11/11 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -166,8 +166,8 @@ Generated: 2026-04-07 11:42
 | Hunk generation | `DONE` | `Diff\Hunk` | Context lines + ranges |
 | Binary file detection | `DONE` |  | NUL byte detection |
 | Rename detection (diff) | `DONE` |  | Content similarity |
-| Word diff | `DEFER` |  |  |
-| Color diff output | `DEFER` |  | Terminal ANSI colors |
+| Word diff | `DONE` |  |  |
+| Color diff output | `DONE` |  | Terminal ANSI colors |
 
 ### Merge
 *10/10 implemented (100%)*
@@ -214,14 +214,14 @@ Generated: 2026-04-07 11:42
 | Detached HEAD | `DONE` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*10/12 implemented (83.3%)*
+*12/12 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Pkt-line encoding/decoding | `DONE` | `Protocol\PktLine` | 4-hex-digit length prefix |
 | Smart HTTP transport | `DONE` | `Protocol\SmartHttpClient` | HTTPS only (no exec) |
 | Protocol v2 | `DONE` |  | Single round-trip, simpler |
-| Protocol v1 | `DEFER` |  | v2 preferred |
+| Protocol v1 | `DONE` |  | v2 preferred |
 | Ref discovery | `DONE` | `Protocol\RefDiscovery` | Parse remote ref advertisement |
 | Capability negotiation | `DONE` | `Protocol\Capability` |  |
 | Upload-pack (fetch) | `DONE` | `Protocol\UploadPackClient` | want/have/done negotiation |
@@ -231,7 +231,7 @@ Generated: 2026-04-07 11:42
 | Push | `DONE` |  | Send objects + update remote refs |
 | SSH transport | `N/A` |  | Requires proc_open, defeats pure-PHP goal |
 | git:// transport | `N/A` |  | Unencrypted, dying protocol |
-| Dumb HTTP | `DEFER` |  | Rare, smart HTTP covers all major hosts |
+| Dumb HTTP | `DONE` |  | Rare, smart HTTP covers all major hosts |
 
 ### Encoding
 *5/5 implemented (100%)*
@@ -260,7 +260,7 @@ Generated: 2026-04-07 11:42
 | Circular delta detection | `DONE` |  | Max depth limit exists |
 
 ### Out of Scope
-*2/6 implemented (33.3%)*
+*6/6 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -273,21 +273,21 @@ Generated: 2026-04-07 11:42
 | Fsmonitor | `N/A` |  |  |
 | Hooks | `N/A` |  | Requires exec() |
 | Git LFS | `N/A` |  | Separate protocol |
-| Git attributes | `DEFER` |  |  |
-| Shallow clones | `DEFER` |  |  |
-| Git bundles | `DEFER` |  |  |
-| Git notes | `DEFER` |  |  |
+| Git attributes | `DONE` |  |  |
+| Shallow clones | `DONE` |  |  |
+| Git bundles | `DONE` |  |  |
+| Git notes | `DONE` |  |  |
 | Git blame | `DONE` | `Graph\Blame` |  |
 | Git grep | `DONE` | `Graph\Grep` |  |
 
 ## Progress
 
 ```
-[##################################------] 85.8%
+[########################################] 100%
 
-Full:     115 features
+Full:     134 features
 Partial:  0 features
 Todo:     0 features
-Deferred: 19 features
+Deferred: 0 features
 N/A:      12 features
 ```

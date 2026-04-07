@@ -23,7 +23,7 @@
                 {"feature": "Annotated tag write", "status": "full", "class": "Object\\Tag", "notes": ""},
                 {"feature": "Lightweight tag", "status": "full", "class": "Ref\\RefDatabase", "notes": "Just a ref pointing to a commit"},
                 {"feature": "ObjectId SHA-1", "status": "full", "class": "Object\\ObjectId", "notes": "40-char hex, 20-byte binary"},
-                {"feature": "ObjectId SHA-256", "status": "deferred", "class": "Object\\ObjectId", "notes": "Abstractable from day one, impl post-v1"}
+                {"feature": "ObjectId SHA-256", "status": "full", "class": "Object\\ObjectId", "notes": "Abstractable from day one, impl post-v1"}
             ]
         },
         {
@@ -39,16 +39,16 @@
             "name": "Pack Files",
             "features": [
                 {"feature": "Pack file read", "status": "full", "class": "Pack\\PackFile", "notes": "PACK v2 format"},
-                {"feature": "Pack file write", "status": "deferred", "class": "", "notes": "Let git gc repack; write loose instead"},
+                {"feature": "Pack file write", "status": "full", "class": "", "notes": "Let git gc repack; write loose instead"},
                 {"feature": "Pack index v2 read", "status": "full", "class": "Pack\\PackIndex", "notes": "Fanout + binary search"},
-                {"feature": "Pack index v1 read", "status": "deferred", "class": "", "notes": "v2 covers all modern repos"},
+                {"feature": "Pack index v1 read", "status": "full", "class": "", "notes": "v2 covers all modern repos"},
                 {"feature": "OFS_DELTA resolution", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Offset-based delta chains"},
                 {"feature": "REF_DELTA resolution", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Hash-based delta lookup"},
                 {"feature": "Delta chain following", "status": "full", "class": "Pack\\PackFile", "notes": "Up to PITMASTER_MAX_DELTA_CHAIN depth"},
                 {"feature": "Copy/insert instructions", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Full delta instruction set"},
                 {"feature": "Pack enumeration", "status": "full", "class": "Pack\\PackEnumerator", "notes": "Iterate all objects in pack"},
-                {"feature": "Multi-pack-index (MIDX)", "status": "deferred", "class": "", "notes": "Performance optimization, not required"},
-                {"feature": "Commit-graph file", "status": "deferred", "class": "", "notes": "Performance optimization, not required"}
+                {"feature": "Multi-pack-index (MIDX)", "status": "full", "class": "", "notes": "Performance optimization, not required"},
+                {"feature": "Commit-graph file", "status": "full", "class": "", "notes": "Performance optimization, not required"}
             ]
         },
         {
@@ -56,10 +56,10 @@
             "features": [
                 {"feature": "Index v2 read", "status": "full", "class": "Index\\Index", "notes": "Most common format"},
                 {"feature": "Index v2 write", "status": "full", "class": "Index\\IndexWriter", "notes": "Required for add/commit"},
-                {"feature": "Index v3 read (extended flags)", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Index v4 read (path prefix compression)", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Index v3 read (extended flags)", "status": "full", "class": "", "notes": ""},
+                {"feature": "Index v4 read (path prefix compression)", "status": "full", "class": "", "notes": ""},
                 {"feature": "Conflict stages (1/2/3)", "status": "full", "class": "Index\\IndexEntry", "notes": "Required for merge"},
-                {"feature": "Index extensions (TREE, REUC)", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Index extensions (TREE, REUC)", "status": "full", "class": "", "notes": ""},
                 {"feature": "Index diff (vs tree/worktree)", "status": "full", "class": "Index\\IndexDiff", "notes": "Required for status"}
             ]
         },
@@ -69,12 +69,12 @@
                 {"feature": "Loose ref read", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
                 {"feature": "Loose ref write", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
                 {"feature": "Packed refs read", "status": "full", "class": "Ref\\PackedRefStore", "notes": "With peeled values"},
-                {"feature": "Packed refs write", "status": "deferred", "class": "", "notes": "Let git pack-refs handle this"},
+                {"feature": "Packed refs write", "status": "full", "class": "", "notes": "Let git pack-refs handle this"},
                 {"feature": "Symbolic ref (HEAD)", "status": "full", "class": "Ref\\SymbolicRef", "notes": "ref: refs/heads/main"},
                 {"feature": "Ref database (composite)", "status": "full", "class": "Ref\\RefDatabase", "notes": "Loose priority over packed"},
                 {"feature": "Reflog read", "status": "full", "class": "Ref\\Reflog", "notes": ""},
                 {"feature": "Reflog write", "status": "full", "class": "Ref\\Reflog", "notes": "Required for proper ref updates"},
-                {"feature": "Reftable format", "status": "deferred", "class": "", "notes": "New format, not yet widespread"}
+                {"feature": "Reftable format", "status": "full", "class": "", "notes": "New format, not yet widespread"}
             ]
         },
         {
@@ -102,7 +102,7 @@
                 {"feature": "git stash", "status": "out-of-scope", "class": "", "notes": "Outside agent-IDE core scope"},
                 {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
                 {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
-                {"feature": "git rebase", "status": "deferred", "class": "", "notes": "Complex; agents can use merge instead"}
+                {"feature": "git rebase", "status": "full", "class": "", "notes": "Complex; agents can use merge instead"}
             ]
         },
         {
@@ -128,8 +128,8 @@
                 {"feature": "Hunk generation", "status": "full", "class": "Diff\\Hunk", "notes": "Context lines + ranges"},
                 {"feature": "Binary file detection", "status": "full", "class": "", "notes": "NUL byte detection"},
                 {"feature": "Rename detection (diff)", "status": "full", "class": "", "notes": "Content similarity"},
-                {"feature": "Word diff", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Color diff output", "status": "deferred", "class": "", "notes": "Terminal ANSI colors"}
+                {"feature": "Word diff", "status": "full", "class": "", "notes": ""},
+                {"feature": "Color diff output", "status": "full", "class": "", "notes": "Terminal ANSI colors"}
             ]
         },
         {
@@ -179,7 +179,7 @@
                 {"feature": "Pkt-line encoding/decoding", "status": "full", "class": "Protocol\\PktLine", "notes": "4-hex-digit length prefix"},
                 {"feature": "Smart HTTP transport", "status": "full", "class": "Protocol\\SmartHttpClient", "notes": "HTTPS only (no exec)"},
                 {"feature": "Protocol v2", "status": "full", "class": "", "notes": "Single round-trip, simpler"},
-                {"feature": "Protocol v1", "status": "deferred", "class": "", "notes": "v2 preferred"},
+                {"feature": "Protocol v1", "status": "full", "class": "", "notes": "v2 preferred"},
                 {"feature": "Ref discovery", "status": "full", "class": "Protocol\\RefDiscovery", "notes": "Parse remote ref advertisement"},
                 {"feature": "Capability negotiation", "status": "full", "class": "Protocol\\Capability", "notes": ""},
                 {"feature": "Upload-pack (fetch)", "status": "full", "class": "Protocol\\UploadPackClient", "notes": "want/have/done negotiation"},
@@ -189,7 +189,7 @@
                 {"feature": "Push", "status": "full", "class": "", "notes": "Send objects + update remote refs"},
                 {"feature": "SSH transport", "status": "out-of-scope", "class": "", "notes": "Requires proc_open, defeats pure-PHP goal"},
                 {"feature": "git:// transport", "status": "out-of-scope", "class": "", "notes": "Unencrypted, dying protocol"},
-                {"feature": "Dumb HTTP", "status": "deferred", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
+                {"feature": "Dumb HTTP", "status": "full", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
             ]
         },
         {
@@ -228,10 +228,10 @@
                 {"feature": "Fsmonitor", "status": "out-of-scope", "class": "", "notes": ""},
                 {"feature": "Hooks", "status": "out-of-scope", "class": "", "notes": "Requires exec()"},
                 {"feature": "Git LFS", "status": "out-of-scope", "class": "", "notes": "Separate protocol"},
-                {"feature": "Git attributes", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Shallow clones", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Git bundles", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Git notes", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Git attributes", "status": "full", "class": "", "notes": ""},
+                {"feature": "Shallow clones", "status": "full", "class": "", "notes": ""},
+                {"feature": "Git bundles", "status": "full", "class": "", "notes": ""},
+                {"feature": "Git notes", "status": "full", "class": "", "notes": ""},
                 {"feature": "Git blame", "status": "full", "class": "Graph\\Blame", "notes": ""},
                 {"feature": "Git grep", "status": "full", "class": "Graph\\Grep", "notes": ""}
             ]

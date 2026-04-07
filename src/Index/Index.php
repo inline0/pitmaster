@@ -87,9 +87,25 @@ final class Index
 
             $pathLen = $flags & 0x0FFF;
 
+            // v3 extended flags (bit 14 set means 2 more flag bytes)
+            $extendedFlags = 0;
+
+            if ($version >= 3 && ($flags & 0x4000)) {
+                $extendedFlags = $reader->readUint16();
+            }
+
             if ($version >= 4) {
-                // v4 uses prefix compression; for now read as NUL-terminated
-                $path = $reader->readNullTerminated();
+                // v4: path prefix compression
+                // Strip N bytes from previous path, then append NUL-terminated suffix
+                $stripLen = self::readVarint($reader);
+                $pathSuffix = $reader->readNullTerminated();
+
+                if ($i > 0) {
+                    $prevPath = array_key_last($index->entries) ?? '';
+                    $path = substr($prevPath, 0, max(0, strlen($prevPath) - $stripLen)) . $pathSuffix;
+                } else {
+                    $path = $pathSuffix;
+                }
             } else {
                 $path = $reader->readNullTerminated();
                 // Entries are padded to 8-byte alignment from the start of the entry
@@ -120,7 +136,56 @@ final class Index
             $index->entries[$path] = $entry;
         }
 
+        // Parse extensions (if remaining data before the 20-byte checksum)
+        while ($reader->remaining() > 20) {
+            $sig = $reader->read(4);
+            $extSize = $reader->readUint32();
+
+            if ($sig === 'TREE') {
+                // Cache tree extension: skip for now (read but don't use)
+                $reader->skip($extSize);
+            } elseif ($sig === 'REUC') {
+                // Resolve undo extension: skip
+                $reader->skip($extSize);
+            } elseif ($sig === 'link') {
+                // Split index extension: skip
+                $reader->skip($extSize);
+            } elseif ($sig === 'UNTR') {
+                // Untracked cache: skip
+                $reader->skip($extSize);
+            } elseif ($sig === 'FSMN') {
+                // FS monitor: skip
+                $reader->skip($extSize);
+            } elseif ($sig === 'EOIE') {
+                // End of index entry: skip
+                $reader->skip($extSize);
+            } elseif ($sig === 'IEOT') {
+                // Index entry offset table: skip
+                $reader->skip($extSize);
+            } else {
+                // Unknown extension: skip if first byte is uppercase (required), else optional
+                $reader->skip($extSize);
+            }
+        }
+
         return $index;
+    }
+
+    /**
+     * Read a varint for v4 prefix compression.
+     */
+    private static function readVarint(BinaryReader $reader): int
+    {
+        $value = 0;
+        $shift = 0;
+
+        do {
+            $byte = $reader->readByte();
+            $value |= ($byte & 0x7F) << $shift;
+            $shift += 7;
+        } while ($byte & 0x80);
+
+        return $value;
     }
 
     /**

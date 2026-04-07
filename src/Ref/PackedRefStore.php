@@ -60,6 +60,37 @@ final class PackedRefStore implements RefStore
         return $this->peeled[$name] ?? null;
     }
 
+    /**
+     * Write all current refs to the packed-refs file.
+     */
+    public function write(): void
+    {
+        $this->ensureLoaded();
+
+        $lines = ["# pack-refs with: peeled fully-peeled sorted\n"];
+
+        ksort($this->refs);
+
+        foreach ($this->refs as $name => $id) {
+            $lines[] = "{$id->hex} {$name}\n";
+
+            if (isset($this->peeled[$name])) {
+                $lines[] = "^{$this->peeled[$name]->hex}\n";
+            }
+        }
+
+        file_put_contents($this->gitDir . '/packed-refs', implode('', $lines));
+    }
+
+    /**
+     * Add a ref to the packed refs (in memory; call write() to persist).
+     */
+    public function add(string $name, ObjectId $id): void
+    {
+        $this->ensureLoaded();
+        $this->refs[$name] = $id;
+    }
+
     private function ensureLoaded(): void
     {
         if ($this->refs !== null) {
