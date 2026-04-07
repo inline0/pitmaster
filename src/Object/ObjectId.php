@@ -29,8 +29,13 @@ final readonly class ObjectId
     {
         $hex = strtolower($hex);
         $algo = strlen($hex) === 64 ? 'sha256' : 'sha1';
+        $binary = hex2bin($hex);
 
-        return new self($hex, hex2bin($hex), $algo);
+        if ($binary === false) {
+            throw new \InvalidArgumentException("Invalid hex string for ObjectId: {$hex}");
+        }
+
+        return new self($hex, $binary, $algo);
     }
 
     /**

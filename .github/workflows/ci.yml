@@ -62,4 +62,5 @@ jobs:
       - run: composer install --no-interaction --prefer-dist
       - run: git config --global user.email "ci@pitmaster.dev"
       - run: git config --global user.name "CI"
+      - run: git config --global init.defaultBranch main
       - run: composer test:integration

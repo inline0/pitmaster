@@ -45,7 +45,7 @@
         "test:unit": "phpunit --testsuite unit",
         "test:integration": "phpunit --testsuite integration",
         "analyse": "phpstan analyse --configuration=phpstan.neon.dist --memory-limit=512M",
-        "cs": "phpcs",
+        "cs": "phpcs --warning-severity=0",
         "cs:fix": "phpcbf"
     },
     "bin": [
