@@ -28,13 +28,15 @@ final class PackIndex
     /** @var array<int, int> Fanout table (256 entries) */
     private array $fanout = [];
 
-    /** @var array<int, string> Sorted SHA-1 hex hashes */
+    /** @var array<int, string> Sorted hex hashes */
     private array $names = [];
 
     /** @var array<int, int> Pack file offsets indexed same as names */
     private array $offsets = [];
 
     private int $objectCount;
+
+    private int $hashBytes = 20;
 
     private function __construct()
     {
@@ -70,9 +72,24 @@ final class PackIndex
 
         $index->objectCount = $index->fanout[255];
 
-        // Names: N x 20-byte SHA-1
+        // Detect SHA-256 by checking file size.
+        // v2 with SHA-1: 8 + 1024 + N*20 + N*4 + N*4 + 20 + 20
+        // v2 with SHA-256: 8 + 1024 + N*32 + N*4 + N*4 + 32 + 32
+        $n = $index->objectCount;
+        $sha1Size = 8 + 1024 + ($n * 20) + ($n * 4) + ($n * 4) + 20 + 20;
+        $sha256Size = 8 + 1024 + ($n * 32) + ($n * 4) + ($n * 4) + 32 + 32;
+
+        if ($reader->length() === $sha256Size && $reader->length() !== $sha1Size) {
+            $index->hashBytes = 32;
+        }
+
+        // Names: N x hash-sized entries
         for ($i = 0; $i < $index->objectCount; $i++) {
-            $index->names[$i] = $reader->readHash20();
+            if ($index->hashBytes === 32) {
+                $index->names[$i] = $reader->readHash32();
+            } else {
+                $index->names[$i] = $reader->readHash20();
+            }
         }
 
         // CRC32s: skip (N x 4 bytes)
@@ -116,6 +133,11 @@ final class PackIndex
     public function objectCount(): int
     {
         return $this->objectCount;
+    }
+
+    public function hashBytes(): int
+    {
+        return $this->hashBytes;
     }
 
     /**

@@ -33,6 +33,7 @@ final class PackFile
     private BinaryReader $reader;
     private int $objectCount;
     private PackIndex $index;
+    private int $hashBytes = 20;
 
     private function __construct(
         private readonly string $path,
@@ -44,6 +45,7 @@ final class PackFile
         $pack = new self($packPath);
         $pack->reader = BinaryReader::fromFile($packPath);
         $pack->index = PackIndex::open($indexPath);
+        $pack->hashBytes = $pack->index->hashBytes();
         $pack->parseHeader();
 
         return $pack;
@@ -90,9 +92,10 @@ final class PackFile
         $type = $resolved['type'];
         $content = $resolved['content'];
 
+        $algo = $this->hashBytes === 32 ? 'sha256' : 'sha1';
         $id = $expectedHash !== null
             ? ObjectId::fromHex($expectedHash)
-            : ObjectId::compute($type, $content);
+            : ObjectId::compute($type, $content, $algo);
 
         return ObjectSerializer::parseTyped($type, $content, $id);
     }
@@ -167,7 +170,9 @@ final class PackFile
         if ($packType === PackEntry::TYPE_OFS_DELTA) {
             $baseOffset = VarInt::decodeOfsOffset($this->reader);
         } elseif ($packType === PackEntry::TYPE_REF_DELTA) {
-            $baseHash = $this->reader->readHash20();
+            $baseHash = $this->hashBytes === 32
+                ? $this->reader->readHash32()
+                : $this->reader->readHash20();
         }
 
         $dataOffset = $this->reader->position();
@@ -184,22 +189,48 @@ final class PackFile
 
     /**
      * Read zlib-compressed data at offset and decompress to expected size.
+     *
+     * Uses incremental inflate to handle the fact that we don't know the
+     * compressed size upfront. Feeds data in chunks until we get the
+     * expected uncompressed size.
      */
     private function readCompressedData(int $offset, int $uncompressedSize): string
     {
         $this->reader->seek($offset);
-
-        // We don't know the compressed size upfront; read remaining data
-        // and let zlib_decode handle finding the end.
         $remaining = $this->reader->remainingData();
 
-        $decompressed = @zlib_decode($remaining, $uncompressedSize);
+        // Try raw deflate first (most common in pack files)
+        $context = @inflate_init(ZLIB_ENCODING_RAW);
 
-        if ($decompressed === false) {
-            throw PackParseException::truncated($this->path, "zlib decompression failed at offset {$offset}");
+        if ($context === false) {
+            throw PackParseException::truncated($this->path, "inflate_init failed at offset {$offset}");
         }
 
-        return $decompressed;
+        $decompressed = @inflate_add($context, $remaining, ZLIB_FINISH);
+
+        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
+            return $decompressed;
+        }
+
+        // Fall back to zlib_decode with various strategies
+        $decompressed = @zlib_decode($remaining, $uncompressedSize);
+
+        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
+            return $decompressed;
+        }
+
+        // Try without size limit
+        $decompressed = @zlib_decode($remaining);
+
+        if ($decompressed !== false) {
+            if (strlen($decompressed) >= $uncompressedSize) {
+                return substr($decompressed, 0, $uncompressedSize);
+            }
+
+            return $decompressed;
+        }
+
+        throw PackParseException::truncated($this->path, "zlib decompression failed at offset {$offset}");
     }
 
     private function parseHeader(): void
