@@ -3,46 +3,87 @@
 
 declare(strict_types=1);
 
+ini_set('memory_limit', '512M');
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+use Pitmaster\Diff\ColorDiff;
 use Pitmaster\Pitmaster;
+use Pitmaster\Repository;
 
 $arguments = array_slice($argv, 1);
 
 if ($arguments === []) {
-    fwrite(STDERR, "Usage: pitmaster <command> [args...]\n");
-    fwrite(STDERR, "Commands: log, cat-file, status, diff, branches, tags, refs\n");
+    fwrite(STDERR, "Usage: pitmaster <command> [args...]\n\n");
+    fwrite(STDERR, "Commands:\n");
+    fwrite(STDERR, "  log [N]             Show commit history (default 10)\n");
+    fwrite(STDERR, "  show <rev>          Show commit details + diff\n");
+    fwrite(STDERR, "  cat-file <hash>     Print object content\n");
+    fwrite(STDERR, "  status              Show working tree status\n");
+    fwrite(STDERR, "  diff                Show unstaged changes\n");
+    fwrite(STDERR, "  diff --cached       Show staged changes\n");
+    fwrite(STDERR, "  add <file...>       Stage files\n");
+    fwrite(STDERR, "  commit -m <msg>     Create a commit\n");
+    fwrite(STDERR, "  branch [name]       List or create branches\n");
+    fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
+    fwrite(STDERR, "  checkout <ref>      Switch branches or detach HEAD\n");
+    fwrite(STDERR, "  merge <branch>      Merge a branch into HEAD\n");
+    fwrite(STDERR, "  stash [pop|list]    Stash working directory changes\n");
+    fwrite(STDERR, "  blame <file>        Show line-by-line authorship\n");
+    fwrite(STDERR, "  grep <pattern>      Search file contents\n");
+    fwrite(STDERR, "  refs                List all refs\n");
+    fwrite(STDERR, "  init [path]         Initialize a new repository\n");
     exit(1);
 }
 
 $command = array_shift($arguments);
+
+// Commands that don't need an existing repo
+if ($command === 'init') {
+    $path = $arguments[0] ?? getcwd();
+    Pitmaster::init($path);
+    fwrite(STDOUT, "Initialized empty Pitmaster repository in {$path}/.git/\n");
+    exit(0);
+}
+
 $repoPath = getcwd();
 
 try {
     $repo = Pitmaster::open($repoPath);
 } catch (\Throwable $e) {
-    fwrite(STDERR, "Error: {$e->getMessage()}\n");
-    exit(1);
+    fwrite(STDERR, "fatal: {$e->getMessage()}\n");
+    exit(128);
 }
 
 try {
     match ($command) {
         'log' => commandLog($repo, $arguments),
+        'show' => commandShow($repo, $arguments),
         'cat-file' => commandCatFile($repo, $arguments),
-        'branches' => commandBranches($repo),
-        'tags' => commandTags($repo),
+        'status' => commandStatus($repo),
+        'diff' => commandDiff($repo, $arguments),
+        'add' => commandAdd($repo, $arguments),
+        'commit' => commandCommit($repo, $arguments),
+        'branch' => commandBranch($repo, $arguments),
+        'tag' => commandTag($repo, $arguments),
+        'checkout' => commandCheckout($repo, $arguments),
+        'merge' => commandMerge($repo, $arguments),
+        'stash' => commandStash($repo, $arguments),
+        'blame' => commandBlame($repo, $arguments),
+        'grep' => commandGrep($repo, $arguments),
         'refs' => commandRefs($repo),
+        'reset' => commandReset($repo, $arguments),
         default => (function () use ($command) {
-            fwrite(STDERR, "Unknown command: {$command}\n");
+            fwrite(STDERR, "pitmaster: '{$command}' is not a command.\n");
             exit(1);
         })(),
     };
 } catch (\Throwable $e) {
-    fwrite(STDERR, "Error: {$e->getMessage()}\n");
+    fwrite(STDERR, "error: {$e->getMessage()}\n");
     exit(1);
 }
 
-function commandLog(\Pitmaster\Repository $repo, array $args): void
+function commandLog(Repository $repo, array $args): void
 {
     $limit = 10;
 
@@ -51,15 +92,14 @@ function commandLog(\Pitmaster\Repository $repo, array $args): void
     }
 
     foreach ($repo->log($limit) as $commit) {
-        fwrite(STDOUT, "commit {$commit->id->hex}\n");
+        fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
 
         if ($commit->isMerge()) {
             $parentHexes = array_map(fn ($p) => substr($p->hex, 0, 7), $commit->parents);
             fwrite(STDOUT, "Merge: " . implode(' ', $parentHexes) . "\n");
         }
 
-        fwrite(STDOUT, "Author: {$commit->author}\n");
-        fwrite(STDOUT, "\n");
+        fwrite(STDOUT, "Author: {$commit->author}\n\n");
 
         foreach (explode("\n", trim($commit->message)) as $line) {
             fwrite(STDOUT, "    {$line}\n");
@@ -69,7 +109,27 @@ function commandLog(\Pitmaster\Repository $repo, array $args): void
     }
 }
 
-function commandCatFile(\Pitmaster\Repository $repo, array $args): void
+function commandShow(Repository $repo, array $args): void
+{
+    $rev = $args[0] ?? 'HEAD';
+    $result = $repo->show($rev);
+    $commit = $result['commit'];
+
+    fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
+    fwrite(STDOUT, "Author: {$commit->author}\n\n");
+
+    foreach (explode("\n", trim($commit->message)) as $line) {
+        fwrite(STDOUT, "    {$line}\n");
+    }
+
+    fwrite(STDOUT, "\n");
+
+    foreach ($result['diff'] as $diff) {
+        fwrite(STDOUT, ColorDiff::colorize($diff->format()));
+    }
+}
+
+function commandCatFile(Repository $repo, array $args): void
 {
     if (!isset($args[0])) {
         fwrite(STDERR, "Usage: pitmaster cat-file <hash>\n");
@@ -79,26 +139,314 @@ function commandCatFile(\Pitmaster\Repository $repo, array $args): void
     fwrite(STDOUT, $repo->catFile($args[0]));
 }
 
-function commandBranches(\Pitmaster\Repository $repo): void
+function commandStatus(Repository $repo): void
 {
-    $current = $repo->branch();
+    $branch = $repo->branch();
 
-    foreach ($repo->branches() as $branch) {
-        $prefix = $branch === $current ? '* ' : '  ';
-        fwrite(STDOUT, "{$prefix}{$branch}\n");
+    if ($branch !== null) {
+        fwrite(STDOUT, "On branch {$branch}\n");
+    } else {
+        fwrite(STDOUT, "HEAD detached\n");
+    }
+
+    $entries = $repo->status();
+
+    if ($entries === []) {
+        fwrite(STDOUT, "nothing to commit, working tree clean\n");
+        return;
+    }
+
+    $staged = [];
+    $unstaged = [];
+    $untracked = [];
+
+    foreach ($entries as $entry) {
+        if ($entry->index === \Pitmaster\Status\FileStatus::Untracked) {
+            $untracked[] = $entry;
+        } elseif ($entry->index !== \Pitmaster\Status\FileStatus::Unmodified) {
+            $staged[] = $entry;
+        }
+
+        if ($entry->worktree !== \Pitmaster\Status\FileStatus::Unmodified
+            && $entry->index !== \Pitmaster\Status\FileStatus::Untracked
+        ) {
+            $unstaged[] = $entry;
+        }
+    }
+
+    if ($staged !== []) {
+        fwrite(STDOUT, "\nChanges to be committed:\n");
+
+        foreach ($staged as $entry) {
+            $action = match ($entry->index) {
+                \Pitmaster\Status\FileStatus::Added => 'new file',
+                \Pitmaster\Status\FileStatus::Modified => 'modified',
+                \Pitmaster\Status\FileStatus::Deleted => 'deleted',
+                default => $entry->index->value,
+            };
+            fwrite(STDOUT, "\t\033[32m{$action}:   {$entry->path}\033[0m\n");
+        }
+    }
+
+    if ($unstaged !== []) {
+        fwrite(STDOUT, "\nChanges not staged for commit:\n");
+
+        foreach ($unstaged as $entry) {
+            $action = match ($entry->worktree) {
+                \Pitmaster\Status\FileStatus::Modified => 'modified',
+                \Pitmaster\Status\FileStatus::Deleted => 'deleted',
+                default => $entry->worktree->value,
+            };
+            fwrite(STDOUT, "\t\033[31m{$action}:   {$entry->path}\033[0m\n");
+        }
+    }
+
+    if ($untracked !== []) {
+        fwrite(STDOUT, "\nUntracked files:\n");
+
+        foreach ($untracked as $entry) {
+            fwrite(STDOUT, "\t\033[31m{$entry->path}\033[0m\n");
+        }
     }
 }
 
-function commandTags(\Pitmaster\Repository $repo): void
+function commandDiff(Repository $repo, array $args): void
 {
-    foreach ($repo->tags() as $tag) {
-        fwrite(STDOUT, "{$tag}\n");
+    $cached = in_array('--cached', $args, true) || in_array('--staged', $args, true);
+
+    $results = $cached ? $repo->diffStaged() : $repo->diff();
+
+    foreach ($results as $diff) {
+        fwrite(STDOUT, ColorDiff::colorize($diff->format()));
     }
 }
 
-function commandRefs(\Pitmaster\Repository $repo): void
+function commandAdd(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster add <file...>\n");
+        exit(1);
+    }
+
+    $repo->add(...$args);
+}
+
+function commandCommit(Repository $repo, array $args): void
+{
+    $message = null;
+
+    for ($i = 0; $i < count($args); $i++) {
+        if ($args[$i] === '-m' && isset($args[$i + 1])) {
+            $message = $args[$i + 1];
+            break;
+        }
+    }
+
+    if ($message === null) {
+        fwrite(STDERR, "Usage: pitmaster commit -m <message>\n");
+        exit(1);
+    }
+
+    $id = $repo->commit($message);
+    $branch = $repo->branch() ?? 'detached HEAD';
+    fwrite(STDOUT, "[{$branch} " . substr($id->hex, 0, 7) . "] {$message}\n");
+}
+
+function commandBranch(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        $current = $repo->branch();
+
+        foreach ($repo->branches() as $branch) {
+            $prefix = $branch === $current ? '* ' : '  ';
+            fwrite(STDOUT, "{$prefix}{$branch}\n");
+        }
+
+        return;
+    }
+
+    $name = $args[0];
+
+    if ($name === '-d' || $name === '-D') {
+        if (!isset($args[1])) {
+            fwrite(STDERR, "Usage: pitmaster branch -d <name>\n");
+            exit(1);
+        }
+
+        $repo->deleteBranch($args[1]);
+        fwrite(STDOUT, "Deleted branch {$args[1]}\n");
+        return;
+    }
+
+    $repo->createBranch($name);
+    fwrite(STDOUT, "Created branch {$name}\n");
+}
+
+function commandTag(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        foreach ($repo->tags() as $tag) {
+            fwrite(STDOUT, "{$tag}\n");
+        }
+
+        return;
+    }
+
+    $name = $args[0];
+    $message = null;
+
+    for ($i = 1; $i < count($args); $i++) {
+        if ($args[$i] === '-m' && isset($args[$i + 1])) {
+            $message = $args[$i + 1];
+            break;
+        }
+    }
+
+    if ($message !== null) {
+        $repo->createTag($name, $message);
+    } else {
+        $headId = $repo->resolve('HEAD');
+        $repo->updateRef("refs/tags/{$name}", $headId);
+    }
+
+    fwrite(STDOUT, "Created tag {$name}\n");
+}
+
+function commandCheckout(Repository $repo, array $args): void
+{
+    if (!isset($args[0])) {
+        fwrite(STDERR, "Usage: pitmaster checkout <branch|commit>\n");
+        exit(1);
+    }
+
+    $repo->checkout($args[0]);
+    fwrite(STDOUT, "Switched to '{$args[0]}'\n");
+}
+
+function commandMerge(Repository $repo, array $args): void
+{
+    if (!isset($args[0])) {
+        fwrite(STDERR, "Usage: pitmaster merge <branch>\n");
+        exit(1);
+    }
+
+    $result = $repo->merge($args[0]);
+
+    if ($result->clean) {
+        fwrite(STDOUT, "Merge successful.\n");
+    } else {
+        fwrite(STDERR, "CONFLICT in: " . implode(', ', $result->conflictPaths) . "\n");
+        exit(1);
+    }
+}
+
+function commandStash(Repository $repo, array $args): void
+{
+    $stash = new \Pitmaster\Stash\Stash(
+        $repo->objectDatabase(),
+        $repo->refDatabase(),
+        $repo->gitDir(),
+        $repo->workDir(),
+    );
+
+    $subcommand = $args[0] ?? 'push';
+
+    match ($subcommand) {
+        'push', 'save' => (function () use ($stash, $args) {
+            $message = $args[1] ?? '';
+            $id = $stash->push($message);
+            fwrite(STDOUT, "Saved working directory to stash " . substr($id->hex, 0, 7) . "\n");
+        })(),
+        'pop' => (function () use ($stash) {
+            $stash->pop();
+            fwrite(STDOUT, "Applied and dropped stash\n");
+        })(),
+        'apply' => (function () use ($stash) {
+            $stash->apply();
+            fwrite(STDOUT, "Applied stash\n");
+        })(),
+        'list' => (function () use ($stash) {
+            foreach ($stash->listEntries() as $entry) {
+                fwrite(STDOUT, "stash@{{$entry['index']}}: {$entry['message']}\n");
+            }
+        })(),
+        'drop' => (function () use ($stash) {
+            $stash->drop();
+            fwrite(STDOUT, "Dropped stash\n");
+        })(),
+        default => (function () use ($subcommand) {
+            fwrite(STDERR, "Unknown stash command: {$subcommand}\n");
+            exit(1);
+        })(),
+    };
+}
+
+function commandBlame(Repository $repo, array $args): void
+{
+    if (!isset($args[0])) {
+        fwrite(STDERR, "Usage: pitmaster blame <file>\n");
+        exit(1);
+    }
+
+    $headId = $repo->resolve('HEAD');
+    $blame = new \Pitmaster\Graph\Blame($repo->objectDatabase());
+    $result = $blame->blame($headId, $args[0]);
+
+    foreach ($result as $line) {
+        fwrite(STDOUT, sprintf(
+            "%s (%s) %s\n",
+            substr($line['hash'], 0, 8),
+            substr($line['author'], 0, 30),
+            $line['content'],
+        ));
+    }
+}
+
+function commandGrep(Repository $repo, array $args): void
+{
+    if (!isset($args[0])) {
+        fwrite(STDERR, "Usage: pitmaster grep <pattern>\n");
+        exit(1);
+    }
+
+    $headCommit = $repo->head();
+    $grep = new \Pitmaster\Graph\Grep($repo->objectDatabase());
+    $results = $grep->grep($headCommit->tree, $args[0]);
+
+    foreach ($results as $match) {
+        fwrite(STDOUT, "\033[35m{$match['path']}\033[0m:\033[32m{$match['line']}\033[0m:{$match['content']}\n");
+    }
+}
+
+function commandRefs(Repository $repo): void
 {
     foreach ($repo->allRefs() as $name => $hash) {
         fwrite(STDOUT, "{$hash} {$name}\n");
     }
+}
+
+function commandReset(Repository $repo, array $args): void
+{
+    $mode = 'mixed';
+    $rev = null;
+
+    foreach ($args as $arg) {
+        if ($arg === '--soft') {
+            $mode = 'soft';
+        } elseif ($arg === '--hard') {
+            $mode = 'hard';
+        } elseif ($arg === '--mixed') {
+            $mode = 'mixed';
+        } else {
+            $rev = $arg;
+        }
+    }
+
+    if ($rev === null) {
+        fwrite(STDERR, "Usage: pitmaster reset [--soft|--mixed|--hard] <commit>\n");
+        exit(1);
+    }
+
+    $repo->reset($rev, $mode);
+    fwrite(STDOUT, "HEAD is now at " . substr($repo->resolve($rev)->hex, 0, 7) . "\n");
 }
