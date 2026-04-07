@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-branch-start-point",
+    "category": "upstream",
+    "description": "isomorphic-git: test-branch-start-point",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

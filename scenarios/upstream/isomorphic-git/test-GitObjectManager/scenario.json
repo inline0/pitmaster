@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-GitObjectManager",
+    "category": "upstream",
+    "description": "isomorphic-git: test-GitObjectManager",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

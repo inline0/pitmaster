@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-clone-no-master",
+    "category": "upstream",
+    "description": "isomorphic-git: test-clone-no-master",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

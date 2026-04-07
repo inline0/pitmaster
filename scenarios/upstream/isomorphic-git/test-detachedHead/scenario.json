@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-detachedHead",
+    "category": "upstream",
+    "description": "isomorphic-git: test-detachedHead",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

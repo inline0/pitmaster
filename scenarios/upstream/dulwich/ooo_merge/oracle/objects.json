@@ -1,0 +1,79 @@
+[
+    {
+        "hash": "2969be3e8ee1c0222396a5611407e4769f14e54b",
+        "type": "blob",
+        "size": 7,
+        "content": "test 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3874e9c60a6d149c44c928140f250d81e6381520",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 954a536f7819d40e6f637f849ee187dd10066349\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6f670c0fb53f9463760b7295fbb814e965fb20c8",
+        "type": "blob",
+        "size": 7,
+        "content": "test 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70c190eb48fa8bbb50ddc692a17b44cb781af7f6",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7601d7f6231db6a57f7bbb79ee52e4d462fd44d1",
+        "type": "commit",
+        "size": 290,
+        "content": "tree 90182552c4a85a45ec2a835cadc3451bebdfe870\nparent fb5b0425c7ce46959bec94d54b9a157645e114f5\nparent f507291b64138b875c28e03469025b1ea20bc614\nauthor James Westby <jw+debian@jameswestby.net> 1174847349 +0100\ncommitter James Westby <jw+debian@jameswestby.net> 1174847349 +0100\n\nMerge ../temp\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90182552c4a85a45ec2a835cadc3451bebdfe870",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n100644 blob 954a536f7819d40e6f637f849ee187dd10066349\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "954a536f7819d40e6f637f849ee187dd10066349",
+        "type": "blob",
+        "size": 7,
+        "content": "test 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2a2766a2879c209ab1176e7e778b81ae422eeaa",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f507291b64138b875c28e03469025b1ea20bc614",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 3874e9c60a6d149c44c928140f250d81e6381520\nparent f9e39b120c68182a4ba35349f832d0e4e61f485c\nauthor James Westby <jw+debian@jameswestby.net> 1174847336 +0100\ncommitter James Westby <jw+debian@jameswestby.net> 1174847336 +0100\n\nCommit branch 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9e39b120c68182a4ba35349f832d0e4e61f485c",
+        "type": "commit",
+        "size": 192,
+        "content": "tree b2a2766a2879c209ab1176e7e778b81ae422eeaa\nauthor James Westby <jw+debian@jameswestby.net> 1174847257 +0100\ncommitter James Westby <jw+debian@jameswestby.net> 1174847257 +0100\n\nTest commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fb5b0425c7ce46959bec94d54b9a157645e114f5",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 70c190eb48fa8bbb50ddc692a17b44cb781af7f6\nparent f9e39b120c68182a4ba35349f832d0e4e61f485c\nauthor James Westby <jw+debian@jameswestby.net> 1174847307 +0100\ncommitter James Westby <jw+debian@jameswestby.net> 1174847307 +0100\n\nCommit branch 1\n",
+        "encoding": "utf-8"
+    }
+]

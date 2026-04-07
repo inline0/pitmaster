@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "f6d51b1f9a449079f6999be1fb249c359511f164",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "d717da498074925e9adf265812a0fc099fbe9684",
+        "name": "refs/notes/alt"
+    },
+    {
+        "hash": "a262a7fdd3bcc603af0da0bafe8c5ae7c5208d7d",
+        "name": "refs/notes/commits"
+    },
+    {
+        "hash": "182ba27af31c3a2e47504220c4b50d0d6d016b9f",
+        "name": "refs/tags/v1.0.0"
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "e5788e2a76a5ab6f84df776df153d5220c7b0fd5",
+        "tree": "85a4a30ffe48e8f7eeb837e758323269dffd77dd",
+        "parents": [
+            "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69"
+        ],
+        "author": "Yu Shimura <mail@yuhr.org> 1544176574 2018-12-07 18:56:14 +0900",
+        "committer": "Yu Shimura <mail@yuhr.org> 1544176574 2018-12-07 18:56:14 +0900",
+        "message": "next"
+    },
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "tree": "984082c29b02a7ab31c34c7a8a52df9a706d7987",
+        "parents": [],
+        "author": "Yu Shimura <mail@yuhr.org> 1544175925 2018-12-07 18:45:25 +0900",
+        "committer": "Yu Shimura <mail@yuhr.org> 1544175925 2018-12-07 18:45:25 +0900",
+        "message": "refs/heads/master"
+    }
+]

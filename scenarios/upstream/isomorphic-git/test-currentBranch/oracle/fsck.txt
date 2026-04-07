@@ -1,0 +1,3 @@
+error: refs/heads/master: invalid sha1 pointer 033417ae18b174f078f2f44232cb7a374f4c60ce
+error: HEAD: invalid sha1 pointer 033417ae18b174f078f2f44232cb7a374f4c60ce
+notice: No default references

@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "182ba27af31c3a2e47504220c4b50d0d6d016b9f",
+        "type": "tag",
+        "size": 139,
+        "content": "object f6d51b1f9a449079f6999be1fb249c359511f164\ntype commit\ntag v1.0.0\ntagger William Hilton <wmhilton@gmail.com> 1578937324 -0500\n\nv1.0.0\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "199948939a0b95c6f27668689102496574b2c332",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 68aba62e560c0ebc3396e8ae9335232cd93a3f60\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b18e512dba79e4c8300dd08aeb37f8e728b8dad",
+        "type": "blob",
+        "size": 12,
+        "content": "hello world\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68aba62e560c0ebc3396e8ae9335232cd93a3f60",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad\thello.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f6d51b1f9a449079f6999be1fb249c359511f164",
+        "type": "commit",
+        "size": 1040,
+        "content": "tree 199948939a0b95c6f27668689102496574b2c332\nauthor William Hilton <wmhilton@gmail.com> 1578937310 -0500\ncommitter William Hilton <wmhilton@gmail.com> 1578937310 -0500\ngpgsig -----BEGIN PGP SIGNATURE-----\n \n iQIzBAABCAAdFiEEaaCqzBxf8S0R+jnQlgm4pZKLprkFAl4cq94ACgkQlgm4pZKL\n prl9hQ//VfOMq0WvWgWkAVcZljDoZoYDg8Znk3+1VNWgAuSxsjK9uUghQ4HrDz7l\n mtwyo/C+EllhpOuQUBOBKZjS4LMi4lvprHnznjLfph56vvc0enLZCvHVwdDku8+q\n RVdSkl+Be1sP43hoMjlBUjEPTBGKgGUOxOK1ebUYK+qKJmfqWd/qRTpmb5JqNgPh\n MOdYolvE/UI0joNOoEZV57Ib8Xu6vwPBQ7myUpFglkvVB6vp+wvSiSD8D9t1K0xn\n CydTtMb7DtDR+GYKwJuQO8ZVOBOg0Ai1tPpIdwthIROK9s1fkqoPmpJcYz75in7c\n 8Gs+TnJB04U9sH4DV/9rU+1bXi7Jkmk5j0JINh0Be2hpYpmx9oY1Eb1gdcjgx5u+\n 08hsdHsXKrVPVw9XPGH/pv3EVnM4Xhk6wwdw693bmE7IRFuAruoMTVXATRrvN5N5\n ZC8U16VIWzDbAlqSxRbtQF2DmvhjHAGTNpZv483n5/3Vf50/DIpW9jGbqNqlgkoo\n C5Qilu7Rt5IH2q/NCbG/RXzAXGskVIevilp/fukG5WNa78GI4IBUgqmDoLMlQuxN\n t+qsnansI9BF8nz+tUGY5IHfZ/UEzsMtNsMju1Pm5HfeCn1q8IKRMIJtPbjVaLmF\n bCh42eUfsYOheiD5QOzIjKosNEKReL664F7KGY5ye8Yujn03ncg=\n =A5Nv\n -----END PGP SIGNATURE-----\n\nInitial commit\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "5dac377bdded4c9aeb8dff595f0faeebcc8498cc",
+        "tree": "d80c186a03f423a81b39df39dc87fd269736ca86",
+        "parents": [
+            "ab64bbdcc51b170d21588e5c5d391ee5c0c96dfd",
+            "4cffe90e0a41ad3f5190079d7c8f036bde29cbe6"
+        ],
+        "author": "James Westby <jw+debian@jameswestby.net> 1174773719 2007-03-24 22:01:59 +0000",
+        "committer": "James Westby <jw+debian@jameswestby.net> 1174773719 2007-03-24 22:01:59 +0000",
+        "message": "Merge ../b"
+    },
+    {
+        "hash": "ab64bbdcc51b170d21588e5c5d391ee5c0c96dfd",
+        "tree": "1b6318f651a534b38f9c7aedeebbd56c1e896853",
+        "parents": [
+            "60dacdc733de308bb77bb76ce0fb0f9b44c9769e"
+        ],
+        "author": "James Westby <jw+debian@jameswestby.net> 1174773711 2007-03-24 22:01:51 +0000",
+        "committer": "James Westby <jw+debian@jameswestby.net> 1174773711 2007-03-24 22:01:51 +0000",
+        "message": "Commit branch 1"
+    },
+    {
+        "hash": "4cffe90e0a41ad3f5190079d7c8f036bde29cbe6",
+        "tree": "d4bdad6549dfedf25d3b89d21f506aff575b28a7",
+        "parents": [
+            "60dacdc733de308bb77bb76ce0fb0f9b44c9769e"
+        ],
+        "author": "James Westby <jw+debian@jameswestby.net> 1174773696 2007-03-24 22:01:36 +0000",
+        "committer": "James Westby <jw+debian@jameswestby.net> 1174773696 2007-03-24 22:01:36 +0000",
+        "message": "Commit branch 2"
+    },
+    {
+        "hash": "60dacdc733de308bb77bb76ce0fb0f9b44c9769e",
+        "tree": "70c190eb48fa8bbb50ddc692a17b44cb781af7f6",
+        "parents": [
+            "0d89f20333fbb1d2f3a94da77f4981373d8f4310"
+        ],
+        "author": "James Westby <jw+debian@jameswestby.net> 1174759230 2007-03-24 18:00:30 +0000",
+        "committer": "James Westby <jw+debian@jameswestby.net> 1174759230 2007-03-24 18:00:30 +0000",
+        "message": "Test commit"
+    },
+    {
+        "hash": "0d89f20333fbb1d2f3a94da77f4981373d8f4310",
+        "tree": "90182552c4a85a45ec2a835cadc3451bebdfe870",
+        "parents": [],
+        "author": "James Westby <jw+debian@jameswestby.net> 1174758034 2007-03-24 17:40:34 +0000",
+        "committer": "James Westby <jw+debian@jameswestby.net> 1174758034 2007-03-24 17:40:34 +0000",
+        "message": "Test commit"
+    }
+]

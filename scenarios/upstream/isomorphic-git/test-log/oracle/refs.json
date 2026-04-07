@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "3c945912219e6fc27a9100bf099687c69c88afed",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "name": "refs/remotes/origin/shallow-branch"
+    }
+]

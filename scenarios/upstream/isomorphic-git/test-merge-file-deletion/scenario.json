@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-merge-file-deletion",
+    "category": "upstream",
+    "description": "isomorphic-git: test-merge-file-deletion",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

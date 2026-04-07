@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "3ca31f139028aee4705e48a30bbc4ad3803da95d",
+        "type": "commit",
+        "size": 175,
+        "content": "tree e7c39629c34bf295adb8ca8b250c653cf2a8bc85\nauthor modesty <modestyz@hotmail.com> 1709229545 -0800\ncommitter modesty <modestyz@hotmail.com> 1709229545 -0800\n\ninitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "46b03c85590a1eec2e0752082e3d66b3102da92c",
+        "type": "blob",
+        "size": 30,
+        "content": "<root>\n\t<test>1</test>\n</root>",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "50715a58453c83bd089ebd1ac923a0ec090598d2",
+        "type": "blob",
+        "size": 20,
+        "content": "console.log('b.js');",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e7c39629c34bf295adb8ca8b250c653cf2a8bc85",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob f3a34851d44d6b97c90fbb99dd3d18c261b9a237\ta.txt\n100644 blob 50715a58453c83bd089ebd1ac923a0ec090598d2\tb.js\n100644 blob 46b03c85590a1eec2e0752082e3d66b3102da92c\tm.xml\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f3a34851d44d6b97c90fbb99dd3d18c261b9a237",
+        "type": "blob",
+        "size": 4,
+        "content": "text",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-uploadPack",
+    "category": "upstream",
+    "description": "isomorphic-git: test-uploadPack",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

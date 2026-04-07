@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-findMergeBase",
+    "category": "upstream",
+    "description": "isomorphic-git: test-findMergeBase",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

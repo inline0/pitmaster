@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "24fc0a9596d825432f06f0c7e3286898b89a04f2",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor git <git@example.com> 1544166761 -0700\ncommitter git <git@example.com> 1544166761 -0700\n\nmake it so\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f7a1ba0e8eb33743c8c7fa9920b6da809c99107",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob cc628ccd10742baea8241c5924df992b5c019f71\thello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cc628ccd10742baea8241c5924df992b5c019f71",
+        "type": "blob",
+        "size": 6,
+        "content": "world\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d4ddffa3db6f52466e09076e70fbefa0641b4cea",
+        "type": "commit",
+        "size": 196,
+        "content": "tree 8f7a1ba0e8eb33743c8c7fa9920b6da809c99107\nparent 24fc0a9596d825432f06f0c7e3286898b89a04f2\nauthor git <git@example.com> 1544166761 -0700\ncommitter git <git@example.com> 1544166761 -0700\n\nwaves\n",
+        "encoding": "utf-8"
+    }
+]

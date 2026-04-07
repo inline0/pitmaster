@@ -1,0 +1,8 @@
+error: refs/heads/.gitignore: badRefName: invalid refname format
+error: refs/heads/.gitignore: badRefContent: *
+!.gitignore
+error: refs/tags/.gitignore: badRefName: invalid refname format
+error: refs/tags/.gitignore: badRefContent: *
+!.gitignore
+notice: HEAD points to an unborn branch (master)
+notice: No default references

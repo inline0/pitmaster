@@ -1,0 +1,114 @@
+[
+    {
+        "hash": "error:",
+        "type": "inflate:",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "error:",
+        "type": "unable",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d89f20333fbb1d2f3a94da77f4981373d8f4310",
+        "type": "commit",
+        "size": 192,
+        "content": "tree 90182552c4a85a45ec2a835cadc3451bebdfe870\nauthor James Westby <jw+debian@jameswestby.net> 1174758034 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174758034 +0000\n\nTest commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1b6318f651a534b38f9c7aedeebbd56c1e896853",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\td\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "error:",
+        "type": "inflate:",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "error:",
+        "type": "unable",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4cffe90e0a41ad3f5190079d7c8f036bde29cbe6",
+        "type": "commit",
+        "size": 244,
+        "content": "tree d4bdad6549dfedf25d3b89d21f506aff575b28a7\nparent 60dacdc733de308bb77bb76ce0fb0f9b44c9769e\nauthor James Westby <jw+debian@jameswestby.net> 1174773696 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174773696 +0000\n\nCommit branch 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5dac377bdded4c9aeb8dff595f0faeebcc8498cc",
+        "type": "commit",
+        "size": 287,
+        "content": "tree d80c186a03f423a81b39df39dc87fd269736ca86\nparent ab64bbdcc51b170d21588e5c5d391ee5c0c96dfd\nparent 4cffe90e0a41ad3f5190079d7c8f036bde29cbe6\nauthor James Westby <jw+debian@jameswestby.net> 1174773719 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174773719 +0000\n\nMerge ../b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "60dacdc733de308bb77bb76ce0fb0f9b44c9769e",
+        "type": "commit",
+        "size": 240,
+        "content": "tree 70c190eb48fa8bbb50ddc692a17b44cb781af7f6\nparent 0d89f20333fbb1d2f3a94da77f4981373d8f4310\nauthor James Westby <jw+debian@jameswestby.net> 1174759230 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174759230 +0000\n\nTest commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70c190eb48fa8bbb50ddc692a17b44cb781af7f6",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90182552c4a85a45ec2a835cadc3451bebdfe870",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n100644 blob 954a536f7819d40e6f637f849ee187dd10066349\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "954a536f7819d40e6f637f849ee187dd10066349",
+        "type": "blob",
+        "size": 7,
+        "content": "test 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab64bbdcc51b170d21588e5c5d391ee5c0c96dfd",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 1b6318f651a534b38f9c7aedeebbd56c1e896853\nparent 60dacdc733de308bb77bb76ce0fb0f9b44c9769e\nauthor James Westby <jw+debian@jameswestby.net> 1174773711 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174773711 +0000\n\nCommit branch 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d4bdad6549dfedf25d3b89d21f506aff575b28a7",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d80c186a03f423a81b39df39dc87fd269736ca86",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n100644 blob 2969be3e8ee1c0222396a5611407e4769f14e54b\tb\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\td\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

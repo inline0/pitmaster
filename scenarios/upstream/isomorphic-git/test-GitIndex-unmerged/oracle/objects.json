@@ -1,0 +1,282 @@
+[
+    {
+        "hash": "04791c147585e228abeb2d64890378c213a24d0e",
+        "type": "commit",
+        "size": 225,
+        "content": "tree ccfba2535bf1609ca9ac2b74a6c3737330df49ca\nparent 7dd9c3d0d8fd74efce92ef72e51f950fbd345b57\nauthor Your Name <you@example.com> 1674526793 -0800\ncommitter Your Name <you@example.com> 1674526793 -0800\n\nBranch B second commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "05ae5b4a8f502df0482aecd0093ad5c4e1d889e2",
+        "type": "tree",
+        "size": 84,
+        "content": "040000 tree 32351f55338f7ca95642983cc67dfbd735fbc092\ta\n040000 tree a458c66a7ca23a3705b5eb1f13e14b673c2ded05\tb\n040000 tree fc7916d27fa92e16868934bb09a89d04d9329a70\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "08563c6d304ece3469c55ffd75f63fab34b99d95",
+        "type": "blob",
+        "size": 80,
+        "content": "this is file b\n<<<<<<< HEAD\nit is not the best\n=======\nit is the best\n>>>>>>> b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0b6e0b9ab330eba9e891081624d840f3e338de5f",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 8891e6940a6984fa71e715e6dc03ddfbe3edc54b\ta\n100644 blob f8e4fe66013c62a4c584a88f810ca65a90ab4fe9\tb\n100644 blob a309dcbf6fddccbfe8b73b4af42beea0cd6d6cb4\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28f7c8779c90c541311a5b961e2909230b2be80e",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 9bf5aef805d5561a1c7c3dff39dbbcc62d252dde\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2cb513be920c30fce76343aa099421f7f0c55311",
+        "type": "blob",
+        "size": 27,
+        "content": "this is a file in folder a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d7b1a9b82e52bd8648cf156aa559eff3a27a678",
+        "type": "commit",
+        "size": 174,
+        "content": "tree 3b7be322ff1dc2346d25938325c262dc9bbd9d84\nauthor Your Name <you@example.com> 1674526625 -0800\ncommitter Your Name <you@example.com> 1674526725 -0800\n\nShared first commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "32351f55338f7ca95642983cc67dfbd735fbc092",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob b2aa81cc2ebe66c57c45afcfb47884688d5165da\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "355cb440284b9c67bc05e98d3ea91a33f584099c",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 0b6e0b9ab330eba9e891081624d840f3e338de5f\nparent 2d7b1a9b82e52bd8648cf156aa559eff3a27a678\nauthor Your Name <you@example.com> 1674526824 -0800\ncommitter Your Name <you@example.com> 1674526824 -0800\n\nBranch A second commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b7be322ff1dc2346d25938325c262dc9bbd9d84",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob baf5b90e3bc9f0c775c8d52764d353212259ffb3\ta\n100644 blob 77486f708f7f7a0dab6f951148b75365081fcc3c\tb\n100644 blob 5e5e2c3d099404a4e6badbbf030b261faf4a9fa3\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "455e64bf08e454de6154a68487c624c4ae7b6deb",
+        "type": "blob",
+        "size": 27,
+        "content": "this is a file in folder b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4aa462849d501a1c91ccadae25fb16698c09ecfc",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 59fc7882764d3ebe8f01f4452cd90816d2452874\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4e7e9a5a98c778d57405196bc7aea81a821cef25",
+        "type": "blob",
+        "size": 42,
+        "content": "this is a file in folder b\nit is the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59fc7882764d3ebe8f01f4452cd90816d2452874",
+        "type": "blob",
+        "size": 46,
+        "content": "this is a file in folder b\nit is not the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5d4a4b9581ad9b028ea039a21c06eecbea13ee7c",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 2cb513be920c30fce76343aa099421f7f0c55311\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5e5e2c3d099404a4e6badbbf030b261faf4a9fa3",
+        "type": "blob",
+        "size": 15,
+        "content": "this is file c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6808ca8c4a9187587628797b4c72f513255e6250",
+        "type": "commit",
+        "size": 174,
+        "content": "tree dc10e4aa65935fe74cd85c60a9c4e4704cc26ef9\nauthor Your Name <you@example.com> 1674526625 -0800\ncommitter Your Name <you@example.com> 1675787060 -0800\n\nShared first commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6b555a05f49cd9ab21427561a3be5b700cfcc96e",
+        "type": "tree",
+        "size": 84,
+        "content": "040000 tree 28f7c8779c90c541311a5b961e2909230b2be80e\ta\n040000 tree 4aa462849d501a1c91ccadae25fb16698c09ecfc\tb\n040000 tree fc7916d27fa92e16868934bb09a89d04d9329a70\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "72434dcc15c0287b5ba5fed423dda126d7dd0aaa",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 455e64bf08e454de6154a68487c624c4ae7b6deb\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "77486f708f7f7a0dab6f951148b75365081fcc3c",
+        "type": "blob",
+        "size": 15,
+        "content": "this is file b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7dd9c3d0d8fd74efce92ef72e51f950fbd345b57",
+        "type": "commit",
+        "size": 169,
+        "content": "tree 3b7be322ff1dc2346d25938325c262dc9bbd9d84\nauthor Your Name <you@example.com> 1674526625 -0800\ncommitter Your Name <you@example.com> 1674526625 -0800\n\nA first commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ed9b611d5424d4ce3788abec8c05a0aca7741c4",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 6b555a05f49cd9ab21427561a3be5b700cfcc96e\nparent 6808ca8c4a9187587628797b4c72f513255e6250\nauthor Your Name <you@example.com> 1675787414 -0800\ncommitter Your Name <you@example.com> 1675787414 -0800\n\nBranch A second commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8891e6940a6984fa71e715e6dc03ddfbe3edc54b",
+        "type": "blob",
+        "size": 30,
+        "content": "this is file a\nit is the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bf5aef805d5561a1c7c3dff39dbbcc62d252dde",
+        "type": "blob",
+        "size": 42,
+        "content": "this is a file in folder a\nit is the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a309dcbf6fddccbfe8b73b4af42beea0cd6d6cb4",
+        "type": "blob",
+        "size": 24,
+        "content": "this is file c\nit is ok\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a41a0b6cec11cd8fa2599c605a72dfe2eb66bcb1",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob d027946a10d569e40a24a440c55fd7f37c7dd9c5\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a458c66a7ca23a3705b5eb1f13e14b673c2ded05",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 4e7e9a5a98c778d57405196bc7aea81a821cef25\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab95baf01d77951192310def6b2e6c2448fbeb62",
+        "type": "blob",
+        "size": 80,
+        "content": "this is file a\n<<<<<<< HEAD\nit is the best\n=======\nit is not the best\n>>>>>>> b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2aa81cc2ebe66c57c45afcfb47884688d5165da",
+        "type": "blob",
+        "size": 46,
+        "content": "this is a file in folder a\nit is not the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b94de96f7c682d9eca74a3a2cb1cd3b03e114942",
+        "type": "blob",
+        "size": 36,
+        "content": "this is a file in folder c\nit is ok\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "baf5b90e3bc9f0c775c8d52764d353212259ffb3",
+        "type": "blob",
+        "size": 15,
+        "content": "this is file a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ccfba2535bf1609ca9ac2b74a6c3737330df49ca",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob d454b10c0b16437dd52cc324c105c3aa2d317a1d\ta\n100644 blob ec626feb592bbc2cfe8bb69299ba16665fe48b1e\tb\n100644 blob a309dcbf6fddccbfe8b73b4af42beea0cd6d6cb4\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce0efb47e11ddce3569e0a4635d69448f54a6143",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 05ae5b4a8f502df0482aecd0093ad5c4e1d889e2\nparent 6808ca8c4a9187587628797b4c72f513255e6250\nauthor Your Name <you@example.com> 1675787295 -0800\ncommitter Your Name <you@example.com> 1675787295 -0800\n\nBranch B second commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d027946a10d569e40a24a440c55fd7f37c7dd9c5",
+        "type": "blob",
+        "size": 27,
+        "content": "this is a file in folder c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d454b10c0b16437dd52cc324c105c3aa2d317a1d",
+        "type": "blob",
+        "size": 34,
+        "content": "this is file a\nit is not the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dc10e4aa65935fe74cd85c60a9c4e4704cc26ef9",
+        "type": "tree",
+        "size": 84,
+        "content": "040000 tree 5d4a4b9581ad9b028ea039a21c06eecbea13ee7c\ta\n040000 tree 72434dcc15c0287b5ba5fed423dda126d7dd0aaa\tb\n040000 tree a41a0b6cec11cd8fa2599c605a72dfe2eb66bcb1\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ec626feb592bbc2cfe8bb69299ba16665fe48b1e",
+        "type": "blob",
+        "size": 30,
+        "content": "this is file b\nit is the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f10f3afa31a001d315eaf27d2fe21c7470861650",
+        "type": "commit",
+        "size": 225,
+        "content": "tree ccfba2535bf1609ca9ac2b74a6c3737330df49ca\nparent 2d7b1a9b82e52bd8648cf156aa559eff3a27a678\nauthor Your Name <you@example.com> 1674526949 -0800\ncommitter Your Name <you@example.com> 1674526949 -0800\n\nBranch B second commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f8e4fe66013c62a4c584a88f810ca65a90ab4fe9",
+        "type": "blob",
+        "size": 34,
+        "content": "this is file b\nit is not the best\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fc7916d27fa92e16868934bb09a89d04d9329a70",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob b94de96f7c682d9eca74a3a2cb1cd3b03e114942\tc\n",
+        "encoding": "utf-8"
+    }
+]

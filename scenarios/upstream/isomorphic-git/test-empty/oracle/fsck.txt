@@ -1,0 +1,4 @@
+error: refs/.gitkeep: badRefName: invalid refname format
+error: refs/.gitkeep: badRefContent: 
+notice: HEAD points to an unborn branch (master)
+notice: No default references

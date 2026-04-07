@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-log",
+    "category": "upstream",
+    "description": "isomorphic-git: test-log",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

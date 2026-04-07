@@ -1,0 +1,77 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Import isomorphic-git test fixtures (bare .git repos).
+ */
+
+$root = dirname(__DIR__);
+$source = '/tmp/isomorphic-git/__tests__/__fixtures__';
+
+if (!is_dir($source)) {
+    fwrite(STDERR, "isomorphic-git fixtures not found at {$source}\n");
+    fwrite(STDERR, "Run: git clone --depth=1 https://github.com/isomorphic-git/isomorphic-git.git /tmp/isomorphic-git\n");
+    exit(1);
+}
+
+$upstreamDir = $root . '/scenarios/upstream/isomorphic-git';
+$imported = 0;
+
+foreach (scandir($source) as $entry) {
+    if ($entry === '.' || $entry === '..') {
+        continue;
+    }
+
+    $sourcePath = $source . '/' . $entry;
+
+    // Only import bare .git repos (most useful for reading)
+    if (!str_ends_with($entry, '.git') || !is_dir($sourcePath)) {
+        continue;
+    }
+
+    // Check it has a HEAD file (valid git repo)
+    if (!is_file($sourcePath . '/HEAD')) {
+        continue;
+    }
+
+    $safeName = str_replace('.git', '', $entry);
+    $scenarioDir = $upstreamDir . '/' . $safeName;
+
+    if (is_dir($scenarioDir)) {
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    $setupContent = "#!/bin/bash\nset -e\n\n# isomorphic-git fixture: {$entry}\n"
+        . "git init .\n"
+        . "cp -r " . escapeshellarg(realpath($sourcePath)) . "/* .git/\n"
+        . "git checkout -- . 2>/dev/null || true\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setupContent);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    $scenario = [
+        'name' => 'upstream/isomorphic-git/' . $safeName,
+        'category' => 'upstream',
+        'description' => 'isomorphic-git: ' . $safeName,
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => [
+            'exact_match' => [],
+            'fsck_clean' => false,
+        ],
+    ];
+
+    file_put_contents(
+        $scenarioDir . '/scenario.json',
+        json_encode($scenario, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+    );
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$safeName}\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} isomorphic-git fixtures.\n");

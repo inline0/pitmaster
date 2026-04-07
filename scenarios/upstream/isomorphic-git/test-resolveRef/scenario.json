@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-resolveRef",
+    "category": "upstream",
+    "description": "isomorphic-git: test-resolveRef",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

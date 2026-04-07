@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "033417ae18b174f078f2f44232cb7a374f4c60ce",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "name": "refs/heads/test-branch"
+    },
+    {
+        "hash": "033417ae18b174f078f2f44232cb7a374f4c60ce",
+        "name": "refs/remotes/origin/master"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "name": "refs/remotes/origin/test-branch"
+    },
+    {
+        "hash": "86167ce7861387275b2fbd188e031e00aff446f9",
+        "name": "refs/tags/tagtree"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "name": "refs/tags/test-tag"
+    },
+    {
+        "hash": "1a2149e96a9767b281a8f10fd014835322da2d14",
+        "name": "refs/tags/v0.0.1"
+    }
+]

@@ -1,0 +1,54 @@
+[
+    {
+        "hash": "53e2cbe218d4d4c1ebb6150e4e9799d941961e1a",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "53e2cbe218d4d4c1ebb6150e4e9799d941961e1a",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "53e2cbe218d4d4c1ebb6150e4e9799d941961e1a",
+        "name": "refs/remotes/origin/main"
+    },
+    {
+        "hash": "14d0e09d4643d7547267c1cbf9972ac1c4db0b2d",
+        "name": "refs/remotes/origin/master"
+    },
+    {
+        "hash": "f7079f698f005f513594b7865853fb8099da193b",
+        "name": "refs/remotes/origin/ssh"
+    },
+    {
+        "hash": "8b80d50a6a956624e3424577151d7e9f568fd20d",
+        "name": "refs/remotes/origin/static-server"
+    },
+    {
+        "hash": "db34227a52a6490fc80a13da3916ea91d183fc3f",
+        "name": "refs/tags/v1.0.0"
+    },
+    {
+        "hash": "e0968e960fc46a1e769c36e4ce0f81e5ddeeddd7",
+        "name": "refs/tags/v1.1.0"
+    },
+    {
+        "hash": "ac33f741135b9c5776d1bd908240f10c9e065973",
+        "name": "refs/tags/v1.2.0"
+    },
+    {
+        "hash": "d32e3180241e87717d620197e4ded58847fd295e",
+        "name": "refs/tags/v1.2.1"
+    },
+    {
+        "hash": "918a6ec91f49bcb763f9cf3ee03db136a29541b3",
+        "name": "refs/tags/v1.3.0"
+    },
+    {
+        "hash": "3200a5a799396e0e4564ce4e92a5e9d6d86e0f38",
+        "name": "refs/tags/v1.3.1"
+    },
+    {
+        "hash": "53e2cbe218d4d4c1ebb6150e4e9799d941961e1a",
+        "name": "refs/tags/v2.0.0"
+    }
+]

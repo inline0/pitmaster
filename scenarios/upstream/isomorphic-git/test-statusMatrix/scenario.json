@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-statusMatrix",
+    "category": "upstream",
+    "description": "isomorphic-git: test-statusMatrix",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "033417a0c0d27e31ee2402838910c3de49b10d8c",
+        "type": "commit",
+        "size": 1164,
+        "content": "tree 601653c721018b5fb9d414391e350f1758c3c8a4\nparent b8b1fcecbc6f5ea8bc915c3ac319e8c9eb204f95\nauthor Will Hilton <wmhilton@gmail.com> 1502671952 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1502671952 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZkPRQAAoJEJYJuKWSi6a5V9IP/iRFlsAHj4lx5fXcoGW+1k+j\n Uje26YCdlYeIfROxDTceUjITW7GGknqJOuVLeTRKbtH0vxi1PRqdIfL3SEpw5Jo2\n PgsgQEHyprWIfvkSxC84QdjtcL41+sC6cjmZ3FmyuxoU7Oy0X9vV2kyHDQTMZggW\n UdhxE9vrpyk8xiG4t1xlF/Gf/t+JSmmB1ASB3UfZefz5ErUnhopxY5APm04CJspQ\n N3jIi3B8y8fNCP5QFAkCnzSrx8nf+0Qo9SBPROZfMP9ajGbzIdbxTXVXZO290A81\n GPuZ25l2xsfV5b6nXNlePS1mQ7sQBxTER96YT0KtvAPmzCbwLRmV65iOdYJ6rbeI\n YO9l5cJol3pkWKsXGgUzcZUql/06+YQY7wQ8HN1wB3qkLdc9Cgu18KQewn7P3G7y\n lU0bWlTTw0VYZZ8+Zpn5vTGIVFljpSLFZarYtkVyY26QaUkvdP+5doMaOhZDUS9D\n iA9AOcWZAWirzoWOWbBXu8JcCn4RWkfATVxmA4bV5I+Sy95CWXQBPGFFrYvo+QiS\n xYoXr85Mqc7nsKaKBc+88Z7lVSNjhb4uUNc0zUa2nCYOPweRGjwnTbsDQK0K2zrw\n s+Ot84Qt3SpC0JB47457s/7V8PXzuV0QXvzr35OHvYmRQ8XKeqd4L+aHwHVpIorY\n 4b5sUqYDVP9y/MpSAnoU\n =J6+s\n -----END PGP SIGNATURE-----\n\nI dunno if this will really work, if it doesn't just give up testing resolveRef for a while or make a fixture\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "033417ae18b174f078f2f44232cb7a374f4c60ce",
+        "type": "commit",
+        "size": 1164,
+        "content": "tree 601653c721018b5fb9d414391e350f1758c3c8a4\nparent b8b1fcecbc6f5ea8bc915c3ac319e8c9eb204f95\nauthor Will Hilton <wmhilton@gmail.com> 1502671952 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1502671952 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZkPRQAAoJEJYJuKWSi6a5V9IP/iRFlsAHj4lx5fXcoGW+1k+j\n Uje26YCdlYeIfROxDTceUjITW7GGknqJOuVLeTRKbtH0vxi1PRqdIfL3SEpw5Jo2\n PgsgQEHyprWIfvkSxC84QdjtcL41+sC6cjmZ3FmyuxoU7Oy0X9vV2kyHDQTMZggW\n UdhxE9vrpyk8xiG4t1xlF/Gf/t+JSmmB1ASB3UfZefz5ErUnhopxY5APm04CJspQ\n N3jIi3B8y8fNCP5QFAkCnzSrx8nf+0Qo9SBPROZfMP9ajGbzIdbxTXVXZO290A81\n GPuZ25l2xsfV5b6nXNlePS1mQ7sQBxTER96YT0KtvAPmzCbwLRmV65iOdYJ6rbeI\n YO9l5cJol3pkWKsXGgUzcZUql/06+YQY7wQ8HN1wB3qkLdc9Cgu18KQewn7P3G7y\n lU0bWlTTw0VYZZ8+Zpn5vTGIVFljpSLFZarYtkVyY26QaUkvdP+5doMaOhZDUS9D\n iA9AOcWZAWirzoWOWbBXu8JcCn4RWkfATVxmA4bV5I+Sy95CWXQBPGFFrYvo+QiS\n xYoXr85Mqc7nsKaKBc+88Z7lVSNjhb4uUNc0zUa2nCYOPweRGjwnTbsDQK0K2zrw\n s+Ot84Qt3SpC0JB47457s/7V8PXzuV0QXvzr35OHvYmRQ8XKeqd4L+aHwHVpIorY\n 4b5sUqYDVP9y/MpSAnoU\n =J6+s\n -----END PGP SIGNATURE-----\n\nI dunno if this will really work, if it doesn't just give up testing resolveRef for a while or make a fixture\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "type": "commit",
+        "size": 1021,
+        "content": "tree 421909592ea5e22c6dda69d1cc85118240478444\nauthor Will Hilton <wmhilton@gmail.com> 1501381894 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501381894 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfUUGAAoJEJYJuKWSi6a51VIQAJPwVk7bFWbNoLbi9Hi931k3\n E6kGW8JnWwcT6Y7fpm0oNpoXt+UzqJdUhVTi+79ws3yKc0u1cA23nVXDUQYmNBT7\n 3YkzXP2b6OE8i7n0ffzWbOIwHqWPn7lm0RlssSEYMAwGzDTP4fj2isRCFBqQ2lb3\n dqp7ZbzikvkkQONs9AKpE7LpWYTVuyElBwO2RtlIcZQrs29fBxZg4q4fkF+mqOhp\n DMWMIvTNeCa35sjmWh4+iPXO2CtoYVKXfCzZStzleeCuwQGRhfCLxrxtcuXOREjG\n DilGnCZ0iM9+ClzD4wDUf/aY3F5exyq2oqktIq78EhFvIIozY+gUaTn6zXicr5ud\n 30QQP063Tf8wC3Cy95aEq9QqLYkMXhOYBDym5fWawEWo7ssmOIW1o0ISfSI8pTVZ\n bZr5f9gQZETlTWhSPh5IGqqdHrI2fw5pkmO1N/OEn4L8D7R8josty28V4+wk2gsO\n wUSPyBv7EpVx2JtO+9Wu941fZK2qOBBmTjcTYys9PQeY9UHtrTQ3y/1r/qdLpdUH\n 9HK/x5yNHqpnSATHpRiZnfkvKfaxxwIbaOLBPV8khPa/zu9dD+0WxDXStLVBWfXg\n MvYAu4q+mQSgON1Qu+kWg67lNhx//kRH0K+vUMJMIvc8M+yUgkJhRqH/HIEzEcJV\n ee4fN2IIWX0CTNr8Fs8a\n =0Txp\n -----END PGP SIGNATURE-----\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "type": "commit",
+        "size": 1113,
+        "content": "tree e0b8f3574060ee24e03e4af3896f65dd208a60cc\nparent b4f8206d9e359416b0f34238cbeb400f7da889a8\nauthor Will Hilton <wmhilton@gmail.com> 1502484200 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1502484200 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZjhboAAoJEJYJuKWSi6a5V5UP/040SfemJ13PRBXst2eB59gs\n 3hPx29DRKBhFtvk+uS+8523/hUfry2oeWWd6YRkcnkxxAUtBnfzVkI9AgRIc1NTM\n h5XtLMQubCAKw8JWvVvoXETzwVAODmdmvC4WSQCLu+opoe6/W7RvkrTD0pbkwH4E\n MXoha59sIWZ/FacZX6ByYqhFykfJL8gCFvRSzjiqBIbsP7Xq2Mh4jkAKYl5zxV3u\n qCk26hnhL++kwfXlu2YdGtB9+lj3pk1NeWqR379zRzh4P10FxXJ18qSxczbkAFOY\n 6o5h7a/Mql1KqWB9EFBupCpjydmpAtPo6l1Us4a3liB5LJvCh9xgR2HtShR4b97O\n nIpXP4ngy4z9UyrXXxxpiQQn/kVn/uKgtvGp8nOFioo61PCi9js2QmQxcsuBOeO+\n DdFq5k2PMNZLwizt4P8EGfVJoPbLhdYP4oWiMCuYV/2fNh0ozl/q176HGszlfrke\n 332Z0maJ3A5xIRj0b7vRNHV8AAl9Dheo3LspjeovP2iycCHFP03gSpCKdLRBRC4T\n X10BBFD8noCMXJxb5qenrf+eKRd8d4g7JtcyzqVgkBQ68GIG844VWRBolOzx4By5\n cAaw/SYIZG3RorAc11iZ7sva0jFISejmEzIebuChSzdWO2OOWRVvMdhyZwDLUgAb\n Qixh2bmPgr3h9nxq2Dmn\n =4+DN\n -----END PGP SIGNATURE-----\n\nImprove resolveRef to handle more kinds of refs. Add tests\n",
+        "encoding": "utf-8"
+    }
+]

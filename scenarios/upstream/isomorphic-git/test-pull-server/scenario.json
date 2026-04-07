@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-pull-server",
+    "category": "upstream",
+    "description": "isomorphic-git: test-pull-server",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

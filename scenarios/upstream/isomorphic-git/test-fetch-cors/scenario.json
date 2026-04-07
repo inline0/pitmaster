@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-fetch-cors",
+    "category": "upstream",
+    "description": "isomorphic-git: test-fetch-cors",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

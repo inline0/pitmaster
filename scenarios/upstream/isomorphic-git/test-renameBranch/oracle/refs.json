@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/heads/existing-branch"
+    },
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/heads/test-branch"
+    },
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/heads/test-branch-2"
+    },
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/remotes/origin/master"
+    }
+]

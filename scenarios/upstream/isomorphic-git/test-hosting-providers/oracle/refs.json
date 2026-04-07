@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "c03e131196f43a78888415924bcdcbf3090f3316",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "c03e131196f43a78888415924bcdcbf3090f3316",
+        "name": "refs/remotes/pseudo/master"
+    },
+    {
+        "hash": "db13ba6f4e969df956fab620f5735281aef832a2",
+        "name": "refs/tags/annotated-tag"
+    },
+    {
+        "hash": "c03e131196f43a78888415924bcdcbf3090f3316",
+        "name": "refs/tags/lightweight-tag"
+    }
+]

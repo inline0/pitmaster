@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-readObject",
+    "category": "upstream",
+    "description": "isomorphic-git: test-readObject",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

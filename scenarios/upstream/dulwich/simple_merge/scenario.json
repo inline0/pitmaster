@@ -1,0 +1,11 @@
+{
+    "name": "upstream/dulwich/simple_merge",
+    "category": "upstream",
+    "description": "dulwich: simple_merge",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

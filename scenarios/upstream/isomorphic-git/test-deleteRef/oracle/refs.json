@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "e5788e2a76a5ab6f84df776df153d5220c7b0fd5",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "e5788e2a76a5ab6f84df776df153d5220c7b0fd5",
+        "name": "refs/tags/latest"
+    },
+    {
+        "hash": "e5788e2a76a5ab6f84df776df153d5220c7b0fd5",
+        "name": "refs/tags/packed-and-loose"
+    },
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "name": "refs/tags/packed-tag"
+    },
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "name": "refs/tags/prev"
+    }
+]

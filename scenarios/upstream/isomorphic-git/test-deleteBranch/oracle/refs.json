@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "46938a722feab415225be56085fe08f233301211",
+        "name": "refs/heads/collision"
+    },
+    {
+        "hash": "0674da21ba278014a243d1e5ae58df828c819181",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "46938a722feab415225be56085fe08f233301211",
+        "name": "refs/heads/remote"
+    },
+    {
+        "hash": "46938a722feab415225be56085fe08f233301211",
+        "name": "refs/heads/test"
+    },
+    {
+        "hash": "46938a722feab415225be56085fe08f233301211",
+        "name": "refs/tags/collision"
+    }
+]

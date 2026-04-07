@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "c03e131196f43a78888415924bcdcbf3090f3316",
+        "tree": "48af7b9b559ef89fc4a41d492282c927d63f306b",
+        "parents": [
+            "5a8905a02e181fe1821068b8c0f48cb6633d5b81"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1523126646 2018-04-07 14:44:06 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1523126646 2018-04-07 14:44:06 -0400",
+        "message": "Second commit"
+    },
+    {
+        "hash": "5a8905a02e181fe1821068b8c0f48cb6633d5b81",
+        "tree": "a69b2f53db7b7ba59f43ee15f5c42166297c4262",
+        "parents": [],
+        "author": "Will Hilton <wmhilton@gmail.com> 1505958727 2017-09-20 21:52:07 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1505958727 2017-09-20 21:52:07 -0400",
+        "message": "Initial commit"
+    }
+]

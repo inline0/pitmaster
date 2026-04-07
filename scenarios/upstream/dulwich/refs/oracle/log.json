@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "42d06bd4b77fed026b154d16493e5deab78f02ec",
+        "tree": "3b9e5457140e738c2dcd39bf6d7acf88379b90d1",
+        "parents": [],
+        "author": "Dave Borowitz <dborowitz@google.com> 1263852228 2010-01-18 14:03:48 -0800",
+        "committer": "Dave Borowitz <dborowitz@google.com> 1263852228 2010-01-18 14:03:48 -0800",
+        "message": "Add foo"
+    }
+]

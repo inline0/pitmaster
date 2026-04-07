@@ -1,0 +1,377 @@
+[
+    {
+        "hash": "ffc8e759595572caa7a6ee0ee97695405a2ecaa2",
+        "tree": "8171c8d2486c77cd9c23e111982e35e87f3da438",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698656195 2023-10-30 11:56:35 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698656195 2023-10-30 11:56:35 +0300",
+        "message": "delete o.txt too"
+    },
+    {
+        "hash": "4c0eab9b75df8b070d3037307839de49d3d350aa",
+        "tree": "8171c8d2486c77cd9c23e111982e35e87f3da438",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698656153 2023-10-30 11:55:53 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698656153 2023-10-30 11:55:53 +0300",
+        "message": "delte o.txt"
+    },
+    {
+        "hash": "48056666b859c10e54f8f1c634efb4de35b1622f",
+        "tree": "c83c3dc3532a3a77032c263e0a9ee54eee5234dc",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698409921 2023-10-27 15:32:01 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698409921 2023-10-27 15:32:01 +0300",
+        "message": "added h.txt too"
+    },
+    {
+        "hash": "1a13b59272076e3288ad75ef173b4a8ffb0b00af",
+        "tree": "de885f4adb2ff47d047c45fc9f6dae614a3e5a7a",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698409892 2023-10-27 15:31:32 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698409892 2023-10-27 15:31:32 +0300",
+        "message": "added h.txt"
+    },
+    {
+        "hash": "8a631ca301310f67e0a30fa154b69ed3ba32346b",
+        "tree": "8171c8d2486c77cd9c23e111982e35e87f3da438",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698327263 2023-10-26 16:34:23 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698327263 2023-10-26 16:34:23 +0300",
+        "message": "delete o.txt"
+    },
+    {
+        "hash": "f1b74b9c2a160e9a3ebec4857886f69443bcc4f4",
+        "tree": "86ebeff7d0ccde65d01e82e7ec45886e5368065c",
+        "parents": [
+            "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08"
+        ],
+        "author": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698327230 2023-10-26 16:33:50 +0300",
+        "committer": "Danil Kazanov <danil.kazanov@ics-it.ru> 1698327230 2023-10-26 16:33:50 +0300",
+        "message": "change o.txt"
+    },
+    {
+        "hash": "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08",
+        "tree": "a715da52342f4f77866f23141f1809632bc17a52",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1655324905 2022-06-15 13:28:25 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1655324905 2022-06-15 13:28:25 -0700",
+        "message": "add file c"
+    },
+    {
+        "hash": "04668fa0ad33660c74f440527fef51c1adc38d63",
+        "tree": "9bfd9b3e3a8b0b28acbaadb009127c4cc8f99c67",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654894737 2022-06-10 13:58:57 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654894737 2022-06-10 13:58:57 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "f6579638b3815a612def5bed7d7058b83dde490b",
+        "tree": "cc7c2bdadd25f0dee304be3c3d5d0a0f7aa4266a",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654101033 2022-06-01 09:30:33 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654101033 2022-06-01 09:30:33 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "a6ae3b137505de6739112df857cb8efcdb2fb5cb",
+        "tree": "72300a1bab421852bb539ae9a4e51a1bfc882fd2",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654100536 2022-06-01 09:22:16 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654100536 2022-06-01 09:22:16 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "045751af44433d8534fa65dcbd98433e5593f073",
+        "tree": "a715da52342f4f77866f23141f1809632bc17a52",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654100423 2022-06-01 09:20:23 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654100423 2022-06-01 09:20:23 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "e5a4054f21da6509ddcc12a822fb02e710173457",
+        "tree": "72300a1bab421852bb539ae9a4e51a1bfc882fd2",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654100228 2022-06-01 09:17:08 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654100228 2022-06-01 09:17:08 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "4c7dd8f59dde32fbfa00a49b429e824e5173fd85",
+        "tree": "03ed3e65b39bf3b69d44970bf2bb212fbd430dbe",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "80c2fdfedd48c09f3e6b75026f14a87d746cb06a"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654100149 2022-06-01 09:15:49 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654100149 2022-06-01 09:15:49 -0700",
+        "message": "Merge branch 'c' into a"
+    },
+    {
+        "hash": "80c2fdfedd48c09f3e6b75026f14a87d746cb06a",
+        "tree": "72300a1bab421852bb539ae9a4e51a1bfc882fd2",
+        "parents": [
+            "ca76efe9dbf57cebd5de30a6ca1c17e898aa805e"
+        ],
+        "author": "araknast <araknast@protonmail.com> 1654099968 2022-06-01 09:12:48 -0700",
+        "committer": "araknast <araknast@protonmail.com> 1654099968 2022-06-01 09:12:48 -0700",
+        "message": "add file c.txt"
+    },
+    {
+        "hash": "520273bbdd95b9c22eed871325f5ec853642e53c",
+        "tree": "a50a2c9b7c50af7993c201f092bc5763b9efcee5",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "98bbeca371ded9d64d8793c59ffc94f268a35050"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567646343 2019-09-04 21:19:03 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567646343 2019-09-04 21:19:03 -0400",
+        "message": "Merge branch 'd' into a"
+    },
+    {
+        "hash": "98bbeca371ded9d64d8793c59ffc94f268a35050",
+        "tree": "5ba885fb4d57f761ade4bc37e45b815b6d1d6bbb",
+        "parents": [
+            "904ead1caefb2439fe0fc3b4088a01de51e5ba88"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567646323 2019-09-04 21:18:43 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567646323 2019-09-04 21:18:43 -0400",
+        "message": "chmod +x"
+    },
+    {
+        "hash": "ca76efe9dbf57cebd5de30a6ca1c17e898aa805e",
+        "tree": "1839973b0fed85f8ca61e49fd8be536190f43381",
+        "parents": [
+            "904ead1caefb2439fe0fc3b4088a01de51e5ba88"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567632940 2019-09-04 17:35:40 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567632940 2019-09-04 17:35:40 -0400",
+        "message": "modification c"
+    },
+    {
+        "hash": "87deae71287b1a76f80b0e42d4be932677a235aa",
+        "tree": "4c8e50ecdb824a4c887910f9c901497144b768b7",
+        "parents": [
+            "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+            "293dd1f9999e3bdb91663c8fc905ed091b389711"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567632893 2019-09-04 17:34:53 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567632893 2019-09-04 17:34:53 -0400",
+        "message": "Merge branch 'b' into a"
+    },
+    {
+        "hash": "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+        "tree": "2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc",
+        "parents": [
+            "904ead1caefb2439fe0fc3b4088a01de51e5ba88"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567632658 2019-09-04 17:30:58 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567632788 2019-09-04 17:33:08 -0400",
+        "message": "modification a"
+    },
+    {
+        "hash": "293dd1f9999e3bdb91663c8fc905ed091b389711",
+        "tree": "5708c7e22ebfbf8d13413fc255b8ff422227dc1e",
+        "parents": [
+            "904ead1caefb2439fe0fc3b4088a01de51e5ba88"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1567632727 2019-09-04 17:32:07 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567632727 2019-09-04 17:32:07 -0400",
+        "message": "modification b"
+    },
+    {
+        "hash": "904ead1caefb2439fe0fc3b4088a01de51e5ba88",
+        "tree": "086032c929876c11e1a8d87756968d680596c40e",
+        "parents": [],
+        "author": "William Hilton <wmhilton@gmail.com> 1567632447 2019-09-04 17:27:27 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1567632597 2019-09-04 17:29:57 -0400",
+        "message": "Initial commit"
+    },
+    {
+        "hash": "d22a91364cbae00934b12037d8059e67ead22ad0",
+        "tree": "3683f870be446c7cc05ffaef9fa06415276e1828",
+        "parents": [
+            "3f5d33fea90237c212ba1137634d98ba98a14366",
+            "a5ad0531b336b5fd12236fa01d02be158119b3be"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1566338322 2019-08-20 17:58:42 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1566338322 2019-08-20 17:58:42 -0400",
+        "message": "Merge branch 'delete-second-half' into delete-first-half"
+    },
+    {
+        "hash": "a5ad0531b336b5fd12236fa01d02be158119b3be",
+        "tree": "d799b6af781161450596c731ad803520fff57178",
+        "parents": [
+            "43a53734debc39e779e4c9d626d443b7f8e6b565"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1566338263 2019-08-20 17:57:43 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1566338263 2019-08-20 17:57:43 -0400",
+        "message": "delete c/e"
+    },
+    {
+        "hash": "3f5d33fea90237c212ba1137634d98ba98a14366",
+        "tree": "761289ebc15998e39058e9475910a0e5f02891fc",
+        "parents": [
+            "43a53734debc39e779e4c9d626d443b7f8e6b565"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1566338238 2019-08-20 17:57:18 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1566338238 2019-08-20 17:57:18 -0400",
+        "message": "delete c/d"
+    },
+    {
+        "hash": "f555fab03962d4d7b4319c39e6f77d4c7fd1bb58",
+        "tree": "1f2cd460428a0efd18efa44fd34948dd2bd063a5",
+        "parents": [
+            "c10f8daa583105388d98c4628d0f9125cf2c2a87",
+            "b25513118f7f4902441aded8ac73a7a85421a940"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1566330310 2019-08-20 15:45:10 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1566330310 2019-08-20 15:45:10 -0400",
+        "message": "Merge branch 'add-files' into remove-files"
+    },
+    {
+        "hash": "6f0a4ac0a12e638c70835bd827630f862d8fc644",
+        "tree": "1f2cd460428a0efd18efa44fd34948dd2bd063a5",
+        "parents": [
+            "b25513118f7f4902441aded8ac73a7a85421a940",
+            "c10f8daa583105388d98c4628d0f9125cf2c2a87"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1566059313 2019-08-17 12:28:33 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1566059313 2019-08-17 12:28:33 -0400",
+        "message": "Merge branch 'remove-files' into add-files"
+    },
+    {
+        "hash": "b25513118f7f4902441aded8ac73a7a85421a940",
+        "tree": "ab318441c394f77457394ca9320484807c4ac4a8",
+        "parents": [
+            "43a53734debc39e779e4c9d626d443b7f8e6b565"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1565902276 2019-08-15 16:51:16 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565902276 2019-08-15 16:51:16 -0400",
+        "message": "touch f c/g"
+    },
+    {
+        "hash": "c10f8daa583105388d98c4628d0f9125cf2c2a87",
+        "tree": "e92b943e694655c9ba42dca3b2f69a46594e50be",
+        "parents": [
+            "43a53734debc39e779e4c9d626d443b7f8e6b565"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1565902157 2019-08-15 16:49:17 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565902157 2019-08-15 16:49:17 -0400",
+        "message": "-m rm b c/d"
+    },
+    {
+        "hash": "43a53734debc39e779e4c9d626d443b7f8e6b565",
+        "tree": "5005b9a37d7f2174d7a0a87b94402b83bc70bdb9",
+        "parents": [
+            "d643d00255603f9fbd4c95851b790650d75eb517"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1565902032 2019-08-15 16:47:12 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565902032 2019-08-15 16:47:12 -0400",
+        "message": "a,b,c,d,e"
+    },
+    {
+        "hash": "b4d7e4c0f1ee3c8a9c1c1ffe079dd0c537fd341d",
+        "tree": "e15e58f6a6e2edc7ab8063ae7e8565028d2bdefd",
+        "parents": [
+            "d643d00255603f9fbd4c95851b790650d75eb517"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1565901613 2019-08-15 16:40:13 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565901646 2019-08-15 16:40:46 -0400",
+        "message": "\"a\" folder"
+    },
+    {
+        "hash": "d4bc425cd8f1d1caf01bab88e8e2dd83679b3a1c",
+        "tree": "aaff74984cccd156a469afa7d9ab10e4777beb24",
+        "parents": [
+            "d643d00255603f9fbd4c95851b790650d75eb517"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1565901548 2019-08-15 16:39:08 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565901548 2019-08-15 16:39:08 -0400",
+        "message": "\"a\" file"
+    },
+    {
+        "hash": "d643d00255603f9fbd4c95851b790650d75eb517",
+        "tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "parents": [],
+        "author": "William Hilton <wmhilton@gmail.com> 1565901488 2019-08-15 16:38:08 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1565901488 2019-08-15 16:38:08 -0400",
+        "message": "Initial commit"
+    },
+    {
+        "hash": "3c945912219e6fc27a9100bf099687c69c88afed",
+        "tree": "24224c8f5d4cb40dc61f4210e7eb2c964f7e2407",
+        "parents": [
+            "ae054080bcfd04c84e0820e0cf74b31f4a422d7c"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501475810 2017-07-31 00:36:50 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501475810 2017-07-31 00:36:50 -0400",
+        "message": "Update gitignore"
+    },
+    {
+        "hash": "ae054080bcfd04c84e0820e0cf74b31f4a422d7c",
+        "tree": "6b858a95cc8e87677aff79a645ae178923caa5f5",
+        "parents": [
+            "3e80cede3c2a753a5272ed4d93496b67bb65cb0d"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501475755 2017-07-31 00:35:55 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501475755 2017-07-31 00:35:55 -0400",
+        "message": "Finished implementing fetching trees and blobs from Github API, even if we can't push to it."
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "tree": "d1a3e8c5371d481b54e32916da162e08a87ad294",
+        "parents": [
+            "1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501462174 2017-07-30 20:49:34 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501462174 2017-07-30 20:49:34 -0400",
+        "message": "My oh shit moment"
+    },
+    {
+        "hash": "1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863",
+        "tree": "dd92ed7e55ddc0c74f467a8899cc281d909c6bb9",
+        "parents": [
+            "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501454660 2017-07-30 18:44:20 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501454660 2017-07-30 18:44:20 -0400",
+        "message": "Git init, and parts of git fetch"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "tree": "421909592ea5e22c6dda69d1cc85118240478444",
+        "parents": [],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501381894 2017-07-29 22:31:34 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501381894 2017-07-29 22:31:34 -0400",
+        "message": "Initial commit"
+    }
+]

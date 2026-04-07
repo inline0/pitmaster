@@ -1,0 +1,2 @@
+error: refs/heads/loop: invalid sha1 pointer 0000000000000000000000000000000000000000
+dangling tag cda609072918d7b70057b6bef9f4c2537843fcfe

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-branch-with-dot",
+    "category": "upstream",
+    "description": "isomorphic-git: test-branch-with-dot",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

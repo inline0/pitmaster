@@ -1,0 +1,8 @@
+error: inflate: data stream error (incorrect header check)
+error: unable to unpack header of .git/objects/29/69be3e8ee1c0222396a5611407e4769f14e54b
+error: 2969be3e8ee1c0222396a5611407e4769f14e54b: object corrupt or missing: .git/objects/29/69be3e8ee1c0222396a5611407e4769f14e54b
+error: inflate: data stream error (incorrect header check)
+error: unable to unpack header of .git/objects/6f/670c0fb53f9463760b7295fbb814e965fb20c8
+error: 6f670c0fb53f9463760b7295fbb814e965fb20c8: object corrupt or missing: .git/objects/6f/670c0fb53f9463760b7295fbb814e965fb20c8
+missing blob 2969be3e8ee1c0222396a5611407e4769f14e54b
+missing blob 6f670c0fb53f9463760b7295fbb814e965fb20c8

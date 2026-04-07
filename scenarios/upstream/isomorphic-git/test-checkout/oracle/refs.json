@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "0f55956cbd50de80c2f86e6e565f00c92ce86631",
+        "name": "refs/heads/empty"
+    },
+    {
+        "hash": "217bab2970018d8d7dc29866340ac63b99c5cada",
+        "name": "refs/heads/executable-file"
+    },
+    {
+        "hash": "033417ae18b174f078f2f44232cb7a374f4c60ce",
+        "name": "refs/heads/missing-branch"
+    },
+    {
+        "hash": "711e953db1c72304d0ab38c6920f85a8fecd6d82",
+        "name": "refs/heads/regular-file"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "name": "refs/heads/test-branch"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "name": "refs/tags/v1.0.0"
+    }
+]

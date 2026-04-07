@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "2bdf04adb23d2b40b6085efb230856e5e2a775b7",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tb.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "562460e4a97c3b0efdd5aa6b6aea5f2863eecb22",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 2bdf04adb23d2b40b6085efb230856e5e2a775b7\nparent 572d5ec8ea719ed6780ef0e6a115a75999cb3091\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1645092284 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1645092284 +0100\n\nAdd b.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "572d5ec8ea719ed6780ef0e6a115a75999cb3091",
+        "type": "commit",
+        "size": 196,
+        "content": "tree 65a457425a679cbe9adf0d2741785d3ceabb44a7\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1645092279 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1645092279 +0100\n\nAdd a.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "65a457425a679cbe9adf0d2741785d3ceabb44a7",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

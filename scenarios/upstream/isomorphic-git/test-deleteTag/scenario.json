@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-deleteTag",
+    "category": "upstream",
+    "description": "isomorphic-git: test-deleteTag",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

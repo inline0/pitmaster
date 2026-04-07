@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "355cb440284b9c67bc05e98d3ea91a33f584099c",
+        "name": "refs/heads/a"
+    },
+    {
+        "hash": "f10f3afa31a001d315eaf27d2fe21c7470861650",
+        "name": "refs/heads/b"
+    },
+    {
+        "hash": "7ed9b611d5424d4ce3788abec8c05a0aca7741c4",
+        "name": "refs/heads/c"
+    },
+    {
+        "hash": "ce0efb47e11ddce3569e0a4635d69448f54a6143",
+        "name": "refs/heads/d"
+    }
+]

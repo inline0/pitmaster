@@ -1,0 +1,11 @@
+{
+    "name": "upstream/dulwich/ooo_merge",
+    "category": "upstream",
+    "description": "dulwich: ooo_merge",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

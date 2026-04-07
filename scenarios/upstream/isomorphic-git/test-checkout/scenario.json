@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-checkout",
+    "category": "upstream",
+    "description": "isomorphic-git: test-checkout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

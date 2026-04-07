@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-fetch-client",
+    "category": "upstream",
+    "description": "isomorphic-git: test-fetch-client",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

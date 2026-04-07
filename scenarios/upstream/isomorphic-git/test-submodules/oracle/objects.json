@@ -1,0 +1,72 @@
+[
+    {
+        "hash": "216e97ce08229b8776d3feb731c6d23a2f669ac8",
+        "type": "blob",
+        "size": 6,
+        "content": "World\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35f169f0c204b2488297e6666f114bbeee3192ac",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 216e97ce08229b8776d3feb731c6d23a2f669ac8\tworld.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "454b10998fb6d722feadce253f3e462ae74558b0",
+        "type": "commit",
+        "size": 1089,
+        "content": "tree 9be6662d3552c82932083c4cbff958727bdc8b81\nparent 4fcfb85bb1d9a7e222274b3ca5ef1fe134d2d089\nauthor William Hilton <wmhilton@gmail.com> 1579624833 -0500\ncommitter William Hilton <wmhilton@gmail.com> 1579624833 -0500\ngpgsig -----BEGIN PGP SIGNATURE-----\n \n iQIzBAABCAAdFiEEaaCqzBxf8S0R+jnQlgm4pZKLprkFAl4nKYEACgkQlgm4pZKL\n prlB7g/+LjPRPl5reO1XqZN6k4DNKMVm5oi+ZJSdODnhN+2p5pTZYcRnFD1sIKh3\n ZRMVJUlBv2eAplzzN4jyNatsREWIndBCoJ2kyyKqjFAX/eSmLIcFqV4MeTAj8e3C\n +AKs1KvgjMA8olPo5Aw+uIArzV1vCdPzZWKYkx9sIuGOCOsdAuDN4oEJpXR68CE+\n HtYnWAl25nzKmExDaEus+Plmv02thENnPUwSFIm6h/7gB2ZVfH5d6IoOSZoRnanG\n Zz/o4kKW1r3fDkgyyVX8q+WDzW4uAGYJAKftK5CL9mCj1obWHWZZESATZbAcMXVI\n h7JK9vNhn4GkyVJQdsYpa0LkQYzG7u8W3iK0IlS5GjkW4idZHrB113qDj8lkVq1k\n PYgaTrWcBk0PR+eFcD/Bl6sP4cV7mAi0DG86TeJ07YAFZXK2i5RBi9hOxuB/CpCK\n aBNlRQhPWlVgzSMm5vhtozj5cneeu6aEkqlQUnyuC3JEmqC5bRMZUTXovVh4E1x5\n fRxb5v0OIEKOn+InilPVDmoSD2/dnJrRbnNvJfHqEAjfFSc6z5i3HOW+rMGYaFbl\n XRUcgRr4eraeyzq/Dx0KS06e5uC3TnAcb2WVj3LiqHOl3ovuw90nS7ZofW86q8d+\n glNwT4UizM0k3VX3w9hLOxknpklrYWCUTEnNBNoxr3586yq78R0=\n =JFdO\n -----END PGP SIGNATURE-----\n\nAdded submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4fcfb85bb1d9a7e222274b3ca5ef1fe134d2d089",
+        "type": "commit",
+        "size": 1040,
+        "content": "tree 68bba92a125792a668032a3c56db3dc25394335b\nauthor William Hilton <wmhilton@gmail.com> 1579624552 -0500\ncommitter William Hilton <wmhilton@gmail.com> 1579624552 -0500\ngpgsig -----BEGIN PGP SIGNATURE-----\n \n iQIzBAABCAAdFiEEaaCqzBxf8S0R+jnQlgm4pZKLprkFAl4nKGgACgkQlgm4pZKL\n prlwaA//Qp5YOr8fVmBlb0hjNeXGyKPHdDA3vOB/s/BjtfXfTfKrbzcTi7YTF0Ci\n 7q43ALHP79UwqCuMT8Os0r32MdkcEfwoqKtZhUAERmX3iU9FKPtVXVr+4D1H02cI\n u9Pmy8uUz2mcDJpZee9UKqHVevkxDdKA1sbt7n86DbYUi3ovKOtQK6t6RTw1FOxR\n xEdUDVPGaWnQsVAqJ3qGTr+/nnRntNpTm3DJFKZtI5t675abdwE5IqgOpkO76v4I\n jS24R/1k374f7N1ivDc8Gtze7zb2YkrKetsV0jiuxC20nIXzVDGOSK+SgE+BBwVf\n YawLPbeVITDu3uaErYc1i1vzGlJVQASKDuncpMRVeNu8IA78bzcs0GL+GLVufTk1\n v4Im0JtyLKFfMXm262AjZXSwluSowNhr+RmcR7ufgqjanLbCqiGBx8O3yn6VW/QM\n 2bNMhmZR2cV+jaKE8iSlN4DHA8hPiveRkodnv2NDXRTTdFhEulClWIx5sx6/rnbD\n snL5/c3Zb2LHDLTvA4re8Kcz/dfzI8eKVYoQprsubE9ahRXG6ysOZBe8cr2obyKn\n sqOXxwdbwyIISTRQ3MzmgwF3RlxV8D0qYV321oXWX03NOQToA7VusOYH2OnzyOdX\n enR+Wlic2n4+JSC2hcCr37vts91OIPyBLhghSEFNRyITfO44mOw=\n =bYL9\n -----END PGP SIGNATURE-----\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68bba92a125792a668032a3c56db3dc25394335b",
+        "type": "tree",
+        "size": 70,
+        "content": "040000 tree 35f169f0c204b2488297e6666f114bbeee3192ac\tfolder\n100644 blob e965047ad7c57865823c7d992b1d046ea66edf78\thello.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c51b1511a1ce03a2628d4a98ccacf3f909add61",
+        "type": "commit",
+        "size": 1091,
+        "content": "tree b9321dfcec1fceecf29f09f23029fa5a22c74a71\nparent 454b10998fb6d722feadce253f3e462ae74558b0\nauthor William Hilton <wmhilton@gmail.com> 1579642160 -0500\ncommitter William Hilton <wmhilton@gmail.com> 1579642160 -0500\ngpgsig -----BEGIN PGP SIGNATURE-----\n \n iQIzBAABCAAdFiEEaaCqzBxf8S0R+jnQlgm4pZKLprkFAl4nbTAACgkQlgm4pZKL\n prl3uw/+NCNZjKBoshzu48adp141QstSFBcqRwRIP59K4A90VxKY8CL5wRQAZDRd\n 8zMgDOHw1HgkG3qtmow0fXLSN8E8Dz2/Lh8XdgvUjB3PgN9TYXb5NA8AKtBgXq7m\n TYbhOEeY7VglueIwOQKuL1pxvZ4AxWQcv4u4xQ038YM0u2k819nWaSeJMf2WYktp\n +q6oIijt142ak1oo2lGAIwf2rhsPrrbpvkCWo1eJzeS+ZF5iIvgzntaBz57vFd85\n jiM/+qZIehSXfIkehtbtu03MTc9TW4UWX42wU9Nwz3s9XPc2KqHvp3/QGBFcpgOL\n ohRnDIkfEV6vs6HhM91iBi/QFQ4iix7vh4fO/FFt13tW+sSUjJrW3x/aUvIezvgK\n MYHOW1IaIkEkQrS/3n0+gmekdfNYwkHNSZqNq6l1mYvdShXEe2XApmccfN4sQz1n\n YxL1Tb7X1i68sumXAOmikp2F1i//rac7cOAloqTvS7sswH4f8SvKAJ5Q3Q300P+s\n /ty+HuYDnPYHdgUWuOO4uH3bD+ooTS0DONYUWHERqrEedU2oxDp7iqat87zT5P48\n sV0ql3h/XBy3QCYr8OxOE+JRW3oTPZrfb6YrpovLXFS8jV9NrWZxMiTlKKvZeee9\n /M4t9/z3edcHDNynH9l11aZqxJWOhbH57lKOeW+KKdrMPK8Cu6c=\n =D9p6\n -----END PGP SIGNATURE-----\n\nNo more submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9be6662d3552c82932083c4cbff958727bdc8b81",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob d704a70560aeba6c532ec797b20e46365e697261\t.gitmodules\n040000 tree 35f169f0c204b2488297e6666f114bbeee3192ac\tfolder\n100644 blob e965047ad7c57865823c7d992b1d046ea66edf78\thello.txt\n160000 commit 5a8905a02e181fe1821068b8c0f48cb6633d5b81\ttest.empty\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b9321dfcec1fceecf29f09f23029fa5a22c74a71",
+        "type": "tree",
+        "size": 109,
+        "content": "100644 blob d704a70560aeba6c532ec797b20e46365e697261\t.gitmodules\n040000 tree 35f169f0c204b2488297e6666f114bbeee3192ac\tfolder\n100644 blob e965047ad7c57865823c7d992b1d046ea66edf78\thello.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d704a70560aeba6c532ec797b20e46365e697261",
+        "type": "blob",
+        "size": 96,
+        "content": "[submodule \"test.empty\"]\n\tpath = test.empty\n\turl = https://github.com/isomorphic-git/test.empty\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e965047ad7c57865823c7d992b1d046ea66edf78",
+        "type": "blob",
+        "size": 6,
+        "content": "Hello\n",
+        "encoding": "utf-8"
+    }
+]

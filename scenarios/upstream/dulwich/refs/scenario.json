@@ -1,0 +1,11 @@
+{
+    "name": "upstream/dulwich/refs",
+    "category": "upstream",
+    "description": "dulwich: refs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

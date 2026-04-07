@@ -1,0 +1,16 @@
+error: refs/tags/v0.0.1: invalid sha1 pointer 1a2149e96a9767b281a8f10fd014835322da2d14
+broken link from  commit 1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9
+              to    tree 421909592ea5e22c6dda69d1cc85118240478444
+broken link from  commit 033417ae18b174f078f2f44232cb7a374f4c60ce
+              to    tree 601653c721018b5fb9d414391e350f1758c3c8a4
+broken link from  commit 033417ae18b174f078f2f44232cb7a374f4c60ce
+              to  commit b8b1fcecbc6f5ea8bc915c3ac319e8c9eb204f95
+broken link from  commit e10ebb90d03eaacca84de1af0a59b444232da99e
+              to    tree e0b8f3574060ee24e03e4af3896f65dd208a60cc
+broken link from  commit e10ebb90d03eaacca84de1af0a59b444232da99e
+              to  commit b4f8206d9e359416b0f34238cbeb400f7da889a8
+missing tree 601653c721018b5fb9d414391e350f1758c3c8a4
+missing tree 421909592ea5e22c6dda69d1cc85118240478444
+missing tree e0b8f3574060ee24e03e4af3896f65dd208a60cc
+missing commit b4f8206d9e359416b0f34238cbeb400f7da889a8
+missing commit b8b1fcecbc6f5ea8bc915c3ac319e8c9eb204f95

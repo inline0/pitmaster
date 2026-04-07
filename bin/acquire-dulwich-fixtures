@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$source = '/tmp/dulwich/testdata/repos';
+
+if (!is_dir($source)) {
+    fwrite(STDERR, "dulwich fixtures not found. Run: git clone --depth=1 --sparse https://github.com/jelmer/dulwich.git /tmp/dulwich && cd /tmp/dulwich && git sparse-checkout set testdata\n");
+    exit(1);
+}
+
+$upstreamDir = $root . '/scenarios/upstream/dulwich';
+$imported = 0;
+
+foreach (scandir($source) as $entry) {
+    if ($entry === '.' || $entry === '..') {
+        continue;
+    }
+
+    if (!str_ends_with($entry, '.git') || !is_dir($source . '/' . $entry)) {
+        continue;
+    }
+
+    if (!is_file($source . '/' . $entry . '/HEAD')) {
+        continue;
+    }
+
+    $safeName = str_replace('.git', '', $entry);
+    $scenarioDir = $upstreamDir . '/' . $safeName;
+
+    if (is_dir($scenarioDir)) {
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    $realPath = realpath($source . '/' . $entry);
+    $setupContent = "#!/bin/bash\nset -e\ngit init .\ncp -r " . escapeshellarg($realPath) . "/* .git/\ngit checkout -- . 2>/dev/null || true\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setupContent);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    file_put_contents($scenarioDir . '/scenario.json', json_encode([
+        'name' => 'upstream/dulwich/' . $safeName,
+        'category' => 'upstream',
+        'description' => 'dulwich: ' . $safeName,
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => ['exact_match' => [], 'fsck_clean' => false],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$safeName}\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} dulwich fixtures.\n");

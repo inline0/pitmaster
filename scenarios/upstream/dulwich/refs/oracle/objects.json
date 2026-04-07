@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "3b9e5457140e738c2dcd39bf6d7acf88379b90d1",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob a18114c31713746a33a2e70d9914d1ef3e781425\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3ec9c43c84ff242e3ef4a9fc5bc111fd780a76a8",
+        "type": "tag",
+        "size": 163,
+        "content": "object 42d06bd4b77fed026b154d16493e5deab78f02ec\ntype commit\ntag refs-0.2\ntagger Dave Borowitz <dborowitz@google.com> 1266422180 -0800\n\nTag with different contents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42d06bd4b77fed026b154d16493e5deab78f02ec",
+        "type": "commit",
+        "size": 180,
+        "content": "tree 3b9e5457140e738c2dcd39bf6d7acf88379b90d1\nauthor Dave Borowitz <dborowitz@google.com> 1263852228 -0800\ncommitter Dave Borowitz <dborowitz@google.com> 1263852228 -0800\n\nAdd foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a18114c31713746a33a2e70d9914d1ef3e781425",
+        "type": "blob",
+        "size": 13,
+        "content": "foo contents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cda609072918d7b70057b6bef9f4c2537843fcfe",
+        "type": "tag",
+        "size": 173,
+        "content": "object 42d06bd4b77fed026b154d16493e5deab78f02ec\ntype commit\ntag refs/tags/refs-0.2\ntagger Dave Borowitz <dborowitz@google.com> 1266422055 -0800\n\nTag with different contents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "df6800012397fb85c56e7418dd4eb9405dee075c",
+        "type": "tag",
+        "size": 139,
+        "content": "object 42d06bd4b77fed026b154d16493e5deab78f02ec\ntype commit\ntag refs-0.1\ntagger Dave Borowitz <dborowitz@google.com> 1263852284 -0800\n\nTag\n",
+        "encoding": "utf-8"
+    }
+]

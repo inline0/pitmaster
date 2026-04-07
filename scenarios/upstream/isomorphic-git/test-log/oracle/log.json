@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "tree": "e0b8f3574060ee24e03e4af3896f65dd208a60cc",
+        "parents": [],
+        "author": "Will Hilton <wmhilton@gmail.com> 1502484200 2017-08-11 16:43:20 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1502484200 2017-08-11 16:43:20 -0400",
+        "message": "Improve resolveRef to handle more kinds of refs. Add tests"
+    },
+    {
+        "hash": "3c945912219e6fc27a9100bf099687c69c88afed",
+        "tree": "24224c8f5d4cb40dc61f4210e7eb2c964f7e2407",
+        "parents": [
+            "ae054080bcfd04c84e0820e0cf74b31f4a422d7c"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501475810 2017-07-31 00:36:50 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501475810 2017-07-31 00:36:50 -0400",
+        "message": "Update gitignore"
+    },
+    {
+        "hash": "ae054080bcfd04c84e0820e0cf74b31f4a422d7c",
+        "tree": "6b858a95cc8e87677aff79a645ae178923caa5f5",
+        "parents": [
+            "3e80cede3c2a753a5272ed4d93496b67bb65cb0d"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501475755 2017-07-31 00:35:55 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501475755 2017-07-31 00:35:55 -0400",
+        "message": "Finished implementing fetching trees and blobs from Github API, even if we can't push to it."
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "tree": "d1a3e8c5371d481b54e32916da162e08a87ad294",
+        "parents": [
+            "1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501462174 2017-07-30 20:49:34 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501462174 2017-07-30 20:49:34 -0400",
+        "message": "My oh shit moment"
+    },
+    {
+        "hash": "1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863",
+        "tree": "dd92ed7e55ddc0c74f467a8899cc281d909c6bb9",
+        "parents": [
+            "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501454660 2017-07-30 18:44:20 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501454660 2017-07-30 18:44:20 -0400",
+        "message": "Git init, and parts of git fetch"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "tree": "421909592ea5e22c6dda69d1cc85118240478444",
+        "parents": [],
+        "author": "Will Hilton <wmhilton@gmail.com> 1501381894 2017-07-29 22:31:34 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1501381894 2017-07-29 22:31:34 -0400",
+        "message": "Initial commit"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "name": "refs/tags/existing-tag"
+    },
+    {
+        "hash": "cfc039a0acb68bee8bb4f3b13b6b211dbb8c1a69",
+        "name": "refs/tags/packed-tag"
+    }
+]

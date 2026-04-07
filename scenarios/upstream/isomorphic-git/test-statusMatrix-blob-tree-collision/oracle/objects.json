@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "2d49412388bf23fb06ac5704cbde42c805bfb25f",
+        "type": "commit",
+        "size": 201,
+        "content": "tree e3ee2964ab6b52ebdfe8b6d7aef02728c45ea23b\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1645693159 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1645693159 +0100\n\ninitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "65a457425a679cbe9adf0d2741785d3ceabb44a7",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e3ee2964ab6b52ebdfe8b6d7aef02728c45ea23b",
+        "type": "tree",
+        "size": 57,
+        "content": "040000 tree 65a457425a679cbe9adf0d2741785d3ceabb44a7\ta\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

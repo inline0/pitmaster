@@ -1,0 +1,772 @@
+[
+    {
+        "hash": "01058d844a98d293a3b03a8615a34700e4ed2be3",
+        "type": "blob",
+        "size": 2,
+        "content": "g\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "03ed3e65b39bf3b69d44970bf2bb212fbd430dbe",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob e9c2c437ecca6e0a43534ed4162584b0933e238d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "045751af44433d8534fa65dcbd98433e5593f073",
+        "type": "commit",
+        "size": 288,
+        "content": "tree a715da52342f4f77866f23141f1809632bc17a52\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654100423 -0700\ncommitter araknast <araknast@protonmail.com> 1654100423 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "04668fa0ad33660c74f440527fef51c1adc38d63",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 9bfd9b3e3a8b0b28acbaadb009127c4cc8f99c67\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654894737 -0700\ncommitter araknast <araknast@protonmail.com> 1654894737 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "086032c929876c11e1a8d87756968d680596c40e",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob d9096bf746461725b5854d2c10b4394af6620f4d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12b138912c18717b497ea281a1ee381362c55056",
+        "type": "blob",
+        "size": 33,
+        "content": "modified\ntext\nfile\ncommit on \"g\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+        "type": "commit",
+        "size": 233,
+        "content": "tree 2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632658 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632788 -0400\n\nmodification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1839973b0fed85f8ca61e49fd8be536190f43381",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 77bf44aaa3496f33753c6ce0aab4cea24c94f357\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1a13b59272076e3288ad75ef173b4a8ffb0b00af",
+        "type": "commit",
+        "size": 238,
+        "content": "tree de885f4adb2ff47d047c45fc9f6dae614a3e5a7a\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698409892 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698409892 +0300\n\nadded h.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863",
+        "type": "commit",
+        "size": 1087,
+        "content": "tree dd92ed7e55ddc0c74f467a8899cc281d909c6bb9\nparent 1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9\nauthor Will Hilton <wmhilton@gmail.com> 1501454660 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501454660 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfmFEAAoJEJYJuKWSi6a5UeUP/3H2AdaOG5g1awkyHSC7sax9\n ZAQZhHumcufXoe4jNlKNogk0SUNud7H9dbhG3D7pbpujrLfjPPQ5rrQ5k2RdbuzR\n /YRuPPv9fdukWSCX3tXp63BzeNF18i/scIODgX2tT3RmihRldSWopgGpfRnks9o1\n cTAhmhjEIOH2wNki7u0M9WT6ntSUw99kglZ2vQGlExp97NFuVS68LsGjdlOpL/Lx\n kYxZUap5NVU1CFQZRgeSKZYKGVanuAbSFrGp5dHdY33YXxUQ2POzzH/sZIRRvnFZ\n T11K4AN4O7NhO0nujJS9VDrNgU20Kxwxl9FsVMwjSDdlf8ZROVbkse1U/pGjchwN\n V+1j3wMzbu0AHCcqkMB5zny/6fLrZigclOTXgq/zFiwh4FjMYwraGIKIYpTWYQ65\n d+BfM3nb7j6otAQvrxiIyNe7dwWPI39OZeFk6krAQNg1Lm1cxWwqWiWgXpZAmQwd\n yNlgQ9WLjZqiKUI8uxYJB3IznpDjIvO7t8Fq2EmDF0L4/t2LTD4JIGPOlKBx0Abr\n 5J9lI+2GLTk1ZRPpDk/7w/UJpSxoeGyo5+bI9RaWQRgzkpSLyPTlvipuBLgZefj2\n njEC13b2FdnupU2qhjTqptwh1t5qrOQ4COYehMFJyhHllu/S1gV53pdBQ3N1sw35\n R4YVFfBN+FJiRwiGq3vn\n =zxDV\n -----END PGP SIGNATURE-----\n\nGit init, and parts of git fetch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "type": "commit",
+        "size": 1021,
+        "content": "tree 421909592ea5e22c6dda69d1cc85118240478444\nauthor Will Hilton <wmhilton@gmail.com> 1501381894 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501381894 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfUUGAAoJEJYJuKWSi6a51VIQAJPwVk7bFWbNoLbi9Hi931k3\n E6kGW8JnWwcT6Y7fpm0oNpoXt+UzqJdUhVTi+79ws3yKc0u1cA23nVXDUQYmNBT7\n 3YkzXP2b6OE8i7n0ffzWbOIwHqWPn7lm0RlssSEYMAwGzDTP4fj2isRCFBqQ2lb3\n dqp7ZbzikvkkQONs9AKpE7LpWYTVuyElBwO2RtlIcZQrs29fBxZg4q4fkF+mqOhp\n DMWMIvTNeCa35sjmWh4+iPXO2CtoYVKXfCzZStzleeCuwQGRhfCLxrxtcuXOREjG\n DilGnCZ0iM9+ClzD4wDUf/aY3F5exyq2oqktIq78EhFvIIozY+gUaTn6zXicr5ud\n 30QQP063Tf8wC3Cy95aEq9QqLYkMXhOYBDym5fWawEWo7ssmOIW1o0ISfSI8pTVZ\n bZr5f9gQZETlTWhSPh5IGqqdHrI2fw5pkmO1N/OEn4L8D7R8josty28V4+wk2gsO\n wUSPyBv7EpVx2JtO+9Wu941fZK2qOBBmTjcTYys9PQeY9UHtrTQ3y/1r/qdLpdUH\n 9HK/x5yNHqpnSATHpRiZnfkvKfaxxwIbaOLBPV8khPa/zu9dD+0WxDXStLVBWfXg\n MvYAu4q+mQSgON1Qu+kWg67lNhx//kRH0K+vUMJMIvc8M+yUgkJhRqH/HIEzEcJV\n ee4fN2IIWX0CTNr8Fs8a\n =0Txp\n -----END PGP SIGNATURE-----\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1f2cd460428a0efd18efa44fd34948dd2bd063a5",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n040000 tree c88eadf08fe139b9b3d61dff369866e8eecf1f59\tc\n100644 blob 6a69f92020f5df77af6e8813ff1232493383b708\tf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "217fd1e153ad323aa7f3570eff25e910fb212bd6",
+        "type": "commit",
+        "size": 255,
+        "content": "tree 5005b9a37d7f2174d7a0a87b94402b83bc70bdb9\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1566059213 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566059213 -0400\n\nindex on mainline: 43a5373 a,b,c,d,e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2345cd044c7e90514fbd2f278b208d5d5baec155",
+        "type": "commit",
+        "size": 253,
+        "content": "tree 4c8e50ecdb824a4c887910f9c901497144b768b7\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nauthor William Hilton <wmhilton@gmail.com> 1567632876 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632876 -0400\n\nindex on a: 1394ed2 modification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "293dd1f9999e3bdb91663c8fc905ed091b389711",
+        "type": "commit",
+        "size": 233,
+        "content": "tree 5708c7e22ebfbf8d13413fc255b8ff422227dc1e\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632727 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632727 -0400\n\nmodification b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b6507269dfcc6b074cf8b72e788ce667fcdbf94",
+        "type": "blob",
+        "size": 19,
+        "content": "modified\ntext\nfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2e8fe0efceeb312f804796e89e8f338f736d94b8",
+        "type": "blob",
+        "size": 43,
+        "content": "added in branch \"h-added-both-files-merge\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 2b6507269dfcc6b074cf8b72e788ce667fcdbf94\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3001375e66de603a012b682e90fb8406d3a15f08",
+        "type": "commit",
+        "size": 236,
+        "content": "tree 2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632658 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632757 -0400\n\n-m modification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "30b58c6fad8b2744b2d220c369d90007525526f8",
+        "type": "commit",
+        "size": 304,
+        "content": "tree aaff74984cccd156a469afa7d9ab10e4777beb24\nparent d643d00255603f9fbd4c95851b790650d75eb517\nparent 369cf9bbdae358c4004646e6178070aa41412de1\nauthor William Hilton <wmhilton@gmail.com> 1565901565 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901565 -0400\n\nWIP on master: d643d00 Initial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3457811d46921b219c38fb99f2b85af84e9843e7",
+        "type": "commit",
+        "size": 301,
+        "content": "tree 878e0205d8bdb7d02844893647f02f49df655aff\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nparent 217fd1e153ad323aa7f3570eff25e910fb212bd6\nauthor William Hilton <wmhilton@gmail.com> 1566059213 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566059213 -0400\n\nWIP on mainline: 43a5373 a,b,c,d,e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3683f870be446c7cc05ffaef9fa06415276e1828",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "369cf9bbdae358c4004646e6178070aa41412de1",
+        "type": "commit",
+        "size": 258,
+        "content": "tree aaff74984cccd156a469afa7d9ab10e4777beb24\nparent d643d00255603f9fbd4c95851b790650d75eb517\nauthor William Hilton <wmhilton@gmail.com> 1565901565 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901565 -0400\n\nindex on master: d643d00 Initial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "36fa3cb61bb6ad33ca122a6928cd8d55d05322e0",
+        "type": "commit",
+        "size": 227,
+        "content": "tree 6cfc3efa546435864c3f01bac1b0ce713996b342\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902083 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902083 -0400\n\n+x a c/d\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "37ff89e3949fea03cf6e64389574daf26293efa3",
+        "type": "commit",
+        "size": 299,
+        "content": "tree 4c8e50ecdb824a4c887910f9c901497144b768b7\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 2345cd044c7e90514fbd2f278b208d5d5baec155\nauthor William Hilton <wmhilton@gmail.com> 1567632876 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632876 -0400\n\nWIP on a: 1394ed2 modification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3c945912219e6fc27a9100bf099687c69c88afed",
+        "type": "commit",
+        "size": 1071,
+        "content": "tree 24224c8f5d4cb40dc61f4210e7eb2c964f7e2407\nparent ae054080bcfd04c84e0820e0cf74b31f4a422d7c\nauthor Will Hilton <wmhilton@gmail.com> 1501475810 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501475810 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfrPiAAoJEJYJuKWSi6a5r7AP/0iG5t9oO4OFkvxCbhUd5fra\n Q2Z/ujck0yJFW3xF/2/Rzi/4PZ93RPhwB/JUVa8I9zPi5mVJMV6+ZoqiRLmgMb8g\n RJyw5Umi2JxtkpssaVfd7RUzjPiXBl9fb0lYgZttGf/sUXoEAUtX0hCwFqN/jALZ\n R+x6DqQy4XPkRpLJtQ/ABIL6dpRWflQVsONE7a4M/PA/dON4JaoCl9NTEsOPDs+J\n uY/dus3C8DTa2cdeb5OCxpjG7uQEzhMF7PfO/j+uAMNh96HVLvZGQcomxDzfglph\n EbEYm21QnpfmYCddnrM2TM3CsYnLutnk85nfz8JcaO40H2uBoxXf6iJguTUDeDWx\n eUDoQNpegfWf2VqoHqsAPamqEDnKt5sWDfx5GLhM7tkbmCDZYKiCIc6YZX2lySlu\n plaAg/NuAETtnHknDABWlVz9TQUrW6VG+iseS/rN+ZvxFQHZQvX3pNLigAa5Ey4T\n bYTU2r/JAajb+e91tEV52+ZzF7QO5URhDBQkiSurFV830HfBFBel/TcOvzWvsW8l\n gaESl+Pz8194Z/fEfIVec8IeLPURpSfOKzRZRbu80qBwgE6IBbhbiveVKE5TmaLO\n OgA2QgYxLNoaP6fR0mzBa/XqVZeTTGUrgPpGprP/AktZdl+8hPT2s8TkeO9wAVL2\n PwpokxoC+HRjO+bEBAs5\n =n8ff\n -----END PGP SIGNATURE-----\n\nUpdate gitignore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08",
+        "type": "commit",
+        "size": 227,
+        "content": "tree a715da52342f4f77866f23141f1809632bc17a52\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nauthor araknast <araknast@protonmail.com> 1655324905 -0700\ncommitter araknast <araknast@protonmail.com> 1655324905 -0700\n\nadd file c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "type": "commit",
+        "size": 1072,
+        "content": "tree d1a3e8c5371d481b54e32916da162e08a87ad294\nparent 1c04ba2c3b7c61cdfc0ddc3f9515116bc0e06863\nauthor Will Hilton <wmhilton@gmail.com> 1501462174 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501462174 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfn6eAAoJEJYJuKWSi6a5H/wP/0iG/chGZyd1b0ZIpI43saW9\n GzGZsKMgUmCmy+CWPIUDJ5p6p045xBDwRrMqdKPvDsJrpDmcUvV8usbL3nQWKvZj\n oeSeOvC4C6yw6k66Zr0YtCrcAjqfAUAsyEdiZ+7JNigDB9MqUufw2sYurlulYtBu\n 2zv22QIep5AYG0pDhSWFbeNuzesL+uk1sxoGTqQN7ER/qnKPWPQwMBNezpA65a3O\n WgH2lnPpyDPc6S356Nkr8f9fvQMxx66vXdR07cIw9gsA6dzgW+aUC9w4rAZ9Afk2\n SPsARmm8DH1vwwQMbiVzcKuvZ5/yWpy2XJjR2v/IhtD8dtYZDAlUbq+5jIpS9eoa\n 046xp7GJ5cawOXhoWJfpvmj9ozFkQA8yZvNQ/DmUX7mrknR3pvOuxKFd/WAHZ0R/\n M696r6MIbAWWmy6/g76qcj//oEhlTWiaoxqBL5HNxRIAJzhM8gGBmtv7L+mSxKtb\n b5foIdbQZ/s890Cnm632KxTQdPkVwInP7oratrYsvpXoe+X6/EOYvhPZYaFARm+C\n KS0bq7XbfGxgswD7/6rOjOL4G3WNs0eBBf4KTOZQ4HLM72cjgcMsSSgHMUarLfCo\n KLW+2DEuHJhzF4yBcR9uSUdT0t/BbqXpRwNL0QI8nOKmvbuZqMkDHJZHOCqbjn+8\n hkMXWZGGpdRSNcNY9Hw8\n =VFL/\n -----END PGP SIGNATURE-----\n\nMy oh shit moment\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3ed6fae069138af5635c1ae75b8fea289910a05d",
+        "type": "blob",
+        "size": 32,
+        "content": "original\ntext\nfile\nwas\nmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3f5d33fea90237c212ba1137634d98ba98a14366",
+        "type": "commit",
+        "size": 229,
+        "content": "tree 761289ebc15998e39058e9475910a0e5f02891fc\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1566338238 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566338238 -0400\n\ndelete c/d\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "43a53734debc39e779e4c9d626d443b7f8e6b565",
+        "type": "commit",
+        "size": 228,
+        "content": "tree 5005b9a37d7f2174d7a0a87b94402b83bc70bdb9\nparent d643d00255603f9fbd4c95851b790650d75eb517\nauthor William Hilton <wmhilton@gmail.com> 1565902032 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902032 -0400\n\na,b,c,d,e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "48056666b859c10e54f8f1c634efb4de35b1622f",
+        "type": "commit",
+        "size": 242,
+        "content": "tree c83c3dc3532a3a77032c263e0a9ee54eee5234dc\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698409921 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698409921 +0300\n\nadded h.txt too\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b245c9d11382a617d59b6191ebb25b3898fe1ec",
+        "type": "blob",
+        "size": 20,
+        "content": "added in branch \"h\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4bcfe98e640c8284511312660fb8709b0afa888e",
+        "type": "blob",
+        "size": 2,
+        "content": "d\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c0eab9b75df8b070d3037307839de49d3d350aa",
+        "type": "commit",
+        "size": 238,
+        "content": "tree 8171c8d2486c77cd9c23e111982e35e87f3da438\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698656153 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698656153 +0300\n\ndelte o.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c7dd8f59dde32fbfa00a49b429e824e5173fd85",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 03ed3e65b39bf3b69d44970bf2bb212fbd430dbe\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654100149 -0700\ncommitter araknast <araknast@protonmail.com> 1654100149 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c8e50ecdb824a4c887910f9c901497144b768b7",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob e9c2c437ecca6e0a43534ed4162584b0933e238d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d9f72ecf5b0fb531bd2ad51a4f4c8d442e50afc",
+        "type": "commit",
+        "size": 231,
+        "content": "tree decf623207d38c60aa08b54ce9c8e52fb1491064\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902413 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902413 -0400\n\nrm b; mv c b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5005b9a37d7f2174d7a0a87b94402b83bc70bdb9",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree faceb189bb665fe7a631602d904e57a4014187b7\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "520273bbdd95b9c22eed871325f5ec853642e53c",
+        "type": "commit",
+        "size": 290,
+        "content": "tree a50a2c9b7c50af7993c201f092bc5763b9efcee5\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 98bbeca371ded9d64d8793c59ffc94f268a35050\nauthor William Hilton <wmhilton@gmail.com> 1567646343 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567646343 -0400\n\nMerge branch 'd' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5708c7e22ebfbf8d13413fc255b8ff422227dc1e",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 3ed6fae069138af5635c1ae75b8fea289910a05d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5ba885fb4d57f761ade4bc37e45b815b6d1d6bbb",
+        "type": "tree",
+        "size": 33,
+        "content": "100755 blob d9096bf746461725b5854d2c10b4394af6620f4d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6155de9ec462411414afd466a86dd2ae281775ec",
+        "type": "commit",
+        "size": 185,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor William Hilton <wmhilton@gmail.com> 1567632447 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632447 -0400\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61780798228d17af2d34fce4cfbdf35556832472",
+        "type": "blob",
+        "size": 2,
+        "content": "b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a498d4ad57cc3b7e916479e58965d95f8033942",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree faceb189bb665fe7a631602d904e57a4014187b7\tf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a69f92020f5df77af6e8813ff1232493383b708",
+        "type": "blob",
+        "size": 2,
+        "content": "f\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6be660545b31f61a82a87d2b1915f0b88bb9f16f",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6cfc3efa546435864c3f01bac1b0ce713996b342",
+        "type": "tree",
+        "size": 86,
+        "content": "100755 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree 825f3723278804ff2c0073973739c1478db72603\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6f0a4ac0a12e638c70835bd827630f862d8fc644",
+        "type": "commit",
+        "size": 309,
+        "content": "tree 1f2cd460428a0efd18efa44fd34948dd2bd063a5\nparent b25513118f7f4902441aded8ac73a7a85421a940\nparent c10f8daa583105388d98c4628d0f9125cf2c2a87\nauthor William Hilton <wmhilton@gmail.com> 1566059313 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566059313 -0400\n\nMerge branch 'remove-files' into add-files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7126e3dbdd32caef616c8be548c285711f499e05",
+        "type": "commit",
+        "size": 290,
+        "content": "tree 4c8e50ecdb824a4c887910f9c901497144b768b7\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 293dd1f9999e3bdb91663c8fc905ed091b389711\nauthor William Hilton <wmhilton@gmail.com> 1567632845 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632845 -0400\n\nMerge branch 'b' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "72300a1bab421852bb539ae9a4e51a1bfc882fd2",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob 77bf44aaa3496f33753c6ce0aab4cea24c94f357\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "761289ebc15998e39058e9475910a0e5f02891fc",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree 84bb40e9d011ee678d381b1f29976f947c7c7985\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76eb3c1a8f93c293e9c9ad418eda70ef8da0c554",
+        "type": "blob",
+        "size": 23,
+        "content": "a\nnew\nfile\non\nbranch\nc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "77bf44aaa3496f33753c6ce0aab4cea24c94f357",
+        "type": "blob",
+        "size": 23,
+        "content": "text\nfile\nwas\nmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78981922613b2afb6025042ff6bd878ac1994e85",
+        "type": "blob",
+        "size": 2,
+        "content": "a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7d822508d9d9092a995a9558277775421166dabc",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 4c8e50ecdb824a4c887910f9c901497144b768b7\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent ca76efe9dbf57cebd5de30a6ca1c17e898aa805e\nauthor araknast <araknast@protonmail.com> 1653617788 -0700\ncommitter araknast <araknast@protonmail.com> 1653617788 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ec1198dcf0e0f460f24a56b8ef7504f44aa042a",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 1839973b0fed85f8ca61e49fd8be536190f43381\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent ca76efe9dbf57cebd5de30a6ca1c17e898aa805e\nauthor araknast <araknast@protonmail.com> 1653617811 -0700\ncommitter araknast <araknast@protonmail.com> 1653617811 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "80c2fdfedd48c09f3e6b75026f14a87d746cb06a",
+        "type": "commit",
+        "size": 231,
+        "content": "tree 72300a1bab421852bb539ae9a4e51a1bfc882fd2\nparent ca76efe9dbf57cebd5de30a6ca1c17e898aa805e\nauthor araknast <araknast@protonmail.com> 1654099968 -0700\ncommitter araknast <araknast@protonmail.com> 1654099968 -0700\n\nadd file c.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8171c8d2486c77cd9c23e111982e35e87f3da438",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "825f3723278804ff2c0073973739c1478db72603",
+        "type": "tree",
+        "size": 58,
+        "content": "100755 blob 4bcfe98e640c8284511312660fb8709b0afa888e\td\n100644 blob d905d9da82c97264ab6f4920e20242e088850ce9\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "84bb40e9d011ee678d381b1f29976f947c7c7985",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob d905d9da82c97264ab6f4920e20242e088850ce9\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "86ebeff7d0ccde65d01e82e7ec45886e5368065c",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob 12b138912c18717b497ea281a1ee381362c55056\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "878e0205d8bdb7d02844893647f02f49df655aff",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree faceb189bb665fe7a631602d904e57a4014187b7\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "87deae71287b1a76f80b0e42d4be932677a235aa",
+        "type": "commit",
+        "size": 290,
+        "content": "tree 4c8e50ecdb824a4c887910f9c901497144b768b7\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 293dd1f9999e3bdb91663c8fc905ed091b389711\nauthor William Hilton <wmhilton@gmail.com> 1567632893 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632893 -0400\n\nMerge branch 'b' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8a3651e1dbef13e4531bbe2af25c22964051cb35",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 4bcfe98e640c8284511312660fb8709b0afa888e\td\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8a631ca301310f67e0a30fa154b69ed3ba32346b",
+        "type": "commit",
+        "size": 239,
+        "content": "tree 8171c8d2486c77cd9c23e111982e35e87f3da438\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698327263 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698327263 +0300\n\ndelete o.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "904ead1caefb2439fe0fc3b4088a01de51e5ba88",
+        "type": "commit",
+        "size": 185,
+        "content": "tree 086032c929876c11e1a8d87756968d680596c40e\nauthor William Hilton <wmhilton@gmail.com> 1567632447 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632597 -0400\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9314557c230cdff54f008d73ac15b67bd1485df0",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 6a498d4ad57cc3b7e916479e58965d95f8033942\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902331 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902331 -0400\n\nmv c f\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "98bbeca371ded9d64d8793c59ffc94f268a35050",
+        "type": "commit",
+        "size": 227,
+        "content": "tree 5ba885fb4d57f761ade4bc37e45b815b6d1d6bbb\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567646323 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567646323 -0400\n\nchmod +x\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bfd9b3e3a8b0b28acbaadb009127c4cc8f99c67",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob c199499d91b8d0b6b1f1c01f5592b76575a87809\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e690ecad7050ede9e55f55eba593708437c7b96",
+        "type": "commit",
+        "size": 236,
+        "content": "tree 2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632658 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632750 -0400\n\n-m modification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9f743ff6df226c409362c661121a39a00aa7e0c8",
+        "type": "commit",
+        "size": 227,
+        "content": "tree c5ea66f32b2749db1646ec3800cd27a366af4a73\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902582 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902582 -0400\n\nmv c d/c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a5ad0531b336b5fd12236fa01d02be158119b3be",
+        "type": "commit",
+        "size": 229,
+        "content": "tree d799b6af781161450596c731ad803520fff57178\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1566338263 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566338263 -0400\n\ndelete c/e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a6ae3b137505de6739112df857cb8efcdb2fb5cb",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 72300a1bab421852bb539ae9a4e51a1bfc882fd2\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654100536 -0700\ncommitter araknast <araknast@protonmail.com> 1654100536 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a715da52342f4f77866f23141f1809632bc17a52",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob 2b6507269dfcc6b074cf8b72e788ce667fcdbf94\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aa8e9010035ab92b67c585aeb8a9669f4a3210d3",
+        "type": "commit",
+        "size": 236,
+        "content": "tree 2f012db3ef39520dd3a2e01c71f6a67daf9fa4dc\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632658 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632658 -0400\n\n-m modification a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aaff74984cccd156a469afa7d9ab10e4777beb24",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab318441c394f77457394ca9320484807c4ac4a8",
+        "type": "tree",
+        "size": 115,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree c19d15d2a33fcfd7633460bf08e25eb70a0b75a9\tc\n100644 blob 6a69f92020f5df77af6e8813ff1232493383b708\tf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae054080bcfd04c84e0820e0cf74b31f4a422d7c",
+        "type": "commit",
+        "size": 1147,
+        "content": "tree 6b858a95cc8e87677aff79a645ae178923caa5f5\nparent 3e80cede3c2a753a5272ed4d93496b67bb65cb0d\nauthor Will Hilton <wmhilton@gmail.com> 1501475755 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1501475755 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZfrOrAAoJEJYJuKWSi6a5VWMP/il3myaUFoxh2DaM/1+F5GFC\n OdS+jUheAMak+M8s87kGrH8Fhv+q46RpSIrrQoz9COYM0tBFDygn2xiIdoMgqwP+\n uSXVRWzawZS+0T0nYIVCZLAN41iniL6um3XopNExpOF6rzsgi5t4s+Ch2fksOhBz\n Ze7jVtFOrmd2O9QlofgM9ICXJDJcrFRd9tPSQO9Nu4sJPpZjcYUfIfOcSIvwrB6p\n ySR4Kyh9zrNRxxY8LEbcXZGvet2wvmhBV6oQo1Xh++E5xINvcHHNo0frZl+/wSSm\n QpVE4ErEOBKYnjFqrtsdra9fmAa30/gl0pC3kBbAYdqbB1k0LgWeBfZ08Lmw5qON\n ZEDzm2jV9PFCuDs6DTk20dguyhIQIvSetpM8LEWUpVSUiXMJkJs48TZ5nTry79me\n QHf3gGNTZ6TQ9Wnjj7QXplVHFMbUc/9TJkXwQ1yYiRCY4z6g9j75qEZmhmWcUg5G\n 1wHb2xcx5uNysb8gFJT4Anb1GL9VdNAy82uaEt7OgpaFozLnqS/ZqZljnM4VUY+e\n A0/Fw1cirSCuVCboA3pPNFyD5vrQcYU+RYEyxdMCf9BBO1/Zuf2qfsVOcIr3hGB6\n EaqfZgz3hL/6DRoaira+wo6vQWDLDfbkKmJTSVTXO/p9gWhOGo2J1w75fJmmwbte\n DW9rcJWg376XhOdUJYjl\n =kq+d\n -----END PGP SIGNATURE-----\n\nFinished implementing fetching trees and blobs from Github API, even if we can't push to it.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b25513118f7f4902441aded8ac73a7a85421a940",
+        "type": "commit",
+        "size": 230,
+        "content": "tree ab318441c394f77457394ca9320484807c4ac4a8\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902276 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902276 -0400\n\ntouch f c/g\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b4d7e4c0f1ee3c8a9c1c1ffe079dd0c537fd341d",
+        "type": "commit",
+        "size": 229,
+        "content": "tree e15e58f6a6e2edc7ab8063ae7e8565028d2bdefd\nparent d643d00255603f9fbd4c95851b790650d75eb517\nauthor William Hilton <wmhilton@gmail.com> 1565901613 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901646 -0400\n\n\"a\" folder\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c10f8daa583105388d98c4628d0f9125cf2c2a87",
+        "type": "commit",
+        "size": 230,
+        "content": "tree e92b943e694655c9ba42dca3b2f69a46594e50be\nparent 43a53734debc39e779e4c9d626d443b7f8e6b565\nauthor William Hilton <wmhilton@gmail.com> 1565902157 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565902157 -0400\n\n-m rm b c/d\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c199499d91b8d0b6b1f1c01f5592b76575a87809",
+        "type": "blob",
+        "size": 60,
+        "content": "<<<<<<< a\nmodified\n=======\n>>>>>>> c\ntext\nfile\nwas\nmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c19d15d2a33fcfd7633460bf08e25eb70a0b75a9",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 4bcfe98e640c8284511312660fb8709b0afa888e\td\n100644 blob d905d9da82c97264ab6f4920e20242e088850ce9\te\n100644 blob 01058d844a98d293a3b03a8615a34700e4ed2be3\tg\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c5ea66f32b2749db1646ec3800cd27a366af4a73",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree 878e0205d8bdb7d02844893647f02f49df655aff\td\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c83c3dc3532a3a77032c263e0a9ee54eee5234dc",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob 2e8fe0efceeb312f804796e89e8f338f736d94b8\th.txt\n100644 blob 2b6507269dfcc6b074cf8b72e788ce667fcdbf94\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c88eadf08fe139b9b3d61dff369866e8eecf1f59",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob d905d9da82c97264ab6f4920e20242e088850ce9\te\n100644 blob 01058d844a98d293a3b03a8615a34700e4ed2be3\tg\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ca76efe9dbf57cebd5de30a6ca1c17e898aa805e",
+        "type": "commit",
+        "size": 233,
+        "content": "tree 1839973b0fed85f8ca61e49fd8be536190f43381\nparent 904ead1caefb2439fe0fc3b4088a01de51e5ba88\nauthor William Hilton <wmhilton@gmail.com> 1567632940 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1567632940 -0400\n\nmodification c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cc7c2bdadd25f0dee304be3c3d5d0a0f7aa4266a",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob d9096bf746461725b5854d2c10b4394af6620f4d\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d22a91364cbae00934b12037d8059e67ead22ad0",
+        "type": "commit",
+        "size": 323,
+        "content": "tree 3683f870be446c7cc05ffaef9fa06415276e1828\nparent 3f5d33fea90237c212ba1137634d98ba98a14366\nparent a5ad0531b336b5fd12236fa01d02be158119b3be\nauthor William Hilton <wmhilton@gmail.com> 1566338322 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566338322 -0400\n\nMerge branch 'delete-second-half' into delete-first-half\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d4bc425cd8f1d1caf01bab88e8e2dd83679b3a1c",
+        "type": "commit",
+        "size": 227,
+        "content": "tree aaff74984cccd156a469afa7d9ab10e4777beb24\nparent d643d00255603f9fbd4c95851b790650d75eb517\nauthor William Hilton <wmhilton@gmail.com> 1565901548 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901548 -0400\n\n\"a\" file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d643d00255603f9fbd4c95851b790650d75eb517",
+        "type": "commit",
+        "size": 185,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor William Hilton <wmhilton@gmail.com> 1565901488 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901488 -0400\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d799b6af781161450596c731ad803520fff57178",
+        "type": "tree",
+        "size": 86,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb\n040000 tree 8a3651e1dbef13e4531bbe2af25c22964051cb35\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d905d9da82c97264ab6f4920e20242e088850ce9",
+        "type": "blob",
+        "size": 2,
+        "content": "e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9096bf746461725b5854d2c10b4394af6620f4d",
+        "type": "blob",
+        "size": 19,
+        "content": "original\ntext\nfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "de885f4adb2ff47d047c45fc9f6dae614a3e5a7a",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 76eb3c1a8f93c293e9c9ad418eda70ef8da0c554\tc.txt\n100644 blob 4b245c9d11382a617d59b6191ebb25b3898fe1ec\th.txt\n100644 blob 2b6507269dfcc6b074cf8b72e788ce667fcdbf94\to.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "decf623207d38c60aa08b54ce9c8e52fb1491064",
+        "type": "tree",
+        "size": 57,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n040000 tree faceb189bb665fe7a631602d904e57a4014187b7\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e10ebb90d03eaacca84de1af0a59b444232da99e",
+        "type": "commit",
+        "size": 1113,
+        "content": "tree e0b8f3574060ee24e03e4af3896f65dd208a60cc\nparent b4f8206d9e359416b0f34238cbeb400f7da889a8\nauthor Will Hilton <wmhilton@gmail.com> 1502484200 -0400\ncommitter Will Hilton <wmhilton@gmail.com> 1502484200 -0400\ngpgsig -----BEGIN PGP SIGNATURE-----\n Version: GnuPG v1\n \n iQIcBAABAgAGBQJZjhboAAoJEJYJuKWSi6a5V5UP/040SfemJ13PRBXst2eB59gs\n 3hPx29DRKBhFtvk+uS+8523/hUfry2oeWWd6YRkcnkxxAUtBnfzVkI9AgRIc1NTM\n h5XtLMQubCAKw8JWvVvoXETzwVAODmdmvC4WSQCLu+opoe6/W7RvkrTD0pbkwH4E\n MXoha59sIWZ/FacZX6ByYqhFykfJL8gCFvRSzjiqBIbsP7Xq2Mh4jkAKYl5zxV3u\n qCk26hnhL++kwfXlu2YdGtB9+lj3pk1NeWqR379zRzh4P10FxXJ18qSxczbkAFOY\n 6o5h7a/Mql1KqWB9EFBupCpjydmpAtPo6l1Us4a3liB5LJvCh9xgR2HtShR4b97O\n nIpXP4ngy4z9UyrXXxxpiQQn/kVn/uKgtvGp8nOFioo61PCi9js2QmQxcsuBOeO+\n DdFq5k2PMNZLwizt4P8EGfVJoPbLhdYP4oWiMCuYV/2fNh0ozl/q176HGszlfrke\n 332Z0maJ3A5xIRj0b7vRNHV8AAl9Dheo3LspjeovP2iycCHFP03gSpCKdLRBRC4T\n X10BBFD8noCMXJxb5qenrf+eKRd8d4g7JtcyzqVgkBQ68GIG844VWRBolOzx4By5\n cAaw/SYIZG3RorAc11iZ7sva0jFISejmEzIebuChSzdWO2OOWRVvMdhyZwDLUgAb\n Qixh2bmPgr3h9nxq2Dmn\n =4+DN\n -----END PGP SIGNATURE-----\n\nImprove resolveRef to handle more kinds of refs. Add tests\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e15e58f6a6e2edc7ab8063ae7e8565028d2bdefd",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 6be660545b31f61a82a87d2b1915f0b88bb9f16f\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5a4054f21da6509ddcc12a822fb02e710173457",
+        "type": "commit",
+        "size": 288,
+        "content": "tree 72300a1bab421852bb539ae9a4e51a1bfc882fd2\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654100228 -0700\ncommitter araknast <araknast@protonmail.com> 1654100228 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e92b943e694655c9ba42dca3b2f69a46594e50be",
+        "type": "tree",
+        "size": 57,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta\n040000 tree 84bb40e9d011ee678d381b1f29976f947c7c7985\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e9c2c437ecca6e0a43534ed4162584b0933e238d",
+        "type": "blob",
+        "size": 32,
+        "content": "modified\ntext\nfile\nwas\nmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f1b74b9c2a160e9a3ebec4857886f69443bcc4f4",
+        "type": "commit",
+        "size": 239,
+        "content": "tree 86ebeff7d0ccde65d01e82e7ec45886e5368065c\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698327230 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698327230 +0300\n\nchange o.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f46b208f63f5d92d27b9f579bf034830cbb7f4ea",
+        "type": "commit",
+        "size": 232,
+        "content": "tree e15e58f6a6e2edc7ab8063ae7e8565028d2bdefd\nparent d643d00255603f9fbd4c95851b790650d75eb517\nauthor William Hilton <wmhilton@gmail.com> 1565901613 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1565901613 -0400\n\n-m \"a\" folder\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f555fab03962d4d7b4319c39e6f77d4c7fd1bb58",
+        "type": "commit",
+        "size": 309,
+        "content": "tree 1f2cd460428a0efd18efa44fd34948dd2bd063a5\nparent c10f8daa583105388d98c4628d0f9125cf2c2a87\nparent b25513118f7f4902441aded8ac73a7a85421a940\nauthor William Hilton <wmhilton@gmail.com> 1566330310 -0400\ncommitter William Hilton <wmhilton@gmail.com> 1566330310 -0400\n\nMerge branch 'add-files' into remove-files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f6579638b3815a612def5bed7d7058b83dde490b",
+        "type": "commit",
+        "size": 288,
+        "content": "tree cc7c2bdadd25f0dee304be3c3d5d0a0f7aa4266a\nparent 1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c\nparent 80c2fdfedd48c09f3e6b75026f14a87d746cb06a\nauthor araknast <araknast@protonmail.com> 1654101033 -0700\ncommitter araknast <araknast@protonmail.com> 1654101033 -0700\n\nMerge branch 'c' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "faceb189bb665fe7a631602d904e57a4014187b7",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 4bcfe98e640c8284511312660fb8709b0afa888e\td\n100644 blob d905d9da82c97264ab6f4920e20242e088850ce9\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fb624a516610d822a8f62617fa785b599b15bc9a",
+        "type": "blob",
+        "size": 63,
+        "content": "<<<<<<< HEAD\nmodified\n=======\n>>>>>>> c\ntext\nfile\nwas\nmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffc8e759595572caa7a6ee0ee97695405a2ecaa2",
+        "type": "commit",
+        "size": 243,
+        "content": "tree 8171c8d2486c77cd9c23e111982e35e87f3da438\nparent 3d29b3f3368a0dce65a4fe0ccfbfd3f1ea0e5a08\nauthor Danil Kazanov <danil.kazanov@ics-it.ru> 1698656195 +0300\ncommitter Danil Kazanov <danil.kazanov@ics-it.ru> 1698656195 +0300\n\ndelete o.txt too\n",
+        "encoding": "utf-8"
+    }
+]

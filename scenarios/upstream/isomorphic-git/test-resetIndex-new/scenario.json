@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-resetIndex-new",
+    "category": "upstream",
+    "description": "isomorphic-git: test-resetIndex-new",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

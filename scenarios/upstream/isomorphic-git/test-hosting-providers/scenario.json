@@ -1,0 +1,11 @@
+{
+    "name": "upstream/isomorphic-git/test-hosting-providers",
+    "category": "upstream",
+    "description": "isomorphic-git: test-hosting-providers",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

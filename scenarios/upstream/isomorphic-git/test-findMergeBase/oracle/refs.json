@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "9ec6646dd454e8f530c478c26f8b06e57f880bd6",
+        "name": "refs/heads/A"
+    },
+    {
+        "hash": "c91a8aab1f086c8cc8914558f035e718a8a5c503",
+        "name": "refs/heads/B"
+    },
+    {
+        "hash": "f79577b91d302d87e310c8b5af8c274bbf45502f",
+        "name": "refs/heads/C"
+    },
+    {
+        "hash": "8a7e4628451951581c6ce84850bd474e107ee750",
+        "name": "refs/heads/D"
+    },
+    {
+        "hash": "8d0e46852781eed81d32b91517f5d5f0979575c4",
+        "name": "refs/heads/E"
+    },
+    {
+        "hash": "21605c3fda133ae46f000a375c92c889fa0688ba",
+        "name": "refs/heads/F"
+    },
+    {
+        "hash": "8d01f1824e6818db3461c06f09a0965810396a45",
+        "name": "refs/heads/G"
+    },
+    {
+        "hash": "423489657e9529ecf285637eb21f40c8657ece3f",
+        "name": "refs/heads/M"
+    },
+    {
+        "hash": "99cfd5bb4e412234162ac1eb46350ec6ccffb50d",
+        "name": "refs/heads/Z"
+    },
+    {
+        "hash": "4c658ff41121ddada50c47e4c72c092a9f7bf2be",
+        "name": "refs/heads/Z1"
+    },
+    {
+        "hash": "85303393b9fd415d48913dfec47d42db184dc4d8",
+        "name": "refs/heads/Z2"
+    },
+    {
+        "hash": "83ad8e1ec6f21f8d0d74587b6a8021fec1a165e1",
+        "name": "refs/heads/issue819"
+    },
+    {
+        "hash": "815474b6e581921cbe05825631decac922803d28",
+        "name": "refs/heads/issue819-upstream"
+    },
+    {
+        "hash": "0526923cafece3d898dbe55ee2c2d69bfcc54c60",
+        "name": "refs/heads/master"
+    }
+]

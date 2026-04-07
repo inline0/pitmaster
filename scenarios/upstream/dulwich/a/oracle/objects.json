@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "28237f4dc30d0d462658d6b937b08a0f0b6ef55a",
+        "type": "tag",
+        "size": 148,
+        "content": "object a90fa2d900a17e99b433217e988c4eb4a2e9a097\ntype commit\ntag mytag\ntagger Dave Borowitz <dborowitz@google.com> 1266345059 -0800\n\nTag last commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a72d929692c41d8554c07f6301757ba18a65d91",
+        "type": "commit",
+        "size": 192,
+        "content": "tree 7d9a07d797595ef11344549b8d08198e48c15364\nauthor James Westby <jw+debian@jameswestby.net> 1174775029 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174775029 +0000\n\nAdd a and b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ef30bbfe26431a69c3820d3a683df54d688f2ec",
+        "type": "blob",
+        "size": 7,
+        "content": "file a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4f2e6529203aa6d44b5af6e3292c837ceda003f9",
+        "type": "blob",
+        "size": 7,
+        "content": "file b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7d9a07d797595ef11344549b8d08198e48c15364",
+        "type": "tree",
+        "size": 58,
+        "content": "100644 blob 4ef30bbfe26431a69c3820d3a683df54d688f2ec\ta\n100644 blob 4f2e6529203aa6d44b5af6e3292c837ceda003f9\tb\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a296d0bb611188cabb256919f36bc30117cca005",
+        "type": "blob",
+        "size": 7,
+        "content": "file c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a90fa2d900a17e99b433217e988c4eb4a2e9a097",
+        "type": "commit",
+        "size": 234,
+        "content": "tree ffd47d45845a8f6576491e1edb97e3fe6a850e7f\nparent 2a72d929692c41d8554c07f6301757ba18a65d91\nauthor James Westby <jw+debian@jameswestby.net> 1174775047 +0000\ncommitter James Westby <jw+debian@jameswestby.net> 1174775047 +0000\n\nAdd c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b0931cadc54336e78a1d980420e3268903b57a50",
+        "type": "tag",
+        "size": 155,
+        "content": "object 2a72d929692c41d8554c07f6301757ba18a65d91\ntype commit\ntag mytag-packed\ntagger Dave Borowitz <dborowitz@google.com> 1266420886 -0800\n\nTag old version\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffd47d45845a8f6576491e1edb97e3fe6a850e7f",
+        "type": "tree",
+        "size": 87,
+        "content": "100644 blob 4ef30bbfe26431a69c3820d3a683df54d688f2ec\ta\n100644 blob 4f2e6529203aa6d44b5af6e3292c837ceda003f9\tb\n100644 blob a296d0bb611188cabb256919f36bc30117cca005\tc\n",
+        "encoding": "utf-8"
+    }
+]

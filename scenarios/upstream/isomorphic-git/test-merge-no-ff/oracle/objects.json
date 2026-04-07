@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "2bdf04adb23d2b40b6085efb230856e5e2a775b7",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tb.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5ff552891b55d7655390e1cc6633627cf6c3a863",
+        "type": "commit",
+        "size": 244,
+        "content": "tree e37e5d19823e42fad252f6341b1f77a7bc6ee451\nparent c1e6d3a1e05f4818ca70646c0972619e10343979\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1646292104 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1646292104 +0100\n\nAdd c.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "65a457425a679cbe9adf0d2741785d3ceabb44a7",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a42fb9a75a6f837e0999e36bcd16f293a6ad375f",
+        "type": "commit",
+        "size": 201,
+        "content": "tree 65a457425a679cbe9adf0d2741785d3ceabb44a7\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1646292024 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1646292024 +0100\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c1e6d3a1e05f4818ca70646c0972619e10343979",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 2bdf04adb23d2b40b6085efb230856e5e2a775b7\nparent a42fb9a75a6f837e0999e36bcd16f293a6ad375f\nauthor Sam Verschueren <sam.verschueren@gmail.com> 1646292095 +0100\ncommitter Sam Verschueren <sam.verschueren@gmail.com> 1646292095 +0100\n\nAdd b.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e37e5d19823e42fad252f6341b1f77a7bc6ee451",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ta.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tb.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tc.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

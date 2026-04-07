@@ -1,0 +1,54 @@
+[
+    {
+        "hash": "39f26707e501121468bbfa3563c84a620eb544d7",
+        "name": "refs/heads/a"
+    },
+    {
+        "hash": "b237d7265dc79c5162865c1d9b959088ffd3f1d9",
+        "name": "refs/heads/a-merge-b-reference"
+    },
+    {
+        "hash": "06ef63b6dd62d1d499dff84a1f8620b4f778f3ad",
+        "name": "refs/heads/b"
+    },
+    {
+        "hash": "f5407c3a5b8240a3b4e95b4551f56fb16a881ec8",
+        "name": "refs/heads/c"
+    },
+    {
+        "hash": "fce05e01b35c60cf6d41ab26a21ed91f5e5a0cc3",
+        "name": "refs/heads/c-merge-d-reference"
+    },
+    {
+        "hash": "ba50c14f16e5a3792beedf33b24df0f056612840",
+        "name": "refs/heads/d"
+    },
+    {
+        "hash": "10a3830accbfbfd2889e92cd7636bcd3634b003d",
+        "name": "refs/heads/e"
+    },
+    {
+        "hash": "4b09de063c70ec33a260ec0519f14f5e30139231",
+        "name": "refs/heads/e-merge-f-reference"
+    },
+    {
+        "hash": "a067e91ba3efdd2b77d2a1f8561d9e9ff3619f36",
+        "name": "refs/heads/f"
+    },
+    {
+        "hash": "f236f1f6008de46af692d13d9a7e8380e7668c38",
+        "name": "refs/heads/g"
+    },
+    {
+        "hash": "b693f3e31390f64057c43beb2153b66e57de9016",
+        "name": "refs/heads/g-merge-h-reference"
+    },
+    {
+        "hash": "5e42e9f8933a4c2bfdd92ea9efaf8111ffeb8892",
+        "name": "refs/heads/h"
+    },
+    {
+        "hash": "068ba5a05e9136f9c23dd5e8061fd4d385864b8d",
+        "name": "refs/heads/master"
+    }
+]

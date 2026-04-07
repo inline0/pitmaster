@@ -1,0 +1,134 @@
+[
+    {
+        "hash": "1394ed28ad98ac8f9ab5ad002a3fd6cb9e60c53c",
+        "name": "refs/heads/a"
+    },
+    {
+        "hash": "d4bc425cd8f1d1caf01bab88e8e2dd83679b3a1c",
+        "name": "refs/heads/a-file"
+    },
+    {
+        "hash": "b4d7e4c0f1ee3c8a9c1c1ffe079dd0c537fd341d",
+        "name": "refs/heads/a-folder"
+    },
+    {
+        "hash": "87deae71287b1a76f80b0e42d4be932677a235aa",
+        "name": "refs/heads/a-merge-b"
+    },
+    {
+        "hash": "04668fa0ad33660c74f440527fef51c1adc38d63",
+        "name": "refs/heads/a-merge-c-manual-resolve"
+    },
+    {
+        "hash": "4c7dd8f59dde32fbfa00a49b429e824e5173fd85",
+        "name": "refs/heads/a-merge-c-recursive-ours"
+    },
+    {
+        "hash": "e5a4054f21da6509ddcc12a822fb02e710173457",
+        "name": "refs/heads/a-merge-c-recursive-theirs"
+    },
+    {
+        "hash": "f6579638b3815a612def5bed7d7058b83dde490b",
+        "name": "refs/heads/a-merge-c-use-base"
+    },
+    {
+        "hash": "045751af44433d8534fa65dcbd98433e5593f073",
+        "name": "refs/heads/a-merge-c-use-ours"
+    },
+    {
+        "hash": "a6ae3b137505de6739112df857cb8efcdb2fb5cb",
+        "name": "refs/heads/a-merge-c-use-theirs"
+    },
+    {
+        "hash": "520273bbdd95b9c22eed871325f5ec853642e53c",
+        "name": "refs/heads/a-merge-d"
+    },
+    {
+        "hash": "b25513118f7f4902441aded8ac73a7a85421a940",
+        "name": "refs/heads/add-files"
+    },
+    {
+        "hash": "6f0a4ac0a12e638c70835bd827630f862d8fc644",
+        "name": "refs/heads/add-files-merge-remove-files"
+    },
+    {
+        "hash": "293dd1f9999e3bdb91663c8fc905ed091b389711",
+        "name": "refs/heads/b"
+    },
+    {
+        "hash": "80c2fdfedd48c09f3e6b75026f14a87d746cb06a",
+        "name": "refs/heads/c"
+    },
+    {
+        "hash": "98bbeca371ded9d64d8793c59ffc94f268a35050",
+        "name": "refs/heads/d"
+    },
+    {
+        "hash": "3f5d33fea90237c212ba1137634d98ba98a14366",
+        "name": "refs/heads/delete-first-half"
+    },
+    {
+        "hash": "d22a91364cbae00934b12037d8059e67ead22ad0",
+        "name": "refs/heads/delete-first-half-merge-delete-second-half"
+    },
+    {
+        "hash": "a5ad0531b336b5fd12236fa01d02be158119b3be",
+        "name": "refs/heads/delete-second-half"
+    },
+    {
+        "hash": "f1b74b9c2a160e9a3ebec4857886f69443bcc4f4",
+        "name": "refs/heads/g"
+    },
+    {
+        "hash": "8a631ca301310f67e0a30fa154b69ed3ba32346b",
+        "name": "refs/heads/g-delete-file"
+    },
+    {
+        "hash": "1a13b59272076e3288ad75ef173b4a8ffb0b00af",
+        "name": "refs/heads/h"
+    },
+    {
+        "hash": "48056666b859c10e54f8f1c634efb4de35b1622f",
+        "name": "refs/heads/h-added-both-files-merge"
+    },
+    {
+        "hash": "ffc8e759595572caa7a6ee0ee97695405a2ecaa2",
+        "name": "refs/heads/i"
+    },
+    {
+        "hash": "4c0eab9b75df8b070d3037307839de49d3d350aa",
+        "name": "refs/heads/i-delete-both"
+    },
+    {
+        "hash": "43a53734debc39e779e4c9d626d443b7f8e6b565",
+        "name": "refs/heads/mainline"
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "name": "refs/heads/medium"
+    },
+    {
+        "hash": "3c945912219e6fc27a9100bf099687c69c88afed",
+        "name": "refs/heads/newest"
+    },
+    {
+        "hash": "1e40fdfba1cf17f3c9f9f3d6b392b1865e5147b9",
+        "name": "refs/heads/oldest"
+    },
+    {
+        "hash": "c10f8daa583105388d98c4628d0f9125cf2c2a87",
+        "name": "refs/heads/remove-files"
+    },
+    {
+        "hash": "f555fab03962d4d7b4319c39e6f77d4c7fd1bb58",
+        "name": "refs/heads/remove-files-merge-add-files"
+    },
+    {
+        "hash": "3e80cede3c2a753a5272ed4d93496b67bb65cb0d",
+        "name": "refs/heads/test-merge"
+    }
+]

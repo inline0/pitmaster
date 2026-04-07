@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "42d06bd4b77fed026b154d16493e5deab78f02ec",
+        "name": "refs/heads/40-char-ref-aaaaaaaaaaaaaaaaaa"
+    },
+    {
+        "hash": "42d06bd4b77fed026b154d16493e5deab78f02ec",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "42d06bd4b77fed026b154d16493e5deab78f02ec",
+        "name": "refs/heads/packed"
+    },
+    {
+        "hash": "df6800012397fb85c56e7418dd4eb9405dee075c",
+        "name": "refs/tags/refs-0.1"
+    },
+    {
+        "hash": "3ec9c43c84ff242e3ef4a9fc5bc111fd780a76a8",
+        "name": "refs/tags/refs-0.2"
+    }
+]

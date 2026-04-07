@@ -1,0 +1,331 @@
+[
+    {
+        "hash": "53e2cbe218d4d4c1ebb6150e4e9799d941961e1a",
+        "tree": "0710fc673681de0b214f1e8daa76453f2adc48e2",
+        "parents": [
+            "3200a5a799396e0e4564ce4e92a5e9d6d86e0f38"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1593458101 2020-06-29 15:15:01 -0400",
+        "committer": "GitHub <noreply@github.com> 1593458101 2020-06-29 15:15:01 -0400",
+        "message": "fix: full support for Protocol Version 2 (#13)\n\nBREAKING CHANGE: I ran into issues with the `git-http-backend` npm module when trying to add support for Git Protocol Version 2 support, so I ended up ditching it and modifying my code to replace that functionality. This change doesn't break any isomorphic-git tests, but I'm releasing this as a major version bump just to be cautious."
+    },
+    {
+        "hash": "3200a5a799396e0e4564ce4e92a5e9d6d86e0f38",
+        "tree": "c48ec665c4a9fd5a4b7afbe973c3bc701e99860d",
+        "parents": [
+            "918a6ec91f49bcb763f9cf3ee03db136a29541b3"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1593379641 2020-06-28 17:27:21 -0400",
+        "committer": "GitHub <noreply@github.com> 1593379641 2020-06-28 17:27:21 -0400",
+        "message": "fix: update CORS to allow Git-Protocol header (#12)"
+    },
+    {
+        "hash": "918a6ec91f49bcb763f9cf3ee03db136a29541b3",
+        "tree": "0c9b977ac79409c0980b85c674810795edbdd208",
+        "parents": [
+            "57df9529846f877e6b5f071d4b452867e43c3ef7"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1593375252 2020-06-28 16:14:12 -0400",
+        "committer": "GitHub <noreply@github.com> 1593375252 2020-06-28 16:14:12 -0400",
+        "message": "feat: set GIT_PROTOCOL env var from Git-Protocol header (#9)"
+    },
+    {
+        "hash": "57df9529846f877e6b5f071d4b452867e43c3ef7",
+        "tree": "de82e89e67ed6f696fd81202a1c4a30eb46a8e37",
+        "parents": [
+            "14a101693bf9530ef2e4e895fe300940bce3820f"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1593374951 2020-06-28 16:09:11 -0400",
+        "committer": "GitHub <noreply@github.com> 1593374951 2020-06-28 16:09:11 -0400",
+        "message": "chore: bump lockfile deps (#11)"
+    },
+    {
+        "hash": "14a101693bf9530ef2e4e895fe300940bce3820f",
+        "tree": "6c50096a268cb38098b47cc3737494b850fe9531",
+        "parents": [
+            "14d0e09d4643d7547267c1cbf9972ac1c4db0b2d"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1593374654 2020-06-28 16:04:14 -0400",
+        "committer": "GitHub <noreply@github.com> 1593374654 2020-06-28 16:04:14 -0400",
+        "message": "chore: update semantic-release to handle 'main' branch (#10)\n\n* chore: update semantic-release to handle 'main' branch\r\n* chore: switch to Azure DevOps for CI"
+    },
+    {
+        "hash": "14d0e09d4643d7547267c1cbf9972ac1c4db0b2d",
+        "tree": "b359934e20daa1ebb69cef682ecc4f76152ac9d0",
+        "parents": [
+            "afc0a306a9c0c888f44520f8277a8020c90bd6ae"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1582073151 2020-02-18 19:45:51 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1582073151 2020-02-18 19:45:51 -0500",
+        "message": "1.2.1"
+    },
+    {
+        "hash": "afc0a306a9c0c888f44520f8277a8020c90bd6ae",
+        "tree": "e9d453d842065e135cf4888a872c880aa6ddaba7",
+        "parents": [
+            "3dfad008803471c90603dd24d3c929eebf5adb37"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1582073081 2020-02-18 19:44:41 -0500",
+        "committer": "GitHub <noreply@github.com> 1582073081 2020-02-18 19:44:41 -0500",
+        "message": "fix: update the allowHeaders list to match @isomorphic-git/cors-proxy (#7)"
+    },
+    {
+        "hash": "8b80d50a6a956624e3424577151d7e9f568fd20d",
+        "tree": "dd5311db496866e66cffbce363714b152832f140",
+        "parents": [
+            "db07dc08c974861cb4c5df74361a49928c907b1d"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1547265713 2019-01-11 23:01:53 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1547265713 2019-01-11 23:01:53 -0500",
+        "message": "feat: add mock server"
+    },
+    {
+        "hash": "db07dc08c974861cb4c5df74361a49928c907b1d",
+        "tree": "5dda3c88b962fdf5d06a41222f93bb18fb619219",
+        "parents": [
+            "3dfad008803471c90603dd24d3c929eebf5adb37"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1547264438 2019-01-11 22:40:38 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1547264492 2019-01-11 22:41:32 -0500",
+        "message": "feat: add static server"
+    },
+    {
+        "hash": "3dfad008803471c90603dd24d3c929eebf5adb37",
+        "tree": "d834c8f341ca6c13e4813f993148e57524ccf8ea",
+        "parents": [
+            "b60911114f18b6ea3f03a032eab3a32fedd7a8b5"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1545774469 2018-12-25 16:47:49 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1545774469 2018-12-25 16:47:49 -0500",
+        "message": "1.2.0"
+    },
+    {
+        "hash": "b60911114f18b6ea3f03a032eab3a32fedd7a8b5",
+        "tree": "1b672fbe7226350b4cb3c924ba298f190265fd8d",
+        "parents": [
+            "47c6e28ccddba6aa939f7f662c49fc3c2fdf63f0",
+            "f7079f698f005f513594b7865853fb8099da193b"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1545774210 2018-12-25 16:43:30 -0500",
+        "committer": "GitHub <noreply@github.com> 1545774210 2018-12-25 16:43:30 -0500",
+        "message": "feat: Add git-ssh-mock-server (#3)"
+    },
+    {
+        "hash": "f7079f698f005f513594b7865853fb8099da193b",
+        "tree": "1b672fbe7226350b4cb3c924ba298f190265fd8d",
+        "parents": [
+            "bdcfd0143bcf322be201ad59dfeadc015109401d"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1545773978 2018-12-25 16:39:38 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1545773978 2018-12-25 16:39:38 -0500",
+        "message": "rebase"
+    },
+    {
+        "hash": "bdcfd0143bcf322be201ad59dfeadc015109401d",
+        "tree": "7412ea9c929244b4dbe691a6b02494256576552f",
+        "parents": [
+            "34ebc3eb563ff5924465caa4d25d5da6e2d929f7"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1545771324 2018-12-25 15:55:24 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1545772879 2018-12-25 16:21:19 -0500",
+        "message": "cleanup and document"
+    },
+    {
+        "hash": "34ebc3eb563ff5924465caa4d25d5da6e2d929f7",
+        "tree": "a513679d7c5c8a99f8ff014319e5f1b984a6911d",
+        "parents": [
+            "47c6e28ccddba6aa939f7f662c49fc3c2fdf63f0"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1536216027 2018-09-06 02:40:27 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1545772780 2018-12-25 16:19:40 -0500",
+        "message": "initial git-ssh-mock-server"
+    },
+    {
+        "hash": "47c6e28ccddba6aa939f7f662c49fc3c2fdf63f0",
+        "tree": "e3d5d08f67e234a87d8904a6628f03bac1cda793",
+        "parents": [
+            "d9d8a2e6d19b4bd5b41eb6269afc5e7c0c374519"
+        ],
+        "author": "fossabot <badges@fossa.io> 1540506421 2018-10-25 15:27:01 -0700",
+        "committer": "William Hilton <wmhilton@gmail.com> 1540506421 2018-10-25 18:27:01 -0400",
+        "message": "Add license scan report and status (#2)\n\nSigned-off-by: fossabot <badges@fossa.io>"
+    },
+    {
+        "hash": "d9d8a2e6d19b4bd5b41eb6269afc5e7c0c374519",
+        "tree": "6ce17d421232f2246ff5b8d833ea963b6137cf79",
+        "parents": [
+            "1a49a52c40bcf1a63985503e6c7eba828bdea242"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1539491788 2018-10-14 00:36:28 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1539491788 2018-10-14 00:36:28 -0400",
+        "message": "1.1.0"
+    },
+    {
+        "hash": "1a49a52c40bcf1a63985503e6c7eba828bdea242",
+        "tree": "6b4d010530f3ec5424f118b2925eee157a3c805c",
+        "parents": [
+            "618656817f84ce60fa822b32da90f74548c9d162"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1539491565 2018-10-14 00:32:45 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1539491565 2018-10-14 00:32:45 -0400",
+        "message": "feat: support running in background and CORS headers"
+    },
+    {
+        "hash": "618656817f84ce60fa822b32da90f74548c9d162",
+        "tree": "df35e49fadf23d20994030a99880a76e371f739f",
+        "parents": [
+            "287229baad18d641ecd1707600ff22f462960124"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1536204289 2018-09-05 23:24:49 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1536204289 2018-09-05 23:24:49 -0400",
+        "message": "1.0.0"
+    },
+    {
+        "hash": "287229baad18d641ecd1707600ff22f462960124",
+        "tree": "f0bf433f02f353b6ef3dc1f7b9b20110e155e446",
+        "parents": [
+            "92fabdff9e9920573c284f85319621fe91252ca4"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1536203235 2018-09-05 23:07:15 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1536203631 2018-09-05 23:13:51 -0400",
+        "message": "fix small typo"
+    },
+    {
+        "hash": "92fabdff9e9920573c284f85319621fe91252ca4",
+        "tree": "33a0acf89bc4af2cf05d94c9456ad1835b87ec11",
+        "parents": [
+            "b235d65d9dc621bd462f4eb7a3de694fe1893d62"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1536202919 2018-09-05 23:01:59 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1536202919 2018-09-05 23:01:59 -0400",
+        "message": "rename project to git-http-mock-server"
+    },
+    {
+        "hash": "b235d65d9dc621bd462f4eb7a3de694fe1893d62",
+        "tree": "5ba1feaa5526a247bb07e5e2ae52e72721182d3f",
+        "parents": [
+            "fd53ded66ef3f05cad10517d9b144e2ac8b47024"
+        ],
+        "author": "renovate[bot] <renovate[bot]@users.noreply.github.com> 1523582580 2018-04-12 21:23:00 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1523582580 2018-04-12 21:23:00 -0400",
+        "message": "chore(deps): update dependency semantic-release to v15.1.7 (#8)"
+    },
+    {
+        "hash": "fd53ded66ef3f05cad10517d9b144e2ac8b47024",
+        "tree": "7e70e451d6a8c2028106368ce9bd680864694508",
+        "parents": [
+            "4b8eba427cfdf398471d1bbb1225ea6addfa790b"
+        ],
+        "author": "renovate[bot] <renovate[bot]@users.noreply.github.com> 1523570056 2018-04-12 17:54:16 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1523570056 2018-04-12 17:54:16 -0400",
+        "message": "chore(deps): update dependency semantic-release to v15.1.6 (#5)"
+    },
+    {
+        "hash": "4b8eba427cfdf398471d1bbb1225ea6addfa790b",
+        "tree": "c47118da72132b649230e424b4bf20dc11c3d98d",
+        "parents": [
+            "ed26e1069d11718175649354c0c3bc187db842ee"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1523569912 2018-04-12 17:51:52 -0400",
+        "committer": "GitHub <noreply@github.com> 1523569912 2018-04-12 17:51:52 -0400",
+        "message": "Update renovate.json"
+    },
+    {
+        "hash": "ed26e1069d11718175649354c0c3bc187db842ee",
+        "tree": "4f65c22561f608078fb6a2bdec876e847e91bb54",
+        "parents": [
+            "7e3ee1e1485730805c35a903a407fd8fb5c96ab7"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1523569849 2018-04-12 17:50:49 -0400",
+        "committer": "GitHub <noreply@github.com> 1523569849 2018-04-12 17:50:49 -0400",
+        "message": "Only renovate on Fridays"
+    },
+    {
+        "hash": "7e3ee1e1485730805c35a903a407fd8fb5c96ab7",
+        "tree": "0f0e57988e5eae8c8579aab03efae471b6986a65",
+        "parents": [
+            "71bbae5cb02a55926150a4cf74d3c333b8127342"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1523073476 2018-04-06 23:57:56 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1523073476 2018-04-06 23:57:56 -0400",
+        "message": "feat: BREAKING CHANGE release version 2"
+    },
+    {
+        "hash": "71bbae5cb02a55926150a4cf74d3c333b8127342",
+        "tree": "0f0e57988e5eae8c8579aab03efae471b6986a65",
+        "parents": [
+            "bc3893399ba7daa34e4613fa81c39d8116dd1b25"
+        ],
+        "author": "William Hilton <wmhilton@gmail.com> 1523073170 2018-04-06 23:52:50 -0400",
+        "committer": "GitHub <noreply@github.com> 1523073170 2018-04-06 23:52:50 -0400",
+        "message": "BREAKING CHANGE: Perform 'push' operations on a temporary copy of the repo. Add settings 'root' and 'route'. (#4)"
+    },
+    {
+        "hash": "bc3893399ba7daa34e4613fa81c39d8116dd1b25",
+        "tree": "37b394b1095d86d85b2e2bbb41b5c200c8aad29f",
+        "parents": [
+            "bcfb32b2131f30975008c3a1b16616d972908f8b"
+        ],
+        "author": "renovate[bot] <renovate[bot]@users.noreply.github.com> 1522842758 2018-04-04 07:52:38 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1522842758 2018-04-04 07:52:38 -0400",
+        "message": "chore(deps): update dependency semantic-release to v15.1.5 (#3)"
+    },
+    {
+        "hash": "bcfb32b2131f30975008c3a1b16616d972908f8b",
+        "tree": "17e4079a43e189610b1aa5ea265bbd616347097c",
+        "parents": [
+            "cd09a2e864cf8eb436dc890a67a5c0feb44702c6"
+        ],
+        "author": "renovate[bot] <renovate[bot]@users.noreply.github.com> 1522449521 2018-03-30 18:38:41 -0400",
+        "committer": "William Hilton <wmhilton@gmail.com> 1522449521 2018-03-30 17:38:41 -0500",
+        "message": "chore(deps): pin dependencies (#2)"
+    },
+    {
+        "hash": "cd09a2e864cf8eb436dc890a67a5c0feb44702c6",
+        "tree": "96e66e878575f8422751be5f0337bc2624a9610d",
+        "parents": [
+            "2e975e6a00f918ba951cab42825c4d003ca28880"
+        ],
+        "author": "renovate[bot] <renovate[bot]@users.noreply.github.com> 1522431550 2018-03-30 12:39:10 -0500",
+        "committer": "William Hilton <wmhilton@gmail.com> 1522431550 2018-03-30 12:39:10 -0500",
+        "message": "Add renovate.json (#1)"
+    },
+    {
+        "hash": "2e975e6a00f918ba951cab42825c4d003ca28880",
+        "tree": "db8fe343f2fec8d7145ad05eb40dda91178d68c8",
+        "parents": [
+            "299d73cc56692262df7c7a0381cbcdedada15c95"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1521941629 2018-03-24 21:33:49 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1521941629 2018-03-24 21:33:49 -0400",
+        "message": "feat: Initial release"
+    },
+    {
+        "hash": "299d73cc56692262df7c7a0381cbcdedada15c95",
+        "tree": "db8fe343f2fec8d7145ad05eb40dda91178d68c8",
+        "parents": [
+            "230b2812906b22989331cb9787b1056cfa546365"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1521941278 2018-03-24 21:27:58 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1521941278 2018-03-24 21:27:58 -0400",
+        "message": "Add semantic-release"
+    },
+    {
+        "hash": "230b2812906b22989331cb9787b1056cfa546365",
+        "tree": "608a67d2ff97f3363d889e0dd57b299ffd0e95ca",
+        "parents": [
+            "03d37d6987a726c916c437622f28f7274266e658"
+        ],
+        "author": "Will Hilton <wmhilton@gmail.com> 1521940872 2018-03-24 21:21:12 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1521940872 2018-03-24 21:21:12 -0400",
+        "message": "Add travis"
+    },
+    {
+        "hash": "03d37d6987a726c916c437622f28f7274266e658",
+        "tree": "4de4f7adcf6ecb2ee71f7027ae5d1c1c5ca28b09",
+        "parents": [],
+        "author": "Will Hilton <wmhilton@gmail.com> 1521939316 2018-03-24 20:55:16 -0400",
+        "committer": "Will Hilton <wmhilton@gmail.com> 1521939902 2018-03-24 21:05:02 -0400",
+        "message": "Initial commit"
+    }
+]
