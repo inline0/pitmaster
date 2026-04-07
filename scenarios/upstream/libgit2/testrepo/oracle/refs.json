@@ -1,0 +1,78 @@
+[
+    {
+        "hash": "a4a7dce85cf63874e984719f4fdd239f5145052f",
+        "name": "refs/heads/br2"
+    },
+    {
+        "hash": "144344043ba4d4a405da03de3844aa829ae8be0e",
+        "name": "refs/heads/dir"
+    },
+    {
+        "hash": "f9ed4af42472941da45a3ce44458455ed227a6be",
+        "name": "refs/heads/executable"
+    },
+    {
+        "hash": "6fd5c7dd2ab27b48c493023f794be09861e9045f",
+        "name": "refs/heads/ident"
+    },
+    {
+        "hash": "6b377958d8c6a4906e8573b53672a1a23a4e8ce6",
+        "name": "refs/heads/long-file-name"
+    },
+    {
+        "hash": "099fabac3a9ea935598528c27f866e34089c2eff",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "a38d028f71eaa590febb7d716b1ca32350cf70da",
+        "name": "refs/heads/merge-conflict"
+    },
+    {
+        "hash": "41bc8c69075bbdb46c5c6f0566cc8cc5b46e8bd9",
+        "name": "refs/heads/packed"
+    },
+    {
+        "hash": "4a202b346bb0fb0db7eff3cffeb3c70babbd2045",
+        "name": "refs/heads/packed-test"
+    },
+    {
+        "hash": "763d71aadf09a7951596c9746c024e7eece7c7af",
+        "name": "refs/heads/subtrees"
+    },
+    {
+        "hash": "e90810b8df3e80c413d903f631643c716887138d",
+        "name": "refs/heads/test"
+    },
+    {
+        "hash": "099fabac3a9ea935598528c27f866e34089c2eff",
+        "name": "refs/heads/testrepo-worktree"
+    },
+    {
+        "hash": "099fabac3a9ea935598528c27f866e34089c2eff",
+        "name": "refs/symref"
+    },
+    {
+        "hash": "7b4384978d2493e851f9cca7858815fac9b10980",
+        "name": "refs/tags/e90810b"
+    },
+    {
+        "hash": "b25fa35b38051e4ae45d4222e795f9df2e43f1d1",
+        "name": "refs/tags/foo/bar"
+    },
+    {
+        "hash": "b25fa35b38051e4ae45d4222e795f9df2e43f1d1",
+        "name": "refs/tags/foo/foo/bar"
+    },
+    {
+        "hash": "b25fa35b38051e4ae45d4222e795f9df2e43f1d1",
+        "name": "refs/tags/packed-tag"
+    },
+    {
+        "hash": "1385f264afb75a56a5bec74243be9b367ba4ca08",
+        "name": "refs/tags/point_to_blob"
+    },
+    {
+        "hash": "b25fa35b38051e4ae45d4222e795f9df2e43f1d1",
+        "name": "refs/tags/test"
+    }
+]

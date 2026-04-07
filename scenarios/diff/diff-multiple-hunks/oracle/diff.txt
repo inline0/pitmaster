@@ -1,0 +1,20 @@
+diff --git a/file.txt b/file.txt
+index c4352f8..6095681 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1,6 +1,6 @@
+ line 1
+ line 2
+-line 3
++changed line 3
+ line 4
+ line 5
+ line 6
+@@ -15,6 +15,6 @@ line 14
+ line 15
+ line 16
+ line 17
+-line 18
++changed line 18
+ line 19
+ line 20

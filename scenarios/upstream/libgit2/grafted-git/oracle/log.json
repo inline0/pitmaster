@@ -1,0 +1,78 @@
+[
+    {
+        "hash": "hint: Support for <GIT_DIR>/info/grafts is deprecated",
+        "tree": "hint: and will be removed in a future Git version.",
+        "parents": [
+            "hint:"
+        ],
+        "author": "hint: Please use \"git replace --convert-graft-file\"",
+        "committer": "hint: to convert the grafts into replace refs.",
+        "message": "hint:\nhint: Turn this message off by running\nhint: \"git config set advice.graftFileDeprecated false\"\n66cc22a015f6ca75b34c82d28f78ba663876bade\ne67b587a57850c69f6f9351ee10c7c8a41dacc78\ne414f42f4e6bc6934563a2349a8600f0ab68618e 8a00e91619098618be97c0d2ceabb05a2c58edd9 1c18e80a276611bb9b146590616bbc5aebdf2945 2f3053cbff8a4ca2f0666de364ddb734a28a31a9\nEtienne Samson <samson.etienne@gmail.com> 1503057411 2017-08-18 13:56:51 +0200\nEtienne Samson <samson.etienne@gmail.com> 1503057411 2017-08-18 13:56:51 +0200\nRemove file"
+    },
+    {
+        "hash": "e414f42f4e6bc6934563a2349a8600f0ab68618e",
+        "tree": "7c9da502b2744b70522bb694cd607fb00104a233",
+        "parents": [],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1503057385 2017-08-18 13:56:25 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1503057385 2017-08-18 13:56:25 +0200",
+        "message": "Adding another file4"
+    },
+    {
+        "hash": "8a00e91619098618be97c0d2ceabb05a2c58edd9",
+        "tree": "f07330bc2e4ed4bd0bf2301505f6c6bbad01aa2a",
+        "parents": [
+            "f503807ffa920e407a600cfaee96b7152259acc7"
+        ],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1503057324 2017-08-18 13:55:24 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1503057324 2017-08-18 13:55:24 +0200",
+        "message": "Adding file4"
+    },
+    {
+        "hash": "1c18e80a276611bb9b146590616bbc5aebdf2945",
+        "tree": "2af02ebff1fc0142d2380c98758d81c67b365869",
+        "parents": [
+            "d7224d49d6d5aff6ade596ed74f4bcd4f77b29e2"
+        ],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1503057228 2017-08-18 13:53:48 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1503057228 2017-08-18 13:53:48 +0200",
+        "message": "New file3 contents"
+    },
+    {
+        "hash": "d7224d49d6d5aff6ade596ed74f4bcd4f77b29e2",
+        "tree": "2becadd3f1ecad07a054392421edf9c0e1c375b2",
+        "parents": [
+            "0512adebd3782157f0d5c9b22b043f87b4aaff9e"
+        ],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1503057207 2017-08-18 13:53:27 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1503057207 2017-08-18 13:53:27 +0200",
+        "message": "Remove file3 contents"
+    },
+    {
+        "hash": "0512adebd3782157f0d5c9b22b043f87b4aaff9e",
+        "tree": "5d31bf4b437e1191b6c709c665f1bd329d0ed0bf",
+        "parents": [
+            "2f3053cbff8a4ca2f0666de364ddb734a28a31a9"
+        ],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1503057109 2017-08-18 13:51:49 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1503057109 2017-08-18 13:51:49 +0200",
+        "message": "Adding file3"
+    },
+    {
+        "hash": "f503807ffa920e407a600cfaee96b7152259acc7",
+        "tree": "b2b4f9e5fe5dacbb2f98bd71d1dc86c7b571ddd1",
+        "parents": [
+            "2f3053cbff8a4ca2f0666de364ddb734a28a31a9"
+        ],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1502969128 2017-08-17 13:25:28 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1502969128 2017-08-17 13:25:28 +0200",
+        "message": "Adding file2"
+    },
+    {
+        "hash": "2f3053cbff8a4ca2f0666de364ddb734a28a31a9",
+        "tree": "48b2b333732644eafb385771a992b923fa88f135",
+        "parents": [],
+        "author": "Etienne Samson <samson.etienne@gmail.com> 1502969042 2017-08-17 13:24:02 +0200",
+        "committer": "Etienne Samson <samson.etienne@gmail.com> 1502969042 2017-08-17 13:24:02 +0200",
+        "message": "Initial commit"
+    }
+]

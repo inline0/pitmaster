@@ -1,0 +1,13 @@
+{
+    "name": "status-modified",
+    "category": "status",
+    "description": "File modified in working tree but not staged",
+    "operations": ["status"],
+    "oracle_commands": {
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

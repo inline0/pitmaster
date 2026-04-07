@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "0266163a49e280c4f5ed1e08facd36a2bd716bcf",
+        "type": "blob",
+        "size": 51,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "53fc32d17276939fc79ed05badaef2db09990016",
+        "type": "tree",
+        "size": 38,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6336846bd5c88d32f93ae57d846683e61ab5c530",
+        "type": "blob",
+        "size": 21,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6dcf9bf7541ee10456529833502442f385010c3d",
+        "type": "commit",
+        "size": 176,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bed08a0b30b72a9d4aed7f1af8c8ca124e8d64b9",
+        "type": "tree",
+        "size": 38,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e90810b8df3e80c413d903f631643c716887138d",
+        "type": "commit",
+        "size": 224,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eda9f45a2a98d4c17a09d681d88569fa4ea91755",
+        "type": "tag",
+        "size": 100,
+        "content": "fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello\n",
+        "encoding": "utf-8"
+    }
+]

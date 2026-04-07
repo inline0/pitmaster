@@ -1,0 +1,13 @@
+{
+    "name": "diff-multiple-hunks",
+    "category": "diff",
+    "description": "Diff with changes in two separate regions producing multiple hunks",
+    "operations": ["diff"],
+    "oracle_commands": {
+        "diff": "git diff"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

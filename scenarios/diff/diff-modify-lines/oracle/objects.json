@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "008f3493894009a3f877abd811724200a2dc4415",
+        "type": "commit",
+        "size": 191,
+        "content": "tree 8fdb09533db4aac454e205dc59516b684a0bf25a\nauthor Test User <test@pitmaster.dev> 1775564848 +0200\ncommitter Test User <test@pitmaster.dev> 1775564848 +0200\n\nInitial commit with four lines\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7a4a73ad9064dfc688bd406ef103970cb96a31eb",
+        "type": "blob",
+        "size": 46,
+        "content": "first line\nsecond line\nthird line\nfourth line\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8fdb09533db4aac454e205dc59516b684a0bf25a",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 7a4a73ad9064dfc688bd406ef103970cb96a31eb\tfile.txt\n",
+        "encoding": "utf-8"
+    }
+]

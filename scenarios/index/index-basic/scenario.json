@@ -1,0 +1,13 @@
+{
+    "name": "index-basic",
+    "category": "index",
+    "description": "Basic index state with several staged files",
+    "operations": ["index"],
+    "oracle_commands": {
+        "index": "git ls-files --stage"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

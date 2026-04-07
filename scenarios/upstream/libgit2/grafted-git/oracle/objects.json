@@ -1,0 +1,156 @@
+[
+    {
+        "hash": "0512adebd3782157f0d5c9b22b043f87b4aaff9e",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 5d31bf4b437e1191b6c709c665f1bd329d0ed0bf\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057109 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057109 +0200\n\nAdding file3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c18e80a276611bb9b146590616bbc5aebdf2945",
+        "type": "commit",
+        "size": 249,
+        "content": "tree 2af02ebff1fc0142d2380c98758d81c67b365869\nparent d7224d49d6d5aff6ade596ed74f4bcd4f77b29e2\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057228 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057228 +0200\n\nNew file3 contents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c3f11eca55d76bc1bf7353ca7e4226246d353ed",
+        "type": "blob",
+        "size": 30,
+        "content": "You remove the file contents.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2af02ebff1fc0142d2380c98758d81c67b365869",
+        "type": "tree",
+        "size": 65,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob ba54010f8d41532eb130eba420f50248881f7fc2\tfile3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2becadd3f1ecad07a054392421edf9c0e1c375b2",
+        "type": "tree",
+        "size": 65,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob 1c3f11eca55d76bc1bf7353ca7e4226246d353ed\tfile3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2f3053cbff8a4ca2f0666de364ddb734a28a31a9",
+        "type": "commit",
+        "size": 197,
+        "content": "tree 48b2b333732644eafb385771a992b923fa88f135\nauthor Etienne Samson <samson.etienne@gmail.com> 1502969042 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1502969042 +0200\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "45342912745ba6f8893b1e126df4653a4355df1a",
+        "type": "blob",
+        "size": 34,
+        "content": "Another, slightly different file4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "48b2b333732644eafb385771a992b923fa88f135",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5d31bf4b437e1191b6c709c665f1bd329d0ed0bf",
+        "type": "tree",
+        "size": 65,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob a04de168dd5c43aa2af594d794d62e922f8b3b34\tfile3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "66cc22a015f6ca75b34c82d28f78ba663876bade",
+        "type": "commit",
+        "size": 242,
+        "content": "tree e67b587a57850c69f6f9351ee10c7c8a41dacc78\nparent e414f42f4e6bc6934563a2349a8600f0ab68618e\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057411 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057411 +0200\n\nRemove file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6cf192eb71cd3243c9fbbe2551012c4449de3fcf",
+        "type": "blob",
+        "size": 22,
+        "content": "The more there are...\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7c9da502b2744b70522bb694cd607fb00104a233",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile2\n100644 blob 45342912745ba6f8893b1e126df4653a4355df1a\tfile4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8a00e91619098618be97c0d2ceabb05a2c58edd9",
+        "type": "commit",
+        "size": 243,
+        "content": "tree f07330bc2e4ed4bd0bf2301505f6c6bbad01aa2a\nparent f503807ffa920e407a600cfaee96b7152259acc7\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057324 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057324 +0200\n\nAdding file4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a04de168dd5c43aa2af594d794d62e922f8b3b34",
+        "type": "blob",
+        "size": 26,
+        "content": "A companion file appears!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2b4f9e5fe5dacbb2f98bd71d1dc86c7b571ddd1",
+        "type": "tree",
+        "size": 65,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba54010f8d41532eb130eba420f50248881f7fc2",
+        "type": "blob",
+        "size": 21,
+        "content": "It's very efficient!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d7224d49d6d5aff6ade596ed74f4bcd4f77b29e2",
+        "type": "commit",
+        "size": 252,
+        "content": "tree 2becadd3f1ecad07a054392421edf9c0e1c375b2\nparent 0512adebd3782157f0d5c9b22b043f87b4aaff9e\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057207 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057207 +0200\n\nRemove file3 contents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "db8e43f297a313c439530c977b733aaa8c10d54e",
+        "type": "blob",
+        "size": 19,
+        "content": "A new file appears\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e414f42f4e6bc6934563a2349a8600f0ab68618e",
+        "type": "commit",
+        "size": 203,
+        "content": "tree 7c9da502b2744b70522bb694cd607fb00104a233\nauthor Etienne Samson <samson.etienne@gmail.com> 1503057385 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1503057385 +0200\n\nAdding another file4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e67b587a57850c69f6f9351ee10c7c8a41dacc78",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile2\n100644 blob 45342912745ba6f8893b1e126df4653a4355df1a\tfile4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f07330bc2e4ed4bd0bf2301505f6c6bbad01aa2a",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile\n100644 blob db8e43f297a313c439530c977b733aaa8c10d54e\tfile2\n100644 blob 6cf192eb71cd3243c9fbbe2551012c4449de3fcf\tfile4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f503807ffa920e407a600cfaee96b7152259acc7",
+        "type": "commit",
+        "size": 195,
+        "content": "tree b2b4f9e5fe5dacbb2f98bd71d1dc86c7b571ddd1\nauthor Etienne Samson <samson.etienne@gmail.com> 1502969128 +0200\ncommitter Etienne Samson <samson.etienne@gmail.com> 1502969128 +0200\n\nAdding file2\n",
+        "encoding": "utf-8"
+    }
+]

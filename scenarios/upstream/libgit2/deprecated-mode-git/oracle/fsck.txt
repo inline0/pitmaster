@@ -1,0 +1,3 @@
+warning in tree 0810fb7818088ff5ac41ee49199b51473b1bd6c7: badFilemode: contains bad file modes
+warning in tree 1b05fdaa881ee45b48cbaa5e9b037d667a47745e: badFilemode: contains bad file modes
+dangling tree 0810fb7818088ff5ac41ee49199b51473b1bd6c7

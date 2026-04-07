@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "3b18e512dba79e4c8300dd08aeb37f8e728b8dad",
+        "type": "blob",
+        "size": 12,
+        "content": "hello world\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "439e1ce9bf9d237648768e609ed524b967f224c1",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob f9a764b1d4b8856d8094767dce1a5752856df670\tmain.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5ebae78db58e8e71c5f59cb019634da0e3e1fa40",
+        "type": "blob",
+        "size": 26,
+        "content": "A simple test repository.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "df67c597e31e131394643675d878e9ae29abd551",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob 5ebae78db58e8e71c5f59cb019634da0e3e1fa40\tREADME\n100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad\thello.txt\n040000 tree 439e1ce9bf9d237648768e609ed524b967f224c1\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eff662b56b992f31370f634185126d5d7de6fd7b",
+        "type": "commit",
+        "size": 192,
+        "content": "tree df67c597e31e131394643675d878e9ae29abd551\nauthor Test User <test@pitmaster.dev> 1775564853 +0200\ncommitter Test User <test@pitmaster.dev> 1775564853 +0200\n\nInitial commit with three files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9a764b1d4b8856d8094767dce1a5752856df670",
+        "type": "blob",
+        "size": 35,
+        "content": "<?php\necho \"Hello from Pitmaster\";\n",
+        "encoding": "utf-8"
+    }
+]

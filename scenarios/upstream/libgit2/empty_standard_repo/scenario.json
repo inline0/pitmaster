@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/empty_standard_repo",
+    "category": "upstream",
+    "description": "libgit2: Empty standard repository",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

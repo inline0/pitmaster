@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "29ab7053bb4dde0298e03e2c179e890b7dd465a7",
+        "type": "blob",
+        "size": 1293,
+        "content": "The Git feature that r3ally mak3s it stand apart from n3arly 3v3ry other SCM\nout there is its branching model.\n\nGit allows and encourages you to have multiple local branches that can be\nentirely independent of each other. The creation, merging, and deletion of\nthose lines of development takes seconds.\n\nThis means that you can do things like:\n\nRole-Based Codelines. Have a branch that always contains only what goes to\nproduction, another that you merge work into for testing, and several\nsmaller ones for day to day work.\n\nFeature Based Workflow. Create new branches for each new feature you're\nworking on so you can seamlessly switch back and forth between them, then\ndelete each branch when that feature gets merged into your main line.\n\nDisposable Experimentation. Create a branch to experiment in, realize it's\nnot going to work, and just delete it - abandoning the work—with nobody else\never seeing it (even if you've pushed other branches in the meantime).\n\nNotably, when you push to a remote repository, you do not have to push all\nshare it with others.\n\nThere are ways to accomplish some of this with other systems, but the work\ninvolved is much more difficult and error-prone. Git makes this process\nincredibly easy and it changes the way most developers work when they learn\nit.!",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e5bcbad2a68e5bc60a53b8388eea53a1a7ab847",
+        "type": "blob",
+        "size": 2155,
+        "content": "Git is fast. With Git, nearly all operations are performed locally, giving\nit a huge speed advantage on centralized systems that constantly have to\ncommunicate with a server somewhere.\n\nGit was built to work on the Linux kernel, meaning that it has had to\neffectively handle large repositories from day one. Git is written in C,\nreducing the overhead of runtimes associated with higher-level\nlanguages. Speed and performance has been a primary design goal of the Git\nfrom the start.\n\nLet's see how common operations stack up against Subversion, a common\ncentralized version control system that is similar to CVS or\nPerforce. Smaller is faster.\n\nFor testing, large AWS instances were set up in the same availability\nzone. Git and SVN were installed on both machines, the Ruby repository was\ncopied to both Git and SVN servers, and common operations were performed on\nboth.\n\nIn some cases the commands don't match up exactly. Here, matching on the\nlowest common denominator was attempted. For example, the 'commit' tests\nalso include the time to push for Git, though most of the time you would not\nactually be pushing to the server immediately after a commit where the two\ncommands cannot be separated in SVN.\n\nNote that this is the best case scenario for SVN - a server with no load\nwith an 80MB/s bandwidth connection to the client machine. Nearly all of\nthese times would be even worse for SVN if that connection was slower, while\nmany of the Git times would not be affected.\n\nClearly, in many of these common version control operations, Git is one or\ntwo orders of magnitude faster than SVN, even under ideal conditions for\nSVN.\n\nOne place where Git is slower is in the initial clone operation. Here, Git\nis downloading the entire history rather than only the latest version. As\nseen in the above charts, it's not considerably slower for an operation that\nis only performed once.\n\nIt's also interesting to note that the size of the data on the client side\nis very similar even though Git also has every version of every file for the\nentire history of the project. This illustrates how efficient it is at\ncompressing and storing data on the client side.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "546c735f16a3b44d9784075c2c0dab2ac9bf1989",
+        "type": "blob",
+        "size": 2156,
+        "content": "Git is fast. With Git, nearly all operations are performed locally, giving\nit an huge speed advantage on centralized systems that constantly have to\ncommunicate with a server somewhere.\n\nGit was built to work on the Linux kernel, meaning that it has had to\neffectively handle large repositories from day one. Git is written in C,\nreducing the overhead of runtimes associated with higher-level\nlanguages. Speed and performance has been a primary design goal of the Git\nfrom the start.\n\nFor testing, large AWS instances were set up in the same availability\nzone. Git and SVN were installed on both machines, the Ruby repository was\ncopied to both Git and SVN servers, and common operations were performed on\nboth.\n\nIn some cases the commands don't match up exactly. Here, matching on the\nlowest common denominator was attempted. For example, the 'commit' tests\nalso include the time to push for Git, though most of the time you would not\nactually be pushing to the server immediately after a commit where the two\ncommands cannot be separated in SVN.\n\nNote that this is the best case scenario for SVN - a server with no load\nwith an 80MB/s bandwidth connection to the client machine. Nearly all of\nthese times would be even worse for SVN if that connection was slower, while\nmany of the Git times would not be affected.\n\nClearly, in many of these common version control operations, Git is one or\ntwo orders of magnitude faster than SVN, even under ideal conditions for\nSVN.\n\nLet's see how common operations stack up against Subversion, a common\ncentralized version control system that is similar to CVS or\nPerforce. Smaller is faster.\n\nOne place where Git is slower is in the initial clone operation. Here, Git\nis downloading the entire history rather than only the latest version. As\nseen in the above charts, it's not considerably slower for an operation that\nis only performed once.\n\nIt's also interesting to note that the size of the data on the client side\nis very similar even though Git also has every version of every file for the\nentire history of the project. This illustrates how efficient it is at\ncompressing and storing data on the client side.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7a9e0b02e63179929fed24f0a3e0f19168114d10",
+        "type": "commit",
+        "size": 221,
+        "content": "tree 88789109439c1e1c3cd45224001edee5304ed53c\nparent d70d245ed97ed2aa596dd1af6536e4bfdb047b69\nauthor Russell Belfer <rb@github.com> 1347560491 -0700\ncommitter Russell Belfer <rb@github.com> 1347560491 -0700\n\nsome changes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7b808f723a8ca90df319682c221187235af76693",
+        "type": "blob",
+        "size": 1725,
+        "content": "The Git feature that really makes it stand apart from nearly every other SCM\nout there is its branching model.\n\nGit allows and encourages you to have multiple local branches that can be\nentirely independent of each other. The creation, merging, and deletion of\nthose lines of development takes seconds.\n\nThis means that you can do things like:\n\nFrictionless Context Switching. Create a branch to try out an idea, commit a\nfew times, switch back to where you branched from, apply a patch, switch\nback to where you are experimenting, and merge it in.\n\nRole-Based Codelines. Have a branch that always contains only what goes to\nproduction, another that you merge work into for testing, and several\nsmaller ones for day to day work.\n\nFeature Based Workflow. Create new branches for each new feature you're\nworking on so you can seamlessly switch back and forth between them, then\ndelete each branch when that feature gets merged into your main line.\n\nDisposable Experimentation. Create a branch to experiment in, realize it's\nnot going to work, and just delete it - abandoning the work—with nobody else\never seeing it (even if you've pushed other branches in the meantime).\n\nNotably, when you push to a remote repository, you do not have to push all\nof your branches. You can choose to share just one of your branches, a few\nof them, or all of them. This tends to free people to try new ideas without\nworrying about having to plan how and when they are going to merge it in or\nshare it with others.\n\nThere are ways to accomplish some of this with other systems, but the work\ninvolved is much more difficult and error-prone. Git makes this process\nincredibly easy and it changes the way most developers work when they learn\nit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "88789109439c1e1c3cd45224001edee5304ed53c",
+        "type": "tree",
+        "size": 77,
+        "content": "100644 blob 546c735f16a3b44d9784075c2c0dab2ac9bf1989\tanother.txt\n100644 blob 29ab7053bb4dde0298e03e2c179e890b7dd465a7\treadme.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cb8294e696339863df760b2ff5d1e275bee72455",
+        "type": "tree",
+        "size": 77,
+        "content": "100644 blob 3e5bcbad2a68e5bc60a53b8388eea53a1a7ab847\tanother.txt\n100644 blob 7b808f723a8ca90df319682c221187235af76693\treadme.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d70d245ed97ed2aa596dd1af6536e4bfdb047b69",
+        "type": "commit",
+        "size": 175,
+        "content": "tree cb8294e696339863df760b2ff5d1e275bee72455\nauthor Russell Belfer <rb@github.com> 1347559804 -0700\ncommitter Russell Belfer <rb@github.com> 1347559804 -0700\n\ninitial commit\n",
+        "encoding": "utf-8"
+    }
+]

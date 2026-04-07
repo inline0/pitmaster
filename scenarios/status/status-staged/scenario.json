@@ -1,0 +1,13 @@
+{
+    "name": "status-staged",
+    "category": "status",
+    "description": "File modified and staged but not committed",
+    "operations": ["status"],
+    "oracle_commands": {
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

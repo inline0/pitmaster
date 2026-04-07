@@ -1,0 +1,11 @@
+{
+    "name": "merge-conflict",
+    "category": "merge",
+    "description": "Two branches modify the same lines, causing a merge conflict",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

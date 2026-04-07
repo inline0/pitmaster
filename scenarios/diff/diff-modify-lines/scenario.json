@@ -1,0 +1,13 @@
+{
+    "name": "diff-modify-lines",
+    "category": "diff",
+    "description": "Diff after modifying lines in an existing file",
+    "operations": ["diff"],
+    "oracle_commands": {
+        "diff": "git diff"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

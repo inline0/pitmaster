@@ -1,0 +1,11 @@
+{
+    "name": "refs-packed",
+    "category": "refs",
+    "description": "Repository with branches and tags packed via git pack-refs --all",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

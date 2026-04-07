@@ -1,0 +1,147 @@
+[
+    {
+        "hash": "75ec9929465623f17ff3ad68c0438ea56faba815",
+        "tree": "8be77695228eadd004606af0508462457961ca4a",
+        "parents": [
+            "e5f831f064adf9224d8c3ce556959d9d61b3c0a9"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1414440261 2014-10-27 16:04:21 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1414440261 2014-10-27 16:04:21 -0400",
+        "message": "Extra edit"
+    },
+    {
+        "hash": "e5f831f064adf9224d8c3ce556959d9d61b3c0a9",
+        "tree": "1010c8f4711d60d04bad16197a0f4b0d4d19c542",
+        "parents": [
+            "97e52d5e81f541080cd6b92829fb85bc4d81d90b"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1414440243 2014-10-27 16:04:03 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1414440243 2014-10-27 16:04:03 -0400",
+        "message": "Revert \"Revert me\"\n\nThis reverts commit 97e52d5e81f541080cd6b92829fb85bc4d81d90b."
+    },
+    {
+        "hash": "97e52d5e81f541080cd6b92829fb85bc4d81d90b",
+        "tree": "aa7e281435d1fe6740d712f4bcc6fe89c425bedc",
+        "parents": [
+            "00c97c9299419874a7bfc4d853d462c568e1be2d"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1414440230 2014-10-27 16:03:50 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1414440230 2014-10-27 16:03:50 -0400",
+        "message": "Revert me"
+    },
+    {
+        "hash": "00c97c9299419874a7bfc4d853d462c568e1be2d",
+        "tree": "1010c8f4711d60d04bad16197a0f4b0d4d19c542",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1414440212 2014-10-27 16:03:32 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1414440212 2014-10-27 16:03:32 -0400",
+        "message": "Initial revision"
+    },
+    {
+        "hash": "52c95c4264245469a0617e289a7d737f156826b4",
+        "tree": "97f3574e92f1730d365fb9e00c10e3c507c1cfe9",
+        "parents": [
+            "5acdc74af27172ec491d213ee36cea7eb9ef2579"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385138350 2013-11-22 11:39:10 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385138350 2013-11-22 11:39:10 -0500",
+        "message": "Revert \"Merge branch 'merges-branch' into merges\"\n\nThis reverts commit 5acdc74af27172ec491d213ee36cea7eb9ef2579, reversing\nchanges made to 39467716290f6df775a91cdb9a4eb39295018145."
+    },
+    {
+        "hash": "5acdc74af27172ec491d213ee36cea7eb9ef2579",
+        "tree": "a69f74efcb51634b88e04ea81273158a85257f41",
+        "parents": [
+            "39467716290f6df775a91cdb9a4eb39295018145",
+            "13ee9cd5d8e1023c218e0e1ea684ec0c582b5050"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385138295 2013-11-22 11:38:15 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385138295 2013-11-22 11:38:15 -0500",
+        "message": "Merge branch 'merges-branch' into merges"
+    },
+    {
+        "hash": "39467716290f6df775a91cdb9a4eb39295018145",
+        "tree": "97f3574e92f1730d365fb9e00c10e3c507c1cfe9",
+        "parents": [
+            "ebb03002cee5d66c7732dd06241119fe72ab96a5"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385138288 2013-11-22 11:38:08 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385138288 2013-11-22 11:38:08 -0500",
+        "message": "mainline"
+    },
+    {
+        "hash": "13ee9cd5d8e1023c218e0e1ea684ec0c582b5050",
+        "tree": "83f65df4606c4f8dbf8da43de25de1b7e4c03238",
+        "parents": [
+            "ebb03002cee5d66c7732dd06241119fe72ab96a5"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385138262 2013-11-22 11:37:42 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385138262 2013-11-22 11:37:42 -0500",
+        "message": "branch"
+    },
+    {
+        "hash": "ebb03002cee5d66c7732dd06241119fe72ab96a5",
+        "tree": "8fd40e13fff575b63e86af87175e70fa7fb92f80",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385138236 2013-11-22 11:37:16 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385138236 2013-11-22 11:37:16 -0500",
+        "message": "initial"
+    },
+    {
+        "hash": "2d440f2b3147d3dc7ad1085813478d6d869d5a4d",
+        "tree": "beead165e017269e8dc0dd6f01195726a2e1e01b",
+        "parents": [
+            "72333f47d4e83616630ff3b0ffe4c0faebcc3c45"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137927 2013-11-22 11:32:07 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137927 2013-11-22 11:32:07 -0500",
+        "message": "conflicting changes"
+    },
+    {
+        "hash": "72333f47d4e83616630ff3b0ffe4c0faebcc3c45",
+        "tree": "181aab27ddb37b40d9a284fb4733497006d57091",
+        "parents": [
+            "d1d403d22cbe24592d725f442835cf46fe60c8ac"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137902 2013-11-22 11:31:42 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137902 2013-11-22 11:31:42 -0500",
+        "message": "automergeable changes"
+    },
+    {
+        "hash": "d1d403d22cbe24592d725f442835cf46fe60c8ac",
+        "tree": "b7a55408832174c54708906a372a9be2ffe3649b",
+        "parents": [
+            "cef56612d71a6af8d8015691e4865f7fece905b5"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137883 2013-11-22 11:31:23 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137883 2013-11-22 11:31:23 -0500",
+        "message": "simple edit"
+    },
+    {
+        "hash": "cef56612d71a6af8d8015691e4865f7fece905b5",
+        "tree": "dd9a159c89509e73fd37d6af99619994cf7dfc06",
+        "parents": [
+            "55568c8de5322ff9a95d72747a239cdb64a19965"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137837 2013-11-22 11:30:37 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137837 2013-11-22 11:30:37 -0500",
+        "message": "rename with similarity"
+    },
+    {
+        "hash": "55568c8de5322ff9a95d72747a239cdb64a19965",
+        "tree": "1fa4e069a641f10f5fb7588138b2d147fcd22c36",
+        "parents": [
+            "0aa8c7e40d342fff78d60b29a4ba8e993ed79c51"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137804 2013-11-22 11:30:04 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137804 2013-11-22 11:30:04 -0500",
+        "message": "rename identical"
+    },
+    {
+        "hash": "0aa8c7e40d342fff78d60b29a4ba8e993ed79c51",
+        "tree": "156ef9bcb968dccec8472a0f2eff49f1a713bc6b",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1385137158 2013-11-22 11:19:18 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1385137158 2013-11-22 11:19:18 -0500",
+        "message": "initial"
+    }
+]

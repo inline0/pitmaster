@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "7015cf066692cff6f1cc228eeb31632b73cef98a",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tempty.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "979553c8b08ef8c3d1dc8a00115558b4ba2bb9d8",
+        "type": "commit",
+        "size": 181,
+        "content": "tree 7015cf066692cff6f1cc228eeb31632b73cef98a\nauthor Test User <test@pitmaster.dev> 1775564852 +0200\ncommitter Test User <test@pitmaster.dev> 1775564852 +0200\n\nCommit an empty file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

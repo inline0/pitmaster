@@ -1,0 +1,14 @@
+warning: refs/heads/master: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/R: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/A: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/c: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/D: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/e: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/tags/B: trailingRefContent: has trailing garbage: '?
+'

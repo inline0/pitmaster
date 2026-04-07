@@ -1,0 +1,4 @@
+error: refs/dummy-marker.txt: badRefContent: 
+error: packed-refs line 5: packedRefEntryNotTerminated: '^6dcf9bf7541ee10456529833502442f385010c3d' is not terminated with a newline
+warning in tag eda9f45a2a98d4c17a09d681d88569fa4ea91755: missingTaggerEntry: invalid format - expected 'tagger' line
+fatal: unexpected line in .git/packed-refs: d3bacb8d3ff25876a961b1963b6515170d0151ab refs/tags/hello

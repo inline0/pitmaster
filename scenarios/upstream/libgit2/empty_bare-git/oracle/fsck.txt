@@ -1,0 +1,6 @@
+error: refs/heads/dummy-marker.txt: badRefContent: 
+error: refs/tags/dummy-marker.txt: badRefContent: 
+error: refs/heads/dummy-marker.txt: invalid sha1 pointer 0000000000000000000000000000000000000000
+error: refs/tags/dummy-marker.txt: invalid sha1 pointer 0000000000000000000000000000000000000000
+notice: HEAD points to an unborn branch (master)
+notice: No default references

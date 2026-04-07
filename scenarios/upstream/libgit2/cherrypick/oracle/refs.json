@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "d3d77487660ee3c0194ee01dc5eaf478782b1c7e",
+        "name": "refs/heads/automerge-branch"
+    },
+    {
+        "hash": "2a26c7e88b285613b302ba76712bc998863f3cbc",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "abe4603bc7cd5b8167a267e0e2418fd2348f8cff",
+        "name": "refs/heads/merge-branch"
+    },
+    {
+        "hash": "bafbf6912c09505ac60575cd43d3f2aba3bd84d8",
+        "name": "refs/heads/merge-conflicts"
+    },
+    {
+        "hash": "cfc4f0999a8367568e049af4f72e452d40828a15",
+        "name": "refs/heads/merge-mainline"
+    },
+    {
+        "hash": "74f06b5bfec6d33d7264f73606b57a7c0b963819",
+        "name": "refs/heads/orphan"
+    },
+    {
+        "hash": "44cd2ed2052c9c68f9a439d208e9614dc2a55c70",
+        "name": "refs/heads/renames"
+    }
+]

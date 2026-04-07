@@ -1,0 +1,268 @@
+[
+    {
+        "hash": "0300021985931292d0611b9232e757035fefc04d",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 191faf88a5826a99f475baaf8b13652c4e40bfe6\tanother\n100644 blob f2ad6c76f0115a6ba5b00456a849810e7ec0af20\tfile\n100644 blob 223b7836fb19fdf64ba2d3cd6173c6a283141f78\tside\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "108b485d8268ea595df8ffea74f0f4b186577d32",
+        "type": "commit",
+        "size": 178,
+        "content": "tree 693a3de402bb23897ed5c931273e53c78eff0495\nauthor nulltoken <emeric.fermas@gmail.com> 1380209394 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209394 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "10bd08b099ecb79184c60183f5c94ca915f427ad",
+        "type": "tag",
+        "size": 129,
+        "content": "object 6a12b56088706aa6c39ccd23b7c7ce60f3a0b9a1\ntype commit\ntag D\ntagger nulltoken <emeric.fermas@gmail.com> 1380209506 +0200\n\nD\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "178481050188cf00d7d9cd5a11e43ab8fab9294f",
+        "type": "blob",
+        "size": 2,
+        "content": "D\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "191faf88a5826a99f475baaf8b13652c4e40bfe6",
+        "type": "blob",
+        "size": 4,
+        "content": "DDD\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e016431ec7b22dd3e23f3e6f5f68f358f9227cf",
+        "type": "commit",
+        "size": 226,
+        "content": "tree 428f9554a2eec22de29898819b579466af7c1583\nparent 6a12b56088706aa6c39ccd23b7c7ce60f3a0b9a1\nauthor nulltoken <emeric.fermas@gmail.com> 1380209527 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209527 +0200\n\nanother\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "223b7836fb19fdf64ba2d3cd6173c6a283141f78",
+        "type": "blob",
+        "size": 2,
+        "content": "B\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "25d5edf8c0ef17e8a13b8da75913dcec4ea7afc1",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 191faf88a5826a99f475baaf8b13652c4e40bfe6\tanother\n100644 blob 62d8fe9f6db631bd3a19140699101c9e281c9f9d\tfile\n100644 blob 62d8fe9f6db631bd3a19140699101c9e281c9f9d\tside\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2bdf67abb163a4ffb2d7f3f0880c9fe5068ce782",
+        "type": "blob",
+        "size": 6,
+        "content": "three\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "31fc9136820b507e938a9c6b88bf2c567a9f6f4b",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 65a91bc2262480dce4c5979519aae6668368eb4e\nparent 4d6558b8fa764baeb0f19c1e857df91e0eda5a0f\nauthor nulltoken <emeric.fermas@gmail.com> 1380209465 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209465 +0200\n\nB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "428f9554a2eec22de29898819b579466af7c1583",
+        "type": "tree",
+        "size": 67,
+        "content": "100644 blob 4f2d9ce01ad5249cabdc6565366af8aff85b1525\tanother\n100644 blob f719efd430d52bcfc8566a43b2eb655688d38871\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d6558b8fa764baeb0f19c1e857df91e0eda5a0f",
+        "type": "commit",
+        "size": 225,
+        "content": "tree aad8d5cef3915ab78b3227abaaac99b62db9eb54\nparent 108b485d8268ea595df8ffea74f0f4b186577d32\nauthor nulltoken <emeric.fermas@gmail.com> 1380209404 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209404 +0200\n\nsecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4f2d9ce01ad5249cabdc6565366af8aff85b1525",
+        "type": "blob",
+        "size": 3,
+        "content": "DD\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "52912fbab0715dec53d43053966e78ad213ba359",
+        "type": "tag",
+        "size": 129,
+        "content": "object 31fc9136820b507e938a9c6b88bf2c567a9f6f4b\ntype commit\ntag B\ntagger nulltoken <emeric.fermas@gmail.com> 1380209476 +0200\n\nB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5626abf0f72e58d7a153368ba57db4c673c0e171",
+        "type": "blob",
+        "size": 4,
+        "content": "one\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6126a5f9c57ebc81e64370ec3095184ad92dab1c",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 9c06d71b8406ab97537e3acdc39a2c4ade7a9411\nparent 81f4b1aac643e6983fab370eae8aefccecbf3a4c\nauthor nulltoken <emeric.fermas@gmail.com> 1380209445 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209445 +0200\n\nc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "62d8fe9f6db631bd3a19140699101c9e281c9f9d",
+        "type": "blob",
+        "size": 2,
+        "content": "X\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "65a91bc2262480dce4c5979519aae6668368eb4e",
+        "type": "tree",
+        "size": 64,
+        "content": "100644 blob f719efd430d52bcfc8566a43b2eb655688d38871\tfile\n100644 blob 223b7836fb19fdf64ba2d3cd6173c6a283141f78\tside\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "680166b6cd31f76354fee2572618e6b0142d05e6",
+        "type": "tag",
+        "size": 129,
+        "content": "object 6a12b56088706aa6c39ccd23b7c7ce60f3a0b9a1\ntype commit\ntag R\ntagger nulltoken <emeric.fermas@gmail.com> 1380209516 +0200\n\nR\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "693a3de402bb23897ed5c931273e53c78eff0495",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 5626abf0f72e58d7a153368ba57db4c673c0e171\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a12b56088706aa6c39ccd23b7c7ce60f3a0b9a1",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 75bb152c600647586c226d98411b1d2f9861af5a\nparent 4d6558b8fa764baeb0f19c1e857df91e0eda5a0f\nauthor nulltoken <emeric.fermas@gmail.com> 1380209496 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209496 +0200\n\nD\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6d218e42592043041c4da016ff298cf241b86c3c",
+        "type": "tree",
+        "size": 64,
+        "content": "100644 blob f2ad6c76f0115a6ba5b00456a849810e7ec0af20\tfile\n100644 blob 223b7836fb19fdf64ba2d3cd6173c6a283141f78\tside\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "75bb152c600647586c226d98411b1d2f9861af5a",
+        "type": "tree",
+        "size": 67,
+        "content": "100644 blob 178481050188cf00d7d9cd5a11e43ab8fab9294f\tanother\n100644 blob f719efd430d52bcfc8566a43b2eb655688d38871\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81f4b1aac643e6983fab370eae8aefccecbf3a4c",
+        "type": "commit",
+        "size": 220,
+        "content": "tree a9e3325a07117aa5381e044a8d96c26eb30d729d\nparent b240c0fb88c5a629e00ebc1275fa1f33e364a705\nauthor nulltoken <emeric.fermas@gmail.com> 1380209425 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209425 +0200\n\nA\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ec1d96451ff05451720e4e8968812c46b35e5e4",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 2bdf67abb163a4ffb2d7f3f0880c9fe5068ce782\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "949b98e208015bfc0e2f573debc34ae2f97a7f0e",
+        "type": "commit",
+        "size": 273,
+        "content": "tree 0300021985931292d0611b9232e757035fefc04d\nparent a9eb02af13df030159e39f70330d5c8a47655691\nparent ce1c4f8b6120122e23d4442925d98c56c41917d8\nauthor nulltoken <emeric.fermas@gmail.com> 1380209557 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209557 +0200\n\nMerged\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9c06d71b8406ab97537e3acdc39a2c4ade7a9411",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob f2ad6c76f0115a6ba5b00456a849810e7ec0af20\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a6095f816e81f64651595d488badc42399837d6a",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 25d5edf8c0ef17e8a13b8da75913dcec4ea7afc1\nparent 949b98e208015bfc0e2f573debc34ae2f97a7f0e\nauthor nulltoken <emeric.fermas@gmail.com> 1380209567 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209567 +0200\n\nx\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9e3325a07117aa5381e044a8d96c26eb30d729d",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob f70f10e4db19068f79bc43844b49f3eece45c4e8\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9eb02af13df030159e39f70330d5c8a47655691",
+        "type": "commit",
+        "size": 230,
+        "content": "tree d5aab219a814ddbe4b3aaedf03cdea491b218ec4\nparent 1e016431ec7b22dd3e23f3e6f5f68f358f9227cf\nauthor nulltoken <emeric.fermas@gmail.com> 1380209547 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209547 +0200\n\nyet another\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aad8d5cef3915ab78b3227abaaac99b62db9eb54",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob f719efd430d52bcfc8566a43b2eb655688d38871\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aaddd4f14847e0e323924ec262c2343249a84f8b",
+        "type": "tag",
+        "size": 129,
+        "content": "object 81f4b1aac643e6983fab370eae8aefccecbf3a4c\ntype commit\ntag A\ntagger nulltoken <emeric.fermas@gmail.com> 1380209435 +0200\n\nA\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b240c0fb88c5a629e00ebc1275fa1f33e364a705",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 8ec1d96451ff05451720e4e8968812c46b35e5e4\nparent 4d6558b8fa764baeb0f19c1e857df91e0eda5a0f\nauthor nulltoken <emeric.fermas@gmail.com> 1380209414 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209414 +0200\n\nthird\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce1c4f8b6120122e23d4442925d98c56c41917d8",
+        "type": "commit",
+        "size": 273,
+        "content": "tree 6d218e42592043041c4da016ff298cf241b86c3c\nparent 31fc9136820b507e938a9c6b88bf2c567a9f6f4b\nparent 6126a5f9c57ebc81e64370ec3095184ad92dab1c\nauthor nulltoken <emeric.fermas@gmail.com> 1380209486 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1380209486 +0200\n\nMerged\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d5aab219a814ddbe4b3aaedf03cdea491b218ec4",
+        "type": "tree",
+        "size": 67,
+        "content": "100644 blob 191faf88a5826a99f475baaf8b13652c4e40bfe6\tanother\n100644 blob f719efd430d52bcfc8566a43b2eb655688d38871\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2ad6c76f0115a6ba5b00456a849810e7ec0af20",
+        "type": "blob",
+        "size": 2,
+        "content": "c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f70f10e4db19068f79bc43844b49f3eece45c4e8",
+        "type": "blob",
+        "size": 2,
+        "content": "A\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f719efd430d52bcfc8566a43b2eb655688d38871",
+        "type": "blob",
+        "size": 4,
+        "content": "two\n",
+        "encoding": "utf-8"
+    }
+]

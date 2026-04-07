@@ -1,0 +1,205 @@
+[
+    {
+        "hash": "0017bd4ab1ec30440b17bae1680cff124ab5f1f6",
+        "type": "commit",
+        "size": 178,
+        "content": "tree 9c2e02cdffa8d73e6c189074594477a6baf87960\nauthor Jason Penny <jasonpenny4@gmail.com> 1308050070 -0400\ncommitter Jason Penny <jasonpenny4@gmail.com> 1308050070 -0400\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "061d42a44cacde5726057b67558821d95db96f19",
+        "type": "blob",
+        "size": 28,
+        "content": "staged_changes_file_deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1888c805345ba265b0ee9449b8877b6064592058",
+        "type": "blob",
+        "size": 20,
+        "content": "subdir/deleted_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "19d9cc8584ac2c7dcf57d2680375e80f099dc481",
+        "type": "blob",
+        "size": 7,
+        "content": "staged\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26a125ee1bfc5df1e1b2e9441bbe63c8a7ae989f",
+        "type": "commit",
+        "size": 323,
+        "content": "tree 37fcb02ccc1a85d1941e7f106d52dc3702dcf0d0\nparent 735b6a258cd196a8f7c9428419b02c1dca93fd75\nauthor nulltoken <emeric.fermas@gmail.com> 1319911544 +0200\ncommitter nulltoken <emeric.fermas@gmail.com> 1319911544 +0200\n\nAdd a file which name should appear before the \"subdir/\" folder while being dealt with by the treewalker\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2bd0a343aeef7a2cf0d158478966a6e587ff3863",
+        "type": "blob",
+        "size": 42,
+        "content": "this file is changed in branch and master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "32504b727382542f9f089e24fddac5e78533e96c",
+        "type": "blob",
+        "size": 15,
+        "content": "staged_changes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "37fcb02ccc1a85d1941e7f106d52dc3702dcf0d0",
+        "type": "tree",
+        "size": 454,
+        "content": "100644 blob a0de7e0ac200c489c41c59dfa910154a70264e6e\tcurrent_file\n100644 blob 5452d32f1dd538eb0405e8a83cc185f79e25e80f\tfile_deleted\n100644 blob 452e4244b5d083ddf0460acf1ecc74db9dcfa11a\tmodified_file\n100644 blob 32504b727382542f9f089e24fddac5e78533e96c\tstaged_changes\n100644 blob 061d42a44cacde5726057b67558821d95db96f19\tstaged_changes_file_deleted\n100644 blob 70bd9443ada07063e7fbf0b3ff5c13f7494d89c2\tstaged_changes_modified_file\n100644 blob e9b9107f290627c04d097733a10055af941f6bca\tstaged_delete_file_deleted\n100644 blob dabc8af9bd6e9f5bbe96a176f1a24baf3d1f8916\tstaged_delete_modified_file\n100644 blob e8ee89e15bbe9b20137715232387b3de5b28972e\tsubdir.txt\n040000 tree aa27a641456848200fdb7f7c99ba36f8a0952877\tsubdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "452e4244b5d083ddf0460acf1ecc74db9dcfa11a",
+        "type": "blob",
+        "size": 14,
+        "content": "modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "529a16e8e762d4acb7b9636ff540a00831f9155a",
+        "type": "blob",
+        "size": 16,
+        "content": "staged_new_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "53ace0d1cc1145a5f4fe4f78a186a60263190733",
+        "type": "blob",
+        "size": 20,
+        "content": "subdir/current_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5452d32f1dd538eb0405e8a83cc185f79e25e80f",
+        "type": "blob",
+        "size": 13,
+        "content": "file_deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "55d316c9ba708999f1918e9677d01dfcae69c6b9",
+        "type": "blob",
+        "size": 30,
+        "content": "staged_changes\nstaged_changes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70bd9443ada07063e7fbf0b3ff5c13f7494d89c2",
+        "type": "blob",
+        "size": 29,
+        "content": "staged_changes_modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "735b6a258cd196a8f7c9428419b02c1dca93fd75",
+        "type": "commit",
+        "size": 229,
+        "content": "tree 756e27627e67bfbc048d01ece5819c6de733d7ea\nparent 0017bd4ab1ec30440b17bae1680cff124ab5f1f6\nauthor Jason Penny <jasonpenny4@gmail.com> 1308954538 -0400\ncommitter Jason Penny <jasonpenny4@gmail.com> 1308954538 -0400\n\nadd subdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "756e27627e67bfbc048d01ece5819c6de733d7ea",
+        "type": "tree",
+        "size": 416,
+        "content": "100644 blob a0de7e0ac200c489c41c59dfa910154a70264e6e\tcurrent_file\n100644 blob 5452d32f1dd538eb0405e8a83cc185f79e25e80f\tfile_deleted\n100644 blob 452e4244b5d083ddf0460acf1ecc74db9dcfa11a\tmodified_file\n100644 blob 32504b727382542f9f089e24fddac5e78533e96c\tstaged_changes\n100644 blob 061d42a44cacde5726057b67558821d95db96f19\tstaged_changes_file_deleted\n100644 blob 70bd9443ada07063e7fbf0b3ff5c13f7494d89c2\tstaged_changes_modified_file\n100644 blob e9b9107f290627c04d097733a10055af941f6bca\tstaged_delete_file_deleted\n100644 blob dabc8af9bd6e9f5bbe96a176f1a24baf3d1f8916\tstaged_delete_modified_file\n040000 tree aa27a641456848200fdb7f7c99ba36f8a0952877\tsubdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "906ee7711f4f4928ddcb2a5f8fbc500deba0d2a8",
+        "type": "blob",
+        "size": 58,
+        "content": "staged_changes_modified_file\nstaged_changes_modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90b8c29d8ba39434d1c63e1b093daaa26e5bd972",
+        "type": "blob",
+        "size": 29,
+        "content": "staged_new_file_deleted_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9c2e02cdffa8d73e6c189074594477a6baf87960",
+        "type": "tree",
+        "size": 383,
+        "content": "100644 blob a0de7e0ac200c489c41c59dfa910154a70264e6e\tcurrent_file\n100644 blob 5452d32f1dd538eb0405e8a83cc185f79e25e80f\tfile_deleted\n100644 blob 452e4244b5d083ddf0460acf1ecc74db9dcfa11a\tmodified_file\n100644 blob 32504b727382542f9f089e24fddac5e78533e96c\tstaged_changes\n100644 blob 061d42a44cacde5726057b67558821d95db96f19\tstaged_changes_file_deleted\n100644 blob 70bd9443ada07063e7fbf0b3ff5c13f7494d89c2\tstaged_changes_modified_file\n100644 blob e9b9107f290627c04d097733a10055af941f6bca\tstaged_delete_file_deleted\n100644 blob dabc8af9bd6e9f5bbe96a176f1a24baf3d1f8916\tstaged_delete_modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0de7e0ac200c489c41c59dfa910154a70264e6e",
+        "type": "blob",
+        "size": 13,
+        "content": "current_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a6191982709b746d5650e93c2acf34ef74e11504",
+        "type": "blob",
+        "size": 21,
+        "content": "subdir/modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a6be623522ce87a1d862128ac42672604f7b468b",
+        "type": "blob",
+        "size": 56,
+        "content": "staged_changes_file_deleted\nstaged_changes_file_deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aa27a641456848200fdb7f7c99ba36f8a0952877",
+        "type": "tree",
+        "size": 121,
+        "content": "100644 blob 53ace0d1cc1145a5f4fe4f78a186a60263190733\tcurrent_file\n100644 blob 1888c805345ba265b0ee9449b8877b6064592058\tdeleted_file\n100644 blob a6191982709b746d5650e93c2acf34ef74e11504\tmodified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d427e0b2e138501a3d15cc376077a3631e15bd46",
+        "type": "blob",
+        "size": 24,
+        "content": "this file is a conflict\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dabc8af9bd6e9f5bbe96a176f1a24baf3d1f8916",
+        "type": "blob",
+        "size": 28,
+        "content": "staged_delete_modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e8ee89e15bbe9b20137715232387b3de5b28972e",
+        "type": "blob",
+        "size": 29,
+        "content": "Is it a bird?\nIs it a plane?\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e9b9107f290627c04d097733a10055af941f6bca",
+        "type": "blob",
+        "size": 27,
+        "content": "staged_delete_file_deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ed062903b8f6f3dccb2fa81117ba6590944ef9bd",
+        "type": "blob",
+        "size": 30,
+        "content": "staged_new_file_modified_file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee3fa1b8c00aff7fe02065fdb50864bb0d932ccf",
+        "type": "blob",
+        "size": 247,
+        "content": "this file is changed in master\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\n",
+        "encoding": "utf-8"
+    }
+]

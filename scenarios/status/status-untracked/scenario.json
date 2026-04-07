@@ -1,0 +1,13 @@
+{
+    "name": "status-untracked",
+    "category": "status",
+    "description": "Committed file plus an untracked file in the working tree",
+    "operations": ["status"],
+    "oracle_commands": {
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

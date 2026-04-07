@@ -1,0 +1,652 @@
+[
+    {
+        "hash": "0ce202f64fa8356c1a32835fce4058ca76b0c7ed",
+        "tree": "e6269ce9017816d67c7189a58b6d0d22bf4b8a1a",
+        "parents": [
+            "766afbfd7d42f757f1fac9ea550c9fcbc8041b89",
+            "b171224a4f604b6091072007765419b14c232c1d"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656802 2018-01-22 13:33:22 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656802 2018-01-22 13:33:22 -0800",
+        "message": "target"
+    },
+    {
+        "hash": "766afbfd7d42f757f1fac9ea550c9fcbc8041b89",
+        "tree": "ea3521485adfa0b0373deaaa06db9218a22edae8",
+        "parents": [
+            "9cdde216049c6a5ccddac0ad81f604419d8990ed",
+            "b2908343e3c16249d0036dd444fc0d4662cd8c0e"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656748 2018-01-22 13:32:28 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656748 2018-01-22 13:32:28 -0800",
+        "message": "S2"
+    },
+    {
+        "hash": "182d0d250d1d7adcc60c178be5be98358b3a2fd1",
+        "tree": "ba9dcfe079848e8e5c1b53bc3b6e47ff57f6e481",
+        "parents": [
+            "3978944e4cd53edcc10a170ab2ff142f7295b958"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656704 2018-01-22 13:31:44 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656704 2018-01-22 13:31:44 -0800",
+        "message": "source"
+    },
+    {
+        "hash": "3978944e4cd53edcc10a170ab2ff142f7295b958",
+        "tree": "71c50785d8d512293bd3af838b131f3da5829ebc",
+        "parents": [
+            "b2908343e3c16249d0036dd444fc0d4662cd8c0e",
+            "dede92a05a0841faa8e4ad6700285cd208184458"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656681 2018-01-22 13:31:21 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656681 2018-01-22 13:31:21 -0800",
+        "message": "source2"
+    },
+    {
+        "hash": "b2908343e3c16249d0036dd444fc0d4662cd8c0e",
+        "tree": "44faf5fba1af850dae54f8b2345938d3c7ae479f",
+        "parents": [
+            "51135c5884d7dd132fef3b432cca5826bab98f37"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656357 2018-01-22 13:25:57 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656357 2018-01-22 13:25:57 -0800",
+        "message": "C2"
+    },
+    {
+        "hash": "9cdde216049c6a5ccddac0ad81f604419d8990ed",
+        "tree": "5160ab78c1973dcd7cdebe2345dc8fcfc755e76d",
+        "parents": [
+            "51135c5884d7dd132fef3b432cca5826bab98f37"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516656285 2018-01-22 13:24:45 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516656285 2018-01-22 13:24:45 -0800",
+        "message": "D2"
+    },
+    {
+        "hash": "f65de1834f57708e76d8dc25502b7f1ecbcce162",
+        "tree": "b8a3b657edcf31e6365a2f1c45d45e6c9ebe8f02",
+        "parents": [
+            "975dd228fd1b0cacf2988167088fd1190c9ac0f5"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225828 2018-01-17 13:50:28 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225828 2018-01-17 13:50:28 -0800",
+        "message": "source2"
+    },
+    {
+        "hash": "975dd228fd1b0cacf2988167088fd1190c9ac0f5",
+        "tree": "0ec39d71c1b074905350ce20ce3f0629f737a2a9",
+        "parents": [
+            "dede92a05a0841faa8e4ad6700285cd208184458",
+            "0563b7706dcdcf94bc0c02cd96c137940278eca9"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225826 2018-01-17 13:50:26 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225826 2018-01-17 13:50:26 -0800",
+        "message": "source"
+    },
+    {
+        "hash": "b01de62cf11945685c98ec671edabdff3e90ddc5",
+        "tree": "a35aa65d86215fce909fc0bcce8949d12becba44",
+        "parents": [
+            "d0c9bd6e2a3e327d81a32de51201d3bd58909f7c",
+            "b171224a4f604b6091072007765419b14c232c1d"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225825 2018-01-17 13:50:25 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225825 2018-01-17 13:50:25 -0800",
+        "message": "target"
+    },
+    {
+        "hash": "b171224a4f604b6091072007765419b14c232c1d",
+        "tree": "a99bf55117ab1958171fccfeb19885f707bd08fd",
+        "parents": [
+            "4c62e9482ed42c1a6d08891906b26126daa4a8f5",
+            "bb4e0014fb09d24312f0af37c7a45e5488f19510"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225825 2018-01-17 13:50:25 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225825 2018-01-17 13:50:25 -0800",
+        "message": "R"
+    },
+    {
+        "hash": "dede92a05a0841faa8e4ad6700285cd208184458",
+        "tree": "e015ebd79a72a88b9291df11771caf56f463e8f9",
+        "parents": [
+            "bb4e0014fb09d24312f0af37c7a45e5488f19510",
+            "4c62e9482ed42c1a6d08891906b26126daa4a8f5"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225824 2018-01-17 13:50:24 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225824 2018-01-17 13:50:24 -0800",
+        "message": "Q"
+    },
+    {
+        "hash": "bb4e0014fb09d24312f0af37c7a45e5488f19510",
+        "tree": "7f9c1d78d760cbfa99273bc1ef642d994c6baa5c",
+        "parents": [
+            "3039c07db695c8c99d0a7c7e32f0afe40eae0be0",
+            "26d3c94459b4faa08f009b15867993ca34153592"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225824 2018-01-17 13:50:24 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225824 2018-01-17 13:50:24 -0800",
+        "message": "A"
+    },
+    {
+        "hash": "4c62e9482ed42c1a6d08891906b26126daa4a8f5",
+        "tree": "ce0d744cd2e18eacf883d43471636f231c0995e3",
+        "parents": [
+            "26d3c94459b4faa08f009b15867993ca34153592",
+            "3039c07db695c8c99d0a7c7e32f0afe40eae0be0"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225823 2018-01-17 13:50:23 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225823 2018-01-17 13:50:23 -0800",
+        "message": "B"
+    },
+    {
+        "hash": "3039c07db695c8c99d0a7c7e32f0afe40eae0be0",
+        "tree": "db51adf2b699eed93e883d6425f5e6c50165a9c2",
+        "parents": [
+            "7c9a30d8dcee320a3b1f9ed10b582479faa9d3a1"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "message": "E"
+    },
+    {
+        "hash": "26d3c94459b4faa08f009b15867993ca34153592",
+        "tree": "9a228c1ee87f286202ec9a25de837a18550013b5",
+        "parents": [
+            "7c9a30d8dcee320a3b1f9ed10b582479faa9d3a1"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "message": "F"
+    },
+    {
+        "hash": "7c9a30d8dcee320a3b1f9ed10b582479faa9d3a1",
+        "tree": "5a47615db824433f816ba62217dda6d46c5a7640",
+        "parents": [
+            "51135c5884d7dd132fef3b432cca5826bab98f37"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225822 2018-01-17 13:50:22 -0800",
+        "message": "G"
+    },
+    {
+        "hash": "0563b7706dcdcf94bc0c02cd96c137940278eca9",
+        "tree": "985b725cf91c6861b5e7a419415d03cbcf5f16ca",
+        "parents": [
+            "a2817ed0e8ca6fe52bf0a20b2f50eb94b9ea5415"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225821 2018-01-17 13:50:21 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225821 2018-01-17 13:50:21 -0800",
+        "message": "T"
+    },
+    {
+        "hash": "d0c9bd6e2a3e327d81a32de51201d3bd58909f7c",
+        "tree": "1bc7bcccf4bbdc8bfba2331a37ad5e9cf1dd321c",
+        "parents": [
+            "a2817ed0e8ca6fe52bf0a20b2f50eb94b9ea5415",
+            "a0ce8909834f389b4f8be6a6ec420868422d40a1"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225821 2018-01-17 13:50:21 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225821 2018-01-17 13:50:21 -0800",
+        "message": "S"
+    },
+    {
+        "hash": "a2817ed0e8ca6fe52bf0a20b2f50eb94b9ea5415",
+        "tree": "44faf5fba1af850dae54f8b2345938d3c7ae479f",
+        "parents": [
+            "51135c5884d7dd132fef3b432cca5826bab98f37"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225820 2018-01-17 13:50:20 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225820 2018-01-17 13:50:20 -0800",
+        "message": "C"
+    },
+    {
+        "hash": "a0ce8909834f389b4f8be6a6ec420868422d40a1",
+        "tree": "5160ab78c1973dcd7cdebe2345dc8fcfc755e76d",
+        "parents": [
+            "51135c5884d7dd132fef3b432cca5826bab98f37"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225820 2018-01-17 13:50:20 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225820 2018-01-17 13:50:20 -0800",
+        "message": "D"
+    },
+    {
+        "hash": "51135c5884d7dd132fef3b432cca5826bab98f37",
+        "tree": "3a8c70144d0334721154b1e0529716b368483d6f",
+        "parents": [
+            "5c27b5f7c6f6dd4e5b4d64976741d56c2df8f48a"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225819 2018-01-17 13:50:19 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225819 2018-01-17 13:50:19 -0800",
+        "message": "H"
+    },
+    {
+        "hash": "5c27b5f7c6f6dd4e5b4d64976741d56c2df8f48a",
+        "tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "parents": [
+            "d71c24b3b113fd1d1909998c5bfe33b86a65ee03"
+        ],
+        "author": "Tyrie Vella <tyrielv@gmail.com> 1516225799 2018-01-17 13:49:59 -0800",
+        "committer": "Tyrie Vella <tyrielv@gmail.com> 1516225799 2018-01-17 13:49:59 -0800",
+        "message": "Clean slate"
+    },
+    {
+        "hash": "5607a8c4601a737daadd1f470bde3142aff57026",
+        "tree": "981c79eb38518d3821e73bb159dc413bb42d6614",
+        "parents": [
+            "aa9e263294fd2f6f6fd9ceab23ca8ce3ea2ce707",
+            "6ef31d35a3f5abc1e24f4f9afa5cb2016f03fa2d"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972768 2015-11-19 17:39:28 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972768 2015-11-19 17:39:28 -0500",
+        "message": "Merge branch I-2 into branchI-1"
+    },
+    {
+        "hash": "f7929c5a67a4bdc98247fb4b5098675723932a64",
+        "tree": "981c79eb38518d3821e73bb159dc413bb42d6614",
+        "parents": [
+            "6ef31d35a3f5abc1e24f4f9afa5cb2016f03fa2d",
+            "aa9e263294fd2f6f6fd9ceab23ca8ce3ea2ce707"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972716 2015-11-19 17:38:36 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972716 2015-11-19 17:38:36 -0500",
+        "message": "Merge branch I-1 into branchI-2"
+    },
+    {
+        "hash": "7a9277e0c5ec75339f011c176d0c20e513c4de1c",
+        "tree": "4244d13e2bbc38510320443bbb003f3967d12436",
+        "parents": [
+            "aa9e263294fd2f6f6fd9ceab23ca8ce3ea2ce707",
+            "6ef31d35a3f5abc1e24f4f9afa5cb2016f03fa2d"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972475 2015-11-19 17:34:35 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972475 2015-11-19 17:34:35 -0500",
+        "message": "Merge branchH-2 into branchH-1"
+    },
+    {
+        "hash": "db203155a789fb749aa3c14e93eea2c744a9c6c7",
+        "tree": "63e8773becdea9c3699c95a5740be5baa8be8d69",
+        "parents": [
+            "6ef31d35a3f5abc1e24f4f9afa5cb2016f03fa2d",
+            "aa9e263294fd2f6f6fd9ceab23ca8ce3ea2ce707"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972418 2015-11-19 17:33:38 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972418 2015-11-19 17:33:38 -0500",
+        "message": "Merge branchH-1 into branchH-2"
+    },
+    {
+        "hash": "6ef31d35a3f5abc1e24f4f9afa5cb2016f03fa2d",
+        "tree": "e1512550f09d980214e46e6d3f5a2b20c3d75755",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972331 2015-11-19 17:32:11 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972331 2015-11-19 17:32:11 -0500",
+        "message": "Edit veal in merge base"
+    },
+    {
+        "hash": "aa9e263294fd2f6f6fd9ceab23ca8ce3ea2ce707",
+        "tree": "888588a782ad433fbf0cc526e07cfe6f4a6b60b3",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1447972309 2015-11-19 17:31:49 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1447972309 2015-11-19 17:31:49 -0500",
+        "message": "Edit veal in merge base"
+    },
+    {
+        "hash": "d71c24b3b113fd1d1909998c5bfe33b86a65ee03",
+        "tree": "348f16ffaeb73f319a75cec5b16a0a47d2d5e27c",
+        "parents": [
+            "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6",
+            "483065df53c0f4a02cdc6b2910b05d388fc17ffb",
+            "815b5a1c80ca749d705c7aa0cb294a00cbedd340"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1447083009 2015-11-09 10:30:09 -0500",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1447083009 2015-11-09 10:30:09 -0500",
+        "message": "Merge branch 'branchG-1', 'branchC-2' into branchG-2"
+    },
+    {
+        "hash": "c483ca4bb087174af5cb51d7caa9c09fe4a28ccb",
+        "tree": "348f16ffaeb73f319a75cec5b16a0a47d2d5e27c",
+        "parents": [
+            "483065df53c0f4a02cdc6b2910b05d388fc17ffb",
+            "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6",
+            "815b5a1c80ca749d705c7aa0cb294a00cbedd340"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1447082657 2015-11-09 10:24:17 -0500",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1447082657 2015-11-09 10:24:17 -0500",
+        "message": "Merge branches 'branchC-1' and 'branchC-2' into branchG-1"
+    },
+    {
+        "hash": "483065df53c0f4a02cdc6b2910b05d388fc17ffb",
+        "tree": "435424798e5e1b21dd4588d1c291ba4eb179a838",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1447082608 2015-11-09 10:23:28 -0500",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1447082608 2015-11-09 10:23:28 -0500",
+        "message": "Edit oyster"
+    },
+    {
+        "hash": "ef1783444b61a8671beea4ce1f4d0202677dfbfb",
+        "tree": "5b8e1e56cb99e8b99ac22eec8aebf6422ecd08c0",
+        "parents": [
+            "723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445986321 2015-10-27 17:52:01 -0500",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445986321 2015-10-27 17:52:01 -0500",
+        "message": "Conflicting edit with F-1"
+    },
+    {
+        "hash": "783d6539dde96b8873c5b5da3e79cc14cd64830b",
+        "tree": "ca7d316d6d9af99d2481e980d68b77e572d80fe7",
+        "parents": [
+            "a34e5a16feabbd0335a633aadb8217c9f3dba58d"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445986301 2015-10-27 17:51:41 -0500",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445986301 2015-10-27 17:51:41 -0500",
+        "message": "Conflicting edit with F-2"
+    },
+    {
+        "hash": "436ea75c99f527e4b42fddb46abedf7726eb719d",
+        "tree": "0e8126647ec607f0a14122cec4b15315d790c8ff",
+        "parents": [
+            "a28c21c90aa36580641b345011869d1a899a6783"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895377 2015-10-26 17:36:17 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895377 2015-10-26 17:36:17 -0400",
+        "message": "Modification on E-2"
+    },
+    {
+        "hash": "ca224bba0a8a24f1768804fe5f565b1014af7ef2",
+        "tree": "7e3056f6765b3044ab09701077dbe1eb5b0e9ad0",
+        "parents": [
+            "9ae63b4a8ce0f181b2d1d098971733a103226917"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895356 2015-10-26 17:35:56 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895356 2015-10-26 17:35:56 -0400",
+        "message": "Modification on E-1"
+    },
+    {
+        "hash": "9b258ad4c39f40c24f66bf1faf48eb6202d59c85",
+        "tree": "ad98bfa4679fb00b89207a0a11b8bbf91a3e4de9",
+        "parents": [
+            "8abda8de114a93f2d3c5a975ee2960f31e24be58",
+            "bd97980c22d122509cdd915fd9788d56c8d3ae20",
+            "9623368f0fc562d6d840372ae17dc4cc32d51a80"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895246 2015-10-26 17:34:06 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895246 2015-10-26 17:34:06 -0400",
+        "message": "Merge commit 'bd97980c22d122509cdd915fd9788d56c8d3ae20'; commit '9623368f0fc562d6d840372ae17dc4cc32d51a80' into branchE-3"
+    },
+    {
+        "hash": "a28c21c90aa36580641b345011869d1a899a6783",
+        "tree": "ad98bfa4679fb00b89207a0a11b8bbf91a3e4de9",
+        "parents": [
+            "9623368f0fc562d6d840372ae17dc4cc32d51a80",
+            "bd97980c22d122509cdd915fd9788d56c8d3ae20",
+            "8abda8de114a93f2d3c5a975ee2960f31e24be58"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895221 2015-10-26 17:33:41 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895221 2015-10-26 17:33:41 -0400",
+        "message": "Merge commit 'bd97980c22d122509cdd915fd9788d56c8d3ae20'; commit '8abda8de114a93f2d3c5a975ee2960f31e24be58' into branchE-2"
+    },
+    {
+        "hash": "9ae63b4a8ce0f181b2d1d098971733a103226917",
+        "tree": "ad98bfa4679fb00b89207a0a11b8bbf91a3e4de9",
+        "parents": [
+            "bd97980c22d122509cdd915fd9788d56c8d3ae20",
+            "9623368f0fc562d6d840372ae17dc4cc32d51a80",
+            "8abda8de114a93f2d3c5a975ee2960f31e24be58"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895183 2015-10-26 17:33:03 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895183 2015-10-26 17:33:03 -0400",
+        "message": "Merge branches 'branchE-2' and 'branchE-3' into branchE-1"
+    },
+    {
+        "hash": "8abda8de114a93f2d3c5a975ee2960f31e24be58",
+        "tree": "e2d185fa827d58134cea20b9e1df893833c6560e",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895166 2015-10-26 17:32:46 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895166 2015-10-26 17:32:46 -0400",
+        "message": "Modification on E-3"
+    },
+    {
+        "hash": "9623368f0fc562d6d840372ae17dc4cc32d51a80",
+        "tree": "dab7b53383a1fec46632e60a1d847ce4f9ae14f2",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895154 2015-10-26 17:32:34 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895154 2015-10-26 17:32:34 -0400",
+        "message": "Modification on E-2"
+    },
+    {
+        "hash": "bd97980c22d122509cdd915fd9788d56c8d3ae20",
+        "tree": "73b20c8e09fa2726d69ff66969186014165da3c3",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445895092 2015-10-26 17:31:32 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445895092 2015-10-26 17:31:32 -0400",
+        "message": "Commit on E-1"
+    },
+    {
+        "hash": "4dfc1be85a9d6c9898152444d32b238b4aecf8cc",
+        "tree": "ad1ea02c2cc4f55c1dff87b80a086206a73885eb",
+        "parents": [
+            "ca49d1a8b6116ffeba22667bba265fa5261df7ab"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445894399 2015-10-26 17:19:59 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445894399 2015-10-26 17:19:59 -0400",
+        "message": "Modification on C-1"
+    },
+    {
+        "hash": "007f1ee2af8e5d99906867c4237510e1790a89b8",
+        "tree": "5f18576d464946eb2338daeb8b4030019961f505",
+        "parents": [
+            "e1dcfc3038be54195a59817c89782b261e46cb05"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445894373 2015-10-26 17:19:33 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445894373 2015-10-26 17:19:33 -0400",
+        "message": "Modification on C-2"
+    },
+    {
+        "hash": "e1dcfc3038be54195a59817c89782b261e46cb05",
+        "tree": "50e4facaafb746cfed89287206274193c1417288",
+        "parents": [
+            "815b5a1c80ca749d705c7aa0cb294a00cbedd340",
+            "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445894228 2015-10-26 17:17:08 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445894241 2015-10-26 17:17:21 -0400",
+        "message": "Merge commit 'ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6' into branchC-2"
+    },
+    {
+        "hash": "ca49d1a8b6116ffeba22667bba265fa5261df7ab",
+        "tree": "50e4facaafb746cfed89287206274193c1417288",
+        "parents": [
+            "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6",
+            "815b5a1c80ca749d705c7aa0cb294a00cbedd340"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445894215 2015-10-26 17:16:55 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445894215 2015-10-26 17:16:55 -0400",
+        "message": "Merge commit '815b5a1c80ca749d705c7aa0cb294a00cbedd340' into branchC-1"
+    },
+    {
+        "hash": "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6",
+        "tree": "c0bd078a61d2cc22c52ca5ce04abdcdc5cc1829e",
+        "parents": [
+            "0fa6ead2731b9d138afe38c336c9727ea05027a7"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445892550 2015-10-26 16:49:10 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445892550 2015-10-26 16:49:10 -0400",
+        "message": "Modification on C-1"
+    },
+    {
+        "hash": "815b5a1c80ca749d705c7aa0cb294a00cbedd340",
+        "tree": "4e70a6b06fc62481f80fbb74327849e7170eebff",
+        "parents": [
+            "75c653822173a8e5795153ec3773dfe44bb9bb63"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445892517 2015-10-26 16:48:37 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445892517 2015-10-26 16:48:37 -0400",
+        "message": "modification in C-2"
+    },
+    {
+        "hash": "75c653822173a8e5795153ec3773dfe44bb9bb63",
+        "tree": "4171bb8d40e9fc830d79b757dc06ec6c14548b78",
+        "parents": [
+            "723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4",
+            "a34e5a16feabbd0335a633aadb8217c9f3dba58d"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445892020 2015-10-26 16:40:20 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445892020 2015-10-26 16:40:20 -0400",
+        "message": "Merge commit 'a34e5a16feabbd0335a633aadb8217c9f3dba58d' into branchC-2"
+    },
+    {
+        "hash": "0fa6ead2731b9d138afe38c336c9727ea05027a7",
+        "tree": "4171bb8d40e9fc830d79b757dc06ec6c14548b78",
+        "parents": [
+            "a34e5a16feabbd0335a633aadb8217c9f3dba58d",
+            "723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445891998 2015-10-26 16:39:58 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445891998 2015-10-26 16:39:58 -0400",
+        "message": "Merge commit '723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4' into branchC-1"
+    },
+    {
+        "hash": "a34e5a16feabbd0335a633aadb8217c9f3dba58d",
+        "tree": "072d89dcf3a7671ac34a8e875bb72fb39bcf14d7",
+        "parents": [
+            "973b70322e758da87e1ce21d2195d86c5e4e9647"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445551286 2015-10-22 18:01:26 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445551286 2015-10-22 18:01:26 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4",
+        "tree": "432faca0c62dc556ad71a22f23e541a46a8b0f6f",
+        "parents": [
+            "3fd41804a7906db846af5e868444782e546af46a"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445551267 2015-10-22 18:01:07 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445551267 2015-10-22 18:01:07 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "3fd41804a7906db846af5e868444782e546af46a",
+        "tree": "05c6a04ac101ab1a9836a95d5ec8d16b6f6304fd",
+        "parents": [
+            "8f35f30bfe09513f96cf8aa4df0834ae34e93bae",
+            "3a3f5a6ec1c968d1d2d5d20dee0d161a4351f279"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445551206 2015-10-22 18:00:06 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445551206 2015-10-22 18:00:06 -0400",
+        "message": "Merge commit '3a3f5a6ec1c968d1d2d5d20dee0d161a4351f279' into branchB-2"
+    },
+    {
+        "hash": "973b70322e758da87e1ce21d2195d86c5e4e9647",
+        "tree": "05c6a04ac101ab1a9836a95d5ec8d16b6f6304fd",
+        "parents": [
+            "3a3f5a6ec1c968d1d2d5d20dee0d161a4351f279",
+            "8f35f30bfe09513f96cf8aa4df0834ae34e93bae"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445551195 2015-10-22 17:59:55 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445551195 2015-10-22 17:59:55 -0400",
+        "message": "Merge commit '8f35f30bfe09513f96cf8aa4df0834ae34e93bae' into branchB-1"
+    },
+    {
+        "hash": "3a3f5a6ec1c968d1d2d5d20dee0d161a4351f279",
+        "tree": "006b298c5702b04c00370d0414959765b82fd722",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445550868 2015-10-22 17:54:28 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445550868 2015-10-22 17:54:28 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "8f35f30bfe09513f96cf8aa4df0834ae34e93bae",
+        "tree": "e293bfdddb81a853bbb16b8b58e68626f30841a4",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445550843 2015-10-22 17:54:03 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445550843 2015-10-22 17:54:03 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "539bd011c4822c560c1d17cab095006b7a10f707",
+        "tree": "a82a121ea36b115548d6dad2cd86ec27f06f7b30",
+        "parents": [
+            "88eb3f98849f4b8d0555395f514800900a01dc8f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548967 2015-10-22 17:22:47 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548967 2015-10-22 17:22:47 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "0bb7ed583d7e9ad507e8b902594f5c9126ea456b",
+        "tree": "016eef4a6fefd36bdcaa93ad773449ddc5c73cbb",
+        "parents": [
+            "f13e1bc6ba935fce2efffa5be4c4832404034ef1"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548950 2015-10-22 17:22:30 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548950 2015-10-22 17:22:30 -0400",
+        "message": "asparagus"
+    },
+    {
+        "hash": "f13e1bc6ba935fce2efffa5be4c4832404034ef1",
+        "tree": "713e438567b28543235faf265c4c5b02b437c7fd",
+        "parents": [
+            "a2fa36ffc4a565a223e225d15b18774f87d0c4f0",
+            "421b392106e079df6d412babd5636697938269ec"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548912 2015-10-22 17:21:52 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548912 2015-10-22 17:21:52 -0400",
+        "message": "Merge commit '421b392106e079df6d412babd5636697938269ec' into branchA-2"
+    },
+    {
+        "hash": "88eb3f98849f4b8d0555395f514800900a01dc8f",
+        "tree": "713e438567b28543235faf265c4c5b02b437c7fd",
+        "parents": [
+            "421b392106e079df6d412babd5636697938269ec",
+            "a2fa36ffc4a565a223e225d15b18774f87d0c4f0"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548895 2015-10-22 17:21:35 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548895 2015-10-22 17:21:35 -0400",
+        "message": "Merge branch 'branchA-2' into branchA-1"
+    },
+    {
+        "hash": "421b392106e079df6d412babd5636697938269ec",
+        "tree": "fef01f3104c8047d05e8572e521c454f8fd4b8db",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548616 2015-10-22 17:16:56 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548616 2015-10-22 17:16:56 -0400",
+        "message": "Edit veal"
+    },
+    {
+        "hash": "a2fa36ffc4a565a223e225d15b18774f87d0c4f0",
+        "tree": "3b919b6e8a575b4779c8243ebea3e3beb436e88f",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445548605 2015-10-22 17:16:45 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445548605 2015-10-22 17:16:45 -0400",
+        "message": "Edit asparagus"
+    },
+    {
+        "hash": "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f",
+        "tree": "42cdad903aef3e7b614675e6584a8be417941911",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "message": "Initial revision\n\nA few soup recipes from \"The Virginia Housewife\", available in the\npublic domain."
+    }
+]

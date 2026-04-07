@@ -1,0 +1,13 @@
+{
+    "name": "status-mixed",
+    "category": "status",
+    "description": "Mixed status: staged modification, untracked file, and deleted file",
+    "operations": ["status"],
+    "oracle_commands": {
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "warning:",
+        "name": "ignoring broken ref refs/heads/dummy-marker.txt"
+    },
+    {
+        "hash": "8d2f05c97ef29a4697b37c30fe81c248ef411a23",
+        "name": "refs/heads/master"
+    }
+]

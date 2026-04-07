@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/merge-resolve",
+    "category": "upstream",
+    "description": "libgit2: Merge resolve strategy tests",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "status-clean",
+    "category": "status",
+    "description": "Clean working tree with no changes",
+    "operations": ["status"],
+    "oracle_commands": {
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

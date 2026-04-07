@@ -1,0 +1,10 @@
+warning: refs/heads/merges-branch: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/heads/merges: trailingRefContent: has trailing garbage: '?
+'
+warning: refs/heads/reverted-branch: trailingRefContent: has trailing garbage: '?
+'
+dangling tree 0ad19525be6d8cae5e5deb2770fc244b65255057
+dangling commit 399fb3aba3d9d13f7d40a9254ce4402067ef3149
+missing blob caf99de3a49827117bb66721010eac461b06a80c
+dangling commit e34ef1afe54eb526fd92eec66084125f340f1d65

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/blametest-git",
+    "category": "upstream",
+    "description": "libgit2: Blame test repository",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

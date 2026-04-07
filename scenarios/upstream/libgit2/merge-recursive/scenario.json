@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/merge-recursive",
+    "category": "upstream",
+    "description": "libgit2: Recursive merge tests",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

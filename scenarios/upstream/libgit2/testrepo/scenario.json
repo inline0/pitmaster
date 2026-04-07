@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/testrepo",
+    "category": "upstream",
+    "description": "libgit2: Main libgit2 test repo with branches, tags, and history",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

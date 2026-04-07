@@ -1,0 +1,94 @@
+[
+    {
+        "hash": "539bd011c4822c560c1d17cab095006b7a10f707",
+        "name": "refs/heads/branchA-1"
+    },
+    {
+        "hash": "0bb7ed583d7e9ad507e8b902594f5c9126ea456b",
+        "name": "refs/heads/branchA-2"
+    },
+    {
+        "hash": "a34e5a16feabbd0335a633aadb8217c9f3dba58d",
+        "name": "refs/heads/branchB-1"
+    },
+    {
+        "hash": "723181f1bfd30e47a6d1d36a4d874e31e7a0a1a4",
+        "name": "refs/heads/branchB-2"
+    },
+    {
+        "hash": "ad2ace9e15f66b3d1138922e6ffdc3ea3f967fa6",
+        "name": "refs/heads/branchC-1"
+    },
+    {
+        "hash": "815b5a1c80ca749d705c7aa0cb294a00cbedd340",
+        "name": "refs/heads/branchC-2"
+    },
+    {
+        "hash": "4dfc1be85a9d6c9898152444d32b238b4aecf8cc",
+        "name": "refs/heads/branchD-1"
+    },
+    {
+        "hash": "007f1ee2af8e5d99906867c4237510e1790a89b8",
+        "name": "refs/heads/branchD-2"
+    },
+    {
+        "hash": "ca224bba0a8a24f1768804fe5f565b1014af7ef2",
+        "name": "refs/heads/branchE-1"
+    },
+    {
+        "hash": "436ea75c99f527e4b42fddb46abedf7726eb719d",
+        "name": "refs/heads/branchE-2"
+    },
+    {
+        "hash": "9b258ad4c39f40c24f66bf1faf48eb6202d59c85",
+        "name": "refs/heads/branchE-3"
+    },
+    {
+        "hash": "783d6539dde96b8873c5b5da3e79cc14cd64830b",
+        "name": "refs/heads/branchF-1"
+    },
+    {
+        "hash": "ef1783444b61a8671beea4ce1f4d0202677dfbfb",
+        "name": "refs/heads/branchF-2"
+    },
+    {
+        "hash": "c483ca4bb087174af5cb51d7caa9c09fe4a28ccb",
+        "name": "refs/heads/branchG-1"
+    },
+    {
+        "hash": "d71c24b3b113fd1d1909998c5bfe33b86a65ee03",
+        "name": "refs/heads/branchG-2"
+    },
+    {
+        "hash": "7a9277e0c5ec75339f011c176d0c20e513c4de1c",
+        "name": "refs/heads/branchH-1"
+    },
+    {
+        "hash": "db203155a789fb749aa3c14e93eea2c744a9c6c7",
+        "name": "refs/heads/branchH-2"
+    },
+    {
+        "hash": "5607a8c4601a737daadd1f470bde3142aff57026",
+        "name": "refs/heads/branchI-1"
+    },
+    {
+        "hash": "f7929c5a67a4bdc98247fb4b5098675723932a64",
+        "name": "refs/heads/branchI-2"
+    },
+    {
+        "hash": "f65de1834f57708e76d8dc25502b7f1ecbcce162",
+        "name": "refs/heads/branchJ-1"
+    },
+    {
+        "hash": "b01de62cf11945685c98ec671edabdff3e90ddc5",
+        "name": "refs/heads/branchJ-2"
+    },
+    {
+        "hash": "182d0d250d1d7adcc60c178be5be98358b3a2fd1",
+        "name": "refs/heads/branchK-1"
+    },
+    {
+        "hash": "0ce202f64fa8356c1a32835fce4058ca76b0c7ed",
+        "name": "refs/heads/branchK-2"
+    }
+]

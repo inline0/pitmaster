@@ -1,0 +1,534 @@
+[
+    {
+        "hash": "01a2b453c2647c71ccfefc285f2266d1f00b8253",
+        "type": "blob",
+        "size": 107,
+        "content": "!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\nFile 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0267838e09bbc5969bba035be2d27c8a6de694d8",
+        "type": "blob",
+        "size": 108,
+        "content": "File 2\nFile 2\n!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "063fc9f01e6e9ec2a8d8f749885e931875e50d37",
+        "type": "commit",
+        "size": 196,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Jacques Germishuys <jacquesg@striata.com> 1396512394 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396512402 +0200\n\nOrphan commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "089ac03f76058b5ba0b44bb268f317f9242481e9",
+        "type": "commit",
+        "size": 246,
+        "content": "tree 5e2206cda1c56430ad107a6866a829c159e0b9ea\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443643 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396443643 +0200\n\nRequire a merge\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d447a6c2528b06616cde3b209a4b4ea3dcb8d65",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 38c05a857e831a7e759d83778bfc85d003e21c45\tfile1.txt\n100644 blob a661b5dec1004e2c62654ded3762370c27cf266b\tfile2.txt\n100644 blob 85a4a1d791973644f24c72f5e89420d3064cc452\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1124c2c1ae07b26fded662d6c3f3631d9dc16f88",
+        "type": "blob",
+        "size": 108,
+        "content": "!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!!\nFile 3\nFile 3\nFile 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12905f4ea5b76f9d3fdcfe73e462201c06ae632a",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 5dc7e1f440ce74d5503a0dfbc6c30e091475f774\tfile1.txt\n100644 blob bd6ffc8c6c41f0f85ff9e3d61c9479516bac0024\tfile2.txt\n100644 blob 1124c2c1ae07b26fded662d6c3f3631d9dc16f88\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "19c5c7207054604b69c84d08a7571ef9672bb5c2",
+        "type": "blob",
+        "size": 106,
+        "content": "File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c2116845780455ecf916538c1cc27c4222452af",
+        "type": "tree",
+        "size": 119,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a58ca3fee5eb68b11adc2703e5843f968c9dad1e\tfile2.txt\n100644 blob 28d9eb4208074ad1cc84e71ccc908b34573f05d2\tfile3.txt.renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1cc85eb4ff0a8438fde1b14274c6f87f891b36a0",
+        "type": "tree",
+        "size": 119,
+        "content": "100644 blob f90f9dcbdac2cce5cc166346160e19cb693ef4e8\tfile1.txt\n100644 blob 563f6473a3858f99b80e5f93c660512ed38e1e6f\tfile2.txt\n100644 blob e233b9ed408a95e9d4b65fec7fc34943a556deb2\tfile3.txt.renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e1cb7391d25dcd8daba88f1f627f3045982286c",
+        "type": "blob",
+        "size": 107,
+        "content": "File 2\nFile 2\n!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "20fc1a4c9d994021f43d33ab75e4252e27ca661d",
+        "type": "tree",
+        "size": 129,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a58ca3fee5eb68b11adc2703e5843f968c9dad1e\tfile2.txt\n100644 blob 28d9eb4208074ad1cc84e71ccc908b34573f05d2\tfile3.txt.renamed_on_branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28d9eb4208074ad1cc84e71ccc908b34573f05d2",
+        "type": "blob",
+        "size": 106,
+        "content": "File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a26c7e88b285613b302ba76712bc998863f3cbc",
+        "type": "commit",
+        "size": 269,
+        "content": "tree 1cc85eb4ff0a8438fde1b14274c6f87f891b36a0\nparent e9b63f3655b2ad80c0ff587389b5a9589a3a7110\nauthor Jacques Germishuys <jacquesg@striata.com> 1396445222 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445222 +0200\n\nRenamed file3.txt -> file3.txt.renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2ac3b376093de405b0a951bff578655b1c2b7fa1",
+        "type": "commit",
+        "size": 270,
+        "content": "tree b826e9b36e22e949ec885e7a1f3db496bbab6cd0\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443854 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396444922 +0200\n\nMerge branch 'master' into merge-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2cacbcaabf785f1ac231e8519849d4ad38692f2c",
+        "type": "blob",
+        "size": 105,
+        "content": "File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35cb210149022c7379b0a67b0dec13cc628ff87d",
+        "type": "commit",
+        "size": 197,
+        "content": "tree e7811a2bc55635f182750f0420da5ad232c1af91\nauthor Jacques Germishuys <jacquesg@striata.com> 1396429317 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396429317 +0200\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "38c05a857e831a7e759d83778bfc85d003e21c45",
+        "type": "blob",
+        "size": 106,
+        "content": "!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3f9eed8946df9e2c737d3b8dc0b8e78959aacd92",
+        "type": "commit",
+        "size": 269,
+        "content": "tree 1c2116845780455ecf916538c1cc27c4222452af\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396445222 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445461 +0200\n\nRenamed file3.txt -> file3.txt.renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "409a1bec58bf35348e8b62b72bb9c1f45cf5a587",
+        "type": "blob",
+        "size": 107,
+        "content": "File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\n!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "44cd2ed2052c9c68f9a439d208e9614dc2a55c70",
+        "type": "commit",
+        "size": 278,
+        "content": "tree 20fc1a4c9d994021f43d33ab75e4252e27ca661d\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396445881 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445881 +0200\n\nRenamed file3.txt -> file.txt.renamed_on_branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "487434cace79238a7091e2220611d4f20a765690",
+        "type": "blob",
+        "size": 107,
+        "content": "File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\n!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4920ad2f17162dcc8823ad491444dcb87f5899c9",
+        "type": "blob",
+        "size": 108,
+        "content": "File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\n!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c532774cc1fea37f6efc2256763a64d38c8cdde",
+        "type": "blob",
+        "size": 105,
+        "content": "File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "51145af30d411a50195b66517d825e69bf57ed22",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a58ca3fee5eb68b11adc2703e5843f968c9dad1e\tfile2.txt\n100644 blob 63c0d92b95253c4a40d3883f423a54be47d2c4c8\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5461de53ffadbf15be4dd6345997c15689573209",
+        "type": "commit",
+        "size": 269,
+        "content": "tree 1c2116845780455ecf916538c1cc27c4222452af\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396445222 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445249 +0200\n\nRenamed file3.txt -> file3.txt.renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "54784f10955e92ab27e4fa832e40cb2baf1edbdc",
+        "type": "blob",
+        "size": 179,
+        "content": "!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\n<<<<<<< HEAD\nFile 3\n=======\nFile 3!\nFile 3!\n>>>>>>> e9b63f3... Change all files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "563f6473a3858f99b80e5f93c660512ed38e1e6f",
+        "type": "blob",
+        "size": 107,
+        "content": "File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "58a957ef0061c1a8ef995c855dfab4f5da8d6617",
+        "type": "blob",
+        "size": 107,
+        "content": "File 3\nFile 3\n!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5dc7e1f440ce74d5503a0dfbc6c30e091475f774",
+        "type": "blob",
+        "size": 108,
+        "content": "!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!!\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5e2206cda1c56430ad107a6866a829c159e0b9ea",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob f2ec8c8cf1a9fb7aa047a25a4308bfe860237ad4\tfile1.txt\n100644 blob 1e1cb7391d25dcd8daba88f1f627f3045982286c\tfile2.txt\n100644 blob 58a957ef0061c1a8ef995c855dfab4f5da8d6617\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5f77a2a13935ac62a629553f8944ad57b1ed8b4a",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 38c05a857e831a7e759d83778bfc85d003e21c45\tfile1.txt\n100644 blob a661b5dec1004e2c62654ded3762370c27cf266b\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63c0d92b95253c4a40d3883f423a54be47d2c4c8",
+        "type": "blob",
+        "size": 107,
+        "content": "File 3\n!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6ce83eb5f0fd34a10c3d25c6b36d2ed7ec0d6ce7",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob bb14296ffa9dfbf935ec9ce2f9ed7808d952226b\tfile1.txt\n100644 blob 0267838e09bbc5969bba035be2d27c8a6de694d8\tfile2.txt\n100644 blob 8536dd6f0ec3ddecb9f9b6c8c64c6d322cd01211\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6d1c2afe5eeb9e497528e2780ac468a5465cbc96",
+        "type": "commit",
+        "size": 244,
+        "content": "tree a83c6f70297b805dedc549e6583582966f6ebcab\nparent 35cb210149022c7379b0a67b0dec13cc628ff87d\nauthor Jacques Germishuys <jacquesg@striata.com> 1396512394 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396512394 +0200\n\nOrphan commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "74f06b5bfec6d33d7264f73606b57a7c0b963819",
+        "type": "commit",
+        "size": 196,
+        "content": "tree bc4dd0744364d1db380a9811bd264c101065231e\nauthor Jacques Germishuys <jacquesg@striata.com> 1396512394 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396512402 +0200\n\nOrphan commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "828b08c52d2cba30952e0e008f60b25b5ba0d41a",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a58ca3fee5eb68b11adc2703e5843f968c9dad1e\tfile2.txt\n100644 blob 28d9eb4208074ad1cc84e71ccc908b34573f05d2\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8536dd6f0ec3ddecb9f9b6c8c64c6d322cd01211",
+        "type": "blob",
+        "size": 108,
+        "content": "File 3\nFile 3\n!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "85a4a1d791973644f24c72f5e89420d3064cc452",
+        "type": "blob",
+        "size": 106,
+        "content": "!File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b5c30499a71001189b647f4d5b57fa8f04897ce",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a58ca3fee5eb68b11adc2703e5843f968c9dad1e\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "964ea3da044d9083181a88ba6701de9e35778bf4",
+        "type": "commit",
+        "size": 258,
+        "content": "tree 8b5c30499a71001189b647f4d5b57fa8f04897ce\nparent a43a050c588d4e92f11a6b139680923e9728477d\nauthor Jacques Germishuys <jacquesg@striata.com> 1396429783 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396429783 +0200\n\nChanged file2.txt on master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9cc39fca3765a2facbe31157f7d60c2602193f36",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob f05ed049854c1596a7cc0e957fab34961077f3ae\tfile1.txt\n100644 blob ebda71fe44dcb60c53b8fbd53208a1204d32e959\tfile2.txt\n100644 blob 4920ad2f17162dcc8823ad491444dcb87f5899c9\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9ccb9bf50c011fd58dcbaa65df917bf79539717f",
+        "type": "blob",
+        "size": 14,
+        "content": "I'm an orphan\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a10b59f4280491afe6e430c30654a7acc67d4a33",
+        "type": "blob",
+        "size": 107,
+        "content": "!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\nFile 1\nFile 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a21b4bfe7a04ab18024fb57f4ae9a52a1acef394",
+        "type": "commit",
+        "size": 251,
+        "content": "tree 51145af30d411a50195b66517d825e69bf57ed22\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396445178 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445178 +0200\n\nChanges after rename\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a43a050c588d4e92f11a6b139680923e9728477d",
+        "type": "commit",
+        "size": 258,
+        "content": "tree bda51965cb36c0c5731c8cb50b80a36cac81018e\nparent 35cb210149022c7379b0a67b0dec13cc628ff87d\nauthor Jacques Germishuys <jacquesg@striata.com> 1396429762 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396429762 +0200\n\nChanged file1.txt on master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a58ca3fee5eb68b11adc2703e5843f968c9dad1e",
+        "type": "blob",
+        "size": 106,
+        "content": "File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a661b5dec1004e2c62654ded3762370c27cf266b",
+        "type": "blob",
+        "size": 106,
+        "content": "!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a69ef8fcbb9a2c509a7dbf4f23d257eb551d5610",
+        "type": "commit",
+        "size": 246,
+        "content": "tree e6ae8889c40c77d7be02758235b5b3f7a4f2a129\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443853 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396443853 +0200\n\nRequire a merge\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a83c6f70297b805dedc549e6583582966f6ebcab",
+        "type": "tree",
+        "size": 149,
+        "content": "100644 blob 4c532774cc1fea37f6efc2256763a64d38c8cdde\tfile1.txt\n100644 blob a9020cd240774e4d672732bcb82d516d9685da76\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n100644 blob 9ccb9bf50c011fd58dcbaa65df917bf79539717f\torphan.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9020cd240774e4d672732bcb82d516d9685da76",
+        "type": "blob",
+        "size": 105,
+        "content": "File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab4115f808bc585b60f822da7020af86d20f62c8",
+        "type": "commit",
+        "size": 318,
+        "content": "tree 6ce83eb5f0fd34a10c3d25c6b36d2ed7ec0d6ce7\nparent 089ac03f76058b5ba0b44bb268f317f9242481e9\nparent e9b63f3655b2ad80c0ff587389b5a9589a3a7110\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443648 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396443648 +0200\n\nMerge branch 'master' into merge-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "abe4603bc7cd5b8167a267e0e2418fd2348f8cff",
+        "type": "commit",
+        "size": 318,
+        "content": "tree 9cc39fca3765a2facbe31157f7d60c2602193f36\nparent a69ef8fcbb9a2c509a7dbf4f23d257eb551d5610\nparent e9b63f3655b2ad80c0ff587389b5a9589a3a7110\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443854 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396443854 +0200\n\nMerge branch 'master' into merge-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b826e9b36e22e949ec885e7a1f3db496bbab6cd0",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob f90f9dcbdac2cce5cc166346160e19cb693ef4e8\tfile1.txt\n100644 blob 563f6473a3858f99b80e5f93c660512ed38e1e6f\tfile2.txt\n100644 blob e233b9ed408a95e9d4b65fec7fc34943a556deb2\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bafbf6912c09505ac60575cd43d3f2aba3bd84d8",
+        "type": "commit",
+        "size": 250,
+        "content": "tree 12905f4ea5b76f9d3fdcfe73e462201c06ae632a\nparent d3d77487660ee3c0194ee01dc5eaf478782b1c7e\nauthor Jacques Germishuys <jacquesg@striata.com> 1396436842 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396436842 +0200\n\nIntroduce conflicts\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb14296ffa9dfbf935ec9ce2f9ed7808d952226b",
+        "type": "blob",
+        "size": 108,
+        "content": "File 1\nFile 1\n!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bc4dd0744364d1db380a9811bd264c101065231e",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 9ccb9bf50c011fd58dcbaa65df917bf79539717f\torphan.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bd65d4083845ed5ed4e1fe5feb85ac395d0760c8",
+        "type": "commit",
+        "size": 182,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Jacques Germishuys <jacquesg@striata.com> 1396512400 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396512400 +0200\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bd6ffc8c6c41f0f85ff9e3d61c9479516bac0024",
+        "type": "blob",
+        "size": 108,
+        "content": "!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!!\nFile 2\nFile 2\nFile 2\nFile 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bda51965cb36c0c5731c8cb50b80a36cac81018e",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 19c5c7207054604b69c84d08a7571ef9672bb5c2\tfile1.txt\n100644 blob a9020cd240774e4d672732bcb82d516d9685da76\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ced8fb81b6ec534d5deaf2a48b4b96c799712507",
+        "type": "commit",
+        "size": 265,
+        "content": "tree f5684c96bf40c709877b56404cd8a5dd2d2a7978\nparent 35cb210149022c7379b0a67b0dec13cc628ff87d\nauthor Jacques Germishuys <jacquesg@striata.com> 1396435575 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396435575 +0200\n\nAutomergeable changes on file1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cfc4f0999a8367568e049af4f72e452d40828a15",
+        "type": "commit",
+        "size": 258,
+        "content": "tree 828b08c52d2cba30952e0e008f60b25b5ba0d41a\nparent 964ea3da044d9083181a88ba6701de9e35778bf4\nauthor Jacques Germishuys <jacquesg@striata.com> 1396429801 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396429801 +0200\n\nChanged file3.txt on master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d0f21e17beb5b9d953b1d8349049818a4f2edd1e",
+        "type": "commit",
+        "size": 265,
+        "content": "tree 5f77a2a13935ac62a629553f8944ad57b1ed8b4a\nparent ced8fb81b6ec534d5deaf2a48b4b96c799712507\nauthor Jacques Germishuys <jacquesg@striata.com> 1396435585 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396435585 +0200\n\nAutomergeable changes on file2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d3d77487660ee3c0194ee01dc5eaf478782b1c7e",
+        "type": "commit",
+        "size": 265,
+        "content": "tree 0d447a6c2528b06616cde3b209a4b4ea3dcb8d65\nparent d0f21e17beb5b9d953b1d8349049818a4f2edd1e\nauthor Jacques Germishuys <jacquesg@striata.com> 1396435592 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396435592 +0200\n\nAutomergeable changes on file3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e233b9ed408a95e9d4b65fec7fc34943a556deb2",
+        "type": "blob",
+        "size": 107,
+        "content": "File 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3\nFile 3!\nFile 3!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5183bfd18e3a0a691fadde2f0d5610b73282d31",
+        "type": "blob",
+        "size": 107,
+        "content": "File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\n!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e6ae8889c40c77d7be02758235b5b3f7a4f2a129",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 487434cace79238a7091e2220611d4f20a765690\tfile1.txt\n100644 blob e5183bfd18e3a0a691fadde2f0d5610b73282d31\tfile2.txt\n100644 blob 409a1bec58bf35348e8b62b72bb9c1f45cf5a587\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e7811a2bc55635f182750f0420da5ad232c1af91",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 4c532774cc1fea37f6efc2256763a64d38c8cdde\tfile1.txt\n100644 blob a9020cd240774e4d672732bcb82d516d9685da76\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e9b63f3655b2ad80c0ff587389b5a9589a3a7110",
+        "type": "commit",
+        "size": 247,
+        "content": "tree b826e9b36e22e949ec885e7a1f3db496bbab6cd0\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396436302 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396436302 +0200\n\nChange all files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ebda71fe44dcb60c53b8fbd53208a1204d32e959",
+        "type": "blob",
+        "size": 108,
+        "content": "File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\n!File 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2\nFile 2!\nFile 2\nFile 2!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f05ed049854c1596a7cc0e957fab34961077f3ae",
+        "type": "blob",
+        "size": 108,
+        "content": "File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\n!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f0a4e1c66bb548cd2b22eebefda703872e969775",
+        "type": "commit",
+        "size": 270,
+        "content": "tree e6ae8889c40c77d7be02758235b5b3f7a4f2a129\nparent cfc4f0999a8367568e049af4f72e452d40828a15\nauthor Jacques Germishuys <jacquesg@striata.com> 1396443854 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1396445061 +0200\n\nMerge branch 'master' into merge-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2ec8c8cf1a9fb7aa047a25a4308bfe860237ad4",
+        "type": "blob",
+        "size": 107,
+        "content": "File 1\nFile 1\n!File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f5684c96bf40c709877b56404cd8a5dd2d2a7978",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob 38c05a857e831a7e759d83778bfc85d003e21c45\tfile1.txt\n100644 blob a9020cd240774e4d672732bcb82d516d9685da76\tfile2.txt\n100644 blob 2cacbcaabf785f1ac231e8519849d4ad38692f2c\tfile3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f90f9dcbdac2cce5cc166346160e19cb693ef4e8",
+        "type": "blob",
+        "size": 107,
+        "content": "File 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1\nFile 1!\nFile 1\nFile 1\nFile 1!\n",
+        "encoding": "utf-8"
+    }
+]

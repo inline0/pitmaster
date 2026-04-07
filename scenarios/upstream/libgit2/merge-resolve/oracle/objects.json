@@ -1,0 +1,401 @@
+[
+    {
+        "hash": "error:",
+        "type": "unable",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "005b6fcc8fec71d2550bef8462d169b3c26aa14b",
+        "type": "commit",
+        "size": 243,
+        "content": "tree c1b17981db0840109a820dae8674ee29684134ff\nparent d4207f77243500bec335ab477f9227fcdb1e271a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1354575027 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1355017673 -0600\n\ndf_side1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "009b9cab6fdac02915a88ecd078b7a792ed802d8",
+        "type": "commit",
+        "size": 247,
+        "content": "tree e17ace1492648c9dc5701bad5c47af9d1b60c4e9\nparent 092ce8682d7f3a2a3a769a6daca58950168ba5c4\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352099921 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352099921 -0600\n\nremoved in 7\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "00c7d33f1ffa79d19c2272b370fcaeaadba49c08",
+        "type": "tree",
+        "size": 138,
+        "content": "040000 tree 350c6eb3010efc403a6bed682332635314e9ed58\tboth-dirs\n100644 blob 27133da702ba3c60af2a01e96c2555ff4045d692\tdf_added\n100644 blob 87b4926260d77a3b851e71ecce06839bd650b231\tdir\n040000 tree 6fbe9fb85c86d7d1435f728da418bdff52c640a9\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "01f149e1b8f84bd8896aaff6d6b22af88459ded0",
+        "type": "commit",
+        "size": 242,
+        "content": "tree fc7d7b805f7a9428574f4f802b2e34cd20ab9d99\nparent bef6e37b3ee632ba74159168836f382fed21d77d\nauthor Edward Thomson <ethomson@microsoft.com> 1365714831 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1365714831 -0500\n\nrename ancestor\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0204a84f822acbf6386b36d33f1f6bc68bbbf858",
+        "type": "commit",
+        "size": 243,
+        "content": "tree c06a9be584ac49aa02c5551312d9e2982c91df10\nparent d4207f77243500bec335ab477f9227fcdb1e271a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1354575206 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1355017754 -0600\n\ndf_side2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "02251f990ca8e92e7ae61d3426163fa821c64001",
+        "type": "tree",
+        "size": 370,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 8307d93a155903a5c49576583f0ce1f6ff897c0e\tnew-in-branch.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0321415405cb906c46869919af56d51dbbe5e85c",
+        "type": "tree",
+        "size": 373,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob fe5407fc50a53aecb41d1a6e9ea7b612e581af87\tmodified-in-both.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "032ebc5ab85d9553bb187d3cd40875ff23a63ed0",
+        "type": "blob",
+        "size": 15,
+        "content": "this is file 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "03b87706555accbf874ccd410dbda01e8e70a67f",
+        "type": "tree",
+        "size": 426,
+        "content": "100644 blob 233c0919c998ed110a4b6ff36f353aec8b713487\tadded-in-master.txt\n100644 blob ee3fa1b8c00aff7fe02065fdb50864bb0d932ccf\tautomergeable.txt\n100644 blob 74df13f0793afdaa972150bba976f7de8284914e\tboth-dirs\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob 11deab00b2d3a6f5a3073988ac050c2d7b6655e2\tchanged-in-master.txt\n100644 blob 4e886e602529caa9ab11d71f86634bd1b6e0de10\tconflicting.txt\n040000 tree d5a61b0b4992a4f0caa887fa08b52431e727bb6f\tdir\n100644 blob 86088dae8bade454995b21a1c88107b0e1accdab\tfile.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "03dad1005e5d06d418f50b12e0bcd48ff2306a03",
+        "type": "tree",
+        "size": 369,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 959de65e568274120fdf9e3af9f77b1550122149\tremoved-in-8.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "051ffd7901a442faf56b226161649074f15c7c47",
+        "type": "tree",
+        "size": 378,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 918bb3e09090a9995d48af9a2a6296d7e6088d1c\tmodified-in-14-branch.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "058541fc37114bfc1dddf6bd6bffc7fae5c2e6fe",
+        "type": "blob",
+        "size": 247,
+        "content": "this file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is automergeable\nthis file is changed in branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "05f3c1a2a56ca95c3d2ef28dc9ddf32b5cd6c91c",
+        "type": "commit",
+        "size": 252,
+        "content": "tree ada55a45d14527dc3dfc714ea1c65d2e1e6fbe87\nparent 8f4433f8593ddd65b7dd43dd4564d841f4d9c8aa\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352100610 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352100610 -0600\n\ntrivial-13-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "07a759da919f737221791d542f176ab49c88837f",
+        "type": "commit",
+        "size": 247,
+        "content": "tree e31e7ad3ed298f24e383c4950f4671993ec078e4\nparent c607fc30883e335def28cd686b51f6cfa02b06ec\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351989044 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351989044 -0500\n\nboth removed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "07c514b04698e068892b31c8d352b85813b99c6e",
+        "type": "blob",
+        "size": 16,
+        "content": "removed in both\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "09055301463b7f2f8ee5d368f8ed5c0a40ad8515",
+        "type": "blob",
+        "size": 27,
+        "content": "This file is new in octo2.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0917bb159596aea4d295f4857da77e8f96b3c7dc",
+        "type": "blob",
+        "size": 22,
+        "content": "this\nis\ndir/file1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "092ce8682d7f3a2a3a769a6daca58950168ba5c4",
+        "type": "commit",
+        "size": 244,
+        "content": "tree fb738a106cfd097a4acb96ce132ecb1ad6c46b03\nparent c607fc30883e335def28cd686b51f6cfa02b06ec\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352099790 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352099790 -0600\n\ntrivial-7\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "093bebf072dd4bbba88833667d6ffe454df199e1",
+        "type": "tree",
+        "size": 377,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob c692ecf62007c0ac9fb26e2aa884de2933de15ed\tremoved-in-10-branch.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "09768bed22680cdb0859683fa9677ccc8d5a25c1",
+        "type": "tree",
+        "size": 373,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 5ddd0fe66f990dc0e5cf9fec6d9b465240e9537f\tmodified-to-same.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0a75d9aac1dc84fb5aa51f7325c0ab53242ddef7",
+        "type": "tree",
+        "size": 373,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 4b48deed3a433909bfd6b6ab3d4b91348b6af464\tmodified-to-same.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0cfd6c54ef6532d862408f562309dc9c74a401e8",
+        "type": "blob",
+        "size": 12,
+        "content": "new in 3alt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d52e3a556e189ba0948ae56780918011c1b167d",
+        "type": "tree",
+        "size": 325,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d872f8e871a30208305978ecbf9e66d864f1638",
+        "type": "blob",
+        "size": 441,
+        "content": "this will be renamed in ours\nand edited in theirs\n\n(indeed, it is edited in theirs)\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n\nthis will be renamed in ours\nand edited in theirs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0ec5f433959cd46177f745903353efb5be08d151",
+        "type": "commit",
+        "size": 245,
+        "content": "tree 093bebf072dd4bbba88833667d6ffe454df199e1\nparent 53825f41ac8d640612f9423a2f03a69f3d96809a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352100223 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352100223 -0600\n\ntrivial-10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0f3fc5dddc8964b9ac1040d0e957f9eb02d9efb3",
+        "type": "blob",
+        "size": 75,
+        "content": "file1\nfile1\nfile1\nfile1\nfile1\nfile1\nfile1\nfile1; modified in branch2\nfile1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "11aeee27ac45a8402c2fd5b875d66dd844e5df00",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob 23ed141a6ae1e798b2f721afedbe947c119111ba\tbinary\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "11deab00b2d3a6f5a3073988ac050c2d7b6655e2",
+        "type": "blob",
+        "size": 18,
+        "content": "changed in master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "11f4f3c08b737f5fd896cbefa1425ee63b21b2fa",
+        "type": "commit",
+        "size": 252,
+        "content": "tree 0d52e3a556e189ba0948ae56780918011c1b167d\nparent 53825f41ac8d640612f9423a2f03a69f3d96809a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352100211 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352100211 -0600\n\ntrivial-10-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "13d1be4ea52a6ced1d7a1d832f0ee3c399348e5e",
+        "type": "commit",
+        "size": 251,
+        "content": "tree 0d52e3a556e189ba0948ae56780918011c1b167d\nparent f0053b8060bb3f0be5cbcc3147a07ece26bf097e\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352100317 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352100317 -0600\n\ntrivial-9-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1439088f509b79b1535b64193137d3ce4b240734",
+        "type": "blob",
+        "size": 44,
+        "content": "this\nis\ndir/file1.txt\n(changed in df_side1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "158dc7bedb202f5b26502bf3574faa7f4238d56c",
+        "type": "commit",
+        "size": 240,
+        "content": "tree d2f8637f2eab2507a1e13cbc9df4729ec386627e\nparent 977c696519c5a3004c5f1d15d60c89dbeb8f235f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351874974 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351874974 -0500\n\nocto2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16f825815cfd20a07a75c71554e82d8eede0b061",
+        "type": "commit",
+        "size": 240,
+        "content": "tree 62269111c3b02a9355badcb9da8678b1bf41787b\nparent 977c696519c5a3004c5f1d15d60c89dbeb8f235f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351874954 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351874954 -0500\n\nocto1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "178940b450f238a56c0d75b7955cb57b38191982",
+        "type": "blob",
+        "size": 307,
+        "content": "this file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n\nthis file will be renamed\nin both branches\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "183310e30fb1499af8c619108ffea4d300b5e778",
+        "type": "commit",
+        "size": 251,
+        "content": "tree a887dd39ad3edd610fc9083dcb61e40ab50673d1\nparent c607fc30883e335def28cd686b51f6cfa02b06ec\nauthor Edward Thomson <ethomson@edwardthomson.com> 1352094856 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1352094856 -0600\n\ntrivial-4-branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "18cb316b1cefa0f8a6946f0e201a8e1a6f845ab9",
+        "type": "blob",
+        "size": 363,
+        "content": "this will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n\nthis will be renamed in ours\nand deleted in theirs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "19b7ac485269b672a101060894de3ba9c2a24dd1",
+        "type": "blob",
+        "size": 43,
+        "content": "Removed in '7' but modified in '7-branch'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1a010b1c0f081b2e8901d55307a15c29ff30af0e",
+        "type": "blob",
+        "size": 4,
+        "content": "file",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c51d885170f57a0c4e8c69ff6363d91a5b51f85",
+        "type": "blob",
+        "size": 14,
+        "content": "AA4NEAEFEAANDgoNEAA=",
+        "encoding": "base64"
+    },
+    {
+        "hash": "1cff9ec6a47a537380dedfdd17c9e76d74259a2b",
+        "type": "blob",
+        "size": 17,
+        "content": "Modified in '13'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e4ff029aee68d0d69ef9eb6efa6cbf1ec732f99",
+        "type": "blob",
+        "size": 15,
+        "content": "this is file 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1f81433e3161efbf250576c58fede7f6b836f3d3",
+        "type": "tree",
+        "size": 323,
+        "content": "100644 blob 233c0919c998ed110a4b6ff36f353aec8b713487\tadded-in-master.txt\n100644 blob ee3fa1b8c00aff7fe02065fdb50864bb0d932ccf\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob 11deab00b2d3a6f5a3073988ac050c2d7b6655e2\tchanged-in-master.txt\n100644 blob 4e886e602529caa9ab11d71f86634bd1b6e0de10\tconflicting.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2091d94c8bd3eb0835dc5220de5e8bb310fa1513",
+        "type": "tree",
+        "size": 378,
+        "content": "100644 blob 6212c31dab5e482247d7977e4f0dd3601decf13b\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-master.txt\n100644 blob d427e0b2e138501a3d15cc376077a3631e15bd46\tconflicting.txt\n100644 blob 26153a3ff3649b6c2bb652d3f06878c6e0a172f9\tmodified-in-14-branch.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob 5c3b68a71fc4fa5d362fd3875e53137c6a5ab7a5\tremoved-in-master.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "21671e290278286fb2ce4c63d01699b67adce331",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob 1439088f509b79b1535b64193137d3ce4b240734\tfile1.txt\n100644 blob 547607c690372fe81fab8e3bb44c530e129118fd\tfile2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "227792b52aaa0b238bea00ec7e509b02623f168c",
+        "type": "blob",
+        "size": 489,
+        "content": "this will be renamed in ours\nand a file with the same name\nwill be independently added\nin theirs\n\nthis will be renamed in ours\nand a file with the same name\nwill be independently added\nin theirs\n\nthis will be renamed in ours\nand a file with the same name\nwill be independently added\nin theirs\n\nthis will be renamed in ours\nand a file with the same name\nwill be independently added\nin theirs\n\nthis will be renamed in ours\nand a file with the same name\nwill be independently added\nin theirs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "233c0919c998ed110a4b6ff36f353aec8b713487",
+        "type": "blob",
+        "size": 29,
+        "content": "this file is added in master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2392a2dacc9efb562b8635d6579fb458751c7c5b",
+        "type": "commit",
+        "size": 203,
+        "content": "tree fc7d7b805f7a9428574f4f802b2e34cd20ab9d99\nauthor Edward Thomson <ethomson@microsoft.com> 1365714958 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1365714958 -0500\n\nrename conflict ancestor\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "23ed141a6ae1e798b2f721afedbe947c119111ba",
+        "type": "blob",
+        "size": 14,
+        "content": "CwFuAQpyeQEFEAANDgo=",
+        "encoding": "base64"
+    },
+    {
+        "hash": "241a1005cd9b980732741b74385b891142bcba28",
+        "type": "blob",
+        "size": 407,
+        "content": "this will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n\nthis will be renamed in theirs\nand edited in ours\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "242591eb280ee9eeb2ce63524b9a8b9bc4cb515d",
+        "type": "blob",
+        "size": 16,
+        "content": "this is case 10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2490b9f1a079420870027deefb49f51d6656cf74",
+        "type": "tree",
+        "size": 320,
+        "content": "100644 blob ee3fa1b8c00aff7fe02065fdb50864bb0d932ccf\tautomergeable.txt\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob 11deab00b2d3a6f5a3073988ac050c2d7b6655e2\tchanged-in-master.txt\n100644 blob 4e886e602529caa9ab11d71f86634bd1b6e0de10\tconflicting.txt\n100644 blob da178208145ef585a1bd5ca5f4c9785d738df2cf\tnew-in-octo6.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "259d08ca43af9200e9ea9a098e44a5a350ebd9b3",
+        "type": "tree",
+        "size": 461,
+        "content": "100644 blob 233c0919c998ed110a4b6ff36f353aec8b713487\tadded-in-master.txt\n100644 blob ee3fa1b8c00aff7fe02065fdb50864bb0d932ccf\tautomergeable.txt\n040000 tree 350c6eb3010efc403a6bed682332635314e9ed58\tboth-dirs\n100644 blob ab6c44a2e84492ad4b41bb6bac87353e9d02ac8b\tchanged-in-branch.txt\n100644 blob 11deab00b2d3a6f5a3073988ac050c2d7b6655e2\tchanged-in-master.txt\n100644 blob 4e886e602529caa9ab11d71f86634bd1b6e0de10\tconflicting.txt\n100644 blob 27133da702ba3c60af2a01e96c2555ff4045d692\tdf_added\n100644 blob 87b4926260d77a3b851e71ecce06839bd650b231\tdir\n040000 tree 6fbe9fb85c86d7d1435f728da418bdff52c640a9\tfile.txt\n100644 blob dfe3f22baa1f6fce5447901c3086bae368de6bdd\tremoved-in-branch.txt\n100644 blob c8f06f2e3bb2964174677e91f0abead0e43c9e5d\tunchanged.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "25c40b7660c08c8fb581f770312f41b9b03119d1",
+        "type": "blob",
+        "size": 15,
+        "content": "added in side2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26153a3ff3649b6c2bb652d3f06878c6e0a172f9",
+        "type": "blob",
+        "size": 32,
+        "content": "Modified in 'trivial-14-branch'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "27133da702ba3c60af2a01e96c2555ff4045d692",
+        "type": "blob",
+        "size": 16,
+        "content": "df_added (file)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "274bbe983022fb4c02f8a2bf2ebe8da4fe130054",
+        "type": "blob",
+        "size": 78,
+        "content": "file2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\nfile2\n",
+        "encoding": "utf-8"
+    }
+]

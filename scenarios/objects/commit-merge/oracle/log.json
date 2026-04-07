@@ -1,0 +1,41 @@
+[
+    {
+        "hash": "42fe867df9409f537e30df2cb05d4686ec4813f6",
+        "tree": "3650eabdf2dd995b2b19ca7f1756a8bf77979d28",
+        "parents": [
+            "1f9bb66afa0b71dd4ceff837c8f07a33997938b3"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "message": "Add feature file"
+    },
+    {
+        "hash": "d3e7022389116ddbcbaab83e45e1241f6929adff",
+        "tree": "edf95bef788c64d98ab0a0aa2ec29cc8ac97b360",
+        "parents": [
+            "83819d6809d4cdc3cc28b2c7e2b4edac9a213695",
+            "42fe867df9409f537e30df2cb05d4686ec4813f6"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "message": "Merge feature into main"
+    },
+    {
+        "hash": "1f9bb66afa0b71dd4ceff837c8f07a33997938b3",
+        "tree": "ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "message": "Initial commit"
+    },
+    {
+        "hash": "83819d6809d4cdc3cc28b2c7e2b4edac9a213695",
+        "tree": "66cfd92071300fc4e40f00f029e2b9e412269f9d",
+        "parents": [
+            "1f9bb66afa0b71dd4ceff837c8f07a33997938b3"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "message": "Add main file"
+    }
+]

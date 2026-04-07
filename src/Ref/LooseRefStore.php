@@ -172,10 +172,18 @@ final class LooseRefStore implements RefStore
                 continue;
             }
 
-            $hex = trim($content);
+            $trimmed = trim($content);
 
-            if (strlen($hex) >= 40 && ctype_xdigit(substr($hex, 0, 40))) {
-                $refs[$refName] = ObjectId::fromHex(substr($hex, 0, 40));
+            if (strlen($trimmed) >= 40 && ctype_xdigit(substr($trimmed, 0, 40))) {
+                $refs[$refName] = ObjectId::fromHex(substr($trimmed, 0, 40));
+            } elseif (str_starts_with($trimmed, 'ref: ')) {
+                // Symbolic ref: resolve it
+                $target = substr($trimmed, 5);
+                $resolved = $this->resolve($target);
+
+                if ($resolved !== null) {
+                    $refs[$refName] = $resolved;
+                }
             }
         }
     }

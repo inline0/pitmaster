@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "4c9109b3e671d851eec87e0e72f6305b582e7e99",
+        "type": "tree",
+        "size": 169,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tfile.tx\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tfile.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tfile.txz\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tfoo\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzzz\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b0952dbb50bed5f01e03e31b296184cb183e54a7",
+        "type": "commit",
+        "size": 209,
+        "content": "tree 4c9109b3e671d851eec87e0e72f6305b582e7e99\nauthor Patrick Steinhardt <ps@pks.im> 1494574446 +0200\ncommitter Patrick Steinhardt <ps@pks.im> 1494574446 +0200\n\nAdd files to tickle index entry path compression\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "979553c8b08ef8c3d1dc8a00115558b4ba2bb9d8",
+        "tree": "7015cf066692cff6f1cc228eeb31632b73cef98a",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564852 2026-04-07 14:27:32 +0200",
+        "message": "Commit an empty file"
+    }
+]

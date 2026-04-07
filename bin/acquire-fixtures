@@ -1,0 +1,118 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Acquire upstream test fixtures from libgit2 and go-git.
+ *
+ * Downloads fixtures into scenarios/upstream/ with proper .git directories
+ * and generates scenario.json for each.
+ */
+
+$root = dirname(__DIR__);
+$upstreamDir = $root . '/scenarios/upstream';
+$libgit2Source = '/tmp/libgit2-fixtures/tests/resources';
+
+if (!is_dir($libgit2Source)) {
+    fwrite(STDERR, "libgit2 fixtures not found at {$libgit2Source}\n");
+    fwrite(STDERR, "Run: git clone --depth=1 https://github.com/libgit2/libgit2.git /tmp/libgit2-fixtures\n");
+    exit(1);
+}
+
+// Key libgit2 fixtures to import
+$libgit2Fixtures = [
+    // Core repos
+    'testrepo' => ['type' => 'gitted', 'description' => 'Main libgit2 test repo with branches, tags, and history'],
+    'empty_bare.git' => ['type' => 'bare', 'description' => 'Empty bare repository'],
+    'empty_standard_repo' => ['type' => 'gitted', 'description' => 'Empty standard repository'],
+    'duplicate.git' => ['type' => 'bare', 'description' => 'Repository with duplicate entries'],
+    // Merge/operations
+    'cherrypick' => ['type' => 'gitted', 'description' => 'Cherry-pick test cases'],
+    'revert' => ['type' => 'gitted', 'description' => 'Revert test cases'],
+    'merge-resolve' => ['type' => 'gitted', 'description' => 'Merge resolve strategy tests'],
+    'merge-recursive' => ['type' => 'gitted', 'description' => 'Recursive merge tests'],
+    // Diff and blame
+    'diff' => ['type' => 'gitted', 'description' => 'Diff test cases'],
+    'blametest.git' => ['type' => 'bare', 'description' => 'Blame test repository'],
+    'describe' => ['type' => 'gitted', 'description' => 'Git describe test cases'],
+    // Submodules
+    'submodules' => ['type' => 'gitted', 'description' => 'Repository with submodules'],
+    // Edge cases
+    'grafted.git' => ['type' => 'bare', 'description' => 'Repository with grafts'],
+    'packed-test.git' => ['type' => 'bare', 'description' => 'Packed refs test'],
+    'status' => ['type' => 'gitted', 'description' => 'Status test cases'],
+    // Special formats
+    'indexv4' => ['type' => 'gitted', 'description' => 'Index v4 format test'],
+    'deprecated-mode.git' => ['type' => 'bare', 'description' => 'Deprecated tree entry modes'],
+    'bad_tag.git' => ['type' => 'bare', 'description' => 'Repository with malformed tag'],
+];
+
+$imported = 0;
+
+foreach ($libgit2Fixtures as $name => $info) {
+    $sourcePath = $libgit2Source . '/' . $name;
+
+    if (!is_dir($sourcePath) && !is_file($sourcePath)) {
+        fwrite(STDOUT, "  SKIP  {$name} (not found)\n");
+        continue;
+    }
+
+    $safeName = str_replace('.git', '', str_replace('.', '-', $name));
+    $scenarioDir = $upstreamDir . '/libgit2/' . $safeName;
+
+    if (is_dir($scenarioDir)) {
+        fwrite(STDOUT, "  EXISTS  {$name}\n");
+        continue;
+    }
+
+    if (!is_dir($scenarioDir)) {
+        mkdir($scenarioDir, 0777, true);
+    }
+
+    // Create setup.sh that copies the fixture
+    if ($info['type'] === 'gitted') {
+        $gittedPath = $sourcePath . '/.gitted';
+
+        if (!is_dir($gittedPath)) {
+            fwrite(STDOUT, "  SKIP  {$name} (no .gitted)\n");
+            continue;
+        }
+
+        $setupContent = "#!/bin/bash\nset -e\n\n# Copy libgit2 fixture: {$name}\n"
+            . "cp -r " . escapeshellarg($gittedPath) . " .git\n"
+            . "# Checkout working tree from HEAD\n"
+            . "git checkout -- . 2>/dev/null || true\n";
+    } else {
+        // Bare repo
+        $setupContent = "#!/bin/bash\nset -e\n\n# Copy libgit2 bare fixture: {$name}\n"
+            . "git init .\n"
+            . "cp -r " . escapeshellarg($sourcePath) . "/* .git/\n"
+            . "git checkout -- . 2>/dev/null || true\n";
+    }
+
+    file_put_contents($scenarioDir . '/setup.sh', $setupContent);
+
+    // Create scenario.json
+    $scenario = [
+        'name' => 'upstream/libgit2/' . $safeName,
+        'category' => 'upstream',
+        'description' => 'libgit2: ' . $info['description'],
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => [
+            'exact_match' => [],
+            'fsck_clean' => false, // some libgit2 fixtures intentionally have quirks
+        ],
+    ];
+
+    file_put_contents(
+        $scenarioDir . '/scenario.json',
+        json_encode($scenario, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+    );
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$name}\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} libgit2 fixtures.\n");

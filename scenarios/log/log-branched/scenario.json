@@ -1,0 +1,11 @@
+{
+    "name": "log-branched",
+    "category": "log",
+    "description": "Commit history with a branch and merge, producing a non-linear graph",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

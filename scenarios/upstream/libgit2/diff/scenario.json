@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/diff",
+    "category": "upstream",
+    "description": "libgit2: Diff test cases",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

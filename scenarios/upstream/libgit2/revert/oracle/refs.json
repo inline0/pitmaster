@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "2d440f2b3147d3dc7ad1085813478d6d869d5a4d",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "5acdc74af27172ec491d213ee36cea7eb9ef2579",
+        "name": "refs/heads/merges"
+    },
+    {
+        "hash": "13ee9cd5d8e1023c218e0e1ea684ec0c582b5050",
+        "name": "refs/heads/merges-branch"
+    },
+    {
+        "hash": "52c95c4264245469a0617e289a7d737f156826b4",
+        "name": "refs/heads/reverted-branch"
+    },
+    {
+        "hash": "75ec9929465623f17ff3ad68c0438ea56faba815",
+        "name": "refs/heads/two"
+    }
+]

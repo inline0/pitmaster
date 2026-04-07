@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "464a79140fa2376f0f69d7894ed7430c3395dd21",
+        "tree": "255d53d8048ad2a042f09e657f2cffbf85298977",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775564851 2026-04-07 14:27:31 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775564851 2026-04-07 14:27:31 +0200",
+        "message": "Initial commit with two files"
+    }
+]

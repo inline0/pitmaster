@@ -1,0 +1,13 @@
+{
+    "name": "diff-delete-lines",
+    "category": "diff",
+    "description": "Diff after deleting lines from an existing file",
+    "operations": ["diff"],
+    "oracle_commands": {
+        "diff": "git diff"
+    },
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

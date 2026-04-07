@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "233f5c66952af061a3fbe0370a1c794815722a07",
+        "type": "blob",
+        "size": 26,
+        "content": "this file will be deleted\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "255d53d8048ad2a042f09e657f2cffbf85298977",
+        "type": "tree",
+        "size": 82,
+        "content": "100644 blob 233f5c66952af061a3fbe0370a1c794815722a07\tdelete-me.txt\n100644 blob 2fd01525c9757f2e4cebdbef4f0ec8ec28669ee4\tmodify-me.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2fd01525c9757f2e4cebdbef4f0ec8ec28669ee4",
+        "type": "blob",
+        "size": 17,
+        "content": "original content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "464a79140fa2376f0f69d7894ed7430c3395dd21",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 255d53d8048ad2a042f09e657f2cffbf85298977\nauthor Test User <test@pitmaster.dev> 1775564851 +0200\ncommitter Test User <test@pitmaster.dev> 1775564851 +0200\n\nInitial commit with two files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f2383152420af92751729e1c7c01ac5a62788b8",
+        "type": "blob",
+        "size": 17,
+        "content": "modified content\n",
+        "encoding": "utf-8"
+    }
+]

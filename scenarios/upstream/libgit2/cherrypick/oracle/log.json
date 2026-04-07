@@ -1,0 +1,139 @@
+[
+    {
+        "hash": "74f06b5bfec6d33d7264f73606b57a7c0b963819",
+        "tree": "bc4dd0744364d1db380a9811bd264c101065231e",
+        "parents": [],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396512394 2014-04-03 10:06:34 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396512402 2014-04-03 10:06:42 +0200",
+        "message": "Orphan commit"
+    },
+    {
+        "hash": "44cd2ed2052c9c68f9a439d208e9614dc2a55c70",
+        "tree": "20fc1a4c9d994021f43d33ab75e4252e27ca661d",
+        "parents": [
+            "cfc4f0999a8367568e049af4f72e452d40828a15"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396445881 2014-04-02 15:38:01 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396445881 2014-04-02 15:38:01 +0200",
+        "message": "Renamed file3.txt -> file.txt.renamed_on_branch"
+    },
+    {
+        "hash": "2a26c7e88b285613b302ba76712bc998863f3cbc",
+        "tree": "1cc85eb4ff0a8438fde1b14274c6f87f891b36a0",
+        "parents": [
+            "e9b63f3655b2ad80c0ff587389b5a9589a3a7110"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396445222 2014-04-02 15:27:02 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396445222 2014-04-02 15:27:02 +0200",
+        "message": "Renamed file3.txt -> file3.txt.renamed"
+    },
+    {
+        "hash": "abe4603bc7cd5b8167a267e0e2418fd2348f8cff",
+        "tree": "9cc39fca3765a2facbe31157f7d60c2602193f36",
+        "parents": [
+            "a69ef8fcbb9a2c509a7dbf4f23d257eb551d5610",
+            "e9b63f3655b2ad80c0ff587389b5a9589a3a7110"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396443854 2014-04-02 15:04:14 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396443854 2014-04-02 15:04:14 +0200",
+        "message": "Merge branch 'master' into merge-branch"
+    },
+    {
+        "hash": "a69ef8fcbb9a2c509a7dbf4f23d257eb551d5610",
+        "tree": "e6ae8889c40c77d7be02758235b5b3f7a4f2a129",
+        "parents": [
+            "cfc4f0999a8367568e049af4f72e452d40828a15"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396443853 2014-04-02 15:04:13 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396443853 2014-04-02 15:04:13 +0200",
+        "message": "Require a merge"
+    },
+    {
+        "hash": "bafbf6912c09505ac60575cd43d3f2aba3bd84d8",
+        "tree": "12905f4ea5b76f9d3fdcfe73e462201c06ae632a",
+        "parents": [
+            "d3d77487660ee3c0194ee01dc5eaf478782b1c7e"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396436842 2014-04-02 13:07:22 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396436842 2014-04-02 13:07:22 +0200",
+        "message": "Introduce conflicts"
+    },
+    {
+        "hash": "e9b63f3655b2ad80c0ff587389b5a9589a3a7110",
+        "tree": "b826e9b36e22e949ec885e7a1f3db496bbab6cd0",
+        "parents": [
+            "cfc4f0999a8367568e049af4f72e452d40828a15"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396436302 2014-04-02 12:58:22 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396436302 2014-04-02 12:58:22 +0200",
+        "message": "Change all files"
+    },
+    {
+        "hash": "d3d77487660ee3c0194ee01dc5eaf478782b1c7e",
+        "tree": "0d447a6c2528b06616cde3b209a4b4ea3dcb8d65",
+        "parents": [
+            "d0f21e17beb5b9d953b1d8349049818a4f2edd1e"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396435592 2014-04-02 12:46:32 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396435592 2014-04-02 12:46:32 +0200",
+        "message": "Automergeable changes on file3.txt"
+    },
+    {
+        "hash": "d0f21e17beb5b9d953b1d8349049818a4f2edd1e",
+        "tree": "5f77a2a13935ac62a629553f8944ad57b1ed8b4a",
+        "parents": [
+            "ced8fb81b6ec534d5deaf2a48b4b96c799712507"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396435585 2014-04-02 12:46:25 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396435585 2014-04-02 12:46:25 +0200",
+        "message": "Automergeable changes on file2.txt"
+    },
+    {
+        "hash": "ced8fb81b6ec534d5deaf2a48b4b96c799712507",
+        "tree": "f5684c96bf40c709877b56404cd8a5dd2d2a7978",
+        "parents": [
+            "35cb210149022c7379b0a67b0dec13cc628ff87d"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396435575 2014-04-02 12:46:15 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396435575 2014-04-02 12:46:15 +0200",
+        "message": "Automergeable changes on file1.txt"
+    },
+    {
+        "hash": "cfc4f0999a8367568e049af4f72e452d40828a15",
+        "tree": "828b08c52d2cba30952e0e008f60b25b5ba0d41a",
+        "parents": [
+            "964ea3da044d9083181a88ba6701de9e35778bf4"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396429801 2014-04-02 11:10:01 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396429801 2014-04-02 11:10:01 +0200",
+        "message": "Changed file3.txt on master"
+    },
+    {
+        "hash": "964ea3da044d9083181a88ba6701de9e35778bf4",
+        "tree": "8b5c30499a71001189b647f4d5b57fa8f04897ce",
+        "parents": [
+            "a43a050c588d4e92f11a6b139680923e9728477d"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396429783 2014-04-02 11:09:43 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396429783 2014-04-02 11:09:43 +0200",
+        "message": "Changed file2.txt on master"
+    },
+    {
+        "hash": "a43a050c588d4e92f11a6b139680923e9728477d",
+        "tree": "bda51965cb36c0c5731c8cb50b80a36cac81018e",
+        "parents": [
+            "35cb210149022c7379b0a67b0dec13cc628ff87d"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396429762 2014-04-02 11:09:22 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396429762 2014-04-02 11:09:22 +0200",
+        "message": "Changed file1.txt on master"
+    },
+    {
+        "hash": "35cb210149022c7379b0a67b0dec13cc628ff87d",
+        "tree": "e7811a2bc55635f182750f0420da5ad232c1af91",
+        "parents": [],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1396429317 2014-04-02 11:01:57 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1396429317 2014-04-02 11:01:57 +0200",
+        "message": "Initial commit"
+    }
+]

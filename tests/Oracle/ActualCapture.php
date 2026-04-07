@@ -105,11 +105,15 @@ final class ActualCapture
                     default => $object->content,
                 };
 
+                $isBinary = !mb_check_encoding($content, 'UTF-8')
+                    || str_contains(substr($content, 0, 8192), "\0");
+
                 $objects[] = [
                     'hash' => $hash,
                     'type' => $object->type->value,
                     'size' => $object->size(),
-                    'content' => $content,
+                    'content' => $isBinary ? base64_encode($content) : $content,
+                    'encoding' => $isBinary ? 'base64' : 'utf-8',
                 ];
             } catch (\Throwable $e) {
                 $objects[] = [
@@ -163,9 +167,30 @@ final class ActualCapture
      */
     private function captureLog(\Pitmaster\Repository $repo): array
     {
+        // Walk from ALL ref tips (like git log --all)
+        $tips = [];
+
+        foreach ($repo->allRefs() as $name => $hash) {
+            $tips[] = \Pitmaster\Object\ObjectId::fromHex($hash);
+        }
+
+        // Also include HEAD
+        $headId = $repo->refDatabase()->resolveHead();
+
+        if ($headId !== null) {
+            $tips[] = $headId;
+        }
+
+        if ($tips === []) {
+            return [];
+        }
+
+        $walker = new \Pitmaster\Graph\CommitWalker($repo->objectDatabase());
+        $allCommits = $walker->walkAll($tips, 1000);
+
         $commits = [];
 
-        foreach ($repo->log(1000) as $commit) {
+        foreach ($allCommits as $commit) {
             $parents = array_map(
                 static fn ($p) => $p->hex,
                 $commit->parents,

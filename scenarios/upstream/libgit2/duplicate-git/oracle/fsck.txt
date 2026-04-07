@@ -1,0 +1,6 @@
+error: refs/heads/dummy-marker.txt: badRefContent: dummy
+error: refs/heads/dummy-marker.txt: invalid sha1 pointer 0000000000000000000000000000000000000000
+dangling commit a28d237d8f18005a5526d48a216ea1c9dacc1b3d
+dangling blob 038d718da6a1ebbc6a7780a96ed75a70cc2ad6e2
+dangling blob 0ddeadede9e6d6ccddce0ee1e5749eed0485e5ea
+dangling commit dbfbc717472f4362746f4ea3f6e8e73197b091d3

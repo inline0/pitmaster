@@ -1,0 +1,11 @@
+{
+    "name": "blob-empty",
+    "category": "objects",
+    "description": "Empty file committed as an empty blob object",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,11 @@
+diff --git a/file.txt b/file.txt
+index 7a4a73a..29093ce 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1,4 +1,4 @@
+ first line
+-second line
++modified second line
+ third line
+-fourth line
++modified fourth line

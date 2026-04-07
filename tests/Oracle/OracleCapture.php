@@ -161,11 +161,16 @@ final class OracleCapture
 
             $contentOutput = shell_exec($contentCommand) ?? '';
 
+            // Base64-encode binary content so JSON can handle it
+            $isBinary = !mb_check_encoding($contentOutput, 'UTF-8')
+                || str_contains(substr($contentOutput, 0, 8192), "\0");
+
             $objects[] = [
                 'hash' => $hash,
                 'type' => $type,
                 'size' => (int) $size,
-                'content' => $contentOutput,
+                'content' => $isBinary ? base64_encode($contentOutput) : $contentOutput,
+                'encoding' => $isBinary ? 'base64' : 'utf-8',
             ];
         }
 

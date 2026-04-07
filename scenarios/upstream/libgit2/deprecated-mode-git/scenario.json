@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/deprecated-mode-git",
+    "category": "upstream",
+    "description": "libgit2: Deprecated tree entry modes",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

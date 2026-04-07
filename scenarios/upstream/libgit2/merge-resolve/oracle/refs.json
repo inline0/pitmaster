@@ -1,0 +1,214 @@
+[
+    {
+        "hash": "7cb63eed597130ba4abb87b3e544b85021905520",
+        "name": "refs/heads/branch"
+    },
+    {
+        "hash": "50c5dc8cdfe40c688eb0a0e23be54dd57cae2e78",
+        "name": "refs/heads/delete-submodule"
+    },
+    {
+        "hash": "2da538570bc1e5b2c3e855bf702f35248ad0735f",
+        "name": "refs/heads/df_ancestor"
+    },
+    {
+        "hash": "a7dbfcbfc1a60709cb80b5ca24539008456531d0",
+        "name": "refs/heads/df_side1"
+    },
+    {
+        "hash": "fc90237dc4891fa6c69827fc465632225e391618",
+        "name": "refs/heads/df_side2"
+    },
+    {
+        "hash": "ea789495e0a72efadcd0f86a48f4c9ed435bb8a3",
+        "name": "refs/heads/emptyfile_renames"
+    },
+    {
+        "hash": "ab347abd8cda4a0e3b8bb42bb620c0c72c7df779",
+        "name": "refs/heads/emptyfile_renames-branch"
+    },
+    {
+        "hash": "fd89f8cffb663ac89095a0f9764902e93ceaca6a",
+        "name": "refs/heads/ff_branch"
+    },
+    {
+        "hash": "bd593285fc7fe4ca18ccdbabf027f5d689101452",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "16f825815cfd20a07a75c71554e82d8eede0b061",
+        "name": "refs/heads/octo1"
+    },
+    {
+        "hash": "158dc7bedb202f5b26502bf3574faa7f4238d56c",
+        "name": "refs/heads/octo2"
+    },
+    {
+        "hash": "50ce7d7d01217679e26c55939eef119e0c93e272",
+        "name": "refs/heads/octo3"
+    },
+    {
+        "hash": "54269b3f6ec3d7d4ede24dd350dd5d605495c3ae",
+        "name": "refs/heads/octo4"
+    },
+    {
+        "hash": "e4f618a2c3ed0669308735727df5ebf2447f022f",
+        "name": "refs/heads/octo5"
+    },
+    {
+        "hash": "b6f610aef53bd343e6c96227de874c66f00ee8e8",
+        "name": "refs/heads/octo6"
+    },
+    {
+        "hash": "c607fc30883e335def28cd686b51f6cfa02b06ec",
+        "name": "refs/heads/previous"
+    },
+    {
+        "hash": "2392a2dacc9efb562b8635d6579fb458751c7c5b",
+        "name": "refs/heads/rename_conflict_ancestor"
+    },
+    {
+        "hash": "34bfafff88eaf118402b44e6f3e2dbbf1a582b05",
+        "name": "refs/heads/rename_conflict_ours"
+    },
+    {
+        "hash": "a802e06f1782a9645b9851bc7202cee74a8a4972",
+        "name": "refs/heads/rename_conflict_theirs"
+    },
+    {
+        "hash": "412b32fb66137366147f1801ecc962452757d48a",
+        "name": "refs/heads/renames1"
+    },
+    {
+        "hash": "ab40af3cb8a3ed2e2843e96d9aa7871336b94573",
+        "name": "refs/heads/renames2"
+    },
+    {
+        "hash": "f97da95f156121bea8f978623628f4cbdbf30b36",
+        "name": "refs/heads/submodule_rename1"
+    },
+    {
+        "hash": "37f53a5a14f64e91089a39ea58e71c87d81df765",
+        "name": "refs/heads/submodule_rename2"
+    },
+    {
+        "hash": "d8dec75ff2f8b41d1c5bfef0cd57b7300c834f66",
+        "name": "refs/heads/submodules"
+    },
+    {
+        "hash": "811c70fcb6d5bbd022d04cc31836d30b436f9551",
+        "name": "refs/heads/submodules-branch"
+    },
+    {
+        "hash": "7c04ca611203ed320c5f495b9813054dd23be3be",
+        "name": "refs/heads/submodules-branch2"
+    },
+    {
+        "hash": "0ec5f433959cd46177f745903353efb5be08d151",
+        "name": "refs/heads/trivial-10"
+    },
+    {
+        "hash": "11f4f3c08b737f5fd896cbefa1425ee63b21b2fa",
+        "name": "refs/heads/trivial-10-branch"
+    },
+    {
+        "hash": "3168dca1a561889b045a6441909f4c56145e666d",
+        "name": "refs/heads/trivial-11"
+    },
+    {
+        "hash": "6718a45909532d1fcf5600d0877f7fe7e78f0b86",
+        "name": "refs/heads/trivial-11-branch"
+    },
+    {
+        "hash": "a3fabece9eb8748da810e1e08266fef9b7136ad4",
+        "name": "refs/heads/trivial-13"
+    },
+    {
+        "hash": "05f3c1a2a56ca95c3d2ef28dc9ddf32b5cd6c91c",
+        "name": "refs/heads/trivial-13-branch"
+    },
+    {
+        "hash": "7e2d058d5fedf8329db44db4fac610d6b1a89159",
+        "name": "refs/heads/trivial-14"
+    },
+    {
+        "hash": "8187117062b750eed4f93fd7e899f17b52ce554d",
+        "name": "refs/heads/trivial-14-branch"
+    },
+    {
+        "hash": "566ab53c220a2eafc1212af1a024513230280ab9",
+        "name": "refs/heads/trivial-2alt"
+    },
+    {
+        "hash": "c9174cef549ec94ecbc43ef03cdc775b4950becb",
+        "name": "refs/heads/trivial-2alt-branch"
+    },
+    {
+        "hash": "4c9fac0707f8d4195037ae5a681aa48626491541",
+        "name": "refs/heads/trivial-3alt"
+    },
+    {
+        "hash": "c607fc30883e335def28cd686b51f6cfa02b06ec",
+        "name": "refs/heads/trivial-3alt-branch"
+    },
+    {
+        "hash": "cc3e3009134cb88014129fc8858d1101359e5e2f",
+        "name": "refs/heads/trivial-4"
+    },
+    {
+        "hash": "183310e30fb1499af8c619108ffea4d300b5e778",
+        "name": "refs/heads/trivial-4-branch"
+    },
+    {
+        "hash": "4fe93c0ec83eb6305cbace3dace88ecee1b63cb6",
+        "name": "refs/heads/trivial-5alt-1"
+    },
+    {
+        "hash": "478172cb2f5ff9b514bc9d04d3bd5ef5840cb3b2",
+        "name": "refs/heads/trivial-5alt-1-branch"
+    },
+    {
+        "hash": "3b47b031b3e55ae11e14a05260b1c3ffd6838d55",
+        "name": "refs/heads/trivial-5alt-2"
+    },
+    {
+        "hash": "f48097eb340dc5a7cae55aabcf1faf4548aa821f",
+        "name": "refs/heads/trivial-5alt-2-branch"
+    },
+    {
+        "hash": "99b4f7e4f24470fa06b980bc21f1095c2a9425c0",
+        "name": "refs/heads/trivial-6"
+    },
+    {
+        "hash": "a43150a738849c59376cf30bb2a68348a83c8f48",
+        "name": "refs/heads/trivial-6-branch"
+    },
+    {
+        "hash": "d874671ef5b20184836cb983bb273e5280384d0b",
+        "name": "refs/heads/trivial-7"
+    },
+    {
+        "hash": "5195a1b480f66691b667f10a9e41e70115a78351",
+        "name": "refs/heads/trivial-7-branch"
+    },
+    {
+        "hash": "3575826c96a975031d2c14368529cc5c4353a8fd",
+        "name": "refs/heads/trivial-8"
+    },
+    {
+        "hash": "52d8bc572af2b6d4ee0d5e62ed5d1fbad92210a9",
+        "name": "refs/heads/trivial-8-branch"
+    },
+    {
+        "hash": "c35dee9bcc0e989f3b0c40f68372a9a51b6c4e6a",
+        "name": "refs/heads/trivial-9"
+    },
+    {
+        "hash": "13d1be4ea52a6ced1d7a1d832f0ee3c399348e5e",
+        "name": "refs/heads/trivial-9-branch"
+    },
+    {
+        "hash": "55b4e4687e7a0d9ca367016ed930f385d4022e6f",
+        "name": "refs/heads/unrelated"
+    }
+]

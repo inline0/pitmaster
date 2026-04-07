@@ -1,0 +1,11 @@
+{
+    "name": "merge-clean",
+    "category": "merge",
+    "description": "Two branches modify different parts of the same file, allowing a clean merge",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}
