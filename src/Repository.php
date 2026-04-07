@@ -35,32 +35,86 @@ use Pitmaster\Storage\ObjectDatabase;
 
 /**
  * Repository handle. Wraps a .git directory and provides all operations.
+ *
+ * Supports both regular repos (.git is a directory) and linked worktrees
+ * (.git is a file containing "gitdir: <path>"). For linked worktrees,
+ * shared resources (objects, packed-refs, config) come from the common
+ * git dir, while per-worktree resources (HEAD, index) come from the
+ * worktree-specific git dir.
  */
 final class Repository
 {
     private readonly ObjectDatabase $objects;
     private readonly RefDatabase $refs;
     private readonly GitConfig $config;
+
+    /** Per-worktree git dir (may be .git/worktrees/<name> for linked worktrees) */
     private readonly string $gitDir;
+
+    /** Common git dir (shared objects, config, packed-refs) */
+    private readonly string $commonDir;
+
+    /** Working tree root */
     private readonly string $workDir;
+
+    /** Whether this is a linked worktree */
+    private readonly bool $isLinkedWorktree;
 
     public function __construct(string $path)
     {
-        // Accept either the repo root or the .git directory itself
         if (is_dir($path . '/.git')) {
+            // Regular repo: .git is a directory
             $this->workDir = $path;
             $this->gitDir = $path . '/.git';
+            $this->commonDir = $this->gitDir;
+            $this->isLinkedWorktree = false;
+        } elseif (is_file($path . '/.git')) {
+            // Linked worktree: .git is a file with "gitdir: <path>"
+            $content = trim((string) file_get_contents($path . '/.git'));
+
+            if (!str_starts_with($content, 'gitdir: ')) {
+                throw new \InvalidArgumentException("Invalid .git file at {$path}");
+            }
+
+            $gitdir = substr($content, 8);
+
+            // Resolve relative path
+            if (!str_starts_with($gitdir, '/')) {
+                $gitdir = $path . '/' . $gitdir;
+            }
+
+            $this->workDir = $path;
+            $this->gitDir = realpath($gitdir) ?: $gitdir;
+            $this->isLinkedWorktree = true;
+
+            // Resolve common dir from the worktree metadata
+            $commonDirFile = $this->gitDir . '/commondir';
+
+            if (is_file($commonDirFile)) {
+                $rel = trim((string) file_get_contents($commonDirFile));
+                $resolved = realpath($this->gitDir . '/' . $rel);
+                $this->commonDir = $resolved ?: ($this->gitDir . '/' . $rel);
+            } else {
+                // Fall back: assume parent of worktrees/<name> is the common dir
+                $this->commonDir = dirname($this->gitDir, 2);
+            }
         } elseif (is_file($path . '/HEAD')) {
             // Bare repo or .git directory passed directly
             $this->workDir = dirname($path);
             $this->gitDir = $path;
+            $this->commonDir = $path;
+            $this->isLinkedWorktree = false;
         } else {
             throw new \InvalidArgumentException("Not a git repository: {$path}");
         }
 
-        $this->objects = new ObjectDatabase($this->gitDir . '/objects');
-        $this->refs = new RefDatabase($this->gitDir);
-        $this->config = GitConfig::fromFile($this->gitDir . '/config');
+        // Objects and config come from common dir (shared)
+        $this->objects = new ObjectDatabase($this->commonDir . '/objects');
+        $this->config = GitConfig::fromFile($this->commonDir . '/config');
+
+        // Refs use per-worktree gitDir for HEAD + loose refs,
+        // but common dir for packed-refs
+        $this->refs = new RefDatabase($this->gitDir, $this->commonDir);
     }
 
     public function gitDir(): string
@@ -68,9 +122,160 @@ final class Repository
         return $this->gitDir;
     }
 
+    /**
+     * The common git directory (shared objects, config, packed-refs).
+     * Same as gitDir() for regular repos. Different for linked worktrees.
+     */
+    public function commonGitDir(): string
+    {
+        return $this->commonDir;
+    }
+
     public function workDir(): string
     {
         return $this->workDir;
+    }
+
+    public function isLinkedWorktree(): bool
+    {
+        return $this->isLinkedWorktree;
+    }
+
+    // -- Default branch --
+
+    /**
+     * Resolve the repository's default/stable branch.
+     *
+     * Checks: remote HEAD symref -> local HEAD -> fallback to main/master.
+     */
+    public function defaultBranch(): string
+    {
+        // Check remote HEAD if we have an origin
+        $remoteUrl = $this->config->get('remote.origin.url');
+
+        if ($remoteUrl !== null) {
+            try {
+                $http = new SmartHttpClient();
+                $discovery = $http->discoverRefs($remoteUrl);
+                $symref = $discovery->headSymref();
+
+                if ($symref !== null && str_starts_with($symref, 'refs/heads/')) {
+                    return substr($symref, 11);
+                }
+            } catch (\Throwable) {
+                // Network unavailable, fall through
+            }
+        }
+
+        // Check local HEAD
+        $head = $this->refs->readHead();
+
+        if ($head !== null && str_starts_with($head->target, 'refs/heads/')) {
+            return substr($head->target, 11);
+        }
+
+        // Fallback: check which of main/master exists
+        if ($this->refs->resolve('refs/heads/main') !== null) {
+            return 'main';
+        }
+
+        if ($this->refs->resolve('refs/heads/master') !== null) {
+            return 'master';
+        }
+
+        return 'main';
+    }
+
+    /**
+     * Check if a branch is fully merged into another branch.
+     */
+    public function isBranchMerged(string $branch, ?string $target = null): bool
+    {
+        $target = $target ?? $this->defaultBranch();
+
+        $branchId = $this->refs->resolve("refs/heads/{$branch}");
+        $targetId = $this->refs->resolve("refs/heads/{$target}");
+
+        if ($branchId === null || $targetId === null) {
+            return false;
+        }
+
+        // Branch is merged if it's an ancestor of target
+        $mergeBase = new MergeBase($this->objects);
+
+        return $mergeBase->isAncestor($branchId, $targetId);
+    }
+
+    // -- Worktree lifecycle --
+
+    /**
+     * Add a linked worktree with a full checkout.
+     *
+     * @return \Pitmaster\Worktree\Worktree
+     */
+    public function addWorktree(string $path, string $branch, ?ObjectId $from = null): \Pitmaster\Worktree\Worktree
+    {
+        $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
+
+        // Ensure the branch exists
+        if ($this->refs->resolve("refs/heads/{$branch}") === null) {
+            $target = $from ?? $this->refs->resolveHead();
+
+            if ($target !== null) {
+                $this->refs->update("refs/heads/{$branch}", $target);
+            }
+        }
+
+        $wt = $manager->add($path, $branch);
+
+        // Materialize the working tree files
+        $branchId = $this->refs->resolve("refs/heads/{$branch}");
+
+        if ($branchId !== null) {
+            $commit = $this->objects->read($branchId);
+
+            if ($commit instanceof Commit) {
+                $this->checkoutTree($commit->tree, $path);
+
+                // Write index for the worktree
+                $treeMap = $this->flattenTree($commit->tree);
+                $index = new Index();
+
+                foreach ($treeMap as $filePath => $hash) {
+                    $fullPath = $path . '/' . $filePath;
+
+                    if (is_file($fullPath)) {
+                        $entry = IndexEntry::fromStat($filePath, ObjectId::fromHex($hash), $fullPath);
+                        $index->addEntry($entry);
+                    }
+                }
+
+                IndexWriter::write($index, $wt->gitDir . '/index');
+            }
+        }
+
+        return $wt;
+    }
+
+    /**
+     * Remove a linked worktree.
+     */
+    public function removeWorktree(string $pathOrName, bool $force = false): void
+    {
+        $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
+        $manager->remove(basename($pathOrName), $force);
+    }
+
+    /**
+     * List all worktrees.
+     *
+     * @return array<int, \Pitmaster\Worktree\Worktree>
+     */
+    public function worktrees(): array
+    {
+        $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
+
+        return $manager->list();
     }
 
     // -- Objects --
@@ -1307,5 +1512,30 @@ final class Repository
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /**
+     * Checkout files from a tree into a directory.
+     */
+    private function checkoutTree(ObjectId $treeId, string $targetDir): void
+    {
+        $treeMap = $this->flattenTree($treeId);
+
+        foreach ($treeMap as $path => $hash) {
+            $blob = $this->objects->read(ObjectId::fromHex($hash));
+
+            if (!$blob instanceof Blob) {
+                continue;
+            }
+
+            $fullPath = $targetDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $blob->content);
+        }
     }
 }

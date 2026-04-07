@@ -16,10 +16,18 @@ final class RefDatabase implements RefStore
     private readonly LooseRefStore $loose;
     private readonly PackedRefStore $packed;
 
-    public function __construct(string $gitDir)
+    /**
+     * @param string $gitDir Per-worktree git dir (HEAD, loose refs)
+     * @param string|null $commonDir Common git dir for packed-refs and shared refs (null = same as gitDir)
+     */
+    public function __construct(string $gitDir, ?string $commonDir = null)
     {
-        $this->loose = new LooseRefStore($gitDir);
-        $this->packed = new PackedRefStore($gitDir);
+        $commonDir = $commonDir ?? $gitDir;
+
+        // HEAD and per-worktree refs from gitDir
+        $this->loose = new LooseRefStore($gitDir, $commonDir);
+        // packed-refs from common dir
+        $this->packed = new PackedRefStore($commonDir);
     }
 
     public function resolve(string $name): ?ObjectId

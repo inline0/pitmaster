@@ -25,6 +25,7 @@ final class ReflogTest extends TestCase
         $this->git('init');
         $this->git('config user.email test@pitmaster.dev');
         $this->git('config user.name "Test User"');
+        $this->git('config core.logAllRefUpdates true');
 
         // Create 3 commits so the reflog has entries
         $this->writeFile('a.txt', "first\n");

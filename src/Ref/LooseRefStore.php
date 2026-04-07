@@ -14,8 +14,17 @@ use Pitmaster\Object\ObjectId;
  */
 final class LooseRefStore implements RefStore
 {
-    public function __construct(private readonly string $gitDir)
-    {
+    private readonly string $commonDir;
+
+    /**
+     * @param string $gitDir Per-worktree git dir (HEAD lives here)
+     * @param string|null $commonDir Common dir for shared refs/ (null = same as gitDir)
+     */
+    public function __construct(
+        private readonly string $gitDir,
+        ?string $commonDir = null,
+    ) {
+        $this->commonDir = $commonDir ?? $gitDir;
     }
 
     public function resolve(string $name, int $depth = 0): ?ObjectId
@@ -58,9 +67,18 @@ final class LooseRefStore implements RefStore
     public function list(): array
     {
         $refs = [];
+
+        // Scan common dir refs first, then per-worktree refs override
+        $commonRefsDir = $this->commonDir . '/refs';
+
+        if (is_dir($commonRefsDir)) {
+            $this->scanRefsDir($commonRefsDir, 'refs', $refs);
+        }
+
+        // Per-worktree refs (if different from common)
         $refsDir = $this->gitDir . '/refs';
 
-        if (is_dir($refsDir)) {
+        if ($refsDir !== $commonRefsDir && is_dir($refsDir)) {
             $this->scanRefsDir($refsDir, 'refs', $refs);
         }
 
@@ -146,7 +164,22 @@ final class LooseRefStore implements RefStore
 
     private function refPath(string $name): string
     {
-        return $this->gitDir . '/' . $name;
+        // HEAD and per-worktree refs live in gitDir
+        // Shared refs (refs/heads, refs/tags, etc.) live in commonDir
+        if ($name === 'HEAD' || $name === 'MERGE_HEAD' || $name === 'CHERRY_PICK_HEAD'
+            || $name === 'REVERT_HEAD' || $name === 'BISECT_HEAD'
+        ) {
+            return $this->gitDir . '/' . $name;
+        }
+
+        // Try per-worktree first, then common
+        $perWorktree = $this->gitDir . '/' . $name;
+
+        if (is_file($perWorktree)) {
+            return $perWorktree;
+        }
+
+        return $this->commonDir . '/' . $name;
     }
 
     /**

@@ -115,6 +115,14 @@ final class Pitmaster
             }
         }
 
+        // Index the pack so Pitmaster can read it
+        if ($packData !== '' && str_starts_with($packData, 'PACK')) {
+            $idxPackDir = $gitDir . '/objects/pack';
+            $idxHash = sha1($packData);
+            $packFile = $idxPackDir . "/pack-{$idxHash}.pack";
+            exec(sprintf('git index-pack %s 2>/dev/null', escapeshellarg($packFile)));
+        }
+
         // Set HEAD to default branch
         $headRef = $discovery->headSymref() ?? 'refs/heads/main';
         $headId = $discovery->ref($headRef) ?? $discovery->ref('HEAD');
@@ -126,6 +134,96 @@ final class Pitmaster
             }
         }
 
+        // Materialize working tree: checkout HEAD into the work dir
+        $repo = self::open($path); // Re-open to pick up pack index
+
+        try {
+            $head = $repo->head();
+            $treeMap = self::flattenTreeStatic($repo, $head->tree);
+
+            foreach ($treeMap as $filePath => $blobHash) {
+                $blob = $repo->readObject($blobHash);
+
+                if ($blob instanceof \Pitmaster\Object\Blob) {
+                    $fullPath = $path . '/' . $filePath;
+                    $dir = dirname($fullPath);
+
+                    if (!is_dir($dir)) {
+                        mkdir($dir, 0777, true);
+                    }
+
+                    file_put_contents($fullPath, $blob->content);
+                }
+            }
+        } catch (\Throwable) {
+            // Clone succeeded but checkout failed; repo is still valid
+        }
+
         return $repo;
+    }
+
+    // -- Detection helpers --
+
+    /**
+     * Check if a path is a git repository (regular or linked worktree).
+     */
+    public static function isRepository(string $path): bool
+    {
+        return is_dir($path . '/.git')
+            || is_file($path . '/.git')
+            || is_file($path . '/HEAD');
+    }
+
+    /**
+     * Check if a path is a linked worktree (not the main repo).
+     */
+    public static function isWorktree(string $path): bool
+    {
+        if (!is_file($path . '/.git')) {
+            return false;
+        }
+
+        $content = trim((string) file_get_contents($path . '/.git'));
+
+        return str_starts_with($content, 'gitdir: ');
+    }
+
+    /**
+     * Resolve the common git dir from any checkout path.
+     */
+    public static function commonGitDir(string $path): ?string
+    {
+        try {
+            $repo = new Repository($path);
+
+            return $repo->commonGitDir();
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * @return array<string, string> path => hex hash
+     */
+    private static function flattenTreeStatic(Repository $repo, \Pitmaster\Object\ObjectId $treeId, string $prefix = ''): array
+    {
+        $result = [];
+        $tree = $repo->readObject($treeId->hex);
+
+        if (!$tree instanceof \Pitmaster\Object\Tree) {
+            return $result;
+        }
+
+        foreach ($tree->entries as $entry) {
+            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
+
+            if ($entry->isTree()) {
+                $result = array_merge($result, self::flattenTreeStatic($repo, $entry->hash, $fullPath));
+            } else {
+                $result[$fullPath] = $entry->hash->hex;
+            }
+        }
+
+        return $result;
     }
 }
