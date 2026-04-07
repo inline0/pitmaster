@@ -28,8 +28,15 @@ final readonly class Hunk
     /**
      * Format as unified diff hunk header.
      */
+    /**
+     * Format as unified diff hunk header.
+     * Git omits the count when it equals 1.
+     */
     public function header(): string
     {
-        return "@@ -{$this->oldStart},{$this->oldCount} +{$this->newStart},{$this->newCount} @@";
+        $old = $this->oldCount === 1 ? "-{$this->oldStart}" : "-{$this->oldStart},{$this->oldCount}";
+        $new = $this->newCount === 1 ? "+{$this->newStart}" : "+{$this->newStart},{$this->newCount}";
+
+        return "@@ {$old} {$new} @@";
     }
 }

@@ -143,21 +143,16 @@ final class WorkingTreeStatus
             return true;
         }
 
-        // Quick check: size
+        // Quick check: size mismatch means definitely changed
         $size = filesize($fullPath);
 
         if ($size !== false && $size !== $entry->fileSize) {
             return true;
         }
 
-        // Quick check: mtime
-        $mtime = filemtime($fullPath);
-
-        if ($mtime !== false && $mtime === $entry->mtimeSec && $size === $entry->fileSize) {
-            return false;
-        }
-
-        // Full check: hash content
+        // Always verify by hashing content. The mtime-based shortcut is unreliable
+        // when writes happen in the same second (racily clean entries). Git handles
+        // this with smudge/clean filters and nanosecond timestamps; we just hash.
         $content = file_get_contents($fullPath);
 
         if ($content === false) {
