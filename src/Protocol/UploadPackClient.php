@@ -72,17 +72,12 @@ final class UploadPackClient
      */
     private function extractPackData(string $response): string
     {
-        // Look for PACK signature
-        $packPos = strpos($response, 'PACK');
-
-        if ($packPos !== false) {
-            return substr($response, $packPos);
-        }
-
-        // Try decoding pkt-lines and extracting side-band data
+        // Always try side-band parsing first (GitHub and most servers use this).
+        // Side-band pkt-line format: length + channel byte + data
         $packData = '';
         $offset = 0;
         $length = strlen($response);
+        $hasSideBand = false;
 
         while ($offset < $length) {
             if ($offset + 4 > $length) {
@@ -98,7 +93,7 @@ final class UploadPackClient
 
             $lineLen = (int) hexdec($hexLen);
 
-            if ($lineLen < 5) {
+            if ($lineLen < 4) {
                 $offset += 4;
                 continue;
             }
@@ -110,22 +105,27 @@ final class UploadPackClient
             }
 
             $payload = substr($response, $offset + 4, $payloadLen);
-            $channel = ord($payload[0]);
 
-            if ($channel === 1) {
-                // Pack data channel
-                $packData .= substr($payload, 1);
+            if ($payloadLen >= 1) {
+                $channel = ord($payload[0]);
+
+                if ($channel === 1) {
+                    $packData .= substr($payload, 1);
+                    $hasSideBand = true;
+                } elseif ($channel === 2 || $channel === 3) {
+                    $hasSideBand = true;
+                }
+                // Other channels: NAK/ACK lines (not side-band)
             }
-            // Channel 2 = progress (ignore), Channel 3 = error
 
             $offset += $lineLen;
         }
 
-        if ($packData !== '' && str_starts_with($packData, 'PACK')) {
+        if ($hasSideBand && $packData !== '' && str_starts_with($packData, 'PACK')) {
             return $packData;
         }
 
-        // Last resort: return everything after any NAK/ACK line
+        // No side-band: look for raw PACK data after NAK line
         $nakPos = strpos($response, "NAK\n");
 
         if ($nakPos !== false) {
@@ -135,6 +135,13 @@ final class UploadPackClient
             if ($packStart !== false) {
                 return substr($afterNak, $packStart);
             }
+        }
+
+        // Last resort: find PACK anywhere
+        $packPos = strpos($response, 'PACK');
+
+        if ($packPos !== false) {
+            return substr($response, $packPos);
         }
 
         return $response;

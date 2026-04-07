@@ -8,7 +8,7 @@ namespace Pitmaster\Diff;
  * Myers diff algorithm (line-level).
  *
  * Produces a minimal edit script between two sequences of lines.
- * This is the same algorithm git uses by default.
+ * Uses the standard LCS-based approach for correctness.
  */
 final class MyersDiff
 {
@@ -25,178 +25,162 @@ final class MyersDiff
             return [];
         }
 
+        // Split into lines. Remove trailing empty element from trailing newline,
+        // since git diff operates on lines terminated by \n, not separated by \n.
         $oldLines = $old !== '' ? explode("\n", $old) : [];
         $newLines = $new !== '' ? explode("\n", $new) : [];
 
-        $editScript = self::computeEditScript($oldLines, $newLines);
+        if ($oldLines !== [] && end($oldLines) === '') {
+            array_pop($oldLines);
+        }
 
-        return self::editScriptToHunks($editScript, $oldLines, $newLines, $context);
+        if ($newLines !== [] && end($newLines) === '') {
+            array_pop($newLines);
+        }
+
+        $lcs = self::lcs($oldLines, $newLines);
+
+        return self::lcsToHunks($oldLines, $newLines, $lcs, $context);
     }
 
     /**
-     * Compute the edit script using Myers algorithm.
-     *
-     * Returns array of ['type' => 'equal'|'delete'|'insert', 'old' => int, 'new' => int]
+     * Compute longest common subsequence using DP.
      *
      * @param array<int, string> $a
      * @param array<int, string> $b
-     * @return array<int, array{type: string, oldIdx: int, newIdx: int}>
+     * @return array<int, array{oldIdx: int, newIdx: int}>
      */
-    private static function computeEditScript(array $a, array $b): array
+    private static function lcs(array $a, array $b): array
     {
         $n = count($a);
         $m = count($b);
-        $max = $n + $m;
 
-        if ($max === 0) {
-            return [];
+        // DP table
+        $dp = [];
+
+        for ($i = 0; $i <= $n; $i++) {
+            $dp[$i] = array_fill(0, $m + 1, 0);
         }
 
-        // V array: maps diagonal k to farthest reaching x
-        $v = array_fill(-$max, 2 * $max + 1, 0);
-        $v[1] = 0;
-        $trace = [];
-
-        for ($d = 0; $d <= $max; $d++) {
-            $trace[$d] = $v;
-
-            for ($k = -$d; $k <= $d; $k += 2) {
-                if ($k === -$d || ($k !== $d && $v[$k - 1] < $v[$k + 1])) {
-                    $x = $v[$k + 1];
+        for ($i = 1; $i <= $n; $i++) {
+            for ($j = 1; $j <= $m; $j++) {
+                if ($a[$i - 1] === $b[$j - 1]) {
+                    $dp[$i][$j] = $dp[$i - 1][$j - 1] + 1;
                 } else {
-                    $x = $v[$k - 1] + 1;
-                }
-
-                $y = $x - $k;
-
-                // Follow diagonal (equal lines)
-                while ($x < $n && $y < $m && $a[$x] === $b[$y]) {
-                    $x++;
-                    $y++;
-                }
-
-                $v[$k] = $x;
-
-                if ($x >= $n && $y >= $m) {
-                    return self::backtrace($trace, $a, $b, $d);
+                    $dp[$i][$j] = max($dp[$i - 1][$j], $dp[$i][$j - 1]);
                 }
             }
         }
 
-        return [];
+        // Backtrace to find the LCS indices
+        $result = [];
+        $i = $n;
+        $j = $m;
+
+        while ($i > 0 && $j > 0) {
+            if ($a[$i - 1] === $b[$j - 1]) {
+                array_unshift($result, ['oldIdx' => $i - 1, 'newIdx' => $j - 1]);
+                $i--;
+                $j--;
+            } elseif ($dp[$i - 1][$j] >= $dp[$i][$j - 1]) {
+                $i--;
+            } else {
+                $j--;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Backtrace through the edit graph to produce operations.
+     * Convert LCS to hunks by finding the gaps (edits).
      *
-     * @param array<int, array<int, int>> $trace
-     * @param array<int, string> $a
-     * @param array<int, string> $b
-     * @return array<int, array{type: string, oldIdx: int, newIdx: int}>
-     */
-    private static function backtrace(array $trace, array $a, array $b, int $d): array
-    {
-        $ops = [];
-        $x = count($a);
-        $y = count($b);
-
-        for ($step = $d; $step > 0; $step--) {
-            $v = $trace[$step - 1];
-            $k = $x - $y;
-
-            if ($k === -$step || ($k !== $step && $v[$k - 1] < $v[$k + 1])) {
-                $prevK = $k + 1;
-            } else {
-                $prevK = $k - 1;
-            }
-
-            $prevX = $v[$prevK];
-            $prevY = $prevX - $prevK;
-
-            // Diagonal moves (equal)
-            while ($x > $prevX + ($prevK !== $k ? 0 : 1) && $y > $prevY + ($prevK !== $k ? 1 : 0)) {
-                $x--;
-                $y--;
-                array_unshift($ops, ['type' => 'equal', 'oldIdx' => $x, 'newIdx' => $y]);
-            }
-
-            if ($prevK === $k + 1) {
-                // Insert
-                $y--;
-                array_unshift($ops, ['type' => 'insert', 'oldIdx' => $x, 'newIdx' => $y]);
-            } else {
-                // Delete
-                $x--;
-                array_unshift($ops, ['type' => 'delete', 'oldIdx' => $x, 'newIdx' => $y]);
-            }
-        }
-
-        // Remaining diagonal
-        while ($x > 0 && $y > 0) {
-            $x--;
-            $y--;
-            array_unshift($ops, ['type' => 'equal', 'oldIdx' => $x, 'newIdx' => $y]);
-        }
-
-        return $ops;
-    }
-
-    /**
-     * Convert edit script to hunks with context.
-     *
-     * @param array<int, array{type: string, oldIdx: int, newIdx: int}> $ops
      * @param array<int, string> $oldLines
      * @param array<int, string> $newLines
+     * @param array<int, array{oldIdx: int, newIdx: int}> $lcs
      * @return array<int, Hunk>
      */
-    private static function editScriptToHunks(array $ops, array $oldLines, array $newLines, int $context): array
-    {
-        if ($ops === []) {
-            // All added or all deleted
-            if ($oldLines === [] && $newLines !== []) {
-                $lines = array_map(fn (string $l) => "+{$l}", $newLines);
+    private static function lcsToHunks(
+        array $oldLines,
+        array $newLines,
+        array $lcs,
+        int $context,
+    ): array {
+        // Build unified ops from LCS
+        $ops = [];
+        $oi = 0;
+        $ni = 0;
+        $li = 0;
 
-                return [new Hunk(0, 0, 1, count($newLines), $lines)];
+        while ($oi < count($oldLines) || $ni < count($newLines)) {
+            if ($li < count($lcs) && $oi === $lcs[$li]['oldIdx'] && $ni === $lcs[$li]['newIdx']) {
+                $ops[] = ['type' => 'equal', 'line' => $oldLines[$oi]];
+                $oi++;
+                $ni++;
+                $li++;
+            } elseif ($li < count($lcs)) {
+                // Before next LCS match: emit deletes then inserts
+                while ($oi < $lcs[$li]['oldIdx']) {
+                    $ops[] = ['type' => 'delete', 'line' => $oldLines[$oi]];
+                    $oi++;
+                }
+
+                while ($ni < $lcs[$li]['newIdx']) {
+                    $ops[] = ['type' => 'insert', 'line' => $newLines[$ni]];
+                    $ni++;
+                }
+            } else {
+                // After last LCS match
+                while ($oi < count($oldLines)) {
+                    $ops[] = ['type' => 'delete', 'line' => $oldLines[$oi]];
+                    $oi++;
+                }
+
+                while ($ni < count($newLines)) {
+                    $ops[] = ['type' => 'insert', 'line' => $newLines[$ni]];
+                    $ni++;
+                }
             }
+        }
 
-            if ($newLines === [] && $oldLines !== []) {
-                $lines = array_map(fn (string $l) => "-{$l}", $oldLines);
+        // Check if there are any actual changes
+        $hasChanges = false;
 
-                return [new Hunk(1, count($oldLines), 0, 0, $lines)];
+        foreach ($ops as $op) {
+            if ($op['type'] !== 'equal') {
+                $hasChanges = true;
+                break;
             }
+        }
 
+        if (!$hasChanges) {
             return [];
         }
 
-        // Find change regions and add context
-        $changes = [];
+        // Group changes into hunks with context
+        $changeIndices = [];
 
         foreach ($ops as $i => $op) {
             if ($op['type'] !== 'equal') {
-                $changes[] = $i;
+                $changeIndices[] = $i;
             }
         }
 
-        if ($changes === []) {
-            return [];
-        }
-
-        // Group changes that are close together (within 2*context lines)
         $groups = [];
-        $currentGroup = [$changes[0]];
+        $currentGroup = [$changeIndices[0]];
 
-        for ($i = 1; $i < count($changes); $i++) {
-            if ($changes[$i] - $changes[$i - 1] <= 2 * $context + 1) {
-                $currentGroup[] = $changes[$i];
+        for ($i = 1; $i < count($changeIndices); $i++) {
+            if ($changeIndices[$i] - $changeIndices[$i - 1] <= 2 * $context + 1) {
+                $currentGroup[] = $changeIndices[$i];
             } else {
                 $groups[] = $currentGroup;
-                $currentGroup = [$changes[$i]];
+                $currentGroup = [$changeIndices[$i]];
             }
         }
 
         $groups[] = $currentGroup;
 
-        // Build hunks from groups
+        // Build hunks
         $hunks = [];
 
         foreach ($groups as $group) {
@@ -207,39 +191,42 @@ final class MyersDiff
             $end = min(count($ops) - 1, $last + $context);
 
             $hunkLines = [];
-            $oldStart = null;
-            $newStart = null;
             $oldCount = 0;
             $newCount = 0;
+
+            // Calculate starting line numbers
+            $oldStart = 1;
+            $newStart = 1;
+
+            for ($i = 0; $i < $start; $i++) {
+                if ($ops[$i]['type'] === 'equal' || $ops[$i]['type'] === 'delete') {
+                    $oldStart++;
+                }
+
+                if ($ops[$i]['type'] === 'equal' || $ops[$i]['type'] === 'insert') {
+                    $newStart++;
+                }
+            }
 
             for ($i = $start; $i <= $end; $i++) {
                 $op = $ops[$i];
 
-                if ($oldStart === null) {
-                    $oldStart = $op['oldIdx'] + 1;
-                    $newStart = $op['newIdx'] + 1;
-                }
-
                 if ($op['type'] === 'equal') {
-                    $hunkLines[] = ' ' . $oldLines[$op['oldIdx']];
+                    $hunkLines[] = ' ' . $op['line'];
                     $oldCount++;
                     $newCount++;
                 } elseif ($op['type'] === 'delete') {
-                    $hunkLines[] = '-' . $oldLines[$op['oldIdx']];
+                    $hunkLines[] = '-' . $op['line'];
                     $oldCount++;
                 } elseif ($op['type'] === 'insert') {
-                    $hunkLines[] = '+' . $newLines[$op['newIdx']];
+                    $hunkLines[] = '+' . $op['line'];
                     $newCount++;
                 }
             }
 
-            $hunks[] = new Hunk(
-                oldStart: $oldStart ?? 1,
-                oldCount: $oldCount,
-                newStart: $newStart ?? 1,
-                newCount: $newCount,
-                lines: $hunkLines,
-            );
+            if ($hunkLines !== []) {
+                $hunks[] = new Hunk($oldStart, $oldCount, $newStart, $newCount, $hunkLines);
+            }
         }
 
         return $hunks;

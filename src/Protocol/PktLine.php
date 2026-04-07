@@ -51,7 +51,7 @@ final class PktLine
     /**
      * Decode pkt-lines from a stream string.
      *
-     * @return array<int, string> Decoded payloads (flush = null marker)
+     * @return array<int, string|null|false> Decoded payloads (null = flush, false = delimiter)
      */
     public static function decode(string $data): array
     {
