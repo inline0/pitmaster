@@ -1,0 +1,2784 @@
+[
+    {
+        "hash": "00b871fce1bf5aa38ca9d5310b03f4932878cd87",
+        "tree": "5e2ea8da051058d102cbd43268cfd1b10ecb6d76",
+        "parents": [
+            "87b66542215c70ad66231e75812492bfa369c2b3"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1402756817 2014-06-14 14:40:17 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1402756817 2014-06-14 14:40:17 +0000",
+        "message": "pull in latest buildrump.sh"
+    },
+    {
+        "hash": "87b66542215c70ad66231e75812492bfa369c2b3",
+        "tree": "d0829ef064dd878d5ad8d3c8f90ffbe52cc187f4",
+        "parents": [
+            "0dd4289875f92bced4969ac02443c5707aa583d2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1402756342 2014-06-14 14:32:22 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1402756342 2014-06-14 14:32:22 +0000",
+        "message": "add cleanrump and distcleanrump targets a la rumprun"
+    },
+    {
+        "hash": "0dd4289875f92bced4969ac02443c5707aa583d2",
+        "tree": "2d2a3ee0f2b124b2894f103174ab6708514fe7da",
+        "parents": [
+            "e699baa3f82c94ca9b41065cc7007f3d39302ecd"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1402756221 2014-06-14 14:30:21 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1402756221 2014-06-14 14:30:21 +0000",
+        "message": "nuke symlinks from correct directory"
+    },
+    {
+        "hash": "e699baa3f82c94ca9b41065cc7007f3d39302ecd",
+        "tree": "4fd47e1d5153c4acd3a31683f7933d7a61309c30",
+        "parents": [
+            "8392b91c505eee1e814b490fb700aded18edf00f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1402669364 2014-06-13 14:22:44 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1402669364 2014-06-13 14:22:44 +0000",
+        "message": "remove some low-hanging namespace pollution.  needs more work"
+    },
+    {
+        "hash": "8392b91c505eee1e814b490fb700aded18edf00f",
+        "tree": "209d14a6a07fca85776020b54b720f1188a26eb8",
+        "parents": [
+            "29ffcff77f2401d429e1f4a108a0a7a0a34b6741"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1402010502 2014-06-05 23:21:42 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1402010502 2014-06-05 23:21:42 +0000",
+        "message": "Support \"justcheckout\"\n\nfrom the rumprun build script ... yes, they still need to be united."
+    },
+    {
+        "hash": "29ffcff77f2401d429e1f4a108a0a7a0a34b6741",
+        "tree": "b53ef36cd94522ac65f00cf15506a75ec1c55373",
+        "parents": [
+            "8012849c3287ba90c5efd0591d01700550f41f69"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1401240917 2014-05-28 01:35:17 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1401240917 2014-05-28 01:35:17 +0000",
+        "message": "send email notifications to rumpkernel-builds"
+    },
+    {
+        "hash": "8012849c3287ba90c5efd0591d01700550f41f69",
+        "tree": "0f22bdb8ada92e6d4c77819727c9b9cc72ce49b5",
+        "parents": [
+            "0a5b40f673d63b48a78a5f527e9de6d72010f936"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1401106023 2014-05-26 12:07:03 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1401106023 2014-05-26 12:07:03 +0000",
+        "message": "do not build mvphy since we do not use it"
+    },
+    {
+        "hash": "0a5b40f673d63b48a78a5f527e9de6d72010f936",
+        "tree": "09374943a2c3cb6948a4d456f2132eceb41e7a04",
+        "parents": [
+            "9b05a92cb4d154727a9a21b1cbff539d49fb2bba"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1401104967 2014-05-26 11:49:27 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1401104967 2014-05-26 11:49:27 +0000",
+        "message": "update nblibs"
+    },
+    {
+        "hash": "9b05a92cb4d154727a9a21b1cbff539d49fb2bba",
+        "tree": "dce7d8fdeccde49e23ccf10bdf2f7ae7eb345c6b",
+        "parents": [
+            "4950bdd7b27dc50d29300b7a57b1d0c2c05d2d3d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1401104950 2014-05-26 11:49:10 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1401104950 2014-05-26 11:49:10 +0000",
+        "message": "update buildrump.sh"
+    },
+    {
+        "hash": "4950bdd7b27dc50d29300b7a57b1d0c2c05d2d3d",
+        "tree": "0e8a06a128d727841b4b5d996ebcaf1e791a8f0d",
+        "parents": [
+            "ab456e56a27d342845d433a0c3013a904b54bdf6",
+            "ddecce5853926157fa8060ed9227289c7114fa41"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400180437 2014-05-15 19:00:37 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400180437 2014-05-15 19:00:37 +0000",
+        "message": "Merge pull request #7 from ijackson-citrix/netfront-csum-offload\n\nxen/netfront: Request no checksum offload"
+    },
+    {
+        "hash": "ab456e56a27d342845d433a0c3013a904b54bdf6",
+        "tree": "0bf203a38669968dde186baf9a9f212f490e1ea1",
+        "parents": [
+            "46fe02c703bddbe166f8ef843a24e19b99e24f48",
+            "eab7e35b13c5c1147f7e2b1645cfc946516ba710"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400180347 2014-05-15 18:59:07 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400180347 2014-05-15 18:59:07 +0000",
+        "message": "Merge pull request #6 from ijackson-citrix/master\n\nDemo and build fixes"
+    },
+    {
+        "hash": "ddecce5853926157fa8060ed9227289c7114fa41",
+        "tree": "0def2fe2f6bd37099e919100c715b390579eecfe",
+        "parents": [
+            "46fe02c703bddbe166f8ef843a24e19b99e24f48"
+        ],
+        "author": "Ian Jackson <ian.jackson@eu.citrix.com> 1400179400 2014-05-15 19:43:20 +0100",
+        "committer": "Ian Jackson <Ian.Jackson@eu.citrix.com> 1400179400 2014-05-15 19:43:20 +0100",
+        "message": "xen/netfront: Request no checksum offload\n\nChecksum offload is not plumbed through to the networking stack, so\ndoes not work.  Turn it off by writing the relevant key in xenstore.\n\nIt would be better, but more work, to plumb it through.\n\nSigned-off-by: Ian Jackson <Ian.Jackson@eu.citrix.com>"
+    },
+    {
+        "hash": "eab7e35b13c5c1147f7e2b1645cfc946516ba710",
+        "tree": "0bf203a38669968dde186baf9a9f212f490e1ea1",
+        "parents": [
+            "53c9f126ba4f07e142893423a9cba684c73e91a7"
+        ],
+        "author": "Ian Jackson <ian.jackson@eu.citrix.com> 1400178579 2014-05-15 19:29:39 +0100",
+        "committer": "Ian Jackson <Ian.Jackson@eu.citrix.com> 1400179268 2014-05-15 19:41:08 +0100",
+        "message": "Config.mk: Make it possible to override XEN_HEADERS\n\nThis makes it possible to build against a checked out and built but\nnot installed xen tree, etc.\n\nSigned-off-by: Ian Jackson <Ian.Jackson@eu.citrix.com>"
+    },
+    {
+        "hash": "53c9f126ba4f07e142893423a9cba684c73e91a7",
+        "tree": "673794b797dea414f821ccd2de486f72c1cdafc7",
+        "parents": [
+            "a34f72c64ad1e55e570414ee42b9c5d297596b8d"
+        ],
+        "author": "Ian Jackson <ian.jackson@eu.citrix.com> 1400178522 2014-05-15 19:28:42 +0100",
+        "committer": "Ian Jackson <Ian.Jackson@eu.citrix.com> 1400179268 2014-05-15 19:41:08 +0100",
+        "message": "rumpkern_demo: Do not constantly try to close closed fds\n\nSigned-off-by: Ian Jackson <Ian.Jackson@eu.citrix.com>"
+    },
+    {
+        "hash": "a34f72c64ad1e55e570414ee42b9c5d297596b8d",
+        "tree": "0ee327e04cdc58eb33969d6bb59c37f8aac799cc",
+        "parents": [
+            "f69510ee3e377ff6aa7e46d48eca9434e2b707ec"
+        ],
+        "author": "Ian Jackson <ian.jackson@eu.citrix.com> 1400178486 2014-05-15 19:28:06 +0100",
+        "committer": "Ian Jackson <Ian.Jackson@eu.citrix.com> 1400178486 2014-05-15 19:28:06 +0100",
+        "message": "rumpkern_demo: Return from readconn when read fails\n\nAfter closing the fd, we should not continue with the rest of the\nfunction.\n\nSigned-off-by: Ian Jackson <Ian.Jackson@eu.citrix.com>"
+    },
+    {
+        "hash": "f69510ee3e377ff6aa7e46d48eca9434e2b707ec",
+        "tree": "94e0eb0798637caa317c0e34dbca812eeabd6aa9",
+        "parents": [
+            "46fe02c703bddbe166f8ef843a24e19b99e24f48"
+        ],
+        "author": "Ian Jackson <ian.jackson@eu.citrix.com> 1400178385 2014-05-15 19:26:25 +0100",
+        "committer": "Ian Jackson <Ian.Jackson@eu.citrix.com> 1400178385 2014-05-15 19:26:25 +0100",
+        "message": "rumpkern_demo: Work even though master socket is not fd 0\n\nThe WOPR demo was predicated on the master socket being fd 0.  But of\ncourse it isn't because the rump environment now correctly starts with\nsome fds 0-2.\n\nSigned-off-by: Ian Jackson <Ian.Jackson@eu.citrix.com>"
+    },
+    {
+        "hash": "46fe02c703bddbe166f8ef843a24e19b99e24f48",
+        "tree": "6e72351bea72a318861e3a97e23fcaea712fea80",
+        "parents": [
+            "8590dca91deda66c93d09eebc8a41598ffe59246"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400062703 2014-05-14 10:18:23 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400062703 2014-05-14 10:18:23 +0000",
+        "message": "add editing domain_config to the quickstart instructions"
+    },
+    {
+        "hash": "8590dca91deda66c93d09eebc8a41598ffe59246",
+        "tree": "1143586dc103e994b6c848ab25f64e41cc7c1f2c",
+        "parents": [
+            "e5c7641c3862ed328676e53f00e2392168335971"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400061683 2014-05-14 10:01:23 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400061683 2014-05-14 10:01:23 +0000",
+        "message": "conform to new pci_intr_string signature from NetBSD code\n\nXXX: should just move to sys/rump/dev/lib/libpci, but that has slightly\ndifferent hypercall interface, so we need some work to adjust things here."
+    },
+    {
+        "hash": "e5c7641c3862ed328676e53f00e2392168335971",
+        "tree": "780e646f21975b66ab449ead5e8dee9043183748",
+        "parents": [
+            "ff7dbb1b4db950ce1cf17decb4f00c3ec5e39a14"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400060791 2014-05-14 09:46:31 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400060791 2014-05-14 09:46:31 +0000",
+        "message": "update submodule urls to current ones\n\n(old ones were provided by github compat, so no great actual impact)"
+    },
+    {
+        "hash": "ff7dbb1b4db950ce1cf17decb4f00c3ec5e39a14",
+        "tree": "d509f73abeaa9cc6e2ff7d1ec792d4a075d6d67a",
+        "parents": [
+            "0bf3acdc000922059525fae5af776ee19ee2f818"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400060656 2014-05-14 09:44:16 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400060656 2014-05-14 09:44:16 +0000",
+        "message": "pull in latest buildrump.sh and nblibs (why not?)"
+    },
+    {
+        "hash": "0bf3acdc000922059525fae5af776ee19ee2f818",
+        "tree": "0213d94acb76272614aa42a465913ea4b71b7f48",
+        "parents": [
+            "2c6aaa83cecd281bcc2864bb304efa96e534b768"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400018714 2014-05-13 22:05:14 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400018714 2014-05-13 22:05:14 +0000",
+        "message": "unsnafu"
+    },
+    {
+        "hash": "2c6aaa83cecd281bcc2864bb304efa96e534b768",
+        "tree": "7cd80e9256a10f4b552f32d19140e50bfe4c0870",
+        "parents": [
+            "4f904e9fd7a442d5e79364c6d091c767f823e51e"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400018447 2014-05-13 22:00:47 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400018447 2014-05-13 22:00:47 +0000",
+        "message": "always use curlwp=hypercall, nothing else is available"
+    },
+    {
+        "hash": "4f904e9fd7a442d5e79364c6d091c767f823e51e",
+        "tree": "ab10bf3129d5789f4c0a9e0da0d2640e20b15ed9",
+        "parents": [
+            "ccefea624cc52c57105143e21a48f8fc7449bca1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1400018327 2014-05-13 21:58:47 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1400018327 2014-05-13 21:58:47 +0000",
+        "message": "Do not wrap thread_create\n\n1) it's probably quite fast and without deadlocks\n2) it causes recursion with softints\n\nSo, wrt. \"2\", this fix is kind of a hack, but I have the softint\nrevamp on the horizon anyway, so better revisit the issue then."
+    },
+    {
+        "hash": "ccefea624cc52c57105143e21a48f8fc7449bca1",
+        "tree": "59cf938a772e2b0134014053a66f5834082afce7",
+        "parents": [
+            "ff904a5d1f144744476fb72f262118147fad32b6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1399999454 2014-05-13 16:44:14 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1399999536 2014-05-13 16:45:36 +0000",
+        "message": "remove unnecessary call to gettimeofday()\n\nit's now provided by the rump kernel, and breaks when called\ntoo early in bootstrap"
+    },
+    {
+        "hash": "ff904a5d1f144744476fb72f262118147fad32b6",
+        "tree": "72aa9f5d7c7f4a5963ccbb94ff2357a8cc9f0752",
+        "parents": [
+            "f4f991cbb616d0b6d05c8ad27c8cbfe5bc7ec2f9"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1397118135 2014-04-10 09:22:15 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1397118135 2014-04-10 09:22:15 +0100",
+        "message": "Build all the libraries not just libc, libm\n\nThis merges in the changes from rumprun to build more NetBSD\nlibraries. At some point it would be good to merge these\nbuild processes."
+    },
+    {
+        "hash": "f4f991cbb616d0b6d05c8ad27c8cbfe5bc7ec2f9",
+        "tree": "efb5036265b778200282fa78edbb29674aa42d46",
+        "parents": [
+            "0b56c58e0222f001a056c7f340e6cc0bb2246ae9"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1396969384 2014-04-08 16:03:04 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1396969384 2014-04-08 16:03:04 +0100",
+        "message": "update repos"
+    },
+    {
+        "hash": "0b56c58e0222f001a056c7f340e6cc0bb2246ae9",
+        "tree": "64f53a607e938d2aebcc9868b0468a854e8a8e79",
+        "parents": [
+            "8240946432514531f6d71f7beadfd3053d68ab4f"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1396969223 2014-04-08 16:00:23 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1396969223 2014-04-08 16:00:23 +0100",
+        "message": "remove rumpkern_time"
+    },
+    {
+        "hash": "8240946432514531f6d71f7beadfd3053d68ab4f",
+        "tree": "44df2cd2200400975a90ed2f62df22f30d623d33",
+        "parents": [
+            "b8bd4b49bb3a8fae6e5810f766928c7b9d644920"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1396968714 2014-04-08 15:51:54 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1396968714 2014-04-08 15:51:54 +0100",
+        "message": "add short form how to build"
+    },
+    {
+        "hash": "b8bd4b49bb3a8fae6e5810f766928c7b9d644920",
+        "tree": "4c6daa340c5baa86a2aa8298c7b404db46e50369",
+        "parents": [
+            "4511991b5150862b5e2e1afb18fecb08ca966a83"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1396883568 2014-04-07 15:12:48 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1396883568 2014-04-07 15:12:48 +0000",
+        "message": "fix toyp"
+    },
+    {
+        "hash": "4511991b5150862b5e2e1afb18fecb08ca966a83",
+        "tree": "e1ccf57ae7d37cc9f50c1286985f7f7639730397",
+        "parents": [
+            "685716923ef951642252354c0a20896d224dde56"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1396883453 2014-04-07 15:10:53 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1396883453 2014-04-07 15:10:53 +0000",
+        "message": "point to wiki"
+    },
+    {
+        "hash": "685716923ef951642252354c0a20896d224dde56",
+        "tree": "656094f28983876f9483e3557d1b68fd6a260e8b",
+        "parents": [
+            "583ac13ad05495ebb212ee62908e661a7aeb81bb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1396348637 2014-04-01 10:37:17 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1396348637 2014-04-01 10:37:17 +0000",
+        "message": "sprintf -> snprintf"
+    },
+    {
+        "hash": "583ac13ad05495ebb212ee62908e661a7aeb81bb",
+        "tree": "0794755896252575d72b5f76bd7ed69f9752cc7d",
+        "parents": [
+            "3afa880ed06e0f340ca7c92762f28bd1794d6a0f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1395621964 2014-03-24 00:46:04 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1395621964 2014-03-24 00:46:04 +0000",
+        "message": "update urls"
+    },
+    {
+        "hash": "3afa880ed06e0f340ca7c92762f28bd1794d6a0f",
+        "tree": "4ace954d275813efec818c2d1a3a2a32fa27af5a",
+        "parents": [
+            "325cc81c4517febe22763a7b5c4d689ac1cbc7c4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1395104961 2014-03-18 01:09:21 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1395104961 2014-03-18 01:09:21 +0000",
+        "message": "gettimeofday is provided by the rump kernel"
+    },
+    {
+        "hash": "325cc81c4517febe22763a7b5c4d689ac1cbc7c4",
+        "tree": "10cd42d4d2d1b115f366ced64fc60b7d83cbb289",
+        "parents": [
+            "87d9ddbd27c7d68395f2d7c94aa1d5edf971a4c3"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1395104751 2014-03-18 01:05:51 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1395104751 2014-03-18 01:05:51 +0000",
+        "message": "use rumpkern_time instead of stubs"
+    },
+    {
+        "hash": "87d9ddbd27c7d68395f2d7c94aa1d5edf971a4c3",
+        "tree": "0ea7116765e69fdad61ffd922d5da64458ea79a0",
+        "parents": [
+            "46df8f41af8803bc2f7944fea157f833350eb893"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1395104076 2014-03-18 00:54:36 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1395104076 2014-03-18 00:54:36 +0000",
+        "message": "pull in latest buildrump.sh"
+    },
+    {
+        "hash": "46df8f41af8803bc2f7944fea157f833350eb893",
+        "tree": "b3fa6f28ebdb20ed05e04e2a777ecfad0f3dc9df",
+        "parents": [
+            "25b550adc84b03cee773dc25d10613071f4d30d4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1395104066 2014-03-18 00:54:26 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1395104066 2014-03-18 00:54:26 +0000",
+        "message": "pull in latest nblibs"
+    },
+    {
+        "hash": "25b550adc84b03cee773dc25d10613071f4d30d4",
+        "tree": "c503ade570fb801e238c15717e8ebdf363ccfb18",
+        "parents": [
+            "1d86e7e7345783649a23423c9ca5c1ac9c1e934c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1394971721 2014-03-16 12:08:41 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1394971721 2014-03-16 12:08:41 +0000",
+        "message": "fix urls: anttikantee -> rumpkernel"
+    },
+    {
+        "hash": "1d86e7e7345783649a23423c9ca5c1ac9c1e934c",
+        "tree": "49c7b8618bac45df63e58394d2858c2ce02adb32",
+        "parents": [
+            "89b89418651f26bb2c2d355fda1d058791978a8f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1394204933 2014-03-07 15:08:53 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1394204933 2014-03-07 15:08:53 +0000",
+        "message": "use minimal irc notifications"
+    },
+    {
+        "hash": "89b89418651f26bb2c2d355fda1d058791978a8f",
+        "tree": "a75dcab7c0ad1b5ee4ba22bef98c77a43f4e8874",
+        "parents": [
+            "e55ef28d535d5be486515934e84c2bd946b3b3a7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1392676567 2014-02-17 22:36:07 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1392676567 2014-02-17 22:36:07 +0000",
+        "message": "make build infos go to #rumpkernel-builds"
+    },
+    {
+        "hash": "e55ef28d535d5be486515934e84c2bd946b3b3a7",
+        "tree": "91b7eb9c1adf6a718d1f5f48f26bc1a430891b80",
+        "parents": [
+            "c62efa4ce87ea6ae0eff339ea4e3aa1b48f9465d"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1388510943 2013-12-31 17:29:03 +0000",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1388510943 2013-12-31 17:29:03 +0000",
+        "message": "force MKPIC=no as buildrump -k switching to not doing this by default"
+    },
+    {
+        "hash": "c62efa4ce87ea6ae0eff339ea4e3aa1b48f9465d",
+        "tree": "cc5a32d90c2bbde7872686022abe5117cac30b3d",
+        "parents": [
+            "6f77640add8c85199617134acfb07aadb6c54ef5"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1387827015 2013-12-23 19:30:15 +0000",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1387827015 2013-12-23 19:30:15 +0000",
+        "message": "do apt-get update first"
+    },
+    {
+        "hash": "6f77640add8c85199617134acfb07aadb6c54ef5",
+        "tree": "6045bab3790fc896be21aa3a08401c4c895c4a65",
+        "parents": [
+            "d79d31f45299accd8356c221cb345d64e598bee0"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1387826744 2013-12-23 19:25:44 +0000",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1387826744 2013-12-23 19:25:44 +0000",
+        "message": "fix some printf format strings in rumpkern_demo"
+    },
+    {
+        "hash": "d79d31f45299accd8356c221cb345d64e598bee0",
+        "tree": "a671ed987586f57ba111e87005f8fe99d2ebaf7a",
+        "parents": [
+            "7c10a6259bef67dd78269e65ded2b2d9f1563bbd",
+            "66a02ad16c68aed9dc8a81d8ac01955998a12168"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1387265627 2013-12-17 07:33:47 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1387265627 2013-12-17 07:33:47 +0000",
+        "message": "Merge branch 'pci'"
+    },
+    {
+        "hash": "66a02ad16c68aed9dc8a81d8ac01955998a12168",
+        "tree": "cce378f7d0ee929b2666865adb9f2a8738143fa0",
+        "parents": [
+            "46f3500e5ad17164adbff405bfecfc06311ae85c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1387265405 2013-12-17 07:30:05 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1387265405 2013-12-17 07:30:05 +0000",
+        "message": "add note describing why dma mem alloc needs more work"
+    },
+    {
+        "hash": "7c10a6259bef67dd78269e65ded2b2d9f1563bbd",
+        "tree": "34135d2af4748d212fecdc75dd1b8c1562ee56e7",
+        "parents": [
+            "e38458b2bef5442d164c4150dad4440eb6fb45b5"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1386503922 2013-12-08 11:58:42 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1386503922 2013-12-08 11:58:42 +0000",
+        "message": "pull in latest buildrump.sh"
+    },
+    {
+        "hash": "46f3500e5ad17164adbff405bfecfc06311ae85c",
+        "tree": "7737e75a07fab5efe924885097ad5a870d6ed28a",
+        "parents": [
+            "fa2101c98dc3be026eaaca5caa698412c079211a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379967603 2013-09-23 20:20:03 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379967603 2013-09-23 20:20:03 +0000",
+        "message": "update comments -- things _are_ expected to compile"
+    },
+    {
+        "hash": "fa2101c98dc3be026eaaca5caa698412c079211a",
+        "tree": "5ee4f9ef83fdd512999080f5d6eff2547242b1f4",
+        "parents": [
+            "4a521cbfb186b04d12d297d0471789aac8c035f6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379966900 2013-09-23 20:08:20 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379966900 2013-09-23 20:08:20 +0000",
+        "message": "header visibility"
+    },
+    {
+        "hash": "4a521cbfb186b04d12d297d0471789aac8c035f6",
+        "tree": "42f19e0bcaba5127048de9ede03c5f76267039c5",
+        "parents": [
+            "930e167bdad11b1e10cc1279527c142f17af2769"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379965443 2013-09-23 19:44:03 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379965443 2013-09-23 19:44:03 +0000",
+        "message": "and create the objdir root too ..."
+    },
+    {
+        "hash": "930e167bdad11b1e10cc1279527c142f17af2769",
+        "tree": "d69cafd7f0387b61edc3f49d9f4cf14476f5f123",
+        "parents": [
+            "756b43b4a12e506206b865ab126c00ee3d971ac2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379964499 2013-09-23 19:28:19 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379964499 2013-09-23 19:28:19 +0000",
+        "message": "use MAKEOBJDIRPREFIX to fix obj locations for now"
+    },
+    {
+        "hash": "756b43b4a12e506206b865ab126c00ee3d971ac2",
+        "tree": "f8edbeb463354bb18e468e16d852b42fcdb0f8c2",
+        "parents": [
+            "9b8e8ec21e8d58d2bc0aa746c20666398e777503"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379960614 2013-09-23 18:23:34 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379960614 2013-09-23 18:23:34 +0000",
+        "message": "spell dmat64 correctly (usually helps code compile)"
+    },
+    {
+        "hash": "9b8e8ec21e8d58d2bc0aa746c20666398e777503",
+        "tree": "aae22bdbdf92cde2f40a73f1c48c6569f740f5de",
+        "parents": [
+            "673967c994987f076d129627550c10c4ee672830"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379959675 2013-09-23 18:07:55 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379959675 2013-09-23 18:07:55 +0000",
+        "message": "pull buildrump.sh for amd64 fix"
+    },
+    {
+        "hash": "673967c994987f076d129627550c10c4ee672830",
+        "tree": "dcea1cf74ef4a2a48ab5614fea4541b003f7f206",
+        "parents": [
+            "ec613fdaaaf5ecf4d0f4438f93b234614666c069"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379959604 2013-09-23 18:06:44 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379959604 2013-09-23 18:06:44 +0000",
+        "message": "if we're LP64, pretend we can do dma64"
+    },
+    {
+        "hash": "ec613fdaaaf5ecf4d0f4438f93b234614666c069",
+        "tree": "4c2af384fdf21da60b3d81f13cb141a01d564959",
+        "parents": [
+            "749fd850b391a40916d8af3dd6f5e83c732e4526"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379957640 2013-09-23 17:34:00 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379957640 2013-09-23 17:34:00 +0000",
+        "message": "Pull new submodules (for PCI support)"
+    },
+    {
+        "hash": "749fd850b391a40916d8af3dd6f5e83c732e4526",
+        "tree": "6a5dda6a73f275a597cbabe9cb63309ef0952836",
+        "parents": [
+            "242b04ed902c917389cdfbe29b90377bf7ed7048"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379949280 2013-09-23 18:14:40 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379949280 2013-09-23 18:14:40 +0300",
+        "message": "build PCI drivers as part of buildxen.sh"
+    },
+    {
+        "hash": "242b04ed902c917389cdfbe29b90377bf7ed7048",
+        "tree": "e2eb98c4551c6c528e3258ef29b8fb6a97665c9e",
+        "parents": [
+            "84711624446b527315d64392b1d38037d3982d8c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379949157 2013-09-23 18:12:37 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379949157 2013-09-23 18:12:37 +0300",
+        "message": "Build PCI drivers"
+    },
+    {
+        "hash": "84711624446b527315d64392b1d38037d3982d8c",
+        "tree": "c3104378f3efbfa7e117a20e4bb975fbc84a8db7",
+        "parents": [
+            "6a06cfc80608724ab7cf5765a8bf63e2626eaf75"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379948438 2013-09-23 18:00:38 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379948438 2013-09-23 18:00:38 +0300",
+        "message": "Add rest of PCI driver hierarchy"
+    },
+    {
+        "hash": "6a06cfc80608724ab7cf5765a8bf63e2626eaf75",
+        "tree": "d2ca0ef995bb646385164d4990d54bb553812aa6",
+        "parents": [
+            "49428b72799d3b199098f7a0767e92785e27543c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379948316 2013-09-23 17:58:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379948316 2013-09-23 17:58:36 +0300",
+        "message": "add PCI bus support"
+    },
+    {
+        "hash": "49428b72799d3b199098f7a0767e92785e27543c",
+        "tree": "3c0a9819a194fcc3be121607c69609f403cdb516",
+        "parents": [
+            "781d4aea46e809a513ead061804e927df633815f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379945967 2013-09-23 17:19:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379945967 2013-09-23 17:19:27 +0300",
+        "message": "consistent naming"
+    },
+    {
+        "hash": "781d4aea46e809a513ead061804e927df633815f",
+        "tree": "a94b0d41081f5ecd2fca85fe26b9a73b679ff7a0",
+        "parents": [
+            "43cd559640c00d8a3bcc5f6cacdb28533bf0d345"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379945399 2013-09-23 17:09:59 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379945399 2013-09-23 17:09:59 +0300",
+        "message": "include hypercall header from right place"
+    },
+    {
+        "hash": "43cd559640c00d8a3bcc5f6cacdb28533bf0d345",
+        "tree": "5fea062e2b09a848c0021087652df5eb5f50661d",
+        "parents": [
+            "774c7552e42eec20254aed116597d4d9da26d7c4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379945283 2013-09-23 17:08:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379945283 2013-09-23 17:08:03 +0300",
+        "message": "g/c unnecessary bits"
+    },
+    {
+        "hash": "774c7552e42eec20254aed116597d4d9da26d7c4",
+        "tree": "92a1f2157770a6795cdec86c4939389f4c8f4e4e",
+        "parents": [
+            "997d5c4f1abcfd083e77a22930407d1044615698"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379945247 2013-09-23 17:07:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379945247 2013-09-23 17:07:27 +0300",
+        "message": "add pcn(4) PCI NIC driver"
+    },
+    {
+        "hash": "997d5c4f1abcfd083e77a22930407d1044615698",
+        "tree": "4b6fd7112c7d611e3608ae65eecd705656acf7ae",
+        "parents": [
+            "f14adb19bf2d0585412bf70f9eccd9217712183a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379944990 2013-09-23 17:03:10 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379944990 2013-09-23 17:03:10 +0300",
+        "message": "add wm(4) PCI NIC driver"
+    },
+    {
+        "hash": "f14adb19bf2d0585412bf70f9eccd9217712183a",
+        "tree": "f3a36a5672e569b1a149b5580e8d61025393e383",
+        "parents": [
+            "d0485ddc6562cab64772ffb67573af0c7d722cbe"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379944683 2013-09-23 16:58:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379944683 2013-09-23 16:58:03 +0300",
+        "message": "add phy drivers"
+    },
+    {
+        "hash": "d0485ddc6562cab64772ffb67573af0c7d722cbe",
+        "tree": "4a4e018bdacef43aeedcfa3bd6b57d9027cc8b63",
+        "parents": [
+            "e38458b2bef5442d164c4150dad4440eb6fb45b5"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379944072 2013-09-23 16:47:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379944072 2013-09-23 16:47:52 +0300",
+        "message": "add example on how to specify PCI devices"
+    },
+    {
+        "hash": "e38458b2bef5442d164c4150dad4440eb6fb45b5",
+        "tree": "bc00aaaae5cc28066cee0c73a1b403cdf99442ce",
+        "parents": [
+            "23e5d907015e629a84d82cffa03884e3ca39bfaa"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379605349 2013-09-19 18:42:29 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379605349 2013-09-19 18:42:29 +0300",
+        "message": "Allow configurations with 0 pci devices to boot.\n\nXXX: needs some more finetuning on multiple layers"
+    },
+    {
+        "hash": "23e5d907015e629a84d82cffa03884e3ca39bfaa",
+        "tree": "7f2f295c5c988d4b4a0f442f9e266682053c0465",
+        "parents": [
+            "9b32fa6bf3c71055323d4aa68857901498eb7bca"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379589856 2013-09-19 14:24:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379589856 2013-09-19 14:24:16 +0300",
+        "message": "tone down some prints"
+    },
+    {
+        "hash": "9b32fa6bf3c71055323d4aa68857901498eb7bca",
+        "tree": "89ae227179395ff81df89b77b8d4aed03f34d256",
+        "parents": [
+            "d4164ad5153c1f8ca673bfb9b5acdaafc2396955"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379588766 2013-09-19 14:06:06 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379588766 2013-09-19 14:06:06 +0300",
+        "message": "Don't depend everything on Makefile\n\nI promise I'll remember to type \"make clean\" if I make _critical_ changes\nto the Makefile.  99% of the time I just want to modify the set of libs\nthat gets linked, and I don't want to wait for a recompile."
+    },
+    {
+        "hash": "d4164ad5153c1f8ca673bfb9b5acdaafc2396955",
+        "tree": "2297adf8c8203b2d2a5d959247d14cbc6fdbfc01",
+        "parents": [
+            "a3df10f2d6bac6ba0149a9129f48e62f95065775"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379544381 2013-09-19 01:46:21 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379544434 2013-09-19 01:47:14 +0300",
+        "message": "Add hypercalls for PCI drivers"
+    },
+    {
+        "hash": "a3df10f2d6bac6ba0149a9129f48e62f95065775",
+        "tree": "b7924c0582118af3050b5b6f1c2bcdf8dcfade3e",
+        "parents": [
+            "4df371be4c7abf3386f8db3cf4d986675b28fc9d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379536433 2013-09-18 20:33:53 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379536433 2013-09-18 20:33:53 +0000",
+        "message": "Remove build vars now set by rumpmake itself."
+    },
+    {
+        "hash": "4df371be4c7abf3386f8db3cf4d986675b28fc9d",
+        "tree": "cd3a04a3f96cbbece93a61892d89a5d1500f5955",
+        "parents": [
+            "97d328c92b97dda353a18e6ce2bfd466826e1994"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379335176 2013-09-16 12:39:36 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379335176 2013-09-16 12:39:36 +0000",
+        "message": "make compile after infra changes"
+    },
+    {
+        "hash": "97d328c92b97dda353a18e6ce2bfd466826e1994",
+        "tree": "c39f071e94fdff9a897a9b75c93b6f5140fc107a",
+        "parents": [
+            "9ba9559babe85ef00426d7adefbb0b4ebc3cebf8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379334835 2013-09-16 12:33:55 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379334835 2013-09-16 12:33:55 +0000",
+        "message": "g/c unused cpp define"
+    },
+    {
+        "hash": "9ba9559babe85ef00426d7adefbb0b4ebc3cebf8",
+        "tree": "790f4077f97736358ed4b78bdf8bcbaf4750d64c",
+        "parents": [
+            "113410f3da4e22cd20a466e66ae21043b4d3b4ce"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379270116 2013-09-15 18:35:16 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379270116 2013-09-15 18:35:16 +0000",
+        "message": "Running checkout multiple times is no longer a problem.\n\nPreserve the ability to not checkout if the first parameter is\n\"nocheckout\"; might be useful e.g. if you have local mods in\nthe source trees."
+    },
+    {
+        "hash": "113410f3da4e22cd20a466e66ae21043b4d3b4ce",
+        "tree": "9f0313a229a8d0c4a18296888ee943fb699739d2",
+        "parents": [
+            "77c316719fee58646198ae3c1ef481cdd05bb274"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379270043 2013-09-15 18:34:03 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379270043 2013-09-15 18:34:03 +0000",
+        "message": "Install headers before build.\n\nThis way running the build multiple times will always use\nheaders from the same location.  Otherwise they would first get\nused from the source tree and then from destdir."
+    },
+    {
+        "hash": "77c316719fee58646198ae3c1ef481cdd05bb274",
+        "tree": "ca5dbdcd4c25c53c6cb1f1bef97b09a7af61af86",
+        "parents": [
+            "c1737822ccc803fb63a0c52d0b76e684257b9baf"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379267039 2013-09-15 17:43:59 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379267039 2013-09-15 17:43:59 +0000",
+        "message": "Create objdirs in sys before running includes.\n\nThis avoids creating the machine symlinks in the source tree during\nincludes, which in turn avoids causing problems with checkout later due\nto a dirty source tree."
+    },
+    {
+        "hash": "c1737822ccc803fb63a0c52d0b76e684257b9baf",
+        "tree": "b7cf203b5f9ab3d51a4a9b1ab7ecc4b99bd6e90b",
+        "parents": [
+            "c1eecafbd487cdf721c7fbe0d82e13ae9167b60a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379265384 2013-09-15 17:16:24 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379265384 2013-09-15 17:16:24 +0000",
+        "message": "Put httpd objects in a separate variable.\n\nSince they're not built by this Makefile, they now don't get\nblown away by a \"make clean\" either.  (yeayea, this is bubblegum)"
+    },
+    {
+        "hash": "c1eecafbd487cdf721c7fbe0d82e13ae9167b60a",
+        "tree": "fb9269aa1654b4e0a5cdf8ccb79b634a7f0a80fe",
+        "parents": [
+            "5cc40ae93d7f8bd9586a9aa6bd03fac0a7033580"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379253758 2013-09-15 14:02:38 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379253758 2013-09-15 14:02:38 +0000",
+        "message": "avoid indirection in wiki link\n\n[ci skip]"
+    },
+    {
+        "hash": "5cc40ae93d7f8bd9586a9aa6bd03fac0a7033580",
+        "tree": "6bcb4c09cc700cf959fd7c1dc01f8352739c1edc",
+        "parents": [
+            "2fbd9362d5f90abe157dbb88bb59f04acd368875"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379253697 2013-09-15 14:01:37 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379253697 2013-09-15 14:01:37 +0000",
+        "message": "point to wiki\n\n[ci skip]"
+    },
+    {
+        "hash": "2fbd9362d5f90abe157dbb88bb59f04acd368875",
+        "tree": "1842694af46339cc4c2ca9776639b17c8aa5edb2",
+        "parents": [
+            "6eb3c1a65f643df69c172e1784c1627a83eb7de9"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379251698 2013-09-15 13:28:18 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379251698 2013-09-15 13:28:18 +0000",
+        "message": "\"buildrump.sh tools\" can now be run multiple times"
+    },
+    {
+        "hash": "6eb3c1a65f643df69c172e1784c1627a83eb7de9",
+        "tree": "4cffceda109effba4698b4c94e9c8e0ff13eadb6",
+        "parents": [
+            "dc41a57a538b811e258395b9f0fc55133effa4e1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379251620 2013-09-15 13:27:00 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379251620 2013-09-15 13:27:00 +0000",
+        "message": "pull new buildrump.sh for better mk.conf handling"
+    },
+    {
+        "hash": "dc41a57a538b811e258395b9f0fc55133effa4e1",
+        "tree": "e4db29cab337b268f689936ad4510b8838358a0c",
+        "parents": [
+            "2187cbe6c182a531973f9a7516f1957c2e0e87fe"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379246647 2013-09-15 12:04:07 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379246647 2013-09-15 12:04:07 +0000",
+        "message": "one more pull to buildrump.sh to fix tools with -N"
+    },
+    {
+        "hash": "2187cbe6c182a531973f9a7516f1957c2e0e87fe",
+        "tree": "7d91e823b27630030e3ef48a6a4888a49b1a7d50",
+        "parents": [
+            "e980050f6be83cf895c6db8b3b82d76aef3e536a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379245456 2013-09-15 11:44:16 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379245456 2013-09-15 11:44:16 +0000",
+        "message": "pull new buildrump.sh (small fix to -N)"
+    },
+    {
+        "hash": "e980050f6be83cf895c6db8b3b82d76aef3e536a",
+        "tree": "f42206ae7dd8e751c7d3427f91d5dafe6a9ad752",
+        "parents": [
+            "6fc80b838cf7f0e8a1d795529fe0b5135f85cc1f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379245162 2013-09-15 11:39:22 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379245162 2013-09-15 11:39:22 +0000",
+        "message": "pull new nblibs (mostly cosmetic fix)"
+    },
+    {
+        "hash": "6fc80b838cf7f0e8a1d795529fe0b5135f85cc1f",
+        "tree": "650bdd4e82908ec38be164c077d7a526ce0096a6",
+        "parents": [
+            "0f9eebb3f0702c36a58c22f9f5c17fb7766ccb6a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379166131 2013-09-14 13:42:11 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379166131 2013-09-14 13:42:11 +0000",
+        "message": "use buildrump.sh -N"
+    },
+    {
+        "hash": "0f9eebb3f0702c36a58c22f9f5c17fb7766ccb6a",
+        "tree": "b72529f8558122ee49ef2087b0605e00881efefe",
+        "parents": [
+            "9fd73615ae48470b0f287a1008635bf374ccef6a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379166113 2013-09-14 13:41:53 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379166113 2013-09-14 13:41:53 +0000",
+        "message": "Update buildrump.sh for -N"
+    },
+    {
+        "hash": "9fd73615ae48470b0f287a1008635bf374ccef6a",
+        "tree": "63d8bd966c9c97f1827ce1ff8811d5f52a5a5264",
+        "parents": [
+            "72523701641c65d502ac3c905ecbed60c0c82aeb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379164211 2013-09-14 13:10:11 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379164211 2013-09-14 13:10:11 +0000",
+        "message": "Pull nblibs with fewer diffs to NetBSD upstream."
+    },
+    {
+        "hash": "72523701641c65d502ac3c905ecbed60c0c82aeb",
+        "tree": "d3b6142c73149820731e9183fb4a34fa30dc1502",
+        "parents": [
+            "d37314375156fce2f128f39635405257b86d7e1a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379010348 2013-09-12 18:25:48 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379010348 2013-09-12 18:25:48 +0000",
+        "message": "more coffee, less crack. should fix issue #4"
+    },
+    {
+        "hash": "d37314375156fce2f128f39635405257b86d7e1a",
+        "tree": "bb728426c793e2c03fe1134c305fe516ac7d9304",
+        "parents": [
+            "afd71fcca60100c0e5e5345ad9b2cd1e7f8c87f7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379002023 2013-09-12 19:07:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379002023 2013-09-12 19:07:03 +0300",
+        "message": "Add support for rumpuser_thread_join()"
+    },
+    {
+        "hash": "afd71fcca60100c0e5e5345ad9b2cd1e7f8c87f7",
+        "tree": "6cf32c3b348987cb5c25514fc5f07667a89b81b0",
+        "parents": [
+            "29091b4b4186e879996b1fdd42bb299032188480"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1379001296 2013-09-12 18:54:56 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1379001296 2013-09-12 18:54:56 +0300",
+        "message": "add FIXME comment"
+    },
+    {
+        "hash": "29091b4b4186e879996b1fdd42bb299032188480",
+        "tree": "42c94b6e7f02405daf12a1aa0dd6e02d6f82f261",
+        "parents": [
+            "0db7382fb0dae79b2e8b3ec811aecceb5d253c0f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378984087 2013-09-12 14:08:07 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378984087 2013-09-12 14:08:07 +0300",
+        "message": "Get rid of #ifdefs in struct thread.\n\nAdd a 'struct thread_md' member."
+    },
+    {
+        "hash": "0db7382fb0dae79b2e8b3ec811aecceb5d253c0f",
+        "tree": "8d7f2f9fa105429cfe8d80f7d01334e82888ba68",
+        "parents": [
+            "4b4f0e266e70bfb76aec367ce8049c258aeb5b35"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378983185 2013-09-12 13:53:05 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378983185 2013-09-12 13:53:05 +0300",
+        "message": "g/c outdated comment"
+    },
+    {
+        "hash": "4b4f0e266e70bfb76aec367ce8049c258aeb5b35",
+        "tree": "853aea2b33207692865eb6ce1721e4f791613aa2",
+        "parents": [
+            "e5126f6e36237ddef434cfab2ce4a16b6fa19ade"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378982695 2013-09-12 13:44:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378982823 2013-09-12 13:47:03 +0300",
+        "message": "Limit rump kernel memory use.\n\nInitial stab at issue #3 (fixing whole issue still need a lot more work)."
+    },
+    {
+        "hash": "e5126f6e36237ddef434cfab2ce4a16b6fa19ade",
+        "tree": "817c78e5dd6554bbcb00296c282803a3717f3f5d",
+        "parents": [
+            "5d290e09cd181935f3f5c1625f96a2fe2dcf4df7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378906883 2013-09-11 13:41:23 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378906883 2013-09-11 13:41:23 +0000",
+        "message": "implement rumpuser_thread_exit()"
+    },
+    {
+        "hash": "5d290e09cd181935f3f5c1625f96a2fe2dcf4df7",
+        "tree": "811c3749786c17e4dc7ce48b4102b97c958c8fdd",
+        "parents": [
+            "71e419aea0374addba6e1598aa8b6dc78482de16"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378906751 2013-09-11 13:39:11 +0000",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378906751 2013-09-11 13:39:11 +0000",
+        "message": "no need to be so verbose about thread exit"
+    },
+    {
+        "hash": "71e419aea0374addba6e1598aa8b6dc78482de16",
+        "tree": "c98dec4868b4e6c802bdc00d582ef85cee8a875a",
+        "parents": [
+            "24dd4ff1a3e87a8b7ecd29782041aa2cd5e8469d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378847166 2013-09-11 00:06:06 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378847166 2013-09-11 00:06:06 +0300",
+        "message": "update buildrump.sh for KERNONLY fix"
+    },
+    {
+        "hash": "24dd4ff1a3e87a8b7ecd29782041aa2cd5e8469d",
+        "tree": "c489cf085dd080319629de79639eeff7e30abfb3",
+        "parents": [
+            "1dcf58008ace60a71156a31d2c73e0672bb5121b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378846778 2013-09-10 23:59:38 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378846778 2013-09-10 23:59:38 +0300",
+        "message": "update buildrump.sh and nblibs for new upstream sources"
+    },
+    {
+        "hash": "1dcf58008ace60a71156a31d2c73e0672bb5121b",
+        "tree": "8e76f3253c6c105554053d13329b55a7c4fee59b",
+        "parents": [
+            "6657d9b387db000176d3ecec1201fd68afee4a79"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378738576 2013-09-09 17:56:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378738576 2013-09-09 17:56:16 +0300",
+        "message": "specifying MAXPHYS once is enough"
+    },
+    {
+        "hash": "6657d9b387db000176d3ecec1201fd68afee4a79",
+        "tree": "7a54db46df7e3518ad83d4c74e6c24c36acfc9a4",
+        "parents": [
+            "1bbca692fb51f25635ae6f4f35717b7708a45644"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378724268 2013-09-09 13:57:48 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378724268 2013-09-09 13:57:48 +0300",
+        "message": "make clean for all subdirectories"
+    },
+    {
+        "hash": "1bbca692fb51f25635ae6f4f35717b7708a45644",
+        "tree": "c4bf1418c6893421882fa012faa7ba27fd86ff36",
+        "parents": [
+            "733e5ea814df2a933e9ee1245fb96c6b686dbdb1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378724089 2013-09-09 13:54:49 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378724089 2013-09-09 13:54:49 +0300",
+        "message": "Add libs as a submodule instead of manual pulling.\n\nI called it \"nblibs\" instead of \"xen-nblibc\" (per the repo name) since\nthe repo contains more than just libc and it's not really Xen-specific.\n\n... and yes, we still want to get rid of that repo and be able to\nuse unmodified upstream sources."
+    },
+    {
+        "hash": "733e5ea814df2a933e9ee1245fb96c6b686dbdb1",
+        "tree": "13a72aa2d8360b88c91dfe9b7c062f85bfe4811c",
+        "parents": [
+            "bfc50168fb807d3a81bfe8bb6c54d18d8d736d1f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378723804 2013-09-09 13:50:04 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378723804 2013-09-09 13:50:04 +0300",
+        "message": "Move bits dealing with Xen into a xen/ subdirectory."
+    },
+    {
+        "hash": "bfc50168fb807d3a81bfe8bb6c54d18d8d736d1f",
+        "tree": "e4d17cda2a9c1510141035d3a1d5c0b6792ebb08",
+        "parents": [
+            "5f7faab57be5e08fe2db34a8ddd0ee0cc3c48f42"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378631665 2013-09-08 12:14:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378631665 2013-09-08 12:14:25 +0300",
+        "message": "avoid console output silently dropping characters"
+    },
+    {
+        "hash": "5f7faab57be5e08fe2db34a8ddd0ee0cc3c48f42",
+        "tree": "6e23e9adff6f59b5aec1090bc9848761b91babb4",
+        "parents": [
+            "ff2f1ef7266bdd1e1cc62981d3d15edd028b2073"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378628669 2013-09-08 11:24:29 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378628669 2013-09-08 11:24:29 +0300",
+        "message": "set progname (the easiest way, to be revisited)"
+    },
+    {
+        "hash": "ff2f1ef7266bdd1e1cc62981d3d15edd028b2073",
+        "tree": "d830e743ec291f1a030ed598c72c741535bc912b",
+        "parents": [
+            "cf054e1e8656a387804975a3e3651ac79c63fb02"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378627142 2013-09-08 10:59:02 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378627142 2013-09-08 10:59:02 +0300",
+        "message": "Implement _exit (we _must_ not return from a __noreturn__ function)"
+    },
+    {
+        "hash": "cf054e1e8656a387804975a3e3651ac79c63fb02",
+        "tree": "db7aac2d2c7e378ab3f4ee660c14c790e90b718a",
+        "parents": [
+            "8ecb4f756a2f47a483f090292d412205acdcc395"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378626716 2013-09-08 10:51:56 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378626716 2013-09-08 10:51:56 +0300",
+        "message": "minor header + whitespace cleanup"
+    },
+    {
+        "hash": "8ecb4f756a2f47a483f090292d412205acdcc395",
+        "tree": "15c7646bdc7afe170300cdc27f357fac2e91cbc7",
+        "parents": [
+            "7ee63f7166179039ed20f2b5881f6f8462c64d3b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378626549 2013-09-08 10:49:09 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378626549 2013-09-08 10:49:09 +0300",
+        "message": "continue header cleanup\n\nremove empty mini-os/traps.h and include mini-os/machine/traps.h"
+    },
+    {
+        "hash": "7ee63f7166179039ed20f2b5881f6f8462c64d3b",
+        "tree": "e459ae8d6c45281ec1adcff94ffc0aa3562a0c61",
+        "parents": [
+            "8da8eb0b52d72a7fb2c23779dc4573a760c092b8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378626027 2013-09-08 10:40:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378626027 2013-09-08 10:40:27 +0300",
+        "message": "Split MI definitions from machine/os.h into os.h"
+    },
+    {
+        "hash": "8da8eb0b52d72a7fb2c23779dc4573a760c092b8",
+        "tree": "6c817e705b5d4204cbbdf47f676d5dafbf59f43f",
+        "parents": [
+            "e14d841aba2d0d4af5a19cab92bc5d764138a721"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378621260 2013-09-08 09:21:00 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378621260 2013-09-08 09:21:00 +0300",
+        "message": "Use consistent indentation within this file.\n\nNo functional change.\nXXX: this file is missing a license."
+    },
+    {
+        "hash": "e14d841aba2d0d4af5a19cab92bc5d764138a721",
+        "tree": "23b7a3c57d79bcff468a0a3cb62fc6b3da9b40b6",
+        "parents": [
+            "322cde4f68057ce8eac87d2d651f3709449e5630"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378615918 2013-09-08 07:51:58 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378615989 2013-09-08 07:53:09 +0300",
+        "message": "use stdio instead of printk"
+    },
+    {
+        "hash": "322cde4f68057ce8eac87d2d651f3709449e5630",
+        "tree": "14fc00f4003f259584886275718d930a36f05898",
+        "parents": [
+            "f3f3b7d35d78b3277ab53c57c36988b7507c7ac6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378615614 2013-09-08 07:46:54 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378615988 2013-09-08 07:53:08 +0300",
+        "message": "Update buildrump.sh (upstream console driver fix)"
+    },
+    {
+        "hash": "f3f3b7d35d78b3277ab53c57c36988b7507c7ac6",
+        "tree": "9c44cc140af91f190df8cde773d21151a3cc1195",
+        "parents": [
+            "9874091f85baa34ecf402aa2d53fd6a504a9234c"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1378581658 2013-09-07 20:20:58 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1378581658 2013-09-07 20:20:58 +0100",
+        "message": "it is ok to have an address hint for mmap and just ignore it"
+    },
+    {
+        "hash": "9874091f85baa34ecf402aa2d53fd6a504a9234c",
+        "tree": "25c47a900bff62f26bb2f42272bdab85d05cb704",
+        "parents": [
+            "0e452302c3e2e1e198d184cb702b48291d46edbe"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378574551 2013-09-07 20:22:31 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378574551 2013-09-07 20:22:31 +0300",
+        "message": "update buildrump.sh for rump kernel fd's 0/1/2"
+    },
+    {
+        "hash": "0e452302c3e2e1e198d184cb702b48291d46edbe",
+        "tree": "b7d68690a1c92243e0220f0e07ae8817993da965",
+        "parents": [
+            "326ba89d830a6c90a42ca6298de7955ed4757100"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378572466 2013-09-07 19:47:46 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378572466 2013-09-07 19:47:46 +0300",
+        "message": "do not assume anything about first fd number"
+    },
+    {
+        "hash": "326ba89d830a6c90a42ca6298de7955ed4757100",
+        "tree": "a6150698edd9697d5a445f3a809f09db2c4337e4",
+        "parents": [
+            "78590ec1899d060bfde984eb007c19c455854bb7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378568796 2013-09-07 18:46:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378568796 2013-09-07 18:46:36 +0300",
+        "message": "we currently have no support for signal delivery"
+    },
+    {
+        "hash": "78590ec1899d060bfde984eb007c19c455854bb7",
+        "tree": "e67ea1f77d3b66db73781084c108369a2ae089dc",
+        "parents": [
+            "7c2f7cc5184270e9135dd609f94189772ae7247a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378567765 2013-09-07 18:29:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378567765 2013-09-07 18:29:25 +0300",
+        "message": "Get rid of __INSIDE_MINIOS__\n\nDon't want to see that stuff?  Don't include mini-os headers!"
+    },
+    {
+        "hash": "7c2f7cc5184270e9135dd609f94189772ae7247a",
+        "tree": "49e11d5856aa153f946463069f696a041fef24a8",
+        "parents": [
+            "935e6cda6e4e76a68330f915c3747f671c375d23"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378567651 2013-09-07 18:27:31 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378567651 2013-09-07 18:27:31 +0300",
+        "message": "update comment"
+    },
+    {
+        "hash": "935e6cda6e4e76a68330f915c3747f671c375d23",
+        "tree": "afd4bc23053f3dd9c2a469f6fee8026ea58a2f17",
+        "parents": [
+            "9083491e30cda0cc6575500cf36efd4826e93a96"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378572790 2013-09-07 19:53:10 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378572790 2013-09-07 19:53:10 +0300",
+        "message": "g/c null defs and some whitespace to boot"
+    },
+    {
+        "hash": "9083491e30cda0cc6575500cf36efd4826e93a96",
+        "tree": "483fc62bdaf13869439529cd79f2894064586318",
+        "parents": [
+            "375175c8207d8b68a35f92bf131b4b302251463b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378559769 2013-09-07 16:16:09 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378559769 2013-09-07 16:16:09 +0300",
+        "message": "implement rumpuser_dprintf"
+    },
+    {
+        "hash": "375175c8207d8b68a35f92bf131b4b302251463b",
+        "tree": "07135a06f9ec6a963c143210afd09f2d4c60e2c7",
+        "parents": [
+            "9733a793f0b61e14bbb22f3252927e7669dcf98e"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378559278 2013-09-07 16:07:58 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378559278 2013-09-07 16:07:58 +0300",
+        "message": "use a more direct console print"
+    },
+    {
+        "hash": "9733a793f0b61e14bbb22f3252927e7669dcf98e",
+        "tree": "06b59b4e1451e4a79dcca54504e45c373505d0d7",
+        "parents": [
+            "77b493a68445edbf98dc85722e0e92d5d3e4512e"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378558930 2013-09-07 16:02:10 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378558930 2013-09-07 16:02:10 +0300",
+        "message": "SCHED_DEBUG doesn't appear to do anything => g/c"
+    },
+    {
+        "hash": "77b493a68445edbf98dc85722e0e92d5d3e4512e",
+        "tree": "1f9002477cea86c46e97b5239ef1023617c5dc48",
+        "parents": [
+            "282a10cbd69e920e7385f4bae85f2f473a7e334f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378558716 2013-09-07 15:58:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378558716 2013-09-07 15:58:36 +0300",
+        "message": "add note about how to examine/modify fs images"
+    },
+    {
+        "hash": "282a10cbd69e920e7385f4bae85f2f473a7e334f",
+        "tree": "e9b84b8b0b07e9ef9b3a395e9e32827b78eedc7b",
+        "parents": [
+            "08f06f40fcef9b2aade549077efe6151a239b626"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378558220 2013-09-07 15:50:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378558220 2013-09-07 15:50:20 +0300",
+        "message": "__MINIOS__ seems to be relevant for newlib ==> g/c"
+    },
+    {
+        "hash": "08f06f40fcef9b2aade549077efe6151a239b626",
+        "tree": "dcf9280a25a6d8d3f3ec07712c9c35c213d5214b",
+        "parents": [
+            "2fa805ae79eaadf3ec64ec0a85cba5538b1087a4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378557868 2013-09-07 15:44:28 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378557868 2013-09-07 15:44:28 +0300",
+        "message": "remove more \"options\""
+    },
+    {
+        "hash": "2fa805ae79eaadf3ec64ec0a85cba5538b1087a4",
+        "tree": "225faa0663ef08202322e7419b2f76d3dbb03cba",
+        "parents": [
+            "51476ba2e60a7665e49316017f7631ae55546e9c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378554790 2013-09-07 14:53:10 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378554790 2013-09-07 14:53:10 +0300",
+        "message": "remove config \"options\" which can't be changed"
+    },
+    {
+        "hash": "51476ba2e60a7665e49316017f7631ae55546e9c",
+        "tree": "6c3e30c46b62c3b6d5a04a2ebf66fa04a31fa4d3",
+        "parents": [
+            "85296f8eb453c4e806b3c2d2966115ad1892f755"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378554347 2013-09-07 14:45:47 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378554347 2013-09-07 14:45:47 +0300",
+        "message": "build in obj/"
+    },
+    {
+        "hash": "85296f8eb453c4e806b3c2d2966115ad1892f755",
+        "tree": "c9eca914c0d6074eaba7e5cdc50e6f238f2d3df2",
+        "parents": [
+            "c3313f2137ec5602fbd2b4dd64f779d590b7b3fa"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378553524 2013-09-07 14:32:04 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378553524 2013-09-07 14:32:04 +0300",
+        "message": "build xenif in objdir"
+    },
+    {
+        "hash": "c3313f2137ec5602fbd2b4dd64f779d590b7b3fa",
+        "tree": "cb8edcda79ed6bb81ce49071f679386406e90d8e",
+        "parents": [
+            "f66941377206841ceb5c5be490520858563d7bed"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378553237 2013-09-07 14:27:17 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378553237 2013-09-07 14:27:17 +0300",
+        "message": "simple script to run gdbsx"
+    },
+    {
+        "hash": "f66941377206841ceb5c5be490520858563d7bed",
+        "tree": "82ad01c4cf9616b481545c9693ffd0045a28f9b2",
+        "parents": [
+            "adcac1cbdc8b5206a2f542b142e75df67bcd4140"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378552456 2013-09-07 14:14:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378552456 2013-09-07 14:14:16 +0300",
+        "message": "make sure getopt() work every time"
+    },
+    {
+        "hash": "adcac1cbdc8b5206a2f542b142e75df67bcd4140",
+        "tree": "8af9423e3c890b308e292a61c3640cb88362440a",
+        "parents": [
+            "012ceecd3f142dacfc189299935875e52ed0a60d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378551045 2013-09-07 13:50:45 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378551045 2013-09-07 13:50:45 +0300",
+        "message": "remove historic \"is this mic on?\" edit"
+    },
+    {
+        "hash": "012ceecd3f142dacfc189299935875e52ed0a60d",
+        "tree": "565fe8166a2b920a486ff797558240e870393109",
+        "parents": [
+            "c4da66a484f9f3ff59d5f01b086cb84e8d8f3565"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378550989 2013-09-07 13:49:49 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378550989 2013-09-07 13:49:49 +0300",
+        "message": "move file system images to img/"
+    },
+    {
+        "hash": "c4da66a484f9f3ff59d5f01b086cb84e8d8f3565",
+        "tree": "b63cb056d22f4b2ff37c4061cef0d810b15a528a",
+        "parents": [
+            "3e6ef3ee82d8783a6f15853f7e336ced80e351b9"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378549296 2013-09-07 13:21:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378549296 2013-09-07 13:21:36 +0300",
+        "message": "replace /etc/services with a slightly smaller one"
+    },
+    {
+        "hash": "3e6ef3ee82d8783a6f15853f7e336ced80e351b9",
+        "tree": "0a2fdf3d5b6296feb99dd3c8ae346a7ed877e419",
+        "parents": [
+            "2cba9745d320d838bc600c361cff45dd5d2bb53a"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1378500010 2013-09-06 21:40:10 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1378500010 2013-09-06 21:40:10 +0100",
+        "message": "add memprotect"
+    },
+    {
+        "hash": "2cba9745d320d838bc600c361cff45dd5d2bb53a",
+        "tree": "fb548c1bdc6d5682a7e30c260d4b68936bb7920a",
+        "parents": [
+            "60c8e3cb80dfd7860c1d67b60ec9814792c2a488"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1378486051 2013-09-06 17:47:31 +0100",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1378486051 2013-09-06 17:47:31 +0100",
+        "message": "add more stub syscalls"
+    },
+    {
+        "hash": "60c8e3cb80dfd7860c1d67b60ec9814792c2a488",
+        "tree": "b2f940803501504a38f5d5ef2bc491299a27ada5",
+        "parents": [
+            "7b27479ccb87348fcaa78f0bc0e91ed7d9ecdd3e"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378471375 2013-09-06 15:42:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378471457 2013-09-06 15:44:17 +0300",
+        "message": "Make app_main() the application entry point\n\nThe rump kernel is bootstrapped before calling it."
+    },
+    {
+        "hash": "7b27479ccb87348fcaa78f0bc0e91ed7d9ecdd3e",
+        "tree": "6eea22993a35e25d3dee2e6bcbf166e7be1eb71e",
+        "parents": [
+            "2fc121c978dd91283106865aef299dd735abe7a1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378471336 2013-09-06 15:42:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378471456 2013-09-06 15:44:16 +0300",
+        "message": "Avoid duplicate etfs names"
+    },
+    {
+        "hash": "2fc121c978dd91283106865aef299dd735abe7a1",
+        "tree": "19430a54e976c8fe297cdad62025a1a5b5d99dd5",
+        "parents": [
+            "a6c883dba84b1ab031ac232200f6b8e5e043c0af"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378470469 2013-09-06 15:27:49 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378471456 2013-09-06 15:44:16 +0300",
+        "message": "simplify setting errno"
+    },
+    {
+        "hash": "a6c883dba84b1ab031ac232200f6b8e5e043c0af",
+        "tree": "91a8fbb272bc8bd61e2a8f5806054fe0a23c43c1",
+        "parents": [
+            "1649e3b204c1a6924b0a39b52aaf6f1b492ddfbd"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378470128 2013-09-06 15:22:08 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378470128 2013-09-06 15:22:08 +0300",
+        "message": "Add travis status sticker\n\n[ci skip]"
+    },
+    {
+        "hash": "1649e3b204c1a6924b0a39b52aaf6f1b492ddfbd",
+        "tree": "bb013a013790c99dd3ae909c93d9978ff0225d42",
+        "parents": [
+            "3a916d359643fb221c6670db7bdfc3a87c2bdcec"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378469627 2013-09-06 15:13:47 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378469627 2013-09-06 15:13:47 +0300",
+        "message": "build is now simpler"
+    },
+    {
+        "hash": "3a916d359643fb221c6670db7bdfc3a87c2bdcec",
+        "tree": "e04463a074c8a749859c798a2463f2ae908a3552",
+        "parents": [
+            "73cf445bde6c13034c6367619ffb06b7e6ebf1ea"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378469510 2013-09-06 15:11:50 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378469510 2013-09-06 15:11:50 +0300",
+        "message": "use some -j"
+    },
+    {
+        "hash": "73cf445bde6c13034c6367619ffb06b7e6ebf1ea",
+        "tree": "af7bf755f901c829f506ba403fd02324641655e7",
+        "parents": [
+            "5c2d4cf2b8bfb8b7d20819c3e64e843c472d57fb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378468879 2013-09-06 15:01:19 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378468879 2013-09-06 15:01:19 +0300",
+        "message": "install libxen-dev"
+    },
+    {
+        "hash": "5c2d4cf2b8bfb8b7d20819c3e64e843c472d57fb",
+        "tree": "102760f1be299d86d69e65477c94516af8bb3ce3",
+        "parents": [
+            "d3a47ca6a5bace083c930f0d749fab514f5397ea"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378468640 2013-09-06 14:57:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378468640 2013-09-06 14:57:20 +0300",
+        "message": "Make it possible to be less verbose.  Fix pasto."
+    },
+    {
+        "hash": "d3a47ca6a5bace083c930f0d749fab514f5397ea",
+        "tree": "8a3507893f54069b7328f7a2e41243fd2b86d592",
+        "parents": [
+            "9fecb4b82e5d519aa94f689aff3dd9f568d42a87"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378468102 2013-09-06 14:48:22 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378468102 2013-09-06 14:48:22 +0300",
+        "message": "initial travis yml"
+    },
+    {
+        "hash": "9fecb4b82e5d519aa94f689aff3dd9f568d42a87",
+        "tree": "c88cb7677139bcfec350c8091b8929922d030104",
+        "parents": [
+            "ff618cb76edab30b2bba7f47e2dc58684ab8ddff"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378467718 2013-09-06 14:41:58 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378467718 2013-09-06 14:41:58 +0300",
+        "message": "Make things build from any directory.\n\nThis means that it's no longer necessary to place the repository\nunder xen/extras/rumpuser-xen, nor is it necessary to fetch the\nXen sources."
+    },
+    {
+        "hash": "ff618cb76edab30b2bba7f47e2dc58684ab8ddff",
+        "tree": "7bae597b8f672cd622ee0549591ef22df7cd9968",
+        "parents": [
+            "048832eaadeced7d6185d5b547c8a0ee8b34f834"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378464728 2013-09-06 13:52:08 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378464728 2013-09-06 13:52:08 +0300",
+        "message": "remove lib/math.c, obsoleted by libc"
+    },
+    {
+        "hash": "048832eaadeced7d6185d5b547c8a0ee8b34f834",
+        "tree": "95ac356322fa023bd7536b8fc34a673eabe61353",
+        "parents": [
+            "3b0aa2afb73bacdf4d8fd8f07107546bd4e77d48"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378464472 2013-09-06 13:47:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378464472 2013-09-06 13:47:52 +0300",
+        "message": "Use objdirs for lib{c,m}\n\nalso, some cleanup"
+    },
+    {
+        "hash": "3b0aa2afb73bacdf4d8fd8f07107546bd4e77d48",
+        "tree": "0f07811d3664fd30b51898677ac614214de7d266",
+        "parents": [
+            "93fe10b7e44fd7e7e17f66939dd0d39e24751ee2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378462646 2013-09-06 13:17:26 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378462646 2013-09-06 13:17:26 +0300",
+        "message": "important disclaimer"
+    },
+    {
+        "hash": "93fe10b7e44fd7e7e17f66939dd0d39e24751ee2",
+        "tree": "ccebc4d1711d5812bc9ef612260c1efb7586d648",
+        "parents": [
+            "1e744192eec21c42f10f2a53d4e89590ff1804b7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378462318 2013-09-06 13:11:58 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378462318 2013-09-06 13:11:58 +0300",
+        "message": "Use locales from libc, remove private copy."
+    },
+    {
+        "hash": "1e744192eec21c42f10f2a53d4e89590ff1804b7",
+        "tree": "ecc059f8473f7f748c55f9e30665e2ef06095fb8",
+        "parents": [
+            "dc865f101aa7f9c40d27725ee5a1de1f667b5926"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378461361 2013-09-06 12:56:01 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378461361 2013-09-06 12:56:01 +0300",
+        "message": "Header purge.\n\nGet rid of the <mini-os/arch_foo.h> compat headers and require that\nusers include <mini-os/machine/foo.h>"
+    },
+    {
+        "hash": "dc865f101aa7f9c40d27725ee5a1de1f667b5926",
+        "tree": "1867cfb8a08cc54bdaf6a7873e14601cb5cf36ac",
+        "parents": [
+            "f4c9ba1b5cdd9f7e4b9de96c78a97fb7bb96795d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378460965 2013-09-06 12:49:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378460965 2013-09-06 12:49:25 +0300",
+        "message": "verify that we support the hypercall versions"
+    },
+    {
+        "hash": "f4c9ba1b5cdd9f7e4b9de96c78a97fb7bb96795d",
+        "tree": "6ec9167cf6f1436d7c23b9ad9f885d9dd3f719df",
+        "parents": [
+            "fa600a2edc7350666f181e600b5b944af5aecdbb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378460940 2013-09-06 12:49:00 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378460940 2013-09-06 12:49:00 +0300",
+        "message": "put files logically belonging in lib also physically there"
+    },
+    {
+        "hash": "fa600a2edc7350666f181e600b5b944af5aecdbb",
+        "tree": "71fbd9df518bc5a1bc6475a5782a192dc7836aa9",
+        "parents": [
+            "4a82c73de3c0df8e8336635e0a4a8993fa8cd721"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378460028 2013-09-06 12:33:48 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378460028 2013-09-06 12:33:48 +0300",
+        "message": "There is no more need for a private copy of printf.\n\nNote that calling printf() currently works only from the rump kernel.\nIn \"userspace\", you still need to call printk().  Me be fixink this."
+    },
+    {
+        "hash": "4a82c73de3c0df8e8336635e0a4a8993fa8cd721",
+        "tree": "cb80d9dde42c266887d8867659b450a77a3ee098",
+        "parents": [
+            "60b2833c8ecfd62c1e80dffeb5d0319b941b3c95"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378418621 2013-09-06 01:03:41 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378418621 2013-09-06 01:03:41 +0300",
+        "message": "mumble more using the \"less is more\" approach"
+    },
+    {
+        "hash": "60b2833c8ecfd62c1e80dffeb5d0319b941b3c95",
+        "tree": "e7df862ea5f99d5822601ade7ef32c16d0cf4231",
+        "parents": [
+            "573bcf2201aa7abbc59c963207c6880c2c1b208c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378418595 2013-09-06 01:03:15 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378418595 2013-09-06 01:03:15 +0300",
+        "message": "improve a bit, can now run multiple times"
+    },
+    {
+        "hash": "573bcf2201aa7abbc59c963207c6880c2c1b208c",
+        "tree": "a0e3039085b34598e825ca95fabcfee73ee8c858",
+        "parents": [
+            "884abd9497ff0d22604455d76de03ee79040abeb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378415805 2013-09-06 00:16:45 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378415805 2013-09-06 00:16:45 +0300",
+        "message": "touch more verbosity"
+    },
+    {
+        "hash": "884abd9497ff0d22604455d76de03ee79040abeb",
+        "tree": "80ba3f8a5305eab351f518becca03558e466a791",
+        "parents": [
+            "3bf91e1187798a2dd121f8a391a06ee906cdb0d9"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378415494 2013-09-06 00:11:34 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378415494 2013-09-06 00:11:34 +0300",
+        "message": "panic is no longer used anywhere in minios"
+    },
+    {
+        "hash": "3bf91e1187798a2dd121f8a391a06ee906cdb0d9",
+        "tree": "e3aaa6617023a21d1610aaa1087e322318868aa1",
+        "parents": [
+            "9c99e4052b32c6b676c12e583c152ae33c25db32"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378415462 2013-09-06 00:11:02 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378415462 2013-09-06 00:11:02 +0300",
+        "message": "use strtoul from libc instead of duplicate copy here"
+    },
+    {
+        "hash": "9c99e4052b32c6b676c12e583c152ae33c25db32",
+        "tree": "f450429d71fca1c953f7bd91020da52f7a863aba",
+        "parents": [
+            "83c1bb5f2fa917354f2b4bac18d34afbf9077851"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378406155 2013-09-05 21:35:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378406155 2013-09-05 21:35:55 +0300",
+        "message": "slap some sort of copyright here"
+    },
+    {
+        "hash": "83c1bb5f2fa917354f2b4bac18d34afbf9077851",
+        "tree": "269b542734fbd2c087d24977cf2e9055586c62a4",
+        "parents": [
+            "b9545d9bf0acbe80f42c154841f6fd151ce2596f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378404129 2013-09-05 21:02:09 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378404129 2013-09-05 21:02:09 +0300",
+        "message": "now that the kernel bug has been fixed, properly release handler thread"
+    },
+    {
+        "hash": "b9545d9bf0acbe80f42c154841f6fd151ce2596f",
+        "tree": "23ca53d50c57324c5c28293be0e1520edcc7f1c4",
+        "parents": [
+            "373e663bcf62af7b99ca62baf54b998ae2680ca8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378404003 2013-09-05 21:00:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378404003 2013-09-05 21:00:03 +0300",
+        "message": "update for ff_exclose fix"
+    },
+    {
+        "hash": "373e663bcf62af7b99ca62baf54b998ae2680ca8",
+        "tree": "0c07b1634fa17399b6b7372c2e3f53da59ab6ec7",
+        "parents": [
+            "9bd6024b804f72450053ad95e90d254f4a784fb9"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378376796 2013-09-05 13:26:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378376796 2013-09-05 13:26:36 +0300",
+        "message": "Build libc and libm without -Werror\n\nThis is temporary, but allows things to limp on on some hosts letting\npeople concentrate on more interesting issues than debating windmills\nwith the compiler."
+    },
+    {
+        "hash": "9bd6024b804f72450053ad95e90d254f4a784fb9",
+        "tree": "1f3d4f34d1f0dab81f1e4259d6ba0a1cf39f8aae",
+        "parents": [
+            "73c87897e68ea57787a03afc89490b96dabdaef9"
+        ],
+        "author": "Justin Cormack <justin@specialbusservice.com> 1378368666 2013-09-05 10:11:06 +0200",
+        "committer": "Justin Cormack <justin@specialbusservice.com> 1378368666 2013-09-05 10:11:06 +0200",
+        "message": "build libm"
+    },
+    {
+        "hash": "73c87897e68ea57787a03afc89490b96dabdaef9",
+        "tree": "e885d81c7dd8725a3dd2cf5cf66e03e746672aac",
+        "parents": [
+            "177f02066d6c3f22f29123724d237754e838c78d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378335920 2013-09-05 02:05:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378336107 2013-09-05 02:08:27 +0300",
+        "message": "Pull a newer httpd and override the large mmap size.\n\nMakes httpd work for serving large files with a memory-restricted DomU"
+    },
+    {
+        "hash": "177f02066d6c3f22f29123724d237754e838c78d",
+        "tree": "2c64efdab4c779f46049e716b258f0c33c42868f",
+        "parents": [
+            "57b3344a4b6a9de55f7efaecee8a2aff3e704136"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378332685 2013-09-05 01:11:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378332685 2013-09-05 01:11:25 +0300",
+        "message": "Remove mmap() from limitations.\n\nOur emulation may not be perfect, but it does exist."
+    },
+    {
+        "hash": "57b3344a4b6a9de55f7efaecee8a2aff3e704136",
+        "tree": "3d717eb1d987f8761aecfa7aa704fac5bd9db996",
+        "parents": [
+            "6f294f000bc8c74a356de68021580fcea1b1455a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378332051 2013-09-05 01:00:51 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378332051 2013-09-05 01:00:51 +0300",
+        "message": "default to httpd"
+    },
+    {
+        "hash": "6f294f000bc8c74a356de68021580fcea1b1455a",
+        "tree": "542c371b35f4ae101016f43d1d1b730e6f7a04d4",
+        "parents": [
+            "7a9f23de6e2082f37cfa2623e85f211fcf63928f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378332035 2013-09-05 01:00:35 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378332035 2013-09-05 01:00:35 +0300",
+        "message": "support running httpd"
+    },
+    {
+        "hash": "7a9f23de6e2082f37cfa2623e85f211fcf63928f",
+        "tree": "fe555fa7ecfcf1f789e2809950b93aefb09c173b",
+        "parents": [
+            "33f4a9a37bbdb8c82ac8937487c0c1b4005aab6f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378331979 2013-09-05 00:59:39 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378331979 2013-09-05 00:59:39 +0300",
+        "message": "add a file system containing some useful /etc files"
+    },
+    {
+        "hash": "33f4a9a37bbdb8c82ac8937487c0c1b4005aab6f",
+        "tree": "364e4a909dacafe7cd993352e62ccc58c6900fec",
+        "parents": [
+            "2866b1704d2db2fad45d3066ef679a29b4c5b899"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378331900 2013-09-05 00:58:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378331900 2013-09-05 00:58:20 +0300",
+        "message": "add the httpd as well"
+    },
+    {
+        "hash": "2866b1704d2db2fad45d3066ef679a29b4c5b899",
+        "tree": "bf674f3341e4c2f41e38a28e9707940e7592622e",
+        "parents": [
+            "0fc3ee358622540037077b82dcfc05c872e9fe4c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378331761 2013-09-05 00:56:01 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378331761 2013-09-05 00:56:01 +0300",
+        "message": "build httpd"
+    },
+    {
+        "hash": "0fc3ee358622540037077b82dcfc05c872e9fe4c",
+        "tree": "ace976b5c459678cd5bc733c72ec6917fd678da8",
+        "parents": [
+            "cdd961f0874dd15366918752b16d03046f6654ee"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378329505 2013-09-05 00:18:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378329505 2013-09-05 00:18:25 +0300",
+        "message": "update buildrump.sh"
+    },
+    {
+        "hash": "cdd961f0874dd15366918752b16d03046f6654ee",
+        "tree": "e9a75742342acf62b3608bf52613e300cf2e6548",
+        "parents": [
+            "a6539b1d5d351509f3b5154cf97f6e7f5f34939b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378329396 2013-09-05 00:16:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378329396 2013-09-05 00:16:36 +0300",
+        "message": "simplify"
+    },
+    {
+        "hash": "a6539b1d5d351509f3b5154cf97f6e7f5f34939b",
+        "tree": "c47b30698275ae9477440e3ca4dc8fac6081d169",
+        "parents": [
+            "9f7814f94734a4b9f76844c07f9624206aaf3027"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378326500 2013-09-04 23:28:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378326500 2013-09-04 23:28:20 +0300",
+        "message": "Xen can't deal with 64k MAXPHYS, so use 32k"
+    },
+    {
+        "hash": "9f7814f94734a4b9f76844c07f9624206aaf3027",
+        "tree": "01d45c46d13727b084bfd5102b3a34138ff9a085",
+        "parents": [
+            "f39f262c76f5ab4624e14e69bf1ffacafc5cc803"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378324490 2013-09-04 22:54:50 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378324490 2013-09-04 22:54:50 +0300",
+        "message": "pull new buildrump.sh for bugfixes"
+    },
+    {
+        "hash": "f39f262c76f5ab4624e14e69bf1ffacafc5cc803",
+        "tree": "7f11412a79da52929229d7ce5b561813a6aca615",
+        "parents": [
+            "b18deabdcfe1b2de541607004781b91f03cf4444"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378324296 2013-09-04 22:51:36 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378324296 2013-09-04 22:51:36 +0300",
+        "message": "Add some sort of emulation for mmap"
+    },
+    {
+        "hash": "b18deabdcfe1b2de541607004781b91f03cf4444",
+        "tree": "c1c7384b8a1479d41aa29d5a9dffac5c7bc047db",
+        "parents": [
+            "9d525c5544269963be8142c0126b996b7078c497"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378291960 2013-09-04 13:52:40 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378291960 2013-09-04 13:52:40 +0300",
+        "message": "Use high-level libc interface for reading directory."
+    },
+    {
+        "hash": "9d525c5544269963be8142c0126b996b7078c497",
+        "tree": "3d52c2931d7b0b57e04199fe9a4a04a51beaed27",
+        "parents": [
+            "ace8dbcc26f78ee64d48a046baba4d17b4bc3975"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378291922 2013-09-04 13:52:02 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378291922 2013-09-04 13:52:02 +0300",
+        "message": "set errno in stubs"
+    },
+    {
+        "hash": "ace8dbcc26f78ee64d48a046baba4d17b4bc3975",
+        "tree": "d8d338328594fb442b2a49308e25713a99b7869e",
+        "parents": [
+            "e1693035ab7b1c0d6aca2ad92efbf31a4ce0d708"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378291403 2013-09-04 13:43:23 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378291403 2013-09-04 13:43:23 +0300",
+        "message": "Make some stubs return NULL so as to signal the caller."
+    },
+    {
+        "hash": "e1693035ab7b1c0d6aca2ad92efbf31a4ce0d708",
+        "tree": "5189b176c0c41a365274050ed382a83dc638f6ad",
+        "parents": [
+            "e61ba8ff0916d42399bfff0309e9b0972a066ff6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378249286 2013-09-04 02:01:26 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378249286 2013-09-04 02:01:26 +0300",
+        "message": "rump_syscalls.h no longer necessary -- use libc"
+    },
+    {
+        "hash": "e61ba8ff0916d42399bfff0309e9b0972a066ff6",
+        "tree": "88b4f24d985ca8e495f42e30a13e94dbc4258f29",
+        "parents": [
+            "bc4e6b1b311caa18f82729981ab6a92cebbd0d64"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378249093 2013-09-04 01:58:13 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378249093 2013-09-04 01:58:13 +0300",
+        "message": "strdup() can now be used from libc"
+    },
+    {
+        "hash": "bc4e6b1b311caa18f82729981ab6a92cebbd0d64",
+        "tree": "324cc5905f2d0e193dd473539d902662a514dd46",
+        "parents": [
+            "34001e31f75459ad1aa06c401ab104db6d4cc787"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378249008 2013-09-04 01:56:48 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378249008 2013-09-04 01:56:48 +0300",
+        "message": "stack_chk_fail is provided by libc"
+    },
+    {
+        "hash": "34001e31f75459ad1aa06c401ab104db6d4cc787",
+        "tree": "f8b791adc101e11a58b3d05345dc51eabfee9f9f",
+        "parents": [
+            "505bf34b050df4cbdffc2da68c247b5a6023c4c6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378248949 2013-09-04 01:55:49 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378248949 2013-09-04 01:55:49 +0300",
+        "message": "Stubs for unsupported interfaces used internally by libc"
+    },
+    {
+        "hash": "505bf34b050df4cbdffc2da68c247b5a6023c4c6",
+        "tree": "57965d2e3a50cae281c8475409558ca7f75483f7",
+        "parents": [
+            "33150b29dbe4304329e1d64ef610f54ef931fa8d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378248858 2013-09-04 01:54:18 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378248858 2013-09-04 01:54:18 +0300",
+        "message": "initialize libc"
+    },
+    {
+        "hash": "33150b29dbe4304329e1d64ef610f54ef931fa8d",
+        "tree": "0d526a43420f76d37a1c8d83b000e80b5ccdd95d",
+        "parents": [
+            "4f946152ee09800c5c315a2d18fb8911fd6a9966"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378248434 2013-09-04 01:47:14 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378248434 2013-09-04 01:47:14 +0300",
+        "message": "g/c some test code"
+    },
+    {
+        "hash": "4f946152ee09800c5c315a2d18fb8911fd6a9966",
+        "tree": "22780908d314d423362966417144aeb9c8266aa6",
+        "parents": [
+            "de635c55529c87ee09f8298e0150a10b6994f189"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378247845 2013-09-04 01:37:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378247845 2013-09-04 01:37:25 +0300",
+        "message": "export libc syscall names from librump"
+    },
+    {
+        "hash": "de635c55529c87ee09f8298e0150a10b6994f189",
+        "tree": "b584d895be996754f17c4b3447450b132833d1de",
+        "parents": [
+            "2f9c5c5c3c6031b12b1ab63439ba3bb1e67839ef"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378247511 2013-09-04 01:31:51 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378247511 2013-09-04 01:31:51 +0300",
+        "message": "note caveat"
+    },
+    {
+        "hash": "2f9c5c5c3c6031b12b1ab63439ba3bb1e67839ef",
+        "tree": "e2aa3ae00d298a74fc418b18e0a738b3b6b489fb",
+        "parents": [
+            "b8f5231dd3040c6668355ce60496e3106b24f18f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378246740 2013-09-04 01:19:00 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378246740 2013-09-04 01:19:00 +0300",
+        "message": "add __errno.c\n\nShould've been in 5a10c7696d387ed5126fc85fdbdb59f165f26cfe."
+    },
+    {
+        "hash": "b8f5231dd3040c6668355ce60496e3106b24f18f",
+        "tree": "b6ddce610dac012fb54659fe336fb01303431b61",
+        "parents": [
+            "4a05d9ab2acc0b0dda1ddf1f3bcd66cbc906248c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378245832 2013-09-04 01:03:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378245832 2013-09-04 01:03:52 +0300",
+        "message": "buildrump.sh update to get syscall improvements"
+    },
+    {
+        "hash": "4a05d9ab2acc0b0dda1ddf1f3bcd66cbc906248c",
+        "tree": "263e15aab1c988fbe8f202dfaafdc9d79b1e6231",
+        "parents": [
+            "200c521b15612f35938d8a3cf98bbee9f224508a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378205345 2013-09-03 13:49:05 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378205345 2013-09-03 13:49:05 +0300",
+        "message": "remove unused <mini-os/byteswap.h>\n\nprovided by libc anyway"
+    },
+    {
+        "hash": "200c521b15612f35938d8a3cf98bbee9f224508a",
+        "tree": "2b91df2d6e131cfa4f2e93e3534fcbe46644e97f",
+        "parents": [
+            "43a84a46876476b53d09fe09eb4828015f4fec52"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378205096 2013-09-03 13:44:56 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378205096 2013-09-03 13:44:56 +0300",
+        "message": "nuke <mini-os/fcntl.h>"
+    },
+    {
+        "hash": "43a84a46876476b53d09fe09eb4828015f4fec52",
+        "tree": "95a2ee21732035a2c4fedbf1d24850c025f8f364",
+        "parents": [
+            "bb7933e003d31bdc329a9258a074e6adcaae345d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378205005 2013-09-03 13:43:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378205005 2013-09-03 13:43:25 +0300",
+        "message": "more rumpdefs.h avoidance"
+    },
+    {
+        "hash": "bb7933e003d31bdc329a9258a074e6adcaae345d",
+        "tree": "6df6b890a7732856b2c3e56af229bde6d254dc74",
+        "parents": [
+            "c0bd71610c40c14dade1eac823e39582e678d167"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378204923 2013-09-03 13:42:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378204923 2013-09-03 13:42:03 +0300",
+        "message": "test we get errno right"
+    },
+    {
+        "hash": "c0bd71610c40c14dade1eac823e39582e678d167",
+        "tree": "84c76624df05fb3bcdc3d935f9ce44e53dc1b7fb",
+        "parents": [
+            "725cced4affb007dd24d839b64b6fac09335d5b1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378204455 2013-09-03 13:34:15 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378204455 2013-09-03 13:34:15 +0300",
+        "message": "minor cleanup in the init department"
+    },
+    {
+        "hash": "725cced4affb007dd24d839b64b6fac09335d5b1",
+        "tree": "5e8756c6f6b8db40ae964e4b9a125b52d48afd64",
+        "parents": [
+            "b5537505160d54348049f54d83e8aa659d69dcbc"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378204328 2013-09-03 13:32:08 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378204328 2013-09-03 13:32:08 +0300",
+        "message": "add placeholders for stuff I need to remember to call"
+    },
+    {
+        "hash": "b5537505160d54348049f54d83e8aa659d69dcbc",
+        "tree": "4da4b011eb7a2c3694ebf585feb16a8d933a4676",
+        "parents": [
+            "3c3503f9c695cc2b99e091147aaaa5818440c115"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378203784 2013-09-03 13:23:04 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378203784 2013-09-03 13:23:04 +0300",
+        "message": "Get rid of uses of rumpdefs.h\n\n(wasn't wrong, but can be unnecessarily confusing to people\nreading the sources)"
+    },
+    {
+        "hash": "3c3503f9c695cc2b99e091147aaaa5818440c115",
+        "tree": "0f359558159bc98327f7f7fd9e7aa170cf4d2eef",
+        "parents": [
+            "5a10c7696d387ed5126fc85fdbdb59f165f26cfe"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378203585 2013-09-03 13:19:45 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378203585 2013-09-03 13:19:45 +0300",
+        "message": "rumpdefs.h is no longer necessary"
+    },
+    {
+        "hash": "5a10c7696d387ed5126fc85fdbdb59f165f26cfe",
+        "tree": "6aeac0e12dbe6b590884ebcd430e646d7e126355",
+        "parents": [
+            "1cab0a9c44fcf3cbc7f080bedd02e7adccc10532"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378203532 2013-09-03 13:18:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378203532 2013-09-03 13:18:52 +0300",
+        "message": "get rid of mini-os errnos (use NetBSD ones)"
+    },
+    {
+        "hash": "1cab0a9c44fcf3cbc7f080bedd02e7adccc10532",
+        "tree": "81eb10a3b619691a857637df00072f55ffa7487e",
+        "parents": [
+            "0cb9b20689dfb82be68db32f3f720fd52c2d1e0d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378200415 2013-09-03 12:26:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378200415 2013-09-03 12:26:55 +0300",
+        "message": "use namespace in header protectors"
+    },
+    {
+        "hash": "0cb9b20689dfb82be68db32f3f720fd52c2d1e0d",
+        "tree": "7a3a3ea53d75118ad8c92763af5ec5daf4eb76c2",
+        "parents": [
+            "a66c230722ae7a75f7c23fb1a0b141446eb7209f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378198195 2013-09-03 11:49:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378198195 2013-09-03 11:49:55 +0300",
+        "message": "use sys/queue.h"
+    },
+    {
+        "hash": "a66c230722ae7a75f7c23fb1a0b141446eb7209f",
+        "tree": "626f91aa4d8ae69027685f692e694196088e0210",
+        "parents": [
+            "e07687c9141c8fe5a31f574cadea5952bf611b3f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378197620 2013-09-03 11:40:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378197620 2013-09-03 11:40:20 +0300",
+        "message": "more header cleanup, remove dupes from <mini-os/lib.h>"
+    },
+    {
+        "hash": "e07687c9141c8fe5a31f574cadea5952bf611b3f",
+        "tree": "66a5574235507374ad0d6b653e82980edd370ada",
+        "parents": [
+            "40f4c9bec8b8bcce1c53b662a29d9149b11f787f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378196324 2013-09-03 11:18:44 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378196324 2013-09-03 11:18:44 +0300",
+        "message": "remove unused"
+    },
+    {
+        "hash": "40f4c9bec8b8bcce1c53b662a29d9149b11f787f",
+        "tree": "63e593036046c89c929fd09a5723a671bfacf9ff",
+        "parents": [
+            "60e7e1262b3a99eca700aa789f83da9116a3502f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378196049 2013-09-03 11:14:09 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378196049 2013-09-03 11:14:09 +0300",
+        "message": "g/c bits provided by libc\n\nNote, we can't yet g/c strdup() because it pulls in all kinds\nof parts of libc due to it allocating memory."
+    },
+    {
+        "hash": "60e7e1262b3a99eca700aa789f83da9116a3502f",
+        "tree": "bb3be38e6a922436dde95217e176d40a06bc476d",
+        "parents": [
+            "f9e75412be3ac60eac49f6ed0139692e3fd9a071"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378195474 2013-09-03 11:04:34 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378195474 2013-09-03 11:04:34 +0300",
+        "message": "remove now-empty files"
+    },
+    {
+        "hash": "f9e75412be3ac60eac49f6ed0139692e3fd9a071",
+        "tree": "978afdc889ef0f620c736516c7b43eb30cd228b9",
+        "parents": [
+            "1362811525323fe433386e4f05217cf6503d2bcd"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378195246 2013-09-03 11:00:46 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378195246 2013-09-03 11:00:46 +0300",
+        "message": "move lwip-related cleanup"
+    },
+    {
+        "hash": "1362811525323fe433386e4f05217cf6503d2bcd",
+        "tree": "800beb954ca9165030de0c612441fe756a587fd5",
+        "parents": [
+            "818d212bb3662e74d85a50acc25c8a5cdd0514c2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378171360 2013-09-03 04:22:40 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378171360 2013-09-03 04:22:40 +0300",
+        "message": "mention libc stuff"
+    },
+    {
+        "hash": "818d212bb3662e74d85a50acc25c8a5cdd0514c2",
+        "tree": "68ccec51c5ecc567f018c3e16f1cade7f70a9136",
+        "parents": [
+            "6a4e8a18fb97ee578fa75f42dcf5c45e22ac2ae1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378170343 2013-09-03 04:05:43 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378170343 2013-09-03 04:05:43 +0300",
+        "message": "No need for nb/queue.h anymore\n\n(obsoleted by the regular presense of sys/queue.h)"
+    },
+    {
+        "hash": "6a4e8a18fb97ee578fa75f42dcf5c45e22ac2ae1",
+        "tree": "43e849feb293f320c5e0b25039e7b812f0d47575",
+        "parents": [
+            "e09fa7741ad845463ebcab9efec4fd643efebc2a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378169823 2013-09-03 03:57:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378169823 2013-09-03 03:57:03 +0300",
+        "message": "nuke now-empty module"
+    },
+    {
+        "hash": "e09fa7741ad845463ebcab9efec4fd643efebc2a",
+        "tree": "c4150a643b5d626d7511c3a457d2039e1ce44af4",
+        "parents": [
+            "a10f495644642bcbd4836e997a82251628745efc"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378159814 2013-09-03 01:10:14 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378159814 2013-09-03 01:10:14 +0300",
+        "message": "actually build libc"
+    },
+    {
+        "hash": "a10f495644642bcbd4836e997a82251628745efc",
+        "tree": "4dead6c41cffd5fb9590100e6bc4945ce6f1b7f9",
+        "parents": [
+            "c8dc344bb1ef757174bea69fe2abc8db79f44ed8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378159728 2013-09-03 01:08:48 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378159728 2013-09-03 01:08:48 +0300",
+        "message": "even better types"
+    },
+    {
+        "hash": "c8dc344bb1ef757174bea69fe2abc8db79f44ed8",
+        "tree": "9381964371c2407ab5392cd82ea7c1899f90379e",
+        "parents": [
+            "d5820ce41720109aaffc6781ce15dc32cce20d5b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378159717 2013-09-03 01:08:37 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378159717 2013-09-03 01:08:37 +0300",
+        "message": "things work better if we also link libc"
+    },
+    {
+        "hash": "d5820ce41720109aaffc6781ce15dc32cce20d5b",
+        "tree": "8720183e778ede9b2ff43a5131cec9f08a0c537d",
+        "parents": [
+            "f8ff3d49c88f40958328a68077f553d773b1c873"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378157646 2013-09-03 00:34:06 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378157646 2013-09-03 00:34:06 +0300",
+        "message": "automagically provide test.ffs"
+    },
+    {
+        "hash": "f8ff3d49c88f40958328a68077f553d773b1c873",
+        "tree": "58d0fc1ddd79abdb31d09c05aa22d06c704d9f3f",
+        "parents": [
+            "02aad40d3905306d1e21241dcc3bdc21ad3b35d2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378157604 2013-09-03 00:33:24 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378157604 2013-09-03 00:33:24 +0300",
+        "message": "no PIC drivers"
+    },
+    {
+        "hash": "02aad40d3905306d1e21241dcc3bdc21ad3b35d2",
+        "tree": "8903dff9ec2fb0f0454feb4f9684e4366900362a",
+        "parents": [
+            "e97411687564cfb98e38ea72112cf836481f889f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378167300 2013-09-03 03:15:00 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378167300 2013-09-03 03:15:00 +0300",
+        "message": "proper cleanup"
+    },
+    {
+        "hash": "e97411687564cfb98e38ea72112cf836481f889f",
+        "tree": "d9a829711c2864cc9c7b8f36c1b75024eaec8415",
+        "parents": [
+            "2c71e02ca46a89b723f426834db422b3584c6500"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378167290 2013-09-03 03:14:50 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378167290 2013-09-03 03:14:50 +0300",
+        "message": "minor tweaks"
+    },
+    {
+        "hash": "2c71e02ca46a89b723f426834db422b3584c6500",
+        "tree": "7214df54c7a01303f7d25be0b972e955c2f7a90e",
+        "parents": [
+            "7b436419e7f344dbafed48567d5ce0213c1c5714"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378167041 2013-09-03 03:10:41 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378167041 2013-09-03 03:10:41 +0300",
+        "message": "Apply olive oil to the headers.\n\nPut mini-os specific stuff under mini-os and toss until things build."
+    },
+    {
+        "hash": "7b436419e7f344dbafed48567d5ce0213c1c5714",
+        "tree": "24ce22cee16b6c5c0b6969ec8ae18321c448c187",
+        "parents": [
+            "edd5d64344e2571a4f9233b70ea3f43fa890a071"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378166154 2013-09-03 02:55:54 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378166154 2013-09-03 02:55:54 +0300",
+        "message": "header paths + -nostdinc"
+    },
+    {
+        "hash": "edd5d64344e2571a4f9233b70ea3f43fa890a071",
+        "tree": "6435c9ae327d69d5c08f258a3ce6b3ecad6445e8",
+        "parents": [
+            "0c8c96e099443436107f4e14cad2e5bc76f4e84e"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165996 2013-09-03 02:53:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165996 2013-09-03 02:53:16 +0300",
+        "message": "uncompat"
+    },
+    {
+        "hash": "0c8c96e099443436107f4e14cad2e5bc76f4e84e",
+        "tree": "b40ca905aacd405a3e5595dd78ff4f3c9a80b0a2",
+        "parents": [
+            "e7078deddf7e51be6ff1f02a24e69cf0a18be648"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165830 2013-09-03 02:50:30 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165830 2013-09-03 02:50:30 +0300",
+        "message": "let there be types!"
+    },
+    {
+        "hash": "e7078deddf7e51be6ff1f02a24e69cf0a18be648",
+        "tree": "ea3e5e671b4b31c5c745302b2184bb47ff2ea544",
+        "parents": [
+            "f7ea6eb2b85e4b89a0a1bddef81152777bba58a8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165637 2013-09-03 02:47:17 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165637 2013-09-03 02:47:17 +0300",
+        "message": "proto care"
+    },
+    {
+        "hash": "f7ea6eb2b85e4b89a0a1bddef81152777bba58a8",
+        "tree": "760f3065255ab2c6da51e2e245d222679dbb3e93",
+        "parents": [
+            "a1dc172951974d28648683509d6d6514a991cab1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165577 2013-09-03 02:46:17 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165577 2013-09-03 02:46:17 +0300",
+        "message": "header namespace"
+    },
+    {
+        "hash": "a1dc172951974d28648683509d6d6514a991cab1",
+        "tree": "b556de41d6cdc7b68b820f4d28ee01d8d4999585",
+        "parents": [
+            "8a9876a5cc7c5bf7f96302c07a427aa04fcf4bf4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165487 2013-09-03 02:44:47 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165487 2013-09-03 02:44:47 +0300",
+        "message": "<posix/limits.h> is dead, long live <limits.h>"
+    },
+    {
+        "hash": "8a9876a5cc7c5bf7f96302c07a427aa04fcf4bf4",
+        "tree": "93318bc87220d0f086c8843e08cf2948b29a3142",
+        "parents": [
+            "ed3514df7300c20335c9a594c4c24d02055a3d99"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165423 2013-09-03 02:43:43 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165423 2013-09-03 02:43:43 +0300",
+        "message": "remove nbcompat\n\n(we shouldn't need this file at all anymore?)"
+    },
+    {
+        "hash": "ed3514df7300c20335c9a594c4c24d02055a3d99",
+        "tree": "99dbc12fa7bfdd66e005c03ad598c02344ea01af",
+        "parents": [
+            "0e24f8ee37f2930d4a0918531502078c306d93bc"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165331 2013-09-03 02:42:11 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165331 2013-09-03 02:42:11 +0300",
+        "message": "header namespace"
+    },
+    {
+        "hash": "0e24f8ee37f2930d4a0918531502078c306d93bc",
+        "tree": "687b0f052f5733a69c6d6f2e6268ea0c1b39fc44",
+        "parents": [
+            "39e66b00aa6355f831c090c734a7a3a0bc489d24"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165310 2013-09-03 02:41:50 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165310 2013-09-03 02:41:50 +0300",
+        "message": "main.c got the g/c"
+    },
+    {
+        "hash": "39e66b00aa6355f831c090c734a7a3a0bc489d24",
+        "tree": "e024f15ab88b806fa637211517fc845fad20cfb8",
+        "parents": [
+            "c2c563f320880a03c4ee987ccc4296cac2ab2f9a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165285 2013-09-03 02:41:25 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165285 2013-09-03 02:41:25 +0300",
+        "message": "remove conflicting types"
+    },
+    {
+        "hash": "c2c563f320880a03c4ee987ccc4296cac2ab2f9a",
+        "tree": "a8c6dcbf72e3bf71ce5250164d91c8cdc2a38440",
+        "parents": [
+            "9459777600daed0d44b8ac8e1a3cf3ec723341ec"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378165136 2013-09-03 02:38:56 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378165136 2013-09-03 02:38:56 +0300",
+        "message": "create list.h into mini-os/"
+    },
+    {
+        "hash": "9459777600daed0d44b8ac8e1a3cf3ec723341ec",
+        "tree": "745f1227d2cd96fc53cb9ab31f1d444dde8311c0",
+        "parents": [
+            "d5b6d133e54d3d1b02459c43aafaee9536b0c3cf"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164974 2013-09-03 02:36:14 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164974 2013-09-03 02:36:14 +0300",
+        "message": "kill duplicates"
+    },
+    {
+        "hash": "d5b6d133e54d3d1b02459c43aafaee9536b0c3cf",
+        "tree": "7fc190ee094cd80373219bb1c518196041e3d66d",
+        "parents": [
+            "b03919c084750f0e135dbea8c8fbfc33f444403d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164253 2013-09-03 02:24:13 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164253 2013-09-03 02:24:13 +0300",
+        "message": "-nostdinc"
+    },
+    {
+        "hash": "b03919c084750f0e135dbea8c8fbfc33f444403d",
+        "tree": "6fe28b0b1220e96383c0509649d8bfbc8e7230a8",
+        "parents": [
+            "5d6682ba9add742f6ba5987cdb5b04cd5b38711d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164172 2013-09-03 02:22:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164172 2013-09-03 02:22:52 +0300",
+        "message": "We have a good deal of POSIX from NetBSD, use that instead."
+    },
+    {
+        "hash": "5d6682ba9add742f6ba5987cdb5b04cd5b38711d",
+        "tree": "f3418acf1b0232e5add55702f6c656feb779a551",
+        "parents": [
+            "861ec22e0eaddd5bd91f52588bb5fb9653652cee"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164098 2013-09-03 02:21:38 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164098 2013-09-03 02:21:38 +0300",
+        "message": "remove more lwip leftovers"
+    },
+    {
+        "hash": "861ec22e0eaddd5bd91f52588bb5fb9653652cee",
+        "tree": "589dfab57032fe25659c3d59ca315ad1171de6f3",
+        "parents": [
+            "7f69c562c9998add0dca4d2700f33e15444ce8b6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164045 2013-09-03 02:20:45 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164045 2013-09-03 02:20:45 +0300",
+        "message": "had become empty"
+    },
+    {
+        "hash": "7f69c562c9998add0dca4d2700f33e15444ce8b6",
+        "tree": "8427fa7a6bf950419d00309554c9fe607a9abc59",
+        "parents": [
+            "6f9427fd433c84858046672daf9c182c8b555beb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378164027 2013-09-03 02:20:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378164027 2013-09-03 02:20:27 +0300",
+        "message": "g/c"
+    },
+    {
+        "hash": "6f9427fd433c84858046672daf9c182c8b555beb",
+        "tree": "bcfa2e005cf6ca04adad59f522bcfc01bb96c30a",
+        "parents": [
+            "c0292cbdbd2cbf9b19bb1d50df3542b6f51051db"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378163886 2013-09-03 02:18:06 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378163886 2013-09-03 02:18:06 +0300",
+        "message": "begin header massage"
+    },
+    {
+        "hash": "c0292cbdbd2cbf9b19bb1d50df3542b6f51051db",
+        "tree": "35e954bb3280ae52030fc86c133608c9e7e01051",
+        "parents": [
+            "d60939530b6346d87b7544ed59df28230bd82629"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378150413 2013-09-02 21:33:33 +0200",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378150413 2013-09-02 21:33:33 +0200",
+        "message": "janitorize HAVE_LWIP too; we have real TCP/IP"
+    },
+    {
+        "hash": "d60939530b6346d87b7544ed59df28230bd82629",
+        "tree": "b549c86fc8c41af3aa3cd32a9526b181f0d01642",
+        "parents": [
+            "32f04c9d8a348be9a528f295cc99cccaa81bf3f5"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378150322 2013-09-02 21:32:02 +0200",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378150322 2013-09-02 21:32:02 +0200",
+        "message": "remove some more HAVE_LIBC"
+    },
+    {
+        "hash": "32f04c9d8a348be9a528f295cc99cccaa81bf3f5",
+        "tree": "a38d27ab65520b7aa3d6cfced4ffcad4393c9cdf",
+        "parents": [
+            "31468edffffed42f73f36b8d7f4fd53fd85561bd"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378150141 2013-09-02 21:29:01 +0200",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378150141 2013-09-02 21:29:01 +0200",
+        "message": "unifdef -UHAVE_LIBC\n\nWe're going to have a real libc, and we don't want\nthis code around complicating things."
+    },
+    {
+        "hash": "31468edffffed42f73f36b8d7f4fd53fd85561bd",
+        "tree": "8a78674d5e807538477405cf1730e77f820275f8",
+        "parents": [
+            "2e0fc1077305cfc2d40d61015560710a48f05896"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378139504 2013-09-02 19:31:44 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378139504 2013-09-02 19:31:44 +0300",
+        "message": "disable symlink killing in make clean, too annoying"
+    },
+    {
+        "hash": "2e0fc1077305cfc2d40d61015560710a48f05896",
+        "tree": "eafcae3cc6d78ddb9522cfedc4fd2f3b9d2e9b2e",
+        "parents": [
+            "6c9e632252f9d7b706752d875f48ebb0b7231e80"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378137243 2013-09-02 18:54:03 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378137243 2013-09-02 18:54:03 +0300",
+        "message": "fix posix_memalign signature"
+    },
+    {
+        "hash": "6c9e632252f9d7b706752d875f48ebb0b7231e80",
+        "tree": "c0dccb729b72fbe4cf3e2381e8c1df3e626b25e9",
+        "parents": [
+            "88676295021af4339d5994252ce0d7d861f9e7c5"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378137175 2013-09-02 18:52:55 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378137175 2013-09-02 18:52:55 +0300",
+        "message": "Fix posix_memalign() signature.\n\nSERIOUSLY, need to check which compiler warnings are used."
+    },
+    {
+        "hash": "88676295021af4339d5994252ce0d7d861f9e7c5",
+        "tree": "ddb812dd2023d2a40efdbb1ec8ba9008bfa86799",
+        "parents": [
+            "1b11df3ebc2c1f40034b0c3fdb6f8ab1d7fea76a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378137106 2013-09-02 18:51:46 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378137106 2013-09-02 18:51:46 +0300",
+        "message": "Support realloc, hide POSIX aliases ALLOC_TESTING.\n\nHiding malloc etc. prevents collisions with the host."
+    },
+    {
+        "hash": "1b11df3ebc2c1f40034b0c3fdb6f8ab1d7fea76a",
+        "tree": "e257ebeb1aff39476311ef161509fdcd0c4bc585",
+        "parents": [
+            "57f47aec4019930daf5aa20135faf2dc52b70248"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1378061514 2013-09-01 21:51:54 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1378061514 2013-09-01 21:51:54 +0300",
+        "message": "Give more posix-y names to memory allocators.\n\nUseful in the \"with libc\" scenario."
+    },
+    {
+        "hash": "57f47aec4019930daf5aa20135faf2dc52b70248",
+        "tree": "cac7909d4292fbf0b947b326fb03b6a5b0f7d158",
+        "parents": [
+            "16b93a6a11516c4fef108c1627519c9e23c89c02"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377957191 2013-08-31 16:53:11 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377957191 2013-08-31 16:53:11 +0300",
+        "message": "fix readlock held condition"
+    },
+    {
+        "hash": "16b93a6a11516c4fef108c1627519c9e23c89c02",
+        "tree": "85d2bacfb8b605dfd37edf56fa3ea863d238c546",
+        "parents": [
+            "4afe73201897e72b70a1f60d59b23b9be65640f4"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377867187 2013-08-30 15:53:07 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377867187 2013-08-30 15:53:07 +0300",
+        "message": "Use buildrump.sh only for the kernel.\n\nThis repo implements its own hypercalls and we don't need the POSIX ones\nfrom buildrump.sh"
+    },
+    {
+        "hash": "4afe73201897e72b70a1f60d59b23b9be65640f4",
+        "tree": "66f21010fe98a22fc394cff558fab03f6578e235",
+        "parents": [
+            "acf896b757c135f6c7e808110ade6cfe6d278985"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377864479 2013-08-30 15:07:59 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377864479 2013-08-30 15:07:59 +0300",
+        "message": "update buildrump.sh (for -k)"
+    },
+    {
+        "hash": "acf896b757c135f6c7e808110ade6cfe6d278985",
+        "tree": "1f96a81e59c81063ac8380fb7a170652919132fe",
+        "parents": [
+            "be7071593d38c852eaae3d4c750aceb8fcf9299b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377720015 2013-08-28 23:00:15 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377720015 2013-08-28 23:00:15 +0300",
+        "message": "terminate freelist, this time in the correct place"
+    },
+    {
+        "hash": "be7071593d38c852eaae3d4c750aceb8fcf9299b",
+        "tree": "5aa8e6ccc2fe04c8a3ebc4d2b4ef7050012d8a02",
+        "parents": [
+            "e3425606c3393ad6cfa33418c35a02ee29688da0"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377636315 2013-08-27 23:45:15 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377636315 2013-08-27 23:45:15 +0300",
+        "message": "consistent naming for image and domain"
+    },
+    {
+        "hash": "e3425606c3393ad6cfa33418c35a02ee29688da0",
+        "tree": "99a5c0a866224616244fd221b109b26f9b64fde8",
+        "parents": [
+            "8d09663ef3d6f7b0c297a90334a3e8667433af97"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377374627 2013-08-24 23:03:47 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377374627 2013-08-24 23:03:47 +0300",
+        "message": "set initial rump kernel context to NULL"
+    },
+    {
+        "hash": "8d09663ef3d6f7b0c297a90334a3e8667433af97",
+        "tree": "7fabfd56a05fefa872be14c47f3b6a09335f3a01",
+        "parents": [
+            "4d89a14aa0624bc15f94062c563ef6bbdbeae2a1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377264654 2013-08-23 16:30:54 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377264654 2013-08-23 16:30:54 +0300",
+        "message": "Make sure biopoll doesn't run too early.\n\nprobably doesn't, but better safe than sorry"
+    },
+    {
+        "hash": "4d89a14aa0624bc15f94062c563ef6bbdbeae2a1",
+        "tree": "22ed84d3d30ae6843511c1135e6480bb7ff77990",
+        "parents": [
+            "65eb351714001e37bf2ddd964c26083a764451cb"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377263907 2013-08-23 16:18:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377263907 2013-08-23 16:18:27 +0300",
+        "message": "Use blkfront wait if we're waiting for events."
+    },
+    {
+        "hash": "65eb351714001e37bf2ddd964c26083a764451cb",
+        "tree": "d54b2c0442589820eeebef63d36eadaa72147deb",
+        "parents": [
+            "9d57ce66796702b7f1614b8f52254ff46fb0377c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377167427 2013-08-22 13:30:27 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377167427 2013-08-22 13:30:27 +0300",
+        "message": "Increase default memory allowance to 16MB\n\n8MB might be tight especially on 64bit if running complex demos."
+    },
+    {
+        "hash": "9d57ce66796702b7f1614b8f52254ff46fb0377c",
+        "tree": "4515762b2b784a93702903439ed895d3b80e3165",
+        "parents": [
+            "45288a03746333b1bc4812c13d2c0e7cab08a34c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377162845 2013-08-22 12:14:05 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377162845 2013-08-22 12:14:05 +0300",
+        "message": "Improve memory use efficiently by 40+%\n\nThis is done by adjusting the rump kernel memory allocation hypercall\nto directly use the page allocator for page-sized allocation (the very\ncommon case).  This in turn avoids having to allocate an extra page for\nthe malloc header, which in turn makes rump_hypermalloc(PAGE_SIZE)\nconsume only one page of memory instead of two."
+    },
+    {
+        "hash": "45288a03746333b1bc4812c13d2c0e7cab08a34c",
+        "tree": "29c07b3f53aac9bb2a4201ca1e6d0f66482ea0c8",
+        "parents": [
+            "21a40985e7454b24ca93ea21e8fb3194c7f47b64"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377119340 2013-08-22 00:09:00 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377119340 2013-08-22 00:09:00 +0300",
+        "message": "fix use-after-free"
+    },
+    {
+        "hash": "21a40985e7454b24ca93ea21e8fb3194c7f47b64",
+        "tree": "8a4723192020bac81b342a1f456f795790032146",
+        "parents": [
+            "891a733c92f69eae8aa69d6816799098fb677c27"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377118397 2013-08-21 23:53:17 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377118397 2013-08-21 23:53:17 +0300",
+        "message": "Replace GPL'd xmalloc with a BSD-licensed malloc.\n\nI believe this was the last GPL'd file hidden in the Mini-OS sources\nand this whole repo can now be considered free software regardless of\nhow it is used, modified and/or distributed.\n\nTODO: avoid wastefulness in the standard \"just allocate a page, thanks\"\ncase for the malloc hypercall."
+    },
+    {
+        "hash": "891a733c92f69eae8aa69d6816799098fb677c27",
+        "tree": "85c0b579eb264e50560360b5d4a0b202d8b96181",
+        "parents": [
+            "80b11b36ba3e29c1c6bddc2e0be39457b1cb3df7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377080777 2013-08-21 13:26:17 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377080777 2013-08-21 13:26:17 +0300",
+        "message": "Make compile without sscanf()\n\ncompile-tested only"
+    },
+    {
+        "hash": "80b11b36ba3e29c1c6bddc2e0be39457b1cb3df7",
+        "tree": "e08e7aec34621bedde77fc653262dcef58ed7b92",
+        "parents": [
+            "aa44399bb3d0c5b6a8b97f77730d199a1b9daeb7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377079126 2013-08-21 12:58:46 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377079126 2013-08-21 12:58:46 +0300",
+        "message": "improve path spec"
+    },
+    {
+        "hash": "aa44399bb3d0c5b6a8b97f77730d199a1b9daeb7",
+        "tree": "26409179cf6d8927181b67ec25412a74d14e5d30",
+        "parents": [
+            "89cadf34a0494a60c49fbe06601fbbe490aa1ce2"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377078940 2013-08-21 12:55:40 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377078940 2013-08-21 12:55:40 +0300",
+        "message": "Don't remove symbolic links from rumpobj with \"make clean\".\n\nThey're created by buildrump.sh and should be cleared elsewhere."
+    },
+    {
+        "hash": "89cadf34a0494a60c49fbe06601fbbe490aa1ce2",
+        "tree": "857b3a075ea9341eff703cfde55c7418319073c1",
+        "parents": [
+            "68821474d99a45ee2b20e79cc1688ca14b3a30f3"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377078292 2013-08-21 12:44:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377078292 2013-08-21 12:44:52 +0300",
+        "message": "Remove ia64 support.\n\nFirst and foremost, ia64 contained files contaminated with GPL.\nSecond, it's highly likely that nobody will miss it (I know of\nexactly 0 people who have run rump kernels on ia64)."
+    },
+    {
+        "hash": "68821474d99a45ee2b20e79cc1688ca14b3a30f3",
+        "tree": "269222ccdec33e6e5740c0d10f7d680c0b988fb4",
+        "parents": [
+            "5b8640780fe987ac1a0b916e2c6cacc99dc061f6"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377031562 2013-08-20 23:46:02 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377031562 2013-08-20 23:46:02 +0300",
+        "message": "Preserve domain on crash.\n\nThe tests can run so fast that the console server doesn't have\na chance to catch up."
+    },
+    {
+        "hash": "5b8640780fe987ac1a0b916e2c6cacc99dc061f6",
+        "tree": "d7b1f4ba41d3844ee4afc98efc0c767c5fe10549",
+        "parents": [
+            "4dd4b5d99ba941f3ec19a2b1137ab606ac50c3a7"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377031524 2013-08-20 23:45:24 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377031524 2013-08-20 23:45:24 +0300",
+        "message": "fix strtoul ep test. also, assign result"
+    },
+    {
+        "hash": "4dd4b5d99ba941f3ec19a2b1137ab606ac50c3a7",
+        "tree": "196600608e1c02ae0cd72e46978f70b95c403cb5",
+        "parents": [
+            "2d89e4ea44c59453872dbd08967f2a56ff0d8c30"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377031016 2013-08-20 23:36:56 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377031016 2013-08-20 23:36:56 +0300",
+        "message": "fix typo from sscanf->strtoul conversion"
+    },
+    {
+        "hash": "2d89e4ea44c59453872dbd08967f2a56ff0d8c30",
+        "tree": "741f2815973cb26212448a334d5b6d8781dd9399",
+        "parents": [
+            "59115cf6076acb8c7ea0a499a9545f066ac0bfe8"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377030967 2013-08-20 23:36:07 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377030967 2013-08-20 23:36:07 +0300",
+        "message": "specify radix explicitly"
+    },
+    {
+        "hash": "59115cf6076acb8c7ea0a499a9545f066ac0bfe8",
+        "tree": "e9018cb0700c9063b177e31f63dbcf689ade2550",
+        "parents": [
+            "d47a06e54e0306a1a7da2647ce573121ebae3c13"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1377005729 2013-08-20 16:35:29 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1377005729 2013-08-20 16:35:29 +0300",
+        "message": "replace some gpl'd code with a non-viral alternative. *sigh*\n\nno functional change intended, but only compile-tested so far"
+    },
+    {
+        "hash": "d47a06e54e0306a1a7da2647ce573121ebae3c13",
+        "tree": "570426a7ae926f63a0bf9b8a77ee830e878e6900",
+        "parents": [
+            "8e82e1e77dbff1b7f9d3e680b0d9ff587963a90b"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376945261 2013-08-19 23:47:41 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376945261 2013-08-19 23:47:41 +0300",
+        "message": "nits"
+    },
+    {
+        "hash": "8e82e1e77dbff1b7f9d3e680b0d9ff587963a90b",
+        "tree": "071f7a021e39f94116be5c6750454827c7962da2",
+        "parents": [
+            "c66fa9cc90f090447d8ee3268e5fd1cece50e6e1"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376945029 2013-08-19 23:43:49 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376945029 2013-08-19 23:43:49 +0300",
+        "message": "use config param to control which tests to run"
+    },
+    {
+        "hash": "c66fa9cc90f090447d8ee3268e5fd1cece50e6e1",
+        "tree": "e4af5623ad7ffef651df709292ec142e5d9c415c",
+        "parents": [
+            "3418cabf51e815517b4c2f4a91dff2893bedeffc"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376943854 2013-08-19 23:24:14 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376943854 2013-08-19 23:24:14 +0300",
+        "message": "put build commands in a simple script"
+    },
+    {
+        "hash": "3418cabf51e815517b4c2f4a91dff2893bedeffc",
+        "tree": "c6edf4c1a4740dbc9b271c3ab5e9e42d6bc1b6d9",
+        "parents": [
+            "555e8ade12a4f9cc199a1e312cc839cbe8235a4f"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376942260 2013-08-19 22:57:40 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376942260 2013-08-19 22:57:40 +0300",
+        "message": "support multiple block devices"
+    },
+    {
+        "hash": "555e8ade12a4f9cc199a1e312cc839cbe8235a4f",
+        "tree": "3594102e20981a76d62f50d93fad4ca420008fcd",
+        "parents": [
+            "5c0c606aa188616e1ea6637a81de4a9a37e2c101"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376935164 2013-08-19 20:59:24 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376935164 2013-08-19 20:59:24 +0300",
+        "message": "support device close"
+    },
+    {
+        "hash": "5c0c606aa188616e1ea6637a81de4a9a37e2c101",
+        "tree": "58b14208cb564bcb55125b706c9e023cacab45ad",
+        "parents": [
+            "898abd1487c3d980411924899a323728c5735385"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376930692 2013-08-19 19:44:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376930692 2013-08-19 19:44:52 +0300",
+        "message": "be a bit more random"
+    },
+    {
+        "hash": "898abd1487c3d980411924899a323728c5735385",
+        "tree": "689740701e6f95911475ac55ace5141655c62fcb",
+        "parents": [
+            "167021cfb4fa3bccddf341be5f19767cac07a88c"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376929530 2013-08-19 19:25:30 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376929530 2013-08-19 19:25:30 +0300",
+        "message": "some near-cosmetic improvements"
+    },
+    {
+        "hash": "167021cfb4fa3bccddf341be5f19767cac07a88c",
+        "tree": "53cd788429fd79c39cce78d4b625683ff477309e",
+        "parents": [
+            "a622d6bdeb8c04e27157523eb81611d5afd67b8a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376933692 2013-08-19 20:34:52 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376933692 2013-08-19 20:34:52 +0300",
+        "message": "allow multiple outstanding bio operations"
+    },
+    {
+        "hash": "a622d6bdeb8c04e27157523eb81611d5afd67b8a",
+        "tree": "a01d58c388229b58d6e0a24ff3aeb2c0aff86af7",
+        "parents": [
+            "166513ae5730fb144d4f0e7c5593a9c7eeee8774"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376932580 2013-08-19 20:16:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376932580 2013-08-19 20:16:20 +0300",
+        "message": "add missing copyright"
+    },
+    {
+        "hash": "166513ae5730fb144d4f0e7c5593a9c7eeee8774",
+        "tree": "88dba7ac3623984e945cb4adaf50cc2eee8eb45a",
+        "parents": [
+            "4913be5a1782750981062e941d59a05132de664d"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376932237 2013-08-19 20:10:37 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376932237 2013-08-19 20:10:37 +0300",
+        "message": "implement errno support\n\n(would conflict with HAVE_LIBC, solve that later)"
+    },
+    {
+        "hash": "4913be5a1782750981062e941d59a05132de664d",
+        "tree": "06504a9d71d280a36e06d37c40756e76acb42cd2",
+        "parents": [
+            "c2be97a7faed2bb2ebaa4d0ee3e601342417e7de"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376931755 2013-08-19 20:02:35 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376931755 2013-08-19 20:02:35 +0300",
+        "message": "give vif a hardcoded MAC addr to keep dhcp happier"
+    },
+    {
+        "hash": "c2be97a7faed2bb2ebaa4d0ee3e601342417e7de",
+        "tree": "5f89e7ecdb9e9155c864528589d590f7c98274a1",
+        "parents": [
+            "bae1cd9830f6431966a3e75c39d147c908c741da"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376931573 2013-08-19 19:59:33 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376931573 2013-08-19 19:59:33 +0300",
+        "message": "Use poll() for multi-connection support.\n\nIt was boring to write, but it exercises blocking and timeouts\nquite nicely.  Too bad it shook out only one bug :/"
+    },
+    {
+        "hash": "bae1cd9830f6431966a3e75c39d147c908c741da",
+        "tree": "e0a9c44962ec6f1df7118231c3193197b77d4ccb",
+        "parents": [
+            "2ac6dbdea34e6ab836d2768a8b2c1a6ea3cf2588",
+            "fddb2696aeec72e327a5f9325ee2aaa142bce018"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376924061 2013-08-19 17:54:21 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376924061 2013-08-19 17:54:21 +0300",
+        "message": "Merge branch 'master' of https://github.com/anttikantee/rumpuser-xen"
+    },
+    {
+        "hash": "2ac6dbdea34e6ab836d2768a8b2c1a6ea3cf2588",
+        "tree": "634f22876501e606cc10ad086580c79db3186817",
+        "parents": [
+            "66d301fe0eb052b6ef456328b75de52a43dc6bbf"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376924000 2013-08-19 17:53:20 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376924000 2013-08-19 17:53:20 +0300",
+        "message": "fix cv_timedwait"
+    },
+    {
+        "hash": "fddb2696aeec72e327a5f9325ee2aaa142bce018",
+        "tree": "900a22c0074ca821c28ede311d0eac292122be4e",
+        "parents": [
+            "66d301fe0eb052b6ef456328b75de52a43dc6bbf"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376904514 2013-08-19 12:28:34 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376904514 2013-08-19 12:28:34 +0300",
+        "message": "clarify instructions a bit more"
+    },
+    {
+        "hash": "66d301fe0eb052b6ef456328b75de52a43dc6bbf",
+        "tree": "d0ecebe12a982689811dd26648a49a7900a9af14",
+        "parents": [
+            "e3eaa21308e3d4b835207c9c514d29792ee22584"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376903956 2013-08-19 12:19:16 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376903956 2013-08-19 12:19:16 +0300",
+        "message": "update docs for submodule change"
+    },
+    {
+        "hash": "e3eaa21308e3d4b835207c9c514d29792ee22584",
+        "tree": "07834105c9f29fa6ef130db95e5e8b48c63ca5ef",
+        "parents": [
+            "60e17e829ee5dc0e7f88fc4f77e357a1132d0db3"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376903033 2013-08-19 12:03:53 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376903033 2013-08-19 12:03:53 +0300",
+        "message": "add buildrump.sh as a submodule"
+    },
+    {
+        "hash": "60e17e829ee5dc0e7f88fc4f77e357a1132d0db3",
+        "tree": "6727f553fb3980eb71c1e75fadfa8955b91a6aec",
+        "parents": [
+            "b177a01e60f5e7bacae6bc99cac2b8845aea970a"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376612721 2013-08-16 03:25:21 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376612721 2013-08-16 03:25:21 +0300",
+        "message": "less sparta"
+    },
+    {
+        "hash": "b177a01e60f5e7bacae6bc99cac2b8845aea970a",
+        "tree": "f247b82a9b1fd8d7f1aed96ae6140de96bd3ac76",
+        "parents": [
+            "d641661544f7b4c849db0ad0f80f537553673910"
+        ],
+        "author": "Antti Kantee <pooka@iki.fi> 1376609915 2013-08-16 02:38:35 +0300",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376609915 2013-08-16 02:38:35 +0300",
+        "message": "Initial support for rump kernels on Xen"
+    },
+    {
+        "hash": "d641661544f7b4c849db0ad0f80f537553673910",
+        "tree": "ceb1785331dc848b78f7a219e12067066192e462",
+        "parents": [],
+        "author": "Antti Kantee <pooka@iki.fi> 1376606495 2013-08-15 15:41:35 -0700",
+        "committer": "Antti Kantee <pooka@iki.fi> 1376606495 2013-08-15 15:41:35 -0700",
+        "message": "Initial commit"
+    }
+]

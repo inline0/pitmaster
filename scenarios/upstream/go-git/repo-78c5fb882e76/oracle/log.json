@@ -1,0 +1,203 @@
+[
+    {
+        "hash": "caf05fe371a5a6feab588a73ebd9ac73abdd072c",
+        "tree": "d5713c1843df3c0525e507d1647650bc051730f8",
+        "parents": [
+            "a511fa38233896f50bcc8a5f8d0f30b872484852",
+            "058cec4b81e8f0a9c3763e0671bbfba0666a4b33"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221853 2017-01-12 12:50:53 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221853 2017-01-12 12:50:53 +0100",
+        "message": "Merge branch '3' into 1"
+    },
+    {
+        "hash": "a511fa38233896f50bcc8a5f8d0f30b872484852",
+        "tree": "c9ba956e9b11f5930273b72d3131f2e28a9b0c28",
+        "parents": [
+            "8ec19d64748c54c6d047f30c81b4c444a8232b41",
+            "04fffad6eacd4512554cb22ca3a0d6b8a38a96cc"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221847 2017-01-12 12:50:47 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221847 2017-01-12 12:50:47 +0100",
+        "message": "Merge branch '2' into 1"
+    },
+    {
+        "hash": "058cec4b81e8f0a9c3763e0671bbfba0666a4b33",
+        "tree": "977e3a248a5126b471548d83c294e99937db230a",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221826 2017-01-12 12:50:26 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221826 2017-01-12 12:50:26 +0100",
+        "message": "add 3"
+    },
+    {
+        "hash": "04fffad6eacd4512554cb22ca3a0d6b8a38a96cc",
+        "tree": "f9ef5f4170afa53ba24af203e0f4e8701ad1e0a8",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221780 2017-01-12 12:49:40 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221780 2017-01-12 12:49:40 +0100",
+        "message": "add 2"
+    },
+    {
+        "hash": "8ec19d64748c54c6d047f30c81b4c444a8232b41",
+        "tree": "8bb827729ec3847b5af4fc2491e0f41c75802f28",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221712 2017-01-12 12:48:32 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221712 2017-01-12 12:48:32 +0100",
+        "message": "Added one"
+    },
+    {
+        "hash": "79b3db5091672bcb9da2704a2d7b269bcd1ef36f",
+        "tree": "960d8555fff278b45b176e15473d9a0d346db257",
+        "parents": [
+            "a6284856e054eea3886b7aa120d8be775ae9a2c3"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221176 2017-01-12 12:39:36 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221176 2017-01-12 12:39:36 +0100",
+        "message": "Added functionality three"
+    },
+    {
+        "hash": "a6284856e054eea3886b7aa120d8be775ae9a2c3",
+        "tree": "4644c465d52a0f43f4a5a3d190de3015f87201d9",
+        "parents": [
+            "d74a3c0c22d6512493317ae27574a768be88aa28",
+            "ca858bfd043ac70bf532d53a4031be0cdf7483b4"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221088 2017-01-12 12:38:08 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221088 2017-01-12 12:38:08 +0100",
+        "message": "Merge branch 'functionalityOne' into functionalityTwo"
+    },
+    {
+        "hash": "d74a3c0c22d6512493317ae27574a768be88aa28",
+        "tree": "ca3183d5757ab7abd58efe0e1c35ff8cf87fafc0",
+        "parents": [
+            "8829746417d76e7a64e540e906abcb7970679e47"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221053 2017-01-12 12:37:33 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221053 2017-01-12 12:37:33 +0100",
+        "message": "More files into functionality two"
+    },
+    {
+        "hash": "8829746417d76e7a64e540e906abcb7970679e47",
+        "tree": "074bb551bc3114eedeeacb1e6ecd4c595cdba430",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221005 2017-01-12 12:36:45 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484221005 2017-01-12 12:36:45 +0100",
+        "message": "Added functionality two"
+    },
+    {
+        "hash": "ca858bfd043ac70bf532d53a4031be0cdf7483b4",
+        "tree": "ff1eeaaef1aa2b20bd7b399810014d69749afa2e",
+        "parents": [
+            "5e4661353b435315edb0aab7a472bd43c82fed5c"
+        ],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484220764 2017-01-12 12:32:44 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484220764 2017-01-12 12:32:44 +0100",
+        "message": "More files into functionality one"
+    },
+    {
+        "hash": "5e4661353b435315edb0aab7a472bd43c82fed5c",
+        "tree": "32cb703f6904d371378ee9d9f4d3932b039ac36f",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484220727 2017-01-12 12:32:07 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484220727 2017-01-12 12:32:07 +0100",
+        "message": "Init functionality one"
+    },
+    {
+        "hash": "a135c3e77219a8eaf166a643f6ce3192e97b7e5e",
+        "tree": "835f8b36cdd8c69b7a5b51e6b1def6ca5b816f0c",
+        "parents": [],
+        "author": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484216232 2017-01-12 11:17:12 +0100",
+        "committer": "Antonio Jesus Navarro Perez <antonio@sourced.tech> 1484216232 2017-01-12 11:17:12 +0100",
+        "message": "New root commit"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "tree": "a8d315b2b1c615d43042c3a62402b8a54288cf5c",
+        "parents": [
+            "918c48b83bd081e863dbe1b80f8998f058cd8294"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269447 2015-04-05 23:30:47 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269447 2015-04-05 23:30:47 +0200",
+        "message": "vendor stuff"
+    },
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "tree": "dbd3641b371024f44d0e469a9c8f5457b0660de1",
+        "parents": [
+            "918c48b83bd081e863dbe1b80f8998f058cd8294"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427803208 2015-03-31 14:00:08 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427803208 2015-03-31 14:00:08 +0200",
+        "message": "some code in a branch"
+    },
+    {
+        "hash": "918c48b83bd081e863dbe1b80f8998f058cd8294",
+        "tree": "fb72698cab7617ac416264415f13224dfd7a165e",
+        "parents": [
+            "af2d6a6954d532f8ffb47615169c8fdf9d383a1a"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802978 2015-03-31 13:56:18 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802978 2015-03-31 13:56:18 +0200",
+        "message": "some code"
+    },
+    {
+        "hash": "af2d6a6954d532f8ffb47615169c8fdf9d383a1a",
+        "tree": "4d081c50e250fa32ea8b1313cf8bb7c2ad7627fd",
+        "parents": [
+            "1669dce138d9b841a518c64b10914d88f5e488ea"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802711 2015-03-31 13:51:51 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802711 2015-03-31 13:51:51 +0200",
+        "message": "some json"
+    },
+    {
+        "hash": "1669dce138d9b841a518c64b10914d88f5e488ea",
+        "tree": "eba74343e2f15d62adedfd8c883ee0262b5c8021",
+        "parents": [
+            "35e85108805c84807bc66a02d91535e1e24b38b9",
+            "a5b8b09e2f8fcb0bb99d3ccb0958157b40890d69"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802494 2015-03-31 13:48:14 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802494 2015-03-31 13:48:14 +0200",
+        "message": "Merge branch 'master' of github.com:tyba/git-fixture"
+    },
+    {
+        "hash": "a5b8b09e2f8fcb0bb99d3ccb0958157b40890d69",
+        "tree": "c2d30fa8ef288618f65f6eed6e168e0d514886f4",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d",
+            "b8e471f58bcbca63b07bda20e428190409c2db47"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1427802434 2015-03-31 13:47:14 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1427802434 2015-03-31 13:47:14 +0200",
+        "message": "Merge pull request #1 from dripolles/feature\n\nCreating changelog"
+    },
+    {
+        "hash": "35e85108805c84807bc66a02d91535e1e24b38b9",
+        "tree": "8dcef98b1d52143e1e2dbc458ffe38f925786bf2",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802384 2015-03-31 13:46:24 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802384 2015-03-31 13:46:24 +0200",
+        "message": "binary file"
+    },
+    {
+        "hash": "b8e471f58bcbca63b07bda20e428190409c2db47",
+        "tree": "c2d30fa8ef288618f65f6eed6e168e0d514886f4",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d"
+        ],
+        "author": "Daniel Ripolles <daniel@lordran.local> 1427802292 2015-03-31 13:44:52 +0200",
+        "committer": "Daniel Ripolles <daniel@lordran.local> 1427802292 2015-03-31 13:44:52 +0200",
+        "message": "Creating changelog"
+    },
+    {
+        "hash": "b029517f6300c2da0f4b651b8642506cd6aaf45d",
+        "tree": "aa9b383c260e1d05fbbf6b30a02914555e20c725",
+        "parents": [],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1427802141 2015-03-31 13:42:21 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1427802141 2015-03-31 13:42:21 +0200",
+        "message": "Initial commit"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "name": "refs/heads/branch"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "name": "refs/remotes/origin/branch"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/remotes/origin/master"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/tags/v1.0.0"
+    }
+]

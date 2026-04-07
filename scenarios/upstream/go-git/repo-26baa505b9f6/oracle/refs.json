@@ -1,0 +1,74 @@
+[
+    {
+        "hash": "25ca6c810c08482d61113fbcaaada38bb59093a8",
+        "name": "refs/heads/dev"
+    },
+    {
+        "hash": "d1b0093698e398d596ef94d646c4db37e8d1e970",
+        "name": "refs/heads/feature"
+    },
+    {
+        "hash": "dce0e0c20d701c3d260146e443d6b3b079505191",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "29740cfaf0c2ee4bb532dba9e80040ca738f367c",
+        "name": "refs/tags/A"
+    },
+    {
+        "hash": "31a7e081a28f149ee98ffd13ba1a6d841a5f46fd",
+        "name": "refs/tags/AB"
+    },
+    {
+        "hash": "2c84807970299ba98951c65fe81ebbaac01030f0",
+        "name": "refs/tags/B"
+    },
+    {
+        "hash": "8b72fabdc4222c3ff965bc310ded788c601c50ed",
+        "name": "refs/tags/C"
+    },
+    {
+        "hash": "4709e13a3cbb300c2b8a917effda776e1b8955c7",
+        "name": "refs/tags/CD1"
+    },
+    {
+        "hash": "38468e274e91e50ffb637b88a1954ab6193fe974",
+        "name": "refs/tags/CD2"
+    },
+    {
+        "hash": "14777cf3e209334592fbfd0b878f6868394db836",
+        "name": "refs/tags/D"
+    },
+    {
+        "hash": "d1b0093698e398d596ef94d646c4db37e8d1e970",
+        "name": "refs/tags/G"
+    },
+    {
+        "hash": "ccaaa99c21dad7e9f392c36ae8cb72dc63bed458",
+        "name": "refs/tags/GQ1"
+    },
+    {
+        "hash": "806824d4778e94fe7c3244e92a9cd07090c9ab54",
+        "name": "refs/tags/GQ2"
+    },
+    {
+        "hash": "bb355b64e18386dbc3af63dfd09c015c44cbd9b6",
+        "name": "refs/tags/M"
+    },
+    {
+        "hash": "d64b894762ab5f09e2b155221b90c18bd0637236",
+        "name": "refs/tags/N"
+    },
+    {
+        "hash": "ff84393134864cf9d3a9853a81bde81778bd5805",
+        "name": "refs/tags/P"
+    },
+    {
+        "hash": "dce0e0c20d701c3d260146e443d6b3b079505191",
+        "name": "refs/tags/Q"
+    },
+    {
+        "hash": "628f1a42b70380ed05734bf01b468b46206ef1ea",
+        "name": "refs/tags/S"
+    }
+]

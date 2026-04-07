@@ -1,0 +1,11 @@
+{
+    "name": "upstream/go-git/pack-a3fed42da1e8",
+    "category": "upstream",
+    "description": "go-git pack fixture: pack-a3fed42da1e8189a077c0e6846c040dcf73fc9dd",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

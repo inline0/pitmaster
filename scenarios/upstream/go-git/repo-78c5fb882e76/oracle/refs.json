@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "caf05fe371a5a6feab588a73ebd9ac73abdd072c",
+        "name": "refs/heads/1"
+    },
+    {
+        "hash": "04fffad6eacd4512554cb22ca3a0d6b8a38a96cc",
+        "name": "refs/heads/2"
+    },
+    {
+        "hash": "058cec4b81e8f0a9c3763e0671bbfba0666a4b33",
+        "name": "refs/heads/3"
+    },
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "name": "refs/heads/branch"
+    },
+    {
+        "hash": "ca858bfd043ac70bf532d53a4031be0cdf7483b4",
+        "name": "refs/heads/functionalityOne"
+    },
+    {
+        "hash": "79b3db5091672bcb9da2704a2d7b269bcd1ef36f",
+        "name": "refs/heads/functionalityTwo"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "a135c3e77219a8eaf166a643f6ce3192e97b7e5e",
+        "name": "refs/heads/rootReference"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "name": "refs/remotes/origin/branch"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/remotes/origin/master"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "name": "refs/tags/v1.0.0"
+    }
+]

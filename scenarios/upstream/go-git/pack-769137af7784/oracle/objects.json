@@ -1,0 +1,212 @@
+[
+    {
+        "hash": "03d2c021ff68954cf3ef0a36825e194a4b98f981",
+        "type": "commit",
+        "size": 224,
+        "content": "tree d180730b429a9e3f750f38d111f15d8f41ed14b9\nparent 347c91919944a68e9413581a1bc15519550a3afe\nauthor Filip Navara <filip.navara@gmail.com> 1555917493 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917493 +0200\n\n4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1247c7d74e9c28fb83e8e394910346dee104fcae",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4\t2.txt\n100644 blob e440e5c842586965a7fb77deda2eca68612b1f53\t3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2ae2131ad3b1d5c9873aef1879d881a961bf9966",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4\t2.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "301160a93062df23030a69f4b5e4d9bf71866ee9",
+        "type": "blob",
+        "size": 1,
+        "content": "8",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "347c91919944a68e9413581a1bc15519550a3afe",
+        "type": "commit",
+        "size": 176,
+        "content": "tree e19896d6cb50c3038012a69fdcbec243576ea41e\nauthor Filip Navara <filip.navara@gmail.com> 1555917358 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917358 +0200\n\n1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3c32edbda9aee2fb6cca53500af4aea23815ca87",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4\t2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "56a6051ca2b02b04ef92d5150c9ef600403cb1de",
+        "type": "blob",
+        "size": 1,
+        "content": "1",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "62f9457511f879886bb7728c986fe10b0ece6bcb",
+        "type": "blob",
+        "size": 1,
+        "content": "6",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6f6c5d2be7852c782be1dd13e36496dd7ad39560",
+        "type": "commit",
+        "size": 369,
+        "content": "tree 79559dbcd7248559442521273ad130894609ccc1\nparent ce275064ad67d51e99f026084e20827901a8361c\nparent bb13916df33ed23004c3ce9ed3b8487528e655c1\nparent a45273fe2d63300e1962a9e26a6b15c276cd7082\nauthor Filip Navara <filip.navara@gmail.com> 1555917740 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917740 +0200\n\nMerge commit 'bb13916'; commit 'a45273f' into HEAD\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7813681f5b41c028345ca62a2be376bae70b7f61",
+        "type": "blob",
+        "size": 1,
+        "content": "5",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "79559dbcd7248559442521273ad130894609ccc1",
+        "type": "tree",
+        "size": 231,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4\t2.txt\n100644 blob e440e5c842586965a7fb77deda2eca68612b1f53\t3.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n100644 blob 7813681f5b41c028345ca62a2be376bae70b7f61\t5.txt\n100644 blob 62f9457511f879886bb7728c986fe10b0ece6bcb\t6.txt\n100644 blob c7930257dfef505fd996e1d6f22f2f35149990d0\t7.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a45273fe2d63300e1962a9e26a6b15c276cd7082",
+        "type": "commit",
+        "size": 224,
+        "content": "tree b38750a9e3d52d5464b51b219354d01eed64a2dc\nparent c0edf780dd0da6a65a7a49a86032fcf8a0c2d467\nauthor Filip Navara <filip.navara@gmail.com> 1555917580 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917580 +0200\n\n7\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b29328491a0682c259bcce28741eac71f3499f7d",
+        "type": "commit",
+        "size": 293,
+        "content": "tree 2ae2131ad3b1d5c9873aef1879d881a961bf9966\nparent e713b52d7e13807e87a002e812041f248db3f643\nparent 03d2c021ff68954cf3ef0a36825e194a4b98f981\nauthor Filip Navara <filip.navara@gmail.com> 1555917633 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917633 +0200\n\nMerge commit '03d2c02'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b38750a9e3d52d5464b51b219354d01eed64a2dc",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob 62f9457511f879886bb7728c986fe10b0ece6bcb\t6.txt\n100644 blob c7930257dfef505fd996e1d6f22f2f35149990d0\t7.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b9d69064b190e7aedccf84731ca1d917871f8a1c",
+        "type": "commit",
+        "size": 224,
+        "content": "tree e846fadc3aab5d9c1a590f0e199081bb5f620b77\nparent 6f6c5d2be7852c782be1dd13e36496dd7ad39560\nauthor Filip Navara <filip.navara@gmail.com> 1555917801 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917801 +0200\n\n8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb13916df33ed23004c3ce9ed3b8487528e655c1",
+        "type": "commit",
+        "size": 224,
+        "content": "tree f9178ce0209aace4589c8eb0b1bcd0378a16fceb\nparent 03d2c021ff68954cf3ef0a36825e194a4b98f981\nauthor Filip Navara <filip.navara@gmail.com> 1555917520 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917520 +0200\n\n5\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bf0d87ab1b2b0ec1a11a3973d2845b42413d9767",
+        "type": "blob",
+        "size": 1,
+        "content": "4",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bf7f10a540d60aec852fc7661b01ff71a3d7ebd7",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n100644 blob 62f9457511f879886bb7728c986fe10b0ece6bcb\t6.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c0edf780dd0da6a65a7a49a86032fcf8a0c2d467",
+        "type": "commit",
+        "size": 224,
+        "content": "tree d841229731c05a54bc1a2432ee642e1be006ab44\nparent 347c91919944a68e9413581a1bc15519550a3afe\nauthor Filip Navara <filip.navara@gmail.com> 1555917551 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917551 +0200\n\n6\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c7930257dfef505fd996e1d6f22f2f35149990d0",
+        "type": "blob",
+        "size": 1,
+        "content": "7",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce275064ad67d51e99f026084e20827901a8361c",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 1247c7d74e9c28fb83e8e394910346dee104fcae\nparent e713b52d7e13807e87a002e812041f248db3f643\nauthor Filip Navara <filip.navara@gmail.com> 1555917419 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917419 +0200\n\n3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d180730b429a9e3f750f38d111f15d8f41ed14b9",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d2dc5ac04916e156018db4482c40c39b894090e9",
+        "type": "commit",
+        "size": 293,
+        "content": "tree bf7f10a540d60aec852fc7661b01ff71a3d7ebd7\nparent 03d2c021ff68954cf3ef0a36825e194a4b98f981\nparent c0edf780dd0da6a65a7a49a86032fcf8a0c2d467\nauthor Filip Navara <filip.navara@gmail.com> 1555917680 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917680 +0200\n\nMerge commit 'c0edf78'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d8263ee9860594d2806b0dfd1bfd17528b0ba2a4",
+        "type": "blob",
+        "size": 1,
+        "content": "2",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d841229731c05a54bc1a2432ee642e1be006ab44",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob 62f9457511f879886bb7728c986fe10b0ece6bcb\t6.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e19896d6cb50c3038012a69fdcbec243576ea41e",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e440e5c842586965a7fb77deda2eca68612b1f53",
+        "type": "blob",
+        "size": 1,
+        "content": "3",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e713b52d7e13807e87a002e812041f248db3f643",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 3c32edbda9aee2fb6cca53500af4aea23815ca87\nparent 347c91919944a68e9413581a1bc15519550a3afe\nauthor Filip Navara <filip.navara@gmail.com> 1555917391 +0200\ncommitter Filip Navara <filip.navara@gmail.com> 1555917391 +0200\n\n2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e846fadc3aab5d9c1a590f0e199081bb5f620b77",
+        "type": "tree",
+        "size": 264,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4\t2.txt\n100644 blob e440e5c842586965a7fb77deda2eca68612b1f53\t3.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n100644 blob 7813681f5b41c028345ca62a2be376bae70b7f61\t5.txt\n100644 blob 62f9457511f879886bb7728c986fe10b0ece6bcb\t6.txt\n100644 blob c7930257dfef505fd996e1d6f22f2f35149990d0\t7.txt\n100644 blob 301160a93062df23030a69f4b5e4d9bf71866ee9\t8.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9178ce0209aace4589c8eb0b1bcd0378a16fceb",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de\t1.txt\n100644 blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767\t4.txt\n100644 blob 7813681f5b41c028345ca62a2be376bae70b7f61\t5.txt\n",
+        "encoding": "utf-8"
+    }
+]

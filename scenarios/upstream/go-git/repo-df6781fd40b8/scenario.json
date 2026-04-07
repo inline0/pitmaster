@@ -1,0 +1,11 @@
+{
+    "name": "upstream/go-git/repo-df6781fd40b8",
+    "category": "upstream",
+    "description": "go-git fixture: git-df6781fd40b8f4911d70ce71f8387b991615cd6d",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

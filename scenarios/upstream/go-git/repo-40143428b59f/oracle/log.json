@@ -1,0 +1,40 @@
+[
+    {
+        "hash": "b2755b63e92d79410f28a33bef90107789c63a139121a457920c668d5805e974",
+        "tree": "4779fe6f7471f2ad5e8407b07b1012aa035c5adc4ef8956e5584aaa88e6827fd",
+        "parents": [
+            "cf25021d9b16a6c8747a7058d5bedf1c7d5ab224378dc0a0ca391ae26b6f0393"
+        ],
+        "author": "Paulo Gomes <pjbgf@linux.com> 1758836662 2025-09-25 22:44:22 +0100",
+        "committer": "Paulo Gomes <pjbgf@linux.com> 1758836662 2025-09-25 22:44:22 +0100",
+        "message": "Add dirs\n\nSigned-off-by: Paulo Gomes <pjbgf@linux.com>"
+    },
+    {
+        "hash": "cf25021d9b16a6c8747a7058d5bedf1c7d5ab224378dc0a0ca391ae26b6f0393",
+        "tree": "e289d2a57e200a01c0488cf029c7e5cfb59a0a3a36a6174a9d167c6245dcede3",
+        "parents": [
+            "722e8b57095d069fc3fbe9d4378b140910cdba65950e67c1ec5830d47829a73f"
+        ],
+        "author": "Paulo Gomes <pjbgf@linux.com> 1758836647 2025-09-25 22:44:07 +0100",
+        "committer": "Paulo Gomes <pjbgf@linux.com> 1758836647 2025-09-25 22:44:07 +0100",
+        "message": "Add CHANGELOG and LICENSE\n\nSigned-off-by: Paulo Gomes <pjbgf@linux.com>"
+    },
+    {
+        "hash": "722e8b57095d069fc3fbe9d4378b140910cdba65950e67c1ec5830d47829a73f",
+        "tree": "0302f8a517d80755dff5d5fc02dda63721ffa60c87919f78e54cd47c0500b525",
+        "parents": [
+            "6ae1cd1218ecefe183547edc2da77bb10aefbba4bbbf7c605a21ae52b6ec7037"
+        ],
+        "author": "Paulo Gomes <pjbgf@linux.com> 1758836610 2025-09-25 22:43:30 +0100",
+        "committer": "Paulo Gomes <pjbgf@linux.com> 1758836610 2025-09-25 22:43:30 +0100",
+        "message": "Add binary.jpg\n\nSigned-off-by: Paulo Gomes <pjbgf@linux.com>"
+    },
+    {
+        "hash": "6ae1cd1218ecefe183547edc2da77bb10aefbba4bbbf7c605a21ae52b6ec7037",
+        "tree": "80d3e62537540bb252e4cbca79974d225683644138d972f004ff9c909a1478c1",
+        "parents": [],
+        "author": "Paulo Gomes <paulo.gomes.uk@gmail.com> 1730292346 2024-10-30 12:45:46 +0000",
+        "committer": "Paulo Gomes <paulo.gomes.uk@gmail.com> 1730292346 2024-10-30 12:45:46 +0000",
+        "message": "Initial commit"
+    }
+]

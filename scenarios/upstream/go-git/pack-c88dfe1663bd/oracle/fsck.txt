@@ -1,0 +1,6 @@
+error: wrong index v2 file size in .git/objects/pack/pack-c88dfe1663bd216e278d5bb3c8decd0a4bb174a6204585dc44b7c7a05fceed55.idx
+error: packfile .git/objects/pack/pack-c88dfe1663bd216e278d5bb3c8decd0a4bb174a6204585dc44b7c7a05fceed55.pack index not opened
+notice: HEAD points to an unborn branch (main)
+notice: No default references
+error: wrong index v2 file size in .git/objects/pack/pack-c88dfe1663bd216e278d5bb3c8decd0a4bb174a6204585dc44b7c7a05fceed55.idx
+error: unable to load rev-index for pack '.git/objects/pack/pack-c88dfe1663bd216e278d5bb3c8decd0a4bb174a6204585dc44b7c7a05fceed55.pack'

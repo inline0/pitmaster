@@ -1,0 +1,122 @@
+[
+    {
+        "hash": "1980fcf55330d9d94c34abee5ab734afecf96aba",
+        "tree": "73d9cf44e9045254346c73f6646b08f9302c8570",
+        "parents": [
+            "6ecf0ef2c2dffb796033e5a02219af86ec6584e5"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1476972600 2016-10-20 16:10:00 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1476972600 2016-10-20 16:10:00 +0200",
+        "message": "touching balls"
+    },
+    {
+        "hash": "f72835db2eeacb70969ef2164c30a2613c40609c",
+        "tree": "e242218598d1d585657b6725700c1a10bdb132d7",
+        "parents": [
+            "b35bdcaacfa2359e39a44d858a64dd49550c6ec2"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437558985 2015-07-22 11:56:25 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437559460 2015-07-22 12:04:20 +0200",
+        "message": "Very important fix."
+    },
+    {
+        "hash": "b35bdcaacfa2359e39a44d858a64dd49550c6ec2",
+        "tree": "cbc582ec899b13c4931c64eaa8ff878f98f2d601",
+        "parents": [
+            "6ecf0ef2c2dffb796033e5a02219af86ec6584e5"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437495152 2015-07-21 18:12:32 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437495166 2015-07-21 18:12:46 +0200",
+        "message": "Hi, I'm another contributor!"
+    },
+    {
+        "hash": "6ecf0ef2c2dffb796033e5a02219af86ec6584e5",
+        "tree": "a8d315b2b1c615d43042c3a62402b8a54288cf5c",
+        "parents": [
+            "918c48b83bd081e863dbe1b80f8998f058cd8294"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269447 2015-04-05 23:30:47 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269447 2015-04-05 23:30:47 +0200",
+        "message": "vendor stuff"
+    },
+    {
+        "hash": "e8d3ffab552895c19b9fcf7aa264d277cde33881",
+        "tree": "dbd3641b371024f44d0e469a9c8f5457b0660de1",
+        "parents": [
+            "918c48b83bd081e863dbe1b80f8998f058cd8294"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427803208 2015-03-31 14:00:08 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427803208 2015-03-31 14:00:08 +0200",
+        "message": "some code in a branch"
+    },
+    {
+        "hash": "918c48b83bd081e863dbe1b80f8998f058cd8294",
+        "tree": "fb72698cab7617ac416264415f13224dfd7a165e",
+        "parents": [
+            "af2d6a6954d532f8ffb47615169c8fdf9d383a1a"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802978 2015-03-31 13:56:18 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802978 2015-03-31 13:56:18 +0200",
+        "message": "some code"
+    },
+    {
+        "hash": "af2d6a6954d532f8ffb47615169c8fdf9d383a1a",
+        "tree": "4d081c50e250fa32ea8b1313cf8bb7c2ad7627fd",
+        "parents": [
+            "1669dce138d9b841a518c64b10914d88f5e488ea"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802711 2015-03-31 13:51:51 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802711 2015-03-31 13:51:51 +0200",
+        "message": "some json"
+    },
+    {
+        "hash": "1669dce138d9b841a518c64b10914d88f5e488ea",
+        "tree": "eba74343e2f15d62adedfd8c883ee0262b5c8021",
+        "parents": [
+            "35e85108805c84807bc66a02d91535e1e24b38b9",
+            "a5b8b09e2f8fcb0bb99d3ccb0958157b40890d69"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802494 2015-03-31 13:48:14 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802494 2015-03-31 13:48:14 +0200",
+        "message": "Merge branch 'master' of github.com:tyba/git-fixture"
+    },
+    {
+        "hash": "a5b8b09e2f8fcb0bb99d3ccb0958157b40890d69",
+        "tree": "c2d30fa8ef288618f65f6eed6e168e0d514886f4",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d",
+            "b8e471f58bcbca63b07bda20e428190409c2db47"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1427802434 2015-03-31 13:47:14 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1427802434 2015-03-31 13:47:14 +0200",
+        "message": "Merge pull request #1 from dripolles/feature\n\nCreating changelog"
+    },
+    {
+        "hash": "35e85108805c84807bc66a02d91535e1e24b38b9",
+        "tree": "8dcef98b1d52143e1e2dbc458ffe38f925786bf2",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802384 2015-03-31 13:46:24 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1427802384 2015-03-31 13:46:24 +0200",
+        "message": "binary file"
+    },
+    {
+        "hash": "b8e471f58bcbca63b07bda20e428190409c2db47",
+        "tree": "c2d30fa8ef288618f65f6eed6e168e0d514886f4",
+        "parents": [
+            "b029517f6300c2da0f4b651b8642506cd6aaf45d"
+        ],
+        "author": "Daniel Ripolles <daniel@lordran.local> 1427802292 2015-03-31 13:44:52 +0200",
+        "committer": "Daniel Ripolles <daniel@lordran.local> 1427802292 2015-03-31 13:44:52 +0200",
+        "message": "Creating changelog"
+    },
+    {
+        "hash": "b029517f6300c2da0f4b651b8642506cd6aaf45d",
+        "tree": "aa9b383c260e1d05fbbf6b30a02914555e20c725",
+        "parents": [],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1427802141 2015-03-31 13:42:21 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1427802141 2015-03-31 13:42:21 +0200",
+        "message": "Initial commit"
+    }
+]

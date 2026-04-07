@@ -1,0 +1,180 @@
+[
+    {
+        "hash": "0e3f541c637051e924d6cd90dfa906b2945c3d34",
+        "tree": "ae881854f7a709a12233c87e104e9958fe4e293d",
+        "parents": [
+            "7f339d24564ed7d8789a9e7f4dae38f3caa38e55"
+        ],
+        "author": "Mike P <mike.p@gembaadvantage.com> 1635348186 2021-10-27 16:23:06 +0100",
+        "committer": "Mike P <mike.p@gembaadvantage.com> 1635348186 2021-10-27 16:23:06 +0100",
+        "message": "APO-1393"
+    },
+    {
+        "hash": "7f339d24564ed7d8789a9e7f4dae38f3caa38e55",
+        "tree": "e7b384615e007fd3b78f8a79cc92a75340e1b60e",
+        "parents": [
+            "79d13d0bc786ab069fb8b3b76c0dcb2a19dee5b8"
+        ],
+        "author": "Mike P <mike.p@gembaadvantage.com> 1635347716 2021-10-27 16:15:16 +0100",
+        "committer": "Mike P <mike.p@gembaadvantage.com> 1635347716 2021-10-27 16:15:16 +0100",
+        "message": "APO-1393"
+    },
+    {
+        "hash": "79d13d0bc786ab069fb8b3b76c0dcb2a19dee5b8",
+        "tree": "cdfce28a90292157351138194e5ad2d27b1df11d",
+        "parents": [
+            "697e152d8ba5a2353a386ba3a4b0ff26b9c0ab89"
+        ],
+        "author": "Mike P <mike.p@gembaadvantage.com> 1635344806 2021-10-27 15:26:46 +0100",
+        "committer": "Mike P <mike.p@gembaadvantage.com> 1635344806 2021-10-27 15:26:46 +0100",
+        "message": "APO-1393 test"
+    },
+    {
+        "hash": "697e152d8ba5a2353a386ba3a4b0ff26b9c0ab89",
+        "tree": "7cd20b849bbcf672360b4d59336b2e8e565e8562",
+        "parents": [
+            "93cf9cc71f4324797e01cd8bfec4ce9b89a48d0f"
+        ],
+        "author": "Mike P <mike.p@gembaadvantage.com> 1635343556 2021-10-27 15:05:56 +0100",
+        "committer": "Mike P <mike.p@gembaadvantage.com> 1635343556 2021-10-27 15:05:56 +0100",
+        "message": "APO-1393 test"
+    },
+    {
+        "hash": "93cf9cc71f4324797e01cd8bfec4ce9b89a48d0f",
+        "tree": "7ebfad21f98dba64c8688d97b82dc51e58d71fd6",
+        "parents": [
+            "289f9f68051d2c50f4eba311aae053e02d7174d1"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635004974 2021-10-23 17:02:54 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635004974 2021-10-23 17:02:54 +0100",
+        "message": "feat!: this is a breaking change"
+    },
+    {
+        "hash": "289f9f68051d2c50f4eba311aae053e02d7174d1",
+        "tree": "2d415c79d0da6a3b2e2ca04d5a9b7a16e0ee20aa",
+        "parents": [
+            "77f46263345f17f34a72bf050584f391d44d4e52"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635004950 2021-10-23 17:02:30 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635004950 2021-10-23 17:02:30 +0100",
+        "message": "fix: ensure all tags are fetched"
+    },
+    {
+        "hash": "77f46263345f17f34a72bf050584f391d44d4e52",
+        "tree": "085589c336fdbb7fc36869cb0ccb7f2571a23c95",
+        "parents": [
+            "6b72002f287362acfcf124a50eb788d4d8f9157b"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635004839 2021-10-23 17:00:39 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635004839 2021-10-23 17:00:39 +0100",
+        "message": "feat: this is another feature"
+    },
+    {
+        "hash": "6b72002f287362acfcf124a50eb788d4d8f9157b",
+        "tree": "05867d28ed39a3939ffd4bcc81beb0301d251732",
+        "parents": [
+            "2349d6fa9083ef88169e48eb5fa21cbe14a20386"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635004820 2021-10-23 17:00:20 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635004820 2021-10-23 17:00:20 +0100",
+        "message": "fix: this is a bug fix"
+    },
+    {
+        "hash": "2349d6fa9083ef88169e48eb5fa21cbe14a20386",
+        "tree": "085589c336fdbb7fc36869cb0ccb7f2571a23c95",
+        "parents": [
+            "ff14fe90fc0cbd45e32b90203018a4c6913a2e2c"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635001948 2021-10-23 16:12:28 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635001948 2021-10-23 16:12:28 +0100",
+        "message": "fix: this is a bug fix"
+    },
+    {
+        "hash": "ff14fe90fc0cbd45e32b90203018a4c6913a2e2c",
+        "tree": "085589c336fdbb7fc36869cb0ccb7f2571a23c95",
+        "parents": [
+            "c81f759796cfbca0b85d633d2410439c89ef06a7"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1635001897 2021-10-23 16:11:37 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1635001897 2021-10-23 16:11:37 +0100",
+        "message": "feat!: this is a breaking change"
+    },
+    {
+        "hash": "c81f759796cfbca0b85d633d2410439c89ef06a7",
+        "tree": "085589c336fdbb7fc36869cb0ccb7f2571a23c95",
+        "parents": [
+            "4b4d053aafabf1fe3c7e5098eb708c24db14c2ef"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634999092 2021-10-23 15:24:52 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634999092 2021-10-23 15:24:52 +0100",
+        "message": "fix: pull version from source branch"
+    },
+    {
+        "hash": "4b4d053aafabf1fe3c7e5098eb708c24db14c2ef",
+        "tree": "879d64b9abf7b746e751223cc517fadf7f5c9bd0",
+        "parents": [
+            "621bf9909ac8b5ef22d1499b3ab12f8c811810b2"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634998442 2021-10-23 15:14:02 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634998442 2021-10-23 15:14:02 +0100",
+        "message": "fix: this is a fix"
+    },
+    {
+        "hash": "621bf9909ac8b5ef22d1499b3ab12f8c811810b2",
+        "tree": "9b0a88a1984f9ff103b13ebcd36b8fc83c956807",
+        "parents": [
+            "a5127c3be405015ce66b78fd9665dea1fc5e12bd"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634982011 2021-10-23 10:40:11 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634982011 2021-10-23 10:40:11 +0100",
+        "message": "feat: this is a new feature"
+    },
+    {
+        "hash": "a5127c3be405015ce66b78fd9665dea1fc5e12bd",
+        "tree": "0527294ef3af09138089438bb6c4f6479e05f458",
+        "parents": [
+            "4260b3070863e88391ab438286f893adb6023003"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634981456 2021-10-23 10:30:56 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634981456 2021-10-23 10:30:56 +0100",
+        "message": "fix: a new bug fix"
+    },
+    {
+        "hash": "4260b3070863e88391ab438286f893adb6023003",
+        "tree": "6aff006cade1277d71d792e66aa95d4844dadb08",
+        "parents": [
+            "7ef2a37307c0f32fc44002966fa9e06746bbf085"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634980897 2021-10-23 10:21:37 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634980897 2021-10-23 10:21:37 +0100",
+        "message": "feat: this is another feature"
+    },
+    {
+        "hash": "7ef2a37307c0f32fc44002966fa9e06746bbf085",
+        "tree": "72465e1274de70ad8a7a141b65c5cf9298f49e14",
+        "parents": [
+            "217124732d6ac68df84d194b6b46563c431be2c4"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634980833 2021-10-23 10:20:33 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634980833 2021-10-23 10:20:33 +0100",
+        "message": "fix: this is a bug fix"
+    },
+    {
+        "hash": "217124732d6ac68df84d194b6b46563c431be2c4",
+        "tree": "03315f94992348e32ccf8db5e85c31f2d2df649e",
+        "parents": [
+            "4a5d87f96d542bebdece91a1d600abd8711d3f4d"
+        ],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634980580 2021-10-23 09:16:20 +0000",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634980580 2021-10-23 09:16:20 +0000",
+        "message": "feat: this is a new feature"
+    },
+    {
+        "hash": "4a5d87f96d542bebdece91a1d600abd8711d3f4d",
+        "tree": "6aff006cade1277d71d792e66aa95d4844dadb08",
+        "parents": [],
+        "author": "paul.t <paul.t@gembaadvantage.com> 1634980118 2021-10-23 10:08:38 +0100",
+        "committer": "paul.t <paul.t@gembaadvantage.com> 1634980118 2021-10-23 10:08:38 +0100",
+        "message": "chore: initialise repository"
+    }
+]

@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "152175bf7e5580299fa1f0ba41ef6474cc043b70",
+        "type": "tag",
+        "size": 147,
+        "content": "object 70846e9a10ef7b41064b40f07713d5b8b9a8fc73\ntype tree\ntag tree-tag\ntagger Máximo Cuadros <mcuadros@gmail.com> 1474485476 +0200\n\na tagged tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70846e9a10ef7b41064b40f07713d5b8b9a8fc73",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ad7897c0fb8e7d9a9ba41fa66072cf06095a6cfc",
+        "type": "tag",
+        "size": 153,
+        "content": "object f7b877701fbf855b44c0a9e86f3fdce2c298b07f\ntype commit\ntag commit-tag\ntagger Máximo Cuadros <mcuadros@gmail.com> 1474485404 +0200\n\na tagged commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b742a2a9fa0afcfa9a6fad080980fbc26b007c69",
+        "type": "tag",
+        "size": 162,
+        "content": "object f7b877701fbf855b44c0a9e86f3fdce2c298b07f\ntype commit\ntag annotated-tag\ntagger Máximo Cuadros <mcuadros@gmail.com> 1474485215 +0200\n\nexample annotated tag\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f7b877701fbf855b44c0a9e86f3fdce2c298b07f",
+        "type": "commit",
+        "size": 180,
+        "content": "tree 70846e9a10ef7b41064b40f07713d5b8b9a8fc73\nauthor Máximo Cuadros <mcuadros@gmail.com> 1474485052 +0200\ncommitter Máximo Cuadros <mcuadros@gmail.com> 1474485052 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fe6cb94756faa81e5ed9240f9191b833db5f40ae",
+        "type": "tag",
+        "size": 147,
+        "content": "object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ntype blob\ntag blob-tag\ntagger Máximo Cuadros <mcuadros@gmail.com> 1474485453 +0200\n\na tagged blob\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,75 @@
+error: HEAD: invalid sha1 pointer ec6f456c0e8c7058a29611429965aa05c190b54b
+error: HEAD: invalid reflog entry ec6f456c0e8c7058a29611429965aa05c190b54b
+notice: No default references
+error: 3be7a88afda8d4409d30e6a7fc7b7128dabe2b45: invalid sha1 pointer in cache-tree of .git/index
+missing blob 8003d0766f8238e16e9b4f81045c5e8ccfa91c82
+missing blob 469a6284bcca7f5b01829d738995946e07ad8683
+missing blob 86b556ff07ba86f9366f3a79a8154a7ec7345613
+missing blob 881f6298e55dffd605a681e3f33e449f5e414895
+missing blob 09160bb30c97cf4a71c6299e929b7fd36f48095c
+missing blob 4a97dc7d5b14d435793b1dde5ba4b584330a880e
+missing blob 8bd2ecba872e98cac6503eaf46deb3725f5bdf01
+missing blob 0ae22e3727f275ba4122d2c9e982a083a50fb251
+missing blob 104a5d2cb866121c0abbd3ed71ecdf079822d82a
+missing blob d5f40b9a7ca47da62c7ca915d3a74234f11747b6
+missing blob d70f396e5b67501278fb47615242d4b8305a47e2
+missing blob 5da0570ef9dffe773f6dc2d13be53b7ac29b4592
+missing blob 1fc28da5c2af621ad63a064c4dee90b4bd58aaf7
+missing blob a0f012ee830bea7da890e0e2698eb864f43868d2
+missing blob 603cd1bd635a39c8472df47ab454357a0b9dcde0
+missing blob e1def6280e14e52abffc4874a0bcdef6865840c4
+missing blob a078475dd88d5b39e0543c9a21e3f7f1c5f856bd
+missing blob e46d8afd9c2ebc4e1d0e4c9e9c06006a8c783c79
+missing blob e3cd2f439df74e9fa9859765904882d4ddcc56cd
+missing blob dfa53e2f3d0ce7829dd08f08c4a58e9cbd995b7e
+missing blob 715d71e5448ec97892e2b41b3e47147bc3b4dbe8
+missing blob 74492f09d85d80e161d1796d50fb797e2cd8225d
+missing blob b6728012d4007f26ca8d42a91dea07b75822a747
+missing blob f718c3391c9629f382f41c952bc83bf8b67a8ccc
+missing blob 3d9675f88b7787f5f4f87fc24bb750a210332398
+missing blob 7e837e1511935b4952a1417d3c358a99035f420d
+missing blob 3f25ad95309baf4d71373202afb4a5f6d100bed5
+error: Could not read 214e1dca024fb6da5ed65564d2de734df5dc2127
+failed to parse commit 214e1dca024fb6da5ed65564d2de734df5dc2127 from object database for commit-graph
+error: Could not read 2275fa7d0c75d20103f90b0e1616937d5a9fc5e6
+failed to parse commit 2275fa7d0c75d20103f90b0e1616937d5a9fc5e6 from object database for commit-graph
+error: Could not read 27aa8cdd2431068606741a589383c02c149ea625
+failed to parse commit 27aa8cdd2431068606741a589383c02c149ea625 from object database for commit-graph
+error: Could not read 3048d280d2d5b258d9e582a226ff4bbed34fd5c9
+failed to parse commit 3048d280d2d5b258d9e582a226ff4bbed34fd5c9 from object database for commit-graph
+error: Could not read 5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae
+failed to parse commit 5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae from object database for commit-graph
+error: Could not read 6c629843a1750a27c9af01ed2985f362f619c47a
+failed to parse commit 6c629843a1750a27c9af01ed2985f362f619c47a from object database for commit-graph
+error: Could not read 6f43e8933ba3c04072d5d104acc6118aac3e52ee
+failed to parse commit 6f43e8933ba3c04072d5d104acc6118aac3e52ee from object database for commit-graph
+error: Could not read 70923099e61fa33f0bc5256d2f938fa44c4df10e
+failed to parse commit 70923099e61fa33f0bc5256d2f938fa44c4df10e from object database for commit-graph
+error: Could not read 758ac33217f092bfcded4ad4774954ac054c9609
+failed to parse commit 758ac33217f092bfcded4ad4774954ac054c9609 from object database for commit-graph
+error: Could not read 939814f341fdd5d35e81a3845a33c4fedb19d2d2
+failed to parse commit 939814f341fdd5d35e81a3845a33c4fedb19d2d2 from object database for commit-graph
+error: Could not read a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e
+failed to parse commit a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e from object database for commit-graph
+error: Could not read b359f11ea09e642695edcd114b463da4395b10c1
+failed to parse commit b359f11ea09e642695edcd114b463da4395b10c1 from object database for commit-graph
+error: Could not read bcaa1ac5644b16f1febb72f31e204720b7bb8934
+failed to parse commit bcaa1ac5644b16f1febb72f31e204720b7bb8934 from object database for commit-graph
+error: Could not read bdd9a92789d4a86b20a8d3df462df373f41acf23
+failed to parse commit bdd9a92789d4a86b20a8d3df462df373f41acf23 from object database for commit-graph
+error: Could not read ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec
+failed to parse commit ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec from object database for commit-graph
+error: Could not read cf2874632223220e0445abf0a7806dc772c0b37a
+failed to parse commit cf2874632223220e0445abf0a7806dc772c0b37a from object database for commit-graph
+error: Could not read d0a18ccd8eea3bdabc76d6dc5420af1ea30aae9f
+failed to parse commit d0a18ccd8eea3bdabc76d6dc5420af1ea30aae9f from object database for commit-graph
+error: Could not read d10a0e7c1f340a6cfc14540a5f8c508ce7e2eabf
+failed to parse commit d10a0e7c1f340a6cfc14540a5f8c508ce7e2eabf from object database for commit-graph
+error: Could not read d82f291cde9987322c8a0c81a325e1ba6159684c
+failed to parse commit d82f291cde9987322c8a0c81a325e1ba6159684c from object database for commit-graph
+error: Could not read e1d8866ffa78fa16d2f39b0ba5344a7269ee5371
+failed to parse commit e1d8866ffa78fa16d2f39b0ba5344a7269ee5371 from object database for commit-graph
+error: Could not read ec6f456c0e8c7058a29611429965aa05c190b54b
+failed to parse commit ec6f456c0e8c7058a29611429965aa05c190b54b from object database for commit-graph
+error: Could not read fa058d42fa3bc53f39108a56dad67157169b2191
+failed to parse commit fa058d42fa3bc53f39108a56dad67157169b2191 from object database for commit-graph

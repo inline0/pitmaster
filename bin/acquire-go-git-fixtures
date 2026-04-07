@@ -1,0 +1,131 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Import go-git-fixtures: repo tarballs and standalone pack files.
+ */
+
+$root = dirname(__DIR__);
+$source = '/tmp/go-git-fixtures/data';
+
+if (!is_dir($source)) {
+    fwrite(STDERR, "go-git fixtures not found at {$source}\n");
+    fwrite(STDERR, "Run: git clone --depth=1 https://github.com/go-git/go-git-fixtures.git /tmp/go-git-fixtures\n");
+    exit(1);
+}
+
+$upstreamDir = $root . '/scenarios/upstream/go-git';
+
+// Import repo tarballs
+$tarballs = glob($source . '/git-*.tgz');
+$imported = 0;
+
+foreach ($tarballs as $tarball) {
+    $basename = basename($tarball, '.tgz');
+    $hash = substr($basename, 4); // strip "git-"
+    $shortHash = substr($hash, 0, 12);
+    $scenarioName = "repo-{$shortHash}";
+    $scenarioDir = $upstreamDir . '/' . $scenarioName;
+
+    if (is_dir($scenarioDir)) {
+        fwrite(STDOUT, "  EXISTS  {$scenarioName}\n");
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    // Create setup.sh that extracts the tarball
+    $setupContent = "#!/bin/bash\nset -e\n\n# Extract go-git fixture: {$basename}\n"
+        . "git init .\n"
+        . "tar xzf " . escapeshellarg(realpath($tarball)) . " -C .git\n"
+        . "git checkout -- . 2>/dev/null || true\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setupContent);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    // Create scenario.json
+    $scenario = [
+        'name' => 'upstream/go-git/' . $scenarioName,
+        'category' => 'upstream',
+        'description' => "go-git fixture: {$basename}",
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => [
+            'exact_match' => [],
+            'fsck_clean' => false,
+        ],
+    ];
+
+    file_put_contents(
+        $scenarioDir . '/scenario.json',
+        json_encode($scenario, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+    );
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$scenarioName}\n");
+}
+
+// Import standalone pack files (create scenarios that test pack reading)
+$packs = glob($source . '/pack-*.pack');
+$packImported = 0;
+
+foreach ($packs as $packFile) {
+    $basename = basename($packFile, '.pack');
+    $hash = substr($basename, 5); // strip "pack-"
+    $shortHash = substr($hash, 0, 12);
+    $scenarioName = "pack-{$shortHash}";
+    $scenarioDir = $upstreamDir . '/' . $scenarioName;
+
+    $idxFile = substr($packFile, 0, -5) . '.idx';
+
+    if (!is_file($idxFile)) {
+        fwrite(STDOUT, "  SKIP  {$scenarioName} (no .idx)\n");
+        continue;
+    }
+
+    if (is_dir($scenarioDir)) {
+        fwrite(STDOUT, "  EXISTS  {$scenarioName}\n");
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    // Create setup.sh that creates a repo with this pack
+    $setupContent = "#!/bin/bash\nset -e\n\n# go-git pack fixture: {$basename}\n"
+        . "git init .\n"
+        . "mkdir -p .git/objects/pack\n"
+        . "cp " . escapeshellarg(realpath($packFile)) . " .git/objects/pack/\n"
+        . "cp " . escapeshellarg(realpath($idxFile)) . " .git/objects/pack/\n"
+        . "# Set HEAD to first commit found in pack\n"
+        . "FIRST_COMMIT=\$(git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | grep ' commit' | head -1 | cut -d' ' -f1)\n"
+        . "if [ -n \"\$FIRST_COMMIT\" ]; then\n"
+        . "  git update-ref refs/heads/main \$FIRST_COMMIT 2>/dev/null || true\n"
+        . "fi\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setupContent);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    $scenario = [
+        'name' => 'upstream/go-git/' . $scenarioName,
+        'category' => 'upstream',
+        'description' => "go-git pack fixture: {$basename}",
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => [
+            'exact_match' => [],
+            'fsck_clean' => false,
+        ],
+    ];
+
+    file_put_contents(
+        $scenarioDir . '/scenario.json',
+        json_encode($scenario, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+    );
+
+    $packImported++;
+    fwrite(STDOUT, "  OK    {$scenarioName} (pack)\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} repo fixtures, {$packImported} pack fixtures.\n");

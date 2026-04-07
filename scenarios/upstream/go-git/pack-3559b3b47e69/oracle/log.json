@@ -1,0 +1,1812 @@
+[
+    {
+        "hash": "0289de7f3803529cb79e2b5905844f33c5f00f86",
+        "tree": "4f1ba742fb1e53ce6cdd4b0cd44c7b9741ac1a1e",
+        "parents": [
+            "b298dffb4d88f2ad570c1527124f02667ec77889"
+        ],
+        "author": "Alberto Cortés <alcortesm@gmail.com> 1470389658 2016-08-05 11:34:18 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1470389658 2016-08-05 11:34:18 +0200",
+        "message": "add simple difftree implementation (#63)\n\n* add simple difftree implementation\r\n\r\n* strings.Compare needs at least go1.5"
+    },
+    {
+        "hash": "b298dffb4d88f2ad570c1527124f02667ec77889",
+        "tree": "417ad7de6f446f4b4bfad21986c35c8d19233afb",
+        "parents": [
+            "bc035e354ad328192a1e5040d84b73d93291efcb",
+            "d806d10650fad380392308b9bd31c1ae0c46a726"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470128512 2016-08-02 11:01:52 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470128512 2016-08-02 11:01:52 +0200",
+        "message": "Merge branch 'repository-head'"
+    },
+    {
+        "hash": "bc035e354ad328192a1e5040d84b73d93291efcb",
+        "tree": "417ad7de6f446f4b4bfad21986c35c8d19233afb",
+        "parents": [
+            "96cacdb7df9e9efb119b44ffd2ab5c6993064ecc"
+        ],
+        "author": "Alberto Cortés <alcortesm@gmail.com> 1470128329 2016-08-02 10:58:49 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1470128329 2016-08-02 10:58:49 +0200",
+        "message": "Repository head (#61)\n\n* add Repository.Head() tests\r\n\r\n* add head support for remote repos and more tests\r\n\r\n* add head support for local repos\r\n\r\n* clean code\r\n\r\n* remove dead code"
+    },
+    {
+        "hash": "d806d10650fad380392308b9bd31c1ae0c46a726",
+        "tree": "417ad7de6f446f4b4bfad21986c35c8d19233afb",
+        "parents": [
+            "f85f5efddd6c923e82a50de8b001f78a4b9de910"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470128032 2016-08-02 10:53:52 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470128032 2016-08-02 10:53:52 +0200",
+        "message": "remove dead code"
+    },
+    {
+        "hash": "f85f5efddd6c923e82a50de8b001f78a4b9de910",
+        "tree": "3d96b8db4aab105c5e7637ca6a38c863e06fc422",
+        "parents": [
+            "27a183ed5ae91485c7ae31961c5aa6b8b440625b"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470127932 2016-08-02 10:52:12 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470127932 2016-08-02 10:52:12 +0200",
+        "message": "clean code"
+    },
+    {
+        "hash": "27a183ed5ae91485c7ae31961c5aa6b8b440625b",
+        "tree": "ac6d25636243be774066f38039e23a794f24ded8",
+        "parents": [
+            "71c58f6fbce5e468114216b59f747f6ca5c725e0"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470127746 2016-08-02 10:49:06 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470127746 2016-08-02 10:49:06 +0200",
+        "message": "add head support for local repos"
+    },
+    {
+        "hash": "71c58f6fbce5e468114216b59f747f6ca5c725e0",
+        "tree": "ae985008d089f38bb7b599ed5c61365116db0fb0",
+        "parents": [
+            "8b6b098bd266203420445e8257b876677afd1e86"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470072682 2016-08-01 19:31:22 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470072682 2016-08-01 19:31:22 +0200",
+        "message": "add head support for remote repos and more tests"
+    },
+    {
+        "hash": "8b6b098bd266203420445e8257b876677afd1e86",
+        "tree": "874dc73d8ffb195fc6d333e52f1f2a36ad060fb8",
+        "parents": [
+            "96cacdb7df9e9efb119b44ffd2ab5c6993064ecc"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1470069466 2016-08-01 18:37:46 +0200",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1470069466 2016-08-01 18:37:46 +0200",
+        "message": "add Repository.Head() tests"
+    },
+    {
+        "hash": "96cacdb7df9e9efb119b44ffd2ab5c6993064ecc",
+        "tree": "c6f9efd895f7c7a13c3d33e2f196133a058fb42e",
+        "parents": [
+            "635c77e0d0be84ff11da826a1d1febe49f082aff"
+        ],
+        "author": "Vadim Markovtsev <gmarkhor@gmail.com> 1468016173 2016-07-09 01:16:13 +0300",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1468016173 2016-07-09 00:16:13 +0200",
+        "message": "Fix some bugs found during gypogit testing (#58)"
+    },
+    {
+        "hash": "635c77e0d0be84ff11da826a1d1febe49f082aff",
+        "tree": "5a9a32f9d3449d54c8eda4c560a1d17534aff589",
+        "parents": [
+            "3e1d98efe176fed87a49133894e5d2bd54780c71"
+        ],
+        "author": "Alberto Cortés <alcortesm@gmail.com> 1467644962 2016-07-04 17:09:22 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1467644962 2016-07-04 17:09:22 +0200",
+        "message": "Adds support to open local repositories and to use file-based object storage (#55)\n\n* remove some comments\r\n\r\n* idx writer/reader\r\n\r\n* Shut up ssh tests, they are annoying\r\n\r\n* Add file scheme test to clients\r\n\r\n* Add dummy file client\r\n\r\n* Add test fot file client\r\n\r\n* Make tests use fixture endpoint\r\n\r\n* add parser for packed-refs format\r\n\r\n* add parser for packed-refs format\r\n\r\n* WIP adding dir.Refs() tests\r\n\r\n* Add test for fixture refs\r\n\r\n* refs parser for the refs directory\r\n\r\n* Documentation\r\n\r\n* Add Capabilities to file client\r\n\r\n* tgz.Exatract now accpets a path instead of a Reader\r\n\r\n* fix bug in idxfile fanout calculation\r\n\r\n* remove dead code\r\n\r\n* packfile documentation\r\n\r\n* clean packfile parser code\r\n\r\n* add core.Object.Content() and returns errors for core.ObjectStorage.Iter()\r\n\r\n* add seekable storage\r\n\r\n* add dir repos to NewRepository\r\n\r\n* clean prints\r\n\r\n* Add dir client documentation to README\r\n\r\n* Organize the README\r\n\r\n* README\r\n\r\n* Clean tgz package\r\n\r\n* Clean temp dirs after tgz tests\r\n\r\n* Gometalinter on gitdir\r\n\r\n* Clean pattern function\r\n\r\n* metalinter tgz\r\n\r\n* metalinter gitdir\r\n\r\n* gitdir coverage and remove seekable packfile filedescriptor leak\r\n\r\n* gitdir Idxfile tests and remove file descriptor leak\r\n\r\n* gitdir Idxfile tests when no idx is found\r\n\r\n* clean storage/seekable/internal/index and some formats/idxfile API issues\r\n\r\n* clean storage/seekable\r\n\r\n* clean formats/idx\r\n\r\n* turn packfile/doc.go into packfile/doc.txt\r\n\r\n* move formats/packfile/reader to decoder\r\n\r\n* fix packfile decoder error names\r\n\r\n* improve documentation\r\n\r\n* comment packfile decoder errors\r\n\r\n* comment public API (format/packfile)\r\n\r\n* remve duplicated code in packfile decoder test\r\n\r\n* move tracking_reader into an internal package and clean it\r\n\r\n* use iota for packfile format\r\n\r\n* rename packfile parse.go to packfile object_at.go\r\n\r\n* clean packfile deltas\r\n\r\n* fix delta header size bug\r\n\r\n* improve delta documentation\r\n\r\n* clean packfile deltas\r\n\r\n* clean packfiles deltas\r\n\r\n* clean repository.go\r\n\r\n* Remove go 1.5 from Travis CI\r\n\r\nBecause go 1.5 does not suport internal packages.\r\n\r\n* change local repo scheme to local://\r\n\r\n* change \"local://\" to \"file://\" as the local scheme\r\n\r\n* fix broken indentation\r\n\r\n* shortens names of variables in short scopes\r\n\r\n* more shortening of variable names\r\n\r\n* more shortening of variable names\r\n\r\n* Rename git dir client to \"file\", as the scheme used for it\r\n\r\n* Fix file format ctor name, now that the package name has change\r\n\r\n* Sortcut local repo constructor to not use remotes\r\n\r\nThe object storage is build directly in the repository ctor, instead\r\nof creating a remote and waiting for the user to pull it.\r\n\r\n* update README and fix some errors in it\r\n\r\n* remove file scheme client\r\n\r\n* Local respositories has now a new ctor\r\n\r\nThis is, they are no longer identified by the scheme of the URL, but are\r\ncreated different from inception.\r\n\r\n* remove unused URL field form Repository\r\n\r\n* move all git dir logic to seekable sotrage ctor\r\n\r\n* fix documentation\r\n\r\n* Make formats/file/dir an internal package to storage/seekable\r\n\r\n* change package storage/seekable to storage/fs\r\n\r\n* clean storage/fs\r\n\r\n* overall storage/fs clean\r\n\r\n* more cleaning\r\n\r\n* some metalinter fixes\r\n\r\n* upgrade cshared to last changes\r\n\r\n* remove dead code\r\n\r\n* fix test error info\r\n\r\n* remove file scheme check from clients\r\n\r\n* fix test error message\r\n\r\n* fix test error message\r\n\r\n* fix error messages\r\n\r\n* style changes\r\n\r\n* fix comments everywhere\r\n\r\n* style changes\r\n\r\n* style changes\r\n\r\n* scaffolding and tests for local packfiles without ifx files\r\n\r\n* outsource index building from packfile to the packfile decoder\r\n\r\n* refactor packfile header reading into a new function\r\n\r\n* move code to generate index from packfile back to index package\r\n\r\n* add header parsing\r\n\r\n* fix documentation errata\r\n\r\n* add undeltified and OFS delta support for index building from the packfile\r\n\r\n* add tests for packfile with ref-deltas\r\n\r\n* support for packfiles with ref-deltas and no idx\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* WIP refactor packfile format parser to reuse code\r\n\r\n* refactor packfile format parser to reuse code\r\n\r\n* remove prints from tests\r\n\r\n* remove prints from tests\r\n\r\n* refactor packfile.core into packfile.parser\r\n\r\n* rename packfile reader to something that shows it is a recaller\r\n\r\n* rename cannot recall error\r\n\r\n* rename packfile.Reader to packfile.ReadRecaller and document\r\n\r\n* speed up test by using StreamReader instead of SeekableReader when possible\r\n\r\n* clean packfile StreamReader\r\n\r\n* stream_reader tests\r\n\r\n* refactor packfile.StreamReader into packfile.StreamReadRecaller\r\n\r\n* refactor packfile.SeekableReader into packfile.SeekableReadRecaller and document it\r\n\r\n* generalize packfile.StreamReadRecaller test to all packfile.ReadRecaller implementations\r\n\r\n* speed up storage/fs tests\r\n\r\n* speed up tests in . by loading packfiles in memory\r\n\r\n* speed up repository tests by using and smaller fixture\r\n\r\n* restore doc.go files\r\n\r\n* rename packfile.ReadRecaller implementations to shorter names\r\n\r\n* update comments to type changes\r\n\r\n* packfile.Parser test (WIP)\r\n\r\n* packfile.Parser tests and add ForgetAll() to packfile.ReadRecaller\r\n\r\n* add test for packfile.ReadRecaller.ForgetAll()\r\n\r\n* clarify seekable being able to recallByOffset forgetted objects\r\n\r\n* use better names for internal maps\r\n\r\n* metalinter packfile package\r\n\r\n* speed up some tests\r\n\r\n* documentation fixes\r\n\r\n* change storage.fs package name to storage.proxy to avoid confusion with new filesystem support\r\n\r\n* New fs package and os transparent implementation\r\n\r\nNow NewRepositoryFromFS receives a fs and a path and tests are\r\nmodified accordingly, but it is still not using for anything.\r\n\r\n* add fs to gitdir and proxy.store\r\n\r\n* reduce fs interface for easier implementation\r\n\r\n* remove garbage dirs from tgz tests\r\n\r\n* change file name gitdir/dir.go to gitdir/gitdir.go\r\n\r\n* fs.OS tests\r\n\r\n* metalinter utils/fs\r\n\r\n* add NewRepositoryFromFS documentation to README\r\n\r\n* Readability fixes to README\r\n\r\n* move tgz to an external dependency\r\n\r\n* move filesystem impl. example to example dir\r\n\r\n* rename proxy/store.go to proxy/storage.go for coherence with memory/storage.go\r\n\r\n* rename proxy package to seekable"
+    },
+    {
+        "hash": "3e1d98efe176fed87a49133894e5d2bd54780c71",
+        "tree": "a430392b15d856affb2297dc35f4e2f4aeee34c2",
+        "parents": [
+            "8ab543c9911dfecbed4cbac5270306ea451537a0",
+            "0e1bc15f54d17c218c0c92a704fdf6a16db9cee2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1467015756 2016-06-27 10:22:36 +0200",
+        "committer": "GitHub <noreply@github.com> 1467015756 2016-06-27 10:22:36 +0200",
+        "message": "Merge pull request #56 from vmarkovtsev/master\n\nWrap more objects with CGo"
+    },
+    {
+        "hash": "0e1bc15f54d17c218c0c92a704fdf6a16db9cee2",
+        "tree": "322b85b8608a4b6de28c2cd14cf95e8a6795869c",
+        "parents": [
+            "5df15d6acc505ae581d9a62e384503fea006b678"
+        ],
+        "author": "Vadim Markovtsev <vadim@sourced.tech> 1466518493 2016-06-21 17:14:53 +0300",
+        "committer": "Vadim Markovtsev <vadim@sourced.tech> 1466518493 2016-06-21 17:14:53 +0300",
+        "message": "Wrap more objects with CGo"
+    },
+    {
+        "hash": "8ab543c9911dfecbed4cbac5270306ea451537a0",
+        "tree": "5f7b4fc252d12a9187f3bef562220e7e3fed91b3",
+        "parents": [
+            "e9bce553cf38f50633bef54ed9d4a9a37bf842ea",
+            "5df15d6acc505ae581d9a62e384503fea006b678"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1465980948 2016-06-15 10:55:48 +0200",
+        "committer": "GitHub <noreply@github.com> 1465980948 2016-06-15 10:55:48 +0200",
+        "message": "Merge pull request #54 from vmarkovtsev/cshared\n\nAdd cshared files to allow building wrappers in other languages"
+    },
+    {
+        "hash": "5df15d6acc505ae581d9a62e384503fea006b678",
+        "tree": "eedbbe616ac3ac8fe2e554aa329ac5fff03c0ef3",
+        "parents": [
+            "fda8c1ae106ed63881323d0587345e189f2103f3"
+        ],
+        "author": "Vadim Markovtsev <vadim@sourced.tech> 1465577390 2016-06-10 18:49:50 +0200",
+        "committer": "Vadim Markovtsev <vadim@sourced.tech> 1465979386 2016-06-15 10:29:46 +0200",
+        "message": "Add cshared files to allow building wrappers in other languages"
+    },
+    {
+        "hash": "e9bce553cf38f50633bef54ed9d4a9a37bf842ea",
+        "tree": "117eaa99d355914a829c578589a6e908bd8b01b5",
+        "parents": [
+            "4c617c1e20a742f071e25293cf8c566159c12331"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1463669372 2016-05-19 16:49:32 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1463669372 2016-05-19 16:49:32 +0200",
+        "message": "documentation"
+    },
+    {
+        "hash": "4c617c1e20a742f071e25293cf8c566159c12331",
+        "tree": "a08208bde4db4da382da72258237423b52e1bcc0",
+        "parents": [
+            "e8fe969777816c14b0518ea98fd91f11591e1632"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1463669303 2016-05-19 16:48:23 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1463669303 2016-05-19 16:48:23 +0200",
+        "message": "documentation"
+    },
+    {
+        "hash": "e8fe969777816c14b0518ea98fd91f11591e1632",
+        "tree": "59a0f207a357914499a51a2ca3a24f0129a64301",
+        "parents": [
+            "fda8c1ae106ed63881323d0587345e189f2103f3"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1463669099 2016-05-19 16:44:59 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1463669099 2016-05-19 16:44:59 +0200",
+        "message": "documentation"
+    },
+    {
+        "hash": "fda8c1ae106ed63881323d0587345e189f2103f3",
+        "tree": "aeb0b8cc2f836b5604f3d1c0ce8fb16ed83e6e96",
+        "parents": [
+            "e002e1ae03b80d110d0008fbb2836499bdcb55a2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1463657297 2016-05-19 13:28:17 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1463657297 2016-05-19 13:28:17 +0200",
+        "message": "fix misspellings"
+    },
+    {
+        "hash": "e002e1ae03b80d110d0008fbb2836499bdcb55a2",
+        "tree": "cc55cc258cdbbfc509a10a1416f4e4186c68c00d",
+        "parents": [
+            "743680bf345c705e90dd8463aa5dacbe4c579ed4"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1463655749 2016-05-19 13:02:29 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1463656427 2016-05-19 13:13:47 +0200",
+        "message": "formats/pktline: fixed underflow glitch reading network stream"
+    },
+    {
+        "hash": "743680bf345c705e90dd8463aa5dacbe4c579ed4",
+        "tree": "4c72b74e96323c8acf3c8fd00284caf23b652ae7",
+        "parents": [
+            "7635f3580cf745ede76f4cd9fe249681e4109c71",
+            "213eb799d31d50e76fa21dd8026b987629886491"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1462701978 2016-05-08 12:06:18 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1462701978 2016-05-08 12:06:18 +0200",
+        "message": "Merge pull request #47 from TripleDogDare/fix-repository-pulldefault\n\nFix PullDefault to not cause panics."
+    },
+    {
+        "hash": "213eb799d31d50e76fa21dd8026b987629886491",
+        "tree": "4c72b74e96323c8acf3c8fd00284caf23b652ae7",
+        "parents": [
+            "7635f3580cf745ede76f4cd9fe249681e4109c71"
+        ],
+        "author": "Calvin Behling <calvin.behling@gmail.com> 1462660492 2016-05-07 17:34:52 -0500",
+        "committer": "Calvin Behling <calvin.behling@gmail.com> 1462661926 2016-05-07 17:58:46 -0500",
+        "message": "Fix PullDefault to not cause panics.\n\nThe `remote.upInfo` is not set until `Connect()` is called.\nHowever, `repository.PullDefault()` requires that it exists when\nit calls `remote.DefaultBranch()`. This can be solved by pushing\nthe default branch discovery into `repository.Pull()`.\n\nThe empty string \"\" is not a valid branch name, so by allowing\nthe empty string to mean 'default branch' in the `Pull()` function\nwe can allow `PullDefault()` to not need a `remote.Connect()` call\nbefore calling `repository.Pull()`"
+    },
+    {
+        "hash": "7635f3580cf745ede76f4cd9fe249681e4109c71",
+        "tree": "882edb7df71643495b0e86aed254b1b4d6d0bdb2",
+        "parents": [
+            "cd6682ecf9215ab427e0cb1991cd883fa9620663"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1461569040 2016-04-25 09:24:00 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1461569040 2016-04-25 09:24:00 +0200",
+        "message": "undo import enforcement"
+    },
+    {
+        "hash": "cd6682ecf9215ab427e0cb1991cd883fa9620663",
+        "tree": "e28fcab4168f4a2b43ebf60b0de340b1011c56f4",
+        "parents": [
+            "31424c5deb51ce9fa9be2dc67fcbf4062bb8253b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1461567688 2016-04-25 09:01:28 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1461567688 2016-04-25 09:01:28 +0200",
+        "message": "documentation"
+    },
+    {
+        "hash": "31424c5deb51ce9fa9be2dc67fcbf4062bb8253b",
+        "tree": "855dd7dd812a5c441cd8348f455cbeca65f3d79f",
+        "parents": [
+            "46a7481a8ec452f556773c6c91ab26a51a771b5e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1461567468 2016-04-25 08:57:48 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1461567468 2016-04-25 08:57:48 +0200",
+        "message": "remote.Head and repository.PullDefault"
+    },
+    {
+        "hash": "46a7481a8ec452f556773c6c91ab26a51a771b5e",
+        "tree": "6e2de8691686c546e33d1f3eca9887c6f95757a8",
+        "parents": [
+            "47477a9894a86a62b231db4ee3c8f811b1151ccb"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1461318228 2016-04-22 11:43:48 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1461318228 2016-04-22 11:43:48 +0200",
+        "message": "dump v3"
+    },
+    {
+        "hash": "47477a9894a86a62b231db4ee3c8f811b1151ccb",
+        "tree": "391b2f19c35964f353a37391ecc0f8fd13b9f1b9",
+        "parents": [
+            "19e3d1e726d02ca5023695edfce124151d25420f"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1461317712 2016-04-22 11:35:12 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1461317712 2016-04-22 11:35:12 +0200",
+        "message": "file, added field Mode"
+    },
+    {
+        "hash": "19e3d1e726d02ca5023695edfce124151d25420f",
+        "tree": "aefecb136d42705f076188e0c30fb4820f976b00",
+        "parents": [
+            "b8dd44ee2e978a4b7e639184ef99da2a100b49da",
+            "619e51232ddd910163bf5d9ac8894420ece1b4f9"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1457476252 2016-03-08 23:30:52 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1457476252 2016-03-08 23:30:52 +0100",
+        "message": "Merge pull request #39 from scjalliance/git-object-interface\n\nAdded Object interface for Commit, Tree, Blob and Tag"
+    },
+    {
+        "hash": "619e51232ddd910163bf5d9ac8894420ece1b4f9",
+        "tree": "aefecb136d42705f076188e0c30fb4820f976b00",
+        "parents": [
+            "b8dd44ee2e978a4b7e639184ef99da2a100b49da"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456993980 2016-03-03 00:33:00 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1457471394 2016-03-08 13:09:54 -0800",
+        "message": "Added Object interface for Commit, Tree, Blob and Tag\n\n* New Object interface is distinct from core.Object\n* New Object interface is used in places where returned object could be of any type\n* Object is implemented by Commit, Tree, Blob, File and Tag\n* Added Repository.Object function for retrieving objects of any type\n* Tag.Object now returns Object instead of core.Object\n* Tag target hash is now publicly accessible\n* Renamed Tag.Type field to Tag.TargetType, making it distinct from Tag.Type function\n* Fixed infinite recursive loop in TagIter.Close\n* TreeWalker.Next now returns Object instead of core.Object\n* Removed some duplicate test setup code"
+    },
+    {
+        "hash": "b8dd44ee2e978a4b7e639184ef99da2a100b49da",
+        "tree": "afea4521bccd3351f6e09433eac23e8fd330c7c2",
+        "parents": [
+            "02aef05e83454d8ea6adfb612237c5f4bd5cf872",
+            "ae3ed9b505dd2c8d93d5736d34d517e386e8800c"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1456613404 2016-02-27 23:50:04 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1456613404 2016-02-27 23:50:04 +0100",
+        "message": "Merge pull request #37 from scjalliance/objfile-format\n\nAdded support for objfile format"
+    },
+    {
+        "hash": "ae3ed9b505dd2c8d93d5736d34d517e386e8800c",
+        "tree": "afea4521bccd3351f6e09433eac23e8fd330c7c2",
+        "parents": [
+            "8428e1a6d126bec09787e57f15e917b7176d90c2"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456610842 2016-02-27 14:07:22 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456610842 2016-02-27 14:07:22 -0800",
+        "message": "Improved objfile error handling and test coverage"
+    },
+    {
+        "hash": "8428e1a6d126bec09787e57f15e917b7176d90c2",
+        "tree": "2d67d918bd94414a10ed4c4d317c7108c2468183",
+        "parents": [
+            "1bbcca3f006dc5b027304c819aded543ab86ca98"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456562187 2016-02-27 00:36:27 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456562187 2016-02-27 00:36:27 -0800",
+        "message": "Renamed internal close function to checkClose\n\n* Old name accidentally shadowed builtin close function"
+    },
+    {
+        "hash": "1bbcca3f006dc5b027304c819aded543ab86ca98",
+        "tree": "26295a7b63e4d6edde2e86217f8cfaab80646757",
+        "parents": [
+            "24131e657a2336227e9921fb2156766076c54cbf"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456561835 2016-02-27 00:30:35 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456561835 2016-02-27 00:30:35 -0800",
+        "message": "Added objfile format used for loose git objects"
+    },
+    {
+        "hash": "24131e657a2336227e9921fb2156766076c54cbf",
+        "tree": "9e342a399d5d1bd2d04e2873fb73327f0892c787",
+        "parents": [
+            "02aef05e83454d8ea6adfb612237c5f4bd5cf872"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456523799 2016-02-26 13:56:39 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456523799 2016-02-26 13:56:39 -0800",
+        "message": "Added function to check validity of core.ObjectType"
+    },
+    {
+        "hash": "02aef05e83454d8ea6adfb612237c5f4bd5cf872",
+        "tree": "6d0f7d5fe1f4b93b9dc30d554faaf3f8ceb203fe",
+        "parents": [
+            "e59f31ccc7d64ea1bb56902272bc4f0cb812f8d5",
+            "c6b398e63bdb3ebbb252cdc257fcfe2ed021e778"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1456474449 2016-02-26 09:14:09 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1456474449 2016-02-26 09:14:09 +0100",
+        "message": "Merge pull request #35 from scjalliance/hasher\n\nAdded Hasher for computing hashes of streamed objects"
+    },
+    {
+        "hash": "c6b398e63bdb3ebbb252cdc257fcfe2ed021e778",
+        "tree": "6d0f7d5fe1f4b93b9dc30d554faaf3f8ceb203fe",
+        "parents": [
+            "e59f31ccc7d64ea1bb56902272bc4f0cb812f8d5"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456423993 2016-02-25 10:13:13 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456423993 2016-02-25 10:13:13 -0800",
+        "message": "Added Hasher for computing hashes of streamed objects"
+    },
+    {
+        "hash": "e59f31ccc7d64ea1bb56902272bc4f0cb812f8d5",
+        "tree": "b25f47adcbb47f58780e11db7cd3e7bf7d237654",
+        "parents": [
+            "79d2b4618b9055a891122ffb062fdf543a671c7e",
+            "e2c9ad1b646245cfff010b60223fc883210b3281"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1456391928 2016-02-25 10:18:48 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1456391928 2016-02-25 10:18:48 +0100",
+        "message": "Merge pull request #34 from scjalliance/object-reader-writer\n\nRefactor to use core.ObjectReader and core.ObjectWriter"
+    },
+    {
+        "hash": "e2c9ad1b646245cfff010b60223fc883210b3281",
+        "tree": "b25f47adcbb47f58780e11db7cd3e7bf7d237654",
+        "parents": [
+            "79d2b4618b9055a891122ffb062fdf543a671c7e"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456382430 2016-02-24 22:40:30 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1456389531 2016-02-25 00:38:51 -0800",
+        "message": "Refactor to use core.ObjectReader and core.ObjectWriter\n\n* New function signatures provide the necessary interface to stream data from disk when using filesystem-based storage in the future\n* New function signatures provide proper error handling\n* ObjectReader and ObjectWriter interfaces added to avoid future refactoring, currently are type aliases for io.ReadCloser and io.WriteCloser respectively\n* Object.Reader now returns (ObjectReader, error)\n* Object.Writer now returns (ObjectWriter, error)\n* File.Contents now returns (string, error)\n* File.Lines now returns ([]string, error)\n* Blob.Reader now returns (core.ObjectReader, error)\n* Added internal close helper function for deferred calls to Close that need to check the return value"
+    },
+    {
+        "hash": "79d2b4618b9055a891122ffb062fdf543a671c7e",
+        "tree": "39b43d03d765db8f6c8f816ef91f2cc39db96a36",
+        "parents": [
+            "ee8f9a82fedd3ed5633a72fa71598a526d9aaae7"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1456164349 2016-02-22 19:05:49 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1456164349 2016-02-22 19:05:49 +0100",
+        "message": "File, added size and reader is now a method"
+    },
+    {
+        "hash": "ee8f9a82fedd3ed5633a72fa71598a526d9aaae7",
+        "tree": "97dfe671077bac15be420567e47cf0d91f59e5e3",
+        "parents": [
+            "6d957229f5ec16d6aac04362e9bb5e0fa495f81c",
+            "9ec9b0db0c8e21a521ecc355d920960d88622b00"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455925500 2016-02-20 00:45:00 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455925500 2016-02-20 00:45:00 +0100",
+        "message": "Merge pull request #32 from scjalliance/annotated-tags\n\nAnnotated tags"
+    },
+    {
+        "hash": "9ec9b0db0c8e21a521ecc355d920960d88622b00",
+        "tree": "97dfe671077bac15be420567e47cf0d91f59e5e3",
+        "parents": [
+            "aa78803b2257dd9b636d875064cf451bde8f59fe"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455925320 2016-02-19 15:42:00 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455925320 2016-02-19 15:42:00 -0800",
+        "message": "Improved support for Blob objects"
+    },
+    {
+        "hash": "aa78803b2257dd9b636d875064cf451bde8f59fe",
+        "tree": "5aa0f50ba21472d5315918600de5effdb7c70df4",
+        "parents": [
+            "aa878f8ac34a61f14d53ad16b0d37ff9d0b1d050"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455866886 2016-02-18 23:28:06 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455867431 2016-02-18 23:37:11 -0800",
+        "message": "Added support for annotated tags"
+    },
+    {
+        "hash": "aa878f8ac34a61f14d53ad16b0d37ff9d0b1d050",
+        "tree": "60a70203ca6bba4987f3e2985f0849bffdef7114",
+        "parents": [
+            "0c55a1fed6836d4708fa9f25a1a80ec7eddd4370"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455866277 2016-02-18 23:17:57 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455866277 2016-02-18 23:17:57 -0800",
+        "message": "Added ParseObjectType function to core"
+    },
+    {
+        "hash": "0c55a1fed6836d4708fa9f25a1a80ec7eddd4370",
+        "tree": "460a8f6d07280e378c82fcfd4b47010be0aa2717",
+        "parents": [
+            "6d957229f5ec16d6aac04362e9bb5e0fa495f81c"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455861360 2016-02-18 21:56:00 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455866239 2016-02-18 23:17:19 -0800",
+        "message": "Added helper function for test fixture unpacking"
+    },
+    {
+        "hash": "6d957229f5ec16d6aac04362e9bb5e0fa495f81c",
+        "tree": "b1abfdd16a7a3deb6da0588b0f5eec9c49f6ea2f",
+        "parents": [
+            "2742fcdc3b6a9abf1f020e17c7b5ea8ca6b3d866"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455793953 2016-02-18 12:12:33 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455793953 2016-02-18 12:12:33 +0100",
+        "message": "travis: adding 1.6"
+    },
+    {
+        "hash": "2742fcdc3b6a9abf1f020e17c7b5ea8ca6b3d866",
+        "tree": "115f4154b2f939e06d026e00102c2aadcabde730",
+        "parents": [
+            "33dada7c1f3a38f8bb3774d5af4dfa7ccbe13d09"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455793637 2016-02-18 12:07:17 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455793637 2016-02-18 12:07:17 +0100",
+        "message": "signature decode refactor"
+    },
+    {
+        "hash": "33dada7c1f3a38f8bb3774d5af4dfa7ccbe13d09",
+        "tree": "d6bf98ab16767c8963a5e2a221653c7b5147540b",
+        "parents": [
+            "3ac81decb0b2e9745ec97ed69a8ee66f1dae7555",
+            "e8524edc6fe0caac6c362a29fb76d249fab69a55"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455749106 2016-02-17 23:45:06 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455749106 2016-02-17 23:45:06 +0100",
+        "message": "Merge pull request #30 from scjalliance/consistent-iterators\n\nImproved consistency of Tree iterators"
+    },
+    {
+        "hash": "e8524edc6fe0caac6c362a29fb76d249fab69a55",
+        "tree": "d6bf98ab16767c8963a5e2a221653c7b5147540b",
+        "parents": [
+            "8261deb62697a73603e535e37465e2430323786e"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455739262 2016-02-17 12:01:02 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455739262 2016-02-17 12:01:02 -0800",
+        "message": "Tree.Entries is now a slice\n\nTree's mapping of names to entries has been made internal, and will only be built when necessary with the first call to Tree.File()."
+    },
+    {
+        "hash": "8261deb62697a73603e535e37465e2430323786e",
+        "tree": "3d8ebb1efc20fc4a235580bb32e755e7941444eb",
+        "parents": [
+            "3ac81decb0b2e9745ec97ed69a8ee66f1dae7555"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455654546 2016-02-16 12:29:06 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455713217 2016-02-17 04:46:57 -0800",
+        "message": "New iteration behavior via FileIter and TreeWalker\n\nInstead of returning a channel of files, Tree.Files() now returns a\nFileIter with these qualities:\n\n* It returns files in the original order of the repository (relying on a\n* new Tree.OrderedNames property)\n* It can return errors encountered when retrieving files and trees from\n* underlying storage\n* It can be Closed without having to drain the entire channel\n* It defers the heavy lifting to a new TreeWalker type\n* Its behavior is a little more consistent with other Iter types\n* It's a little less prone to memory leaks\n\nThis update includes a new TreeWalker type that will iterate through all\nof the entries of a tree and its descendant subtrees. It does the dirty\nwork that Tree.walkEntries() used to do, but with a public API.\n\nA new TreeIter type is also included that just walks through subtrees.\nThis could be useful for performing a directory search while ignoring\nfiles/blobs altogether."
+    },
+    {
+        "hash": "3ac81decb0b2e9745ec97ed69a8ee66f1dae7555",
+        "tree": "7f092ea5aa1ad44d46c671db1c91dadee67c8146",
+        "parents": [
+            "fd4e7410e94ddcf10381edfd09ada646f1887505"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455708056 2016-02-17 12:20:56 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455708056 2016-02-17 12:20:56 +0100",
+        "message": "update imports to v3"
+    },
+    {
+        "hash": "fd4e7410e94ddcf10381edfd09ada646f1887505",
+        "tree": "3e8d53f816867863cba047f791724c3157ae4c38",
+        "parents": [
+            "f353195f7b676d3fd4c6c28098ba0ee0cd47e9c8",
+            "478e3ce2eba7dab0522293d5b0ce9db04c8c6fe9"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455706331 2016-02-17 11:52:11 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455706331 2016-02-17 11:52:11 +0100",
+        "message": "Merge pull request #28 from mcuadros/memory-object\n\nstorages: memory object"
+    },
+    {
+        "hash": "478e3ce2eba7dab0522293d5b0ce9db04c8c6fe9",
+        "tree": "3e8d53f816867863cba047f791724c3157ae4c38",
+        "parents": [
+            "f353195f7b676d3fd4c6c28098ba0ee0cd47e9c8"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455665071 2016-02-17 00:24:31 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455705960 2016-02-17 11:46:00 +0100",
+        "message": "storages: memory object"
+    },
+    {
+        "hash": "f353195f7b676d3fd4c6c28098ba0ee0cd47e9c8",
+        "tree": "79b304ada66c2901f815530c9e726b3b73bdb2f0",
+        "parents": [
+            "ccc7a2c09fb773135af4dbf6f87e033b9aa718b2",
+            "1f4ac8880251f38d8a34acefdfa2defe92e20ee3"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455657280 2016-02-16 22:14:40 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455657280 2016-02-16 22:14:40 +0100",
+        "message": "Merge pull request #27 from scjalliance/windows-compatibility\n\nFile paths will now be consistent across platforms"
+    },
+    {
+        "hash": "1f4ac8880251f38d8a34acefdfa2defe92e20ee3",
+        "tree": "79b304ada66c2901f815530c9e726b3b73bdb2f0",
+        "parents": [
+            "ccc7a2c09fb773135af4dbf6f87e033b9aa718b2"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455647613 2016-02-16 10:33:33 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455647613 2016-02-16 10:33:33 -0800",
+        "message": "File paths will now be consistent across platforms\n\nPreviously go-git used filepath.Join when walking tree structures and constructing paths, but its results are platform-dependent as it will return different results on different systems. For example, it will use backslashes as a path separator on Windows. As a result the SuiteTree.TestFiles test was failing on Windows because the returned paths didn't match what was expected.\n\nfilepath.Join has been changed to path.Join, which will return consistent results for all platforms. This change makes it so that go-git will always return paths with forward-slash delimiters.\n\nUsers of the library should convert the resulting file paths into platform-compatible paths when necessary."
+    },
+    {
+        "hash": "ccc7a2c09fb773135af4dbf6f87e033b9aa718b2",
+        "tree": "c6f8eeb250476cbe2a7c533c393019afca67a4b0",
+        "parents": [
+            "ef6652d7dd958c8ef6ef5ee0f071169417bc78a7",
+            "c4a05c0adaae156a6c455d293525d28029773771"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455641887 2016-02-16 17:58:07 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455641887 2016-02-16 17:58:07 +0100",
+        "message": "Merge pull request #20 from scjalliance/generic-object-storage\n\nIterable ObjectStorage interface for use in Repository struct"
+    },
+    {
+        "hash": "ef6652d7dd958c8ef6ef5ee0f071169417bc78a7",
+        "tree": "df2e3d95b066ba5549b8c23c59abe8afe198076d",
+        "parents": [
+            "23318e594f65c57fe15615a9a3b7f2264b628e58"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455640269 2016-02-16 17:31:09 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455640649 2016-02-16 17:37:29 +0100",
+        "message": "remove package doc"
+    },
+    {
+        "hash": "23318e594f65c57fe15615a9a3b7f2264b628e58",
+        "tree": "7da2506d7d8f94685e4a6b868d5ff88addf8a4d6",
+        "parents": [
+            "312ba7435dbd64795758bc73344cc8f4f7a500c8",
+            "31a5bf9f8f299628a224e9f9d0590e0a5b9f56e8"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455639736 2016-02-16 17:22:16 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455639736 2016-02-16 17:22:16 +0100",
+        "message": "remove blame package header"
+    },
+    {
+        "hash": "312ba7435dbd64795758bc73344cc8f4f7a500c8",
+        "tree": "14710d476acd7112da55afe41e57d004160a9950",
+        "parents": [
+            "f7ca495466286ab9a26e37a7a46360b0425a31be"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455639660 2016-02-16 17:21:00 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455639660 2016-02-16 17:21:00 +0100",
+        "message": "package documentation"
+    },
+    {
+        "hash": "31a5bf9f8f299628a224e9f9d0590e0a5b9f56e8",
+        "tree": "dc91a9f8bc831a1c3733f15bd25adf7eaf099d4d",
+        "parents": [
+            "727a7144f397dff58bd654afb14590db61f1cfe6",
+            "5520fb26a15072bde52f1e29f126a3b51c714a04"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455639145 2016-02-16 17:12:25 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455639145 2016-02-16 17:12:25 +0100",
+        "message": "Merge pull request #25 from shawnps/patch-1\n\nfix typo"
+    },
+    {
+        "hash": "727a7144f397dff58bd654afb14590db61f1cfe6",
+        "tree": "7eb0fb9f7a7ce105ea4a5eb26b593bc01c50f980",
+        "parents": [
+            "236138340ccb4b5a59c69a159e1a87efe52ad200",
+            "9cf3b78d99de11864a5f313c0682f184c92c071b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455639137 2016-02-16 17:12:17 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455639137 2016-02-16 17:12:17 +0100",
+        "message": "Merge pull request #24 from shawnps/master\n\ngofmt -s"
+    },
+    {
+        "hash": "236138340ccb4b5a59c69a159e1a87efe52ad200",
+        "tree": "dbacafe061246880717c5625619846030744434d",
+        "parents": [
+            "68a4954686e63c1cf41a01bf1034719167b2a3f6",
+            "fb43371b97cde11879cf33b6f057a988c408dceb"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455639130 2016-02-16 17:12:10 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455639130 2016-02-16 17:12:10 +0100",
+        "message": "Merge pull request #26 from shawnps/patch-2\n\nfix typo"
+    },
+    {
+        "hash": "fb43371b97cde11879cf33b6f057a988c408dceb",
+        "tree": "dbacafe061246880717c5625619846030744434d",
+        "parents": [
+            "68a4954686e63c1cf41a01bf1034719167b2a3f6"
+        ],
+        "author": "Shawn Smith <shawnpsmith@gmail.com> 1455637381 2016-02-17 00:43:01 +0900",
+        "committer": "Shawn Smith <shawnpsmith@gmail.com> 1455637381 2016-02-17 00:43:01 +0900",
+        "message": "fix typo"
+    },
+    {
+        "hash": "5520fb26a15072bde52f1e29f126a3b51c714a04",
+        "tree": "ee785eaf0423a1ddd045b206acdaabab0ed3c2c1",
+        "parents": [
+            "68a4954686e63c1cf41a01bf1034719167b2a3f6"
+        ],
+        "author": "Shawn Smith <shawnpsmith@gmail.com> 1455637359 2016-02-17 00:42:39 +0900",
+        "committer": "Shawn Smith <shawnpsmith@gmail.com> 1455637359 2016-02-17 00:42:39 +0900",
+        "message": "fix typo"
+    },
+    {
+        "hash": "9cf3b78d99de11864a5f313c0682f184c92c071b",
+        "tree": "fa8821347c14083656d8c7eb511f745279e35108",
+        "parents": [
+            "68a4954686e63c1cf41a01bf1034719167b2a3f6"
+        ],
+        "author": "Shawn Smith <shawnpsmith@gmail.com> 1455637276 2016-02-17 00:41:16 +0900",
+        "committer": "Shawn Smith <shawnpsmith@gmail.com> 1455637276 2016-02-17 00:41:16 +0900",
+        "message": "gofmt -s"
+    },
+    {
+        "hash": "68a4954686e63c1cf41a01bf1034719167b2a3f6",
+        "tree": "1d580264246f40b6f5b76a82ed824c760641310b",
+        "parents": [
+            "25791773bb54b55bdad0c419e417824bbfe0496e",
+            "d472bc33830f3c76f68b8bd2312929d99ecf6af9"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455635452 2016-02-16 16:10:52 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455635452 2016-02-16 16:10:52 +0100",
+        "message": "Merge pull request #22 from alcortesm/master\n\nadd blame comment to readme and fix typo"
+    },
+    {
+        "hash": "d472bc33830f3c76f68b8bd2312929d99ecf6af9",
+        "tree": "1d580264246f40b6f5b76a82ed824c760641310b",
+        "parents": [
+            "f7ca495466286ab9a26e37a7a46360b0425a31be"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1455630658 2016-02-16 14:50:58 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1455635064 2016-02-16 16:04:24 +0100",
+        "message": "[README] Adds Coming Soon section"
+    },
+    {
+        "hash": "25791773bb54b55bdad0c419e417824bbfe0496e",
+        "tree": "7b0efea83db2ad1f3e7ec2a66955c081cbd47f4a",
+        "parents": [
+            "f7ca495466286ab9a26e37a7a46360b0425a31be",
+            "463aab464f3199eccb1e16b16124200f3d199a95"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455632569 2016-02-16 15:22:49 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455632569 2016-02-16 15:22:49 +0100",
+        "message": "Merge pull request #23 from mvader/patch-1\n\nTypo on README"
+    },
+    {
+        "hash": "463aab464f3199eccb1e16b16124200f3d199a95",
+        "tree": "7b0efea83db2ad1f3e7ec2a66955c081cbd47f4a",
+        "parents": [
+            "f7ca495466286ab9a26e37a7a46360b0425a31be"
+        ],
+        "author": "Miguel Molina <hi@mvader.me> 1455631625 2016-02-16 15:07:05 +0100",
+        "committer": "Miguel Molina <hi@mvader.me> 1455631625 2016-02-16 15:07:05 +0100",
+        "message": "Update README.md"
+    },
+    {
+        "hash": "f7ca495466286ab9a26e37a7a46360b0425a31be",
+        "tree": "821f0c2516da1eb080f1b9ebdb78d10f6b2d313e",
+        "parents": [
+            "4ae416c546b5fcd01f30f42bbf3968d18ab5d55e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455626267 2016-02-16 13:37:47 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455626376 2016-02-16 13:39:36 +0100",
+        "message": "readme: Acknowledgements"
+    },
+    {
+        "hash": "4ae416c546b5fcd01f30f42bbf3968d18ab5d55e",
+        "tree": "0afe26a87b35055101748a5f2f8338e293a0d5a3",
+        "parents": [
+            "5c7ee9f514ac84b0ef0d7aace93c4d926d8b8142"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455625487 2016-02-16 13:24:47 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455625487 2016-02-16 13:24:47 +0100",
+        "message": "readme: codebeat badge"
+    },
+    {
+        "hash": "5c7ee9f514ac84b0ef0d7aace93c4d926d8b8142",
+        "tree": "0ce4b66e10371878495db48923e87a51dd6f290d",
+        "parents": [
+            "d263975fdb50433ee77a148bc68b4416cfb38619",
+            "0b2065d3a0795db998f2acf38fe623b470798bab"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455625393 2016-02-16 13:23:13 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455625393 2016-02-16 13:23:13 +0100",
+        "message": "documentation"
+    },
+    {
+        "hash": "d263975fdb50433ee77a148bc68b4416cfb38619",
+        "tree": "0ce4b66e10371878495db48923e87a51dd6f290d",
+        "parents": [
+            "6d6cf35f9cf82bf3f5af1b32cc2c357fe6cfa432"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455625345 2016-02-16 13:22:25 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455625345 2016-02-16 13:22:25 +0100",
+        "message": "documentation"
+    },
+    {
+        "hash": "c4a05c0adaae156a6c455d293525d28029773771",
+        "tree": "3514bb86fd8fe9e808175e8252c26a54f1c6a6ea",
+        "parents": [
+            "22bd38976f6a309e17263494c03504a7f234383e"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455622101 2016-02-16 03:28:21 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455622101 2016-02-16 03:28:21 -0800",
+        "message": "Functions in core.ObjectStorage interface now return an error"
+    },
+    {
+        "hash": "0b2065d3a0795db998f2acf38fe623b470798bab",
+        "tree": "030316b203d615d9d19d3e3df25248970b4f24e4",
+        "parents": [
+            "6d6cf35f9cf82bf3f5af1b32cc2c357fe6cfa432",
+            "ea77aac7f37222e2860b9b1cdddbb04b31cfe369"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455617442 2016-02-16 11:10:42 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455617442 2016-02-16 11:10:42 +0100",
+        "message": "Merge pull request #21 from marcinwyszynski/patch-1\n\nAdd codebeat badge"
+    },
+    {
+        "hash": "6d6cf35f9cf82bf3f5af1b32cc2c357fe6cfa432",
+        "tree": "82bace7948fe5769ff10b1969c459e69d842d8bc",
+        "parents": [
+            "175fc5fc7c1f1231cddd5d0d247f29956e4d96c3"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455615726 2016-02-16 10:42:06 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455615878 2016-02-16 10:44:38 +0100",
+        "message": "examples: basic"
+    },
+    {
+        "hash": "175fc5fc7c1f1231cddd5d0d247f29956e4d96c3",
+        "tree": "3267f991a842161237272d8178ae65238f20e094",
+        "parents": [
+            "95c80a068553456d2ed00f3c560d874766e61682"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455615714 2016-02-16 10:41:54 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455615714 2016-02-16 10:41:54 +0100",
+        "message": "repository: documentation"
+    },
+    {
+        "hash": "ea77aac7f37222e2860b9b1cdddbb04b31cfe369",
+        "tree": "8ac8d1383c1f4a1d551c5f38f9750aa7736dd9d0",
+        "parents": [
+            "95c80a068553456d2ed00f3c560d874766e61682"
+        ],
+        "author": "Marcin Wyszynski <marcin.pixie@gmail.com> 1455615049 2016-02-16 10:30:49 +0100",
+        "committer": "Marcin Wyszynski <marcin.pixie@gmail.com> 1455615049 2016-02-16 10:30:49 +0100",
+        "message": "Add codebeat badge\n\nBrilliant piece of Go code, congrats! Out of curiosity - have you tried benchmarking this against Golang's libgit2 bindings running from ramdisk? For a small side project where I needed `git blame` functionality I got 10-20x speed boost from doing just that."
+    },
+    {
+        "hash": "95c80a068553456d2ed00f3c560d874766e61682",
+        "tree": "709bf89988ce4703f399595fefb5cf4265d7ac0e",
+        "parents": [
+            "32b1ee0145b9a24218df4d0f83a793eba4e9fad0"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455611591 2016-02-16 09:33:11 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455611591 2016-02-16 09:33:11 +0100",
+        "message": "travis: allow_failures"
+    },
+    {
+        "hash": "22bd38976f6a309e17263494c03504a7f234383e",
+        "tree": "26dfbc34458e21bb8acbde3c92b7c4fe0d48fe8a",
+        "parents": [
+            "132fc26b3b2c64c0a57197f631bd5a30f2ba802c",
+            "32b1ee0145b9a24218df4d0f83a793eba4e9fad0"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455594265 2016-02-15 19:44:25 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455594265 2016-02-15 19:44:25 -0800",
+        "message": "Merge remote-tracking branch 'upstream/master' into generic-object-storage"
+    },
+    {
+        "hash": "132fc26b3b2c64c0a57197f631bd5a30f2ba802c",
+        "tree": "75b6beee11aaa8c3ccea421946f4568536abd076",
+        "parents": [
+            "74ed5bbac83e44aed37a919dfcd33a8ac1b056b6"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593820 2016-02-15 19:37:00 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593820 2016-02-15 19:37:00 -0800",
+        "message": "ObjectLookupIter.Next() now returns ObjectNotFoundErr when appropriate"
+    },
+    {
+        "hash": "74ed5bbac83e44aed37a919dfcd33a8ac1b056b6",
+        "tree": "c383adbe6ea0fd683239bf6424717dee61125d44",
+        "parents": [
+            "1668435fe91cfe7bd0ad934dbfc89ad1fe5d9b8f"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593700 2016-02-15 19:35:00 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593700 2016-02-15 19:35:00 -0800",
+        "message": "Added tests for CommitIter"
+    },
+    {
+        "hash": "1668435fe91cfe7bd0ad934dbfc89ad1fe5d9b8f",
+        "tree": "479c2997be845cb1a697284c6f839aadc9e6790e",
+        "parents": [
+            "4172d931089d9851614217df7c8f57693587399e"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593348 2016-02-15 19:29:08 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1455593348 2016-02-15 19:29:08 -0800",
+        "message": "Renamed ObjectStorage.IterType() to Iter() and improved documentation for object iterators"
+    },
+    {
+        "hash": "32b1ee0145b9a24218df4d0f83a793eba4e9fad0",
+        "tree": "2bcee428bdc26b5ba60c05d67d347593463a1bee",
+        "parents": [
+            "fa774ce74a8a90aa9c3363d9940d366c79fd3e86"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455546316 2016-02-15 15:25:16 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455546316 2016-02-15 15:25:16 +0100",
+        "message": "core.Type stringer improved"
+    },
+    {
+        "hash": "fa774ce74a8a90aa9c3363d9940d366c79fd3e86",
+        "tree": "2bf67c69a2b8a44ce08e2509168cc2a09f336a84",
+        "parents": [
+            "a32bbb16545b33febf79b2255bc849167ddb48fa"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455389234 2016-02-13 19:47:14 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455389234 2016-02-13 19:47:14 +0100",
+        "message": "clients: skip ssh test when SSH_AUTH_SOCK is not present"
+    },
+    {
+        "hash": "a32bbb16545b33febf79b2255bc849167ddb48fa",
+        "tree": "0375173a18e5249ff086378d88681c5561af6e3d",
+        "parents": [
+            "2bc8a95bc0ab1cf899545895cce9e218f827d38f"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455189247 2016-02-11 12:14:07 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455189247 2016-02-11 12:14:07 +0100",
+        "message": "clients: cleanup"
+    },
+    {
+        "hash": "2bc8a95bc0ab1cf899545895cce9e218f827d38f",
+        "tree": "4a682ac57cf41228bbdae29291a98c602dc0f0d8",
+        "parents": [
+            "6206a2ee152e5e6583aa219f76124721efd320c5",
+            "e9164d853bed12ed9f6787a608db32504c894a64"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455189012 2016-02-11 12:10:12 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455189012 2016-02-11 12:10:12 +0100",
+        "message": "Merge branch 'master' of github.com:src-d/go-git"
+    },
+    {
+        "hash": "6206a2ee152e5e6583aa219f76124721efd320c5",
+        "tree": "71388c4f4cba4097a06e9aef34a63ca593d7733c",
+        "parents": [
+            "9dbb1305e96957b0196e0faebe8636943efd9b3b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1455188942 2016-02-11 12:09:02 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1455188942 2016-02-11 12:09:02 +0100",
+        "message": "clients: removing url from the clients constructor"
+    },
+    {
+        "hash": "4172d931089d9851614217df7c8f57693587399e",
+        "tree": "d414907f46a4661e62fdb15ce1797cadbe39ad31",
+        "parents": [
+            "7d1d4534cd349c5cca03f53e532ed2f3a97e99a6",
+            "e9164d853bed12ed9f6787a608db32504c894a64"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1454390191 2016-02-01 21:16:31 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1454390191 2016-02-01 21:16:31 -0800",
+        "message": "Merge remote-tracking branch 'upstream/master' into generic-object-storage"
+    },
+    {
+        "hash": "7d1d4534cd349c5cca03f53e532ed2f3a97e99a6",
+        "tree": "15590c8c4bf6f0470fd7d03ddab46ac2db481da1",
+        "parents": [
+            "855517cb6c6796c8893c0d9191e88ccf6e1b5c7a"
+        ],
+        "author": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1454389648 2016-02-01 21:07:28 -0800",
+        "committer": "Joshua Sjoding <joshua.sjoding@scjalliance.com> 1454389648 2016-02-01 21:07:28 -0800",
+        "message": "Renamed ObjectStorage Iter function to IterType"
+    },
+    {
+        "hash": "e9164d853bed12ed9f6787a608db32504c894a64",
+        "tree": "6c52cb9721671c45ebd63c107cb97aa58c76fbd6",
+        "parents": [
+            "3191ea1948ef98c58a35f70ff3f4b9a26e267823",
+            "8bd763433e27ff712acc0ffe74270af6de8eee10"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453914299 2016-01-27 18:04:59 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453914299 2016-01-27 18:04:59 +0100",
+        "message": "Merge pull request #18 from ivanfoo/master\n\nadded default shell to makefile"
+    },
+    {
+        "hash": "8bd763433e27ff712acc0ffe74270af6de8eee10",
+        "tree": "6c52cb9721671c45ebd63c107cb97aa58c76fbd6",
+        "parents": [
+            "3191ea1948ef98c58a35f70ff3f4b9a26e267823"
+        ],
+        "author": "ivanfoo <sanfru.ivan@gmail.com> 1453896602 2016-01-27 13:10:02 +0100",
+        "committer": "ivanfoo <sanfru.ivan@gmail.com> 1453913256 2016-01-27 17:47:36 +0100",
+        "message": "added default shell to makefile\n\nchanged if to a more standard syntax"
+    },
+    {
+        "hash": "3191ea1948ef98c58a35f70ff3f4b9a26e267823",
+        "tree": "dbce69ca3c709b744855c255c8670e0927536f7a",
+        "parents": [
+            "9dbb1305e96957b0196e0faebe8636943efd9b3b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453893574 2016-01-27 12:19:34 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453893574 2016-01-27 12:19:34 +0100",
+        "message": "ci"
+    },
+    {
+        "hash": "9dbb1305e96957b0196e0faebe8636943efd9b3b",
+        "tree": "25d346f02cb368a6c7bab7d648bcdafe34947272",
+        "parents": [
+            "1c89426ca99a9396b65268634cb511989145d31e",
+            "e7d896db87294e33ca3202e536d4d9bb16023db3"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453892856 2016-01-27 12:07:36 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453892856 2016-01-27 12:07:36 +0100",
+        "message": "Merge pull request #17 from alcortesm/fix-zlib-invalid-header\n\nfix zlib invalid header error"
+    },
+    {
+        "hash": "e7d896db87294e33ca3202e536d4d9bb16023db3",
+        "tree": "25d346f02cb368a6c7bab7d648bcdafe34947272",
+        "parents": [
+            "1c89426ca99a9396b65268634cb511989145d31e"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1453889629 2016-01-27 11:13:49 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1453892126 2016-01-27 11:55:26 +0100",
+        "message": "fix zlib invalid header error\n\nThe return value of reads to the packfile were being ignored, so zlib\nwas getting invalid data on it read buffers."
+    },
+    {
+        "hash": "1c89426ca99a9396b65268634cb511989145d31e",
+        "tree": "c89f1196c240610f713eedb201833a1d3af3d4de",
+        "parents": [
+            "48efd2048cae08fbdbf15418a07564126d0b93c1",
+            "470a3c86e8a88353279a4a5f507ee8ffc26cf785"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453789292 2016-01-26 07:21:32 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453789292 2016-01-26 07:21:32 +0100",
+        "message": "Merge pull request #16 from alcortesm/speedup-packfile-reading\n\nSpeed up packfile reading"
+    },
+    {
+        "hash": "470a3c86e8a88353279a4a5f507ee8ffc26cf785",
+        "tree": "c89f1196c240610f713eedb201833a1d3af3d4de",
+        "parents": [
+            "48efd2048cae08fbdbf15418a07564126d0b93c1"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1453771598 2016-01-26 02:26:38 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1453771598 2016-01-26 02:26:38 +0100",
+        "message": "Speed up packfile reading\n\nBy adding a bufio to the trackingReader, otherwise most of the time\nis spent in syscalls for small reads to the packfile."
+    },
+    {
+        "hash": "855517cb6c6796c8893c0d9191e88ccf6e1b5c7a",
+        "tree": "29fbe1f8e4483ab23cc9e1ab84d8aa9763f6b1a3",
+        "parents": [
+            "48efd2048cae08fbdbf15418a07564126d0b93c1"
+        ],
+        "author": "Joshua Sjoding <joshs@scjalliance.com> 1453539029 2016-01-23 00:50:29 -0800",
+        "committer": "Joshua Sjoding <joshs@scjalliance.com> 1453539029 2016-01-23 00:50:29 -0800",
+        "message": "Repository now works against the generic ObjectStore interface"
+    },
+    {
+        "hash": "48efd2048cae08fbdbf15418a07564126d0b93c1",
+        "tree": "10b78e67ef5cafc4afaed3d1cda281b483fdde28",
+        "parents": [
+            "9f933cbddc33fca418f044612b7df2d77ff09fbd",
+            "7e3259c191a9de23d88b6077dcb1cd427e925432"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453378840 2016-01-21 13:20:40 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453378840 2016-01-21 13:20:40 +0100",
+        "message": "Merge pull request #15 from alcortesm/performance-increase-for-big-repos\n\nPerformance increase for big repos"
+    },
+    {
+        "hash": "9f933cbddc33fca418f044612b7df2d77ff09fbd",
+        "tree": "64df2b89fdfec869975aa206c10ddada5f69c0f1",
+        "parents": [
+            "66cbf1444917c258e9b0f5793d4aff42620e75f3",
+            "c526d5273bb1f3ddc3cc744aa3900a40c3d49dbb"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1453377719 2016-01-21 13:01:59 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1453377719 2016-01-21 13:01:59 +0100",
+        "message": "Merge pull request #14 from alcortesm/fix-file-iterator-gorutine-leak\n\nFix commit.File() gorutine leak"
+    },
+    {
+        "hash": "c526d5273bb1f3ddc3cc744aa3900a40c3d49dbb",
+        "tree": "64df2b89fdfec869975aa206c10ddada5f69c0f1",
+        "parents": [
+            "6825ee17a23754ac56a1fb9d4c09f321070c29b1"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1453372764 2016-01-21 11:39:24 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1453372764 2016-01-21 11:39:24 +0100",
+        "message": "Readability improvements"
+    },
+    {
+        "hash": "7e3259c191a9de23d88b6077dcb1cd427e925432",
+        "tree": "a11c46d63281fb8c87d0fa723ecbf08a913c50a5",
+        "parents": [
+            "6825ee17a23754ac56a1fb9d4c09f321070c29b1"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1453343397 2016-01-21 03:29:57 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1453343397 2016-01-21 03:29:57 +0100",
+        "message": "performance increase for repos with many files and directories"
+    },
+    {
+        "hash": "6825ee17a23754ac56a1fb9d4c09f321070c29b1",
+        "tree": "6084daff5823c93d8190ea318c3280560c088f3f",
+        "parents": [
+            "66cbf1444917c258e9b0f5793d4aff42620e75f3"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1453341641 2016-01-21 03:00:41 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1453341641 2016-01-21 03:00:41 +0100",
+        "message": "Fix commit.File() gorutine leak\n\nCommit.File() was leaking a goroutine because it was looping over\nan iterator without closing its channel.\n\nNow commit.File() calls the new Tree.File() method that searches\nthe file in the repository by trasversing the dir tree instead\nof using the tree.Files() iterator.\n\nThis not only prevent the goroutine leak, but also speeds up\nfile searching."
+    },
+    {
+        "hash": "66cbf1444917c258e9b0f5793d4aff42620e75f3",
+        "tree": "29242d8bd7c990739603cd19e93ea4c140936ce1",
+        "parents": [
+            "6d65319f2d5983c9f432da30a666c22837789feb",
+            "c443aa676df8296a94124077544d8904aed38c28"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1452510555 2016-01-11 12:09:15 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1452510555 2016-01-11 12:09:15 +0100",
+        "message": "Merge pull request #12 from alcortesm/hotfix-close-packfile\n\nmissing call to Close on Fetch return value (ReadCloser)"
+    },
+    {
+        "hash": "c443aa676df8296a94124077544d8904aed38c28",
+        "tree": "29242d8bd7c990739603cd19e93ea4c140936ce1",
+        "parents": [
+            "6d65319f2d5983c9f432da30a666c22837789feb"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1452506343 2016-01-11 10:59:03 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1452509031 2016-01-11 11:43:51 +0100",
+        "message": "missing call to Close on Fetch return value (ReadCloser)"
+    },
+    {
+        "hash": "6d65319f2d5983c9f432da30a666c22837789feb",
+        "tree": "f925408862049b1982446a0521e974dedd0864f1",
+        "parents": [
+            "7abff4db2db31d3f2bf8603419d6347a645e9e59",
+            "c815b57af387ef6f2508db10d65a845762b3e39a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1452268896 2016-01-08 17:01:36 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1452268896 2016-01-08 17:01:36 +0100",
+        "message": "Merge pull request #11 from alcortesm/ignore-submodules\n\nIgnore submodule dirs (empty directories without associated object)"
+    },
+    {
+        "hash": "c815b57af387ef6f2508db10d65a845762b3e39a",
+        "tree": "f925408862049b1982446a0521e974dedd0864f1",
+        "parents": [
+            "7abff4db2db31d3f2bf8603419d6347a645e9e59"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1452265469 2016-01-08 16:04:29 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1452268150 2016-01-08 16:49:10 +0100",
+        "message": "Ignore submodule dirs (empty directories without associated object), add empty dir test"
+    },
+    {
+        "hash": "7abff4db2db31d3f2bf8603419d6347a645e9e59",
+        "tree": "14e77376fd52684f689c6709b0d1eee741823c56",
+        "parents": [
+            "a952acf888c77261e204fa51882de5ce379ac065",
+            "ec6c9ac1b33259f1cf315172ca32b6070b0b0b5b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1450860491 2015-12-23 09:48:11 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1450860491 2015-12-23 09:48:11 +0100",
+        "message": "Merge pull request #10 from alcortesm/file-client\n\nAdds external protocol insertion for the clients and protocol selection based on the scheme"
+    },
+    {
+        "hash": "ec6c9ac1b33259f1cf315172ca32b6070b0b0b5b",
+        "tree": "14e77376fd52684f689c6709b0d1eee741823c56",
+        "parents": [
+            "df98ea6d6d2eb5bd31f154cd0fdde523e769e901"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1450371698 2015-12-17 18:01:38 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1450371698 2015-12-17 18:01:38 +0100",
+        "message": "Add install protocols capabilities to GitUploadPackService"
+    },
+    {
+        "hash": "df98ea6d6d2eb5bd31f154cd0fdde523e769e901",
+        "tree": "37f7637a3a053f0fe8b126d4f2363d98590f2f35",
+        "parents": [
+            "a952acf888c77261e204fa51882de5ce379ac065"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1450291289 2015-12-16 19:41:29 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1450291289 2015-12-16 19:41:29 +0100",
+        "message": "Add client selection based on repo URL scheme"
+    },
+    {
+        "hash": "a952acf888c77261e204fa51882de5ce379ac065",
+        "tree": "af482b1c8746c5f5afcdfac1c7606dda74b5f7ef",
+        "parents": [
+            "b7304b275b80fb37edb159299649fc5fac0fdc0e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1449965882 2015-12-13 01:18:02 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1449965882 2015-12-13 01:18:02 +0100",
+        "message": "master version"
+    },
+    {
+        "hash": "b7304b275b80fb37edb159299649fc5fac0fdc0e",
+        "tree": "22cfd29cbaffbcabb80877db62091a91df4e2f18",
+        "parents": [
+            "ff49d8979a927925d42e3dffdec6c6f64520e060",
+            "728b7a31a2506889830081a4e2fb5ff618f336d5"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1449954467 2015-12-12 22:07:47 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1449954467 2015-12-12 22:07:47 +0100",
+        "message": "Merge pull request #9 from mcuadros/blame-cleanup\n\nblame code reorganization, and mutting the test"
+    },
+    {
+        "hash": "728b7a31a2506889830081a4e2fb5ff618f336d5",
+        "tree": "22cfd29cbaffbcabb80877db62091a91df4e2f18",
+        "parents": [
+            "ff49d8979a927925d42e3dffdec6c6f64520e060"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1449886972 2015-12-12 03:22:52 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1449886972 2015-12-12 03:22:52 +0100",
+        "message": "blame code reorganization, and mutting the test"
+    },
+    {
+        "hash": "ff49d8979a927925d42e3dffdec6c6f64520e060",
+        "tree": "85c71c2c9e4e9560c48cedea49347c8467930d62",
+        "parents": [
+            "130753296e768a0313c37c4e9378fd1f48a80f59",
+            "24b8ae50db91f3909b11304014564bffc6fdee79"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1449874680 2015-12-11 23:58:00 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1449874680 2015-12-11 23:58:00 +0100",
+        "message": "Merge pull request #7 from alcortesm/blame\n\nBlame"
+    },
+    {
+        "hash": "24b8ae50db91f3909b11304014564bffc6fdee79",
+        "tree": "c105fdbe028610e9148323f49daa49698b3c6923",
+        "parents": [
+            "1f647f49e521012c966574c70337e7cd0dc744dd"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1449853030 2015-12-11 17:57:10 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1449853030 2015-12-11 17:57:10 +0100",
+        "message": "Extra fixes for #7"
+    },
+    {
+        "hash": "1f647f49e521012c966574c70337e7cd0dc744dd",
+        "tree": "f3a29650a337690c3549086af065ca2605d9aafc",
+        "parents": [
+            "8b14832a1851671edb746c806ff60ec0a86d2760"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1448624374 2015-11-27 12:39:34 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1449218921 2015-12-04 09:48:41 +0100",
+        "message": "fix PR#7 comments"
+    },
+    {
+        "hash": "8b14832a1851671edb746c806ff60ec0a86d2760",
+        "tree": "72a30cb25b1d84d4a11275b2f7a4b9de806cb54c",
+        "parents": [
+            "02f34c0dd1cc5bc2fe1215715d2032384b8e5f81"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1447640401 2015-11-16 03:20:01 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1448446191 2015-11-25 11:09:51 +0100",
+        "message": "Blame support for files\n\nThis also includes a diff package and revlist package (needed by\nblame)\n\nSome extra packfiles (<1MB) are also included, to be used as fixtures in\nthe tests."
+    },
+    {
+        "hash": "130753296e768a0313c37c4e9378fd1f48a80f59",
+        "tree": "6da61f2afee4062bd7ca778fc836d789d23c4977",
+        "parents": [
+            "02f34c0dd1cc5bc2fe1215715d2032384b8e5f81",
+            "5e133db90ffb127900cee10d7cd2e9ee58b38cf8"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1448300602 2015-11-23 18:43:22 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1448300602 2015-11-23 18:43:22 +0100",
+        "message": "Merge pull request #6 from klaidliadon/v2.0.0\n\nTimezone fixes"
+    },
+    {
+        "hash": "5e133db90ffb127900cee10d7cd2e9ee58b38cf8",
+        "tree": "6da61f2afee4062bd7ca778fc836d789d23c4977",
+        "parents": [
+            "02f34c0dd1cc5bc2fe1215715d2032384b8e5f81"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1448298252 2015-11-23 18:04:12 +0100",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1448298252 2015-11-23 18:04:12 +0100",
+        "message": "Timezone fixes"
+    },
+    {
+        "hash": "02f34c0dd1cc5bc2fe1215715d2032384b8e5f81",
+        "tree": "7f28876dd8edc849d04c5a190f992310f58eca66",
+        "parents": [
+            "cab8f00929dbbbe11172ab08acb7fdeaaee0460a",
+            "570a80c01d1417041d38a6f451ed451bcff9f1a2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447779666 2015-11-17 18:01:06 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447779666 2015-11-17 18:01:06 +0100",
+        "message": "Merge pull request #5 from alcortesm/ssh\n\nSsh client for go-git"
+    },
+    {
+        "hash": "570a80c01d1417041d38a6f451ed451bcff9f1a2",
+        "tree": "60287f942679ddb66058f9b04388b235153ab785",
+        "parents": [
+            "08ae59c76d2c2605d8a161c19007eaf459d23237"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1447774909 2015-11-17 16:41:49 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1447774909 2015-11-17 16:41:49 +0100",
+        "message": "travis update: crypt was included in 1.4"
+    },
+    {
+        "hash": "08ae59c76d2c2605d8a161c19007eaf459d23237",
+        "tree": "f95354eb514dc2988b1f3f0143260a2672487e3f",
+        "parents": [
+            "9c9f989b0ca8913308a107656db22dca25a4d7cd"
+        ],
+        "author": "Alberto Cortés <alberto@sourced.tech> 1447771900 2015-11-17 15:51:40 +0100",
+        "committer": "Alberto Cortés <alberto@sourced.tech> 1447773404 2015-11-17 16:16:44 +0100",
+        "message": "ssh client"
+    },
+    {
+        "hash": "cab8f00929dbbbe11172ab08acb7fdeaaee0460a",
+        "tree": "ded2cfec62d11744a0c13aafffe8f3c68709aeab",
+        "parents": [
+            "957820dda3bfe8563013c1295bca4683ce71d5fa"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447748391 2015-11-17 09:19:51 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447748391 2015-11-17 09:19:51 +0100",
+        "message": "iters: add IsClosed field, fixes #4"
+    },
+    {
+        "hash": "957820dda3bfe8563013c1295bca4683ce71d5fa",
+        "tree": "f46d5e5aa0225b565e7820fd4fa95432ca9f37ee",
+        "parents": [
+            "9c9f989b0ca8913308a107656db22dca25a4d7cd"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447743032 2015-11-17 07:50:32 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447743032 2015-11-17 07:50:32 +0100",
+        "message": "client/common: fix empty panic on set at empty capability"
+    },
+    {
+        "hash": "9c9f989b0ca8913308a107656db22dca25a4d7cd",
+        "tree": "f901644e926949230efccaa9367dab7932b0fe1d",
+        "parents": [
+            "cb1a94838821e9e337890c8edc7283e3d8b8895e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447186049 2015-11-10 21:07:29 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447186049 2015-11-10 21:07:29 +0100",
+        "message": "common: GitUploadPackRequest Want, Have methods"
+    },
+    {
+        "hash": "cb1a94838821e9e337890c8edc7283e3d8b8895e",
+        "tree": "ed57c41c8067aabe318b9ae180ea0f84cca34add",
+        "parents": [
+            "337bd1cf29bd7c3470a7d756562ffe6efcee484f"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446934511 2015-11-07 23:15:11 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446934511 2015-11-07 23:15:11 +0100",
+        "message": "core: erros making public the inner error"
+    },
+    {
+        "hash": "337bd1cf29bd7c3470a7d756562ffe6efcee484f",
+        "tree": "8c2ccc10b720d3f47eac1d313d86bc7b61957406",
+        "parents": [
+            "0defc5065eac623197f3dc2e904c270c77569744"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446763718 2015-11-05 23:48:38 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446763718 2015-11-05 23:48:38 +0100",
+        "message": "clients: GitUploadPackInfo head change"
+    },
+    {
+        "hash": "0defc5065eac623197f3dc2e904c270c77569744",
+        "tree": "49290afae4d37c3334117aa15c0498531fe6f0ae",
+        "parents": [
+            "9cce3cb4d415e7cfbda40c87af9272ec0d108924"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446746900 2015-11-05 19:08:20 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446753346 2015-11-05 20:55:46 +0100",
+        "message": "clients: new AuthMethod and ConnectWithAuth"
+    },
+    {
+        "hash": "9cce3cb4d415e7cfbda40c87af9272ec0d108924",
+        "tree": "13792def909c850e3c3d603211768f39f6a99050",
+        "parents": [
+            "77172cdb28da83e3cb990a79f97d8a1b70cd80a2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446684494 2015-11-05 01:48:14 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446684494 2015-11-05 01:48:14 +0100",
+        "message": "remote: info method"
+    },
+    {
+        "hash": "77172cdb28da83e3cb990a79f97d8a1b70cd80a2",
+        "tree": "59f504ca9d1c3f90d9c6e5e7d716f6b89b4aed22",
+        "parents": [
+            "ddbe184c31aeda357c9508107007c7fea5f04af2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446684487 2015-11-05 01:48:07 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446684487 2015-11-05 01:48:07 +0100",
+        "message": "clients: capabilities improvement and info head"
+    },
+    {
+        "hash": "ddbe184c31aeda357c9508107007c7fea5f04af2",
+        "tree": "c7998e8eb7c4b727c14d1ae6b971ab49d31c9e6e",
+        "parents": [
+            "76f3a40c0190ce858a4ac31ecf9577496e398b51"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446338315 2015-11-01 01:38:35 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446338315 2015-11-01 01:38:35 +0100",
+        "message": "clients: capabilities improvement"
+    },
+    {
+        "hash": "76f3a40c0190ce858a4ac31ecf9577496e398b51",
+        "tree": "9b9456da2fb3229a60c472a5c286ee2cd9e47154",
+        "parents": [
+            "b06365ce042f2c48e40b1636946d9369fb5c5ae9"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446250443 2015-10-31 01:14:03 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446250443 2015-10-31 01:14:03 +0100",
+        "message": "internal -> core"
+    },
+    {
+        "hash": "b06365ce042f2c48e40b1636946d9369fb5c5ae9",
+        "tree": "9a763461a3d5a8784324c669eed7b484535f0427",
+        "parents": [
+            "d014f188988ea4941207693536f09996c6a1ecea"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446248450 2015-10-31 00:40:50 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446248450 2015-10-31 00:40:50 +0100",
+        "message": "clients: Capabilities parsing improvement and GitUploadPackInfo encoding"
+    },
+    {
+        "hash": "d014f188988ea4941207693536f09996c6a1ecea",
+        "tree": "6510f65d3b7b3f896dd0a797f40df34dd7ddda4e",
+        "parents": [
+            "e72e29ba685ef0e005113cf487f2989a603fa98d"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446199646 2015-10-30 11:07:26 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446199646 2015-10-30 11:07:26 +0100",
+        "message": "client: handly empty repositories"
+    },
+    {
+        "hash": "e72e29ba685ef0e005113cf487f2989a603fa98d",
+        "tree": "df61b1d84fc0cc78ea793abeb951a3fca8de689e",
+        "parents": [
+            "2d94e011cdf494eee695ed7826dec61e1619ec6b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446040945 2015-10-28 15:02:25 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446040945 2015-10-28 15:02:25 +0100",
+        "message": "clients: helpful error handling"
+    },
+    {
+        "hash": "2d94e011cdf494eee695ed7826dec61e1619ec6b",
+        "tree": "ca92fcc7b6c901a9138d59ce4cc339c2b78bd459",
+        "parents": [
+            "4061f42e5dc22742f54f841a542e5f3b4e5b5187"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445906998 2015-10-27 01:49:58 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445906998 2015-10-27 01:49:58 +0100",
+        "message": "tree and commit"
+    },
+    {
+        "hash": "4061f42e5dc22742f54f841a542e5f3b4e5b5187",
+        "tree": "4190075dcf00ac69d318156ab80c13e9cbb7dded",
+        "parents": [
+            "63559cecb03a640d9c100b17b276a19460b82444"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445818998 2015-10-26 01:23:18 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445818998 2015-10-26 01:23:18 +0100",
+        "message": "repository"
+    },
+    {
+        "hash": "63559cecb03a640d9c100b17b276a19460b82444",
+        "tree": "b496af614ef2481c476bf2b97d73025b632a99d6",
+        "parents": [
+            "40851549b51769a1c5f2ae6ae039e00877be9d5a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445818974 2015-10-26 01:22:54 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445818974 2015-10-26 01:22:54 +0100",
+        "message": "objects: using readers from internal.Object"
+    },
+    {
+        "hash": "40851549b51769a1c5f2ae6ae039e00877be9d5a",
+        "tree": "b35905c1118b13eaa87bd9c5c7250a455bad5d77",
+        "parents": [
+            "6d2a7abb6c8711ca069d2f5ab067e97e2fa9b66f"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445801436 2015-10-25 20:30:36 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445801436 2015-10-25 20:30:36 +0100",
+        "message": "formats/packfile: new reader API"
+    },
+    {
+        "hash": "6d2a7abb6c8711ca069d2f5ab067e97e2fa9b66f",
+        "tree": "5cddb88ce09b8f793870b6cd9327c36061e18468",
+        "parents": [
+            "afc79399a4d8a89784124568d4601c8e856e8e13"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445772865 2015-10-25 12:34:25 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445772865 2015-10-25 12:34:25 +0100",
+        "message": "formats/packfile: new reader API (wip)"
+    },
+    {
+        "hash": "afc79399a4d8a89784124568d4601c8e856e8e13",
+        "tree": "e8741a343b6e4cb95453ac8a822c1aa1cd904096",
+        "parents": [
+            "200bae1acd53555be7b6d32883cfbf605a20f009"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445735464 2015-10-25 02:11:04 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445735464 2015-10-25 02:11:04 +0100",
+        "message": "formats/packfile: new reader API (wip)"
+    },
+    {
+        "hash": "200bae1acd53555be7b6d32883cfbf605a20f009",
+        "tree": "c9be6b3c77cc5008247f12c9467e7d289d6b88d2",
+        "parents": [
+            "2b41ef280fdb67a9b250678686a0c3e03b0a9989",
+            "d82f291cde9987322c8a0c81a325e1ba6159684c"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445730263 2015-10-25 01:44:23 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445730263 2015-10-25 01:44:23 +0200",
+        "message": "Merge branch 'v2.0.0' of github.com:src-d/go-git into v2.0.0"
+    },
+    {
+        "hash": "2b41ef280fdb67a9b250678686a0c3e03b0a9989",
+        "tree": "c9be6b3c77cc5008247f12c9467e7d289d6b88d2",
+        "parents": [
+            "27aa8cdd2431068606741a589383c02c149ea625"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445730195 2015-10-25 01:43:15 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445730195 2015-10-25 01:43:15 +0200",
+        "message": "formats/packfile: test improvements"
+    },
+    {
+        "hash": "d82f291cde9987322c8a0c81a325e1ba6159684c",
+        "tree": "d423447ee374fbfa802f7ff354651fd34afe0fb2",
+        "parents": [
+            "6c629843a1750a27c9af01ed2985f362f619c47a",
+            "27aa8cdd2431068606741a589383c02c149ea625"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445615101 2015-10-23 17:45:01 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445615101 2015-10-23 17:45:01 +0200",
+        "message": "Merge pull request #2 from mcuadros/v2.0.0\n\nformats/packfile: cleanup and hash type"
+    },
+    {
+        "hash": "27aa8cdd2431068606741a589383c02c149ea625",
+        "tree": "d423447ee374fbfa802f7ff354651fd34afe0fb2",
+        "parents": [
+            "fa058d42fa3bc53f39108a56dad67157169b2191"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445610428 2015-10-23 16:27:08 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445610493 2015-10-23 16:28:13 +0200",
+        "message": "formats/packfile: cleanup"
+    },
+    {
+        "hash": "fa058d42fa3bc53f39108a56dad67157169b2191",
+        "tree": "d6b15f621627027810a6a0ecf33edb74ab433905",
+        "parents": [
+            "d0a18ccd8eea3bdabc76d6dc5420af1ea30aae9f",
+            "6c629843a1750a27c9af01ed2985f362f619c47a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445603455 2015-10-23 14:30:55 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445603455 2015-10-23 14:30:55 +0200",
+        "message": "Merge branch 'v2.0.0' of github.com:mcuadros/go-git into v2.0.0"
+    },
+    {
+        "hash": "d0a18ccd8eea3bdabc76d6dc5420af1ea30aae9f",
+        "tree": "d6b15f621627027810a6a0ecf33edb74ab433905",
+        "parents": [
+            "cf2874632223220e0445abf0a7806dc772c0b37a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445603329 2015-10-23 14:28:49 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445603329 2015-10-23 14:28:49 +0200",
+        "message": "formats/packfile: type Hash instead of strings"
+    },
+    {
+        "hash": "6c629843a1750a27c9af01ed2985f362f619c47a",
+        "tree": "c9bfb27a41658c5f76b821349eba85eef496d664",
+        "parents": [
+            "cf2874632223220e0445abf0a7806dc772c0b37a",
+            "d10a0e7c1f340a6cfc14540a5f8c508ce7e2eabf"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445595799 2015-10-23 12:23:19 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445595799 2015-10-23 12:23:19 +0200",
+        "message": "Merge pull request #1 from mcuadros/v2.0.0\n\nformat/pktline: review and improving coverage"
+    },
+    {
+        "hash": "cf2874632223220e0445abf0a7806dc772c0b37a",
+        "tree": "c9bfb27a41658c5f76b821349eba85eef496d664",
+        "parents": [
+            "758ac33217f092bfcded4ad4774954ac054c9609"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445595396 2015-10-23 12:16:36 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445595693 2015-10-23 12:21:33 +0200",
+        "message": "fixing routes"
+    },
+    {
+        "hash": "d10a0e7c1f340a6cfc14540a5f8c508ce7e2eabf",
+        "tree": "c584d43ce934d4b8ef576829dd10a8598b6428c6",
+        "parents": [
+            "758ac33217f092bfcded4ad4774954ac054c9609"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445595396 2015-10-23 12:16:36 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445595405 2015-10-23 12:16:45 +0200",
+        "message": "fixing routes"
+    },
+    {
+        "hash": "758ac33217f092bfcded4ad4774954ac054c9609",
+        "tree": "c487d1c799414eb3f5595c9f85d35d8fd977b637",
+        "parents": [
+            "214e1dca024fb6da5ed65564d2de734df5dc2127"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445560871 2015-10-23 02:41:11 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445595405 2015-10-23 12:16:45 +0200",
+        "message": "codecov"
+    },
+    {
+        "hash": "214e1dca024fb6da5ed65564d2de734df5dc2127",
+        "tree": "0c2805a0676006690a8053ae8ccee388ccfc83fe",
+        "parents": [
+            "70923099e61fa33f0bc5256d2f938fa44c4df10e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445594702 2015-10-23 12:05:02 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445594702 2015-10-23 12:05:02 +0200",
+        "message": "format/pktline: review and improving coverage"
+    },
+    {
+        "hash": "70923099e61fa33f0bc5256d2f938fa44c4df10e",
+        "tree": "31e738f7f3e4754b2c815dfe8bbbdbf82a2b42d9",
+        "parents": [
+            "bcaa1ac5644b16f1febb72f31e204720b7bb8934"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445560744 2015-10-23 02:39:04 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445560779 2015-10-23 02:39:39 +0200",
+        "message": "license and readme"
+    },
+    {
+        "hash": "bcaa1ac5644b16f1febb72f31e204720b7bb8934",
+        "tree": "cc4e71fcbdddd5cbcbccf46d7a999b9a1dacebcf",
+        "parents": [
+            "e1d8866ffa78fa16d2f39b0ba5344a7269ee5371"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445560232 2015-10-23 02:30:32 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445560698 2015-10-23 02:38:18 +0200",
+        "message": "travis"
+    },
+    {
+        "hash": "e1d8866ffa78fa16d2f39b0ba5344a7269ee5371",
+        "tree": "4602b0ca341187aad77048f807cde423af410554",
+        "parents": [
+            "2275fa7d0c75d20103f90b0e1616937d5a9fc5e6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445559975 2015-10-23 02:26:15 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445559975 2015-10-23 02:26:15 +0200",
+        "message": "clients and remote: fetch implementation"
+    },
+    {
+        "hash": "2275fa7d0c75d20103f90b0e1616937d5a9fc5e6",
+        "tree": "57ad6b6085e80cddd235d4a6aee2187bfb93827b",
+        "parents": [
+            "bdd9a92789d4a86b20a8d3df462df373f41acf23"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553873 2015-10-23 00:44:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553873 2015-10-23 00:44:33 +0200",
+        "message": "update version"
+    },
+    {
+        "hash": "bdd9a92789d4a86b20a8d3df462df373f41acf23",
+        "tree": "02d06216eba1b85a5b3c10af0865c6f4761a6464",
+        "parents": [
+            "b359f11ea09e642695edcd114b463da4395b10c1"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553311 2015-10-23 00:35:11 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553311 2015-10-23 00:35:11 +0200",
+        "message": "new remote abstraction"
+    },
+    {
+        "hash": "b359f11ea09e642695edcd114b463da4395b10c1",
+        "tree": "6f84c4693429a3815b7523e957801cdb420abb40",
+        "parents": [
+            "6f43e8933ba3c04072d5d104acc6118aac3e52ee"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553280 2015-10-23 00:34:40 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553280 2015-10-23 00:34:40 +0200",
+        "message": "clients: supporting diferent protocols"
+    },
+    {
+        "hash": "6f43e8933ba3c04072d5d104acc6118aac3e52ee",
+        "tree": "6015756f3da396c6c578a984e967b070a6c71b58",
+        "parents": [
+            "ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445512224 2015-10-22 13:10:24 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445512293 2015-10-22 13:11:33 +0200",
+        "message": "paths"
+    },
+    {
+        "hash": "ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec",
+        "tree": "0800022d7b0efba906183859cd9cba5b2bb87fd8",
+        "parents": [
+            "939814f341fdd5d35e81a3845a33c4fedb19d2d2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445511393 2015-10-22 12:56:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445511393 2015-10-22 12:56:33 +0200",
+        "message": "travis"
+    },
+    {
+        "hash": "939814f341fdd5d35e81a3845a33c4fedb19d2d2",
+        "tree": "71f051ab73cf6f0790d6177abe0b642bf595d693",
+        "parents": [
+            "5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445209777 2015-10-19 01:09:37 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445209777 2015-10-19 01:09:37 +0200",
+        "message": "org rename"
+    },
+    {
+        "hash": "5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae",
+        "tree": "a79a04e39b98bed8d6c7fb753e3fd9548068d8fe",
+        "parents": [
+            "a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1444924339 2015-10-15 17:52:19 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1444924339 2015-10-15 17:52:19 +0200",
+        "message": "Remove duplicate NotFoundError and rename it to ErrNotFound (idiomatic)\n\nError had to be defined in its own package to avoid import cycles."
+    },
+    {
+        "hash": "a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e",
+        "tree": "9e1917bba4d724555f7e2bfbf1bba00a78fac2e4",
+        "parents": [
+            "77906b653c3eb8a1cd5bd7254e161c00c6086d83"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444813691 2015-10-14 11:08:11 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444813691 2015-10-14 11:08:11 +0200",
+        "message": "memory passed to NewGit(), changed git types name"
+    },
+    {
+        "hash": "77906b653c3eb8a1cd5bd7254e161c00c6086d83",
+        "tree": "6ee58ddba7a1931817cda9321a1be47dc0f025c3",
+        "parents": [
+            "465cba710284204f9851854587c2887c247222db"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444733482 2015-10-13 12:51:22 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444738818 2015-10-13 14:20:18 +0200",
+        "message": "Switch of repo size"
+    },
+    {
+        "hash": "465cba710284204f9851854587c2887c247222db",
+        "tree": "75158b29f50acf928a069f4478852de51d77b466",
+        "parents": [
+            "b9471b13256703d3f5eb88b280b4a16ce325ec1b"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444150307 2015-10-06 18:51:47 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444150307 2015-10-06 18:51:47 +0200",
+        "message": "Extract GitHash function"
+    },
+    {
+        "hash": "b9471b13256703d3f5eb88b280b4a16ce325ec1b",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "5f56aea0ca8b74215a5b982bca32236e1e28c76b",
+            "62925030859646daeeaf5a4d386a0c41e00dda8a"
+        ],
+        "author": "Daniel Ripollés <dripolles@gmail.com> 1441211263 2015-09-02 18:27:43 +0200",
+        "committer": "Daniel Ripollés <dripolles@gmail.com> 1441211263 2015-09-02 18:27:43 +0200",
+        "message": "Merge remote-tracking branch 'origin/dev'"
+    },
+    {
+        "hash": "62925030859646daeeaf5a4d386a0c41e00dda8a",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "23148841baa5dbce48f6adcb7ddf83dcd97debb3"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "committer": "Daniel Ripollés <dripolles@gmail.com> 1441190902 2015-09-02 12:48:22 +0200",
+        "message": "clients: allowing access to all the branches"
+    },
+    {
+        "hash": "5f56aea0ca8b74215a5b982bca32236e1e28c76b",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "23148841baa5dbce48f6adcb7ddf83dcd97debb3"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "message": "clients: allowing access to all the branches"
+    },
+    {
+        "hash": "23148841baa5dbce48f6adcb7ddf83dcd97debb3",
+        "tree": "5b0c34a0b0159c433b95ffb4f12086d8ca350167",
+        "parents": [
+            "c336d16298a017486c4164c40f8acb28afe64e84"
+        ],
+        "author": "Franky <prados@gmail.com> 1439827054 2015-08-17 17:57:34 +0200",
+        "committer": "Franky <prados@gmail.com> 1439829601 2015-08-17 18:40:01 +0200",
+        "message": "Update imports"
+    },
+    {
+        "hash": "c336d16298a017486c4164c40f8acb28afe64e84",
+        "tree": "df9b916867d4ef5db357b5635b0d18b7eb574497",
+        "parents": [
+            "31eae7b619d166c366bf5df4991f04ba8cebea0a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1438179830 2015-07-29 16:23:50 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1438179830 2015-07-29 16:23:50 +0200",
+        "message": "vcs: using github.com/klauspost/compress/zlib"
+    },
+    {
+        "hash": "31eae7b619d166c366bf5df4991f04ba8cebea0a",
+        "tree": "c67e1db9575d58cb5d7edfe4eb44a3aaf5d514e7",
+        "parents": [
+            "b977a025ca21e3b5ca123d8093bd7917694f6da7",
+            "d2a38b4a5965d529566566640519d03d2bd10f6c"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1434013209 2015-06-11 11:00:09 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1434013209 2015-06-11 11:00:09 +0200",
+        "message": "Merge pull request #65 from toqueteos/repo-redirects\n\nUpdate URLs for moved repositories"
+    },
+    {
+        "hash": "b977a025ca21e3b5ca123d8093bd7917694f6da7",
+        "tree": "bc036af7f2ca6d8544f852365479b4da15e1f836",
+        "parents": [
+            "35b585759cbf29f8ec428ef89da20705d59f99ec"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432892326 2015-05-29 11:38:46 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1433426943 2015-06-04 16:09:03 +0200",
+        "message": "Remove not used zlib fragment.\n\nNewTree is called with the already deflated contents, there's no need to always fail creating a `zlib.NewReader` and waste memory with a new buffer we are just about to destroy."
+    },
+    {
+        "hash": "d2a38b4a5965d529566566640519d03d2bd10f6c",
+        "tree": "a170295fb1311a2c5d24c22d2e956a4341b52fae",
+        "parents": [
+            "35b585759cbf29f8ec428ef89da20705d59f99ec"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432549924 2015-05-25 12:32:04 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1433426864 2015-06-04 16:07:44 +0200",
+        "message": "Unused attribute (leftover)."
+    },
+    {
+        "hash": "35b585759cbf29f8ec428ef89da20705d59f99ec",
+        "tree": "d40ce8e8d14f820bfcbd4cac2f2c48b621a6d2d3",
+        "parents": [
+            "c2bbf9fe8009b22d0f390f3c8c3f13937067590f"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432128097 2015-05-20 15:21:37 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432128917 2015-05-20 15:35:17 +0200",
+        "message": "Refactor out ReadAll, use custom Reader instead.\n\nWe don't want to read all packfiles to memory, working with a stream is enough."
+    },
+    {
+        "hash": "c2bbf9fe8009b22d0f390f3c8c3f13937067590f",
+        "tree": "2beff7231ec6c80e4d07dd78ba8e6be14309f6b0",
+        "parents": [
+            "fc9f0643b21cfe571046e27e0c4565f3a1ee96c8"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432122417 2015-05-20 13:46:57 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432122417 2015-05-20 13:46:57 +0200",
+        "message": "Fix typos."
+    },
+    {
+        "hash": "fc9f0643b21cfe571046e27e0c4565f3a1ee96c8",
+        "tree": "2ec084715b5de477e62d520db8866342bbe90971",
+        "parents": [
+            "c088fd6a7e1a38e9d5a9815265cb575bb08d08ff"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1431963194 2015-05-18 17:33:14 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432122408 2015-05-20 13:46:48 +0200",
+        "message": "Fixes #50.\n\nRevamped PackfileReader internals, no longer using a give back buffer."
+    },
+    {
+        "hash": "c088fd6a7e1a38e9d5a9815265cb575bb08d08ff",
+        "tree": "3d240aec2afc446a64ef1e165d8b78c2a8b80ac3",
+        "parents": [
+            "5fddbeb678bd2c36c5e5c891ab8f2b143ced5baf"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1432056267 2015-05-19 19:24:27 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1432056267 2015-05-19 19:24:27 +0200",
+        "message": "Reduce allocs in packfile reader.\n\nThis doesn't have a noticeable impact in performance for a single repo, but it may have for lots of repos due to GC overhead, as we are creating thousands of spurious objects per repo.\n\nMore importantly, it was driving me crazy."
+    },
+    {
+        "hash": "5fddbeb678bd2c36c5e5c891ab8f2b143ced5baf",
+        "tree": "41943f67ed91b751800c7d43dcb4e35b4c9602d1",
+        "parents": [
+            "5d7303c49ac984a9fec60523f2d5297682e16646"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430564749 2015-05-02 13:05:49 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430564749 2015-05-02 13:05:49 +0200",
+        "message": "project renamed"
+    },
+    {
+        "hash": "5d7303c49ac984a9fec60523f2d5297682e16646",
+        "tree": "53ac3a7eae7e271e58cc37ab1b7d2c27f3f2a9e5",
+        "parents": [],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269683 2015-04-05 23:34:43 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428286324 2015-04-06 04:12:04 +0200",
+        "message": "some refactor in folders and crawler"
+    }
+]

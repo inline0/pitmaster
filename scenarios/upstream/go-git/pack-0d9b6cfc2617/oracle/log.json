@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "68052f114af0ac9412ed76537e1a3173d8294054",
+        "tree": "b19297f3da434f1c45019d01f0292ac5b2565440",
+        "parents": [
+            "98d88521f451f22bc1c24b177d822808a25b7b55"
+        ],
+        "author": "Derek Fowler <dezfowler@gmail.com> 1420040894 2014-12-31 15:48:14 +0000",
+        "committer": "Derek Fowler <dezfowler@gmail.com> 1420040894 2014-12-31 15:48:14 +0000",
+        "message": "Swapping nunit out for nuget version"
+    },
+    {
+        "hash": "98d88521f451f22bc1c24b177d822808a25b7b55",
+        "tree": "a74d751c9572c509fd363685baa540a638e10246",
+        "parents": [
+            "a52775e66d9429fac98753422f64683060204875"
+        ],
+        "author": "Derek Fowler <dezfowler@gmail.com> 1420040795 2014-12-31 15:46:35 +0000",
+        "committer": "Derek Fowler <dezfowler@gmail.com> 1420040795 2014-12-31 15:46:35 +0000",
+        "message": "Upgrading to VS2013"
+    },
+    {
+        "hash": "a52775e66d9429fac98753422f64683060204875",
+        "tree": "bb4292d0002efd1dcf07da6df283d2f94c3751aa",
+        "parents": [
+            "f580113a8ac2cb78f36bddab691f18fe55f123fc"
+        ],
+        "author": "Derek Fowler <dezfowler@gmail.com> 1282519414 2010-08-23 00:23:34 +0100",
+        "committer": "Derek Fowler <dezfowler@gmail.com> 1282519414 2010-08-23 00:23:34 +0100",
+        "message": "updating README"
+    },
+    {
+        "hash": "f580113a8ac2cb78f36bddab691f18fe55f123fc",
+        "tree": "d87ca9b32e45c2d0e2a3ffcb26a5ad645970d226",
+        "parents": [
+            "b7965eaa2c4f245d07191fe0bcfe86da032d672a"
+        ],
+        "author": "Derek Fowler <dezfowler@gmail.com> 1282499091 2010-08-22 18:44:51 +0100",
+        "committer": "Derek Fowler <dezfowler@gmail.com> 1282499091 2010-08-22 18:44:51 +0100",
+        "message": "Working with a few tests"
+    },
+    {
+        "hash": "b7965eaa2c4f245d07191fe0bcfe86da032d672a",
+        "tree": "543b9bebdc6bd5c4b22136034a95dd097a57d3dd",
+        "parents": [],
+        "author": "Derek Fowler <dezfowler@gmail.com> 1282498708 2010-08-22 18:38:28 +0100",
+        "committer": "Derek Fowler <dezfowler@gmail.com> 1282498708 2010-08-22 18:38:28 +0100",
+        "message": "first commit"
+    }
+]

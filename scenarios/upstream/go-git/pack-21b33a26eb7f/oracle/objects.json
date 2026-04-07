@@ -1,0 +1,730 @@
+[
+    {
+        "hash": "03d686e06179395053129d4af6ad7b9760f9f9b9",
+        "type": "commit",
+        "size": 242,
+        "content": "tree 20de2dc0c06efd557b0098f9aa8b439145fa7cc1\nparent dd49ffd6c8df59189da0e82f48c255e95c86d208\nauthor Carlos <toqueteos@gmail.com> 1358197975 +0100\ncommitter Carlos <toqueteos@gmail.com> 1358197975 +0100\n\nAdded LICENSE and renamed README ext.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "04a53df0a23eeff360c6d34a9687300ef1c63984",
+        "type": "blob",
+        "size": 963,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that checks version, signs in and sends a text message to\n// channel#1 then exits.\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmds = []string{\n\t\t// Show version\n\t\t\"version\",\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// \"clientlist\",\n\t\t// Send message to channel with id=1\n\t\t`sendtextmessage targetmode=2 target=1 msg=Bot\\smessage!`,\n\t}\n\n\tfor _, s := range cmds {\n\t\t// Send command and wait for its response\n\t\tr := conn.Cmd(s)\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", s, r)\n\t\t// Wait a bit after each command so we don't get banned.  serveradmin\n\t\t// doesn't need this if bot's ip is on whitelist.\n\t\ttime.Sleep(200 * time.Millisecond)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "066defa413bfe9e6147fc856b15529ce597f40a0",
+        "type": "blob",
+        "size": 3389,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// Custom logger\r\n\tlog = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout = 1 * time.Second\r\n)\r\n\r\n// Holds incoming, outgoing and notification requests (1) and responses (2 & 3)\r\ntype RWChan struct{ In, Out, Not chan string }\r\n\r\ntype Conn struct {\r\n\tconn net.Conn\r\n\trw   RWChan\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn: conn,\r\n\t\trw: RWChan{\r\n\t\t\tIn:  make(chan string),\r\n\t\t\tOut: make(chan string),\r\n\t\t\tNot: make(chan string),\r\n\t\t},\r\n\t}\r\n\r\n\trbuf := bufio.NewReader(conn)\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\t\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn, conn)\r\n\tgo cp(conn, ts3conn)\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// Read reads data from buffer into p doubling any IAC chars found (0xff), more\r\n// info on RFC 854 (Telnet).  It returns the number of bytes read into p.\r\nfunc (conn *Conn) Read(p []byte) (int, error) {\r\n\tb := []byte(<-conn.rw.In)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\tcopy(p, b)\r\n\treturn len(b), nil\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of\r\n// bytes written.\r\nfunc (conn *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\tconn.rw.Out <- s\r\n\treturn len(p), nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (c *Conn) Cmd(cmd string) string {\r\n\tvar s string\r\n\r\n\tc.rw.In <- cmd + \"\\n\"\r\n\r\n\t// Some commands output two lines\r\n\tvar end bool\r\n\tfor !end {\r\n\t\tselect {\r\n\t\tcase line := <-c.rw.Out:\r\n\t\t\ts += line\r\n\t\t\t/*if strings.HasPrefix(s, \"notify\") {\r\n\t\t\t\tc.rw.Not <- s\r\n\t\t\t\tend = true\r\n\t\t\t}*/\r\n\t\t\tif strings.HasPrefix(s, \"error id=\") {\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\tcase <-time.After(500 * time.Millisecond):\r\n\t\t\tend = true\r\n\t\t}\r\n\t}\r\n\r\n\treturn trimNet(s)\r\n}\r\n\r\n// Chans returns a low-level interaction\r\nfunc (c *Conn) Chans() *RWChan {\r\n\treturn &c.rw\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "08c72d05932e1d0acc1eb3ad05397f4510799e02",
+        "type": "blob",
+        "size": 964,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n\n// bot is a simple bot that checks version, signs in and sends a text message to\n// channel#1 then exits.\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmds = []string{\n\t\t// Show version\n\t\t\"version\",\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// \"clientlist\",\n\t\t// Send message to channel with id=1\n\t\t\"sendtextmessage targetmode=2 target=1 msg=Bot\\smessage!\",\n\t}\n\n\tfor _, s := range cmds {\n\t\t// Send command and wait for its response\n\t\tr := conn.Cmd(s)\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", s, r)\n\t\t// Wait a bit after each command so we don't get banned.  serveradmin\n\t\t// doesn't need this if bot's ip is on whitelist.\n\t\ttime.Sleep(200 * time.Millisecond)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d1701613fe221c702768da3ed4aff2a676718a4",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob cb6287d80f7102b3075b07642a8533becf754b30\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0fb4e954f2883dd703f63facbe142dd645f89696",
+        "type": "commit",
+        "size": 254,
+        "content": "tree 7062e7e39fb66d012bfffe3065d4940d6e1aae78\nparent 3224cf93d1b370f8d943a5f87fdd01ee06b4fad5\nauthor Carlos Cobo <toqueteos@gmail.com> 1454027471 +0100\ncommitter Carlos Cobo <toqueteos@gmail.com> 1454027471 +0100\n\ntravis: Non-recursive go get and go test",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "11f7f91cc6259e6183f9b3972d85c6a0c418023f",
+        "type": "tree",
+        "size": 265,
+        "content": "100644 blob 1ee7667f2339e7108d02586fcd30911fedbf4247\t.travis.yml\n100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree f36f18593e0fb55d7e8d20988c0d3941c051421c\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "136feef323ee982301f090f9fe2877a061f4c8e0",
+        "type": "blob",
+        "size": 287,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tt, err := ts3.Dial(\"127.0.0.1\")\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\n\tt.Cmd(\"help\")\n\tt.Cmd(\"login serveradmin 123456\")\n\tt.Cmd(\"use 1\")\n\tt.Cmd(`clientupdate client_nickname=My\\sBot`)\n\tt.Cmd(\"quit\")\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1ee7667f2339e7108d02586fcd30911fedbf4247",
+        "type": "blob",
+        "size": 94,
+        "content": "language: go\n\ngo:\n  - 1.2\n  - 1.3\n  - 1.4\n  - tip\n\nscript:\n  - go get ./...\n  - go test ./...\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "205a3bce7a839dd52cf1a398f2fbc94319c15cd2",
+        "type": "blob",
+        "size": 3785,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\n// Custom logger\r\nvar log = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\r\nvar (\r\n\tReadAfter    = 100 * time.Millisecond\r\n\tDialTimeout  = 1 * time.Second\r\n\tReadTimeout  = 2 * time.Second\r\n\tWriteTimeout = 1500 * time.Millisecond\r\n)\r\n\r\ntype Conn struct {\r\n\taddr string\r\n\tconn net.Conn\r\n\t// In holds messages written to server\r\n\t// Out holds messages read from server\r\n\tIn, Out chan string\r\n\tquit    chan bool\r\n\tr       *bufio.Reader\r\n\tw       *bufio.Writer\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tc, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\taddr: addr,\r\n\t\tconn: c,\r\n\t\tIn:   make(chan string),\r\n\t\tOut:  make(chan string),\r\n\t\tquit: make(chan bool),\r\n\t\tr:    bufio.NewReader(c),\r\n\t\tw:    bufio.NewWriter(c),\r\n\t}\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = ts3conn.r.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = ts3conn.r.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn.w, c)\r\n\tgo cp(c, ts3conn.r)\r\n\r\n\t// Workers parse\r\n\tgo ts3conn.inWorker()\r\n\tgo ts3conn.outWorker()\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\t// Two workers need two quit signals\r\n\tc.quit <- true\r\n\tc.quit <- true\r\n\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends an arbitrary command to the server and expects an output.\r\nfunc (c *Conn) Cmd(s string) {\r\n\tfmt.Println(\"> \" + s)\r\n\tc.In <- s\r\n\tfmt.Println(<-c.Out)\r\n}\r\n\r\n// inWorker writes (copies) incoming requests to its underlying io.Writer.\r\nfunc (c *Conn) inWorker() {\r\n\tvar err error\r\n\r\n\tfor {\r\n\t\tselect {\r\n\t\tcase line := <-c.In:\r\n\t\t\tc.conn.SetWriteDeadline(time.Now().Add(WriteTimeout))\r\n\r\n\t\t\t_, err = c.w.WriteString(line)\r\n\t\t\tfatal(err)\r\n\r\n\t\t\terr = c.w.Flush()\r\n\t\t\tfatal(err)\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// inWorker reads (copies) incoming responses to its underlying io.Reader.\r\nfunc (c *Conn) outWorker() {\r\n\tfor {\r\n\t\tselect {\r\n\t\t// Check if there's something to receive\r\n\t\tcase <-time.After(ReadAfter):\r\n\t\t\tvar (\r\n\t\t\t\tend   bool\r\n\t\t\t\tchunk string\r\n\t\t\t)\r\n\r\n\t\t\t// Read until end of response (error footer)\r\n\t\t\tfor !end {\r\n\t\t\t\tline, err := c.r.ReadString('\\n')\r\n\t\t\t\tfatal(err)\r\n\r\n\t\t\t\t// Trim network control chars\r\n\t\t\t\tline = StringsTrimNet(line)\r\n\t\t\t\tchunk += line\r\n\r\n\t\t\t\t// Determine end of line\r\n\t\t\t\tif strings.HasPrefix(line, \"error id=\") ||\r\n\t\t\t\t\tstrings.Contains(line, \"notify\") {\r\n\t\t\t\t\tc.Out <- chunk\r\n\t\t\t\t\t// EOL found, finish iteration\r\n\t\t\t\t\tend = true\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "20de2dc0c06efd557b0098f9aa8b439145fa7cc1",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 232de1d18068a005fb09b1be96c045b075c26c1b\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22b3d931644b007fa5541d479da22a85e21df888",
+        "type": "commit",
+        "size": 239,
+        "content": "tree e6b748dddedb9d74167e07ab9ee1e0e85a02c6ab\nparent 3893caa13424fe959b01beab36c8a43997c1700d\nauthor Carlos <toqueteos@gmail.com> 1352746401 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352746401 +0100\n\nAdded some nice tests for helpers.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "232de1d18068a005fb09b1be96c045b075c26c1b",
+        "type": "blob",
+        "size": 1099,
+        "content": "The MIT License (MIT)\nCopyright (c) 2013 Carlos Cobo <toqueteos@gmail.com>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the \"Software\"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "24a033dea04bb7e5f204fe3b35f6f2e20a357f84",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob d60ced0ffd5f121b11350faabd8428bd8deee502\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2504e54849cc9110d3d4cc04278deee18a9417cd",
+        "type": "commit",
+        "size": 333,
+        "content": "tree f2fee784634863cb9a0fefaff43a99f5294ad9f8\nparent 6057428d26d6b158e1065a4687723edff06f87e7\nauthor Carlos <toqueteos@gmail.com> 1352740704 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352740704 +0100\n\nFix sendtextmessage string.\n\n\\s isn't recognized as a escape sequence on http://go.pkgdoc.org so\nbetter use raw string literals.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26c942c6d0cffc664c535fa00ac3f167ef144660",
+        "type": "commit",
+        "size": 251,
+        "content": "tree 0d1701613fe221c702768da3ed4aff2a676718a4\nparent af47780fb8d82167a154d79bab90ea3cc8e97f8e\nauthor zeroZshadow <martijn_gerkes@hotmail.com> 1398903560 +0200\ncommitter zeroZshadow <martijn_gerkes@hotmail.com> 1398903560 +0200\n\nremoved unneeded prints",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d525524d38a08dc6927c9695dc5d172d11d4abb",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree e5f173a0df5acd575f91d7a7c33c6692ceaa8b65\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob 205a3bce7a839dd52cf1a398f2fbc94319c15cd2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2dca7535489b8680f2ae447527a426251b217692",
+        "type": "blob",
+        "size": 1269,
+        "content": "package main\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"fmt\"\r\n\t\"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n\r\n\t\"github.com/toqueteos/ts3\"\r\n)\r\n\r\nfunc main() {\r\n\tin := make(chan string)\r\n\tq := make(chan bool)\r\n\r\n\t// Connect to Server Query daemon\r\n\tc, err := net.DialTimeout(\"tcp\", \"127.0.0.1:10011\", time.Second)\r\n\tif err != nil {\r\n\t\tlog.Println(err)\r\n\t}\r\n\tdefer c.Close()\r\n\r\n\tbuf := bufio.NewReader(c)\r\n\tgo stdin(in, q)\r\n\r\n\tgo func(c net.Conn, in chan string, q chan bool) {\r\n\t\tfor {\r\n\t\t\tselect {\r\n\t\t\tcase line := <-in:\r\n\t\t\t\tc.SetWriteDeadline(time.Now().Add(500 * time.Millisecond))\r\n\t\t\t\tc.Write([]byte(line))\r\n\t\t\tcase <-q:\r\n\t\t\t\treturn\r\n\t\t\t}\r\n\t\t}\r\n\t}(c, in, q)\r\n\r\n\tfor {\r\n\t\tc.SetReadDeadline(time.Now().Add(500 * time.Millisecond))\r\n\r\n\t\ts, err := buf.ReadString('\\n')\r\n\t\tif err != nil {\r\n\t\t\tlog.Fatal(err)\r\n\t\t}\r\n\r\n\t\tif len(s) > 1 {\r\n\t\t\tfmt.Print(s)\r\n\t\t}\r\n\t}\r\n\r\n}\r\n\r\nfunc stdin(chIn chan string, q chan bool) {\r\n\t// Feed ts3.In\r\n\tin := bufio.NewReader(os.Stdin)\r\n\r\n\tfor {\r\n\t\t// repl thingy\r\n\t\tline, err := in.ReadString('\\n')\r\n\t\tif err != nil {\r\n\t\t\tfmt.Printf(\"ts3> stdin read error: %v\\n\", err)\r\n\t\t}\r\n\t\tline = ts3.StringsTrimNet(line)\r\n\r\n\t\t// Ignore empty lines\r\n\t\tif line != \"\\n\" {\r\n\t\t\tchIn <- line\r\n\r\n\t\t\tif strings.HasPrefix(line, \"quit\") {\r\n\t\t\t\tq <- true\r\n\t\t\t\tbreak\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2e12d62b4b282f321817e5fa1b98147c258f9c78",
+        "type": "blob",
+        "size": 4773,
+        "content": "package ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"errors\"\r\n\t\"io\"\r\n\t\"net\"\r\n\t\"strings\"\r\n\t\"sync\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout    = 1 * time.Second\r\n\tCommandTimeout = 350 * time.Millisecond\r\n)\r\n\r\ntype notification func(string, string)\r\n\r\ntype Conn struct {\r\n\tconn          net.Conn\r\n\trbuf          *bufio.Reader\r\n\twbuf          *bufio.Writer\r\n\tcResult       chan string\r\n\tcNotification chan string\r\n\tcError        chan ErrorMsg\r\n\tnotifyCb      notification\r\n\tcmdSync       *sync.WaitGroup\r\n\tcmdLast       time.Time\r\n\tcmdTimeout    time.Duration\r\n}\r\n\r\ntype ErrorMsg struct {\r\n\tId  int\r\n\tMsg string\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string, whitelisted bool) (*Conn, error) {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tif err != nil {\r\n\t\treturn nil, err\r\n\t}\r\n\r\n\t// Create buffers\r\n\trbuf := bufio.NewReader(conn)\r\n\twbuf := bufio.NewWriter(conn)\r\n\r\n\ttimeout := time.Duration(350 * time.Millisecond)\r\n\tif whitelisted {\r\n\t\ttimeout = time.Duration(0 * time.Millisecond)\r\n\t}\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn:          conn,\r\n\t\trbuf:          rbuf,\r\n\t\twbuf:          wbuf,\r\n\t\tcResult:       make(chan string),\r\n\t\tcNotification: make(chan string),\r\n\t\tcError:        make(chan ErrorMsg),\r\n\t\tnotifyCb:      nil,\r\n\t\tcmdSync:       new(sync.WaitGroup),\r\n\t\tcmdLast:       time.Now(),\r\n\t\tcmdTimeout:    timeout,\r\n\t}\r\n\r\n\t// Read VerificationID\r\n\tline, err = rbuf.ReadString('\\n')\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\treturn nil, errors.New(\"Invalid VerificationID\")\r\n\t}\r\n\r\n\t// Read welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\r\n\t// Sync socket incoming data, to ts3conn\r\n\tgo ts3conn.sync()\r\n\r\n\treturn ts3conn, nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (this *Conn) Close() error {\r\n\treturn this.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (this *Conn) Cmd(cmd string) (string, ErrorMsg) {\r\n\t//Make sure only 1 command runs at a time per connection\r\n\tthis.cmdSync.Wait()\r\n\tthis.cmdSync.Add(1)\r\n\r\n\t//Make sure we timeout nicely per command to avoid spamming\r\n\tdiff := time.Since(this.cmdLast)\r\n\tif diff < this.cmdTimeout {\r\n\t\t<-time.After(this.cmdTimeout - diff)\r\n\t}\r\n\r\n\tvar (\r\n\t\tresult string   //Holds end result\r\n\t\ttemp   string   //Holds temp result\r\n\t\terr    ErrorMsg //Holds error message\r\n\t)\r\n\r\n\t// Write the cmd to the socket, ending with a \\n\r\n\tthis.send(cmd + \"\\n\")\r\n\r\n\t// Block on a channel that will recieve the socket READ that is NOT a notification or error\r\n\t// Block on a channel that will recieve the socket READ that is NOT a notification or result\r\n\tdone := false\r\n\tfor !done {\r\n\t\tselect {\r\n\t\tcase temp = <-this.cResult:\r\n\t\t\tresult += temp\r\n\t\t\tcontinue\r\n\t\tcase err = <-this.cError:\r\n\t\t\tdone = true\r\n\t\tcase <-time.After(CommandTimeout):\r\n\t\t\t//TODO Is there a better way to handle this?\r\n\t\t\terr.Id = 1\r\n\t\t\terr.Msg = \"timeout\"\r\n\t\t\tdone = true\r\n\t\t}\r\n\t}\r\n\r\n\tthis.cmdLast = time.Now()\r\n\tthis.cmdSync.Done()\r\n\treturn result, err\r\n}\r\n\r\nfunc (this *Conn) NotifyFunc(cb notification) {\r\n\tthis.notifyCb = cb\r\n}\r\n\r\nfunc (this *Conn) send(p string) (int, error) {\r\n\tb := []byte(p)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\treturn this.conn.Write(b)\r\n}\r\n\r\nfunc (this *Conn) handleResponse(data string) {\r\n\t// Has to be done by line!\r\n\t// Sadly its possible, when spammed, to have an error and notification to stick together, and more\r\n\t// Should be a better way to solve this overall, but teamspeak is a bitch and doesnt have a standard way to end a reply\r\n\r\n\tlines := strings.Split(data, \"\\n\")\r\n\tvar result string\r\n\r\n\tfor _, line := range lines {\r\n\t\tswitch {\r\n\t\tcase strings.HasPrefix(line, \"error\"):\r\n\t\t\tthis.cError <- parseError(line)\r\n\t\tcase strings.HasPrefix(line, \"notify\"):\r\n\t\t\tif this.notifyCb != nil {\r\n\t\t\t\tsplit := strings.SplitN(line, \" \", 2)\r\n\t\t\t\tgo this.notifyCb(split[0], split[1])\r\n\t\t\t}\r\n\t\tdefault:\r\n\t\t\tresult += line\r\n\t\t}\r\n\t}\r\n\r\n\tif result != \"\" {\r\n\t\tthis.cResult <- result\r\n\t}\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of bytes written.\r\nfunc (this *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\ts = strings.Replace(s, \"\\r\", \"\", -1)\r\n\r\n\tthis.handleResponse(s)\r\n\treturn len(s), nil\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc (this *Conn) sync() {\r\n\tfor {\r\n\t\tio.Copy(this, this.conn)\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2e898cd364c94e844588eac7805410ecd2959e6f",
+        "type": "blob",
+        "size": 3420,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// Custom logger\r\n\tlog = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout = 1 * time.Second\r\n)\r\n\r\n// Holds incoming, outgoing and notification requests (1) and responses (2 & 3)\r\ntype RWChan struct{ In, Out, Not chan string }\r\n\r\ntype Conn struct {\r\n\tconn net.Conn\r\n\trw   RWChan\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn: conn,\r\n\t\trw: RWChan{\r\n\t\t\tIn:  make(chan string),\r\n\t\t\tOut: make(chan string),\r\n\t\t\tNot: make(chan string),\r\n\t\t},\r\n\t}\r\n\r\n\trbuf := bufio.NewReader(conn)\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn, conn)\r\n\tgo cp(conn, ts3conn)\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// Read reads data from buffer into p doubling any IAC chars found (0xff), more\r\n// info on RFC 854 (Telnet).  It returns the number of bytes read into p.\r\nfunc (conn *Conn) Read(p []byte) (int, error) {\r\n\tb := []byte(<-conn.rw.In)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\tcopy(p, b)\r\n\treturn len(b), nil\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of\r\n// bytes written.\r\nfunc (conn *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\tconn.rw.Out <- s\r\n\treturn len(p), nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (c *Conn) Cmd(cmd string) string {\r\n\tvar s string\r\n\r\n\tc.rw.In <- cmd + \"\\n\"\r\n\r\n\t// Some commands output two lines\r\n\tvar end bool\r\n\tfor !end {\r\n\t\tselect {\r\n\t\tcase line := <-c.rw.Out:\r\n\t\t\ts += line\r\n\t\t\tif strings.HasPrefix(s, \"notify\") {\r\n\t\t\t\tc.rw.Not <- s\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\t\tif strings.HasPrefix(s, \"error id=\") {\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\tcase <-time.After(500 * time.Millisecond):\r\n\t\t\tend = true\r\n\t\t}\r\n\t}\r\n\r\n\treturn trimNet(s)\r\n}\r\n\r\n// Chans returns a low-level interaction\r\nfunc (c *Conn) Chans() *RWChan {\r\n\treturn &c.rw\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3215e7aa74d403c99377313d9a29818127e8a0f7",
+        "type": "blob",
+        "size": 782,
+        "content": "package ts3\r\n\r\nimport (\r\n\t\"strings\"\r\n)\r\n\r\n// Escapes special chars\r\nfunc ts3Quote(s string) string {\r\n\ts = strings.Replace(s, \"/\", \"\\\\/\", -1)\r\n\ts = strings.Replace(s, \" \", \"\\\\s\", -1)\r\n\ts = strings.Replace(s, \"|\", \"\\\\p\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Unescapes special chars\r\nfunc ts3Unquote(s string) string {\r\n\ts = strings.Replace(s, \"\\\\/\", \"/\", -1)\r\n\ts = strings.Replace(s, \"\\\\s\", \" \", -1)\r\n\ts = strings.Replace(s, \"\\\\p\", \"|\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Keeps only printable ASCII runes, also cleans \"\\r\"\r\nfunc StringsTrimNet(s string) string {\r\n\tvar res []rune\r\n\r\n\ts = strings.Trim(s, \"\\r\")\r\n\r\n\t// Just pretty ASCII runes\r\n\tfor _, r := range s {\r\n\t\tswitch {\r\n\t\tcase 32 >= r || r <= 127:\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3224cf93d1b370f8d943a5f87fdd01ee06b4fad5",
+        "type": "commit",
+        "size": 235,
+        "content": "tree 11f7f91cc6259e6183f9b3972d85c6a0c418023f\nparent a51480fcec953ce46329a656ad58f3baf16eff60\nauthor Carlos Cobo <toqueteos@gmail.com> 1454027435 +0100\ncommitter Carlos Cobo <toqueteos@gmail.com> 1454027435 +0100\n\nFix wrong import path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "36010c679d04a293c30d99cf6357897f7af1b0d1",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob 136feef323ee982301f090f9fe2877a061f4c8e0\tbot.go\n100644 blob 3fafcf5765b4f454395ec01485df6b157b5bf2c4\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "377662719afaf4ce6be8065aff697baca7f874cd",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.markdown\n040000 tree a7f0c6d4128d9dc72a44d70b6c421e1b1d8744df\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3893caa13424fe959b01beab36c8a43997c1700d",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 377662719afaf4ce6be8065aff697baca7f874cd\nparent 2504e54849cc9110d3d4cc04278deee18a9417cd\nauthor Carlos <toqueteos@gmail.com> 1352746113 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352746113 +0100\n\nMade helpers conformant with TS3 specs.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3917fe3e41e271c58bf44ad22232d30c8e87e18e",
+        "type": "blob",
+        "size": 782,
+        "content": "package ts3\r\n\r\nimport (\r\n\t\"strings\"\r\n)\r\n\r\n// Escapes special chars\r\nfunc Ts3Quote(s string) string {\r\n\ts = strings.Replace(s, \"/\", \"\\\\/\", -1)\r\n\ts = strings.Replace(s, \" \", \"\\\\s\", -1)\r\n\ts = strings.Replace(s, \"|\", \"\\\\p\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Unescapes special chars\r\nfunc Ts3Unquote(s string) string {\r\n\ts = strings.Replace(s, \"\\\\/\", \"/\", -1)\r\n\ts = strings.Replace(s, \"\\\\s\", \" \", -1)\r\n\ts = strings.Replace(s, \"\\\\p\", \"|\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Keeps only printable ASCII runes, also cleans \"\\r\"\r\nfunc StringsTrimNet(s string) string {\r\n\tvar res []rune\r\n\r\n\ts = strings.Trim(s, \"\\r\")\r\n\r\n\t// Just pretty ASCII runes\r\n\tfor _, r := range s {\r\n\t\tswitch {\r\n\t\tcase 32 >= r || r <= 127:\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba",
+        "type": "blob",
+        "size": 440,
+        "content": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\t// repl thingy\n\tin := bufio.NewReader(os.Stdin)\n\tfor {\n\t\tline, err := in.ReadString('\\n')\n\t\tif err != nil {\n\t\t\tdefer conn.Cmd(\"quit\")\n\t\t\treturn\n\t\t}\n\n\t\t// Ignore empty lines\n\t\tif line != \"\\n\" {\n\t\t\tfmt.Print(conn.Cmd(line))\n\n\t\t\tif strings.HasPrefix(line, \"quit\") {\n\t\t\t\treturn\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3c7f38991eb569f96337b8b7ac9a5e6eedbcfe86",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob 7ed2502dd2b60a3ac2faefa53c49fa6a2666b5ff\tREADME.markdown\n040000 tree 85d7740f90379dcb4b004141677975244549a226\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3fafcf5765b4f454395ec01485df6b157b5bf2c4",
+        "type": "blob",
+        "size": 722,
+        "content": "package main\n\nimport (\n\t\"bufio\"\n\t\"io\"\n\t\"log\"\n\t\"net\"\n\t\"os\"\n\t\"strings\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn, err := net.Dial(\"tcp\", \":10011\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\tdefer conn.Close()\n\n\terrc := make(chan error)\n\tgo cp(os.Stdout, conn, errc)\n\t// go cp(conn, os.Stdin, errc)\n\n\t// repl thingy\n\tin := bufio.NewReader(os.Stdin)\n\tfor {\n\t\tline, err := in.ReadString('\\n')\n\t\tif err != nil {\n\t\t\treturn\n\t\t}\n\t\tline = ts3.StringsTrimNet(line)\n\n\t\t// Ignore empty lines\n\t\tif line != \"\\n\" {\n\t\t\tconn.Write([]byte(line))\n\n\t\t\tif strings.HasPrefix(line, \"quit\") {\n\t\t\t\treturn\n\t\t\t}\n\t\t}\n\t}\n\n\tlog.Fatal(<-errc)\n}\n\nfunc cp(dst io.Writer, src io.Reader, errc chan<- error) {\n\t_, err := io.Copy(dst, src)\n\terrc <- err\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "47d9726c1aa886ccfa02bf68e390495e34b6014d",
+        "type": "commit",
+        "size": 336,
+        "content": "tree 95bbf2ac6c5bd8fa4b573cc32766b01f995cd8b3\nparent bbb6ca22cd4b4a2b00f0172be9f471f61ea8e8a0\nauthor Carlos <toqueteos@gmail.com> 1352152140 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352152140 +0100\n\nDocs + Fully working Conn.Cmd & notifications.\n\nConn.Cmd now reads whole command response (previously it ignored 2 line\nresponses).\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4abbde0d80b6b5e8590f2bce4921aca1ef1bd705",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 706c5a8627205f4abf223f308f01051045050f76\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ce7bfad742dd2f23d60da703683be502aabb0f7",
+        "type": "commit",
+        "size": 337,
+        "content": "tree 76da6eef0efc0b8f4884c50be5e3f7cf78e0ab7d\nparent ea48a21d488005d5bd814cc7763dbefbb8edeb2c\nparent a345627135df03af496259041b59ae62d1265c3e\nauthor Carlos Cobo <toqueteos@gmail.com> 1399328090 +0200\ncommitter Carlos Cobo <toqueteos@gmail.com> 1399328090 +0200\n\nMerge pull request #2 from zeroZshadow/master\n\nBig overhaul by @zeroZshadow",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4cfb9f7e8f33cc0d04497e72ab389afaeba28867",
+        "type": "blob",
+        "size": 227,
+        "content": "package main\n\nimport (\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tt := ts3.Dial(\"127.0.0.1\")\n\n\tt.Cmd(\"help\")\n\tt.Cmd(\"login serveradmin 123456\")\n\tt.Cmd(\"use 1\")\n\tt.Cmd(`clientupdate client_nickname=My\\sBot`)\n\tt.Cmd(\"quit\")\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d4bb3db786e040d161774a4dcd1dff3d3f788e2",
+        "type": "blob",
+        "size": 4107,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"fmt\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\n// Custom logger\r\nvar log = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\r\nvar (\r\n\tWriteRetries = 3\r\n\tReadAfter    = 100 * time.Millisecond\r\n\tDialTimeout  = 1 * time.Second\r\n\tReadTimeout  = 2 * time.Second\r\n\tWriteTimeout = 1500 * time.Millisecond\r\n)\r\n\r\ntype Conn struct {\r\n\taddr string\r\n\tconn net.Conn\r\n\t// In holds messages written to server\r\n\t// Out holds messages read from server\r\n\tIn, Out chan string\r\n\tquit    chan bool\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) (*Conn, error) {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tc, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tt := &Conn{\r\n\t\taddr: addr,\r\n\t\tconn: c,\r\n\t\tIn:   make(chan string),\r\n\t\tOut:  make(chan string),\r\n\t\tquit: make(chan bool),\r\n\t}\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tbuf := bufio.NewReader(c)\r\n\tline, err = buf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = buf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Init workers\r\n\tgo t.inWorker()\r\n\tgo t.outWorker()\r\n\r\n\treturn t, err\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\t// Two workers need two quit signals\r\n\tc.quit <- true\r\n\tc.quit <- true\r\n\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends an arbitrary command to the server and expects an output.\r\nfunc (c *Conn) Cmd(s string) {\r\n\tfmt.Println(\"> \" + s)\r\n\tc.In <- s\r\n\tfmt.Println(<-c.Out)\r\n}\r\n\r\n// inWorker writes server requests and sends them to `t.In` channel.\r\nfunc (c *Conn) inWorker() {\r\n\tvar (\r\n\t\tretry = true\r\n\t\ttries int\r\n\t)\r\n\r\n\tbuf := bufio.NewWriter(c.conn)\r\n\r\n\tfor {\r\n\t\tselect {\r\n\t\tcase line := <-c.In:\r\n\t\t\t// Ensure line is sent to remote telnetd\r\n\t\t\tfor retry && (tries < WriteRetries) {\r\n\t\t\t\tc.conn.SetWriteDeadline(time.Now().Add(WriteTimeout))\r\n\r\n\t\t\t\t_, err := buf.WriteString(line)\r\n\t\t\t\tbuf.Flush()\r\n\r\n\t\t\t\tif err != nil {\r\n\t\t\t\t\ttries++\r\n\t\t\t\t} else {\r\n\t\t\t\t\t// Exit inner loop\r\n\t\t\t\t\tretry = false\r\n\t\t\t\t}\r\n\t\t\t}\r\n\r\n\t\t\t// Reset write ensurance\r\n\t\t\tretry, tries = true, 0\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// outWorker reads server responses and sends them to `t.Out` channel.\r\nfunc (c *Conn) outWorker() {\r\n\tbuf := bufio.NewReader(c.conn)\r\n\r\n\tfor {\r\n\t\tselect {\r\n\t\t// Check if there's something to receive\r\n\t\tcase <-time.After(ReadAfter):\r\n\t\t\tvar (\r\n\t\t\t\tend   bool\r\n\t\t\t\tchunk string\r\n\t\t\t)\r\n\r\n\t\t\tc.conn.SetReadDeadline(time.Now().Add(ReadTimeout))\r\n\r\n\t\t\t// Read until end of response (error footer)\r\n\t\t\tfor !end {\r\n\t\t\t\t// log.Println(\"Inside retry for loop!\")\r\n\t\t\t\tline, err := buf.ReadString('\\n')\r\n\t\t\t\tfatal(err, fmt.Sprint(err))\r\n\r\n\t\t\t\t// Trim network control chars and save line to chunk\r\n\t\t\t\tline = StringsTrimNet(line)\r\n\t\t\t\tchunk += line\r\n\r\n\t\t\t\t// Determine end of line\r\n\t\t\t\tif strings.HasPrefix(line, \"error id=\") ||\r\n\t\t\t\t\tstrings.Contains(line, \"notify\") {\r\n\t\t\t\t\tc.Out <- chunk\r\n\t\t\t\t\t// EOL found, finish iteration\r\n\t\t\t\t\tend = true\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s string) {\r\n\tif err != nil {\r\n\t\tlog.Fatal(s)\r\n\t}\r\n}\r\n\r\n// info logs an error without exitting from application\r\nfunc info(err error, s string) {\r\n\tif err != nil {\r\n\t\tlog.Println(s)\r\n\t}\r\n}\r\n\r\n// info logs an error without exitting from application\r\nfunc infoErr(err error) {\r\n\tif err != nil {\r\n\t\tlog.Println(err)\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ddf933d5c4415f0854c074ac77bad2d0f648106",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob 136feef323ee982301f090f9fe2877a061f4c8e0\tbot.go\n100644 blob 2dca7535489b8680f2ae447527a426251b217692\traw_shell.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4eb128dc3d7bd7979fe02614c8ce174d68453a0b",
+        "type": "commit",
+        "size": 253,
+        "content": "tree 6d2c06a49c430c28e4d46435c70ba86e62d7d199\nparent f9ef9536d8f5a1cb2922f060fcada008f8672252\nauthor Carlos <toqueteos@gmail.com> 1352119907 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352119907 +0100\n\nForgot to make helpers public (Ts3Quote/Unquote)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ec8a82b87badc6b572bbf4ea7d4f637954adc0d",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree 36010c679d04a293c30d99cf6357897f7af1b0d1\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 205a3bce7a839dd52cf1a398f2fbc94319c15cd2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "51825a42f35a8601f106afffe970d0e9839e1bee",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree 98993376d865a2b3ccdb8fc1daacfac3c27df9a3\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 205a3bce7a839dd52cf1a398f2fbc94319c15cd2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "51ac38e205a0a5faae80658db6e3f1b1266c6b7d",
+        "type": "blob",
+        "size": 4251,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"fmt\"\r\n\t\"log\"\r\n\t\"net\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\tWriteRetries = 3\r\n\t//\r\n\tReadAfter    = 100 * time.Millisecond\r\n\tDialTimeout  = time.Second\r\n\tReadTimeout  = 250 * time.Millisecond\r\n\tWriteTimeout = 500 * time.Millisecond\r\n)\r\n\r\ntype Conn struct {\r\n\taddr string\r\n\tconn net.Conn\r\n\t// In holds messages written to server\r\n\t// Out holds messages read from server\r\n\tIn, Out chan string\r\n\tquit    chan bool\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) (*Conn, error) {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tc, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tt := &Conn{\r\n\t\taddr: addr,\r\n\t\tconn: c,\r\n\t\tIn:   make(chan string),\r\n\t\tOut:  make(chan string),\r\n\t\tquit: make(chan bool),\r\n\t}\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tbuf := bufio.NewReader(c)\r\n\tline, err = buf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = buf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Init workers\r\n\tgo t.outWorker()\r\n\tgo t.inWorker()\r\n\r\n\tt.In <- \"version\"\r\n\tfmt.Println(\"Checking server version...\")\r\n\tfmt.Println(<-t.Out)\r\n\r\n\treturn t, err\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\t// Two workers need two quit signals\r\n\tc.quit <- true\r\n\tc.quit <- true\r\n\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends an arbitrary command to the server and expects an output.\r\nfunc (c *Conn) Cmd(s string) {\r\n\tfmt.Println(\"> \" + s)\r\n\tc.In <- s\r\n\tfmt.Println(<-c.Out)\r\n}\r\n\r\n// outWorker reads server responses and sends them to `t.Out` channel.\r\nfunc (c *Conn) outWorker() {\r\n\tfor {\r\n\t\tselect {\r\n\t\t// Check if there's something to receive\r\n\t\tcase <-time.After(ReadAfter):\r\n\t\t\tlog.Println(\"I'm reading something!\")\r\n\r\n\t\t\tvar (\r\n\t\t\t\tend   bool\r\n\t\t\t\tchunk string\r\n\t\t\t)\r\n\r\n\t\t\tc.conn.SetReadDeadline(time.Now().Add(ReadTimeout))\r\n\r\n\t\t\t// Read until end of response (error footer)\r\n\t\t\tbuf := bufio.NewReader(c.conn)\r\n\t\t\tfor !end {\r\n\t\t\t\tlog.Println(\"Inside retry for loop!\")\r\n\t\t\t\tline, err := buf.ReadString('\\n')\r\n\t\t\t\tfatal(err, fmt.Sprint(err))\r\n\r\n\t\t\t\t// Trim network control chars and save line to chunk\r\n\t\t\t\tline = StringsTrimNet(line)\r\n\t\t\t\tchunk += line\r\n\r\n\t\t\t\t// Determine end of line\r\n\t\t\t\tif strings.HasPrefix(line, \"error id=\") ||\r\n\t\t\t\t\tstrings.Contains(line, \"notify\") {\r\n\t\t\t\t\tc.Out <- chunk\r\n\t\t\t\t\t// EOL found, finish iteration\r\n\t\t\t\t\tend = true\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// outWorker writes server requests and sends them to `t.In` channel.\r\nfunc (c *Conn) inWorker() {\r\n\tvar (\r\n\t\tretry = true\r\n\t\ttries int\r\n\t)\r\n\r\n\tbuf := bufio.NewWriter(c.conn)\r\n\r\n\tfor {\r\n\t\tselect {\r\n\t\tcase line := <-c.In:\r\n\t\t\t// Ensure line is sent to remote telnetd\r\n\t\t\tfor retry && (tries < WriteRetries) {\r\n\t\t\t\tc.conn.SetWriteDeadline(time.Now().Add(WriteTimeout))\r\n\r\n\t\t\t\t_, err := buf.WriteString(line)\r\n\r\n\t\t\t\tif err != nil {\r\n\t\t\t\t\ttries++\r\n\t\t\t\t} else {\r\n\t\t\t\t\t// Exit loop\r\n\t\t\t\t\tretry = false\r\n\t\t\t\t}\r\n\t\t\t}\r\n\r\n\t\t\t// Reset write ensurance\r\n\t\t\tretry, tries = true, 0\r\n\t\tcase <-c.quit:\r\n\t\t\treturn\r\n\t\t}\r\n\t}\r\n}\r\n\r\n// init registers log package prefix and removes any flags\r\nfunc init() {\r\n\tlog.SetPrefix(\"ts3> \")\r\n\tlog.SetFlags(0)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s string) {\r\n\tif err != nil {\r\n\t\tlog.Fatal(s)\r\n\t}\r\n}\r\n\r\n// info logs an error without exitting from application\r\nfunc info(err error, s string) {\r\n\tif err != nil {\r\n\t\tlog.Println(s)\r\n\t}\r\n}\r\n\r\n// info logs an error without exitting from application\r\nfunc infoErr(err error) {\r\n\tif err != nil {\r\n\t\tlog.Println(err)\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "54474b51e81b39c4b4482b5751c40c5c95853b6c",
+        "type": "tree",
+        "size": 265,
+        "content": "100644 blob f542fa9ecdf8740b080c597ef55d4962303df459\t.travis.yml\n100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob a71f541f096c0b4b4f37ad58de9ea047dc3bdc6d\tREADME.md\n040000 tree f36f18593e0fb55d7e8d20988c0d3941c051421c\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "56bd16e65acaf76f3df95ac626aa2dd45de82936",
+        "type": "blob",
+        "size": 1098,
+        "content": "The MIT License (MIT)\nCopyright (c) 2013 by Carlos Cobo and contributors.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the \"Software\"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6057428d26d6b158e1065a4687723edff06f87e7",
+        "type": "commit",
+        "size": 226,
+        "content": "tree f1f7c26e8cf8a3b1d1078966ecacb36221faa09b\nparent 6f0e42386b349292361c0c82f2a49ea7d1e27d46\nauthor Carlos <toqueteos@gmail.com> 1352152259 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352152259 +0100\n\nSmall typo on README.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "624fd8401300ea955ec84e2587b2d66c32419a11",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree 4ddf933d5c4415f0854c074ac77bad2d0f648106\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 51ac38e205a0a5faae80658db6e3f1b1266c6b7d\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6d2c06a49c430c28e4d46435c70ba86e62d7d199",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree e5f173a0df5acd575f91d7a7c33c6692ceaa8b65\texamples\n100644 blob 3917fe3e41e271c58bf44ad22232d30c8e87e18e\thelpers.go\n100644 blob 205a3bce7a839dd52cf1a398f2fbc94319c15cd2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6f0e42386b349292361c0c82f2a49ea7d1e27d46",
+        "type": "commit",
+        "size": 248,
+        "content": "tree 3c7f38991eb569f96337b8b7ac9a5e6eedbcfe86\nparent 47d9726c1aa886ccfa02bf68e390495e34b6014d\nauthor Carlos <toqueteos@gmail.com> 1352152178 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352152178 +0100\n\nUpdated examples + Added notifications bot.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7024550348e525d16adb36c61484ac1c7dbc8c80",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree 36010c679d04a293c30d99cf6357897f7af1b0d1\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 51ac38e205a0a5faae80658db6e3f1b1266c6b7d\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7062e7e39fb66d012bfffe3065d4940d6e1aae78",
+        "type": "tree",
+        "size": 265,
+        "content": "100644 blob f542fa9ecdf8740b080c597ef55d4962303df459\t.travis.yml\n100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree f36f18593e0fb55d7e8d20988c0d3941c051421c\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "706c5a8627205f4abf223f308f01051045050f76",
+        "type": "blob",
+        "size": 3384,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// Custom logger\r\n\tlog = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout = 1 * time.Second\r\n)\r\n\r\n// Holds incoming, outgoing and notification requests (1) and responses (2 & 3)\r\ntype RWChan struct{ In, Out, Not chan string }\r\n\r\ntype Conn struct {\r\n\tconn net.Conn\r\n\trw   RWChan\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn: conn,\r\n\t\trw: RWChan{\r\n\t\t\tIn:  make(chan string),\r\n\t\t\tOut: make(chan string),\r\n\t\t\tNot: make(chan string),\r\n\t\t},\r\n\t}\r\n\r\n\trbuf := bufio.NewReader(conn)\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn, conn)\r\n\tgo cp(conn, ts3conn)\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// Read reads data from buffer into p doubling any IAC chars found (0xff), more\r\n// info on RFC 854 (Telnet).  It returns the number of bytes read into p.\r\nfunc (conn *Conn) Read(p []byte) (int, error) {\r\n\tb := []byte(<-conn.rw.In)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\tcopy(p, b)\r\n\treturn len(b), nil\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of\r\n// bytes written.\r\nfunc (conn *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\tconn.rw.Out <- s\r\n\treturn len(p), nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (c *Conn) Cmd(cmd string) string {\r\n\tvar s string\r\n\r\n\tc.rw.In <- cmd + \"\\n\"\r\n\r\n\t// Some commands output two lines\r\n\tvar end bool\r\n\tfor !end {\r\n\t\tselect {\r\n\t\tcase line := <-c.rw.Out:\r\n\t\t\ts += line\r\n\t\t\tif strings.HasPrefix(s, \"notify\") {\r\n\t\t\t\tc.rw.Not <- s\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\t\tif strings.HasPrefix(s, \"error id=\") {\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\tcase <-time.After(500 * time.Millisecond):\r\n\t\t\tend = true\r\n\t\t}\r\n\t}\r\n\r\n\treturn trimNet(s)\r\n}\r\n\r\n// Chans returns a low-level interaction\r\nfunc (c *Conn) Chans() *RWChan {\r\n\treturn &c.rw\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "764e914b75d6d6df1fc5d832aa9840f590abf1bb",
+        "type": "commit",
+        "size": 170,
+        "content": "tree 624fd8401300ea955ec84e2587b2d66c32419a11\nauthor Carlos <toqueteos@gmail.com> 1352053642 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352053642 +0100\n\nFirst commit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76da6eef0efc0b8f4884c50be5e3f7cf78e0ab7d",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree f749c8f04811026f36f0a70f0dd73685a60ce166\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7bbc9e0c32d9bd8d676c187b2843c579e76c24cf",
+        "type": "commit",
+        "size": 233,
+        "content": "tree ebb8ace15ee97d4d7eeee899c70d50a1c91ba596\nparent b2616c2dee605dd53f1634fc2766f548aad515a0\nauthor 090317 <090317@nhtv.nl> 1399309326 +0200\ncommitter 090317 <090317@nhtv.nl> 1399309326 +0200\n\nChanged default waiting time to 350 ms\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ed2502dd2b60a3ac2faefa53c49fa6a2666b5ff",
+        "type": "blob",
+        "size": 492,
+        "content": "TeamSpeak 3 Server Query Library\r\n\r\n# Simple usage\r\n\r\n    package main\r\n\r\n    import (\r\n        \"fmt\"\r\n        \"time\"\r\n\r\n        \"github.com/toqueteos/ts3\"\r\n    )\r\n\r\n    func main() {\r\n        conn := ts3.Dial(\":10011\")\r\n        defer conn.Close()\r\n\r\n        bot(conn)\r\n    }\r\n\r\n    func bot(conn *ts3.Conn) {\r\n        defer conn.Cmd(\"quit\")\r\n\r\n        r := conn.Cmd(\"version\")\r\n        fmt.Printf(\"> %s\\n%s\", s, r)\r\n    }\r\n\r\n# Notifications support\r\n\r\nCheck `examples/bot_notifications.go`\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "85d7740f90379dcb4b004141677975244549a226",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob 08c72d05932e1d0acc1eb3ad05397f4510799e02\tbot.go\n100644 blob ae250e94d06ccbc990bf90f983e047ec0a33c23c\tbot_notifications.go\n100644 blob 3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d45975a03b4a4c173fdc3c02a29d2eb0bb8b30c",
+        "type": "blob",
+        "size": 1288,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that registers itself for channel#1 text messages (using\n// notifications).\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmdList = []string{\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// Register to channel id=1 text messages\n\t\t\"servernotifyregister event=textchannel id=1\",\n\t}\n\n\t// Chans returns a struct with three `chan string`.  We want `ch.Not` the\n\t// one that contains notifications.\n\tch := conn.Chans()\n\n\tfor _, cmdReq := range cmdList {\n\t\t// Send request to server (feed in a command)\n\t\tch.In <- cmdReq + \"\\n\"\n\t\t// Wait for its response\n\t\tcmdResp := <-ch.Out\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", cmdReq, r)\n\t\t// Wait a bit after each command so we don't get banned. By default you\n\t\t// can issue 10 commands within 3 seconds.  More info on the\n\t\t// WHITELISTING AND BLACKLISTING section of TS3 ServerQuery Manual\n\t\t// (http://goo.gl/OpJXz).\n\t\ttime.Sleep(350 * time.Millisecond)\n\t}\n\n\t// Keep\n\tfor m := range nch {\n\t\tfmt.Printf(\"Notification: %s\", m)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ff763fe712f003196b4c06bd49acdce798633d4",
+        "type": "tree",
+        "size": 193,
+        "content": "100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.markdown\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9165347ec6aabc4b6f6ede3fc74d6ef50927bcf0",
+        "type": "blob",
+        "size": 1083,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn, _ := ts3.Dial(\":10011\", false)\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that checks version, signs in and sends a text message to\n// channel#1 then exits.\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmds = []string{\n\t\t// Show version\n\t\t\"version\",\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// \"clientlist\",\n\t\t// Send message to channel with id=1\n\t\t`sendtextmessage targetmode=2 target=1 msg=Bot\\smessage!`,\n\t}\n\n\tfor _, s := range cmds {\n\t\t// Send command and wait for its response\n\t\tr := conn.Cmd(s)\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", s, r)\n\t\t// Wait a bit after each command so we don't get banned. By default you\n\t\t// can issue 10 commands within 3 seconds.  More info on the\n\t\t// WHITELISTING AND BLACKLISTING section of TS3 ServerQuery Manual\n\t\t// (http://goo.gl/OpJXz).\n\t\ttime.Sleep(350 * time.Millisecond)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "91b60bb2ab9b6f7c83d763177a6cc8783ca2729d",
+        "type": "blob",
+        "size": 508,
+        "content": "TeamSpeak 3 Server Query Library\r\n\r\n# Simple usage\r\n\r\n    package main\r\n\r\n    import (\r\n        \"fmt\"\r\n        \"time\"\r\n\r\n        \"github.com/toqueteos/ts3\"\r\n    )\r\n\r\n    func main() {\r\n        conn := ts3.Dial(\":10011\")\r\n        defer conn.Close()\r\n\r\n        bot(conn)\r\n    }\r\n\r\n    func bot(conn *ts3.Conn) {\r\n        defer conn.Cmd(\"quit\")\r\n\r\n        s := \"version\"\r\n        r := conn.Cmd(s)\r\n        fmt.Printf(\"> %s\\n%s\", s, r)\r\n    }\r\n\r\n# Notifications support\r\n\r\nCheck `examples/bot_notifications.go`\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "950d97e5b8175a22da8b31d3a7a2fc77a0c13411",
+        "type": "tree",
+        "size": 265,
+        "content": "100644 blob 1ee7667f2339e7108d02586fcd30911fedbf4247\t.travis.yml\n100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree f749c8f04811026f36f0a70f0dd73685a60ce166\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "95bbf2ac6c5bd8fa4b573cc32766b01f995cd8b3",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob 7ed2502dd2b60a3ac2faefa53c49fa6a2666b5ff\tREADME.markdown\n040000 tree e5f173a0df5acd575f91d7a7c33c6692ceaa8b65\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "98993376d865a2b3ccdb8fc1daacfac3c27df9a3",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob 4cfb9f7e8f33cc0d04497e72ab389afaeba28867\tbot.go\n100644 blob 3fafcf5765b4f454395ec01485df6b157b5bf2c4\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9af7db4e8ba18b6c6870c5f7cbe272baf5113237",
+        "type": "blob",
+        "size": 2432,
+        "content": "package ts3\r\n\r\n// Escaping table:\r\n// NAME         CHAR    ASCII   REPLACE CHAR    REPLACE ASCII\r\n// Backslash    \\       92      \\\\              92 92\r\n// Slash        /       47      \\/              92 47\r\n// Whitespace   \" \"     32      \\s              92 115\r\n// Pipe         |       124     \\p              92 112\r\n// Bell         \\a      7       \\a              92 97\r\n// Backspace    \\b      8       \\b              92 98\r\n// Formfeed     \\f      12      \\f              92 102\r\n// Newline      \\n      10      \\n              92 110\r\n// Car. Ret     \\r      13      \\r              92 114\r\n// Hor. Tab     \\t      9       \\t              92 116\r\n// Ver. Tab     \\v      11      \\v              92 118\r\n\r\nimport (\r\n\t\"strconv\"\r\n\t\"strings\"\r\n)\r\n\r\nvar (\r\n\tquoteTable = map[rune][]rune{\r\n\t\t92:   []rune{92, 92},  // \\   -> \\\\\r\n\t\t'/':  []rune{92, 47},  // /   -> \\/\r\n\t\t' ':  []rune{92, 115}, // \" \" -> \\s\r\n\t\t'|':  []rune{92, 112}, // |   -> \\p\r\n\t\t'\\a': []rune{92, 97},  // All these translate to `/` + `letter`\r\n\t\t'\\b': []rune{92, 98},  //\r\n\t\t'\\f': []rune{92, 102}, //\r\n\t\t'\\n': []rune{92, 110}, //\r\n\t\t'\\r': []rune{92, 114}, //\r\n\t\t'\\t': []rune{92, 116}, //\r\n\t\t'\\v': []rune{92, 118}, //\r\n\t}\r\n\r\n\tunquoteTable = map[string]string{\r\n\t\t`\\\\`: `\\`, // \\\\ -> \\\r\n\t\t`\\/`: `/`, // \\/ -> /\r\n\t\t`\\s`: ` `, // \\s -> \" \"\r\n\t\t`\\p`: `|`, // \\p -> |\r\n\t\t`\\a`: \"\\a\",\r\n\t\t`\\b`: \"\\b\",\r\n\t\t`\\f`: \"\\f\",\r\n\t\t`\\n`: \"\\n\",\r\n\t\t`\\r`: \"\\r\",\r\n\t\t`\\t`: \"\\t\",\r\n\t\t`\\v`: \"\\v\",\r\n\t}\r\n)\r\n\r\n// Escapes special chars\r\nfunc Quote(s string) string {\r\n\tvar res = make([]rune, 0)\r\n\r\n\tfor _, r := range []rune(s) {\r\n\t\tif v, ok := quoteTable[r]; ok {\r\n\t\t\tres = append(res, v...)\r\n\t\t} else {\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n\r\n// Unescapes special chars\r\nfunc Unquote(s string) string {\r\n\tfor k, v := range unquoteTable {\r\n\t\ts = strings.Replace(s, k, v, -1)\r\n\t}\r\n\r\n\treturn s\r\n}\r\n\r\n// Keeps only printable ASCII runes, also cleans \"\\r\"\r\nfunc trimNet(s string) string {\r\n\tvar res []rune\r\n\r\n\ts = strings.Trim(s, \"\\r\")\r\n\r\n\t// Just pretty ASCII runes\r\n\tfor _, r := range s {\r\n\t\tswitch {\r\n\t\tcase 32 >= r || r <= 127:\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n\r\nfunc parseError(data string) ErrorMsg {\r\n\tvar err ErrorMsg\r\n\tsplit := strings.Split(data, \" \")\r\n\r\n\tvalues := make([]string, 2)\r\n\tfor i, s := range split[1:] {\r\n\t\tvalues[i] = strings.Split(s, \"=\")[1]\r\n\t}\r\n\r\n\terr.Id, _ = strconv.Atoi(values[0])\r\n\terr.Msg = values[1]\r\n\r\n\treturn err\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9b0c361b1180a7b462844983f7fca076c66c8fec",
+        "type": "commit",
+        "size": 318,
+        "content": "tree e380c9a762637c1b1e1c2d178516735fd6ceab00\nparent b99f9a2b468e82777ecaccee7d401bb92113c793\nauthor Carlos <toqueteos@gmail.com> 1352059036 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352059036 +0100\n\nRefactoring + Fixed log init hook.\n\nExtras:\n- Increased Read and Write timeouts to 2 and 1 seconds respectivelly.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a345627135df03af496259041b59ae62d1265c3e",
+        "type": "commit",
+        "size": 309,
+        "content": "tree 76da6eef0efc0b8f4884c50be5e3f7cf78e0ab7d\nparent 7bbc9e0c32d9bd8d676c187b2843c579e76c24cf\nparent ea48a21d488005d5bd814cc7763dbefbb8edeb2c\nauthor 090317 <090317@nhtv.nl> 1399327058 +0200\ncommitter 090317 <090317@nhtv.nl> 1399327058 +0200\n\nMerge remote-tracking branch 'upstream/master'\n\nConflicts:\n\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a36b3a3b3aa5909877491cef5a370fe8b765c4e0",
+        "type": "blob",
+        "size": 2936,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// Custom logger\r\n\tlog = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout = 1 * time.Second\r\n)\r\n\r\ntype rwChan struct{ In, Out chan string }\r\n\r\ntype Conn struct {\r\n\tconn net.Conn\r\n\trw   rwChan\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn: conn,\r\n\t\trw: rwChan{\r\n\t\t\tmake(chan string),\r\n\t\t\tmake(chan string),\r\n\t\t},\r\n\t}\r\n\r\n\trbuf := bufio.NewReader(conn)\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\tfmt.Print(line)\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn, conn)\r\n\tgo cp(conn, ts3conn)\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// Read reads data from buffer into p doubling any IAC chars found (0xff), more\r\n// info on RFC 854 (Telnet).  It returns the number of bytes read into p.\r\nfunc (conn *Conn) Read(p []byte) (int, error) {\r\n\tb := []byte(<-conn.rw.In)\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\tcopy(p, b)\r\n\treturn len(b), nil\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of\r\n// bytes written.\r\nfunc (conn *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\tconn.rw.Out <- s\r\n\treturn len(p), nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.  Any blocked Read or\r\n// Write operations will be unblocked and return errors.\r\nfunc (c *Conn) Close() error {\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (c *Conn) Cmd(cmd string) string {\r\n\tc.rw.In <- Quote(cmd) + \"\\n\"\r\n\ts := Unquote(<-c.rw.Out)\r\n\treturn trimNet(s)\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a51480fcec953ce46329a656ad58f3baf16eff60",
+        "type": "commit",
+        "size": 232,
+        "content": "tree 950d97e5b8175a22da8b31d3a7a2fc77a0c13411\nparent 4ce7bfad742dd2f23d60da703683be502aabb0f7\nauthor Carlos Cobo <toqueteos@gmail.com> 1454025824 +0100\ncommitter Carlos Cobo <toqueteos@gmail.com> 1454025824 +0100\n\nCreate .travis.yml",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a71f541f096c0b4b4f37ad58de9ea047dc3bdc6d",
+        "type": "blob",
+        "size": 772,
+        "content": "# ts3 [![](https://godoc.org/github.com/toqueteos/ts3?status.svg)](http://godoc.org/github.com/toqueteos/ts3)\r\n\r\nA TeamSpeak 3 Server Query library.\r\n\r\nThe API is stable but horrible. Hopefully it's about to change, this project was done quite some time ago and it needs a bit of love from my side.\r\n\r\n# Installation\r\n\r\n`go get github.com/toqueteos/ts3/...`\r\n\r\n# Example\r\n\r\n```go\r\npackage main\r\n\r\nimport (\r\n    \"fmt\"\r\n    \"time\"\r\n\r\n    \"github.com/toqueteos/ts3\"\r\n)\r\n\r\nfunc main() {\r\n    conn := ts3.Dial(\":10011\")\r\n    defer conn.Close()\r\n\r\n    bot(conn)\r\n}\r\n\r\nfunc bot(conn *ts3.Conn) {\r\n    defer conn.Cmd(\"quit\")\r\n\r\n    s := \"version\"\r\n    r := conn.Cmd(s)\r\n    fmt.Printf(\"> %s\\n%s\", s, r)\r\n}\r\n```\r\n\r\n# Notifications support\r\n\r\nCheck `examples/bot_notifications.go`\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a7f0c6d4128d9dc72a44d70b6c421e1b1d8744df",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob 04a53df0a23eeff360c6d34a9687300ef1c63984\tbot.go\n100644 blob ae250e94d06ccbc990bf90f983e047ec0a33c23c\tbot_notifications.go\n100644 blob 3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a83d74dab8e63c064c13bbd9eadcbff78413fcf0",
+        "type": "commit",
+        "size": 305,
+        "content": "tree 4abbde0d80b6b5e8590f2bce4921aca1ef1bd705\nparent af47780fb8d82167a154d79bab90ea3cc8e97f8e\nauthor zeroZshadow <martijn_gerkes@hotmail.com> 1398903375 +0200\ncommitter zeroZshadow <martijn_gerkes@hotmail.com> 1398903375 +0200\n\nUpdate ts3.go\n\nThere is really no need to print the welcome message for a bot",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a8d2e35e399129d6b8b2a54184258f2bcecd1d14",
+        "type": "commit",
+        "size": 244,
+        "content": "tree 51825a42f35a8601f106afffe970d0e9839e1bee\nparent ef789362c2d18b0cc59b953a98e6e9203f290113\nauthor Carlos <toqueteos@gmail.com> 1352061375 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352061375 +0100\n\nUpdated Bot example. Still not working.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae250e94d06ccbc990bf90f983e047ec0a33c23c",
+        "type": "blob",
+        "size": 1190,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that registers itself for channel#1 text messages (using\n// notifications).\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmdList = []string{\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=Poketron\\sBot\\s6000`,\n\t\t// Register to channel id=1 text messages\n\t\t\"servernotifyregister event=textchannel id=1\",\n\t}\n\n\t// Chans returns a struct with three `chan string`.  We want `ch.Not` the\n\t// one that contains notifications.\n\tch := conn.Chans()\n\n\tfor _, cmdReq := range cmdList {\n\t\t// Send request to server (feed in a command)\n\t\tch.In <- cmdReq + \"\\n\"\n\t\t// Wait for its response\n\t\tcmdResp := <-ch.Out\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", cmdReq, r)\n\t\t// Wait a bit after each command so we don't get banned.  serveradmin\n\t\t// doesn't need this if bot's ip is on whitelist.\n\t\ttime.Sleep(200 * time.Millisecond)\n\t}\n\n\t// Keep\n\tfor m := range nch {\n\t\tfmt.Printf(\"Notification: %s\", m)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "af47780fb8d82167a154d79bab90ea3cc8e97f8e",
+        "type": "commit",
+        "size": 226,
+        "content": "tree e3b6bd10f96d83921764c76a3cfa5e919d053337\nparent 03d686e06179395053129d4af6ad7b9760f9f9b9\nauthor Carlos <toqueteos@gmail.com> 1358198205 +0100\ncommitter Carlos <toqueteos@gmail.com> 1358198205 +0100\n\nMention contributors.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2616c2dee605dd53f1634fc2766f548aad515a0",
+        "type": "commit",
+        "size": 295,
+        "content": "tree 24a033dea04bb7e5f204fe3b35f6f2e20a357f84\nparent b3ce1ccdf58cb49f1f997609b01399b0602168c0\nauthor 090317 <090317@nhtv.nl> 1399308925 +0200\ncommitter 090317 <090317@nhtv.nl> 1399308925 +0200\n\nBig overhaul\nRewrote most of the system to work better with command timing and notification handling\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b287702db26c390abd7516db0afaa9ba2c7b9b08",
+        "type": "commit",
+        "size": 233,
+        "content": "tree 2d525524d38a08dc6927c9695dc5d172d11d4abb\nparent 4eb128dc3d7bd7979fe02614c8ce174d68453a0b\nauthor Carlos <toqueteos@gmail.com> 1352126460 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352126460 +0100\n\nRemove clutter from helpers.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b3ce1ccdf58cb49f1f997609b01399b0602168c0",
+        "type": "commit",
+        "size": 259,
+        "content": "tree cf9de2a970f825d55ea8c506cb062dedce23da91\nparent 26c942c6d0cffc664c535fa00ac3f167ef144660\nauthor zeroZshadow <martijn_gerkes@hotmail.com> 1398962406 +0200\ncommitter zeroZshadow <martijn_gerkes@hotmail.com> 1398962406 +0200\n\ncommented notification handling",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b99f9a2b468e82777ecaccee7d401bb92113c793",
+        "type": "commit",
+        "size": 317,
+        "content": "tree 7024550348e525d16adb36c61484ac1c7dbc8c80\nparent 764e914b75d6d6df1fc5d832aa9840f590abf1bb\nauthor Carlos <toqueteos@gmail.com> 1352058797 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352058797 +0100\n\nReplaced raw_shell example.\n\n- examples/repl.go provides a nicer alternative example (an it works\nproperly too!)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bbb6ca22cd4b4a2b00f0172be9f471f61ea8e8a0",
+        "type": "commit",
+        "size": 247,
+        "content": "tree d7a5a205c8fc4d1f30d8a706965f4950c5ebc445\nparent b287702db26c390abd7516db0afaa9ba2c7b9b08\nauthor Carlos <toqueteos@gmail.com> 1352129340 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352129340 +0100\n\nSimplified library code thanks to io.Copy.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6",
+        "type": "blob",
+        "size": 769,
+        "content": "package ts3\r\n\r\nimport (\r\n\t\"strings\"\r\n)\r\n\r\n// Escapes special chars\r\nfunc Quote(s string) string {\r\n\ts = strings.Replace(s, \"/\", \"\\\\/\", -1)\r\n\ts = strings.Replace(s, \" \", \"\\\\s\", -1)\r\n\ts = strings.Replace(s, \"|\", \"\\\\p\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Unescapes special chars\r\nfunc Unquote(s string) string {\r\n\ts = strings.Replace(s, \"\\\\/\", \"/\", -1)\r\n\ts = strings.Replace(s, \"\\\\s\", \" \", -1)\r\n\ts = strings.Replace(s, \"\\\\p\", \"|\", -1)\r\n\treturn strings.Trim(s, \"\\r\")\r\n}\r\n\r\n// Keeps only printable ASCII runes, also cleans \"\\r\"\r\nfunc trimNet(s string) string {\r\n\tvar res []rune\r\n\r\n\ts = strings.Trim(s, \"\\r\")\r\n\r\n\t// Just pretty ASCII runes\r\n\tfor _, r := range s {\r\n\t\tswitch {\r\n\t\tcase 32 >= r || r <= 127:\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c59e649251682390e5da3fd412f5810606bbc1ef",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob d21a2201bcdbb0e1e4b0e9778c15f4437ad29efa\tbot.go\n100644 blob 8d45975a03b4a4c173fdc3c02a29d2eb0bb8b30c\tbot_notifications.go\n100644 blob 3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c74d6ad3686bed075faad7f585ef7700feb8903f",
+        "type": "blob",
+        "size": 34,
+        "content": "TeamSpeak 3 Server Query Library\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cb6287d80f7102b3075b07642a8533becf754b30",
+        "type": "blob",
+        "size": 3385,
+        "content": "// TeamSpeak 3 Server Query library\r\n//\r\n// Reference: http://goo.gl/OpJXz\r\npackage ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"fmt\"\r\n\t\"io\"\r\n\tstdlog \"log\"\r\n\t\"net\"\r\n\t\"os\"\r\n\t\"strings\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// Custom logger\r\n\tlog = stdlog.New(os.Stdout, \"ts3> \", stdlog.LstdFlags)\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout = 1 * time.Second\r\n)\r\n\r\n// Holds incoming, outgoing and notification requests (1) and responses (2 & 3)\r\ntype RWChan struct{ In, Out, Not chan string }\r\n\r\ntype Conn struct {\r\n\tconn net.Conn\r\n\trw   RWChan\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string) *Conn {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tfatal(err, fmt.Sprintf(\"Connection error: %v\\n\", err))\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn: conn,\r\n\t\trw: RWChan{\r\n\t\t\tIn:  make(chan string),\r\n\t\t\tOut: make(chan string),\r\n\t\t\tNot: make(chan string),\r\n\t\t},\r\n\t}\r\n\r\n\trbuf := bufio.NewReader(conn)\r\n\r\n\t// Buffer to read from TCP socket; Read first line\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't identify server.\")\r\n\t\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\tlog.Fatal(\"Not a TeamSpeak 3 server.\")\r\n\t}\r\n\r\n\t// Show welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\tfatal(err, \"Couldn't recv welcome message.\")\r\n\r\n\t// Copy flow: writer (request) -> conn -> reader (response)\r\n\tgo cp(ts3conn, conn)\r\n\tgo cp(conn, ts3conn)\r\n\r\n\treturn ts3conn\r\n}\r\n\r\n// Read reads data from buffer into p doubling any IAC chars found (0xff), more\r\n// info on RFC 854 (Telnet).  It returns the number of bytes read into p.\r\nfunc (conn *Conn) Read(p []byte) (int, error) {\r\n\tb := []byte(<-conn.rw.In)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\tcopy(p, b)\r\n\treturn len(b), nil\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of\r\n// bytes written.\r\nfunc (conn *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\tconn.rw.Out <- s\r\n\treturn len(p), nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (c *Conn) Close() error {\r\n\treturn c.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (c *Conn) Cmd(cmd string) string {\r\n\tvar s string\r\n\r\n\tc.rw.In <- cmd + \"\\n\"\r\n\r\n\t// Some commands output two lines\r\n\tvar end bool\r\n\tfor !end {\r\n\t\tselect {\r\n\t\tcase line := <-c.rw.Out:\r\n\t\t\ts += line\r\n\t\t\tif strings.HasPrefix(s, \"notify\") {\r\n\t\t\t\tc.rw.Not <- s\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\t\tif strings.HasPrefix(s, \"error id=\") {\r\n\t\t\t\tend = true\r\n\t\t\t}\r\n\t\tcase <-time.After(500 * time.Millisecond):\r\n\t\t\tend = true\r\n\t\t}\r\n\t}\r\n\r\n\treturn trimNet(s)\r\n}\r\n\r\n// Chans returns a low-level interaction\r\nfunc (c *Conn) Chans() *RWChan {\r\n\treturn &c.rw\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc cp(dst io.Writer, src io.Reader) {\r\n\t_, err := io.Copy(dst, src)\r\n\tfatal(err)\r\n}\r\n\r\n// fatal exits application if encounters an error\r\nfunc fatal(err error, s ...string) {\r\n\tif err != nil {\r\n\t\tif len(s) == 0 {\r\n\t\t\tlog.Fatal(err)\r\n\t\t} else {\r\n\t\t\tlog.Fatal(s)\r\n\t\t}\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cf9de2a970f825d55ea8c506cb062dedce23da91",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 066defa413bfe9e6147fc856b15529ce597f40a0\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d1640d0b5b160d71c595a853b92f33571096a77a",
+        "type": "blob",
+        "size": 244,
+        "content": "package main\n\nimport (\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tt := ts3.Dial(\"127.0.0.1\")\n\tdefer t.Close()\n\n\tt.Cmd(\"help\")\n\tt.Cmd(\"login serveradmin 123456\")\n\tt.Cmd(\"use 1\")\n\tt.Cmd(`clientupdate client_nickname=My\\sBot`)\n\tt.Cmd(\"quit\")\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d21a2201bcdbb0e1e4b0e9778c15f4437ad29efa",
+        "type": "blob",
+        "size": 1073,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/toqueteos/ts3\"\n)\n\nfunc main() {\n\tconn := ts3.Dial(\":10011\")\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that checks version, signs in and sends a text message to\n// channel#1 then exits.\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmds = []string{\n\t\t// Show version\n\t\t\"version\",\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// \"clientlist\",\n\t\t// Send message to channel with id=1\n\t\t`sendtextmessage targetmode=2 target=1 msg=Bot\\smessage!`,\n\t}\n\n\tfor _, s := range cmds {\n\t\t// Send command and wait for its response\n\t\tr := conn.Cmd(s)\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", s, r)\n\t\t// Wait a bit after each command so we don't get banned. By default you\n\t\t// can issue 10 commands within 3 seconds.  More info on the\n\t\t// WHITELISTING AND BLACKLISTING section of TS3 ServerQuery Manual\n\t\t// (http://goo.gl/OpJXz).\n\t\ttime.Sleep(350 * time.Millisecond)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d60ced0ffd5f121b11350faabd8428bd8deee502",
+        "type": "blob",
+        "size": 4773,
+        "content": "package ts3\r\n\r\nimport (\r\n\t\"bufio\"\r\n\t\"bytes\"\r\n\t\"errors\"\r\n\t\"io\"\r\n\t\"net\"\r\n\t\"strings\"\r\n\t\"sync\"\r\n\t\"time\"\r\n)\r\n\r\nconst (\r\n\tDefaultPort    = \"10011\"\r\n\tVerificationID = \"TS3\"\r\n)\r\n\r\nvar (\r\n\t// ts3.Dial max timeout\r\n\tDialTimeout    = 1 * time.Second\r\n\tCommandTimeout = 500 * time.Millisecond\r\n)\r\n\r\ntype notification func(string, string)\r\n\r\ntype Conn struct {\r\n\tconn          net.Conn\r\n\trbuf          *bufio.Reader\r\n\twbuf          *bufio.Writer\r\n\tcResult       chan string\r\n\tcNotification chan string\r\n\tcError        chan ErrorMsg\r\n\tnotifyCb      notification\r\n\tcmdSync       *sync.WaitGroup\r\n\tcmdLast       time.Time\r\n\tcmdTimeout    time.Duration\r\n}\r\n\r\ntype ErrorMsg struct {\r\n\tId  int\r\n\tMsg string\r\n}\r\n\r\n// Dial connects to a local/remote TS3 server. A default port is appended to\r\n// `addr` if user doesn't provide one.\r\nfunc Dial(addr string, whitelisted bool) (*Conn, error) {\r\n\tvar (\r\n\t\terr  error\r\n\t\tline string\r\n\t)\r\n\r\n\t// Append DefaultPort if user didn't specify one\r\n\tif !strings.Contains(addr, \":\") {\r\n\t\taddr += \":\" + DefaultPort\r\n\t}\r\n\r\n\t// Try to establish connection\r\n\tconn, err := net.DialTimeout(\"tcp\", addr, DialTimeout)\r\n\tif err != nil {\r\n\t\treturn nil, err\r\n\t}\r\n\r\n\t// Create buffers\r\n\trbuf := bufio.NewReader(conn)\r\n\twbuf := bufio.NewWriter(conn)\r\n\r\n\ttimeout := time.Duration(350 * time.Millisecond)\r\n\tif whitelisted {\r\n\t\ttimeout = time.Duration(0 * time.Millisecond)\r\n\t}\r\n\r\n\t// Allocate connection object\r\n\tts3conn := &Conn{\r\n\t\tconn:          conn,\r\n\t\trbuf:          rbuf,\r\n\t\twbuf:          wbuf,\r\n\t\tcResult:       make(chan string),\r\n\t\tcNotification: make(chan string),\r\n\t\tcError:        make(chan ErrorMsg),\r\n\t\tnotifyCb:      nil,\r\n\t\tcmdSync:       new(sync.WaitGroup),\r\n\t\tcmdLast:       time.Now(),\r\n\t\tcmdTimeout:    timeout,\r\n\t}\r\n\r\n\t// Read VerificationID\r\n\tline, err = rbuf.ReadString('\\n')\r\n\r\n\t// Then check if it's a TS3 server\r\n\tif !strings.Contains(line, VerificationID) {\r\n\t\treturn nil, errors.New(\"Invalid VerificationID\")\r\n\t}\r\n\r\n\t// Read welcome message\r\n\tline, err = rbuf.ReadString('\\n')\r\n\r\n\t// Sync socket incoming data, to ts3conn\r\n\tgo ts3conn.sync()\r\n\r\n\treturn ts3conn, nil\r\n}\r\n\r\n// Close closes underlying TCP Conn to local/remote server.\r\nfunc (this *Conn) Close() error {\r\n\treturn this.conn.Close()\r\n}\r\n\r\n// Cmd sends a request to a server and waits for its response.\r\nfunc (this *Conn) Cmd(cmd string) (string, ErrorMsg) {\r\n\t//Make sure only 1 command runs at a time per connection\r\n\tthis.cmdSync.Wait()\r\n\tthis.cmdSync.Add(1)\r\n\r\n\t//Make sure we timeout nicely per command to avoid spamming\r\n\tdiff := time.Since(this.cmdLast)\r\n\tif diff < this.cmdTimeout {\r\n\t\t<-time.After(this.cmdTimeout - diff)\r\n\t}\r\n\r\n\tvar (\r\n\t\tresult string   //Holds end result\r\n\t\ttemp   string   //Holds temp result\r\n\t\terr    ErrorMsg //Holds error message\r\n\t)\r\n\r\n\t// Write the cmd to the socket, ending with a \\n\r\n\tthis.send(cmd + \"\\n\")\r\n\r\n\t// Block on a channel that will recieve the socket READ that is NOT a notification or error\r\n\t// Block on a channel that will recieve the socket READ that is NOT a notification or result\r\n\tdone := false\r\n\tfor !done {\r\n\t\tselect {\r\n\t\tcase temp = <-this.cResult:\r\n\t\t\tresult += temp\r\n\t\t\tcontinue\r\n\t\tcase err = <-this.cError:\r\n\t\t\tdone = true\r\n\t\tcase <-time.After(CommandTimeout):\r\n\t\t\t//TODO Is there a better way to handle this?\r\n\t\t\terr.Id = 1\r\n\t\t\terr.Msg = \"timeout\"\r\n\t\t\tdone = true\r\n\t\t}\r\n\t}\r\n\r\n\tthis.cmdLast = time.Now()\r\n\tthis.cmdSync.Done()\r\n\treturn result, err\r\n}\r\n\r\nfunc (this *Conn) NotifyFunc(cb notification) {\r\n\tthis.notifyCb = cb\r\n}\r\n\r\nfunc (this *Conn) send(p string) (int, error) {\r\n\tb := []byte(p)\r\n\t// Double IAC chars\r\n\tbytes.Replace(b, []byte{0xff}, []byte{0xff, 0xff}, -1)\r\n\treturn this.conn.Write(b)\r\n}\r\n\r\nfunc (this *Conn) handleResponse(data string) {\r\n\t// Has to be done by line!\r\n\t// Sadly its possible, when spammed, to have an error and notification to stick together, and more\r\n\t// Should be a better way to solve this overall, but teamspeak is a bitch and doesnt have a standard way to end a reply\r\n\r\n\tlines := strings.Split(data, \"\\n\")\r\n\tvar result string\r\n\r\n\tfor _, line := range lines {\r\n\t\tswitch {\r\n\t\tcase strings.HasPrefix(line, \"error\"):\r\n\t\t\tthis.cError <- parseError(line)\r\n\t\tcase strings.HasPrefix(line, \"notify\"):\r\n\t\t\tif this.notifyCb != nil {\r\n\t\t\t\tsplit := strings.SplitN(line, \" \", 2)\r\n\t\t\t\tgo this.notifyCb(split[0], split[1])\r\n\t\t\t}\r\n\t\tdefault:\r\n\t\t\tresult += line\r\n\t\t}\r\n\t}\r\n\r\n\tif result != \"\" {\r\n\t\tthis.cResult <- result\r\n\t}\r\n}\r\n\r\n// Write writes the contents of p into the buffer. It returns the number of bytes written.\r\nfunc (this *Conn) Write(p []byte) (int, error) {\r\n\ts := string(p)\r\n\ts = strings.Replace(s, \"\\r\", \"\", -1)\r\n\r\n\tthis.handleResponse(s)\r\n\treturn len(s), nil\r\n}\r\n\r\n// cp copies from an io.Reader to an io.Writer\r\nfunc (this *Conn) sync() {\r\n\tfor {\r\n\t\tio.Copy(this, this.conn)\r\n\t}\r\n}\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d7a5a205c8fc4d1f30d8a706965f4950c5ebc445",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree e5f173a0df5acd575f91d7a7c33c6692ceaa8b65\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob a36b3a3b3aa5909877491cef5a370fe8b765c4e0\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dd49ffd6c8df59189da0e82f48c255e95c86d208",
+        "type": "commit",
+        "size": 310,
+        "content": "tree 8ff763fe712f003196b4c06bd49acdce798633d4\nparent 22b3d931644b007fa5541d479da22a85e21df888\nauthor Carlos <toqueteos@gmail.com> 1352758004 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352758005 +0100\n\nExamples: Explain use of Sleep after each cmd.\n\nNinja: renamed default bot name for `bot_notificatons.go`\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e380c9a762637c1b1e1c2d178516735fd6ceab00",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree 36010c679d04a293c30d99cf6357897f7af1b0d1\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 4d4bb3db786e040d161774a4dcd1dff3d3f788e2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e3b6bd10f96d83921764c76a3cfa5e919d053337",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5f173a0df5acd575f91d7a7c33c6692ceaa8b65",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob d1640d0b5b160d71c595a853b92f33571096a77a\tbot.go\n100644 blob 3fafcf5765b4f454395ec01485df6b157b5bf2c4\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e61b001fb475e280c68544a41877304aea5715b8",
+        "type": "blob",
+        "size": 1277,
+        "content": "package ts3\n\nimport (\n\t\"testing\"\n)\n\nvar testQuote = []struct {\n\tin, expected string\n}{\n\t{\"\", \"\"},\n\t{\" \", `\\s`},\n\t{\"Hello\\a\", \"Hello\\\\a\"},\n\t{\"Hello buddy!\", `Hello\\sbuddy!`},\n\t{\"id|1 id|2\", `id\\p1\\sid\\p2`},\n\t{\"heyooo\\n\\r\", \"heyooo\\\\n\\\\r\"},\n\t{\"Lots\\tof\\vtabs\", \"Lots\\\\tof\\\\vtabs\"},\n\t{\"I've never used these: \\b, \\f\", `I've\\snever\\sused\\sthese:\\s\\b,\\s\\f`},\n}\n\nvar testUnquote = []struct {\n\tin, expected string\n}{\n\t{\"\", \"\"},\n\t{`\\s`, \" \"},\n\t{\"Hello\\\\a\", \"Hello\\a\"},\n\t{`Hello\\sbuddy!`, \"Hello buddy!\"},\n\t{`id\\p1\\sid\\p2`, \"id|1 id|2\"},\n\t{\"heyooo\\\\n\\\\r\", \"heyooo\\n\\r\"},\n\t{\"Lots\\\\tof\\\\vtabs\", \"Lots\\tof\\vtabs\"},\n\t{`I've\\snever\\sused\\sthese:\\s\\b,\\s\\f`, \"I've never used these: \\b, \\f\"},\n}\n\nfunc TestQuote(t *testing.T) {\n\tfor index, tt := range testQuote {\n\t\toutput := Quote(tt.in)\n\t\tif output != tt.expected {\n\t\t\tt.Errorf(\"%d. Got %q, want %q\", index+1, output, tt.expected)\n\t\t}\n\t}\n}\n\nfunc TestUnquote(t *testing.T) {\n\tfor index, tt := range testUnquote {\n\t\toutput := Unquote(tt.in)\n\t\tif output != tt.expected {\n\t\t\tt.Errorf(\"%d. Got %q, want %q\", index+1, output, tt.expected)\n\t\t}\n\t}\n}\n\nfunc TestQuoteUnquote(t *testing.T) {\n\tfor index, tt := range testQuote {\n\t\toutput := Unquote(Quote(tt.in))\n\t\tif output != tt.in {\n\t\t\tt.Errorf(\"%d. Got %q, want %q\", index+1, output, tt.in)\n\t\t}\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e6b748dddedb9d74167e07ab9ee1e0e85a02c6ab",
+        "type": "tree",
+        "size": 193,
+        "content": "100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.markdown\n040000 tree a7f0c6d4128d9dc72a44d70b6c421e1b1d8744df\texamples\n100644 blob fdf6b92679140797b5819309c8008e1f65b9dea0\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e930f32164baf7a86a9ea62e36bea0c1af223f68",
+        "type": "commit",
+        "size": 364,
+        "content": "tree 54474b51e81b39c4b4482b5751c40c5c95853b6c\nparent 0fb4e954f2883dd703f63facbe142dd645f89696\nauthor Carlos Cobo <toqueteos@gmail.com> 1454024452 +0100\ncommitter Carlos Cobo <toqueteos@gmail.com> 1454027495 +0100\n\nREADME.md: Small changes\n\n- The library description was greatly improved, changes are coming!\n- GoDoc badge was added.\n- Minor changes to formatting.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea48a21d488005d5bd814cc7763dbefbb8edeb2c",
+        "type": "commit",
+        "size": 340,
+        "content": "tree 4abbde0d80b6b5e8590f2bce4921aca1ef1bd705\nparent af47780fb8d82167a154d79bab90ea3cc8e97f8e\nparent a83d74dab8e63c064c13bbd9eadcbff78413fcf0\nauthor Carlos Cobo <toqueteos@gmail.com> 1398905844 +0200\ncommitter Carlos Cobo <toqueteos@gmail.com> 1398905844 +0200\n\nMerge pull request #1 from zeroZshadow/patch-1\n\nRemove welcome message prints.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ebb8ace15ee97d4d7eeee899c70d50a1c91ba596",
+        "type": "tree",
+        "size": 226,
+        "content": "100644 blob 56bd16e65acaf76f3df95ac626aa2dd45de82936\tLICENSE.txt\n100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.md\n040000 tree c59e649251682390e5da3fd412f5810606bbc1ef\texamples\n100644 blob 9af7db4e8ba18b6c6870c5f7cbe272baf5113237\thelpers.go\n100644 blob e61b001fb475e280c68544a41877304aea5715b8\thelpers_test.go\n100644 blob 2e12d62b4b282f321817e5fa1b98147c258f9c78\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef789362c2d18b0cc59b953a98e6e9203f290113",
+        "type": "commit",
+        "size": 222,
+        "content": "tree 4ec8a82b87badc6b572bbf4ea7d4f637954adc0d\nparent 9b0c361b1180a7b462844983f7fca076c66c8fec\nauthor Carlos <toqueteos@gmail.com> 1352061278 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352061278 +0100\n\nNow using io.Copy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f1f7c26e8cf8a3b1d1078966ecacb36221faa09b",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.markdown\n040000 tree 85d7740f90379dcb4b004141677975244549a226\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2fee784634863cb9a0fefaff43a99f5294ad9f8",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob 91b60bb2ab9b6f7c83d763177a6cc8783ca2729d\tREADME.markdown\n040000 tree a7f0c6d4128d9dc72a44d70b6c421e1b1d8744df\texamples\n100644 blob c49c03c3a7bd4ef15b1aa438cd9acad0806b2aa6\thelpers.go\n100644 blob 2e898cd364c94e844588eac7805410ecd2959e6f\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f36f18593e0fb55d7e8d20988c0d3941c051421c",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob 9165347ec6aabc4b6f6ede3fc74d6ef50927bcf0\tbot.go\n100644 blob 8d45975a03b4a4c173fdc3c02a29d2eb0bb8b30c\tbot_notifications.go\n100644 blob 3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f542fa9ecdf8740b080c597ef55d4962303df459",
+        "type": "blob",
+        "size": 82,
+        "content": "language: go\n\ngo:\n  - 1.2\n  - 1.3\n  - 1.4\n  - tip\n\nscript:\n  - go get\n  - go test\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f65eb2eec6179ebb27dd6b70d5a187f59a301078",
+        "type": "blob",
+        "size": 1085,
+        "content": "package main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/zeroZshadow/ts3\"\n)\n\nfunc main() {\n\tconn, _ := ts3.Dial(\":10011\", false)\n\tdefer conn.Close()\n\n\tbot(conn)\n}\n\n// bot is a simple bot that checks version, signs in and sends a text message to\n// channel#1 then exits.\nfunc bot(conn *ts3.Conn) {\n\tdefer conn.Cmd(\"quit\")\n\n\tvar cmds = []string{\n\t\t// Show version\n\t\t\"version\",\n\t\t// Login\n\t\t\"login serveradmin 123456\",\n\t\t// Choose virtual server\n\t\t\"use 1\",\n\t\t// Update nickname\n\t\t`clientupdate client_nickname=My\\sBot`,\n\t\t// \"clientlist\",\n\t\t// Send message to channel with id=1\n\t\t`sendtextmessage targetmode=2 target=1 msg=Bot\\smessage!`,\n\t}\n\n\tfor _, s := range cmds {\n\t\t// Send command and wait for its response\n\t\tr := conn.Cmd(s)\n\t\t// Display as:\n\t\t//     > request\n\t\t//     response\n\t\tfmt.Printf(\"> %s\\n%s\", s, r)\n\t\t// Wait a bit after each command so we don't get banned. By default you\n\t\t// can issue 10 commands within 3 seconds.  More info on the\n\t\t// WHITELISTING AND BLACKLISTING section of TS3 ServerQuery Manual\n\t\t// (http://goo.gl/OpJXz).\n\t\ttime.Sleep(350 * time.Millisecond)\n\t}\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f749c8f04811026f36f0a70f0dd73685a60ce166",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob f65eb2eec6179ebb27dd6b70d5a187f59a301078\tbot.go\n100644 blob 8d45975a03b4a4c173fdc3c02a29d2eb0bb8b30c\tbot_notifications.go\n100644 blob 3b0dbf4a6b82a3e4eaf2ca1347ded4c17b2aadba\trepl.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9ef9536d8f5a1cb2922f060fcada008f8672252",
+        "type": "commit",
+        "size": 236,
+        "content": "tree fc2dea4f671c2c440667f2dcbd57586ea42a7456\nparent a8d2e35e399129d6b8b2a54184258f2bcecd1d14\nauthor Carlos <toqueteos@gmail.com> 1352061414 +0100\ncommitter Carlos <toqueteos@gmail.com> 1352061414 +0100\n\nTiny fix. Forgot deferred Close\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fc2dea4f671c2c440667f2dcbd57586ea42a7456",
+        "type": "tree",
+        "size": 150,
+        "content": "100644 blob c74d6ad3686bed075faad7f585ef7700feb8903f\tREADME.markdown\n040000 tree e5f173a0df5acd575f91d7a7c33c6692ceaa8b65\texamples\n100644 blob 3215e7aa74d403c99377313d9a29818127e8a0f7\thelpers.go\n100644 blob 205a3bce7a839dd52cf1a398f2fbc94319c15cd2\tts3.go\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fdf6b92679140797b5819309c8008e1f65b9dea0",
+        "type": "blob",
+        "size": 2134,
+        "content": "package ts3\r\n\r\n// Escaping table:\r\n// NAME         CHAR    ASCII   REPLACE CHAR    REPLACE ASCII\r\n// Backslash    \\       92      \\\\              92 92\r\n// Slash        /       47      \\/              92 47\r\n// Whitespace   \" \"     32      \\s              92 115\r\n// Pipe         |       124     \\p              92 112\r\n// Bell         \\a      7       \\a              92 97\r\n// Backspace    \\b      8       \\b              92 98\r\n// Formfeed     \\f      12      \\f              92 102\r\n// Newline      \\n      10      \\n              92 110\r\n// Car. Ret     \\r      13      \\r              92 114\r\n// Hor. Tab     \\t      9       \\t              92 116\r\n// Ver. Tab     \\v      11      \\v              92 118\r\n\r\nimport (\r\n\t\"strings\"\r\n)\r\n\r\nvar (\r\n\tquoteTable = map[rune][]rune{\r\n\t\t92:   []rune{92, 92},  // \\   -> \\\\\r\n\t\t'/':  []rune{92, 47},  // /   -> \\/\r\n\t\t' ':  []rune{92, 115}, // \" \" -> \\s\r\n\t\t'|':  []rune{92, 112}, // |   -> \\p\r\n\t\t'\\a': []rune{92, 97},  // All these translate to `/` + `letter`\r\n\t\t'\\b': []rune{92, 98},  //\r\n\t\t'\\f': []rune{92, 102}, //\r\n\t\t'\\n': []rune{92, 110}, //\r\n\t\t'\\r': []rune{92, 114}, //\r\n\t\t'\\t': []rune{92, 116}, //\r\n\t\t'\\v': []rune{92, 118}, //\r\n\t}\r\n\r\n\tunquoteTable = map[string]string{\r\n\t\t`\\\\`: `\\`, // \\\\ -> \\\r\n\t\t`\\/`: `/`, // \\/ -> /\r\n\t\t`\\s`: ` `, // \\s -> \" \"\r\n\t\t`\\p`: `|`, // \\p -> |\r\n\t\t`\\a`: \"\\a\",\r\n\t\t`\\b`: \"\\b\",\r\n\t\t`\\f`: \"\\f\",\r\n\t\t`\\n`: \"\\n\",\r\n\t\t`\\r`: \"\\r\",\r\n\t\t`\\t`: \"\\t\",\r\n\t\t`\\v`: \"\\v\",\r\n\t}\r\n)\r\n\r\n// Escapes special chars\r\nfunc Quote(s string) string {\r\n\tvar res = make([]rune, 0)\r\n\r\n\tfor _, r := range []rune(s) {\r\n\t\tif v, ok := quoteTable[r]; ok {\r\n\t\t\tres = append(res, v...)\r\n\t\t} else {\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n\r\n// Unescapes special chars\r\nfunc Unquote(s string) string {\r\n\tfor k, v := range unquoteTable {\r\n\t\ts = strings.Replace(s, k, v, -1)\r\n\t}\r\n\r\n\treturn s\r\n}\r\n\r\n// Keeps only printable ASCII runes, also cleans \"\\r\"\r\nfunc trimNet(s string) string {\r\n\tvar res []rune\r\n\r\n\ts = strings.Trim(s, \"\\r\")\r\n\r\n\t// Just pretty ASCII runes\r\n\tfor _, r := range s {\r\n\t\tswitch {\r\n\t\tcase 32 >= r || r <= 127:\r\n\t\t\tres = append(res, r)\r\n\t\t}\r\n\t}\r\n\r\n\treturn string(res)\r\n}\r\n",
+        "encoding": "utf-8"
+    }
+]

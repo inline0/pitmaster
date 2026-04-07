@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "2d1da034146a070f3107aa9c6a0ff4d0d0c4720b",
+        "type": "commit",
+        "size": 207,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nparent d418bb7b917638f7a171df7e10e663d50f61b4ec\nauthor JakobDev <jakobdev@gmx.de> 1700822791 +0100\ncommitter JakobDev <jakobdev@gmx.de> 1700822791 +0100\n\nSecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "557db03de997c86a4a028e1ebd3a1ceb225be238",
+        "type": "blob",
+        "size": 12,
+        "content": "Hello World\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b54de759e7a0eb9907311b19fe4826ca11c47e35",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 557db03de997c86a4a028e1ebd3a1ceb225be238\td418bb7b917638f7a171df7e10e663d50f61b4ec\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd899197e89f448e61d90f10ce100181cb8980fa",
+        "type": "commit",
+        "size": 183,
+        "content": "tree b54de759e7a0eb9907311b19fe4826ca11c47e35\nauthor JakobDev <jakobdev@gmx.de> 1700822782 +0100\ncommitter JakobDev <jakobdev@gmx.de> 1700822782 +0100\n\nNotes added by 'git notes add'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d418bb7b917638f7a171df7e10e663d50f61b4ec",
+        "type": "commit",
+        "size": 157,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor JakobDev <jakobdev@gmx.de> 1700822765 +0100\ncommitter JakobDev <jakobdev@gmx.de> 1700822765 +0100\n\nInit\n",
+        "encoding": "utf-8"
+    }
+]

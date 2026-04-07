@@ -1,0 +1,97 @@
+error: refs/heads/master: invalid sha1 pointer d2dc5ac04916e156018db4482c40c39b894090e9
+error: refs/heads/merges/1: invalid sha1 pointer b29328491a0682c259bcce28741eac71f3499f7d
+error: refs/heads/merges/2: invalid sha1 pointer d2dc5ac04916e156018db4482c40c39b894090e9
+error: refs/heads/merges/3: invalid sha1 pointer 6f6c5d2be7852c782be1dd13e36496dd7ad39560
+error: HEAD: invalid sha1 pointer b9d69064b190e7aedccf84731ca1d917871f8a1c
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: HEAD: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: HEAD: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: HEAD: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: HEAD: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: HEAD: invalid reflog entry bb13916df33ed23004c3ce9ed3b8487528e655c1
+error: HEAD: invalid reflog entry bb13916df33ed23004c3ce9ed3b8487528e655c1
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: HEAD: invalid reflog entry c0edf780dd0da6a65a7a49a86032fcf8a0c2d467
+error: HEAD: invalid reflog entry c0edf780dd0da6a65a7a49a86032fcf8a0c2d467
+error: HEAD: invalid reflog entry a45273fe2d63300e1962a9e26a6b15c276cd7082
+error: HEAD: invalid reflog entry a45273fe2d63300e1962a9e26a6b15c276cd7082
+error: HEAD: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: HEAD: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: HEAD: invalid reflog entry b29328491a0682c259bcce28741eac71f3499f7d
+error: HEAD: invalid reflog entry b29328491a0682c259bcce28741eac71f3499f7d
+error: HEAD: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: HEAD: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: HEAD: invalid reflog entry d2dc5ac04916e156018db4482c40c39b894090e9
+error: HEAD: invalid reflog entry d2dc5ac04916e156018db4482c40c39b894090e9
+error: HEAD: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: HEAD: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: HEAD: invalid reflog entry 6f6c5d2be7852c782be1dd13e36496dd7ad39560
+error: HEAD: invalid reflog entry 6f6c5d2be7852c782be1dd13e36496dd7ad39560
+error: HEAD: invalid reflog entry b9d69064b190e7aedccf84731ca1d917871f8a1c
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: refs/heads/master: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: refs/heads/master: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: refs/heads/master: invalid reflog entry ce275064ad67d51e99f026084e20827901a8361c
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: refs/heads/master: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: refs/heads/master: invalid reflog entry bb13916df33ed23004c3ce9ed3b8487528e655c1
+error: refs/heads/master: invalid reflog entry bb13916df33ed23004c3ce9ed3b8487528e655c1
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry 347c91919944a68e9413581a1bc15519550a3afe
+error: refs/heads/master: invalid reflog entry c0edf780dd0da6a65a7a49a86032fcf8a0c2d467
+error: refs/heads/master: invalid reflog entry c0edf780dd0da6a65a7a49a86032fcf8a0c2d467
+error: refs/heads/master: invalid reflog entry a45273fe2d63300e1962a9e26a6b15c276cd7082
+error: refs/heads/master: invalid reflog entry a45273fe2d63300e1962a9e26a6b15c276cd7082
+error: refs/heads/master: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: refs/heads/master: invalid reflog entry e713b52d7e13807e87a002e812041f248db3f643
+error: refs/heads/master: invalid reflog entry b29328491a0682c259bcce28741eac71f3499f7d
+error: refs/heads/master: invalid reflog entry b29328491a0682c259bcce28741eac71f3499f7d
+error: refs/heads/master: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: refs/heads/master: invalid reflog entry 03d2c021ff68954cf3ef0a36825e194a4b98f981
+error: refs/heads/master: invalid reflog entry d2dc5ac04916e156018db4482c40c39b894090e9
+error: refs/heads/merges/1: invalid reflog entry b29328491a0682c259bcce28741eac71f3499f7d
+error: refs/heads/merges/2: invalid reflog entry d2dc5ac04916e156018db4482c40c39b894090e9
+error: refs/heads/merges/3: invalid reflog entry 6f6c5d2be7852c782be1dd13e36496dd7ad39560
+notice: No default references
+error: e846fadc3aab5d9c1a590f0e199081bb5f620b77: invalid sha1 pointer in cache-tree of .git/index
+missing blob 62f9457511f879886bb7728c986fe10b0ece6bcb
+missing blob e440e5c842586965a7fb77deda2eca68612b1f53
+missing blob c7930257dfef505fd996e1d6f22f2f35149990d0
+missing blob 301160a93062df23030a69f4b5e4d9bf71866ee9
+missing blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de
+missing blob 7813681f5b41c028345ca62a2be376bae70b7f61
+missing blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4
+dangling tree db0b78e260a73750ad0ff9e5d13ef4559ad8cb4f
+missing blob bf0d87ab1b2b0ec1a11a3973d2845b42413d9767
+error: Could not read 03d2c021ff68954cf3ef0a36825e194a4b98f981
+failed to parse commit 03d2c021ff68954cf3ef0a36825e194a4b98f981 from object database for commit-graph
+error: Could not read 347c91919944a68e9413581a1bc15519550a3afe
+failed to parse commit 347c91919944a68e9413581a1bc15519550a3afe from object database for commit-graph
+error: Could not read 6f6c5d2be7852c782be1dd13e36496dd7ad39560
+failed to parse commit 6f6c5d2be7852c782be1dd13e36496dd7ad39560 from object database for commit-graph
+error: Could not read a45273fe2d63300e1962a9e26a6b15c276cd7082
+failed to parse commit a45273fe2d63300e1962a9e26a6b15c276cd7082 from object database for commit-graph
+error: Could not read b29328491a0682c259bcce28741eac71f3499f7d
+failed to parse commit b29328491a0682c259bcce28741eac71f3499f7d from object database for commit-graph
+error: Could not read b9d69064b190e7aedccf84731ca1d917871f8a1c
+failed to parse commit b9d69064b190e7aedccf84731ca1d917871f8a1c from object database for commit-graph
+error: Could not read bb13916df33ed23004c3ce9ed3b8487528e655c1
+failed to parse commit bb13916df33ed23004c3ce9ed3b8487528e655c1 from object database for commit-graph
+error: Could not read c0edf780dd0da6a65a7a49a86032fcf8a0c2d467
+failed to parse commit c0edf780dd0da6a65a7a49a86032fcf8a0c2d467 from object database for commit-graph
+error: Could not read ce275064ad67d51e99f026084e20827901a8361c
+failed to parse commit ce275064ad67d51e99f026084e20827901a8361c from object database for commit-graph
+error: Could not read d2dc5ac04916e156018db4482c40c39b894090e9
+failed to parse commit d2dc5ac04916e156018db4482c40c39b894090e9 from object database for commit-graph
+error: Could not read e713b52d7e13807e87a002e812041f248db3f643
+failed to parse commit e713b52d7e13807e87a002e812041f248db3f643 from object database for commit-graph

@@ -1,0 +1,282 @@
+[
+    {
+        "hash": "214e1dca024fb6da5ed65564d2de734df5dc2127",
+        "tree": "0c2805a0676006690a8053ae8ccee388ccfc83fe",
+        "parents": [
+            "70923099e61fa33f0bc5256d2f938fa44c4df10e"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445594702 2015-10-23 12:05:02 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445594702 2015-10-23 12:05:02 +0200",
+        "message": "format/pktline: review and improving coverage"
+    },
+    {
+        "hash": "70923099e61fa33f0bc5256d2f938fa44c4df10e",
+        "tree": "31e738f7f3e4754b2c815dfe8bbbdbf82a2b42d9",
+        "parents": [
+            "bcaa1ac5644b16f1febb72f31e204720b7bb8934"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445560744 2015-10-23 02:39:04 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445560779 2015-10-23 02:39:39 +0200",
+        "message": "license and readme"
+    },
+    {
+        "hash": "bcaa1ac5644b16f1febb72f31e204720b7bb8934",
+        "tree": "cc4e71fcbdddd5cbcbccf46d7a999b9a1dacebcf",
+        "parents": [
+            "e1d8866ffa78fa16d2f39b0ba5344a7269ee5371"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445560232 2015-10-23 02:30:32 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445560698 2015-10-23 02:38:18 +0200",
+        "message": "travis"
+    },
+    {
+        "hash": "e1d8866ffa78fa16d2f39b0ba5344a7269ee5371",
+        "tree": "4602b0ca341187aad77048f807cde423af410554",
+        "parents": [
+            "2275fa7d0c75d20103f90b0e1616937d5a9fc5e6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445559975 2015-10-23 02:26:15 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445559975 2015-10-23 02:26:15 +0200",
+        "message": "clients and remote: fetch implementation"
+    },
+    {
+        "hash": "2275fa7d0c75d20103f90b0e1616937d5a9fc5e6",
+        "tree": "57ad6b6085e80cddd235d4a6aee2187bfb93827b",
+        "parents": [
+            "bdd9a92789d4a86b20a8d3df462df373f41acf23"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553873 2015-10-23 00:44:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553873 2015-10-23 00:44:33 +0200",
+        "message": "update version"
+    },
+    {
+        "hash": "bdd9a92789d4a86b20a8d3df462df373f41acf23",
+        "tree": "02d06216eba1b85a5b3c10af0865c6f4761a6464",
+        "parents": [
+            "b359f11ea09e642695edcd114b463da4395b10c1"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553311 2015-10-23 00:35:11 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553311 2015-10-23 00:35:11 +0200",
+        "message": "new remote abstraction"
+    },
+    {
+        "hash": "b359f11ea09e642695edcd114b463da4395b10c1",
+        "tree": "6f84c4693429a3815b7523e957801cdb420abb40",
+        "parents": [
+            "6f43e8933ba3c04072d5d104acc6118aac3e52ee"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445553280 2015-10-23 00:34:40 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445553280 2015-10-23 00:34:40 +0200",
+        "message": "clients: supporting diferent protocols"
+    },
+    {
+        "hash": "6f43e8933ba3c04072d5d104acc6118aac3e52ee",
+        "tree": "6015756f3da396c6c578a984e967b070a6c71b58",
+        "parents": [
+            "ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445512224 2015-10-22 13:10:24 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445512293 2015-10-22 13:11:33 +0200",
+        "message": "paths"
+    },
+    {
+        "hash": "ccafe8bd5f9dbfb8b98b0da03ced29608dcfdeec",
+        "tree": "0800022d7b0efba906183859cd9cba5b2bb87fd8",
+        "parents": [
+            "939814f341fdd5d35e81a3845a33c4fedb19d2d2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445511393 2015-10-22 12:56:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445511393 2015-10-22 12:56:33 +0200",
+        "message": "travis"
+    },
+    {
+        "hash": "939814f341fdd5d35e81a3845a33c4fedb19d2d2",
+        "tree": "71f051ab73cf6f0790d6177abe0b642bf595d693",
+        "parents": [
+            "5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445209777 2015-10-19 01:09:37 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445209777 2015-10-19 01:09:37 +0200",
+        "message": "org rename"
+    },
+    {
+        "hash": "5f5ad88bf2babe506f927d64d2b7a1e1493dc2ae",
+        "tree": "a79a04e39b98bed8d6c7fb753e3fd9548068d8fe",
+        "parents": [
+            "a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1444924339 2015-10-15 17:52:19 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1444924339 2015-10-15 17:52:19 +0200",
+        "message": "Remove duplicate NotFoundError and rename it to ErrNotFound (idiomatic)\n\nError had to be defined in its own package to avoid import cycles."
+    },
+    {
+        "hash": "a2014124ca3b3f9ff28fbab0a83ce3c71bf4622e",
+        "tree": "9e1917bba4d724555f7e2bfbf1bba00a78fac2e4",
+        "parents": [
+            "77906b653c3eb8a1cd5bd7254e161c00c6086d83"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444813691 2015-10-14 11:08:11 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444813691 2015-10-14 11:08:11 +0200",
+        "message": "memory passed to NewGit(), changed git types name"
+    },
+    {
+        "hash": "77906b653c3eb8a1cd5bd7254e161c00c6086d83",
+        "tree": "6ee58ddba7a1931817cda9321a1be47dc0f025c3",
+        "parents": [
+            "465cba710284204f9851854587c2887c247222db"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444733482 2015-10-13 12:51:22 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444738818 2015-10-13 14:20:18 +0200",
+        "message": "Switch of repo size"
+    },
+    {
+        "hash": "465cba710284204f9851854587c2887c247222db",
+        "tree": "75158b29f50acf928a069f4478852de51d77b466",
+        "parents": [
+            "b9471b13256703d3f5eb88b280b4a16ce325ec1b"
+        ],
+        "author": "Alex Guerrieri <alex@tyba.com> 1444150307 2015-10-06 18:51:47 +0200",
+        "committer": "Alex Guerrieri <alex@tyba.com> 1444150307 2015-10-06 18:51:47 +0200",
+        "message": "Extract GitHash function"
+    },
+    {
+        "hash": "b9471b13256703d3f5eb88b280b4a16ce325ec1b",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "5f56aea0ca8b74215a5b982bca32236e1e28c76b",
+            "62925030859646daeeaf5a4d386a0c41e00dda8a"
+        ],
+        "author": "Daniel Ripollés <dripolles@gmail.com> 1441211263 2015-09-02 18:27:43 +0200",
+        "committer": "Daniel Ripollés <dripolles@gmail.com> 1441211263 2015-09-02 18:27:43 +0200",
+        "message": "Merge remote-tracking branch 'origin/dev'"
+    },
+    {
+        "hash": "62925030859646daeeaf5a4d386a0c41e00dda8a",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "23148841baa5dbce48f6adcb7ddf83dcd97debb3"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "committer": "Daniel Ripollés <dripolles@gmail.com> 1441190902 2015-09-02 12:48:22 +0200",
+        "message": "clients: allowing access to all the branches"
+    },
+    {
+        "hash": "5f56aea0ca8b74215a5b982bca32236e1e28c76b",
+        "tree": "2b825decac48bee7ad6f9b7ef66b15fe6b0a21f4",
+        "parents": [
+            "23148841baa5dbce48f6adcb7ddf83dcd97debb3"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1440969489 2015-08-30 23:18:09 +0200",
+        "message": "clients: allowing access to all the branches"
+    },
+    {
+        "hash": "23148841baa5dbce48f6adcb7ddf83dcd97debb3",
+        "tree": "5b0c34a0b0159c433b95ffb4f12086d8ca350167",
+        "parents": [
+            "c336d16298a017486c4164c40f8acb28afe64e84"
+        ],
+        "author": "Franky <prados@gmail.com> 1439827054 2015-08-17 17:57:34 +0200",
+        "committer": "Franky <prados@gmail.com> 1439829601 2015-08-17 18:40:01 +0200",
+        "message": "Update imports"
+    },
+    {
+        "hash": "c336d16298a017486c4164c40f8acb28afe64e84",
+        "tree": "df9b916867d4ef5db357b5635b0d18b7eb574497",
+        "parents": [
+            "31eae7b619d166c366bf5df4991f04ba8cebea0a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1438179830 2015-07-29 16:23:50 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1438179830 2015-07-29 16:23:50 +0200",
+        "message": "vcs: using github.com/klauspost/compress/zlib"
+    },
+    {
+        "hash": "31eae7b619d166c366bf5df4991f04ba8cebea0a",
+        "tree": "c67e1db9575d58cb5d7edfe4eb44a3aaf5d514e7",
+        "parents": [
+            "b977a025ca21e3b5ca123d8093bd7917694f6da7",
+            "d2a38b4a5965d529566566640519d03d2bd10f6c"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1434013209 2015-06-11 11:00:09 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1434013209 2015-06-11 11:00:09 +0200",
+        "message": "Merge pull request #65 from toqueteos/repo-redirects\n\nUpdate URLs for moved repositories"
+    },
+    {
+        "hash": "b977a025ca21e3b5ca123d8093bd7917694f6da7",
+        "tree": "bc036af7f2ca6d8544f852365479b4da15e1f836",
+        "parents": [
+            "35b585759cbf29f8ec428ef89da20705d59f99ec"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432892326 2015-05-29 11:38:46 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1433426943 2015-06-04 16:09:03 +0200",
+        "message": "Remove not used zlib fragment.\n\nNewTree is called with the already deflated contents, there's no need to always fail creating a `zlib.NewReader` and waste memory with a new buffer we are just about to destroy."
+    },
+    {
+        "hash": "d2a38b4a5965d529566566640519d03d2bd10f6c",
+        "tree": "a170295fb1311a2c5d24c22d2e956a4341b52fae",
+        "parents": [
+            "35b585759cbf29f8ec428ef89da20705d59f99ec"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432549924 2015-05-25 12:32:04 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1433426864 2015-06-04 16:07:44 +0200",
+        "message": "Unused attribute (leftover)."
+    },
+    {
+        "hash": "35b585759cbf29f8ec428ef89da20705d59f99ec",
+        "tree": "d40ce8e8d14f820bfcbd4cac2f2c48b621a6d2d3",
+        "parents": [
+            "c2bbf9fe8009b22d0f390f3c8c3f13937067590f"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432128097 2015-05-20 15:21:37 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432128917 2015-05-20 15:35:17 +0200",
+        "message": "Refactor out ReadAll, use custom Reader instead.\n\nWe don't want to read all packfiles to memory, working with a stream is enough."
+    },
+    {
+        "hash": "c2bbf9fe8009b22d0f390f3c8c3f13937067590f",
+        "tree": "2beff7231ec6c80e4d07dd78ba8e6be14309f6b0",
+        "parents": [
+            "fc9f0643b21cfe571046e27e0c4565f3a1ee96c8"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1432122417 2015-05-20 13:46:57 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432122417 2015-05-20 13:46:57 +0200",
+        "message": "Fix typos."
+    },
+    {
+        "hash": "fc9f0643b21cfe571046e27e0c4565f3a1ee96c8",
+        "tree": "2ec084715b5de477e62d520db8866342bbe90971",
+        "parents": [
+            "c088fd6a7e1a38e9d5a9815265cb575bb08d08ff"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1431963194 2015-05-18 17:33:14 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1432122408 2015-05-20 13:46:48 +0200",
+        "message": "Fixes #50.\n\nRevamped PackfileReader internals, no longer using a give back buffer."
+    },
+    {
+        "hash": "c088fd6a7e1a38e9d5a9815265cb575bb08d08ff",
+        "tree": "3d240aec2afc446a64ef1e165d8b78c2a8b80ac3",
+        "parents": [
+            "5fddbeb678bd2c36c5e5c891ab8f2b143ced5baf"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1432056267 2015-05-19 19:24:27 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1432056267 2015-05-19 19:24:27 +0200",
+        "message": "Reduce allocs in packfile reader.\n\nThis doesn't have a noticeable impact in performance for a single repo, but it may have for lots of repos due to GC overhead, as we are creating thousands of spurious objects per repo.\n\nMore importantly, it was driving me crazy."
+    },
+    {
+        "hash": "5fddbeb678bd2c36c5e5c891ab8f2b143ced5baf",
+        "tree": "41943f67ed91b751800c7d43dcb4e35b4c9602d1",
+        "parents": [
+            "5d7303c49ac984a9fec60523f2d5297682e16646"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430564749 2015-05-02 13:05:49 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430564749 2015-05-02 13:05:49 +0200",
+        "message": "project renamed"
+    },
+    {
+        "hash": "5d7303c49ac984a9fec60523f2d5297682e16646",
+        "tree": "53ac3a7eae7e271e58cc37ab1b7d2c27f3f2a9e5",
+        "parents": [],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428269683 2015-04-05 23:34:43 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428286324 2015-04-06 04:12:04 +0200",
+        "message": "some refactor in folders and crawler"
+    }
+]

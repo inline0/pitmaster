@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "0260380e375d2dd0e1a8fcab15f91ce56dbe778e",
+        "tree": "6b2ff2622fa0af5408ba27d78aa434ea81be7832",
+        "parents": [
+            "597240b7da22d03ad555328f15abc480b820acc0"
+        ],
+        "author": "steve <coderrr.contact@gmail.com> 1225455873 2008-10-31 19:24:33 +0700",
+        "committer": "steve <coderrr.contact@gmail.com> 1225455873 2008-10-31 19:24:33 +0700",
+        "message": "patched array glob vulnerability\nDir.glob now supported through lazy globbing\nDir.glob now sandboxed away from parent directories"
+    },
+    {
+        "hash": "597240b7da22d03ad555328f15abc480b820acc0",
+        "tree": "2bb1edeb2d80e9838ce4ad77319f2e763a42c0e8",
+        "parents": [
+            "89be3aac2f178719c12953cc9eaa23441f8d9371"
+        ],
+        "author": "steve <coderrr.contact@gmail.com> 1225413400 2008-10-31 07:36:40 +0700",
+        "committer": "steve <coderrr.contact@gmail.com> 1225413400 2008-10-31 07:36:40 +0700",
+        "message": "removed debug comments"
+    },
+    {
+        "hash": "89be3aac2f178719c12953cc9eaa23441f8d9371",
+        "tree": "fda9ce248403a58c44f4a170fd33f4b35e82217e",
+        "parents": [
+            "6c41e05a17e19805879689414026eb4e279f7de0"
+        ],
+        "author": "steve <coderrr.contact@gmail.com> 1225413353 2008-10-31 07:35:53 +0700",
+        "committer": "steve <coderrr.contact@gmail.com> 1225413353 2008-10-31 07:35:53 +0700",
+        "message": "protect against dangerous methods, even w untained data\nprotect against all infinite loops, even endless ensure loop\nprotect against access to the original string methods through modification of Method classes"
+    },
+    {
+        "hash": "6c41e05a17e19805879689414026eb4e279f7de0",
+        "tree": "94cfa6080bd4bc1fc0d4489699e94bdb81cf6bef",
+        "parents": [
+            "9608eed92b3839b06ebf72d5043da547de10ce85"
+        ],
+        "author": "steve <coderrr.contact@gmail.com> 1225155190 2008-10-28 07:53:10 +0700",
+        "committer": "steve <coderrr.contact@gmail.com> 1225155190 2008-10-28 07:53:10 +0700",
+        "message": "added taint fix\ndo processing inside of forked process to ensure no changes to ruby env persist"
+    },
+    {
+        "hash": "9608eed92b3839b06ebf72d5043da547de10ce85",
+        "tree": "e994423d00451bdc5d9638852f489cefe0da729c",
+        "parents": [],
+        "author": "PJ Hyett <pjhyett@gmail.com> 1224890040 2008-10-24 16:14:00 -0700",
+        "committer": "PJ Hyett <pjhyett@gmail.com> 1224890040 2008-10-24 16:14:00 -0700",
+        "message": "Initial commit of gem builder"
+    }
+]

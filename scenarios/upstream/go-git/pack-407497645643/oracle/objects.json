@@ -1,0 +1,9 @@
+[
+    {
+        "hash": "error:",
+        "type": "wrong",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    }
+]

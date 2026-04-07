@@ -1,0 +1,331 @@
+[
+    {
+        "hash": "0535f737a2879e500df98059ed204011d04606d5",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob ef49dd86a6957875edcd0bff210337d6b6dd063c\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0680d55fd7b99b05726bc6cebba22caa5d414073",
+        "type": "commit",
+        "size": 177,
+        "content": "tree 172273a28035746f2f6a86a98809e5cfe913e4fb\nauthor Javier Peletier <jm@epiclabs.io> 1539614039 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539614039 +0200\n\nfirst commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12f2626d1953b492b4ec7f1b4f261f10c53bf48f",
+        "type": "tree",
+        "size": 187,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob a51e2040e659536a2460dd11a91b317cc255f468\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "133f0b6369dc4e2ca3a17811bed6d46fb98b1f93",
+        "type": "commit",
+        "size": 227,
+        "content": "tree a89d594b36382426490af93c5e9e5f1e4a61acea\nparent c1dcea88360ce197717cf1522937c33565875b9c\nauthor Javier Peletier <jm@epiclabs.io> 1539856644 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539856644 +0200\n\nanother commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "172273a28035746f2f6a86a98809e5cfe913e4fb",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "17941780e27a3268249b198bf3e7abe997a6e1cf",
+        "type": "tree",
+        "size": 259,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob e1de8f0769b10f55f15c34da8bed89151ea5bfb8\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "208edfa284c7e6caf2bb5271d65195e1f1c173f1",
+        "type": "blob",
+        "size": 15,
+        "content": "more\nmore\nmore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "288dc89cb17841a610ed61b55935a9c6a088eae4",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2df053d79385b461bf749b2a49d9f418335627c4",
+        "type": "tree",
+        "size": 259,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob b98100e38311a49e6cae224db5380ac61b378e88\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "309827f260f38be3fd5806cc50958347c5e1745f",
+        "type": "commit",
+        "size": 222,
+        "content": "tree 0535f737a2879e500df98059ed204011d04606d5\nparent 133f0b6369dc4e2ca3a17811bed6d46fb98b1f93\nauthor Javier Peletier <jm@epiclabs.io> 1539860243 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539860243 +0200\n\nadd file3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3624dcde586d67d25db1e116fad62914e0e47f24",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob b98100e38311a49e6cae224db5380ac61b378e88\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob ef49dd86a6957875edcd0bff210337d6b6dd063c\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3d9311e4f63352caea76025c999b0f43cd5b9175",
+        "type": "tree",
+        "size": 259,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "45b43a51f1cc3d5bdfd086670815a6598a08a294",
+        "type": "commit",
+        "size": 217,
+        "content": "tree 3d9311e4f63352caea76025c999b0f43cd5b9175\nparent 89102d90b0b56f46fd8ecf3a50c2b054746f49ce\nauthor Javier Peletier <jm@epiclabs.io> 1541059495 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541059495 +0100\n\nnew!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "47fc26df2019c212829047374ebe72fc65ed2693",
+        "type": "blob",
+        "size": 30,
+        "content": "more\nmore\nmore\nmore\nmore\nmore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d1ca3c1f73f4cd6bb5100560d94cf32c294435f",
+        "type": "blob",
+        "size": 43,
+        "content": "file1.txt\nSOme stuff\nchanged some\nmy thing\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "58347672484cb5922920184491c03d91d407d6f0",
+        "type": "tree",
+        "size": 187,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5a089aae997b6f247fa66848206e9b5261d3325d",
+        "type": "blob",
+        "size": 10,
+        "content": "file1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5c60a14a5c2ddfe365262a6e3c74293ac080df4c",
+        "type": "tree",
+        "size": 305,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob e1de8f0769b10f55f15c34da8bed89151ea5bfb8\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n100644 blob 90497a166467c99238d100e3d92bc0d0f73ee33c\tnode2.modifies.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c493ff740f9380390d5c9ddef4af18697ac9375",
+        "type": "blob",
+        "size": 6,
+        "content": "file2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6e9a900c49ad1626cdc3e3999354ef91501e4352",
+        "type": "blob",
+        "size": 7,
+        "content": "filePR\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "702aecc874b802b179c964f1d6949445b91daa0d",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 17941780e27a3268249b198bf3e7abe997a6e1cf\nparent e075ce319d7ae09c413def1bdf4509e250884e24\nauthor Javier Peletier <jm@epiclabs.io> 1541665999 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541665999 +0100\n\nadding stuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "75c6fabf672b34c68c9f368f16c73ceccec61273",
+        "type": "commit",
+        "size": 217,
+        "content": "tree bda25fe30e592fa43182dae3f916b1325e4a63bd\nparent 309827f260f38be3fd5806cc50958347c5e1745f\nauthor Javier Peletier <jm@epiclabs.io> 1539860423 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539860423 +0200\n\nmypr\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "84c9e5f68c4c38d98e88b207495e499f294aab97",
+        "type": "commit",
+        "size": 226,
+        "content": "tree 3624dcde586d67d25db1e116fad62914e0e47f24\nparent 309827f260f38be3fd5806cc50958347c5e1745f\nauthor Javier Peletier <jm@epiclabs.io> 1541058612 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541058612 +0100\n\nfile1 changed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "89102d90b0b56f46fd8ecf3a50c2b054746f49ce",
+        "type": "commit",
+        "size": 229,
+        "content": "tree b7b1fdf8863148875d0e5a4ebb21bf18d7bb39fa\nparent c12b50c1aeda5e1df38647d9ce386f9c7b710a5d\nauthor Javier Peletier <jm@epiclabs.io> 1540323705 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1540323705 +0200\n\nadded more stuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "903d385b1575e21d4359d263dd9a83772755eee2",
+        "type": "tree",
+        "size": 305,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 4d1ca3c1f73f4cd6bb5100560d94cf32c294435f\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n100644 blob 90497a166467c99238d100e3d92bc0d0f73ee33c\tnode2.modifies.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90497a166467c99238d100e3d92bc0d0f73ee33c",
+        "type": "blob",
+        "size": 29,
+        "content": "node 2 modifies\nfurther mods\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "92cad7e6e69bdbafff01d504c1b29bf3f7fdc17a",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 9e52f0cdafb0c7249ba2fc9967d53d9a9e2fe339\nparent 702aecc874b802b179c964f1d6949445b91daa0d\nauthor Javier Peletier <jm@epiclabs.io> 1541699371 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541699371 +0100\n\nnode 2 stuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e52f0cdafb0c7249ba2fc9967d53d9a9e2fe339",
+        "type": "tree",
+        "size": 305,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob e1de8f0769b10f55f15c34da8bed89151ea5bfb8\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n100644 blob d29d7c16a565be39b980a88fded57af24fea9b6b\tnew.txt\n100644 blob f0e6595f471b933ec8e1eb07f70888ae262b8fff\tnode2.modifies.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a13fb45da89e4b0b57833968dba7b59e2a199d7e",
+        "type": "commit",
+        "size": 220,
+        "content": "tree a1df8d07ebb497da8dec15e41c8bdaca2408ea9f\nparent c1dcea88360ce197717cf1522937c33565875b9c\nauthor Javier Peletier <jm@epiclabs.io> 1539862118 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539862118 +0200\n\nbranch1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a1df8d07ebb497da8dec15e41c8bdaca2408ea9f",
+        "type": "tree",
+        "size": 113,
+        "content": "100644 blob c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061\tbranch1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a51e2040e659536a2460dd11a91b317cc255f468",
+        "type": "blob",
+        "size": 10,
+        "content": "more\nmore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a771b1e94141480861332fd0e4684d33071306c6",
+        "type": "commit",
+        "size": 223,
+        "content": "tree 5c60a14a5c2ddfe365262a6e3c74293ac080df4c\nparent 92cad7e6e69bdbafff01d504c1b29bf3f7fdc17a\nauthor Javier Peletier <jm@epiclabs.io> 1541699434 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541699434 +0100\n\nmore stuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a83ffd6989a1e2081de6f3c8b333fef4796c3ce1",
+        "type": "blob",
+        "size": 10,
+        "content": "file3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a89d594b36382426490af93c5e9e5f1e4a61acea",
+        "type": "tree",
+        "size": 110,
+        "content": "100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob ef49dd86a6957875edcd0bff210337d6b6dd063c\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b7b1fdf8863148875d0e5a4ebb21bf18d7bb39fa",
+        "type": "tree",
+        "size": 224,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob 208edfa284c7e6caf2bb5271d65195e1f1c173f1\tmore.txt\n100644 blob 47fc26df2019c212829047374ebe72fc65ed2693\tmore2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b98100e38311a49e6cae224db5380ac61b378e88",
+        "type": "blob",
+        "size": 21,
+        "content": "file1.txt\nSOme stuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bda25fe30e592fa43182dae3f916b1325e4a63bd",
+        "type": "tree",
+        "size": 187,
+        "content": "100644 blob 6e9a900c49ad1626cdc3e3999354ef91501e4352\tfile-pr1.txt\n100644 blob 5a089aae997b6f247fa66848206e9b5261d3325d\tfile1.txt\n100644 blob 6c493ff740f9380390d5c9ddef4af18697ac9375\tfile2.txt\n100644 blob a83ffd6989a1e2081de6f3c8b333fef4796c3ce1\tfile3.txt\n100644 blob ef49dd86a6957875edcd0bff210337d6b6dd063c\tmore.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c12b50c1aeda5e1df38647d9ce386f9c7b710a5d",
+        "type": "commit",
+        "size": 223,
+        "content": "tree 58347672484cb5922920184491c03d91d407d6f0\nparent ff8a69fc7a80b2656d49295e86f0fb1880d0e4b7\nauthor Javier Peletier <jm@epiclabs.io> 1540197440 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1540197440 +0200\n\nadded more\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c1dcea88360ce197717cf1522937c33565875b9c",
+        "type": "commit",
+        "size": 226,
+        "content": "tree 288dc89cb17841a610ed61b55935a9c6a088eae4\nparent 0680d55fd7b99b05726bc6cebba22caa5d414073\nauthor Javier Peletier <jm@epiclabs.io> 1539620221 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539620221 +0200\n\nsecond commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061",
+        "type": "blob",
+        "size": 3,
+        "content": "b1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d29d7c16a565be39b980a88fded57af24fea9b6b",
+        "type": "blob",
+        "size": 8,
+        "content": "new.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e075ce319d7ae09c413def1bdf4509e250884e24",
+        "type": "commit",
+        "size": 283,
+        "content": "tree 2df053d79385b461bf749b2a49d9f418335627c4\nparent 84c9e5f68c4c38d98e88b207495e499f294aab97\nparent 45b43a51f1cc3d5bdfd086670815a6598a08a294\nauthor Javier Peletier <jm@epiclabs.io> 1541492713 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541492713 +0100\n\nMerge branch 'branch2'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e1de8f0769b10f55f15c34da8bed89151ea5bfb8",
+        "type": "blob",
+        "size": 34,
+        "content": "file1.txt\nSOme stuff\nchanged some\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ebda47c120a37f08603179c04c843ebb0d3acd4d",
+        "type": "commit",
+        "size": 218,
+        "content": "tree 903d385b1575e21d4359d263dd9a83772755eee2\nparent a771b1e94141480861332fd0e4684d33071306c6\nauthor Javier Peletier <jm@epiclabs.io> 1541699557 +0100\ncommitter Javier Peletier <jm@epiclabs.io> 1541699557 +0100\n\nstuff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef49dd86a6957875edcd0bff210337d6b6dd063c",
+        "type": "blob",
+        "size": 5,
+        "content": "more\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f0e6595f471b933ec8e1eb07f70888ae262b8fff",
+        "type": "blob",
+        "size": 16,
+        "content": "node 2 modifies\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ff8a69fc7a80b2656d49295e86f0fb1880d0e4b7",
+        "type": "commit",
+        "size": 217,
+        "content": "tree 12f2626d1953b492b4ec7f1b4f261f10c53bf48f\nparent 75c6fabf672b34c68c9f368f16c73ceccec61273\nauthor Javier Peletier <jm@epiclabs.io> 1539874039 +0200\ncommitter Javier Peletier <jm@epiclabs.io> 1539874039 +0200\n\nmore\n",
+        "encoding": "utf-8"
+    }
+]

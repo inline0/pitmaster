@@ -1,0 +1,1186 @@
+[
+    {
+        "hash": "02f3609630d9d8fce3fe926de7be0fc06d74a68b",
+        "tree": "3a652d1c5f2191509a814dfa8fea95e46fe3af30",
+        "parents": [
+            "ddcd567d4cfb6ca96c3da0fa6fb611c8d0d47884"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447348827 2015-11-12 18:20:27 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447348827 2015-11-12 18:20:27 +0100",
+        "message": "new Init method on entities, passing doc"
+    },
+    {
+        "hash": "ddcd567d4cfb6ca96c3da0fa6fb611c8d0d47884",
+        "tree": "5f9e677405529da6ba9dc18b9d029ef5b9bc1484",
+        "parents": [
+            "5da637d535ad1082398fbb5c9e34d19aa7a831a6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1447341805 2015-11-12 16:23:25 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1447341805 2015-11-12 16:23:25 +0100",
+        "message": "new Init method on entities"
+    },
+    {
+        "hash": "5da637d535ad1082398fbb5c9e34d19aa7a831a6",
+        "tree": "1084fa90a9085a2a4ecc7692cdc6993e8c6a2260",
+        "parents": [
+            "241f244a9c2a7c3ef0e614f107304af28045a98c"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1446725704 2015-11-05 13:15:04 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1446725704 2015-11-05 13:15:04 +0100",
+        "message": "fixing the bogus issue of the open connections"
+    },
+    {
+        "hash": "241f244a9c2a7c3ef0e614f107304af28045a98c",
+        "tree": "a99505fd590d4bb854766e3aa494e234b49fea19",
+        "parents": [
+            "be6d1dd9073ff521d64443990a6b55b4dcb20242"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445870411 2015-10-26 15:40:11 +0100",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445870411 2015-10-26 15:40:11 +0100",
+        "message": "store: allowing custom New at stores"
+    },
+    {
+        "hash": "be6d1dd9073ff521d64443990a6b55b4dcb20242",
+        "tree": "2694f0f6dc6332232014ac94528bc1ce110d8945",
+        "parents": [
+            "c1887384efdda416da8dbfb9ea6eb86e922ff121"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445038457 2015-10-17 01:34:17 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445038457 2015-10-17 01:34:17 +0200",
+        "message": "readme: adding codecov"
+    },
+    {
+        "hash": "c1887384efdda416da8dbfb9ea6eb86e922ff121",
+        "tree": "225d5391261c309e88eaf7542047ccd3653772df",
+        "parents": [
+            "cdf76045e5c9ba645a260e9fb5608489567f8fed"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1445038242 2015-10-17 01:30:42 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1445038242 2015-10-17 01:30:42 +0200",
+        "message": "travis.yml setting up codecov"
+    },
+    {
+        "hash": "cdf76045e5c9ba645a260e9fb5608489567f8fed",
+        "tree": "ad6651cdab974c66b13c82746a0810d51fc7955f",
+        "parents": [
+            "804344d30d61033cad8c7ff27e353163dfcf226e"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1445037879 2015-10-17 01:24:39 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1445037879 2015-10-17 01:24:39 +0200",
+        "message": "renaming org"
+    },
+    {
+        "hash": "804344d30d61033cad8c7ff27e353163dfcf226e",
+        "tree": "1c9e8b36423574c912a1933c2df7665feae42196",
+        "parents": [
+            "5bbe26a50c31098d3baa5165f588d757f99902ba"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1444745124 2015-10-13 16:05:24 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1444745124 2015-10-13 16:05:24 +0200",
+        "message": "using session.Copy instead of session.Clone"
+    },
+    {
+        "hash": "5bbe26a50c31098d3baa5165f588d757f99902ba",
+        "tree": "115eeaa6d91929e9f555d20b612da3f2fef6ea5c",
+        "parents": [
+            "2a4e032751d1bca74935d22bafb3448074af4eb9"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1443350793 2015-09-27 12:46:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1443350793 2015-09-27 12:46:33 +0200",
+        "message": "travis: removing tip"
+    },
+    {
+        "hash": "2a4e032751d1bca74935d22bafb3448074af4eb9",
+        "tree": "78897d08a2d1a120e11fd112fe5c7447337bb9a9",
+        "parents": [
+            "07f7e3ad353deadc42647d4eb8fb49cf3f76bb43"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1443269147 2015-09-26 14:05:47 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1443269147 2015-09-26 14:05:47 +0200",
+        "message": "fixing travis"
+    },
+    {
+        "hash": "07f7e3ad353deadc42647d4eb8fb49cf3f76bb43",
+        "tree": "70e0e7eab0ab3ebb8399cec52193a0f7ff131de7",
+        "parents": [
+            "18eb1afd7aebf8b01f67ffde86e3176b0b4813d2"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1443230013 2015-09-26 03:13:33 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1443230013 2015-09-26 03:13:33 +0200",
+        "message": "adding support for inline structs"
+    },
+    {
+        "hash": "18eb1afd7aebf8b01f67ffde86e3176b0b4813d2",
+        "tree": "15bc0690c333849328eb54c8a71b221ce842c12e",
+        "parents": [
+            "5ebf1056353818bd7edb6fcb0fd0bad57ab24e0b",
+            "587b5db9c4f32784cf750ea86f2d05aa68abb0d5"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1442303047 2015-09-15 09:44:07 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1442303047 2015-09-15 09:44:07 +0200",
+        "message": "Merge pull request #23 from oblitum/simple-string-refactoring\n\nSubstitute escaping for raw string. NBC."
+    },
+    {
+        "hash": "5ebf1056353818bd7edb6fcb0fd0bad57ab24e0b",
+        "tree": "94eedb88d103aa96b7ee273417262f04adac538a",
+        "parents": [
+            "7f89ae881ea7d47de04d527dfba718986f749f84",
+            "ad45587dcbe243447f3332be3ed8c34fa62d917a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1442302971 2015-09-15 09:42:51 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1442302971 2015-09-15 09:42:51 +0200",
+        "message": "Merge pull request #22 from oblitum/fix-potential-nil-pointer-dereference\n\nFix potential nil pointer dereference."
+    },
+    {
+        "hash": "587b5db9c4f32784cf750ea86f2d05aa68abb0d5",
+        "tree": "26cd241722d0a2fccf26d10b8c04d0e7971ee28c",
+        "parents": [
+            "7f89ae881ea7d47de04d527dfba718986f749f84"
+        ],
+        "author": "Francisco Lopes <francisco@oblita.com> 1442205260 2015-09-14 01:34:20 -0300",
+        "committer": "Francisco Lopes <francisco@oblita.com> 1442279060 2015-09-14 22:04:20 -0300",
+        "message": "Substitute escaping for raw string. NBC."
+    },
+    {
+        "hash": "ad45587dcbe243447f3332be3ed8c34fa62d917a",
+        "tree": "94eedb88d103aa96b7ee273417262f04adac538a",
+        "parents": [
+            "7f89ae881ea7d47de04d527dfba718986f749f84"
+        ],
+        "author": "Francisco Lopes <francisco@oblita.com> 1442205507 2015-09-14 01:38:27 -0300",
+        "committer": "Francisco Lopes <francisco@oblita.com> 1442279019 2015-09-14 22:03:39 -0300",
+        "message": "Fix potential nil pointer dereference.\n\nCode generated by generator template could cause a nil pointer\ndereference when a storable document had a failing construction."
+    },
+    {
+        "hash": "7f89ae881ea7d47de04d527dfba718986f749f84",
+        "tree": "d018c0e84e5053c7f9aa0abc91e0becdbcb4004c",
+        "parents": [
+            "308644cfb113fe24d9fb34385d7bd66d3112c6b5",
+            "d3bdbc9f218e6cb309ba3ed6c9ab5de65366a0e6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1442217545 2015-09-14 09:59:05 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1442217545 2015-09-14 09:59:05 +0200",
+        "message": "Merge pull request #21 from toqueteos/dev\n\nFix Query.Sort returning gibberish when using more than one key."
+    },
+    {
+        "hash": "d3bdbc9f218e6cb309ba3ed6c9ab5de65366a0e6",
+        "tree": "d018c0e84e5053c7f9aa0abc91e0becdbcb4004c",
+        "parents": [
+            "c510fc99c17b0de197ab9863aba903e3c7663d14"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1441891738 2015-09-10 15:28:58 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1441891738 2015-09-10 15:28:58 +0200",
+        "message": "Rename MgoFormat to ToList."
+    },
+    {
+        "hash": "c510fc99c17b0de197ab9863aba903e3c7663d14",
+        "tree": "974bdfecf4acf802a6c8839fd8ebdef9b8f8e0a1",
+        "parents": [
+            "39a5963049b89e4ad1a8f74969bd5fa68662fedf"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1441804025 2015-09-09 15:07:05 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1441804025 2015-09-09 15:07:05 +0200",
+        "message": "Use generated Schema instead of hardcoded fields"
+    },
+    {
+        "hash": "39a5963049b89e4ad1a8f74969bd5fa68662fedf",
+        "tree": "73a8c03a455ee6e685bf9fbce80c9004c4c62692",
+        "parents": [
+            "308644cfb113fe24d9fb34385d7bd66d3112c6b5"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1441803683 2015-09-09 15:01:23 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1441803683 2015-09-09 15:01:23 +0200",
+        "message": "Fix Query.Sort returning gibberish when using more than one key."
+    },
+    {
+        "hash": "308644cfb113fe24d9fb34385d7bd66d3112c6b5",
+        "tree": "a4ded1b178dd2aed1879045fe8065121cea8f369",
+        "parents": [
+            "304f35091a2c6bfd79ea0dd39d20b46fb498ee1e",
+            "b32ffd1a7dfb13461d2b114a5ddcd3dbf6544332"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1441107747 2015-09-01 13:42:27 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1441107747 2015-09-01 13:42:27 +0200",
+        "message": "Merge branch 'master' of github.com:tyba/storable"
+    },
+    {
+        "hash": "304f35091a2c6bfd79ea0dd39d20b46fb498ee1e",
+        "tree": "d07a7abaa22fd7480ecee44b35f877830a539909",
+        "parents": [
+            "ae1559135d146e76ad91e90cccd4b534be66a3c6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1441107728 2015-09-01 13:42:08 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1441107728 2015-09-01 13:42:08 +0200",
+        "message": "hotfix: related with https://github.com/tyba/storable/issues/20"
+    },
+    {
+        "hash": "b32ffd1a7dfb13461d2b114a5ddcd3dbf6544332",
+        "tree": "0d2af9671871dbfca4b418d919815480899033ba",
+        "parents": [
+            "ae1559135d146e76ad91e90cccd4b534be66a3c6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439929309 2015-08-18 22:21:49 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1439929309 2015-08-18 22:21:49 +0200",
+        "message": "Update README.md"
+    },
+    {
+        "hash": "ae1559135d146e76ad91e90cccd4b534be66a3c6",
+        "tree": "de707cbde29fbed8a8cd26d7d0e2c7bc2d1494ad",
+        "parents": [
+            "7f465cf0e273256579e1e833d5428e5355ab08ac"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439928869 2015-08-18 22:14:29 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439928869 2015-08-18 22:14:29 +0200",
+        "message": "gopkg.in imports"
+    },
+    {
+        "hash": "7f465cf0e273256579e1e833d5428e5355ab08ac",
+        "tree": "781fc4bc6e8f47077c08aefa0276a7506f01f499",
+        "parents": [
+            "b6d6526ea6686723333ea55f240a174d90599bde",
+            "63e18acfef43135125df68f0d4b57f680fb736ce"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439928135 2015-08-18 22:02:15 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1439928135 2015-08-18 22:02:15 +0200",
+        "message": "Merge pull request #19 from tyba/v.1.x\n\nv.1.0.0"
+    },
+    {
+        "hash": "63e18acfef43135125df68f0d4b57f680fb736ce",
+        "tree": "781fc4bc6e8f47077c08aefa0276a7506f01f499",
+        "parents": [
+            "f23713ed2a9448c936011fb4e1fdeb20ea14cd64"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439763222 2015-08-17 00:13:42 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439763222 2015-08-17 00:13:42 +0200",
+        "message": "events: allowing generic method Save in Insert and Update actions"
+    },
+    {
+        "hash": "f23713ed2a9448c936011fb4e1fdeb20ea14cd64",
+        "tree": "4fb2892f9b0934ed20d6ec2318e15e293f7dea01",
+        "parents": [
+            "82fd96e1e48d111021e8b39ed23282724870fa3b"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439752574 2015-08-16 21:16:14 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439752574 2015-08-16 21:16:14 +0200",
+        "message": "processor: verbose"
+    },
+    {
+        "hash": "82fd96e1e48d111021e8b39ed23282724870fa3b",
+        "tree": "3c1619364d5ca2c03cb16c8d22a65740dd2e3e2e",
+        "parents": [
+            "963e35ef3ff35ccdf5bc46f95f60d53ec890eeb7"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439751713 2015-08-16 21:01:53 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439751713 2015-08-16 21:01:53 +0200",
+        "message": "resultset: next and get methods, and some comments and all the generated methods"
+    },
+    {
+        "hash": "963e35ef3ff35ccdf5bc46f95f60d53ec890eeb7",
+        "tree": "4799b0efe3421974ab0d596cc8f730bc17297bab",
+        "parents": [
+            "0c78b4c9ee5efd5101a0dcbebff621704a3621d5"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439634781 2015-08-15 12:33:01 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439635002 2015-08-15 12:36:42 +0200",
+        "message": "base: test improvements and cleanup"
+    },
+    {
+        "hash": "0c78b4c9ee5efd5101a0dcbebff621704a3621d5",
+        "tree": "d4688d38d9d82321706fed574b91bfcb4ad1b77e",
+        "parents": [
+            "8c5b6176dc70d6a318431c97d53d3c66f69f8a95"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439591841 2015-08-15 00:37:21 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439593195 2015-08-15 00:59:55 +0200",
+        "message": "travis and coveralls"
+    },
+    {
+        "hash": "8c5b6176dc70d6a318431c97d53d3c66f69f8a95",
+        "tree": "8267315290466c1f4bf50a19103b6ef200331ab7",
+        "parents": [
+            "71a33b90785ea5a50378cb1f03587e3244592d42"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439591438 2015-08-15 00:30:38 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439591712 2015-08-15 00:35:12 +0200",
+        "message": "store: errors renamed"
+    },
+    {
+        "hash": "71a33b90785ea5a50378cb1f03587e3244592d42",
+        "tree": "eb166d33263934563008011e622a70c0ee5dc538",
+        "parents": [
+            "420821adfc410d0d154b291ec8837809ddd8c8b5"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439590869 2015-08-15 00:21:09 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439590869 2015-08-15 00:21:09 +0200",
+        "message": "tests: proper test for query and store"
+    },
+    {
+        "hash": "420821adfc410d0d154b291ec8837809ddd8c8b5",
+        "tree": "10667ec73acf431d660dba8654dc142ef6e5aab2",
+        "parents": [
+            "f9f9f026bfc92962eb647a246c80a8948a4adacf"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439588850 2015-08-14 23:47:30 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439588850 2015-08-14 23:47:30 +0200",
+        "message": "resultset: foreach function"
+    },
+    {
+        "hash": "f9f9f026bfc92962eb647a246c80a8948a4adacf",
+        "tree": "ffd9366cd927f0b89911b99475e0a0449c421166",
+        "parents": [
+            "7c4bfa4fb2c1f84b044016fbbb31dbfd6f9902a1"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439588772 2015-08-14 23:46:12 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439588772 2015-08-14 23:46:12 +0200",
+        "message": "proper integration test suite"
+    },
+    {
+        "hash": "7c4bfa4fb2c1f84b044016fbbb31dbfd6f9902a1",
+        "tree": "dc1e95a77996f826b38698c6253220242ca92c9c",
+        "parents": [
+            "94f6b8d6dce855a319455b91c78295fa0a1d8a19"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439560036 2015-08-14 15:47:16 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439560036 2015-08-14 15:47:16 +0200",
+        "message": "simple store events on insert, update and save"
+    },
+    {
+        "hash": "94f6b8d6dce855a319455b91c78295fa0a1d8a19",
+        "tree": "7be5776f9e76edd1c9c3936c13e6102f3c36ec33",
+        "parents": [
+            "39675786ea46d7aab66184807e8eccc475693e8d"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439550162 2015-08-14 13:02:42 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439550162 2015-08-14 13:02:42 +0200",
+        "message": "removing hooks :/"
+    },
+    {
+        "hash": "39675786ea46d7aab66184807e8eccc475693e8d",
+        "tree": "4f266d20a4c25e74e120d4619f2a47f62638b0dd",
+        "parents": [
+            "3241f6a7730d1ad19e3dd66a117a662e638b2af3"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439548971 2015-08-14 12:42:51 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439548971 2015-08-14 12:42:51 +0200",
+        "message": "query: select (TODO: operators)"
+    },
+    {
+        "hash": "3241f6a7730d1ad19e3dd66a117a662e638b2af3",
+        "tree": "ca662f83bf545cfc35236bf0d72e58b4360ec032",
+        "parents": [
+            "b6d6526ea6686723333ea55f240a174d90599bde",
+            "b1713a9f0fae509d1c9d0913e85001b581f945c0"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439544772 2015-08-14 11:32:52 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1439544772 2015-08-14 11:32:52 +0200",
+        "message": "Merge pull request #17 from tyba/v.1.x-dev\n\nResultSet.One returns ErrNotFound and ResultSetClosed renamed"
+    },
+    {
+        "hash": "b6d6526ea6686723333ea55f240a174d90599bde",
+        "tree": "616265e89dea1c35cab91b5cec93eae3b14263bb",
+        "parents": [
+            "c8b43602998b8ef21fd42516117642de0b5a6834"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439459466 2015-08-13 11:51:06 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439459466 2015-08-13 11:51:06 +0200",
+        "message": "allowing interface{} in schemas"
+    },
+    {
+        "hash": "c8b43602998b8ef21fd42516117642de0b5a6834",
+        "tree": "2379a29e7deba1a81c9c1988968786960f7936fc",
+        "parents": [
+            "8b6cd5b9d0b25ff9c80f2df9306d1f6fd52601ea"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439457144 2015-08-13 11:12:24 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1439457144 2015-08-13 11:12:24 +0200",
+        "message": "processor: test improvements"
+    },
+    {
+        "hash": "8b6cd5b9d0b25ff9c80f2df9306d1f6fd52601ea",
+        "tree": "a4f5e90029a75fc4fb3157c500a86867d6510638",
+        "parents": [
+            "8e38ee4d188347a7912c1f34e670c1cb3591ddd6",
+            "87cf848a33f430ceaa7518dd26dd0c51313a2be6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439308129 2015-08-11 17:48:49 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1439308129 2015-08-11 17:48:49 +0200",
+        "message": "Merge pull request #16 from toqueteos/objid\n\nStore.New sets document id."
+    },
+    {
+        "hash": "87cf848a33f430ceaa7518dd26dd0c51313a2be6",
+        "tree": "a4f5e90029a75fc4fb3157c500a86867d6510638",
+        "parents": [
+            "8e38ee4d188347a7912c1f34e670c1cb3591ddd6"
+        ],
+        "author": "Carlos Cobo <toqueteos@gmail.com> 1439302401 2015-08-11 16:13:21 +0200",
+        "committer": "Carlos Cobo <toqueteos@gmail.com> 1439302401 2015-08-11 16:13:21 +0200",
+        "message": "Store.New sets document id."
+    },
+    {
+        "hash": "8e38ee4d188347a7912c1f34e670c1cb3591ddd6",
+        "tree": "b5202fcb0d644137891078ee3382954499d65e80",
+        "parents": [
+            "148304da50b3539fe146752a520fba7ab22cbcbb",
+            "0e069f3c8c34b6fd8e6984564781c0d570652250"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1439226752 2015-08-10 19:12:32 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1439226752 2015-08-10 19:12:32 +0200",
+        "message": "Merge pull request #15 from tcard/fix-recursivity\n\nFix recursivity handling."
+    },
+    {
+        "hash": "0e069f3c8c34b6fd8e6984564781c0d570652250",
+        "tree": "b5202fcb0d644137891078ee3382954499d65e80",
+        "parents": [
+            "148304da50b3539fe146752a520fba7ab22cbcbb"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1439225547 2015-08-10 18:52:27 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1439225572 2015-08-10 18:52:52 +0200",
+        "message": "Fix recursivity handling.\n\nWe were using a global map where we stored all the fields for every struct; this ensured that all structs were processed only once (correctly preventing recursivity loops), but had the unpleasant effect that only _the first_ processed field was injected in _every place_ its type was used.\n\nThis fixes that, by handling recursivity with a stack that grows and dies with the call stack, thus preventing that bug. (Plus, is significantly simpler.)\n\nOh, and tests pass now."
+    },
+    {
+        "hash": "b1713a9f0fae509d1c9d0913e85001b581f945c0",
+        "tree": "d1ebdbd9242e7b1d14812d3740f965463cfad95b",
+        "parents": [
+            "148304da50b3539fe146752a520fba7ab22cbcbb"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1438365525 2015-07-31 19:58:45 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1438365525 2015-07-31 19:58:45 +0200",
+        "message": "ResultSet.One returns ErrNotFound and ResultSetClosed renamed"
+    },
+    {
+        "hash": "148304da50b3539fe146752a520fba7ab22cbcbb",
+        "tree": "72f49ed545a78fa654a677f715d95110325ac5aa",
+        "parents": [
+            "7f042e1740f96d774d7d729b48920271c6a2b18d"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1438083018 2015-07-28 13:30:18 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1438083018 2015-07-28 13:30:18 +0200",
+        "message": "fix save variable name and tests"
+    },
+    {
+        "hash": "7f042e1740f96d774d7d729b48920271c6a2b18d",
+        "tree": "c118e1e964ef790c2fbfb896d99f8f217d02fc94",
+        "parents": [
+            "7d299f9ea54cbdc79d60493aee71be546e625195"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437647591 2015-07-23 12:33:11 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437647591 2015-07-23 12:33:11 +0200",
+        "message": "Call hooks from Save method."
+    },
+    {
+        "hash": "7d299f9ea54cbdc79d60493aee71be546e625195",
+        "tree": "6326a1dce8cbb25a104f5b9da13480be7ec18a5f",
+        "parents": [
+            "d5ff092fdc2a410889827a3f8ce6378a7b47b0c6"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437577065 2015-07-22 16:57:45 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437577065 2015-07-22 16:57:45 +0200",
+        "message": "Allow inject store in constructors."
+    },
+    {
+        "hash": "d5ff092fdc2a410889827a3f8ce6378a7b47b0c6",
+        "tree": "c4b6742ac30ef3e86f2a6bf785f78c348739b761",
+        "parents": [
+            "f6ba5be41dda11bf92bc3bb35d6bded226935d97"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437575855 2015-07-22 16:37:35 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437575860 2015-07-22 16:37:40 +0200",
+        "message": "Allow inject store in constructors."
+    },
+    {
+        "hash": "f6ba5be41dda11bf92bc3bb35d6bded226935d97",
+        "tree": "5aa19a8fb34dd1507955ff3b10459148f99f1553",
+        "parents": [
+            "dfbd3a1076b3d7900a31af5687a3bd7ee0ad456c"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437571173 2015-07-22 15:19:33 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437571192 2015-07-22 15:19:52 +0200",
+        "message": "Fix FindByIds."
+    },
+    {
+        "hash": "dfbd3a1076b3d7900a31af5687a3bd7ee0ad456c",
+        "tree": "e7aae3e367c7003bf9446088c47a25a19a544251",
+        "parents": [
+            "791df13d4b879cbc35ffc25e66abb3aec4fb179a"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1437565992 2015-07-22 13:53:12 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1437566009 2015-07-22 13:53:29 +0200",
+        "message": "FindByIds -> FindById"
+    },
+    {
+        "hash": "791df13d4b879cbc35ffc25e66abb3aec4fb179a",
+        "tree": "f79163baffbada2a9ba3ef75f694c1b77bcc1078",
+        "parents": [
+            "1fa95fc1e9fddb920e544d75c74756fa8b047c67"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436883660 2015-07-14 16:21:00 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436883660 2015-07-14 16:21:00 +0200",
+        "message": "removing coverage"
+    },
+    {
+        "hash": "1fa95fc1e9fddb920e544d75c74756fa8b047c67",
+        "tree": "a4846146c216fb76a33a58916215e153ea3d49ef",
+        "parents": [
+            "6a85753820dd7333007ab21438e2a7e49eb2fe80"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436882670 2015-07-14 16:04:30 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436882670 2015-07-14 16:04:30 +0200",
+        "message": "Update .travis.yml"
+    },
+    {
+        "hash": "6a85753820dd7333007ab21438e2a7e49eb2fe80",
+        "tree": "f33ec629cf6649f72c89a69c76ee7be6e7ba8f2e",
+        "parents": [
+            "8f548975041be87f7a709a84d65ff16d7df80509"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436882555 2015-07-14 16:02:35 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436882555 2015-07-14 16:02:35 +0200",
+        "message": "Update .travis.yml"
+    },
+    {
+        "hash": "8f548975041be87f7a709a84d65ff16d7df80509",
+        "tree": "233c7cb5184979cf48dbdfeb64938f991f30edd4",
+        "parents": [
+            "90b2db875570574be6a81e32714015a82971a2a3"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436882536 2015-07-14 16:02:16 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436882536 2015-07-14 16:02:16 +0200",
+        "message": "recursive testing"
+    },
+    {
+        "hash": "90b2db875570574be6a81e32714015a82971a2a3",
+        "tree": "3075ffb7e945ca549e00bac48267b79b5817e67e",
+        "parents": [
+            "7fcfc905c099dfb6c78505ac15ebefa67cd23a2d"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436448229 2015-07-09 15:23:49 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436448229 2015-07-09 15:23:49 +0200",
+        "message": "Fix type names in new args."
+    },
+    {
+        "hash": "7fcfc905c099dfb6c78505ac15ebefa67cd23a2d",
+        "tree": "42f6796ff1891c65024746b26a7c4a958983fd97",
+        "parents": [
+            "cb96434ccdf7cb403461ce6a10cc9f3a8db63d04"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436447659 2015-07-09 15:14:19 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436447659 2015-07-09 15:14:19 +0200",
+        "message": "Fix wrong new args of imported types."
+    },
+    {
+        "hash": "cb96434ccdf7cb403461ce6a10cc9f3a8db63d04",
+        "tree": "27539c9c9db66fe4ad3352fc5bcea25232945250",
+        "parents": [
+            "3e43b7d4e87d19242c291667e96275561c879d13"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436440748 2015-07-09 13:19:08 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436440942 2015-07-09 13:22:22 +0200",
+        "message": "Allow store argument in hooks.\n\nThis allows hook methods (`{Before,After}{Save,Insert,Update}`) to accept an argument with type `*ModelStore`. The store will then be passed to it."
+    },
+    {
+        "hash": "3e43b7d4e87d19242c291667e96275561c879d13",
+        "tree": "13e78bd72c20ad244087883bf72fa0b2538f7569",
+        "parents": [
+            "133151b62a19d4fbe9cdfe36b84c58c8a9f472ef",
+            "2c7cae068c3ecff2eae200c0f452eff685eec73f"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436434837 2015-07-09 11:40:37 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436434837 2015-07-09 11:40:37 +0200",
+        "message": "Merge pull request #12 from tcard/master\n\nUse unexported new funcs in Store.New."
+    },
+    {
+        "hash": "2c7cae068c3ecff2eae200c0f452eff685eec73f",
+        "tree": "13e78bd72c20ad244087883bf72fa0b2538f7569",
+        "parents": [
+            "133151b62a19d4fbe9cdfe36b84c58c8a9f472ef"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436432554 2015-07-09 11:02:34 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436432554 2015-07-09 11:02:34 +0200",
+        "message": "Use unexported new funcs in Store.New."
+    },
+    {
+        "hash": "133151b62a19d4fbe9cdfe36b84c58c8a9f472ef",
+        "tree": "5277a196b89dab839c557a7a770d67663cdc6083",
+        "parents": [
+            "f6f2511b75b150202ace1965c59c118a55dc5c68",
+            "2db9c6a1289008b38589071bcbd735bc910bbf2a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436375557 2015-07-08 19:12:37 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436375557 2015-07-08 19:12:37 +0200",
+        "message": "Merge pull request #11 from tcard/reuse-new-func\n\nUse function `New<entity>` when calling `store.New`"
+    },
+    {
+        "hash": "2db9c6a1289008b38589071bcbd735bc910bbf2a",
+        "tree": "5277a196b89dab839c557a7a770d67663cdc6083",
+        "parents": [
+            "c00ef7f00315dc019770533be14025b5c30b043a"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436375332 2015-07-08 19:08:52 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436375332 2015-07-08 19:08:52 +0200",
+        "message": "Use function `New<entity>` when calling `store.New`\n\nImplements part of tyba/oss#145.\n\nFixes tyba/oss#140."
+    },
+    {
+        "hash": "f6f2511b75b150202ace1965c59c118a55dc5c68",
+        "tree": "16f4a93e54003a9ec9dbfc1260ed9b13e58622a6",
+        "parents": [
+            "974a7de943c975ff67b2c742c0b0b2345eea0042",
+            "c00ef7f00315dc019770533be14025b5c30b043a"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1436373578 2015-07-08 18:39:38 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1436373578 2015-07-08 18:39:38 +0200",
+        "message": "Merge pull request #10 from tcard/storable-hooks\n\nStorable hooks: {Before, After}{Insert, Update, Save}."
+    },
+    {
+        "hash": "c00ef7f00315dc019770533be14025b5c30b043a",
+        "tree": "16f4a93e54003a9ec9dbfc1260ed9b13e58622a6",
+        "parents": [
+            "974a7de943c975ff67b2c742c0b0b2345eea0042"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1436277687 2015-07-07 16:01:27 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1436371163 2015-07-08 17:59:23 +0200",
+        "message": "Storable hooks: {Before, After}{Insert, Update, Save}.\n\nImplements part of #145.\n\nFixes #138."
+    },
+    {
+        "hash": "974a7de943c975ff67b2c742c0b0b2345eea0042",
+        "tree": "65e8ba002d75a292ea24f96a7da78abdf468311e",
+        "parents": [
+            "b8dccf00222c6c30792b9b0682f9dccab9f3cecc",
+            "dcadf0f0efe27d198316d9ea20945f725e2f9a2b"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1435745214 2015-07-01 12:06:54 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1435745214 2015-07-01 12:06:54 +0200",
+        "message": "Merge pull request #8 from mcuadros/must\n\nstore.Must* methods"
+    },
+    {
+        "hash": "b8dccf00222c6c30792b9b0682f9dccab9f3cecc",
+        "tree": "4a30f708c77b9df26ac03ab13c17aa661ef9bbd7",
+        "parents": [
+            "a9c5d366dd9f1c6ad44d8a7c412159c5349820d1",
+            "7099f151ff69e867b59eb73c0efc60ad650b15fb"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1435743793 2015-07-01 11:43:13 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1435743793 2015-07-01 11:43:13 +0200",
+        "message": "Merge pull request #6 from tcard/find-by-ids\n\nAdd FindByIds method."
+    },
+    {
+        "hash": "dcadf0f0efe27d198316d9ea20945f725e2f9a2b",
+        "tree": "a57e19f432051d788f4519318d57a71e9903e65b",
+        "parents": [
+            "0ff43244f427c63dc2155739c56613abbe0bca58"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1435742824 2015-07-01 11:27:04 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1435742824 2015-07-01 11:27:04 +0200",
+        "message": "store.Must* methods"
+    },
+    {
+        "hash": "7099f151ff69e867b59eb73c0efc60ad650b15fb",
+        "tree": "4a30f708c77b9df26ac03ab13c17aa661ef9bbd7",
+        "parents": [
+            "a9c5d366dd9f1c6ad44d8a7c412159c5349820d1"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1435312581 2015-06-26 11:56:21 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1435312581 2015-06-26 11:56:21 +0200",
+        "message": "Add FindByIds method.\n\nIt is very typical to retrieve several concrete documents at the same time. E. g. when retrieved those referenced by another document."
+    },
+    {
+        "hash": "a9c5d366dd9f1c6ad44d8a7c412159c5349820d1",
+        "tree": "3f2bfcf774ede348ca43bdf94edcdf58f35b1369",
+        "parents": [
+            "e64812eacf5b5c37c18195123e4bb671e4cb2a26"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1435067377 2015-06-23 15:49:37 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1435067377 2015-06-23 15:49:37 +0200",
+        "message": "fix gocoveralls"
+    },
+    {
+        "hash": "e64812eacf5b5c37c18195123e4bb671e4cb2a26",
+        "tree": "1c87acd094102c40a55f4b2d73eaa2789061852a",
+        "parents": [
+            "0ff43244f427c63dc2155739c56613abbe0bca58",
+            "3cd10e833a67d5fcd26980750746bcc843ad41e4"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1435065139 2015-06-23 15:12:19 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1435065139 2015-06-23 15:12:19 +0200",
+        "message": "Merge pull request #4 from tcard/master\n\nAdapt code generation to recursive types."
+    },
+    {
+        "hash": "0ff43244f427c63dc2155739c56613abbe0bca58",
+        "tree": "28d6e4b62726db291418355fe3646a589a5b4ced",
+        "parents": [
+            "e59ca63a6f4f8c23fd68825bc15ef3b166c698a6"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1435060157 2015-06-23 13:49:17 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1435060157 2015-06-23 13:49:17 +0200",
+        "message": "Cloning session with every call to a collection"
+    },
+    {
+        "hash": "3cd10e833a67d5fcd26980750746bcc843ad41e4",
+        "tree": "ee66f0670065a4d3eca57d2d5b6c335f4dc77ffb",
+        "parents": [
+            "e618f14617aafebd4678e97388d08e0e9a8aef94"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1435060132 2015-06-23 13:48:52 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1435060132 2015-06-23 13:48:52 +0200",
+        "message": "Adapt code generation to recursive types.\n\nThis moves logic from the `schema.tgo` template to plain Go methods, because we need to keep more information about the code generation to avoid infinite loops."
+    },
+    {
+        "hash": "e618f14617aafebd4678e97388d08e0e9a8aef94",
+        "tree": "d0a24db33a67aa7ae7a72ab8d499d153b123cc71",
+        "parents": [
+            "f88648119b85a99899e67d34b8dfd3605cb78b28",
+            "e59ca63a6f4f8c23fd68825bc15ef3b166c698a6"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1434701213 2015-06-19 10:06:53 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1434701213 2015-06-19 10:06:53 +0200",
+        "message": "Merge pull request #3 from tcard/master\n\nFix generator for recursive structures."
+    },
+    {
+        "hash": "e59ca63a6f4f8c23fd68825bc15ef3b166c698a6",
+        "tree": "d0a24db33a67aa7ae7a72ab8d499d153b123cc71",
+        "parents": [
+            "f88648119b85a99899e67d34b8dfd3605cb78b28"
+        ],
+        "author": "Toni Cárdenas <toni@tcardenas.me> 1434644438 2015-06-18 18:20:38 +0200",
+        "committer": "Toni Cárdenas <toni@tcardenas.me> 1434650383 2015-06-18 19:59:43 +0200",
+        "message": "Fix generator for recursive structures.\n\nAs we are processing a struct, it might be that we hit that same struct again as a child. We can't process twice the same struct without falling into an infinite loop.\n\nThis change detects such case. It defers the point at which structs get their subfields until the end, because we don't know all of them beforehand, and for that we need an extra layer of indirection for the fields slice, because slice are immutable."
+    },
+    {
+        "hash": "f88648119b85a99899e67d34b8dfd3605cb78b28",
+        "tree": "0561662bbaf6e481665d6f25fbf6e2fba2cb5c32",
+        "parents": [
+            "a49c9163db5c82f0ad8ba38ab3a5cf7ec10f73f2"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430909922 2015-05-06 12:58:42 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430909922 2015-05-06 12:58:42 +0200",
+        "message": "removing using document constructor"
+    },
+    {
+        "hash": "a49c9163db5c82f0ad8ba38ab3a5cf7ec10f73f2",
+        "tree": "6d45a2ca0b04859deed35bb947e43f66ae106920",
+        "parents": [
+            "16cd86fbbe83dd6ac6569e527bfc8cc0512149af"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430906702 2015-05-06 12:05:02 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430906702 2015-05-06 12:05:02 +0200",
+        "message": "processor: fixing aliased types"
+    },
+    {
+        "hash": "16cd86fbbe83dd6ac6569e527bfc8cc0512149af",
+        "tree": "fdf63a82433bd4f180a9ecf1220a4071ab65e044",
+        "parents": [
+            "26f698c2715c913fe1b3cd606d9a8d3af5270797"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430860047 2015-05-05 23:07:27 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430860047 2015-05-05 23:07:27 +0200",
+        "message": "processor: handling constructors from models"
+    },
+    {
+        "hash": "26f698c2715c913fe1b3cd606d9a8d3af5270797",
+        "tree": "eb0d365602ab5d6ff528c9b57042a89c7d85fbc6",
+        "parents": [
+            "0b71b6a5b00049713f6eaf05d060369d2f42000c"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430653663 2015-05-03 13:47:43 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430653758 2015-05-03 13:49:18 +0200",
+        "message": "README.md, LICENSE and travis"
+    },
+    {
+        "hash": "0b71b6a5b00049713f6eaf05d060369d2f42000c",
+        "tree": "6ee123a157bb8c8722c6159c760558a05f5cfb4b",
+        "parents": [
+            "d3dd96b135319f7fea95e9e5f0991827a6943bee"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430653263 2015-05-03 13:41:03 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430653263 2015-05-03 13:41:03 +0200",
+        "message": "moving example to tests and creating a clean example"
+    },
+    {
+        "hash": "d3dd96b135319f7fea95e9e5f0991827a6943bee",
+        "tree": "0f3c091e7aa46241a16ac4316ff63146d4bec07b",
+        "parents": [
+            "5908187d00b260f6e74f68bafb0c2bd64ab97bdb"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430648551 2015-05-03 12:22:31 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430648551 2015-05-03 12:22:31 +0200",
+        "message": "documentation in methods"
+    },
+    {
+        "hash": "5908187d00b260f6e74f68bafb0c2bd64ab97bdb",
+        "tree": "475539587ca17dbeef920ddac1bae95899ceab98",
+        "parents": [
+            "0b8daf61890b2589abdb36288a4b4ab61016e763"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430616735 2015-05-03 03:32:15 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430616735 2015-05-03 03:32:15 +0200",
+        "message": "query: sort, limit and skip methods, store: rawupdate and rawdelete"
+    },
+    {
+        "hash": "0b8daf61890b2589abdb36288a4b4ab61016e763",
+        "tree": "049bad8a6715a8a28b1cc304f7b907e4c6ae55b5",
+        "parents": [
+            "9af9abf34b3da67d51ca1086d42bfb10864fc32e"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430587514 2015-05-02 19:25:14 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430587532 2015-05-02 19:25:32 +0200",
+        "message": "operators: field interface, changed IsNew behaviour and Store.Save method"
+    },
+    {
+        "hash": "9af9abf34b3da67d51ca1086d42bfb10864fc32e",
+        "tree": "6d56664471d89d3d45efc738660556b6de131e7c",
+        "parents": [
+            "a9ede182b165d485311cee36005652d6d0159a6f"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430584276 2015-05-02 18:31:16 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430584276 2015-05-02 18:31:16 +0200",
+        "message": "query stringer"
+    },
+    {
+        "hash": "a9ede182b165d485311cee36005652d6d0159a6f",
+        "tree": "a453094252823ab86798e2742fe1cd0b97b41b42",
+        "parents": [
+            "d05c0de0daca64db78e23afb424bac897f8f54c5"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430493573 2015-05-01 17:19:33 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430493573 2015-05-01 17:19:33 +0200",
+        "message": "resultset: count"
+    },
+    {
+        "hash": "d05c0de0daca64db78e23afb424bac897f8f54c5",
+        "tree": "338d0c980269a262786d239a2275f2199a41bde1",
+        "parents": [
+            "cd8eb1e4a3c5af68881fc02959a23209014fccad"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430492802 2015-05-01 17:06:42 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430492802 2015-05-01 17:06:42 +0200",
+        "message": "store: preventing empty raw ops"
+    },
+    {
+        "hash": "cd8eb1e4a3c5af68881fc02959a23209014fccad",
+        "tree": "1972b9d72a3cc0d3f92cd32fb53cd19d9f486797",
+        "parents": [
+            "5d0150d5831dfd2e946325b61eaf80c6059d6df1"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430491954 2015-05-01 16:52:34 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430491954 2015-05-01 16:52:34 +0200",
+        "message": "operators: fix not expresion"
+    },
+    {
+        "hash": "5d0150d5831dfd2e946325b61eaf80c6059d6df1",
+        "tree": "bf43565f0b4425cfd6812b215b7ba58cfb6202f7",
+        "parents": [
+            "fb204b6e9ced9f7a7be3c89aefed201787c96978"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430489230 2015-05-01 16:07:10 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430489230 2015-05-01 16:07:10 +0200",
+        "message": "correct operators usage"
+    },
+    {
+        "hash": "fb204b6e9ced9f7a7be3c89aefed201787c96978",
+        "tree": "9cdda9f32decaa4c767c1cf7f7496f37a9adea75",
+        "parents": [
+            "9bb841060e0447cfc70952747abdea54efccf8a7"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430485575 2015-05-01 15:06:15 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430487395 2015-05-01 15:36:35 +0200",
+        "message": "ignore parse error on source code"
+    },
+    {
+        "hash": "9bb841060e0447cfc70952747abdea54efccf8a7",
+        "tree": "75550dc428b00c4c39232d89dd08f47df7bc7475",
+        "parents": [
+            "3d2b110a418c084e77e95dd1b0dc272c932aea6a"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430485141 2015-05-01 14:59:01 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430485141 2015-05-01 14:59:01 +0200",
+        "message": "allowing define custom stores"
+    },
+    {
+        "hash": "3d2b110a418c084e77e95dd1b0dc272c932aea6a",
+        "tree": "6375ce9116423eb4055dd30a57d04c6db4bdcecd",
+        "parents": [
+            "27a122c182e3303680496ce66a05fe6b3199ed04"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430179527 2015-04-28 02:05:27 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430179527 2015-04-28 02:05:27 +0200",
+        "message": "handling maps"
+    },
+    {
+        "hash": "27a122c182e3303680496ce66a05fe6b3199ed04",
+        "tree": "88a9ecf32648bd5bec6068a0aa2b6ac090890421",
+        "parents": [
+            "913fb993a0c2b97db4f9475408b3b41eae84919e"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430141143 2015-04-27 15:25:43 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430153399 2015-04-27 18:49:59 +0200",
+        "message": "project renamed"
+    },
+    {
+        "hash": "913fb993a0c2b97db4f9475408b3b41eae84919e",
+        "tree": "786f4bea36b133328efaa393f917ad54c1bf67b4",
+        "parents": [
+            "8c4db87fae5053773292db1302a2cc8794c4376c"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430139650 2015-04-27 15:00:50 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430139650 2015-04-27 15:00:50 +0200",
+        "message": "fields with times and handling slice of structs"
+    },
+    {
+        "hash": "8c4db87fae5053773292db1302a2cc8794c4376c",
+        "tree": "7bfaa271ba562f3d6eb69883205566bb4a78ac1d",
+        "parents": [
+            "201d4636ab1437393d8d9dfca67e543d8fbbbfec"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430135204 2015-04-27 13:46:44 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430135204 2015-04-27 13:46:44 +0200",
+        "message": "operators abstraction"
+    },
+    {
+        "hash": "201d4636ab1437393d8d9dfca67e543d8fbbbfec",
+        "tree": "3e6663a69fd33023e8bfb55d56b6c688771aac5b",
+        "parents": [
+            "3ec85ffc277f27ed55f3f4a201089dba9f8c2cec"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430097380 2015-04-27 03:16:20 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430097399 2015-04-27 03:16:39 +0200",
+        "message": "using directly mgo"
+    },
+    {
+        "hash": "3ec85ffc277f27ed55f3f4a201089dba9f8c2cec",
+        "tree": "6397c89473c507d02bc06ad5753bb74ad9dd30c3",
+        "parents": [
+            "7508e186ecb52ae8ccc0a6800837f7c2caf9c73b"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430089267 2015-04-27 01:01:07 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430089267 2015-04-27 01:01:07 +0200",
+        "message": "templates: fixing style"
+    },
+    {
+        "hash": "7508e186ecb52ae8ccc0a6800837f7c2caf9c73b",
+        "tree": "b9ded125db0106d92c6291f9196cb1eeb6f18009",
+        "parents": [
+            "ac98c5e1b5618382290c5e69046c4b06cb78f753"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430089254 2015-04-27 01:00:54 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430089254 2015-04-27 01:00:54 +0200",
+        "message": "base: Field as struct, to avoid autocasting from string"
+    },
+    {
+        "hash": "ac98c5e1b5618382290c5e69046c4b06cb78f753",
+        "tree": "2df1c1d019791a3f1bae8cfe2207bead1f211159",
+        "parents": [
+            "ffeccf4b5815e3643a85282704c73651bd31f4f5"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430087653 2015-04-27 00:34:13 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1430087653 2015-04-27 00:34:13 +0200",
+        "message": "schema generation"
+    },
+    {
+        "hash": "ffeccf4b5815e3643a85282704c73651bd31f4f5",
+        "tree": "20d5aa691c97e8bde4490d66c9993065adb6fa95",
+        "parents": [
+            "da65af708a3c7c9bfec4d27d4bf82db00c5167a7"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429987582 2015-04-25 20:46:22 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429987582 2015-04-25 20:46:22 +0200",
+        "message": "recursive struct proccessor"
+    },
+    {
+        "hash": "da65af708a3c7c9bfec4d27d4bf82db00c5167a7",
+        "tree": "0dea539090ef704b6944e1921e08bf7bbacf3040",
+        "parents": [
+            "9d80ee6f3450d7b89c63f42b0ddd4143dc66596e"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429960286 2015-04-25 13:11:26 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429960286 2015-04-25 13:11:26 +0200",
+        "message": "reading templates from GOPATH and some minor fixes"
+    },
+    {
+        "hash": "9d80ee6f3450d7b89c63f42b0ddd4143dc66596e",
+        "tree": "a5011811181efbba1e0c5f0fa4bce840492f87cc",
+        "parents": [
+            "1a90252c9565179ba8e48b4778165750b30a5754"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429890717 2015-04-24 17:51:57 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429891890 2015-04-24 18:11:30 +0200",
+        "message": "new code bases working with types"
+    },
+    {
+        "hash": "1a90252c9565179ba8e48b4778165750b30a5754",
+        "tree": "f18f1d9517a0e03175cb5c6c3e57b3d4cf96ecf5",
+        "parents": [
+            "061b75c82366ad8e611bd81efbae8de149480456"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429888308 2015-04-24 17:11:48 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429888308 2015-04-24 17:11:48 +0200",
+        "message": "First steps, using types instead of pure ast (wip)"
+    },
+    {
+        "hash": "061b75c82366ad8e611bd81efbae8de149480456",
+        "tree": "cfe32cf7983582e05d870ec2be2e17335ac52056",
+        "parents": [
+            "62e0df75f5dd52d20bd05326815f41ecc53ca075"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429879786 2015-04-24 14:49:46 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429879786 2015-04-24 14:49:46 +0200",
+        "message": "Query: Skip, Limit, Sort and common types"
+    },
+    {
+        "hash": "62e0df75f5dd52d20bd05326815f41ecc53ca075",
+        "tree": "b22512596ed4d3c3b2a5b0b7066fcd00ea166650",
+        "parents": [
+            "9f226adb21877e74f4adefefc9c180ff88c1d76b"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429871673 2015-04-24 12:34:33 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429871673 2015-04-24 12:34:33 +0200",
+        "message": "base splitted with tests"
+    },
+    {
+        "hash": "9f226adb21877e74f4adefefc9c180ff88c1d76b",
+        "tree": "52d0a53e3b43b4042172b60924e3729b209b1418",
+        "parents": [
+            "b9190d483dfbbd1b77970649d6aa2acf28e5363e"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429276560 2015-04-17 15:16:00 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429276560 2015-04-17 15:16:00 +0200",
+        "message": "findable for slices, RawUpdate and FindOne"
+    },
+    {
+        "hash": "b9190d483dfbbd1b77970649d6aa2acf28e5363e",
+        "tree": "d01eca1714e0254f0de8bee89d0d450b4afca94f",
+        "parents": [
+            "dbb3b09d42d91f712760b04afef585106790146c"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429266566 2015-04-17 12:29:26 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1429266566 2015-04-17 12:29:26 +0200",
+        "message": "making finable the slices"
+    },
+    {
+        "hash": "dbb3b09d42d91f712760b04afef585106790146c",
+        "tree": "b69e1561e20b57f2312e7910820f1eeef9319555",
+        "parents": [
+            "a24076cdf3170baccef4bfdc3a4605b516a0ef5f"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428426184 2015-04-07 19:03:04 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428426184 2015-04-07 19:03:04 +0200",
+        "message": "resultset and tests"
+    },
+    {
+        "hash": "a24076cdf3170baccef4bfdc3a4605b516a0ef5f",
+        "tree": "4c0898efab61df2dab30f6c2fde6db8247f34bc1",
+        "parents": [
+            "3ecb857c28cc0e399db062e39e89ba5b26104bdd"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428421497 2015-04-07 17:44:57 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428421497 2015-04-07 17:44:57 +0200",
+        "message": "changing genered file prefix to underscore"
+    },
+    {
+        "hash": "3ecb857c28cc0e399db062e39e89ba5b26104bdd",
+        "tree": "17057e3a61d21448ac21875bd95046d0909a445d",
+        "parents": [
+            "45a17481857e16baf0d23c09564fa3792f5b5772"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428419939 2015-04-07 17:18:59 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428419939 2015-04-07 17:18:59 +0200",
+        "message": "fix: error retrieving field name from struct tag"
+    },
+    {
+        "hash": "45a17481857e16baf0d23c09564fa3792f5b5772",
+        "tree": "c7e77fb9d1a0900178e973aee3d8cf2a6e00354c",
+        "parents": [
+            "6c6b665d6e880fae22e265dfd55814074c3a0d54"
+        ],
+        "author": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428419567 2015-04-07 17:12:47 +0200",
+        "committer": "Máximo Cuadros Ortiz <mcuadros@gmail.com> 1428419567 2015-04-07 17:12:47 +0200",
+        "message": "adding findableTypes"
+    },
+    {
+        "hash": "6c6b665d6e880fae22e265dfd55814074c3a0d54",
+        "tree": "f6d8584870c2cdca1ec151dc3ba48f3f8d1e8895",
+        "parents": [
+            "eae42f6a176401edef9af8fa919f3daca3fdaa45",
+            "27858d57545833073a2091c8eafbb1606ef73902"
+        ],
+        "author": "Máximo Cuadros <mcuadros@gmail.com> 1428416172 2015-04-07 16:16:12 +0200",
+        "committer": "Máximo Cuadros <mcuadros@gmail.com> 1428416172 2015-04-07 16:16:12 +0200",
+        "message": "Merge pull request #1 from dripolles/master\n\nMinimum functionality"
+    },
+    {
+        "hash": "27858d57545833073a2091c8eafbb1606ef73902",
+        "tree": "f6d8584870c2cdca1ec151dc3ba48f3f8d1e8895",
+        "parents": [
+            "e3a713085e142547ab06c24efa4e9cb77f20ae79"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1428316594 2015-04-06 12:36:34 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1428316594 2015-04-06 12:36:34 +0200",
+        "message": "Fix import line: use mongogen from github.com/tyba/"
+    },
+    {
+        "hash": "e3a713085e142547ab06c24efa4e9cb77f20ae79",
+        "tree": "93e0509442a928ffd2f3ca993305cd283f89c329",
+        "parents": [
+            "88571b24d980003787fa28466dc1a05ccc055934"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1428315041 2015-04-06 12:10:41 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1428315041 2015-04-06 12:10:41 +0200",
+        "message": "Filter \"findable\" fields for Query generation"
+    },
+    {
+        "hash": "88571b24d980003787fa28466dc1a05ccc055934",
+        "tree": "441866cf60ca716d210783edcaadb7548f0a4fe5",
+        "parents": [
+            "12f1ef9804c2bbe2561d0a994b8887b81c3af74f"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1428314993 2015-04-06 12:09:53 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1428314993 2015-04-06 12:09:53 +0200",
+        "message": "Use pointers to Field everywhere it's possible"
+    },
+    {
+        "hash": "12f1ef9804c2bbe2561d0a994b8887b81c3af74f",
+        "tree": "5b2a8447295a0e6e96cff4b79af0479702429f98",
+        "parents": [
+            "b85860a3c6d7385211d8facd6d0bd0c440122a5d"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1427907819 2015-04-01 19:03:39 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1427907819 2015-04-01 19:03:39 +0200",
+        "message": "Use collection name in generated model code"
+    },
+    {
+        "hash": "b85860a3c6d7385211d8facd6d0bd0c440122a5d",
+        "tree": "545a4e2b9ad33d33c4ed2490e78ac10e9ea46f33",
+        "parents": [
+            "87d07cf5bbf2d1051d39a190aeb616f7f6ecb1e4"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1427907010 2015-04-01 18:50:10 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1427907010 2015-04-01 18:50:10 +0200",
+        "message": "Change project name to \"fully qualified\""
+    },
+    {
+        "hash": "87d07cf5bbf2d1051d39a190aeb616f7f6ecb1e4",
+        "tree": "1bf95e377961dc0a8f839f671436dfc8f143e26d",
+        "parents": [
+            "eae42f6a176401edef9af8fa919f3daca3fdaa45"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1427906112 2015-04-01 18:35:12 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1427906540 2015-04-01 18:42:20 +0200",
+        "message": "Minimum functionality"
+    },
+    {
+        "hash": "eae42f6a176401edef9af8fa919f3daca3fdaa45",
+        "tree": "f93e3a1a1525fb5b91020da86e44810c87a2d7bc",
+        "parents": [
+            "45dbfdc69ad16d0c679893e80f651ceb2504a053"
+        ],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1427906359 2015-04-01 18:39:19 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1427906420 2015-04-01 18:40:20 +0200",
+        "message": "README.md"
+    },
+    {
+        "hash": "45dbfdc69ad16d0c679893e80f651ceb2504a053",
+        "tree": "543b9bebdc6bd5c4b22136034a95dd097a57d3dd",
+        "parents": [],
+        "author": "Daniel Ripolles <dripolles@gmail.com> 1427906309 2015-04-01 18:38:29 +0200",
+        "committer": "Daniel Ripolles <dripolles@gmail.com> 1427906309 2015-04-01 18:38:29 +0200",
+        "message": "First commit"
+    }
+]

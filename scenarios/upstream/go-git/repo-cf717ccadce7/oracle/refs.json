@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "d2dc5ac04916e156018db4482c40c39b894090e9",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "b29328491a0682c259bcce28741eac71f3499f7d",
+        "name": "refs/heads/merges/1"
+    },
+    {
+        "hash": "d2dc5ac04916e156018db4482c40c39b894090e9",
+        "name": "refs/heads/merges/2"
+    },
+    {
+        "hash": "6f6c5d2be7852c782be1dd13e36496dd7ad39560",
+        "name": "refs/heads/merges/3"
+    }
+]

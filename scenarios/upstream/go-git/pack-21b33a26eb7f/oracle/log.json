@@ -1,0 +1,170 @@
+[
+    {
+        "hash": "03d686e06179395053129d4af6ad7b9760f9f9b9",
+        "tree": "20de2dc0c06efd557b0098f9aa8b439145fa7cc1",
+        "parents": [
+            "dd49ffd6c8df59189da0e82f48c255e95c86d208"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1358197975 2013-01-14 22:12:55 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1358197975 2013-01-14 22:12:55 +0100",
+        "message": "Added LICENSE and renamed README ext."
+    },
+    {
+        "hash": "dd49ffd6c8df59189da0e82f48c255e95c86d208",
+        "tree": "8ff763fe712f003196b4c06bd49acdce798633d4",
+        "parents": [
+            "22b3d931644b007fa5541d479da22a85e21df888"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352758004 2012-11-12 23:06:44 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352758005 2012-11-12 23:06:45 +0100",
+        "message": "Examples: Explain use of Sleep after each cmd.\n\nNinja: renamed default bot name for `bot_notificatons.go`"
+    },
+    {
+        "hash": "22b3d931644b007fa5541d479da22a85e21df888",
+        "tree": "e6b748dddedb9d74167e07ab9ee1e0e85a02c6ab",
+        "parents": [
+            "3893caa13424fe959b01beab36c8a43997c1700d"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352746401 2012-11-12 19:53:21 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352746401 2012-11-12 19:53:21 +0100",
+        "message": "Added some nice tests for helpers."
+    },
+    {
+        "hash": "3893caa13424fe959b01beab36c8a43997c1700d",
+        "tree": "377662719afaf4ce6be8065aff697baca7f874cd",
+        "parents": [
+            "2504e54849cc9110d3d4cc04278deee18a9417cd"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352746113 2012-11-12 19:48:33 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352746113 2012-11-12 19:48:33 +0100",
+        "message": "Made helpers conformant with TS3 specs."
+    },
+    {
+        "hash": "2504e54849cc9110d3d4cc04278deee18a9417cd",
+        "tree": "f2fee784634863cb9a0fefaff43a99f5294ad9f8",
+        "parents": [
+            "6057428d26d6b158e1065a4687723edff06f87e7"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352740704 2012-11-12 18:18:24 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352740704 2012-11-12 18:18:24 +0100",
+        "message": "Fix sendtextmessage string.\n\n\\s isn't recognized as a escape sequence on http://go.pkgdoc.org so\nbetter use raw string literals."
+    },
+    {
+        "hash": "6057428d26d6b158e1065a4687723edff06f87e7",
+        "tree": "f1f7c26e8cf8a3b1d1078966ecacb36221faa09b",
+        "parents": [
+            "6f0e42386b349292361c0c82f2a49ea7d1e27d46"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352152259 2012-11-05 22:50:59 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352152259 2012-11-05 22:50:59 +0100",
+        "message": "Small typo on README."
+    },
+    {
+        "hash": "6f0e42386b349292361c0c82f2a49ea7d1e27d46",
+        "tree": "3c7f38991eb569f96337b8b7ac9a5e6eedbcfe86",
+        "parents": [
+            "47d9726c1aa886ccfa02bf68e390495e34b6014d"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352152178 2012-11-05 22:49:38 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352152178 2012-11-05 22:49:38 +0100",
+        "message": "Updated examples + Added notifications bot."
+    },
+    {
+        "hash": "47d9726c1aa886ccfa02bf68e390495e34b6014d",
+        "tree": "95bbf2ac6c5bd8fa4b573cc32766b01f995cd8b3",
+        "parents": [
+            "bbb6ca22cd4b4a2b00f0172be9f471f61ea8e8a0"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352152140 2012-11-05 22:49:00 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352152140 2012-11-05 22:49:00 +0100",
+        "message": "Docs + Fully working Conn.Cmd & notifications.\n\nConn.Cmd now reads whole command response (previously it ignored 2 line\nresponses)."
+    },
+    {
+        "hash": "bbb6ca22cd4b4a2b00f0172be9f471f61ea8e8a0",
+        "tree": "d7a5a205c8fc4d1f30d8a706965f4950c5ebc445",
+        "parents": [
+            "b287702db26c390abd7516db0afaa9ba2c7b9b08"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352129340 2012-11-05 16:29:00 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352129340 2012-11-05 16:29:00 +0100",
+        "message": "Simplified library code thanks to io.Copy."
+    },
+    {
+        "hash": "b287702db26c390abd7516db0afaa9ba2c7b9b08",
+        "tree": "2d525524d38a08dc6927c9695dc5d172d11d4abb",
+        "parents": [
+            "4eb128dc3d7bd7979fe02614c8ce174d68453a0b"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352126460 2012-11-05 15:41:00 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352126460 2012-11-05 15:41:00 +0100",
+        "message": "Remove clutter from helpers."
+    },
+    {
+        "hash": "4eb128dc3d7bd7979fe02614c8ce174d68453a0b",
+        "tree": "6d2c06a49c430c28e4d46435c70ba86e62d7d199",
+        "parents": [
+            "f9ef9536d8f5a1cb2922f060fcada008f8672252"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352119907 2012-11-05 13:51:47 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352119907 2012-11-05 13:51:47 +0100",
+        "message": "Forgot to make helpers public (Ts3Quote/Unquote)"
+    },
+    {
+        "hash": "f9ef9536d8f5a1cb2922f060fcada008f8672252",
+        "tree": "fc2dea4f671c2c440667f2dcbd57586ea42a7456",
+        "parents": [
+            "a8d2e35e399129d6b8b2a54184258f2bcecd1d14"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352061414 2012-11-04 21:36:54 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352061414 2012-11-04 21:36:54 +0100",
+        "message": "Tiny fix. Forgot deferred Close"
+    },
+    {
+        "hash": "a8d2e35e399129d6b8b2a54184258f2bcecd1d14",
+        "tree": "51825a42f35a8601f106afffe970d0e9839e1bee",
+        "parents": [
+            "ef789362c2d18b0cc59b953a98e6e9203f290113"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352061375 2012-11-04 21:36:15 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352061375 2012-11-04 21:36:15 +0100",
+        "message": "Updated Bot example. Still not working."
+    },
+    {
+        "hash": "ef789362c2d18b0cc59b953a98e6e9203f290113",
+        "tree": "4ec8a82b87badc6b572bbf4ea7d4f637954adc0d",
+        "parents": [
+            "9b0c361b1180a7b462844983f7fca076c66c8fec"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352061278 2012-11-04 21:34:38 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352061278 2012-11-04 21:34:38 +0100",
+        "message": "Now using io.Copy"
+    },
+    {
+        "hash": "9b0c361b1180a7b462844983f7fca076c66c8fec",
+        "tree": "e380c9a762637c1b1e1c2d178516735fd6ceab00",
+        "parents": [
+            "b99f9a2b468e82777ecaccee7d401bb92113c793"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352059036 2012-11-04 20:57:16 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352059036 2012-11-04 20:57:16 +0100",
+        "message": "Refactoring + Fixed log init hook.\n\nExtras:\n- Increased Read and Write timeouts to 2 and 1 seconds respectivelly."
+    },
+    {
+        "hash": "b99f9a2b468e82777ecaccee7d401bb92113c793",
+        "tree": "7024550348e525d16adb36c61484ac1c7dbc8c80",
+        "parents": [
+            "764e914b75d6d6df1fc5d832aa9840f590abf1bb"
+        ],
+        "author": "Carlos <toqueteos@gmail.com> 1352058797 2012-11-04 20:53:17 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352058797 2012-11-04 20:53:17 +0100",
+        "message": "Replaced raw_shell example.\n\n- examples/repl.go provides a nicer alternative example (an it works\nproperly too!)"
+    },
+    {
+        "hash": "764e914b75d6d6df1fc5d832aa9840f590abf1bb",
+        "tree": "624fd8401300ea955ec84e2587b2d66c32419a11",
+        "parents": [],
+        "author": "Carlos <toqueteos@gmail.com> 1352053642 2012-11-04 19:27:22 +0100",
+        "committer": "Carlos <toqueteos@gmail.com> 1352053642 2012-11-04 19:27:22 +0100",
+        "message": "First commit."
+    }
+]

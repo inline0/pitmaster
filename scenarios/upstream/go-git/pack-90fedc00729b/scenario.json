@@ -1,0 +1,11 @@
+{
+    "name": "upstream/go-git/pack-90fedc00729b",
+    "category": "upstream",
+    "description": "go-git pack fixture: pack-90fedc00729b64ea0d0406db861be081cda25bbf",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}
