@@ -1,0 +1,181 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Pitmaster\Tests\Integration;
+
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Pitmaster\Worktree\WorktreeManager;
+
+/**
+ * Test Worktree\WorktreeManager against a real git repository.
+ */
+final class WorktreeTest extends TestCase
+{
+    private string $tmpDir;
+    private string $gitDir;
+
+    protected function setUp(): void
+    {
+        $this->tmpDir = sys_get_temp_dir() . '/pitmaster-test-' . bin2hex(random_bytes(4));
+        mkdir($this->tmpDir, 0777, true);
+        $this->git('init');
+        $this->git('config user.email test@pitmaster.dev');
+        $this->git('config user.name "Test User"');
+        $this->gitDir = $this->tmpDir . '/.git';
+
+        // Need at least one commit for worktree operations
+        $this->writeFile('a.txt', "content\n");
+        $this->git('add a.txt');
+        $this->git('commit -m "Initial commit"');
+
+        // Create a branch for the linked worktree
+        $this->git('branch feature');
+    }
+
+    protected function tearDown(): void
+    {
+        exec('rm -rf ' . escapeshellarg($this->tmpDir));
+    }
+
+    #[Test]
+    public function listReturnsMainWorktree(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $worktrees = $manager->list();
+
+        $this->assertCount(1, $worktrees);
+        $this->assertTrue($worktrees[0]->isMain);
+        $this->assertSame($this->tmpDir, $worktrees[0]->path);
+    }
+
+    #[Test]
+    public function addCreatesLinkedWorktree(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $linkedPath = $this->tmpDir . '-linked';
+
+        $wt = $manager->add($linkedPath, 'feature');
+
+        $this->assertFalse($wt->isMain);
+        $this->assertSame('feature', $wt->branch);
+
+        // Metadata directory should exist
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/' . basename($linkedPath));
+
+        // .git file in linked worktree should exist
+        $this->assertFileExists($linkedPath . '/.git');
+
+        // Clean up linked worktree
+        exec('rm -rf ' . escapeshellarg($linkedPath));
+    }
+
+    #[Test]
+    public function addThenListShowsBothWorktrees(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $linkedPath = $this->tmpDir . '-wt2';
+
+        $manager->add($linkedPath, 'feature');
+
+        $worktrees = $manager->list();
+        $this->assertCount(2, $worktrees);
+
+        $mainCount = 0;
+        $linkedCount = 0;
+
+        foreach ($worktrees as $wt) {
+            if ($wt->isMain) {
+                $mainCount++;
+            } else {
+                $linkedCount++;
+            }
+        }
+
+        $this->assertSame(1, $mainCount);
+        $this->assertSame(1, $linkedCount);
+
+        // Clean up
+        exec('rm -rf ' . escapeshellarg($linkedPath));
+    }
+
+    #[Test]
+    public function removeRemovesWorktreeMetadata(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $linkedPath = $this->tmpDir . '-removable';
+
+        $manager->add($linkedPath, 'feature');
+        $name = basename($linkedPath);
+
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/' . $name);
+
+        $manager->remove($name);
+
+        $this->assertDirectoryDoesNotExist($this->gitDir . '/worktrees/' . $name);
+
+        // Clean up
+        exec('rm -rf ' . escapeshellarg($linkedPath));
+    }
+
+    #[Test]
+    public function lockAndUnlock(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $linkedPath = $this->tmpDir . '-lockable';
+
+        $manager->add($linkedPath, 'feature');
+        $name = basename($linkedPath);
+
+        // Lock with a reason
+        $manager->lock($name, 'maintenance');
+        $this->assertFileExists($this->gitDir . '/worktrees/' . $name . '/locked');
+
+        $lockContent = trim(file_get_contents($this->gitDir . '/worktrees/' . $name . '/locked'));
+        $this->assertSame('maintenance', $lockContent);
+
+        // Removing a locked worktree should throw
+        $this->expectException(\RuntimeException::class);
+
+        try {
+            $manager->remove($name);
+        } finally {
+            // Unlock and clean up
+            $manager->unlock($name);
+            $this->assertFileDoesNotExist($this->gitDir . '/worktrees/' . $name . '/locked');
+            $manager->remove($name);
+            exec('rm -rf ' . escapeshellarg($linkedPath));
+        }
+    }
+
+    #[Test]
+    public function mainWorktreeHasBranchInfo(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $worktrees = $manager->list();
+
+        $main = $worktrees[0];
+        $this->assertTrue($main->isMain);
+        $this->assertFalse($main->isDetached);
+        $this->assertNotNull($main->branch);
+        $this->assertNotNull($main->head);
+    }
+
+    private function git(string $cmd): string
+    {
+        return shell_exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($this->tmpDir), $cmd)) ?? '';
+    }
+
+    private function writeFile(string $path, string $content): void
+    {
+        $full = $this->tmpDir . '/' . $path;
+        $dir = dirname($full);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        file_put_contents($full, $content);
+    }
+}

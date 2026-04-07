@@ -242,6 +242,16 @@ final class Repository
             return $id;
         }
 
+        // Try as a revision expression (HEAD~3, main^2, etc.)
+        if (str_contains($revision, '~') || str_contains($revision, '^')) {
+            $parser = new RevisionParser($this->objects, $this->refs);
+            $id = $parser->resolve($revision);
+
+            if ($id !== null) {
+                return $id;
+            }
+        }
+
         throw new \RuntimeException("Cannot resolve revision: {$revision}");
     }
 

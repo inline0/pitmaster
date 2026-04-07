@@ -48,7 +48,7 @@ final class Blame
         // Start with the current version (strip trailing empty line from \n)
         $currentLines = explode("\n", $versions[0]['content']);
 
-        if ($currentLines !== [] && end($currentLines) === '') {
+        if (end($currentLines) === '') {
             array_pop($currentLines);
         }
         $blame = array_fill(0, count($currentLines), null);

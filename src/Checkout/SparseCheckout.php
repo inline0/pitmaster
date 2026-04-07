@@ -15,7 +15,7 @@ final class SparseCheckout
     /** @var array<int, string> Include patterns */
     private array $includes = [];
 
-    /** @var array<int, string> Exclude patterns */
+    /** @var array<int, string> */
     private array $excludes = [];
 
     public function __construct(private readonly string $gitDir)
@@ -86,20 +86,16 @@ final class SparseCheckout
             return true;
         }
 
-        // Root files are always included if /* is present
-        if (!str_contains($path, '/') && in_array('/*', $this->includes, true)) {
-            return true;
+        // Root files (no /) are included if /* is in the include list
+        if (!str_contains($path, '/')) {
+            return in_array('/*', $this->includes, true);
         }
 
-        foreach ($this->includes as $pattern) {
-            if ($this->matchPattern($pattern, $path)) {
-                // Check exclusions
-                foreach ($this->excludes as $exclude) {
-                    if ($this->matchPattern($exclude, $path)) {
-                        return false;
-                    }
-                }
+        // For paths with directories, check if any include directory matches
+        $dirs = $this->includedDirectories();
 
+        foreach ($dirs as $dir) {
+            if (str_starts_with($path, $dir . '/') || $path === $dir) {
                 return true;
             }
         }
@@ -172,17 +168,13 @@ final class SparseCheckout
         }
     }
 
-    private function matchPattern(string $pattern, string $path): bool
+    /**
+     * Get excludes (parsed from file, used for non-cone mode).
+     *
+     * @return array<int, string>
+     */
+    public function excludes(): array
     {
-        $pattern = ltrim($pattern, '/');
-
-        // Directory pattern: /src/ matches src/ and src/anything
-        if (str_ends_with($pattern, '/')) {
-            $dir = rtrim($pattern, '/');
-
-            return str_starts_with($path, $dir . '/') || $path === $dir;
-        }
-
-        return fnmatch($pattern, $path) || fnmatch($pattern, basename($path));
+        return $this->excludes;
     }
 }
