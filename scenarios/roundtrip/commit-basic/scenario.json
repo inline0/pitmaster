@@ -1,0 +1,11 @@
+{
+    "name": "roundtrip/commit-basic",
+    "category": "roundtrip",
+    "description": "Pitmaster stages files and creates a commit, git reads and validates",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

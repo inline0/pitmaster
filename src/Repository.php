@@ -5,16 +5,28 @@ declare(strict_types=1);
 namespace Pitmaster;
 
 use Pitmaster\Config\GitConfig;
+use Pitmaster\Diff\DiffResult;
+use Pitmaster\Diff\MyersDiff;
+use Pitmaster\Diff\TreeDiff;
 use Pitmaster\Exceptions\ObjectNotFoundException;
 use Pitmaster\Graph\CommitWalker;
+use Pitmaster\Graph\RevisionParser;
+use Pitmaster\Index\Index;
+use Pitmaster\Index\IndexEntry;
+use Pitmaster\Index\IndexWriter;
+use Pitmaster\Merge\MergeBase;
+use Pitmaster\Merge\MergeResult;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\GitObject;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Object\ObjectType;
 use Pitmaster\Object\Tree;
+use Pitmaster\Object\TreeEntry;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\SymbolicRef;
+use Pitmaster\Status\StatusEntry;
+use Pitmaster\Status\WorkingTreeStatus;
 use Pitmaster\Storage\ObjectDatabase;
 
 /**
@@ -297,6 +309,330 @@ final class Repository
         return $walker->walk($from, $limit);
     }
 
+    // -- Index --
+
+    /**
+     * Read the current index.
+     */
+    public function index(): Index
+    {
+        return Index::open($this->gitDir . '/index');
+    }
+
+    /**
+     * Stage files (git add).
+     */
+    public function add(string ...$paths): void
+    {
+        $index = $this->index();
+
+        foreach ($paths as $path) {
+            $fullPath = $this->workDir . '/' . $path;
+
+            if (!is_file($fullPath)) {
+                throw new \RuntimeException("File not found: {$path}");
+            }
+
+            $content = file_get_contents($fullPath);
+            $blob = Blob::fromContent($content);
+            $this->objects->write($blob);
+
+            $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+            $index->addEntry($entry);
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /**
+     * Unstage files (git rm --cached).
+     */
+    public function remove(string ...$paths): void
+    {
+        $index = $this->index();
+
+        foreach ($paths as $path) {
+            $index->removeEntry($path);
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    // -- Commits --
+
+    /**
+     * Create a commit from the current index.
+     */
+    public function commit(string $message, ?string $author = null): ObjectId
+    {
+        $index = $this->index();
+
+        if ($index->count() === 0) {
+            throw new \RuntimeException('Nothing to commit: index is empty');
+        }
+
+        // Build tree from index
+        $treeId = $this->buildTreeFromIndex($index);
+
+        // Determine author/committer
+        if ($author === null) {
+            $name = $this->config->get('user.name')
+                ?? (defined('PITMASTER_AUTHOR_NAME') ? constant('PITMASTER_AUTHOR_NAME') : 'Pitmaster');
+            $email = $this->config->get('user.email')
+                ?? (defined('PITMASTER_AUTHOR_EMAIL') ? constant('PITMASTER_AUTHOR_EMAIL') : 'pitmaster@localhost');
+            $timestamp = time();
+            $tz = date('O');
+            $author = "{$name} <{$email}> {$timestamp} {$tz}";
+        }
+
+        // Build commit
+        $parents = [];
+        $headId = $this->refs->resolveHead();
+
+        if ($headId !== null) {
+            $parents[] = $headId;
+        }
+
+        $content = Commit::buildContent(
+            tree: $treeId,
+            parents: $parents,
+            author: $author,
+            committer: $author,
+            message: $message,
+        );
+
+        $commitId = ObjectId::compute(ObjectType::Commit, $content);
+        $commit = Commit::parse($content, $commitId);
+        $this->objects->write($commit);
+
+        // Update HEAD
+        $head = $this->refs->readHead();
+
+        if ($head !== null) {
+            $this->refs->update($head->target, $commitId);
+        } else {
+            // Detached HEAD or first commit
+            $this->refs->update('HEAD', $commitId);
+        }
+
+        return $commitId;
+    }
+
+    // -- Status --
+
+    /**
+     * Compute working tree status.
+     *
+     * @return array<int, StatusEntry>
+     */
+    public function status(): array
+    {
+        $index = $this->index();
+        $headId = $this->refs->resolveHead();
+        $status = new WorkingTreeStatus($this->objects, $this->workDir);
+
+        return $status->compute($index, $headId);
+    }
+
+    // -- Diff --
+
+    /**
+     * Diff worktree vs index (unstaged changes).
+     *
+     * @return array<int, DiffResult>
+     */
+    public function diff(?string $pathspec = null): array
+    {
+        $index = $this->index();
+        $results = [];
+
+        foreach ($index->entries() as $entry) {
+            if ($pathspec !== null && $entry->path !== $pathspec) {
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $entry->path;
+
+            if (!is_file($fullPath)) {
+                // Deleted in worktree
+                $oldContent = $this->readBlobContent($entry->hash);
+                $hunks = MyersDiff::diff($oldContent, '');
+
+                if ($hunks !== []) {
+                    $results[] = new DiffResult($entry->path, $entry->path, $hunks, false, $entry->hash->hex, null);
+                }
+
+                continue;
+            }
+
+            $worktreeContent = file_get_contents($fullPath);
+
+            if ($worktreeContent === false) {
+                continue;
+            }
+
+            $indexContent = $this->readBlobContent($entry->hash);
+
+            if ($indexContent !== $worktreeContent) {
+                $newHash = ObjectId::compute(ObjectType::Blob, $worktreeContent);
+
+                if (MyersDiff::isBinary($indexContent) || MyersDiff::isBinary($worktreeContent)) {
+                    $results[] = new DiffResult($entry->path, $entry->path, [], true, $entry->hash->hex, $newHash->hex);
+                } else {
+                    $hunks = MyersDiff::diff($indexContent, $worktreeContent);
+                    $results[] = new DiffResult($entry->path, $entry->path, $hunks, false, $entry->hash->hex, $newHash->hex);
+                }
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Diff index vs HEAD (staged changes).
+     *
+     * @return array<int, DiffResult>
+     */
+    public function diffStaged(?string $pathspec = null): array
+    {
+        $headId = $this->refs->resolveHead();
+
+        if ($headId === null) {
+            return [];
+        }
+
+        $commit = $this->objects->read($headId);
+
+        if (!$commit instanceof Commit) {
+            return [];
+        }
+
+        $index = $this->index();
+        $treeDiff = new TreeDiff($this->objects);
+
+        // Build a tree from the index
+        $indexTreeId = $this->buildTreeFromIndex($index);
+
+        return $treeDiff->diff($commit->tree, $indexTreeId);
+    }
+
+    /**
+     * Diff two trees by ObjectId.
+     *
+     * @return array<int, DiffResult>
+     */
+    public function diffTree(ObjectId $a, ObjectId $b): array
+    {
+        $treeDiff = new TreeDiff($this->objects);
+
+        return $treeDiff->diff($a, $b);
+    }
+
+    // -- Merge --
+
+    /**
+     * Merge a branch into HEAD.
+     */
+    public function merge(string $branch): MergeResult
+    {
+        $theirsId = $this->resolve($branch);
+        $oursId = $this->refs->resolveHead();
+
+        if ($oursId === null) {
+            throw new \RuntimeException('Cannot merge: HEAD is not set');
+        }
+
+        // Find merge base
+        $mergeBaseFinder = new MergeBase($this->objects);
+        $baseId = $mergeBaseFinder->find($oursId, $theirsId);
+
+        // Fast-forward check
+        if ($baseId !== null && $baseId->equals($oursId)) {
+            // Fast-forward: just move HEAD
+            $head = $this->refs->readHead();
+
+            if ($head !== null) {
+                $this->refs->update($head->target, $theirsId);
+            }
+
+            return new MergeResult(clean: true, commitId: $theirsId);
+        }
+
+        // Three-way merge via tree diff
+        $treeDiff = new TreeDiff($this->objects);
+        $oursCommit = $this->objects->read($oursId);
+        $theirsCommit = $this->objects->read($theirsId);
+
+        if (!$oursCommit instanceof Commit || !$theirsCommit instanceof Commit) {
+            throw new \RuntimeException('Cannot merge: invalid commit objects');
+        }
+
+        $baseTree = $baseId !== null ? $this->getCommitTree($baseId) : null;
+        $oursTree = $oursCommit->tree;
+        $theirsTree = $theirsCommit->tree;
+
+        // Diff base->ours and base->theirs
+        $oursChanges = $treeDiff->diff($baseTree, $oursTree);
+        $theirsChanges = $treeDiff->diff($baseTree, $theirsTree);
+
+        // For now, return a simple result indicating the merge was attempted
+        $conflicts = [];
+        $clean = true;
+
+        // Check for overlapping changes (simplistic conflict detection)
+        $oursFiles = [];
+
+        foreach ($oursChanges as $change) {
+            $oursFiles[$change->oldPath] = true;
+        }
+
+        foreach ($theirsChanges as $change) {
+            if (isset($oursFiles[$change->oldPath])) {
+                $conflicts[] = $change->oldPath;
+                $clean = false;
+            }
+        }
+
+        if ($clean) {
+            // Create merge commit
+            $name = $this->config->get('user.name') ?? 'Pitmaster';
+            $email = $this->config->get('user.email') ?? 'pitmaster@localhost';
+            $timestamp = time();
+            $tz = date('O');
+            $author = "{$name} <{$email}> {$timestamp} {$tz}";
+
+            $content = Commit::buildContent(
+                tree: $theirsTree,
+                parents: [$oursId, $theirsId],
+                author: $author,
+                committer: $author,
+                message: "Merge branch '{$branch}'\n",
+            );
+
+            $commitId = ObjectId::compute(ObjectType::Commit, $content);
+            $commit = Commit::parse($content, $commitId);
+            $this->objects->write($commit);
+
+            $head = $this->refs->readHead();
+
+            if ($head !== null) {
+                $this->refs->update($head->target, $commitId);
+            }
+
+            return new MergeResult(clean: true, commitId: $commitId);
+        }
+
+        return new MergeResult(clean: false, conflictPaths: $conflicts);
+    }
+
+    /**
+     * Find the merge base of two commits.
+     */
+    public function mergeBase(ObjectId $a, ObjectId $b): ?ObjectId
+    {
+        return (new MergeBase($this->objects))->find($a, $b);
+    }
+
     // -- Config --
 
     public function config(): GitConfig
@@ -314,5 +650,102 @@ final class Repository
     public function refDatabase(): RefDatabase
     {
         return $this->refs;
+    }
+
+    // -- Private helpers --
+
+    /**
+     * Build a tree hierarchy from flat index entries.
+     */
+    private function buildTreeFromIndex(Index $index): ObjectId
+    {
+        // Group entries by directory
+        $root = [];
+
+        foreach ($index->entries() as $entry) {
+            $parts = explode('/', $entry->path);
+            $this->insertIntoTree($root, $parts, $entry);
+        }
+
+        return $this->writeTreeRecursive($root);
+    }
+
+    /**
+     * @param array<string, mixed> $node
+     * @param array<int, string> $parts
+     */
+    private function insertIntoTree(array &$node, array $parts, IndexEntry $entry): void
+    {
+        if (count($parts) === 1) {
+            $node[$parts[0]] = $entry;
+
+            return;
+        }
+
+        $dir = array_shift($parts);
+
+        if (!isset($node[$dir]) || !is_array($node[$dir])) {
+            $node[$dir] = [];
+        }
+
+        $this->insertIntoTree($node[$dir], $parts, $entry);
+    }
+
+    /**
+     * @param array<string, mixed> $node
+     */
+    private function writeTreeRecursive(array $node): ObjectId
+    {
+        $entries = [];
+
+        foreach ($node as $name => $value) {
+            if ($value instanceof IndexEntry) {
+                $mode = match ($value->mode) {
+                    0100755 => '100755',
+                    0120000 => '120000',
+                    0160000 => '160000',
+                    default => '100644',
+                };
+                $entries[] = new TreeEntry($mode, (string) $name, $value->hash);
+            } elseif (is_array($value)) {
+                $subtreeId = $this->writeTreeRecursive($value);
+                $entries[] = new TreeEntry('40000', (string) $name, $subtreeId);
+            }
+        }
+
+        // Sort entries (git sorts trees with trailing / for directories)
+        usort($entries, function (TreeEntry $a, TreeEntry $b): int {
+            $nameA = $a->isTree() ? $a->name . '/' : $a->name;
+            $nameB = $b->isTree() ? $b->name . '/' : $b->name;
+
+            return strcmp($nameA, $nameB);
+        });
+
+        $tree = Tree::fromEntries($entries);
+        $this->objects->write($tree);
+
+        return $tree->id;
+    }
+
+    private function readBlobContent(ObjectId $hash): string
+    {
+        $object = $this->objects->read($hash);
+
+        if ($object instanceof Blob) {
+            return $object->content;
+        }
+
+        return '';
+    }
+
+    private function getCommitTree(ObjectId $commitId): ?ObjectId
+    {
+        $commit = $this->objects->read($commitId);
+
+        if ($commit instanceof Commit) {
+            return $commit->tree;
+        }
+
+        return null;
     }
 }

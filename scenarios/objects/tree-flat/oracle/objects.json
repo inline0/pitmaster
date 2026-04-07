@@ -12,6 +12,12 @@
         "content": "File B content\n"
     },
     {
+        "hash": "66caf905a138d7b2af0a2bd2345bf116b33d82e0",
+        "type": "commit",
+        "size": 176,
+        "content": "tree 6cb20aeb74f347be6ff4730a78dcd0aab08ea947\nauthor Test User <test@pitmaster.dev> 1775561657 +0200\ncommitter Test User <test@pitmaster.dev> 1775561657 +0200\n\nAdd three files\n"
+    },
+    {
         "hash": "6cb20aeb74f347be6ff4730a78dcd0aab08ea947",
         "type": "tree",
         "size": 99,
@@ -22,11 +28,5 @@
         "type": "blob",
         "size": 15,
         "content": "File A content\n"
-    },
-    {
-        "hash": "f0f8ca1627f51a322d9bf8db1058b5cf3283d0f9",
-        "type": "commit",
-        "size": 176,
-        "content": "tree 6cb20aeb74f347be6ff4730a78dcd0aab08ea947\nauthor Test User <test@pitmaster.dev> 1775560615 +0200\ncommitter Test User <test@pitmaster.dev> 1775560615 +0200\n\nAdd three files\n"
     }
 ]

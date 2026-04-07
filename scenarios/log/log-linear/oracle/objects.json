@@ -1,9 +1,9 @@
 [
     {
-        "hash": "01922ddaba52a5e8ffdc0e6a0a88a2e69ce407f3",
+        "hash": "03cf0c105faa0e53a330e59a285fe0d2ebf458a6",
         "type": "commit",
-        "size": 224,
-        "content": "tree 88f1ff7b343c49fa131cb2d8518677c0d6394aa2\nparent 9803bca8e082044adbaa9da10e89450bccb7cfe0\nauthor Test User <test@pitmaster.dev> 1775560655 +0200\ncommitter Test User <test@pitmaster.dev> 1775560655 +0200\n\nCommit number 5\n"
+        "size": 176,
+        "content": "tree 891219ca39c2b0dc0804bce45ae0b8e471ca5f71\nauthor Test User <test@pitmaster.dev> 1775561649 +0200\ncommitter Test User <test@pitmaster.dev> 1775561649 +0200\n\nCommit number 1\n"
     },
     {
         "hash": "18af3019bbe0e008ba009deb257103b25b2fb487",
@@ -18,10 +18,10 @@
         "content": "Commit 1\nCommit 2\nCommit 3\nCommit 4\n"
     },
     {
-        "hash": "42bbfea55c57cff91c5c4aeac6e378300b8a6843",
+        "hash": "37e8c30a8ba6c84139ebd41b62539e56faec3d84",
         "type": "commit",
         "size": 224,
-        "content": "tree 18af3019bbe0e008ba009deb257103b25b2fb487\nparent a5d8bbfa0abcb71f92bd97e30eb1716beba34510\nauthor Test User <test@pitmaster.dev> 1775560655 +0200\ncommitter Test User <test@pitmaster.dev> 1775560655 +0200\n\nCommit number 3\n"
+        "content": "tree 88f1ff7b343c49fa131cb2d8518677c0d6394aa2\nparent e6ba1e166af8cdf7f37df7889a8f31e5425e1502\nauthor Test User <test@pitmaster.dev> 1775561650 +0200\ncommitter Test User <test@pitmaster.dev> 1775561650 +0200\n\nCommit number 5\n"
     },
     {
         "hash": "4afbde2a65d5bd73e63c25e1338c008d0e9ee26c",
@@ -40,6 +40,12 @@
         "type": "blob",
         "size": 45,
         "content": "Commit 1\nCommit 2\nCommit 3\nCommit 4\nCommit 5\n"
+    },
+    {
+        "hash": "852e6bbb492d5ee4340a732f77e04605b0bcdd1b",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 7feadc9859216f07acb093fc0edd0de07a79f250\nparent 03cf0c105faa0e53a330e59a285fe0d2ebf458a6\nauthor Test User <test@pitmaster.dev> 1775561650 +0200\ncommitter Test User <test@pitmaster.dev> 1775561650 +0200\n\nCommit number 2\n"
     },
     {
         "hash": "88f1ff7b343c49fa131cb2d8518677c0d6394aa2",
@@ -66,27 +72,21 @@
         "content": "Commit 1\n"
     },
     {
-        "hash": "9803bca8e082044adbaa9da10e89450bccb7cfe0",
-        "type": "commit",
-        "size": 224,
-        "content": "tree af17d84c215958eeac11e052b648dcc24c5a0b44\nparent 42bbfea55c57cff91c5c4aeac6e378300b8a6843\nauthor Test User <test@pitmaster.dev> 1775560655 +0200\ncommitter Test User <test@pitmaster.dev> 1775560655 +0200\n\nCommit number 4\n"
-    },
-    {
-        "hash": "a5d8bbfa0abcb71f92bd97e30eb1716beba34510",
-        "type": "commit",
-        "size": 224,
-        "content": "tree 7feadc9859216f07acb093fc0edd0de07a79f250\nparent c0daedf4cbd1c0bd33ecf7f1d1874607669d17e9\nauthor Test User <test@pitmaster.dev> 1775560655 +0200\ncommitter Test User <test@pitmaster.dev> 1775560655 +0200\n\nCommit number 2\n"
-    },
-    {
         "hash": "af17d84c215958eeac11e052b648dcc24c5a0b44",
         "type": "tree",
         "size": 35,
         "content": "100644 blob 25d1adea33f7d67c7a747a5971f9e19def6565e2\tlog.txt\n"
     },
     {
-        "hash": "c0daedf4cbd1c0bd33ecf7f1d1874607669d17e9",
+        "hash": "e6ba1e166af8cdf7f37df7889a8f31e5425e1502",
         "type": "commit",
-        "size": 176,
-        "content": "tree 891219ca39c2b0dc0804bce45ae0b8e471ca5f71\nauthor Test User <test@pitmaster.dev> 1775560655 +0200\ncommitter Test User <test@pitmaster.dev> 1775560655 +0200\n\nCommit number 1\n"
+        "size": 224,
+        "content": "tree af17d84c215958eeac11e052b648dcc24c5a0b44\nparent f47a3119cd3482f44203a89ba6424906e21f3fde\nauthor Test User <test@pitmaster.dev> 1775561650 +0200\ncommitter Test User <test@pitmaster.dev> 1775561650 +0200\n\nCommit number 4\n"
+    },
+    {
+        "hash": "f47a3119cd3482f44203a89ba6424906e21f3fde",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 18af3019bbe0e008ba009deb257103b25b2fb487\nparent 852e6bbb492d5ee4340a732f77e04605b0bcdd1b\nauthor Test User <test@pitmaster.dev> 1775561650 +0200\ncommitter Test User <test@pitmaster.dev> 1775561650 +0200\n\nCommit number 3\n"
     }
 ]

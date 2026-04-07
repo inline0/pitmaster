@@ -1,0 +1,240 @@
+{
+    "meta": {
+        "description": "Git feature support matrix for Pitmaster. Generated into SUPPORT_MATRIX.md by bin/support-matrix.",
+        "statuses": {
+            "full": "Fully implemented and oracle-verified",
+            "partial": "Partially implemented",
+            "planned": "In scope, not yet implemented",
+            "deferred": "Post-v1, not yet planned",
+            "out-of-scope": "Will not implement (violates pure-PHP constraint or outside agent-IDE scope)"
+        }
+    },
+    "categories": [
+        {
+            "name": "Object Model",
+            "features": [
+                {"feature": "Blob read", "status": "full", "class": "Object\\Blob", "notes": ""},
+                {"feature": "Blob write", "status": "full", "class": "Object\\Blob", "notes": ""},
+                {"feature": "Tree read", "status": "full", "class": "Object\\Tree", "notes": ""},
+                {"feature": "Tree write", "status": "full", "class": "Object\\Tree", "notes": "Needed for commit()"},
+                {"feature": "Commit read", "status": "full", "class": "Object\\Commit", "notes": ""},
+                {"feature": "Commit write", "status": "full", "class": "Object\\Commit", "notes": "Needed for commit()"},
+                {"feature": "Annotated tag read", "status": "full", "class": "Object\\Tag", "notes": ""},
+                {"feature": "Annotated tag write", "status": "full", "class": "Object\\Tag", "notes": ""},
+                {"feature": "Lightweight tag", "status": "full", "class": "Ref\\RefDatabase", "notes": "Just a ref pointing to a commit"},
+                {"feature": "ObjectId SHA-1", "status": "full", "class": "Object\\ObjectId", "notes": "40-char hex, 20-byte binary"},
+                {"feature": "ObjectId SHA-256", "status": "deferred", "class": "Object\\ObjectId", "notes": "Abstractable from day one, impl post-v1"}
+            ]
+        },
+        {
+            "name": "Object Storage",
+            "features": [
+                {"feature": "Loose object read", "status": "full", "class": "Storage\\LooseObjectStore", "notes": "zlib decompress + header parse"},
+                {"feature": "Loose object write", "status": "full", "class": "Storage\\LooseObjectStore", "notes": "Atomic write via temp+rename"},
+                {"feature": "Object serialization", "status": "full", "class": "Storage\\ObjectSerializer", "notes": "type size\\0content format"},
+                {"feature": "Object database (composite)", "status": "full", "class": "Storage\\ObjectDatabase", "notes": "Loose first, then packs"}
+            ]
+        },
+        {
+            "name": "Pack Files",
+            "features": [
+                {"feature": "Pack file read", "status": "full", "class": "Pack\\PackFile", "notes": "PACK v2 format"},
+                {"feature": "Pack file write", "status": "deferred", "class": "", "notes": "Let git gc repack; write loose instead"},
+                {"feature": "Pack index v2 read", "status": "full", "class": "Pack\\PackIndex", "notes": "Fanout + binary search"},
+                {"feature": "Pack index v1 read", "status": "deferred", "class": "", "notes": "v2 covers all modern repos"},
+                {"feature": "OFS_DELTA resolution", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Offset-based delta chains"},
+                {"feature": "REF_DELTA resolution", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Hash-based delta lookup"},
+                {"feature": "Delta chain following", "status": "full", "class": "Pack\\PackFile", "notes": "Up to PITMASTER_MAX_DELTA_CHAIN depth"},
+                {"feature": "Copy/insert instructions", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Full delta instruction set"},
+                {"feature": "Pack enumeration", "status": "full", "class": "Pack\\PackEnumerator", "notes": "Iterate all objects in pack"},
+                {"feature": "Multi-pack-index (MIDX)", "status": "deferred", "class": "", "notes": "Performance optimization, not required"},
+                {"feature": "Commit-graph file", "status": "deferred", "class": "", "notes": "Performance optimization, not required"}
+            ]
+        },
+        {
+            "name": "Index (Staging Area)",
+            "features": [
+                {"feature": "Index v2 read", "status": "full", "class": "Index\\Index", "notes": "Most common format"},
+                {"feature": "Index v2 write", "status": "full", "class": "Index\\IndexWriter", "notes": "Required for add/commit"},
+                {"feature": "Index v3 read (extended flags)", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Index v4 read (path prefix compression)", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Conflict stages (1/2/3)", "status": "full", "class": "Index\\IndexEntry", "notes": "Required for merge"},
+                {"feature": "Index extensions (TREE, REUC)", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Index diff (vs tree/worktree)", "status": "full", "class": "Index\\IndexDiff", "notes": "Required for status"}
+            ]
+        },
+        {
+            "name": "References",
+            "features": [
+                {"feature": "Loose ref read", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
+                {"feature": "Loose ref write", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
+                {"feature": "Packed refs read", "status": "full", "class": "Ref\\PackedRefStore", "notes": "With peeled values"},
+                {"feature": "Packed refs write", "status": "deferred", "class": "", "notes": "Let git pack-refs handle this"},
+                {"feature": "Symbolic ref (HEAD)", "status": "full", "class": "Ref\\SymbolicRef", "notes": "ref: refs/heads/main"},
+                {"feature": "Ref database (composite)", "status": "full", "class": "Ref\\RefDatabase", "notes": "Loose priority over packed"},
+                {"feature": "Reflog read", "status": "full", "class": "Ref\\Reflog", "notes": ""},
+                {"feature": "Reflog write", "status": "full", "class": "Ref\\Reflog", "notes": "Required for proper ref updates"},
+                {"feature": "Reftable format", "status": "deferred", "class": "", "notes": "New format, not yet widespread"}
+            ]
+        },
+        {
+            "name": "Repository Operations",
+            "features": [
+                {"feature": "Open existing repo", "status": "full", "class": "Pitmaster", "notes": ""},
+                {"feature": "Init new repo", "status": "full", "class": "Pitmaster", "notes": "Creates .git structure"},
+                {"feature": "Clone (remote)", "status": "planned", "class": "Pitmaster", "notes": "Via smart HTTP"},
+                {"feature": "Read .git/config", "status": "full", "class": "Config\\GitConfig", "notes": "INI-style parser"},
+                {"feature": "Write .git/config", "status": "planned", "class": "Config\\GitConfig", "notes": ""},
+                {"feature": "Bare repositories", "status": "full", "class": "Repository", "notes": "Detected by HEAD presence"}
+            ]
+        },
+        {
+            "name": "Staging and Commits",
+            "features": [
+                {"feature": "git add (stage files)", "status": "full", "class": "Repository", "notes": "Update index entries"},
+                {"feature": "git rm (unstage/remove)", "status": "full", "class": "Repository", "notes": ""},
+                {"feature": "git mv (rename)", "status": "planned", "class": "", "notes": "rm + add"},
+                {"feature": "git commit", "status": "full", "class": "Repository", "notes": "Build tree from index, create commit, update HEAD"},
+                {"feature": "git reset --soft", "status": "planned", "class": "", "notes": "Move HEAD only"},
+                {"feature": "git reset --mixed", "status": "planned", "class": "", "notes": "Move HEAD + reset index"},
+                {"feature": "git reset --hard", "status": "planned", "class": "", "notes": "Move HEAD + reset index + worktree"},
+                {"feature": "git restore", "status": "planned", "class": "", "notes": "Restore files from tree/index"},
+                {"feature": "git stash", "status": "out-of-scope", "class": "", "notes": "Outside agent-IDE core scope"},
+                {"feature": "git cherry-pick", "status": "planned", "class": "", "notes": "Apply commit as new commit"},
+                {"feature": "git revert", "status": "planned", "class": "", "notes": "Inverse cherry-pick"},
+                {"feature": "git rebase", "status": "deferred", "class": "", "notes": "Complex; agents can use merge instead"}
+            ]
+        },
+        {
+            "name": "Working Tree Status",
+            "features": [
+                {"feature": "HEAD vs index diff", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": "Staged changes"},
+                {"feature": "Index vs worktree diff", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": "Unstaged changes"},
+                {"feature": "Untracked file detection", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": ""},
+                {"feature": "Porcelain v2 output", "status": "planned", "class": "", "notes": "Machine-readable status"},
+                {"feature": ".gitignore parsing", "status": "full", "class": "", "notes": "Required for untracked detection"},
+                {"feature": "Rename detection", "status": "planned", "class": "", "notes": "Content similarity matching"}
+            ]
+        },
+        {
+            "name": "Diff",
+            "features": [
+                {"feature": "Myers diff algorithm", "status": "full", "class": "Diff\\MyersDiff", "notes": "Default, line-level"},
+                {"feature": "Patience diff algorithm", "status": "full", "class": "Diff\\PatienceDiff", "notes": "Better structural diffs"},
+                {"feature": "Histogram diff algorithm", "status": "deferred", "class": "", "notes": "Extension of patience"},
+                {"feature": "Minimal diff", "status": "deferred", "class": "", "notes": "Minimize edit script length"},
+                {"feature": "Tree-to-tree diff", "status": "full", "class": "Diff\\TreeDiff", "notes": "Recursive tree comparison"},
+                {"feature": "Unified diff output", "status": "full", "class": "Diff\\DiffResult", "notes": "Standard patch format"},
+                {"feature": "Hunk generation", "status": "full", "class": "Diff\\Hunk", "notes": "Context lines + ranges"},
+                {"feature": "Binary file detection", "status": "full", "class": "", "notes": "NUL byte detection"},
+                {"feature": "Rename detection (diff)", "status": "planned", "class": "", "notes": "Content similarity"},
+                {"feature": "Word diff", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Color diff output", "status": "deferred", "class": "", "notes": "Terminal ANSI colors"}
+            ]
+        },
+        {
+            "name": "Merge",
+            "features": [
+                {"feature": "Merge base (LCA)", "status": "full", "class": "Merge\\MergeBase", "notes": "Lowest common ancestor"},
+                {"feature": "Three-way merge (content)", "status": "full", "class": "Merge\\ThreeWayMerge", "notes": "Base/ours/theirs blob merge"},
+                {"feature": "Conflict markers", "status": "full", "class": "Merge\\ConflictMarker", "notes": "<<<<<<< / ======= / >>>>>>>"},
+                {"feature": "File-level merge (tree)", "status": "full", "class": "", "notes": "Which blobs to merge via TreeDiff"},
+                {"feature": "Recursive strategy", "status": "planned", "class": "", "notes": "Handle multiple merge bases"},
+                {"feature": "ORT strategy", "status": "deferred", "class": "", "notes": "Newer, more efficient recursive"},
+                {"feature": "Octopus merge", "status": "deferred", "class": "", "notes": "3+ branches"},
+                {"feature": "Ours strategy", "status": "planned", "class": "", "notes": "Take all from current branch"},
+                {"feature": "Fast-forward merge", "status": "full", "class": "", "notes": "Just move the ref"},
+                {"feature": "Merge commit creation", "status": "full", "class": "", "notes": "Two-parent commit"}
+            ]
+        },
+        {
+            "name": "Commit Graph",
+            "features": [
+                {"feature": "Commit walk (log)", "status": "full", "class": "Graph\\CommitWalker", "notes": "Topological, newest-first"},
+                {"feature": "Ancestry check", "status": "full", "class": "Graph\\AncestryChecker", "notes": "Is A ancestor of B?"},
+                {"feature": "Revision expressions", "status": "full", "class": "Graph\\RevisionParser", "notes": "HEAD~3, main^2, tag@{1}"},
+                {"feature": "Log --all (all branches)", "status": "full", "class": "Graph\\CommitWalker", "notes": "walkAll() from multiple tips"},
+                {"feature": "Log with path filter", "status": "planned", "class": "", "notes": "Only commits touching path"},
+                {"feature": "Log --oneline format", "status": "planned", "class": "", "notes": "Short hash + first line"},
+                {"feature": "git show", "status": "planned", "class": "", "notes": "Commit + diff"}
+            ]
+        },
+        {
+            "name": "Branch and Tag Operations",
+            "features": [
+                {"feature": "List branches", "status": "full", "class": "Repository", "notes": ""},
+                {"feature": "Create branch", "status": "full", "class": "Repository", "notes": ""},
+                {"feature": "Delete branch", "status": "full", "class": "Repository", "notes": ""},
+                {"feature": "List tags", "status": "full", "class": "Repository", "notes": ""},
+                {"feature": "Create lightweight tag", "status": "full", "class": "Repository", "notes": "Via updateRef"},
+                {"feature": "Create annotated tag", "status": "planned", "class": "", "notes": "Write tag object + ref"},
+                {"feature": "Delete tag", "status": "full", "class": "Repository", "notes": "Via deleteRef"},
+                {"feature": "Checkout / switch branch", "status": "planned", "class": "", "notes": "Update HEAD + worktree + index"},
+                {"feature": "Detached HEAD", "status": "planned", "class": "", "notes": "HEAD points directly to commit"}
+            ]
+        },
+        {
+            "name": "Network Protocol",
+            "features": [
+                {"feature": "Pkt-line encoding/decoding", "status": "full", "class": "Protocol\\PktLine", "notes": "4-hex-digit length prefix"},
+                {"feature": "Smart HTTP transport", "status": "full", "class": "Protocol\\SmartHttpClient", "notes": "HTTPS only (no exec)"},
+                {"feature": "Protocol v2", "status": "planned", "class": "", "notes": "Single round-trip, simpler"},
+                {"feature": "Protocol v1", "status": "deferred", "class": "", "notes": "v2 preferred"},
+                {"feature": "Ref discovery", "status": "full", "class": "Protocol\\RefDiscovery", "notes": "Parse remote ref advertisement"},
+                {"feature": "Capability negotiation", "status": "full", "class": "Protocol\\Capability", "notes": ""},
+                {"feature": "Upload-pack (fetch)", "status": "full", "class": "Protocol\\UploadPackClient", "notes": "want/have/done negotiation"},
+                {"feature": "Receive-pack (push)", "status": "full", "class": "Protocol\\ReceivePackClient", "notes": "Send pack + ref updates"},
+                {"feature": "Clone via HTTP", "status": "planned", "class": "", "notes": "Ref discovery + full fetch"},
+                {"feature": "Incremental fetch", "status": "planned", "class": "", "notes": "Only new objects"},
+                {"feature": "Push", "status": "planned", "class": "", "notes": "Send objects + update remote refs"},
+                {"feature": "SSH transport", "status": "out-of-scope", "class": "", "notes": "Requires proc_open, defeats pure-PHP goal"},
+                {"feature": "git:// transport", "status": "out-of-scope", "class": "", "notes": "Unencrypted, dying protocol"},
+                {"feature": "Dumb HTTP", "status": "deferred", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
+            ]
+        },
+        {
+            "name": "Encoding",
+            "features": [
+                {"feature": "LEB128 unsigned", "status": "full", "class": "Encoding\\Leb128", "notes": "Delta sizes"},
+                {"feature": "Git varint (MSB-continue)", "status": "full", "class": "Encoding\\VarInt", "notes": "Pack headers"},
+                {"feature": "OFS_DELTA offset encoding", "status": "full", "class": "Encoding\\VarInt", "notes": "Non-redundant offset"},
+                {"feature": "Binary reader", "status": "full", "class": "Encoding\\BinaryReader", "notes": "Position-tracked byte stream"},
+                {"feature": "Pkt-line format", "status": "full", "class": "Protocol\\PktLine", "notes": "4-hex-digit length prefix"}
+            ]
+        },
+        {
+            "name": "Error Handling",
+            "features": [
+                {"feature": "ObjectNotFoundException", "status": "full", "class": "Exceptions\\ObjectNotFoundException", "notes": ""},
+                {"feature": "CorruptObjectException", "status": "full", "class": "Exceptions\\CorruptObjectException", "notes": "Hash mismatch, bad header"},
+                {"feature": "PackParseException", "status": "full", "class": "Exceptions\\PackParseException", "notes": "Bad magic, truncated, deep chain"},
+                {"feature": "IndexParseException", "status": "full", "class": "Exceptions\\IndexParseException", "notes": ""},
+                {"feature": "MergeConflictException", "status": "full", "class": "Exceptions\\MergeConflictException", "notes": ""},
+                {"feature": "ProtocolException", "status": "full", "class": "Exceptions\\ProtocolException", "notes": ""},
+                {"feature": "Malformed loose object handling", "status": "full", "class": "", "notes": "Graceful error, not crash"},
+                {"feature": "Truncated pack handling", "status": "full", "class": "", "notes": ""},
+                {"feature": "Circular delta detection", "status": "full", "class": "", "notes": "Max depth limit exists"}
+            ]
+        },
+        {
+            "name": "Out of Scope",
+            "features": [
+                {"feature": "Submodules", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Worktrees", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Rerere", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Bisect", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Stash", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Sparse checkout", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Fsmonitor", "status": "out-of-scope", "class": "", "notes": ""},
+                {"feature": "Hooks", "status": "out-of-scope", "class": "", "notes": "Requires exec()"},
+                {"feature": "Git LFS", "status": "out-of-scope", "class": "", "notes": "Separate protocol"},
+                {"feature": "Git attributes", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Shallow clones", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Git bundles", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Git notes", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Git blame", "status": "deferred", "class": "", "notes": ""},
+                {"feature": "Git grep", "status": "deferred", "class": "", "notes": ""}
+            ]
+        }
+    ]
+}
