@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "7e7bfb88ba9bc65fd700fee1819cf1c317aafa56",
+        "name": "refs/heads/break_rewrite"
+    },
+    {
+        "hash": "41a766bb079e18ff6a24571831bd751168799a02",
+        "name": "refs/heads/case-insensitive-status"
+    },
+    {
+        "hash": "be053a189b0bbde545e0a3f59ce00b46ad29ce0d",
+        "name": "refs/heads/delete-and-rename"
+    },
+    {
+        "hash": "19dd32dfb1520a64e5bbaae8dce6ef423dfa2f13",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "444a76ed3e45b183753f49376af30da8c3fe276a",
+        "name": "refs/heads/renames_similar"
+    },
+    {
+        "hash": "50e90273af7d826ff0a95865bcd3ba8412c447d9",
+        "name": "refs/heads/renames_similar_two"
+    },
+    {
+        "hash": "84d8efa38af7ace2b302de0adbda16b1f1cd2e1b",
+        "name": "refs/heads/rewrite-and-delete"
+    }
+]

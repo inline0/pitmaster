@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "09176a980273d801a3e37cc45c84af1366501ed9",
+        "type": "commit",
+        "size": 183,
+        "content": "tree 0f8fb758578188a8fdf04e29bac3ace81b4f3c9c\nauthor Russell Belfer <arrbee@arrbee.com> 1332365253 -0700\ncommitter Russell Belfer <arrbee@arrbee.com> 1332365253 -0700\n\ninitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "092bfb9bdf74dd8cfd22e812151281ee9aa6f01a",
+        "type": "blob",
+        "size": 3,
+        "content": "yo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0f8fb758578188a8fdf04e29bac3ace81b4f3c9c",
+        "type": "tree",
+        "size": 109,
+        "content": "100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tdeleted\n100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tmodified\n100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tunmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26a3b32a9b7d97486c5557f5902e8ac94638145e",
+        "type": "blob",
+        "size": 97,
+        "content": "[submodule \"submod\"]\n\tpath = submod\n\turl = /Users/rb/src/libgit2/tests/resources/status/.gitted/\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78308c9251cf4eee8b25a76c7d2790c73d797357",
+        "type": "blob",
+        "size": 98,
+        "content": "[submodule \"testrepo\"]\n\tpath = testrepo\n\turl = /Users/rb/src/libgit2/tests/resources/testrepo.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "97896810b3210244a62a82458b8e0819ecfc6850",
+        "type": "commit",
+        "size": 238,
+        "content": "tree b60fd986699ba4e9e68bea07cf8e793f323ef888\nparent 09176a980273d801a3e37cc45c84af1366501ed9\nauthor Russell Belfer <arrbee@arrbee.com> 1332780781 -0700\ncommitter Russell Belfer <arrbee@arrbee.com> 1332780781 -0700\n\nSetting up gitmodules\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b60fd986699ba4e9e68bea07cf8e793f323ef888",
+        "type": "tree",
+        "size": 184,
+        "content": "100644 blob 78308c9251cf4eee8b25a76c7d2790c73d797357\t.gitmodules\n100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tdeleted\n100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tmodified\n160000 commit a65fedf39aefe402d3bb6e24df4d4f5fe4547750\ttestrepo\n100644 blob 092bfb9bdf74dd8cfd22e812151281ee9aa6f01a\tunmodified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d5f7fc3f74f7dec08280f370a975b112e8f60818",
+        "type": "blob",
+        "size": 6,
+        "content": "added\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e350052cc767cd1fcb37e84e9a89e701925be4ae",
+        "type": "blob",
+        "size": 195,
+        "content": "[submodule \"submod\"]\n\tpath = submod\n\turl = /Users/rb/src/libgit2/tests/resources/status/.gitted/\n[submodule \"testrepo\"]\n\tpath = testrepo\n\turl = /Users/rb/src/libgit2/tests/resources/testrepo.git\n",
+        "encoding": "utf-8"
+    }
+]

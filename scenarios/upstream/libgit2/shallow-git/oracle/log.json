@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "a65fedf39aefe402d3bb6e24df4d4f5fe4547750",
+        "tree": "944c0f6e4dfa41595e6eb3ceecdb14f50fe18162",
+        "parents": [
+            "be3563ae3f795b2b4353bcce3a527ad0a4f7f644"
+        ],
+        "author": "Scott Chacon <schacon@gmail.com> 1312943626 2011-08-09 19:33:46 -0700",
+        "committer": "Scott Chacon <schacon@gmail.com> 1312943626 2011-08-09 19:33:46 -0700",
+        "message": ""
+    },
+    {
+        "hash": "be3563ae3f795b2b4353bcce3a527ad0a4f7f644",
+        "tree": "1810dff58d8a660512d4832e740f692884338ccd",
+        "parents": [],
+        "author": "Scott Chacon <schacon@gmail.com> 1274813907 2010-05-25 11:58:27 -0700",
+        "committer": "Scott Chacon <schacon@gmail.com> 1274813907 2010-05-25 11:58:27 -0700",
+        "message": "Merge branch 'br2'"
+    }
+]

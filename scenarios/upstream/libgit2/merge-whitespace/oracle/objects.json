@@ -1,0 +1,268 @@
+[
+    {
+        "hash": "01bd650462136a4f0a266dfc91ab93b3fef0f7cb",
+        "type": "blob",
+        "size": 33,
+        "content": "0\n1\n2\n3\n4\n5 XXX\n6  YYY\n7\n8\n9\nTen\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "083f868fb4324e32a4999173b2437b31d7a1ef25",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob c3b1fb31424c98072542cc8e42b48c92e52f494a\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0aa2acaa63cacc7a99fab0c2ce3d56572911df19",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 25246acb001858ffeffb03ea399fd2c0a163b832\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988573 +0200\n\nInitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1189e10a62aadf2fea8cd018afb52c1980f40b4f",
+        "type": "commit",
+        "size": 266,
+        "content": "tree 3c43e7fc2a56fc825c31dfee65abd6dda8d16dca\nparent 0aa2acaa63cacc7a99fab0c2ce3d56572911df19\nauthor Jacques Germishuys <jacquesg@striata.com> 1425989676 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425989676 +0200\n\nFix some whitespace and add content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "242c8f6cf388e96e2c12b6e49cb7ae60167cba1e",
+        "type": "blob",
+        "size": 34,
+        "content": "Zero\n1\n2\n3\n4\n5 XXX\n6 YYY\n7\n8\n9\n10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "25246acb001858ffeffb03ea399fd2c0a163b832",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 4026a6c83f39c56881c9ac62e7582db9e3d33a4f\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "262f67de0de2e535a59ae1bc3c739601e98c354d",
+        "type": "blob",
+        "size": 22,
+        "content": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\nB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2f6727d2e570bf962d9dd926423cf6fe5072071a",
+        "type": "commit",
+        "size": 236,
+        "content": "tree 25246acb001858ffeffb03ea399fd2c0a163b832\nparent f190a0d111ca1688778657798743ddfb4ed4bd64\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988565 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988565 +0200\n\nFIXUP\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3c43e7fc2a56fc825c31dfee65abd6dda8d16dca",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 74e83b6c5df14f1fba7c4ea1f99c6d007b591002\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4026a6c83f39c56881c9ac62e7582db9e3d33a4f",
+        "type": "blob",
+        "size": 25,
+        "content": "0 \n1\n2\n3\n4\n5\n6\n7\n8\n9\n10 \n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42dabb8d5dba2de103815a77e4369bb3966e64ef",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988572 +0200\n\nInitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "439230587f2eb38e9540a5c99e9831f65641eab9",
+        "type": "commit",
+        "size": 316,
+        "content": "tree ec5a35c75b8d3ee29bed37996b14e909d04fdcee\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988572 +0200\n\n# This is a combination of 2 commits.\n# The first commit's message is:\n\nInitial\n\n# The 2nd commit message will be skipped:\n\n#\tContent\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "43ad73e75e15f03bb0b4398a48a57ecfc20788e2",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob ee3c2aac8e03224c323b58ecb1f9eef616745467\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5474989173042512ab630191ad71cdcedb646b9a",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob a827eab4fd66ab37a6ebcfaa7b7e341abfd55947\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5efb9bc29c482e023e40e0a2b3b7e49cec842034",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "70d3d2e7d51a18fcc6f035a67e5c3f33069be04d",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 242c8f6cf388e96e2c12b6e49cb7ae60167cba1e\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "74e83b6c5df14f1fba7c4ea1f99c6d007b591002",
+        "type": "blob",
+        "size": 27,
+        "content": "0\n1\n2\n3\n4\n5 XXX\n6\n7\n8\n9\n10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "77f40c621ceae77ad8d756ef507bdbafe2713aa7",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 01bd650462136a4f0a266dfc91ab93b3fef0f7cb\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9c5362069759fb37ae036cef6e4b2f95c6c5eaab",
+        "type": "commit",
+        "size": 264,
+        "content": "tree 083f868fb4324e32a4999173b2437b31d7a1ef25\nparent 0aa2acaa63cacc7a99fab0c2ce3d56572911df19\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988628 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988628 +0200\n\nWhitespace fixes and content on A\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a29e7dabd68dfb38a717e6b1648713cd5c7adee2",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 262f67de0de2e535a59ae1bc3c739601e98c354d\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a4e6a86e07ef5afe036e26602fbbaa27496d00a9",
+        "type": "commit",
+        "size": 316,
+        "content": "tree 43ad73e75e15f03bb0b4398a48a57ecfc20788e2\nparent 9c5362069759fb37ae036cef6e4b2f95c6c5eaab\nparent bfe4ea5805af22a5b194259bda6f5f634486f891\nauthor Jacques Germishuys <jacquesg@striata.com> 1425989179 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425989179 +0200\n\nMerge branch 'branch_b' into branch_a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a827eab4fd66ab37a6ebcfaa7b7e341abfd55947",
+        "type": "blob",
+        "size": 35,
+        "content": "Zero\n1\n2\n3\n4\n5 XXX\n6 YYY\n7\n8\n9\nTen\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a966acc271e50b5d4595911752a77def0a5e5d40",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 5efb9bc29c482e023e40e0a2b3b7e49cec842034\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\n\nInitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2a69114f4897109fedf1aafea363cb2d2557029",
+        "type": "commit",
+        "size": 253,
+        "content": "tree 77f40c621ceae77ad8d756ef507bdbafe2713aa7\nparent 1189e10a62aadf2fea8cd018afb52c1980f40b4f\nauthor Jacques Germishuys <jacquesg@striata.com> 1425989783 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425989783 +0200\n\nWhitespace change on B\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bc83ac0422ba1082c80e406234910377984cfbb6",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 5efb9bc29c482e023e40e0a2b3b7e49cec842034\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988358 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988572 +0200\n\nInitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bfe4ea5805af22a5b194259bda6f5f634486f891",
+        "type": "commit",
+        "size": 264,
+        "content": "tree a29e7dabd68dfb38a717e6b1648713cd5c7adee2\nparent 0aa2acaa63cacc7a99fab0c2ce3d56572911df19\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988654 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988654 +0200\n\nWhitespace fixes and content on B\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c3b1fb31424c98072542cc8e42b48c92e52f494a",
+        "type": "blob",
+        "size": 23,
+        "content": "A\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c7e2f386736445936f5ba181269a0e0967e280e8",
+        "type": "commit",
+        "size": 316,
+        "content": "tree 43ad73e75e15f03bb0b4398a48a57ecfc20788e2\nparent 9c5362069759fb37ae036cef6e4b2f95c6c5eaab\nparent bfe4ea5805af22a5b194259bda6f5f634486f891\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988850 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988850 +0200\n\nMerge branch 'branch_b' into branch_a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d95182053c31f8aa09df4fa225f4e668c5320b59",
+        "type": "commit",
+        "size": 253,
+        "content": "tree 70d3d2e7d51a18fcc6f035a67e5c3f33069be04d\nparent 1189e10a62aadf2fea8cd018afb52c1980f40b4f\nauthor Jacques Germishuys <jacquesg@striata.com> 1425989753 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425989753 +0200\n\nWhitespace change on A\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ec5a35c75b8d3ee29bed37996b14e909d04fdcee",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob f00c965d8307308469e537302baa73048488f162\ttest.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee3c2aac8e03224c323b58ecb1f9eef616745467",
+        "type": "blob",
+        "size": 22,
+        "content": "A\n1\n2\n3\n4\n5\n6\n7\n8\n9\nB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "efe94a4bf4e697f7f0270f0d1b8a93af784a19d0",
+        "type": "blob",
+        "size": 103,
+        "content": "<<<<<<< HEAD\nA\n=======\n0\n>>>>>>> branch_b\n1\n2\n3\n4\n5\n6\n7\n8\n9\n<<<<<<< HEAD\n10\n=======\nB\n>>>>>>> branch_b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f00c965d8307308469e537302baa73048488f162",
+        "type": "blob",
+        "size": 21,
+        "content": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f190a0d111ca1688778657798743ddfb4ed4bd64",
+        "type": "commit",
+        "size": 238,
+        "content": "tree ec5a35c75b8d3ee29bed37996b14e909d04fdcee\nparent a966acc271e50b5d4595911752a77def0a5e5d40\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988423 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988423 +0200\n\nContent\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f49b2c244e9d3b0647fdfb95954c38fbfeecf3ad",
+        "type": "commit",
+        "size": 182,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Jacques Germishuys <jacquesg@striata.com> 1425988570 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425988570 +0200\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f87905f99f0e66d179a8379d8ca4d8cbbd32c231",
+        "type": "commit",
+        "size": 330,
+        "content": "tree 5474989173042512ab630191ad71cdcedb646b9a\nparent d95182053c31f8aa09df4fa225f4e668c5320b59\nparent b2a69114f4897109fedf1aafea363cb2d2557029\nauthor Jacques Germishuys <jacquesg@striata.com> 1425989836 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1425989836 +0200\n\nMerge branch 'branch_b_change' into branch_a_change\n",
+        "encoding": "utf-8"
+    }
+]

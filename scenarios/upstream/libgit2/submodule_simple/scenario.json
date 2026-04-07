@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/submodule_simple",
+    "category": "upstream",
+    "description": "libgit2: submodule_simple",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

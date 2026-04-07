@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/nasty",
+    "category": "upstream",
+    "description": "libgit2: nasty",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

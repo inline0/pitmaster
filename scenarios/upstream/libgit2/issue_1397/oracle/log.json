@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "7f483a738f867e5b21c8f377d70311f011eb48b5",
+        "tree": "f2c62dea0372a0578e053697d5c1ba1ac05e774a",
+        "parents": [
+            "8a7ef047fc933edb62e84e7977b0612ec3f6f283"
+        ],
+        "author": "Sven Strickroth <email@cs-ware.de> 1362689475 2013-03-07 21:51:15 +0100",
+        "committer": "Sven Strickroth <email@cs-ware.de> 1362689475 2013-03-07 21:51:15 +0100",
+        "message": "changed one line"
+    },
+    {
+        "hash": "8a7ef047fc933edb62e84e7977b0612ec3f6f283",
+        "tree": "ff3578d64d199d5b48d92bbb569e0a273e411741",
+        "parents": [],
+        "author": "Sven Strickroth <email@cs-ware.de> 1362685055 2013-03-07 20:37:35 +0100",
+        "committer": "Sven Strickroth <email@cs-ware.de> 1362689455 2013-03-07 21:50:55 +0100",
+        "message": "Added two crlf files"
+    }
+]

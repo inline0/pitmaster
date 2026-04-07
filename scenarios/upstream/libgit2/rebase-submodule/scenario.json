@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/rebase-submodule",
+    "category": "upstream",
+    "description": "libgit2: rebase-submodule",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

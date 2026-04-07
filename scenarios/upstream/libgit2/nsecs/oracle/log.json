@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "031986a8372d1442cfe9e3b54906a9aadc524a7e",
+        "tree": "039afd91c98f82c14e425bb6796d8ca98e9c8cac",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1445476096 2015-10-21 21:08:16 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1445476096 2015-10-21 21:08:16 -0400",
+        "message": "A repository created with USE_NSECS"
+    }
+]

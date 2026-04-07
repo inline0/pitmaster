@@ -1,0 +1,86 @@
+[
+    {
+        "hash": "06362fe2fdb7010d0e447b4fb450d405420479a1",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 780d7397f5e8f8f477fb55b7af3accc2154b2d4a\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0e6a3ca48bd47cfe67681acf39aa0b10a0b92484",
+        "type": "blob",
+        "size": 40,
+        "content": "This is a file to modify in submodules\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "17d0ece6e96460a06592d9d9d000de37ba4232c5",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 780d7397f5e8f8f477fb55b7af3accc2154b2d4a\tREADME.txt\n100644 blob 0e6a3ca48bd47cfe67681acf39aa0b10a0b92484\tfile_to_modify\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "41bd4bc3df978de695f67ace64c560913da11653",
+        "type": "commit",
+        "size": 225,
+        "content": "tree 17d0ece6e96460a06592d9d9d000de37ba4232c5\nparent 6b31c659545507c381e9cd34ec508f16c04e149e\nauthor Russell Belfer <rb@github.com> 1342559709 -0700\ncommitter Russell Belfer <rb@github.com> 1342559709 -0700\n\nAdding test file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "480095882d281ed676fe5b863569520e54a7d5c0",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 73ba924a80437097795ae839e66e187c55d3babf\nparent 5e4963595a9774b90524d35a807169049de8ccad\nauthor Russell Belfer <rb@github.com> 1342559925 -0700\ncommitter Russell Belfer <rb@github.com> 1342559925 -0700\n\nOne more update\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5e4963595a9774b90524d35a807169049de8ccad",
+        "type": "commit",
+        "size": 227,
+        "content": "tree d05f2cd5cc77addf68ed6f50d622c9a4f732e6c5\nparent 41bd4bc3df978de695f67ace64c560913da11653\nauthor Russell Belfer <rb@github.com> 1342559726 -0700\ncommitter Russell Belfer <rb@github.com> 1342559726 -0700\n\nUpdating test file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6b31c659545507c381e9cd34ec508f16c04e149e",
+        "type": "commit",
+        "size": 175,
+        "content": "tree 06362fe2fdb7010d0e447b4fb450d405420479a1\nauthor Russell Belfer <rb@github.com> 1342559662 -0700\ncommitter Russell Belfer <rb@github.com> 1342559662 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "73ba924a80437097795ae839e66e187c55d3babf",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 780d7397f5e8f8f477fb55b7af3accc2154b2d4a\tREADME.txt\n100644 blob 789efbdadaa4a582778d4584385495559ea0994b\tfile_to_modify\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "780d7397f5e8f8f477fb55b7af3accc2154b2d4a",
+        "type": "blob",
+        "size": 106,
+        "content": "This is the target for submod2 submodule links.\nDon't add commits casually because you make break tests.\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "789efbdadaa4a582778d4584385495559ea0994b",
+        "type": "blob",
+        "size": 105,
+        "content": "This is a file to modify in submodules\nIt already has some history.\nYou can add local changes as needed.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8834b635dd468a83cb012f6feace968c1c9f5d6e",
+        "type": "blob",
+        "size": 69,
+        "content": "This is a file to modify in submodules\nIt already has some history.\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d05f2cd5cc77addf68ed6f50d622c9a4f732e6c5",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 780d7397f5e8f8f477fb55b7af3accc2154b2d4a\tREADME.txt\n100644 blob 8834b635dd468a83cb012f6feace968c1c9f5d6e\tfile_to_modify\n",
+        "encoding": "utf-8"
+    }
+]

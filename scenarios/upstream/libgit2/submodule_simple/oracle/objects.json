@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "229cea838964f435d4fc2c11561ddb7447003609",
+        "type": "commit",
+        "size": 189,
+        "content": "tree d69ff504a3ba631f2fdb35bff93cc8cb8e85f4f8\nauthor Jameson Miller <jamill@microsoft.com> 1413829242 -0400\ncommitter Jameson Miller <jamill@microsoft.com> 1413829242 -0400\n\ninitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5b19f7523fbf55c96153ff5a94875583f1115a36",
+        "type": "tree",
+        "size": 75,
+        "content": "100644 blob b4f28943fad380f4ee3a9c6b95259b28204cc25a\t.gitmodules\n160000 commit be3563ae3f795b2b4353bcce3a527ad0a4f7f644\ttestrepo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a8575e6aaececba78823993e4f11abbc6172aabd",
+        "type": "commit",
+        "size": 249,
+        "content": "tree 5b19f7523fbf55c96153ff5a94875583f1115a36\nparent 229cea838964f435d4fc2c11561ddb7447003609\nauthor Jameson Miller <jamill@microsoft.com> 1413829316 -0400\ncommitter Jameson Miller <jamill@microsoft.com> 1413829316 -0400\n\nalternate submodule commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b4f28943fad380f4ee3a9c6b95259b28204cc25a",
+        "type": "blob",
+        "size": 63,
+        "content": "[submodule \"testrepo\"]\n\tpath = testrepo\n\turl = ../testrepo.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d69ff504a3ba631f2fdb35bff93cc8cb8e85f4f8",
+        "type": "tree",
+        "size": 75,
+        "content": "100644 blob b4f28943fad380f4ee3a9c6b95259b28204cc25a\t.gitmodules\n160000 commit a65fedf39aefe402d3bb6e24df4d4f5fe4547750\ttestrepo\n",
+        "encoding": "utf-8"
+    }
+]

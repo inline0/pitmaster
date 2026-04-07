@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "9962c8453ba6f0cf8dac7c5dcc2fa2897fa9964a",
+        "type": "commit",
+        "size": 188,
+        "content": "tree e748d196331bcb20267eaaee4ff3326cb73b8182\nauthor Russell Belfer <rb@github.com> 1338847682 -0700\ncommitter Russell Belfer <rb@github.com> 1338847682 -0700\n\nInitial commit of test data\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1",
+        "type": "blob",
+        "size": 6,
+        "content": "Howdy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e748d196331bcb20267eaaee4ff3326cb73b8182",
+        "type": "tree",
+        "size": 257,
+        "content": "100644 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_off\n100644 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_off2on_staged\n100644 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_off2on_workdir\n100755 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_on\n100755 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_on2off_staged\n100755 blob a5c5dd0fc6c313159a69b1d19d7f61a9f978e8f1\texec_on2off_workdir\n",
+        "encoding": "utf-8"
+    }
+]

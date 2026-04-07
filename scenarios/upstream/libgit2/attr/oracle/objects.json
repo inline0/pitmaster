@@ -1,0 +1,366 @@
+[
+    {
+        "hash": "108bb4e7fd7b16490dc33ff7d972151e73d7166e",
+        "type": "blob",
+        "size": 158,
+        "content": "Some additional lines\n\n\n  Down here below the other lines  \n\n\nWith even more at the end\n\n\nAnd lots of good stuff  \n\n\nAnywhere you want  \n\n\nDon't you think\n\n\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16983da6643656bb44c43965ecb6855c6d574512",
+        "type": "tree",
+        "size": 536,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob 108bb4e7fd7b16490dc33ff7d972151e73d7166e\troot_test3\n100644 blob a0f7217ae99f5ac3e88534f5cea267febc5fa85b\troot_test4.txt\n040000 tree ecb97df2a174987475ac816e3847fc8e9f6c596b\tsub\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "217878ab49e1314388ea2e32dc6fdb58a1b969e0",
+        "type": "commit",
+        "size": 239,
+        "content": "tree 455a314fa848d52ae1f11d254da4f60858fc97f4\nparent a97cc019851d401a4f1d091cb91a15890a0dd1ba\nauthor Russell Belfer <arrbee@arrbee.com> 1332734901 -0700\ncommitter Russell Belfer <arrbee@arrbee.com> 1332734901 -0700\n\nadded files in sub/sub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "24fa9a9fc4e202313e24b648087495441dab432b",
+        "type": "commit",
+        "size": 257,
+        "content": "tree ce39a97a7fb1fa90bcf5e711249c1e507476ae0e\nparent 217878ab49e1314388ea2e32dc6fdb58a1b969e0\nauthor Russell Belfer <arrbee@arrbee.com> 1332735555 -0700\ncommitter Russell Belfer <arrbee@arrbee.com> 1332735555 -0700\n\nadding more files in sub for tree status\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2929de282ce999e95183aedac6451d3384559c4b",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob dccada462d3df8ac6de596fb8c896aba9344f941\tsubdir2_test1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b40c5aca159b04ea8d20ffe36cdf8b09369b14a",
+        "type": "blob",
+        "size": 602,
+        "content": "* rootattr\nroot_test2 -rootattr\nroot_test3 !rootattr\nbinfile\t   \t\t   binary\nabc\t\tfoo bar baz\n\nroot_test2 multiattr\nroot_test3 multi2=foo\n\nroot_test3 multiattr=1 multiattr=2 multiattr=3 multi2=abc !multi2\nroot_test2 multiattr=string -multiattr\n\n[attr]mymacro positive -negative !rootattr\nmacro* mymacro another=77\n\n[attr]macro2 multi2 -multi2 multi3 !multi3 multi3=answer\nmacro* macro2 macro2 macro2\n\n# let's try some malicious macro defs\n[attr]firstmacro -thirdmacro -secondmacro\n[attr]secondmacro firstmacro -firstmacro\n[attr]thirdmacro secondmacro=hahaha\n\nmacro_bad firstmacro secondmacro thirdmacro\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2",
+        "type": "blob",
+        "size": 552,
+        "content": "\n# variations on assignments\n\npat0 simple\npat1 -neg\n* notundef\npat2 !notundef\npat3 assigned=test-value\npat4 rule-with-more-chars=value-with-more-chars\npat5 empty=\npat6 -negempty=\npat7 multiple -single values=1 also=a-really-long-value/* happy=yes!\n# the next line has trailing spaces\npat8 again= another=12321                        \npatbad0 # empty assignment does not count\n# next line will be another simple empty assign that should not count\n            patbad1    \n\n# BTW I think there are 11 valid rules and two \"invalid\" empty ones\n\npat9 -at-eof",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2de7dfe3588f3c7e9ad59e7d50ba90e3329df9d9",
+        "type": "tree",
+        "size": 126,
+        "content": "100644 blob c7aadd770d5907a8475c29e9ee21a27b88bf675d\t.gitattributes\n100644 blob e563cf4758f0d646f1b14b76016aa17fa9e549a4\tsubdir_test1\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\tsubdir_test2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "370fe9ec224ce33e71f9e5ec2bd1142ce9937a6a",
+        "type": "commit",
+        "size": 250,
+        "content": "tree 717fc31f6b84f9d6fc3a4edbca259d7fc92beee2\nparent a5d76cad53f66f1312bd995909a5bab3c0820770\nauthor Russell Belfer <arrbee@arrbee.com> 1327611749 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1327611749 -0800\n\nUpdating files so we can do diffs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3a6df026462ebafe455af9867d27eda20a9e0974",
+        "type": "blob",
+        "size": 82,
+        "content": "Some additional lines\n\nDown here below the other lines\n\nWith even more at the end\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b74db7ab381105dc0d28f8295a77f6a82989292",
+        "type": "blob",
+        "size": 438,
+        "content": "# a comment followed by some blank lines\n\n\n\n      # another comment that is indented\n\n# variations on fnmatch\n\npat0 attr0\n!pat1 attr1\npat2/ attr2\npat3dir/pat3file attr3\npat4.* attr4\n       *.pat5 attr5\npat6/pat6/*.pat6 attr6\n\npat7[a-e]??[xyz] attr7 # with a comment on the line\n\npat8\\ with\\ spaces attr8\n\n   invalid # attr with no assignments doesn't count\n\nalso/invalid              \n\ninvalid.again/\n\n# next attr is at eof\n\n   pat9 attr9",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e42ffc54a663f9401cc25843d6c0e71a33e4249",
+        "type": "blob",
+        "size": 1245,
+        "content": "# Test file from gitattributes(5) example:\n\nIf you have these three gitattributes file:\n\n   (in $GIT_DIR/info/attributes)\n\n\ta*      foo !bar -baz\n\n\t(in .gitattributes)\n\tabc     foo bar baz\n\n\t(in t/.gitattributes)\n\tab*     merge=filfre\n\tabc     -foo -bar\n\t*.c     frotz\n\nthe attributes given to path t/abc are computed as follows:\n\n1. By examining t/.gitattributes (which is in the same directory as the path\n   in question), git finds that the first line matches. merge attribute is\n   set. It also finds that the second line matches, and attributes foo and\n   bar are unset.\n2. Then it examines .gitattributes (which is in the parent directory), and\n   finds that the first line matches, but t/.gitattributes file already\n   decided how merge, foo and bar attributes should be given to this path,\n   so it leaves foo and bar unset. Attribute baz is set.\n3. Finally it examines $GIT_DIR/info/attributes. This file is used to\n   override the in-tree settings. The first line is a match, and foo is set,\n   bar is reverted to unspecified state, and baz is unset.\n\nAs the result, the attributes assignment to t/abc becomes:\n\n\tfoo     set to true\n\tbar     unspecified\n\tbaz     set to false\n\tmerge   set to string value \"filfre\"\n\tfrotz   unspecified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "45141a79a77842c59a63229403220a4e4be74e3d",
+        "type": "blob",
+        "size": 20,
+        "content": "Hello from the root\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "455a314fa848d52ae1f11d254da4f60858fc97f4",
+        "type": "tree",
+        "size": 536,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob 108bb4e7fd7b16490dc33ff7d972151e73d7166e\troot_test3\n100644 blob fe773770c5a6cc7185580c9204b1ff18a33ff3fc\troot_test4.txt\n040000 tree 9361f40bb97239cf55811892e14de2e344168ba1\tsub\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "45b983be36b73c0788dc9cbcb76cbb80fc7bb057",
+        "type": "blob",
+        "size": 3,
+        "content": "hi\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d",
+        "type": "blob",
+        "size": 61,
+        "content": "Hello from the root\n\nSome additional lines\n\nDown here below\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4e49ba8c5b6c32ff28cd9dcb60be34df50fcc485",
+        "type": "tree",
+        "size": 70,
+        "content": "100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\tfile\n100644 blob 9e5bdc47d6a80f2be0ea3049ad74231b94609242\tsubsub.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3",
+        "type": "blob",
+        "size": 9,
+        "content": "* binary\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5819a185d77b03325aaf87cafc771db36f6ddca7",
+        "type": "blob",
+        "size": 4,
+        "content": "boo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "605812ab7fe421fdd325a935d35cb06a9234a7d7",
+        "type": "commit",
+        "size": 236,
+        "content": "tree a56bbcecaeac760cc26239384d2d4c614e7e4320\nparent 6bab5c79cd5140d0f800917f550eb2a3dc32b0da\nauthor Russell Belfer <arrbee@arrbee.com> 1325143098 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1325143098 -0800\n\nlatest test updates\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6bab5c79cd5140d0f800917f550eb2a3dc32b0da",
+        "type": "commit",
+        "size": 186,
+        "content": "tree c0091889c0c77142b87a1fa5123a6398a61d33e7\nauthor Russell Belfer <arrbee@arrbee.com> 1324416995 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1324416995 -0800\n\ninitial test data\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6d968d62c89c7d9ea23a4c9a7b665d017c3d8ffd",
+        "type": "tree",
+        "size": 506,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob 108bb4e7fd7b16490dc33ff7d972151e73d7166e\troot_test3\n100644 blob fe773770c5a6cc7185580c9204b1ff18a33ff3fc\troot_test4.txt\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "717fc31f6b84f9d6fc3a4edbca259d7fc92beee2",
+        "type": "tree",
+        "size": 506,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob 3a6df026462ebafe455af9867d27eda20a9e0974\troot_test3\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\troot_test4.txt\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d0b9df9bd30be7910ddda60548d485bc302b911",
+        "type": "commit",
+        "size": 265,
+        "content": "tree 16983da6643656bb44c43965ecb6855c6d574512\nparent 24fa9a9fc4e202313e24b648087495441dab432b\nauthor yorah <yoram.harmelin@gmail.com> 1341230701 +0200\ncommitter yorah <yoram.harmelin@gmail.com> 1341230701 +0200\n\nUpdating test data so we can test inter-hunk-context\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9361f40bb97239cf55811892e14de2e344168ba1",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 4e49ba8c5b6c32ff28cd9dcb60be34df50fcc485\tsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "94da4faa0a6bfb8ee6ccf7153801a69202b31857",
+        "type": "blob",
+        "size": 162,
+        "content": "* rootattr\nroot_test2 -rootattr\nroot_test3 !rootattr\nbinfile\t   \t\t   binary\nabc\t\tfoo bar baz\n[attr]mymacro positive -negative !rootattr\nmacro* mymacro another=77\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "96089fd31ce1d3ee2afb0ba09ba063066932f027",
+        "type": "tree",
+        "size": 506,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob c96bbb2c2557a8325ae1559e3ba79cdcecb23076\troot_test3\n100644 blob fe773770c5a6cc7185580c9204b1ff18a33ff3fc\troot_test4.txt\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "99eae476896f4907224978b88e5ecaa6c5bb67a9",
+        "type": "blob",
+        "size": 98,
+        "content": "* subattr=yes -negattr\nsubdir/*.txt another=one\nab*\t\t\t merge=filfre\nabc\t\t\t -foo -bar\n*.c\t\t\t frotz\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e5bdc47d6a80f2be0ea3049ad74231b94609242",
+        "type": "blob",
+        "size": 7,
+        "content": "subsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9fb40b6675dde60b5697afceae91b66d908c02d9",
+        "type": "tree",
+        "size": 157,
+        "content": "100644 blob 99eae476896f4907224978b88e5ecaa6c5bb67a9\t.gitattributes\n100644 blob 3e42ffc54a663f9401cc25843d6c0e71a33e4249\tabc\n100644 blob e563cf4758f0d646f1b14b76016aa17fa9e549a4\tsubdir_test1\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\tsubdir_test2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0f7217ae99f5ac3e88534f5cea267febc5fa85b",
+        "type": "blob",
+        "size": 221,
+        "content": "Here is some stuff at the start\n\nThis should go in one hunk (first)\n\nSome additional lines\n\nDown here below the other lines\n\nWith even more at the end\n\nFollowed by a second hunk of stuff (second)\n\nThat happens down here\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a56bbcecaeac760cc26239384d2d4c614e7e4320",
+        "type": "tree",
+        "size": 470,
+        "content": "100644 blob 94da4faa0a6bfb8ee6ccf7153801a69202b31857\t.gitattributes\n100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test2\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test3\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\troot_test4.txt\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a5d76cad53f66f1312bd995909a5bab3c0820770",
+        "type": "commit",
+        "size": 233,
+        "content": "tree d57da33c16b14326ecb05d19bbea908f5e4c47d9\nparent 605812ab7fe421fdd325a935d35cb06a9234a7d7\nauthor Russell Belfer <arrbee@arrbee.com> 1325281762 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1325281762 -0800\n\nmore macro tests\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a97cc019851d401a4f1d091cb91a15890a0dd1ba",
+        "type": "commit",
+        "size": 266,
+        "content": "tree 6d968d62c89c7d9ea23a4c9a7b665d017c3d8ffd\nparent f5b0af1fb4f5c0cd7aad880711d368a07333c307\nauthor Russell Belfer <arrbee@arrbee.com> 1328653313 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1328653313 -0800\n\nSome whitespace only changes for testing purposes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b435cd5689a0fb54afbeda4ac20368aa480e8f04",
+        "type": "blob",
+        "size": 33,
+        "content": "MDEyMzQ1Njc4OQoBAgMEBQYHCAkACjAxMjM0NTY3ODkK",
+        "encoding": "base64"
+    },
+    {
+        "hash": "c0091889c0c77142b87a1fa5123a6398a61d33e7",
+        "type": "tree",
+        "size": 397,
+        "content": "100644 blob f2c6d717cf4a5a3e6b02684155ab07b766982165\t.gitattributes\n100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test2\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test3\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\troot_test4.txt\n040000 tree 2de7dfe3588f3c7e9ad59e7d50ba90e3329df9d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c485abe35abd4aa6fd83b076a78bbea9e2e7e06c",
+        "type": "blob",
+        "size": 134,
+        "content": "# These are examples from the git-check-attr.1 man page\n*.java diff=java -crlf myAttr\nNoMyAttr.java !myAttr\nREADME caveat=unspecified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c7aadd770d5907a8475c29e9ee21a27b88bf675d",
+        "type": "blob",
+        "size": 48,
+        "content": "* subattr=yes -negattr\nsubdir_file another=one\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c96bbb2c2557a8325ae1559e3ba79cdcecb23076",
+        "type": "blob",
+        "size": 143,
+        "content": "Some additional lines\n\nDown here below the other lines\n\nWith even more at the end\n\nAnd lots of good stuff\n\nAnywhere you want\n\nDon't you think\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce39a97a7fb1fa90bcf5e711249c1e507476ae0e",
+        "type": "tree",
+        "size": 536,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 4d713dc48e6b1bd75b0d61ad078ba9ca3a56745d\troot_test2\n100644 blob 108bb4e7fd7b16490dc33ff7d972151e73d7166e\troot_test3\n100644 blob fe773770c5a6cc7185580c9204b1ff18a33ff3fc\troot_test4.txt\n040000 tree ecb97df2a174987475ac816e3847fc8e9f6c596b\tsub\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d57da33c16b14326ecb05d19bbea908f5e4c47d9",
+        "type": "tree",
+        "size": 506,
+        "content": "100644 blob 556f8c827b8e4a02ad5cab77dca2bcb3e226b0b3\tattr0\n100644 blob 3b74db7ab381105dc0d28f8295a77f6a82989292\tattr1\n100644 blob 2c66e14f77196ea763fb1e41612c1aa2bc2d8ed2\tattr2\n100644 blob c485abe35abd4aa6fd83b076a78bbea9e2e7e06c\tattr3\n100644 blob d800886d9c86731ae5c4a62b0b77c437015e00d2\tbinfile\n100644 blob 2b40c5aca159b04ea8d20ffe36cdf8b09369b14a\tgitattributes\n100644 blob 5819a185d77b03325aaf87cafc771db36f6ddca7\tmacro_bad\n100644 blob ff69f8639ce2e6010b3f33a74160aad98b48da2b\tmacro_test\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test1\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test2\n100644 blob 45141a79a77842c59a63229403220a4e4be74e3d\troot_test3\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\troot_test4.txt\n040000 tree 9fb40b6675dde60b5697afceae91b66d908c02d9\tsubdir\n040000 tree 2929de282ce999e95183aedac6451d3384559c4b\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d800886d9c86731ae5c4a62b0b77c437015e00d2",
+        "type": "blob",
+        "size": 3,
+        "content": "123",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dccada462d3df8ac6de596fb8c896aba9344f941",
+        "type": "blob",
+        "size": 19,
+        "content": "Hello from subdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "de863bff4976c9ed7e17a4da0fd524908dc84049",
+        "type": "blob",
+        "size": 4094,
+        "content": "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",
+        "encoding": "base64"
+    },
+    {
+        "hash": "e563cf4758f0d646f1b14b76016aa17fa9e549a4",
+        "type": "blob",
+        "size": 23,
+        "content": "Hello from the subdir\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ecb97df2a174987475ac816e3847fc8e9f6c596b",
+        "type": "tree",
+        "size": 177,
+        "content": "100644 blob 3e42ffc54a663f9401cc25843d6c0e71a33e4249\tabc\n100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\tfile\n040000 tree 4e49ba8c5b6c32ff28cd9dcb60be34df50fcc485\tsub\n100644 blob e563cf4758f0d646f1b14b76016aa17fa9e549a4\tsubdir_test1\n100644 blob fb5067b1aef3ac1ada4b379dbcb7d17255df7d78\tsubdir_test2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "edf3dcee4003d71f139777898882ccd097e34c53",
+        "type": "blob",
+        "size": 6268,
+        "content": "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",
+        "encoding": "base64"
+    },
+    {
+        "hash": "f2c6d717cf4a5a3e6b02684155ab07b766982165",
+        "type": "blob",
+        "size": 54,
+        "content": "* rootattr\nroot_test2 -rootattr\nroot_test3 !rootattr\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f5b0af1fb4f5c0cd7aad880711d368a07333c307",
+        "type": "commit",
+        "size": 235,
+        "content": "tree 96089fd31ce1d3ee2afb0ba09ba063066932f027\nparent 370fe9ec224ce33e71f9e5ec2bd1142ce9937a6a\nauthor Russell Belfer <arrbee@arrbee.com> 1327621027 -0800\ncommitter Russell Belfer <arrbee@arrbee.com> 1327621027 -0800\n\nUpdating test data\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fb5067b1aef3ac1ada4b379dbcb7d17255df7d78",
+        "type": "blob",
+        "size": 12,
+        "content": "Hello again\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fe773770c5a6cc7185580c9204b1ff18a33ff3fc",
+        "type": "blob",
+        "size": 204,
+        "content": "Here is some stuff at the start\n\nThis should go in one hunk\n\nSome additional lines\n\nDown here below the other lines\n\nWith even more at the end\n\nFollowed by a second hunk of stuff\n\nThat happens down here\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ff69f8639ce2e6010b3f33a74160aad98b48da2b",
+        "type": "blob",
+        "size": 3,
+        "content": "Yo\n",
+        "encoding": "utf-8"
+    }
+]

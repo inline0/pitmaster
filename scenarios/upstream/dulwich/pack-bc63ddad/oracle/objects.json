@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "6f670c0fb53f9463760b7295fbb814e965fb20c8",
+        "type": "blob",
+        "size": 7,
+        "content": "test 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b2a2766a2879c209ab1176e7e778b81ae422eeaa",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 6f670c0fb53f9463760b7295fbb814e965fb20c8\ta\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f18faa16531ac570a3fdc8c7ca16682548dafd12",
+        "type": "commit",
+        "size": 192,
+        "content": "tree b2a2766a2879c209ab1176e7e778b81ae422eeaa\nauthor James Westby <jw+debian@jameswestby.net> 1174945067 +0100\ncommitter James Westby <jw+debian@jameswestby.net> 1174945067 +0100\n\nTest commit\n",
+        "encoding": "utf-8"
+    }
+]

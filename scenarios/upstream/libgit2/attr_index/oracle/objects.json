@@ -1,0 +1,135 @@
+[
+    {
+        "hash": "000b8c04805a1d98522ea183471606729c6ee58d",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob 68304c651c85cebe8ff76aa41dec90623210384e\t.gitattributes\n100644 blob 0397f4152ea9f9210153da25e07cc4a2dd2bdf1a\tREADME.md\n100644 blob 874c12b79a34ee9eface93f81d274efa52e85264\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0397f4152ea9f9210153da25e07cc4a2dd2bdf1a",
+        "type": "blob",
+        "size": 61,
+        "content": "This is contains tests for when the index and workdir differ\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3812cfef36615db1788d4e63f90028007e17a348",
+        "type": "commit",
+        "size": 227,
+        "content": "tree f72502ddd01412bb20796ff812af56fd53b82b52\nparent 58f7cf825b553ef7c26e5b9f8a23599c1a9ca296\nauthor Russell Belfer <rb@github.com> 1336164742 -0700\ncommitter Russell Belfer <rb@github.com> 1336164742 -0700\n\nUnimportant change\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "451ab2dae8ee782914580f5c762f3e1f47671c84",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 96d297c138442dad6545fdccfa89a14c737bcc00\tsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "58f7cf825b553ef7c26e5b9f8a23599c1a9ca296",
+        "type": "commit",
+        "size": 228,
+        "content": "tree 8d328bff4c0dcaad0f7c5c1ee6999428ce8748a4\nparent 67c1640e91ccbaf0793591be09bf572cf40c9a53\nauthor Russell Belfer <rb@github.com> 1335817372 -0700\ncommitter Russell Belfer <rb@github.com> 1335817372 -0700\n\nAdding subtree data\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59652e3495d9760b36d8831bc49232c6e1ccae27",
+        "type": "blob",
+        "size": 13,
+        "content": "More testing\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59d942b8be2784bc96db9b22202c10815c9a077b",
+        "type": "blob",
+        "size": 62,
+        "content": "This is contains tests for when the index and work dir differ\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "649d2a8d3f8afe5e62a5ccd0a98a5770119691bb",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 8ddd2217e579a36e9d9750f9d714a2ba7ed676e4\tsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "67c1640e91ccbaf0793591be09bf572cf40c9a53",
+        "type": "commit",
+        "size": 175,
+        "content": "tree 000b8c04805a1d98522ea183471606729c6ee58d\nauthor Russell Belfer <rb@github.com> 1335817070 -0700\ncommitter Russell Belfer <rb@github.com> 1335817070 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68304c651c85cebe8ff76aa41dec90623210384e",
+        "type": "blob",
+        "size": 48,
+        "content": "* bar\n*.txt foo -bar beep=5\n*.md blargh=garble\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "74f5c75dab3a2ff4f0d3314f72e7d6cf5f1a5be5",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob 68304c651c85cebe8ff76aa41dec90623210384e\t.gitattributes\n100644 blob 0397f4152ea9f9210153da25e07cc4a2dd2bdf1a\tREADME.md\n100644 blob 874c12b79a34ee9eface93f81d274efa52e85264\tREADME.txt\n040000 tree 451ab2dae8ee782914580f5c762f3e1f47671c84\tsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "874c12b79a34ee9eface93f81d274efa52e85264",
+        "type": "blob",
+        "size": 70,
+        "content": "This contains files for testing when the index and the workdir differ\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d328bff4c0dcaad0f7c5c1ee6999428ce8748a4",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob 68304c651c85cebe8ff76aa41dec90623210384e\t.gitattributes\n100644 blob 0397f4152ea9f9210153da25e07cc4a2dd2bdf1a\tREADME.md\n100644 blob 874c12b79a34ee9eface93f81d274efa52e85264\tREADME.txt\n040000 tree 649d2a8d3f8afe5e62a5ccd0a98a5770119691bb\tsub\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ddd2217e579a36e9d9750f9d714a2ba7ed676e4",
+        "type": "tree",
+        "size": 117,
+        "content": "100644 blob d357454bcd5713cea9ffd6b87d0284dfb20d6f2d\t.gitattributes\n100644 blob 59652e3495d9760b36d8831bc49232c6e1ccae27\tREADME.md\n100644 blob 59652e3495d9760b36d8831bc49232c6e1ccae27\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "96d297c138442dad6545fdccfa89a14c737bcc00",
+        "type": "tree",
+        "size": 75,
+        "content": "100644 blob 59652e3495d9760b36d8831bc49232c6e1ccae27\tREADME.md\n100644 blob 59652e3495d9760b36d8831bc49232c6e1ccae27\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cdf17ea3fe625ef812f4dce7f423f4f299287505",
+        "type": "blob",
+        "size": 48,
+        "content": "* bar\n*.txt -foo beep=10\n*.md blargh=goop -bar\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d357454bcd5713cea9ffd6b87d0284dfb20d6f2d",
+        "type": "blob",
+        "size": 33,
+        "content": "*.txt another=one\n*.md bar=1337\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d441d7d88f52c28c2b23940ce4c33756748425f9",
+        "type": "commit",
+        "size": 238,
+        "content": "tree 74f5c75dab3a2ff4f0d3314f72e7d6cf5f1a5be5\nparent 67c1640e91ccbaf0793591be09bf572cf40c9a53\nauthor Russell Belfer <rb@github.com> 1335817296 -0700\ncommitter Russell Belfer <rb@github.com> 1335817296 -0700\n\nAdding some files in subtrees\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f72502ddd01412bb20796ff812af56fd53b82b52",
+        "type": "tree",
+        "size": 147,
+        "content": "100644 blob 68304c651c85cebe8ff76aa41dec90623210384e\t.gitattributes\n100644 blob 59d942b8be2784bc96db9b22202c10815c9a077b\tREADME.md\n100644 blob 874c12b79a34ee9eface93f81d274efa52e85264\tREADME.txt\n040000 tree 649d2a8d3f8afe5e62a5ccd0a98a5770119691bb\tsub\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,90 @@
+[
+    {
+        "hash": "5afb6a14a864e30787857dd92af837e8cdd2cb1b",
+        "tree": "f2b745d7f47d114a3a6b31a7b628e61e804d1a58",
+        "parents": [
+            "6803c385642cebc8103fddd526ef395d75678a7e"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1433526035 2015-06-05 13:40:35 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1433776642 2015-06-08 11:17:22 -0400",
+        "message": "utf8: some files w/ utf8 BOMs"
+    },
+    {
+        "hash": "6803c385642cebc8103fddd526ef395d75678a7e",
+        "tree": "2c03f9f407b576eae80327864bab572e282a33ea",
+        "parents": [
+            "6c589757f65a970a6cc07c71c3f3d2528c611cbc"
+        ],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1433776617 2015-06-08 11:16:57 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1433776617 2015-06-08 11:16:57 -0400",
+        "message": "Add files with many UTF-8 chars and few UTF-8 chars"
+    },
+    {
+        "hash": "6c589757f65a970a6cc07c71c3f3d2528c611cbc",
+        "tree": "2bd9d81b51a867352bab307b89cbb5b4a69adfe1",
+        "parents": [
+            "c8d0b1ebcaccdd8f968c4aae3c2175e7fed651fe"
+        ],
+        "author": "Sven Strickroth <email@cs-ware.de> 1422200698 2015-01-25 16:44:58 +0100",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1433513346 2015-06-05 10:09:06 -0400",
+        "message": "Add some binary files"
+    },
+    {
+        "hash": "c8d0b1ebcaccdd8f968c4aae3c2175e7fed651fe",
+        "tree": "9d29b5bb165bf65637ffcb5ededb82ddd7c3fd13",
+        "parents": [
+            "044bcd5c9bf5ebdd51e514a9a36457018f06f6e1"
+        ],
+        "author": "Sven Strickroth <email@cs-ware.de> 1422039838 2015-01-23 20:03:58 +0100",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1433513342 2015-06-05 10:09:02 -0400",
+        "message": "Add mixed cr-lf-crlf files"
+    },
+    {
+        "hash": "9687e444bcbb85645cb496080434c292f1b57182",
+        "tree": "6ae3e9c11a51f0aabebcffcbd5c00f4beed143c9",
+        "parents": [
+            "97449da2d225557c558ac244384d487e66c3e591"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1427043612 2015-03-22 19:00:12 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1427043612 2015-03-22 19:00:12 +0200",
+        "message": "Added content to test2.txt"
+    },
+    {
+        "hash": "97449da2d225557c558ac244384d487e66c3e591",
+        "tree": "16c72b67861f8524a5bebc05cd20472d3fca00da",
+        "parents": [
+            "3f96bdca0e37616026afaa325c148cec4aa62d04"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1427043593 2015-03-22 18:59:53 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1427043593 2015-03-22 18:59:53 +0200",
+        "message": "Added three empty files"
+    },
+    {
+        "hash": "3f96bdca0e37616026afaa325c148cec4aa62d04",
+        "tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "parents": [
+            "044bcd5c9bf5ebdd51e514a9a36457018f06f6e1"
+        ],
+        "author": "Jacques Germishuys <jacquesg@striata.com> 1427043575 2015-03-22 18:59:35 +0200",
+        "committer": "Jacques Germishuys <jacquesg@striata.com> 1427043575 2015-03-22 18:59:35 +0200",
+        "message": "Clear"
+    },
+    {
+        "hash": "044bcd5c9bf5ebdd51e514a9a36457018f06f6e1",
+        "tree": "ef0dcd356d77221e9c27f4f3928ad28e80b87ceb",
+        "parents": [
+            "78db270c1841841f75a8157321bdcb50ab12e6c3"
+        ],
+        "author": "Edward <ethomson@edwardthomson.com> 1389142719 2014-01-07 16:58:39 -0800",
+        "committer": "Linquize <linquize@yahoo.com.hk> 1414222620 2014-10-25 15:37:00 +0800",
+        "message": "Add zero byte file"
+    },
+    {
+        "hash": "78db270c1841841f75a8157321bdcb50ab12e6c3",
+        "tree": "0d06894e14df22e066763ae906e0ed3eb79c205f",
+        "parents": [],
+        "author": "Edward <ethomson@edwardthomson.com> 1358311998 2013-01-15 22:53:18 -0600",
+        "committer": "Linquize <linquize@yahoo.com.hk> 1414222500 2014-10-25 15:35:00 +0800",
+        "message": "crlf tests"
+    }
+]

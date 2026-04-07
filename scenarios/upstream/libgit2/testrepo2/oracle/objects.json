@@ -1,0 +1,226 @@
+[
+    {
+        "hash": "0c37a5391bbff43c37f0d0371823a5509eed5b1d",
+        "type": "tag",
+        "size": 144,
+        "content": "object 5b5b025afb0b4c913b4c338a42934a3863bf3644\ntype commit\ntag v1.0\ntagger Scott Chacon <schacon@gmail.com> 1288114383 -0200\n\ntest tag message\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1385f264afb75a56a5bec74243be9b367ba4ca08",
+        "type": "blob",
+        "size": 4,
+        "content": "hey\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "181037049a54a1eb5fab404658a3a250b44335d7",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1810dff58d8a660512d4832e740f692884338ccd",
+        "type": "tree",
+        "size": 112,
+        "content": "100644 blob a8233120f6ad708f843d861ce2b7228ec4e3dec6\tREADME\n100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\tbranch_file.txt\n100644 blob a71586c1dfe8a71c6cbf6c129f404c5642ff31bd\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d2eff63372b08adf0a9eb84109ccf7d19e2f3a2",
+        "type": "commit",
+        "size": 163,
+        "content": "tree 181037049a54a1eb5fab404658a3a250b44335d7\nauthor Scott Chacon <schacon@gmail.com> 1273360386\ncommitter Scott Chacon <schacon@gmail.com> 1273360386\n\nnew message",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "36060c58702ed4c2a40832c51758d5344201d89a",
+        "type": "commit",
+        "size": 227,
+        "content": "tree c4dc1555e4d4fa0e0c9c3fc46734c7c35b3ce90b\nparent 5b5b025afb0b4c913b4c338a42934a3863bf3644\nauthor Scott Chacon <schacon@gmail.com> 1288115061 -0200\ncommitter Scott Chacon <schacon@gmail.com> 1288115061 -0200\n\nsubdirectories\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "396c7f1adb7925f51ba13a75f48252f44c5a14a2",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tREADME.md\n160000 commit 0000000000000000000000000000000000000000\tsubmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "418382dff1ffb8bdfba833f4d8bbcde58b1e7f47",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 7c3f1a8504912d590d12048d32cd31d2d75d69ac\tanother.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "41bc8c69075bbdb46c5c6f0566cc8cc5b46e8bd9",
+        "type": "commit",
+        "size": 230,
+        "content": "tree f82a8eb4cb20e88d1030fd10d89286215a715396\nparent 5001298e0c09ad9c34e4249bc5801c75e9754fa5\nauthor Scott Chacon <schacon@gmail.com> 1273610441 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1273610441 -0700\n\npacked commit two\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "45b983be36b73c0788dc9cbcb76cbb80fc7bb057",
+        "type": "blob",
+        "size": 3,
+        "content": "hi\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4a202b346bb0fb0db7eff3cffeb3c70babbd2045",
+        "type": "commit",
+        "size": 227,
+        "content": "tree fd093bff70906175335656e6ce6ae05783708765\nparent 5b5b025afb0b4c913b4c338a42934a3863bf3644\nauthor Scott Chacon <schacon@gmail.com> 1274721544 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1274721544 -0700\n\na third commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5001298e0c09ad9c34e4249bc5801c75e9754fa5",
+        "type": "commit",
+        "size": 182,
+        "content": "tree 418382dff1ffb8bdfba833f4d8bbcde58b1e7f47\nauthor Scott Chacon <schacon@gmail.com> 1273610423 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1273610423 -0700\n\npacked commit one\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5b5b025afb0b4c913b4c338a42934a3863bf3644",
+        "type": "commit",
+        "size": 227,
+        "content": "tree f60079018b664e4e79329a7ef9559c8d9e0378d1\nparent 8496071c1b46c854b31185ea97743be6a8774479\nauthor Scott Chacon <schacon@gmail.com> 1273610322 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1273610322 -0700\n\nanother commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "619f9935957e010c419cb9d15621916ddfcc0b96",
+        "type": "tree",
+        "size": 103,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME\n100644 blob fa49b077972391ad58037050f2a75f74e3671e92\tnew.txt\n040000 tree f60079018b664e4e79329a7ef9559c8d9e0378d1\tsubdir2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "75057dd4114e74cca1d750d0aee1647c903cb60a",
+        "type": "tree",
+        "size": 112,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME\n100644 blob 45b983be36b73c0788dc9cbcb76cbb80fc7bb057\tbranch_file.txt\n100644 blob fa49b077972391ad58037050f2a75f74e3671e92\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7c3f1a8504912d590d12048d32cd31d2d75d69ac",
+        "type": "blob",
+        "size": 17,
+        "content": "yet another file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7f043268ea43ce18e3540acaabf9e090c91965b0",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "814889a078c031f61ed08ab5fa863aea9314344d",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob a8233120f6ad708f843d861ce2b7228ec4e3dec6\tREADME\n100644 blob a71586c1dfe8a71c6cbf6c129f404c5642ff31bd\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8496071c1b46c854b31185ea97743be6a8774479",
+        "type": "commit",
+        "size": 172,
+        "content": "tree 181037049a54a1eb5fab404658a3a250b44335d7\nauthor Scott Chacon <schacon@gmail.com> 1273360386 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1273360386 -0700\n\ntesting\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9fd738e8f7967c078dceed8190330fc8648ee56a",
+        "type": "commit",
+        "size": 228,
+        "content": "tree 814889a078c031f61ed08ab5fa863aea9314344d\nparent 4a202b346bb0fb0db7eff3cffeb3c70babbd2045\nauthor Scott Chacon <schacon@gmail.com> 1274721559 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1274721559 -0700\n\na fourth commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a4a7dce85cf63874e984719f4fdd239f5145052f",
+        "type": "commit",
+        "size": 291,
+        "content": "tree 1810dff58d8a660512d4832e740f692884338ccd\nparent c47800c7266a2be04c571c04d5a6614691ea99bd\nparent 9fd738e8f7967c078dceed8190330fc8648ee56a\nauthor Scott Chacon <schacon@gmail.com> 1274814023 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1274814023 -0700\n\nMerge branch 'master' into br2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a71586c1dfe8a71c6cbf6c129f404c5642ff31bd",
+        "type": "blob",
+        "size": 12,
+        "content": "my new file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a8233120f6ad708f843d861ce2b7228ec4e3dec6",
+        "type": "blob",
+        "size": 10,
+        "content": "hey there\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb61d8117a8cae026fe4061e15c29a96aea3496e",
+        "type": "blob",
+        "size": 11,
+        "content": "what file?\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "be3563ae3f795b2b4353bcce3a527ad0a4f7f644",
+        "type": "commit",
+        "size": 279,
+        "content": "tree 1810dff58d8a660512d4832e740f692884338ccd\nparent 9fd738e8f7967c078dceed8190330fc8648ee56a\nparent c47800c7266a2be04c571c04d5a6614691ea99bd\nauthor Scott Chacon <schacon@gmail.com> 1274813907 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1274813907 -0700\n\nMerge branch 'br2'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c47800c7266a2be04c571c04d5a6614691ea99bd",
+        "type": "commit",
+        "size": 230,
+        "content": "tree 75057dd4114e74cca1d750d0aee1647c903cb60a\nparent 5b5b025afb0b4c913b4c338a42934a3863bf3644\nauthor Scott Chacon <schacon@gmail.com> 1274813894 -0700\ncommitter Scott Chacon <schacon@gmail.com> 1274813894 -0700\n\nbranch commit one\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c4dc1555e4d4fa0e0c9c3fc46734c7c35b3ce90b",
+        "type": "tree",
+        "size": 102,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME\n100644 blob fa49b077972391ad58037050f2a75f74e3671e92\tnew.txt\n040000 tree 619f9935957e010c419cb9d15621916ddfcc0b96\tsubdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f60079018b664e4e79329a7ef9559c8d9e0378d1",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob 1385f264afb75a56a5bec74243be9b367ba4ca08\tREADME\n100644 blob fa49b077972391ad58037050f2a75f74e3671e92\tnew.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f82a8eb4cb20e88d1030fd10d89286215a715396",
+        "type": "tree",
+        "size": 77,
+        "content": "100644 blob 7c3f1a8504912d590d12048d32cd31d2d75d69ac\tanother.txt\n100644 blob bb61d8117a8cae026fe4061e15c29a96aea3496e\tsecond.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fa49b077972391ad58037050f2a75f74e3671e92",
+        "type": "blob",
+        "size": 9,
+        "content": "new file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fd093bff70906175335656e6ce6ae05783708765",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob a8233120f6ad708f843d861ce2b7228ec4e3dec6\tREADME\n100644 blob fa49b077972391ad58037050f2a75f74e3671e92\tnew.txt\n",
+        "encoding": "utf-8"
+    }
+]

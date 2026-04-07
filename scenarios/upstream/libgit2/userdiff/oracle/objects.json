@@ -1,0 +1,415 @@
+[
+    {
+        "hash": "0515bc67593eca76b41aa075f45739a38cf6c6ad",
+        "type": "tree",
+        "size": 68,
+        "content": "040000 tree 8e66ecd734be134a5a8310fda9f5c5a6f815ffcb\tdriver\n040000 tree 5efe181d4723ade23cdbb3485e2c215f61567e13\tnodriver\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "05d669073b39d36847315e3a5b4512cf4cba4546",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 2320e2f1e4d9e6201a8e15949a0c10a533fa51cd\tfile.html\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0965b377c214bbe5e0d18fcdaf556df7fa7ed7c8",
+        "type": "blob",
+        "size": 2556,
+        "content": "define(function(require, exports, module) {\n  module.exports = Player;\n\n  var Key = require(\"./key\")\n    , Direction = require(\"./direction\")\n    , Image = require(\"./image\");\n\n  function Player(game) {\n    this.game = game;\n\n    this.image = new Image(\"./assets/fighter.png\");\n    this.game.resources.add(this.image);\n\n    this.x = 0;\n    this.y = 0;\n\n    this.pixelX = 0;\n    this.pixelY = 0;\n\n    this.animationStep = 0;\n  }\n\n  Player.prototype.update = function() {\n    if (!this.isWalking()) {\n      this.handleInput();\n    }\n\n    if (this.isWalking()) {\n      // Increase the animation step.\n      this.animationStep = ++this.animationStep % 60;\n\n      if (this.x * 32 > this.pixelX) {\n        this.pixelX++;\n      } else if (this.x * 32 < this.pixelX) {\n        this.pixelX--;\n      }\n\n      if (this.y * 32 > this.pixelY) {\n        this.pixelY++;\n      } else if (this.y * 32 < this.pixelY) {\n        this.pixelY--;\n      }\n    } else {\n      // Reset the animation step.\n      this.animationStep = 0;\n    }\n  };\n\n  Player.prototype.handleInput = function() {\n    var keyboard = this.game.keyboard, finalAction, action, inputs = {\n      'moveDown': keyboard.isDown(Key.DOWN),\n      'moveUp': keyboard.isDown(Key.UP),\n      'moveLeft': keyboard.isDown(Key.LEFT),\n      'moveRight': keyboard.isDown(Key.RIGHT)\n    };\n\n    for (action in inputs) {\n      if (inputs[action]) {\n        if (!finalAction || inputs[finalAction] < inputs[action]) {\n          finalAction = action;\n        }\n      }\n    }\n\n    this[finalAction] && this[finalAction]();\n  };\n\n  Player.prototype.isWalking = function() {\n    return this.x * 32 != this.pixelX || this.y * 32 != this.pixelY;\n  };\n\n  Player.prototype.moveDown = function() {\n    this.y += 1;\n    this.direction = Direction.DOWN;\n  };\n\n  Player.prototype.moveUp = function() {\n    this.y -= 1;\n    this.direction = Direction.UP;\n  };\n\n  Player.prototype.moveLeft = function() {\n    this.x -= 1;\n    this.direction = Direction.LEFT;\n  };\n\n  Player.prototype.moveRight = function() {\n    this.x += 1;\n    this.direction = Direction.RIGHT;\n  };\n\n  Player.prototype.draw = function(context) {\n    var offsetX = Math.floor(this.animationStep / 15) * 32, offsetY = 0;\n\n    switch(this.direction) {\n      case Direction.UP:\n        offsetY = 48 * 3;\n        break;\n      case Direction.RIGHT:\n        offsetY = 48 * 2;\n        break;\n      case Direction.LEFT:\n        offsetY = 48;\n        break;\n    }\n\n    context.drawImage(this.image.data, offsetX, offsetY, 32, 48, this.pixelX, this.pixelY - 16, 32, 48);\n  };\n});\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0c20ef1409ae1df4d5a76cdbd98d5c33ccdb6bcc",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree f3be389d351e4bcc6dcc4b5fe22134ef0f63f8bd\tafter\n040000 tree 3cc08384deae5957247bc36776ab626cc9e0582b\tbefore\n040000 tree 0515bc67593eca76b41aa075f45739a38cf6c6ad\texpected\n040000 tree 3cc08384deae5957247bc36776ab626cc9e0582b\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0cac9e468253d999d32bc5f3424e31927debfc23",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob 872d19663f32459389597b52beec6457c1dc971f\tfile.html\n100644 blob b9f1286e566d6e6bd4433b968e3cfcbaf91497e2\tfile.js\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "144163fc21f29923f46ed02f89bdec9047f8dd19",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 872d19663f32459389597b52beec6457c1dc971f\tfile.html\n100644 blob b9f1286e566d6e6bd4433b968e3cfcbaf91497e2\tfile.javascript\n100644 blob 63250ad0197d0103425d2123488f2c139d25bc8b\tfile.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "172106742fb8e51116e6a008de6f9573da336eed",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 9907b35ef4118eaf1dfad8a52e09542680ed6144\tafter\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tbefore\n040000 tree 4ca5bc41c76149124091f2f0e8d9e0637b40458f\texpected\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "18f2f749e0e7d270ee862c8aa0bdc8ae06004382",
+        "type": "blob",
+        "size": 1149,
+        "content": "diff --git a/files/file.js b/files/file.js\nindex b9f1286..7cd3c5a 100644\n--- a/files/file.js\n+++ b/files/file.js\n@@ -16,3 +16,4 @@\n     var client = docElem['clientHeight'],\n-      inner = window['innerHeight'];\n+      inner = window['innerHeight'],\n+      sample = window['otherProperty'];\n \n@@ -27,3 +28,3 @@\n       if (!isNaN(el.offsetTop)) {\n-        offsetTop += el.offsetTop;\n+        offsetTop += el.offsetTop + 1;\n       }\n@@ -43,8 +44,7 @@\n         viewed = scrolled + getViewportH(),\n-        elH = el.offsetHeight,\n         elTop = getOffset(el).top,\n-        elBottom = elTop + elH,\n+        elBottom = elTop + el.offsetHeight,\n         h = h || 0;\n \n-    return (elTop + elH * h) <= viewed && (elBottom) >= scrolled;\n+    return (elTop + el.offsetHeight * h) <= viewed && (elBottom) >= scrolled;\n   }\n@@ -60,4 +60,2 @@\n \n-  //  Initialize all scrollreveals, triggering all\n-  //  reveals on visible elements.\n       this.elems.forEach(function (el, i) {\n@@ -71,3 +69,3 @@\n             self._scrollPage();\n-          }, 60);\n+          }, 61);\n         }\n@@ -101,2 +99,3 @@\n         this.scrolled = false;\n+\t\tthis.tested = true;\n     },\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "20ab776b6ff3169fa0e5eff65df30d45187d22ba",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 2ea4b8a16d737c180dfdd2b119dec9501592326c\tdiff.html\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2320e2f1e4d9e6201a8e15949a0c10a533fa51cd",
+        "type": "blob",
+        "size": 765,
+        "content": "<html>\n<body>\n  <h1 id=\"first section\">\n  <ol>\n    <li>item 1.1</li>\n    <li>item 1.2 changed</li>\n    <li>item 1.3 changed</li>\n    <li>item 1.4</li>\n    <li>item 1.5</li>\n    <li>item 1.6</li>\n    <li>item 1.7</li>\n    <li>item 1.8</li>\n    <li>item 1.9</li>\n  <li>item 1.10 added</li>\n  </ol>\n  </h1>\n  <h1 id=\"second section\">\n  <ol>\n    <li>item 2.1</li>\n    <li>item 2.2</li>\n    <li>item 2.3</li>\n    <li>item 2.4</li>\n    <li>item 2.5</li>\n    <li>item 2.6</li>\n    <li>item 2.7 changed</li>\n    <li>item 2.7.1 added</li>\n    <li>item 2.8</li>\n  </ol>\n  </h1>\n  <h1 id=\"third section\">\n  <ol>\n    <li>item 3.1</li>\n    <li>item 3.2</li>\n    <li>item 3.3</li>\n    <li>item 3.4</li>\n    <li>item 3.5</li>\n    <li>item 3.6</li>\n  </ol>\n  </h1>\n</body>\n</html>\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "258fd0b52c41c7b63a3e4746ffb9f8c1c40515a9",
+        "type": "commit",
+        "size": 240,
+        "content": "tree 9ed26ff56542497a3dc517100b0725223adbc6c3\nparent 9db1d09ff9ad5190bcf12d72ea3c818ffca344c5\nauthor Russell Belfer <rb@github.com> 1390850867 -0800\ncommitter Russell Belfer <rb@github.com> 1390850867 -0800\n\nSetting up javascript test data\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "29745e82f326b1ff7b6ff1ca79109e7385dce1ad",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 2ea4b8a16d737c180dfdd2b119dec9501592326c\tdiff.html\n100644 blob 18f2f749e0e7d270ee862c8aa0bdc8ae06004382\tdiff.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2ea4b8a16d737c180dfdd2b119dec9501592326c",
+        "type": "blob",
+        "size": 614,
+        "content": "diff --git a/files/file.html b/files/file.html\nindex 872d196..2320e2f 100644\n--- a/files/file.html\n+++ b/files/file.html\n@@ -5,4 +5,4 @@\n     <li>item 1.1</li>\n-    <li>item 1.2</li>\n-    <li>item 1.3</li>\n+    <li>item 1.2 changed</li>\n+    <li>item 1.3 changed</li>\n     <li>item 1.4</li>\n@@ -13,2 +13,3 @@\n     <li>item 1.9</li>\n+  <li>item 1.10 added</li>\n   </ol>\n@@ -23,3 +24,4 @@\n     <li>item 2.6</li>\n-    <li>item 2.7</li>\n+    <li>item 2.7 changed</li>\n+    <li>item 2.7.1 added</li>\n     <li>item 2.8</li>\n@@ -35,4 +37,2 @@\n     <li>item 3.6</li>\n-    <li>item 3.7</li>\n-    <li>item 3.8</li>\n   </ol>\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "39ea75107a09091ba54ff86fcc780b59477e42cd",
+        "type": "blob",
+        "size": 2552,
+        "content": "define(function(require, exports, module) {\n  module.exports = Player;\n\n  var Key = require(\"./key\")\n    , Direction = require(\"./direction\")\n    , Image = require(\"./image\");\n\n  function Player(game) {\n    this.game = game;\n\n    this.image = new Image(\"./assets/fighter.png\");\n    this.game.resources.add(this.image);\n\n    this.x = 0;\n    this.y = 0;\n\n    this.pixelX = 10;\n    this.pixelY = 10;\n\n    this.animationStep = 0;\n  }\n\n  Player.prototype.update = function() {\n    if (!this.isWalking()) {\n      this.handleInput();\n    }\n\n    if (this.isWalking()) {\n      // Increase the animation step.\n      this.animationStep = ++this.animationStep % 60;\n\n      if (this.x * 32 > this.pixelX) {\n        this.pixelX++;\n      } else if (this.x * 32 < this.pixelX) {\n        this.pixelX--;\n      }\n\n      if (this.y * 32 > this.pixelY) {\n        this.pixelY++;\n      } else if (this.y * 32 < this.pixelY) {\n        this.pixelY--;\n      }\n    } else {\n      // Reset the animation step.\n      this.animationStep = 0;\n    }\n  };\n\n  Player.prototype.handleInput = function() {\n    var keyboard = this.game.keyboard, finalAction, action, inputs = {\n      'moveDown': keyboard.isDown(Key.DOWN),\n      'moveUp': keyboard.isDown(Key.UP),\n      'moveLeft': keyboard.isDown(Key.LEFT),\n      'moveRight': keyboard.isDown(Key.RIGHT)\n    };\n\n    for (action in inputs) {\n      if (inputs[action]) {\n        if (!finalAction || inputs[finalAction] < inputs[action]) {\n          finalAction = action;\n        }\n      }\n    }\n\n    this[finalAction] && this[finalAction]();\n  };\n\n  Player.prototype.isWalking = function() {\n    return this.x * 32 != this.pixelX || this.y * 32 != this.pixelY;\n  };\n\n  Player.prototype.moveDown = function() {\n    this.y += 1;\n    this.direction = Direction.DOWN;\n  };\n\n  Player.prototype.moveUp = function() {\n    this.y -= 1;\n    this.direction = Direction.UP;\n  };\n\n  Player.prototype.moveLeft = function() {\n    this.x -= 5;\n    this.direction = Direction.LEFT;\n  };\n\n  Player.prototype.moveRight = function() {\n    this.x += 1;\n    this.direction = Direction.RIGHT;\n  };\n\n  Player.prototype.draw = function(context) {\n    var offsetX = Math.floor(this.animationStep / 15) * 32, offsetY = 0;\n\n    switch(this.direction) {\n      case Direction.UP:\n        offsetY = 48 * 3;\n        break;\n      case Direction.RIGHT:\n        offsetY = 48 * 2;\n        break;\n      case Direction.LEFT:\n        offsetY = 48;\n        break;\n    }\n\n    context.drawImage(this.image.data, offsetX, offsetY, 32, 48, this.pixelX, this.pixelY, 32, 48);\n  };\n});",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b5fffcdf079bbbf0eb965217d8c74cc9c6ea647",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 2ea4b8a16d737c180dfdd2b119dec9501592326c\tdiff.html\n100644 blob 69afe4fd8d6d58e1d02901b08368cbd5cecd915d\tdiff.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3cc08384deae5957247bc36776ab626cc9e0582b",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 872d19663f32459389597b52beec6457c1dc971f\tfile.html\n100644 blob 0965b377c214bbe5e0d18fcdaf556df7fa7ed7c8\tfile.javascript\n100644 blob 63250ad0197d0103425d2123488f2c139d25bc8b\tfile.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e1b300cae1a4e1506d6cdfa7129087a0070a72f",
+        "type": "commit",
+        "size": 245,
+        "content": "tree 172106742fb8e51116e6a008de6f9573da336eed\nparent 9db1d09ff9ad5190bcf12d72ea3c818ffca344c5\nauthor Russell Belfer <rb@github.com> 1390850645 -0800\ncommitter Russell Belfer <rb@github.com> 1390850645 -0800\n\nSetting up Javascript userdiff tests\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "468d6f2afc940e14c76347fa9af26e429a3c9044",
+        "type": "blob",
+        "size": 2555,
+        "content": "define(function(require, exports, module) {\n  module.exports = Player;\n\n  var Key = require(\"./key\")\n    , Direction = require(\"./direction\")\n    , Image = require(\"./image\");\n\n  function Player(game) {\n    this.game = game;\n\n    this.image = new Image(\"./assets/fighter.png\");\n    this.game.resources.add(this.image);\n\n    this.x = 0;\n    this.y = 0;\n\n    this.pixelX = 0;\n    this.pixelY = 0;\n\n    this.animationStep = 0;\n  }\n\n  Player.prototype.update = function() {\n    if (!this.isWalking()) {\n      this.handleInput();\n    }\n\n    if (this.isWalking()) {\n      // Increase the animation step.\n      this.animationStep = ++this.animationStep % 60;\n\n      if (this.x * 32 > this.pixelX) {\n        this.pixelX++;\n      } else if (this.x * 32 < this.pixelX) {\n        this.pixelX--;\n      }\n\n      if (this.y * 32 > this.pixelY) {\n        this.pixelY++;\n      } else if (this.y * 32 < this.pixelY) {\n        this.pixelY--;\n      }\n    } else {\n      // Reset the animation step.\n      this.animationStep = 0;\n    }\n  };\n\n  Player.prototype.handleInput = function() {\n    var keyboard = this.game.keyboard, finalAction, action, inputs = {\n      'moveDown': keyboard.isDown(Key.DOWN),\n      'moveUp': keyboard.isDown(Key.UP),\n      'moveLeft': keyboard.isDown(Key.LEFT),\n      'moveRight': keyboard.isDown(Key.RIGHT)\n    };\n\n    for (action in inputs) {\n      if (inputs[action]) {\n        if (!finalAction || inputs[finalAction] < inputs[action]) {\n          finalAction = action;\n        }\n      }\n    }\n\n    this[finalAction] && this[finalAction]();\n  };\n\n  Player.prototype.isWalking = function() {\n    return this.x * 32 != this.pixelX || this.y * 32 != this.pixelY;\n  };\n\n  Player.prototype.moveDown = function() {\n    this.y += 1;\n    this.direction = Direction.DOWN;\n  };\n\n  Player.prototype.moveUp = function() {\n    this.y -= 1;\n    this.direction = Direction.UP;\n  };\n\n  Player.prototype.moveLeft = function() {\n    this.x -= 1;\n    this.direction = Direction.LEFT;\n  };\n\n  Player.prototype.moveRight = function() {\n    this.x += 1;\n    this.direction = Direction.RIGHT;\n  };\n\n  Player.prototype.draw = function(context) {\n    var offsetX = Math.floor(this.animationStep / 15) * 32, offsetY = 0;\n\n    switch(this.direction) {\n      case Direction.UP:\n        offsetY = 48 * 3;\n        break;\n      case Direction.RIGHT:\n        offsetY = 48 * 2;\n        break;\n      case Direction.LEFT:\n        offsetY = 48;\n        break;\n    }\n\n    context.drawImage(this.image.data, offsetX, offsetY, 32, 48, this.pixelX, this.pixelY - 16, 32, 48);\n  };\n});",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4952a832c825f223f09c7b18d2fdeed76cd0a5aa",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 5a428e7dcffb41b65984517f1e6b8547babc8dff\tdiff.html\n100644 blob ccf7aeacc0a5a855cb27142f4380142ddcd25566\tdiff.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "49c0ff897b2b07a2ea0ed073e62a9dcd02704ba0",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 05d669073b39d36847315e3a5b4512cf4cba4546\tafter\n040000 tree 50346bde7428a29c9845470a14d87b1634293d48\tbefore\n040000 tree d63c806de4f666369ed169495657bec24b558165\texpected\n040000 tree 50346bde7428a29c9845470a14d87b1634293d48\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ca5bc41c76149124091f2f0e8d9e0637b40458f",
+        "type": "tree",
+        "size": 68,
+        "content": "040000 tree 4952a832c825f223f09c7b18d2fdeed76cd0a5aa\tdriver\n040000 tree 29745e82f326b1ff7b6ff1ca79109e7385dce1ad\tnodriver\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4e65d074662535061295fe4f92462e2ac9a5152e",
+        "type": "blob",
+        "size": 1343,
+        "content": "diff --git a/files/file.javascript b/files/file.javascript\nindex b9f1286..7cd3c5a 100644\n--- a/files/file.javascript\n+++ b/files/file.javascript\n@@ -16,3 +16,4 @@ function getViewportH ()\n     var client = docElem['clientHeight'],\n-      inner = window['innerHeight'];\n+      inner = window['innerHeight'],\n+      sample = window['otherProperty'];\n \n@@ -27,3 +28,3 @@ function getOffset (el)\n       if (!isNaN(el.offsetTop)) {\n-        offsetTop += el.offsetTop;\n+        offsetTop += el.offsetTop + 1;\n       }\n@@ -43,8 +44,7 @@ function isElementInViewport (el, h)\n         viewed = scrolled + getViewportH(),\n-        elH = el.offsetHeight,\n         elTop = getOffset(el).top,\n-        elBottom = elTop + elH,\n+        elBottom = elTop + el.offsetHeight,\n         h = h || 0;\n \n-    return (elTop + elH * h) <= viewed && (elBottom) >= scrolled;\n+    return (elTop + el.offsetHeight * h) <= viewed && (elBottom) >= scrolled;\n   }\n@@ -60,4 +60,2 @@ _init: function ()\n \n-  //  Initialize all scrollreveals, triggering all\n-  //  reveals on visible elements.\n       this.elems.forEach(function (el, i) {\n@@ -71,3 +69,3 @@ var scrollHandler = function ()\n             self._scrollPage();\n-          }, 60);\n+          }, 61);\n         }\n@@ -101,2 +99,3 @@ _scrollPage: function ()\n         this.scrolled = false;\n+\t\tthis.tested = true;\n     },\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "50346bde7428a29c9845470a14d87b1634293d48",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 872d19663f32459389597b52beec6457c1dc971f\tfile.html\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "53917973acfe0111f93c2cfaacf854be245880e8",
+        "type": "blob",
+        "size": 2520,
+        "content": "define(function(require, exports, module) {\n  module.exports = Player;\n\n  var Key = require(\"./key\")\n    , Direction = require(\"./direction\");\n\n  function Player(game) {\n    this.game = game;\n\n    this.image = new Image(\"./assets/fighter.png\");\n    this.game.resources.add(this.image);\n\n    this.x = 0;\n    this.y = 0;\n\n    this.pixelX = 10;\n    this.pixelY = 10;\n\n    this.animationStep = 0;\n  }\n\n  Player.prototype.update = function() {\n    if (!this.isWalking()) {\n      this.handleInput();\n    }\n\n    if (this.isWalking()) {\n      // Increase the animation step.\n      this.animationStep = ++this.animationStep % 60;\n\n      if (this.x * 32 > this.pixelX) {\n        this.pixelX++;\n      } else if (this.x * 32 < this.pixelX) {\n        this.pixelX--;\n      }\n\n      if (this.y * 32 > this.pixelY) {\n        this.pixelY++;\n      } else if (this.y * 32 < this.pixelY) {\n        this.pixelY--;\n      }\n    } else {\n      // Reset the animation step.\n      this.animationStep = 0;\n    }\n  };\n\n  Player.prototype.handleInput = function() {\n    var keyboard = this.game.keyboard, finalAction, action, inputs = {\n      'moveDown': keyboard.isDown(Key.DOWN),\n      'moveUp': keyboard.isDown(Key.UP),\n      'moveLeft': keyboard.isDown(Key.LEFT),\n      'moveRight': keyboard.isDown(Key.RIGHT)\n    };\n\n    for (action in inputs) {\n      if (inputs[action]) {\n        if (!finalAction || inputs[finalAction] < inputs[action]) {\n          finalAction = action;\n        }\n      }\n    }\n\n    this[finalAction] && this[finalAction]();\n  };\n\n  Player.prototype.isWalking = function() {\n    return this.x * 32 != this.pixelX || this.y * 32 != this.pixelY;\n  };\n\n  Player.prototype.moveDown = function() {\n    this.y += 1;\n    this.direction = Direction.DOWN;\n  };\n\n  Player.prototype.moveUp = function() {\n    this.y -= 1;\n    this.direction = Direction.UP;\n  };\n\n  Player.prototype.moveLeft = function() {\n    this.x -= 5;\n    this.direction = Direction.LEFT;\n  };\n\n  Player.prototype.moveRight = function() {\n    this.x += 1;\n    this.direction = Direction.RIGHT;\n  };\n\n  Player.prototype.draw = function(context) {\n    var offsetX = Math.floor(this.animationStep / 15) * 32, offsetY = 0;\n\n    switch(this.direction) {\n      case Direction.UP:\n        offsetY = 48 * 3;\n        break;\n      case Direction.RIGHT:\n        offsetY = 48 * 2;\n        break;\n      case Direction.LEFT:\n        offsetY = 48;\n        break;\n    }\n\n    context.drawImage(this.image.data, offsetX, offsetY, 32, 48, this.pixelX, this.pixelY, 32, 48);\n  };\n});\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "57924e76b0ec840e6fdf1aba8e3ef2970fc2ed38",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob 5a428e7dcffb41b65984517f1e6b8547babc8dff\tdiff.html\n100644 blob ccf7aeacc0a5a855cb27142f4380142ddcd25566\tdiff.js\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5a428e7dcffb41b65984517f1e6b8547babc8dff",
+        "type": "blob",
+        "size": 711,
+        "content": "diff --git a/files/file.html b/files/file.html\nindex 872d196..2320e2f 100644\n--- a/files/file.html\n+++ b/files/file.html\n@@ -5,4 +5,4 @@ <h1 id=\"first section\">\n     <li>item 1.1</li>\n-    <li>item 1.2</li>\n-    <li>item 1.3</li>\n+    <li>item 1.2 changed</li>\n+    <li>item 1.3 changed</li>\n     <li>item 1.4</li>\n@@ -13,2 +13,3 @@ <h1 id=\"first section\">\n     <li>item 1.9</li>\n+  <li>item 1.10 added</li>\n   </ol>\n@@ -23,3 +24,4 @@ <h1 id=\"second section\">\n     <li>item 2.6</li>\n-    <li>item 2.7</li>\n+    <li>item 2.7 changed</li>\n+    <li>item 2.7.1 added</li>\n     <li>item 2.8</li>\n@@ -35,4 +37,2 @@ <h1 id=\"third section\">\n     <li>item 3.6</li>\n-    <li>item 3.7</li>\n-    <li>item 3.8</li>\n   </ol>\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5efe181d4723ade23cdbb3485e2c215f61567e13",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 2ea4b8a16d737c180dfdd2b119dec9501592326c\tdiff.html\n100644 blob 69afe4fd8d6d58e1d02901b08368cbd5cecd915d\tdiff.javascript\n100644 blob e77c094aaf7d77c0eb67b3615ce0d56a0cad0f01\tdiff.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "60e3f7b244a5305e2c9fa4ef0e897f3b14f3b8dd",
+        "type": "commit",
+        "size": 221,
+        "content": "tree 981b3b4eb6a1b1a6a7faa3b5687b4e8da12fc51a\nparent 802734c801bffc466d69876bc4814f747aaac4fe\nauthor Russell Belfer <rb@github.com> 1390863277 -0800\ncommitter Russell Belfer <rb@github.com> 1390863277 -0800\n\nAdd PHP test\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "631d44e0c72e8cd1b594fa11d7d1ee8a6d67ff67",
+        "type": "commit",
+        "size": 273,
+        "content": "tree 0c20ef1409ae1df4d5a76cdbd98d5c33ccdb6bcc\nparent 60e3f7b244a5305e2c9fa4ef0e897f3b14f3b8dd\nauthor Arthur Schreiber <schreiber.arthur@googlemail.com> 1405368319 +0200\ncommitter Arthur Schreiber <schreiber.arthur@googlemail.com> 1405368319 +0200\n\nReplace javascript file.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63250ad0197d0103425d2123488f2c139d25bc8b",
+        "type": "blob",
+        "size": 1310,
+        "content": "<?php\n\nnamespace Faker;\n\n/**\n * Proxy for other generators, to return only unique values. Works with\n * Faker\\Generator\\Base->unique()\n */\nclass UniqueGenerator\n{\n    protected $generator;\n    protected $maxRetries;\n    protected $uniques = array();\n\n    public function __construct(Generator $generator, $maxRetries)\n    {\n        $this->generator = $generator;\n        $this->maxRetries = $maxRetries;\n    }\n\n    /**\n     * Catch and proxy all generator calls but return only unique values\n     */\n    public function __get($attribute)\n    {\n        return $this->__call($attribute, array());\n    }\n\n    /**\n     * Catch and proxy all generator calls with arguments but return only unique values\n     */\n    public function __call($name, $arguments)\n    {\n        if (!isset($this->uniques[$name])) {\n            $this->uniques[$name] = array();\n        }\n        $i = 0;\n        do {\n            $res = call_user_func_array(array($this->generator, $name), $arguments);\n            $i++;\n            if ($i > $this->maxRetries) {\n                throw new \\OverflowException(sprintf('Maximum retries of %d reached without finding a unique value', $this->maxRetries));\n            }\n        } while (in_array($res, $this->uniques[$name]));\n        $this->uniques[$name][]= $res;\n\n        return $res;\n    }\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "645760e5e85398104ffe1a040e931febedf8d26b",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 845be7d203839e64c1de3ca522e072bfc6057db5\tafter\n040000 tree 0cac9e468253d999d32bc5f3424e31927debfc23\tbefore\n040000 tree a18d67c03d952007bbc002a93d0f0de2ad63c1cb\texpected\n040000 tree 0cac9e468253d999d32bc5f3424e31927debfc23\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "69afe4fd8d6d58e1d02901b08368cbd5cecd915d",
+        "type": "blob",
+        "size": 1181,
+        "content": "diff --git a/files/file.javascript b/files/file.javascript\nindex b9f1286..7cd3c5a 100644\n--- a/files/file.javascript\n+++ b/files/file.javascript\n@@ -16,3 +16,4 @@\n     var client = docElem['clientHeight'],\n-      inner = window['innerHeight'];\n+      inner = window['innerHeight'],\n+      sample = window['otherProperty'];\n \n@@ -27,3 +28,3 @@\n       if (!isNaN(el.offsetTop)) {\n-        offsetTop += el.offsetTop;\n+        offsetTop += el.offsetTop + 1;\n       }\n@@ -43,8 +44,7 @@\n         viewed = scrolled + getViewportH(),\n-        elH = el.offsetHeight,\n         elTop = getOffset(el).top,\n-        elBottom = elTop + elH,\n+        elBottom = elTop + el.offsetHeight,\n         h = h || 0;\n \n-    return (elTop + elH * h) <= viewed && (elBottom) >= scrolled;\n+    return (elTop + el.offsetHeight * h) <= viewed && (elBottom) >= scrolled;\n   }\n@@ -60,4 +60,2 @@\n \n-  //  Initialize all scrollreveals, triggering all\n-  //  reveals on visible elements.\n       this.elems.forEach(function (el, i) {\n@@ -71,3 +69,3 @@\n             self._scrollPage();\n-          }, 60);\n+          }, 61);\n         }\n@@ -101,2 +99,3 @@\n         this.scrolled = false;\n+\t\tthis.tested = true;\n     },\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "761f5d9c55da82324a25d50a4b154295a807567d",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 2320e2f1e4d9e6201a8e15949a0c10a533fa51cd\tfile.html\n100644 blob 7cd3c5a8aaf0e89037ff51ea54fb1c3d0828125c\tfile.javascript\n100644 blob 967d6466ca65c2818753fdae029730a8f6a80392\tfile.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7cd3c5a8aaf0e89037ff51ea54fb1c3d0828125c",
+        "type": "blob",
+        "size": 2785,
+        "content": "/*\n  Some code extracted from https://github.com/julianlloyd/scrollReveal.js\n  which happens to be a trending Javascript repo with an MIT license at\n  the time I was working on Javascript userdiff support in libgit2\n\n  I extracted just some of the code, so I suspect this is no longer valid\n  Javascript code, but it contains enough example patterns to work.\n*/\n;(function (window) {\n\n  'use strict';\n\n  var docElem = window.document.documentElement;\n\n  function getViewportH () {\n    var client = docElem['clientHeight'],\n      inner = window['innerHeight'],\n      sample = window['otherProperty'];\n\n    return (client < inner) ? inner : client;\n  }\n\n  function getOffset (el) {\n    var offsetTop = 0,\n        offsetLeft = 0;\n\n    do {\n      if (!isNaN(el.offsetTop)) {\n        offsetTop += el.offsetTop + 1;\n      }\n      if (!isNaN(el.offsetLeft)) {\n        offsetLeft += el.offsetLeft;\n      }\n    } while (el = el.offsetParent)\n\n    return {\n      top: offsetTop,\n      left: offsetLeft\n    }\n  }\n\n  function isElementInViewport (el, h) {\n    var scrolled = window.pageYOffset,\n        viewed = scrolled + getViewportH(),\n        elTop = getOffset(el).top,\n        elBottom = elTop + el.offsetHeight,\n        h = h || 0;\n\n    return (elTop + el.offsetHeight * h) <= viewed && (elBottom) >= scrolled;\n  }\n\n  scrollReveal.prototype = {\n\n    _init: function () {\n\n      var self = this;\n\n      this.elems = Array.prototype.slice.call(docElem.querySelectorAll('[data-scrollReveal]'));\n      this.scrolled = false;\n\n      this.elems.forEach(function (el, i) {\n        self.animate(el);\n      });\n\n      var scrollHandler = function () {\n        if (!self.scrolled) {\n          self.scrolled = true;\n          setTimeout(function () {\n            self._scrollPage();\n          }, 61);\n        }\n      };\n\n      var resizeHandler = function () {\n        function delayed() {\n          self._scrollPage();\n          self.resizeTimeout = null;\n        }\n        if (self.resizeTimeout) {\n          clearTimeout(self.resizeTimeout);\n        }\n        self.resizeTimeout = setTimeout(delayed, 200);\n      };\n\n      window.addEventListener('scroll', scrollHandler, false);\n      window.addEventListener('resize', resizeHandler, false);\n    },\n\n    /*=============================================================================*/\n\n    _scrollPage: function () {\n        var self = this;\n\n        this.elems.forEach(function (el, i) {\n            if (isElementInViewport(el, self.options.viewportFactor)) {\n                self.animate(el);\n            }\n        });\n        this.scrolled = false;\n\t\tthis.tested = true;\n    },\n  }; // end scrollReveal.prototype\n\n  document.addEventListener(\"DOMContentLoaded\", function (evt) {\n    window.scrollReveal = new scrollReveal();\n  });\n\n})(window);\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "802734c801bffc466d69876bc4814f747aaac4fe",
+        "type": "commit",
+        "size": 246,
+        "content": "tree ea8182381b3a7234bb4d5a0cfd1433ef9fbb8b92\nparent 258fd0b52c41c7b63a3e4746ffb9f8c1c40515a9\nauthor Russell Belfer <rb@github.com> 1390851690 -0800\ncommitter Russell Belfer <rb@github.com> 1390851690 -0800\n\nAdding expected output for Javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "845be7d203839e64c1de3ca522e072bfc6057db5",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob 2320e2f1e4d9e6201a8e15949a0c10a533fa51cd\tfile.html\n100644 blob 7cd3c5a8aaf0e89037ff51ea54fb1c3d0828125c\tfile.js\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "872d19663f32459389597b52beec6457c1dc971f",
+        "type": "blob",
+        "size": 728,
+        "content": "<html>\n<body>\n  <h1 id=\"first section\">\n  <ol>\n    <li>item 1.1</li>\n    <li>item 1.2</li>\n    <li>item 1.3</li>\n    <li>item 1.4</li>\n    <li>item 1.5</li>\n    <li>item 1.6</li>\n    <li>item 1.7</li>\n    <li>item 1.8</li>\n    <li>item 1.9</li>\n  </ol>\n  </h1>\n  <h1 id=\"second section\">\n  <ol>\n    <li>item 2.1</li>\n    <li>item 2.2</li>\n    <li>item 2.3</li>\n    <li>item 2.4</li>\n    <li>item 2.5</li>\n    <li>item 2.6</li>\n    <li>item 2.7</li>\n    <li>item 2.8</li>\n  </ol>\n  </h1>\n  <h1 id=\"third section\">\n  <ol>\n    <li>item 3.1</li>\n    <li>item 3.2</li>\n    <li>item 3.3</li>\n    <li>item 3.4</li>\n    <li>item 3.5</li>\n    <li>item 3.6</li>\n    <li>item 3.7</li>\n    <li>item 3.8</li>\n  </ol>\n  </h1>\n</body>\n</html>\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "893e8d9dfda89cb288323f980f843d0b8f038385",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob 2ea4b8a16d737c180dfdd2b119dec9501592326c\tdiff.html\n100644 blob 18f2f749e0e7d270ee862c8aa0bdc8ae06004382\tdiff.js\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8e66ecd734be134a5a8310fda9f5c5a6f815ffcb",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 5a428e7dcffb41b65984517f1e6b8547babc8dff\tdiff.html\n100644 blob 4e65d074662535061295fe4f92462e2ac9a5152e\tdiff.javascript\n100644 blob 9711b5b3e9f30fbd760666e2a888b4d36dfeddfe\tdiff.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "967d6466ca65c2818753fdae029730a8f6a80392",
+        "type": "blob",
+        "size": 1338,
+        "content": "<?php\n\nnamespace Faker;\n\n/**\n * Proxy for other generators, to return only unique values. Works with\n * Faker\\Generator\\Base->unique()\n */\nclass UniqueGenerator\n{\n    protected $generator;\n    protected $maxRetries;\n\tprotected $moreStuff;\n    protected $uniques = array();\n\n    public function __construct(Generator $generator, $maxRetries)\n    {\n        $this->generator = $generator;\n        $this->maxRetries = $maxRetries + 1;\n    }\n\n    /**\n     * Catch and proxy all generator calls but return only unique values\n     */\n    public function __get($attribute)\n    {\n        return $this->__call($attribute, array());\n    }\n\n    /**\n     * Catch and proxy all generator calls with arguments but return only unique values\n     */\n    public function __call($name, $arguments)\n    {\n        $i = 0;\n        if (!isset($this->uniques[$name])) {\n            $this->uniques[$name] = array();\n        }\n        do {\n            $res = call_user_func_array(array($this->generator, $name), $arguments);\n            $i++;\n            if ($i >= $this->maxRetries) {\n                throw new \\OverflowException(sprintf('Maximum retries of %d reached without finding a unique value', $this->maxRetries));\n            }\n        } while (in_array($res, $this->uniques[$name]));\n        $this->uniques[$name][]= $res;\n\n        return $res;\n    }\n}\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9711b5b3e9f30fbd760666e2a888b4d36dfeddfe",
+        "type": "blob",
+        "size": 1011,
+        "content": "diff --git a/files/file.php b/files/file.php\nindex 63250ad..967d646 100644\n--- a/files/file.php\n+++ b/files/file.php\n@@ -12,2 +12,3 @@ class UniqueGenerator\n     protected $maxRetries;\n+\tprotected $moreStuff;\n     protected $uniques = array();\n@@ -17,3 +18,3 @@ public function __construct(Generator $generator, $maxRetries)\n         $this->generator = $generator;\n-        $this->maxRetries = $maxRetries;\n+        $this->maxRetries = $maxRetries + 1;\n     }\n@@ -33,10 +34,10 @@ public function __call($name, $arguments)\n     {\n+        $i = 0;\n         if (!isset($this->uniques[$name])) {\n             $this->uniques[$name] = array();\n         }\n-        $i = 0;\n         do {\n             $res = call_user_func_array(array($this->generator, $name), $arguments);\n             $i++;\n-            if ($i > $this->maxRetries) {\n+            if ($i >= $this->maxRetries) {\n                 throw new \\OverflowException(sprintf('Maximum retries of %d reached without finding a unique value', $this->maxRetries));\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "981b3b4eb6a1b1a6a7faa3b5687b4e8da12fc51a",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 761f5d9c55da82324a25d50a4b154295a807567d\tafter\n040000 tree 144163fc21f29923f46ed02f89bdec9047f8dd19\tbefore\n040000 tree 0515bc67593eca76b41aa075f45739a38cf6c6ad\texpected\n040000 tree 144163fc21f29923f46ed02f89bdec9047f8dd19\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9907b35ef4118eaf1dfad8a52e09542680ed6144",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 2320e2f1e4d9e6201a8e15949a0c10a533fa51cd\tfile.html\n100644 blob 7cd3c5a8aaf0e89037ff51ea54fb1c3d0828125c\tfile.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9db1d09ff9ad5190bcf12d72ea3c818ffca344c5",
+        "type": "commit",
+        "size": 175,
+        "content": "tree 49c0ff897b2b07a2ea0ed073e62a9dcd02704ba0\nauthor Russell Belfer <rb@github.com> 1390606798 -0800\ncommitter Russell Belfer <rb@github.com> 1390606798 -0800\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9ed26ff56542497a3dc517100b0725223adbc6c3",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 9907b35ef4118eaf1dfad8a52e09542680ed6144\tafter\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tbefore\n040000 tree d63c806de4f666369ed169495657bec24b558165\texpected\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a18d67c03d952007bbc002a93d0f0de2ad63c1cb",
+        "type": "tree",
+        "size": 68,
+        "content": "040000 tree 57924e76b0ec840e6fdf1aba8e3ef2970fc2ed38\tdriver\n040000 tree 893e8d9dfda89cb288323f980f843d0b8f038385\tnodriver\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "addc2ce26735496ce18c8f904a5050fbd747944f",
+        "type": "tree",
+        "size": 68,
+        "content": "040000 tree ce2675013ba30b56743ede9fb311d3ef69e5df95\tdriver\n040000 tree 3b5fffcdf079bbbf0eb965217d8c74cc9c6ea647\tnodriver\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b9f1286e566d6e6bd4433b968e3cfcbaf91497e2",
+        "type": "blob",
+        "size": 2812,
+        "content": "/*\n  Some code extracted from https://github.com/julianlloyd/scrollReveal.js\n  which happens to be a trending Javascript repo with an MIT license at\n  the time I was working on Javascript userdiff support in libgit2\n\n  I extracted just some of the code, so I suspect this is no longer valid\n  Javascript code, but it contains enough example patterns to work.\n*/\n;(function (window) {\n\n  'use strict';\n\n  var docElem = window.document.documentElement;\n\n  function getViewportH () {\n    var client = docElem['clientHeight'],\n      inner = window['innerHeight'];\n\n    return (client < inner) ? inner : client;\n  }\n\n  function getOffset (el) {\n    var offsetTop = 0,\n        offsetLeft = 0;\n\n    do {\n      if (!isNaN(el.offsetTop)) {\n        offsetTop += el.offsetTop;\n      }\n      if (!isNaN(el.offsetLeft)) {\n        offsetLeft += el.offsetLeft;\n      }\n    } while (el = el.offsetParent)\n\n    return {\n      top: offsetTop,\n      left: offsetLeft\n    }\n  }\n\n  function isElementInViewport (el, h) {\n    var scrolled = window.pageYOffset,\n        viewed = scrolled + getViewportH(),\n        elH = el.offsetHeight,\n        elTop = getOffset(el).top,\n        elBottom = elTop + elH,\n        h = h || 0;\n\n    return (elTop + elH * h) <= viewed && (elBottom) >= scrolled;\n  }\n\n  scrollReveal.prototype = {\n\n    _init: function () {\n\n      var self = this;\n\n      this.elems = Array.prototype.slice.call(docElem.querySelectorAll('[data-scrollReveal]'));\n      this.scrolled = false;\n\n  //  Initialize all scrollreveals, triggering all\n  //  reveals on visible elements.\n      this.elems.forEach(function (el, i) {\n        self.animate(el);\n      });\n\n      var scrollHandler = function () {\n        if (!self.scrolled) {\n          self.scrolled = true;\n          setTimeout(function () {\n            self._scrollPage();\n          }, 60);\n        }\n      };\n\n      var resizeHandler = function () {\n        function delayed() {\n          self._scrollPage();\n          self.resizeTimeout = null;\n        }\n        if (self.resizeTimeout) {\n          clearTimeout(self.resizeTimeout);\n        }\n        self.resizeTimeout = setTimeout(delayed, 200);\n      };\n\n      window.addEventListener('scroll', scrollHandler, false);\n      window.addEventListener('resize', resizeHandler, false);\n    },\n\n    /*=============================================================================*/\n\n    _scrollPage: function () {\n        var self = this;\n\n        this.elems.forEach(function (el, i) {\n            if (isElementInViewport(el, self.options.viewportFactor)) {\n                self.animate(el);\n            }\n        });\n        this.scrolled = false;\n    },\n  }; // end scrollReveal.prototype\n\n  document.addEventListener(\"DOMContentLoaded\", function (evt) {\n    window.scrollReveal = new scrollReveal();\n  });\n\n})(window);\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ccf7aeacc0a5a855cb27142f4380142ddcd25566",
+        "type": "blob",
+        "size": 1323,
+        "content": "diff --git a/files/file.js b/files/file.js\nindex b9f1286..7cd3c5a 100644\n--- a/files/file.js\n+++ b/files/file.js\n@@ -16,3 +16,4 @@ function getViewportH () {\n     var client = docElem['clientHeight'],\n-      inner = window['innerHeight'];\n+      inner = window['innerHeight'],\n+      sample = window['otherProperty'];\n \n@@ -27,3 +28,3 @@ function getOffset (el) {\n       if (!isNaN(el.offsetTop)) {\n-        offsetTop += el.offsetTop;\n+        offsetTop += el.offsetTop + 1;\n       }\n@@ -43,8 +44,7 @@ function isElementInViewport (el, h) {\n         viewed = scrolled + getViewportH(),\n-        elH = el.offsetHeight,\n         elTop = getOffset(el).top,\n-        elBottom = elTop + elH,\n+        elBottom = elTop + el.offsetHeight,\n         h = h || 0;\n \n-    return (elTop + elH * h) <= viewed && (elBottom) >= scrolled;\n+    return (elTop + el.offsetHeight * h) <= viewed && (elBottom) >= scrolled;\n   }\n@@ -60,4 +60,2 @@ _init: function () {\n \n-  //  Initialize all scrollreveals, triggering all\n-  //  reveals on visible elements.\n       this.elems.forEach(function (el, i) {\n@@ -71,3 +69,3 @@ var scrollHandler = function () {\n             self._scrollPage();\n-          }, 60);\n+          }, 61);\n         }\n@@ -101,2 +99,3 @@ _scrollPage: function () {\n         this.scrolled = false;\n+\t\tthis.tested = true;\n     },\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce2675013ba30b56743ede9fb311d3ef69e5df95",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 5a428e7dcffb41b65984517f1e6b8547babc8dff\tdiff.html\n100644 blob 4e65d074662535061295fe4f92462e2ac9a5152e\tdiff.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d63c806de4f666369ed169495657bec24b558165",
+        "type": "tree",
+        "size": 68,
+        "content": "040000 tree ef1641511d6cb425c6b4f59ef1feffe7762e86e0\tdriver\n040000 tree 20ab776b6ff3169fa0e5eff65df30d45187d22ba\tnodriver\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dab7a10e36da1830d9021987848e943ae3307094",
+        "type": "commit",
+        "size": 238,
+        "content": "tree f7b050157463c3d00f5c9a0dbc6ca8455db742c3\nparent 9db1d09ff9ad5190bcf12d72ea3c818ffca344c5\nauthor Russell Belfer <rb@github.com> 1390849555 -0800\ncommitter Russell Belfer <rb@github.com> 1390849555 -0800\n\nSetting up Javascript example\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e77c094aaf7d77c0eb67b3615ce0d56a0cad0f01",
+        "type": "blob",
+        "size": 950,
+        "content": "diff --git a/files/file.php b/files/file.php\nindex 63250ad..967d646 100644\n--- a/files/file.php\n+++ b/files/file.php\n@@ -12,2 +12,3 @@ class UniqueGenerator\n     protected $maxRetries;\n+\tprotected $moreStuff;\n     protected $uniques = array();\n@@ -17,3 +18,3 @@ class UniqueGenerator\n         $this->generator = $generator;\n-        $this->maxRetries = $maxRetries;\n+        $this->maxRetries = $maxRetries + 1;\n     }\n@@ -33,10 +34,10 @@ class UniqueGenerator\n     {\n+        $i = 0;\n         if (!isset($this->uniques[$name])) {\n             $this->uniques[$name] = array();\n         }\n-        $i = 0;\n         do {\n             $res = call_user_func_array(array($this->generator, $name), $arguments);\n             $i++;\n-            if ($i > $this->maxRetries) {\n+            if ($i >= $this->maxRetries) {\n                 throw new \\OverflowException(sprintf('Maximum retries of %d reached without finding a unique value', $this->maxRetries));\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea8182381b3a7234bb4d5a0cfd1433ef9fbb8b92",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 9907b35ef4118eaf1dfad8a52e09542680ed6144\tafter\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tbefore\n040000 tree addc2ce26735496ce18c8f904a5050fbd747944f\texpected\n040000 tree fe664ea484f08f6e28d97f7b06baddae5df4181d\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef1641511d6cb425c6b4f59ef1feffe7762e86e0",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 5a428e7dcffb41b65984517f1e6b8547babc8dff\tdiff.html\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f3be389d351e4bcc6dcc4b5fe22134ef0f63f8bd",
+        "type": "tree",
+        "size": 116,
+        "content": "100644 blob 2320e2f1e4d9e6201a8e15949a0c10a533fa51cd\tfile.html\n100644 blob 53917973acfe0111f93c2cfaacf854be245880e8\tfile.javascript\n100644 blob 967d6466ca65c2818753fdae029730a8f6a80392\tfile.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f7b050157463c3d00f5c9a0dbc6ca8455db742c3",
+        "type": "tree",
+        "size": 132,
+        "content": "040000 tree 845be7d203839e64c1de3ca522e072bfc6057db5\tafter\n040000 tree 0cac9e468253d999d32bc5f3424e31927debfc23\tbefore\n040000 tree d63c806de4f666369ed169495657bec24b558165\texpected\n040000 tree 0cac9e468253d999d32bc5f3424e31927debfc23\tfiles\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fe664ea484f08f6e28d97f7b06baddae5df4181d",
+        "type": "tree",
+        "size": 80,
+        "content": "100644 blob 872d19663f32459389597b52beec6457c1dc971f\tfile.html\n100644 blob b9f1286e566d6e6bd4433b968e3cfcbaf91497e2\tfile.javascript\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffa15b96e95747274e8f62eaa1a9350d33dee90c",
+        "type": "commit",
+        "size": 242,
+        "content": "tree 645760e5e85398104ffe1a040e931febedf8d26b\nparent dab7a10e36da1830d9021987848e943ae3307094\nauthor Russell Belfer <rb@github.com> 1390849864 -0800\ncommitter Russell Belfer <rb@github.com> 1390849864 -0800\n\nAdd expected output for JS driver\n",
+        "encoding": "utf-8"
+    }
+]

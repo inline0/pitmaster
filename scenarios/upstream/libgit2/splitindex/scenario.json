@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/splitindex",
+    "category": "upstream",
+    "description": "libgit2: splitindex",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

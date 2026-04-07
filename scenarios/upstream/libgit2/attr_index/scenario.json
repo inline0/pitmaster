@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/attr_index",
+    "category": "upstream",
+    "description": "libgit2: attr_index",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

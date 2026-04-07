@@ -1,0 +1,842 @@
+[
+    {
+        "hash": "0066204dd469ee930e551fbcf123f98e211c99ce",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTAKE THE HIND SHIN of beef, cut off all the flesh off the leg-bone,\nWHICH MUST BE TAKEN AWAY entirely, or the soup will be greasy. Wash the\nMEAT CLEAN and lay it in a pot, sprinkle over it one small\nTABLE-SPOONFUL of pounded black pepper, and two of salt; three onions\nTHE SIZE of a hen's egg, cut small, six small carrots scraped and cut\nUP, two small turnips pared and cut into dice; pour on three quarts of\nWATER, cover the pot close, and keep it gently and steadily boiling five\nHOURS, which will leave about three pints of clear soup; do not let the\nPOT BOIL OVER, but take off the scum carefully, as it rises. When it has\nBOILED four hours, put in a small bundle of thyme and parsley, and a\nPINT of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "00f1b9a0948a7d5d14405eba6030efcdfbb8ff4a",
+        "type": "commit",
+        "size": 256,
+        "content": "tree f556d5fef35003561dc0b64b37057d7541239105\nparent aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622562 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622562 -0400\n\nAddition of dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "013cc32d341bab0e6f039f50f153c18986f16c58",
+        "type": "commit",
+        "size": 259,
+        "content": "tree 78c320b06544e23d786a9ec84ee93861f2933094\nparent 9539b2cc291d6a6b1b266df8474d31fdd344dd79\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622457 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622457 -0400\n\nModification 3 to barley\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "01a17f7d154ab5bf9f8bfede3d82dd00ddf7e7dc",
+        "type": "blob",
+        "size": 576,
+        "content": "DRIED PEA SOUP.\n\nTAKE ONE QUART of split peas, or Lima beans, which are better; put them\nin three quarts of very soft water with three onions chopped up, pepper\nand salt; boil them two hours; mash them well and pass them through a\nsieve; return the liquid into the pot, thicken it with a large piece of\nbutter and flour, put in some slices of nice salt pork, and a large\ntea-spoonful of celery seed pounded; boil it till the pork is done, and\nserve it up; have some toasted bread cut into dice and fried in butter,\nwhich must be put in the tureen before you pour in the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "022d3b6bbd0bfbdf147319476fb8bf405691cb0d",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 22adb22bef75a0371e85ff6d82e5e60e4b425501\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "053808a709cf91385985369159b296cf61a177ac",
+        "type": "tree",
+        "size": 268,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob f75c193a1df47186727179f24867bc4d27a8991f\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 61139b9b40a3e489f4abbc6af14e10ae14006e47\tgreen_pea.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0ef2e2b2a2b8d6e1f8dff5e621e0eca21b693d0c",
+        "type": "commit",
+        "size": 313,
+        "content": "tree bccc8eabb5cfe2ec09959c7f4155aa73429fd604\nparent 4cacc6f6e740a5bc64faa33e04b8ef0733d8a127\nparent 2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622344 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622344 -0400\n\nMerge branch 'gravy' into veal\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0f5f6d3353be1a9966fa5767b7d604b051798224",
+        "type": "commit",
+        "size": 274,
+        "content": "tree ab25a53ef5622d443ecb0492b7516725f0deac8f\nparent 33f915f9e4dbd9f4b24430e48731a59b45b15500\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622039 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622039 -0400\n\nConflicting modification 2 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "11fac10ca1b9318ce361a0be0c3d889d777e299c",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 5b1e8bccf7787e942aecf61912f94a2c274f85a5\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12c084412b952396962eb420716df01022b847cc",
+        "type": "commit",
+        "size": 259,
+        "content": "tree 3da85aca38a95b44d77ef55a8deb445e49ba19b4\nparent 013cc32d341bab0e6f039f50f153c18986f16c58\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622467 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622467 -0400\n\nModification 4 to barley\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "12f28ed978639d331269d9dc2b74e87db58e1057",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 11fac10ca1b9318ce361a0be0c3d889d777e299c\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621645 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621645 -0400\n\nModification 1 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1914d57ddf6c5c997664521cc94f190df46dc1c2",
+        "type": "blob",
+        "size": 390,
+        "content": "GRAVY SOUP.\n\nGET EIGHT POUNDS of coarse lean beef--wash it clean and lay it in your\nPOT, put in the same ingredients as for the shin soup, with the same\nquantity of water, and follow the process directed for that. Strain the\nsoup through a sieve, and serve it up clear, with nothing more than\ntoasted bread in it; two table-spoonsful of mushroom catsup will add a\nfine flavour to the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1b1d19799fcc89fa3cb821581fcf7f2e8fd2cc4d",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 73f346c88d965227a03c0af8d555870b8c5021d4\nparent b9f72b9158fa8c49fb4e4c10b26817ed867be803\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622610 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622610 -0400\n\nModification 3 of dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1d83f106355e4309a293e42ad2a2c4b8bdbe77ae",
+        "type": "blob",
+        "size": 18,
+        "content": "a new blob content",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1f2214c1b13b134d5508f41f6a3b77cc6a8f5182",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 0066204dd469ee930e551fbcf123f98e211c99ce\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "20db906c85e78c6dde82eb2ec6d3231c4b96fce8",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTAKE THE HIND SHIN of beef, cut off all the flesh off the leg-bone,\nWHICH MUST BE TAKEN AWAY entirely, or the soup will be greasy. Wash the\nMEAT CLEAN and lay it in a pot, sprinkle over it one small\nTABLE-SPOONFUL of pounded black pepper, and two of salt; three onions\nTHE SIZE of a hen's egg, cut small, six small carrots scraped and cut\nUP, two small turnips pared and cut into dice; pour on three quarts of\nWATER, cover the pot close, and keep it gently and steadily boiling five\nhours, which will leave about three pints of clear soup; do not let the\npot boil over, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22adb22bef75a0371e85ff6d82e5e60e4b425501",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nOF THE TOPS, and lay them in water, chop the stalks and put them on the\nFIRE WITH A PIECE OF BACON, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e",
+        "type": "commit",
+        "size": 258,
+        "content": "tree 63c18bf188b8a1ab0bad85161dc3fb43c48ed0db\nparent 4bed71df7017283cac61bbf726197ad6a5a18b84\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622301 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622301 -0400\n\nModification 2 to gravy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b4ebffd3111546d278bb5df62e5630930b605fb",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob da82b3a60c50cf5ac524ec3000d743447329465d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3069cc907e6294623e5917ef6de663928c1febfb",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 3f05a038dd89f51ba2b3d7b14ba1f8c00f0e31ac\nparent 8d1f13f93c4995760ac07d129246ac1ff64c0be9\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621859 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621859 -0400\n\nModification 3 to beef\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3252a0692ace4c4c709f22011227d9dc4845f289",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob d6b9ec0dfb972a6815ace42545cde5f2631cd776\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "33f915f9e4dbd9f4b24430e48731a59b45b15500",
+        "type": "commit",
+        "size": 274,
+        "content": "tree 2b4ebffd3111546d278bb5df62e5630930b605fb\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622026 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622026 -0400\n\nConflicting modification 1 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3486a9d4cdf0b7b4a702c199eed541dc3af13a03",
+        "type": "blob",
+        "size": 399,
+        "content": "BARLEY SOUP.\n\nPut on three gills of barley, three quarts of water, few onions cut up,\nsix carrots scraped and cut into dice, an equal quantity of turnips cut\nsmall; boil it gently two hours, then put in four or five pounds of the\nrack or neck of mutton, a few slices of lean ham, with pepper and salt;\nboil it slowly two hours longer and serve it up. Tomatos are an\nexcellent addition to this soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3c33b080bf75724c8899d8e703614cb59bfbd047",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 41c5a0a761bb4a7670924c1af0800b30fe9a21be\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3da85aca38a95b44d77ef55a8deb445e49ba19b4",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 79e28694aae0d3064b06f96a5207b943a2357f07\tbarley.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3e8989b5a16d5258c935d998ef0e6bb139cc4757",
+        "type": "commit",
+        "size": 257,
+        "content": "tree ffdfa89389040a87008c4ab1834120d3046daaea\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622323 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622323 -0400\n\nModification 1 to veal\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3f05a038dd89f51ba2b3d7b14ba1f8c00f0e31ac",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 20db906c85e78c6dde82eb2ec6d3231c4b96fce8\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3fd8d53cf02de539b9a25a5941030451f76a152f",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 79e28694aae0d3064b06f96a5207b943a2357f07\tbarley.txt\n100644 blob ee23c5eeedadf8595c0ff60a366d970a165e373d\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "400d89e8ee6cd91b67b1f45de1ca190e1c580c6f",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 022d3b6bbd0bfbdf147319476fb8bf405691cb0d\nparent dfd3d25264693fcd7348ad286f3c34f3f6b30918\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621673 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621673 -0400\n\nModification 3 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "414dfc71ead79c07acd4ea47fecf91f289afc4b9",
+        "type": "blob",
+        "size": 576,
+        "content": "DRIED PEA SOUP.\n\nTAKE ONE QUART of split peas, or Lima beans, which are better; put them\nIN THREE QUARTS of very soft water with three onions chopped up, pepper\nAND SALT; boil them two hours; mash them well and pass them through a\nSIEVE; return the liquid into the pot, thicken it with a large piece of\nbutter and flour, put in some slices of nice salt pork, and a large\ntea-spoonful of celery seed pounded; boil it till the pork is done, and\nserve it up; have some toasted bread cut into dice and fried in butter,\nwhich must be put in the tureen before you pour in the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "41c5a0a761bb4a7670924c1af0800b30fe9a21be",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, CUT OFF ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and PEPPER AND SALT;\nadd two quarts of water, boil them till the stalks are quite soft, THEN\npulp them through a sieve, and strain the water to it, which MUST BE PUT\nback in the pot; put into it a chicken cut up, with THE TOPS OF\nasparagus which had been laid by, boil it until these last ARTICLES ARE\nsufficiently done, thicken with flour, butter and milk, and SERVE IT UP.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42cdad903aef3e7b614675e6584a8be417941911",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "44c801fe026abbc141b52a4dec5df15fa98249c6",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, cut off ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b21eb6eeeec7f8fc89a1d334faff9bd5f5f8c34",
+        "type": "commit",
+        "size": 274,
+        "content": "tree 3c33b080bf75724c8899d8e703614cb59bfbd047\nparent 85f34ce9ca9e0f33d4146afec9cbe5a26757500a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622073 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622073 -0400\n\nConflicting modification 4 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b7c5650008b2e747fe1809eeb5a1dde0e80850a",
+        "type": "blob",
+        "size": 1092,
+        "content": "SOUP WITH BOUILLI.\n\nTake the nicest part of the thick brisket of beef, about eight pounds,\nput it into a pot with every thing directed for the other soup; make it\nexactly in the same way, only put it on an hour sooner, that you may\nhave time to prepare the bouilli; after it has boiled five hours, take\nout the beef, cover up the soup and set it near the fire that it may\nkeep hot. Take the skin off the beef, have the yelk of an egg well\nbeaten, dip a feather in it and wash the top of your beef, sprinkle over\nit the crumb of stale bread finely grated, put it in a Dutch oven\npreviously heated, put the top on with coals enough to brown, but not\nburn the beef; let it stand nearly an hour, and prepare your gravy\nthus:--Take a sufficient quantity of soup and the vegetables boiled in\nit; add to it a table-spoonful of red wine, and two of mushroom catsup,\nthicken with a little bit of butter and a little brown flour; make it\nvery hot, pour it in your dish, and put the beef on it. Garnish it with\ngreen pickle, cut in thin slices, serve up the soup in a tureen with\nbits of toasted bread.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4bed71df7017283cac61bbf726197ad6a5a18b84",
+        "type": "commit",
+        "size": 258,
+        "content": "tree e88cc0a6919a74599ce8e1dcb81eb2bbae33a645\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622290 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622290 -0400\n\nModification 1 to gravy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4cacc6f6e740a5bc64faa33e04b8ef0733d8a127",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 740a804e8963759c98e5b8cb912e15ae74a7a4a6\nparent 3e8989b5a16d5258c935d998ef0e6bb139cc4757\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622338 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622338 -0400\n\nModification 2 to veal\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4fb698bde45d7d2833e3f2aacfbfe8a7e7f60a65",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob a0fa65f96c1e3bdc7287e334229279dcc1248fa4\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "508be4ff49d38465ad3de58f66d38f70e59f881f",
+        "type": "tree",
+        "size": 268,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 8d95ea62e621f1d38d230d9e7d206e41096d76af\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 61139b9b40a3e489f4abbc6af14e10ae14006e47\tgreen_pea.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "53f75e45a463033854e52fa8d39dc858e45537d0",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 9254a37fde7e97f9a28dee2967fdb2c5d1ed94e9\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "588e5d2f04d49707fe4aab865e1deacaf7ef6787",
+        "type": "commit",
+        "size": 257,
+        "content": "tree b7c536a5883c8adaeb34d5e198c5a3dbbdc608b5\nparent 3069cc907e6294623e5917ef6de663928c1febfb\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621870 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621870 -0400\n\nModification 4 to beef\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5a72bf3bf964fdb176ffa4587312e69e2039695a",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 1d83f106355e4309a293e42ad2a2c4b8bdbe77ae\tfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5b1e8bccf7787e942aecf61912f94a2c274f85a5",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nof the tops, and lay them in water, chop the stalks and put them on the\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6029cb003b59f710f9a8ebd9da9ece2d73070b69",
+        "type": "blob",
+        "size": 1095,
+        "content": "VEAL SOUP.\n\nPUT INTO A POT three quarts of water, three onions cut small, one\nSPOONFUL of black pepper pounded, and two of salt, with two or three\nSLICES OF LEAN HAM; let it boil steadily two hours; skim it\nOCCASIONALLY, then put into it a shin of veal, let it boil two hours\nLONGER; take out the slices of ham, and skim off the grease if any\nSHOULD RISE, take a gill of good cream, mix with it two table-spoonsful\nof flour very nicely, and the yelks of two eggs beaten well, strain this\nmixture, and add some chopped parsley; pour some soup on by degrees,\nstir it well, and pour it into the pot, continuing to stir until it has\nboiled two or three minutes to take off the raw taste of the eggs. If\nthe cream be not perfectly sweet, and the eggs quite new, the thickening\nwill curdle in the soup. For a change you may put a dozen ripe tomatos\nin, first taking off their skins, by letting them stand a few minutes in\nhot water, when they may be easily peeled. When made in this way you\nmust thicken it with the flour only. Any part of the veal may be used,\nbut the shin or knuckle is the nicest.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61139b9b40a3e489f4abbc6af14e10ae14006e47",
+        "type": "blob",
+        "size": 282,
+        "content": "GREEN PEA SOUP.\n\nMAKE IT EXACTLY AS YOU DO THE DRIED PEA SOUP, only in place of the\ncelery seed, put a handful of mint chopped small, and a pint of young\npeas, which must be boiled in the soup till tender; thicken it with a\nquarter of a pound of butter, and two spoonsful of flour.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6130e5fcbdce2aa8b3cfd84706c58a892e7d8dd0",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 6c8e16469b6ca09a07e00f0e07a5143c31dcfb64\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63c18bf188b8a1ab0bad85161dc3fb43c48ed0db",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob e95f47e016dcc70b0b888df8e40e97b8aabafd4c\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "67ed7afb256807556f9b74fa4f7c9284aaec1120",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nOF THE TOPS, and lay them in water, chop the stalks and put them on the\nFIRE WITH A PIECE OF BACON, a large onion cut up, and pepper and salt;\nADD TWO QUARTS OF WATER, boil them till the stalks are quite soft, then\nPULP THEM THROUGH A SIEVE, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68af1fc7407fd9addf1701a87eb1c95c7494c598",
+        "type": "blob",
+        "size": 774,
+        "content": "OYSTER SOUP.\n\nWash and drain two quarts of oysters, put them on with three quarts of\nwater, three onions chopped up, two or three slices of lean ham, pepper\nand salt; boil it till reduced one-half, strain it through a sieve,\nreturn the liquid into the pot, put in one quart of fresh oysters, boil\nit till they are sufficiently done, and thicken the soup with four\nspoonsful of flour, two gills of rich cream, and the yelks of six new\nlaid eggs beaten well; boil it a few minutes after the thickening is put\nin. Take care that it does not curdle, and that the flour is not in\nlumps; serve it up with the last oysters that were put in. If the\nflavour of thyme be agreeable, you may put in a little, but take care\nthat it does not boil in it long enough to discolour the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68f6182f4c85d39e1309d97c7e456156dc9c0096",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTake the hind shin of beef, cut off all the flesh off the leg-bone,\nwhich must be taken away entirely, or the soup will be greasy. Wash the\nmeat clean and lay it in a pot, sprinkle over it one small\ntable-spoonful of pounded black pepper, and two of salt; three onions\nthe size of a hen's egg, cut small, six small carrots scraped and cut\nup, two small turnips pared and cut into dice; pour on three quarts of\nwater, cover the pot close, and keep it gently and steadily boiling five\nhours, which will leave about three pints of clear soup; do not let the\npot boil over, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c8e16469b6ca09a07e00f0e07a5143c31dcfb64",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, CUT OFF ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and PEPPER AND SALT;\nadd two quarts of water, boil them till the stalks are quite soft, THEN\npulp them through a sieve, and strain the water to it, which MUST BE PUT\nback in the pot; put into it a chicken cut up, with THE TOPS OF\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6d77ce8fa2cd93c6489236e33e45e35203ca748c",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 8353b9f9deff7c707f280e0f656c80772cca7cd9\tbarley.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6dfb87d20f3dbca02da4a39890114fd9ba6a51e7",
+        "type": "blob",
+        "size": 576,
+        "content": "DRIED PEA SOUP.\n\nTake one quart of split peas, or Lima beans, which are better; put them\nin three quarts of very soft water with three onions chopped up, pepper\nand salt; boil them two hours; mash them well and pass them through a\nsieve; return the liquid into the pot, thicken it with a large piece of\nbutter and flour, put in some slices of nice salt pork, and a large\ntea-spoonful of celery seed pounded; boil it till the pork is done, and\nserve it up; have some toasted bread cut into dice and fried in butter,\nwhich must be put in the tureen before you pour in the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "73f346c88d965227a03c0af8d555870b8c5021d4",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 79e28694aae0d3064b06f96a5207b943a2357f07\tbarley.txt\n100644 blob ec725f5639730640f91cd0be5f2d6d7ac5d69c79\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "740a804e8963759c98e5b8cb912e15ae74a7a4a6",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob c517380440ed78865ffe3fa130b9738615c76618\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "770f14546ee2563a26c52afa5cc4139a96e5d360",
+        "type": "tree",
+        "size": 258,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob fce0584b379f535e50e036db587db71884ea6b36\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n040000 tree 914f3c604d1098847b7fe275f659ee329878153f\tsome\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78c320b06544e23d786a9ec84ee93861f2933094",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 9cd483e7da23819d7f71d24e9843812337886753\tbarley.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "79e28694aae0d3064b06f96a5207b943a2357f07",
+        "type": "blob",
+        "size": 399,
+        "content": "BARLEY SOUP.\n\nPUT ON THREE GILLS of barley, three quarts of water, few onions cut up,\nSIX CARROTS scraped and cut into dice, an equal quantity of turnips cut\nSMALL; boil it gently two hours, then put in four or five pounds of the\nRACK OR NECK of mutton, a few slices of lean ham, with pepper and salt;\nboil it slowly two hours longer and serve it up. Tomatos are an\nexcellent addition to this soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7a05900f340af0252aaa4e34941f040c5d2fe7f7",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 53f75e45a463033854e52fa8d39dc858e45537d0\nparent 400d89e8ee6cd91b67b1f45de1ca190e1c580c6f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621684 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621684 -0400\n\nModification 4 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7a677f6201c8f9d46bdfe1f4b08cb504e360a34e",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 44c801fe026abbc141b52a4dec5df15fa98249c6\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f",
+        "type": "commit",
+        "size": 286,
+        "content": "tree 42cdad903aef3e7b614675e6584a8be417941911\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621580 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621580 -0400\n\nInitial revision\n\nA few soup recipes from \"The Virginia Housewife\", available in the\npublic domain.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7f37fe2d7320360f8a9118b1ed8fba6f38481679",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 8f4de6c781b9ff9cedfd7f9f9f224e744f97b259\nparent 1b1d19799fcc89fa3cb821581fcf7f2e8fd2cc4d\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622618 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622618 -0400\n\nModification 4 of dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8032d630f37266bace093e353f7b97d7f8b20950",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 8d95ea62e621f1d38d230d9e7d206e41096d76af\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "80dce0e74f0534811db734a68c23b49f98584d7a",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, CUT OFF ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and PEPPER AND SALT;\nadd two quarts of water, boil them till the stalks are quite soft, THEN\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8353b9f9deff7c707f280e0f656c80772cca7cd9",
+        "type": "blob",
+        "size": 399,
+        "content": "BARLEY SOUP.\n\nPUT ON THREE GILLS of barley, three quarts of water, few onions cut up,\nSIX CARROTS scraped and cut into dice, an equal quantity of turnips cut\nsmall; boil it gently two hours, then put in four or five pounds of the\nrack or neck of mutton, a few slices of lean ham, with pepper and salt;\nboil it slowly two hours longer and serve it up. Tomatos are an\nexcellent addition to this soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "85258e426a341cc1aa035ac7f6d18f84fed2ab38",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 67ed7afb256807556f9b74fa4f7c9284aaec1120\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "85f34ce9ca9e0f33d4146afec9cbe5a26757500a",
+        "type": "commit",
+        "size": 274,
+        "content": "tree 6130e5fcbdce2aa8b3cfd84706c58a892e7d8dd0\nparent 0f5f6d3353be1a9966fa5767b7d604b051798224\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622054 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622054 -0400\n\nConflicting modification 3 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "86a5415741ed3754ccb0cac1fc19fd82587840a4",
+        "type": "blob",
+        "size": 1095,
+        "content": "VEAL SOUP.\n\nPUT INTO A POT three quarts of water, three onions cut small, one\nSPOONFUL of black pepper pounded, and two of salt, with two or three\nslices of lean ham; let it boil steadily two hours; skim it\noccasionally, then put into it a shin of veal, let it boil two hours\nlonger; take out the slices of ham, and skim off the grease if any\nshould rise, take a gill of good cream, mix with it two table-spoonsful\nof flour very nicely, and the yelks of two eggs beaten well, strain this\nmixture, and add some chopped parsley; pour some soup on by degrees,\nstir it well, and pour it into the pot, continuing to stir until it has\nboiled two or three minutes to take off the raw taste of the eggs. If\nthe cream be not perfectly sweet, and the eggs quite new, the thickening\nwill curdle in the soup. For a change you may put a dozen ripe tomatos\nin, first taking off their skins, by letting them stand a few minutes in\nhot water, when they may be easily peeled. When made in this way you\nmust thicken it with the flour only. Any part of the veal may be used,\nbut the shin or knuckle is the nicest.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d1f13f93c4995760ac07d129246ac1ff64c0be9",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 3252a0692ace4c4c709f22011227d9dc4845f289\nparent da9c51a23d02d931a486f45ad18cda05cf5d2b94\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621844 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621844 -0400\n\nModification 2 to beef\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d95ea62e621f1d38d230d9e7d206e41096d76af",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTAKE THE HIND SHIN of beef, cut off all the flesh off the leg-bone,\nWHICH MUST BE TAKEN AWAY entirely, or the soup will be greasy. Wash the\nmeat clean and lay it in a pot, sprinkle over it one small\ntable-spoonful of pounded black pepper, and two of salt; three onions\nthe size of a hen's egg, cut small, six small carrots scraped and cut\nup, two small turnips pared and cut into dice; pour on three quarts of\nwater, cover the pot close, and keep it gently and steadily boiling five\nhours, which will leave about three pints of clear soup; do not let the\npot boil over, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f4de6c781b9ff9cedfd7f9f9f224e744f97b259",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 79e28694aae0d3064b06f96a5207b943a2357f07\tbarley.txt\n100644 blob 414dfc71ead79c07acd4ea47fecf91f289afc4b9\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "914f3c604d1098847b7fe275f659ee329878153f",
+        "type": "tree",
+        "size": 33,
+        "content": "040000 tree 5a72bf3bf964fdb176ffa4587312e69e2039695a\tnested\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9254a37fde7e97f9a28dee2967fdb2c5d1ed94e9",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nOF THE TOPS, and lay them in water, chop the stalks and put them on the\nFIRE WITH A PIECE OF BACON, a large onion cut up, and pepper and salt;\nADD TWO QUARTS OF WATER, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9539b2cc291d6a6b1b266df8474d31fdd344dd79",
+        "type": "commit",
+        "size": 259,
+        "content": "tree 6d77ce8fa2cd93c6489236e33e45e35203ca748c\nparent e4f809f826c1a9fc929874bc0e4644dd2f2a1af4\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622449 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622449 -0400\n\nModification 2 to barley\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9a8535dfcaf7554c728d874f047c5461fb2c71d1",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob e95f47e016dcc70b0b888df8e40e97b8aabafd4c\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob 6029cb003b59f710f9a8ebd9da9ece2d73070b69\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9cd483e7da23819d7f71d24e9843812337886753",
+        "type": "blob",
+        "size": 399,
+        "content": "BARLEY SOUP.\n\nPUT ON THREE GILLS of barley, three quarts of water, few onions cut up,\nSIX CARROTS scraped and cut into dice, an equal quantity of turnips cut\nSMALL; boil it gently two hours, then put in four or five pounds of the\nrack or neck of mutton, a few slices of lean ham, with pepper and salt;\nboil it slowly two hours longer and serve it up. Tomatos are an\nexcellent addition to this soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a01a6ee390f65d834375e072952deaee0c5e92f7",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 3486a9d4cdf0b7b4a702c199eed541dc3af13a03\tbarley.txt\n100644 blob 01a17f7d154ab5bf9f8bfede3d82dd00ddf7e7dc\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0fa65f96c1e3bdc7287e334229279dcc1248fa4",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nOF THE TOPS, and lay them in water, chop the stalks and put them on the\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a125b9b655932711abceaf8962948e6b601d67b6",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 3486a9d4cdf0b7b4a702c199eed541dc3af13a03\tbarley.txt\n100644 blob ee23c5eeedadf8595c0ff60a366d970a165e373d\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a700acc970eccccc73be53cd269462176544e6d1",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, cut off ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and PEPPER AND SALT;\nadd two quarts of water, boil them till the stalks are quite soft, THEN\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a7b066537e6be7109abfe4ff97b675d4e077da20",
+        "type": "blob",
+        "size": 1095,
+        "content": "VEAL SOUP.\n\nPut into a pot three quarts of water, three onions cut small, one\nspoonful of black pepper pounded, and two of salt, with two or three\nslices of lean ham; let it boil steadily two hours; skim it\noccasionally, then put into it a shin of veal, let it boil two hours\nlonger; take out the slices of ham, and skim off the grease if any\nshould rise, take a gill of good cream, mix with it two table-spoonsful\nof flour very nicely, and the yelks of two eggs beaten well, strain this\nmixture, and add some chopped parsley; pour some soup on by degrees,\nstir it well, and pour it into the pot, continuing to stir until it has\nboiled two or three minutes to take off the raw taste of the eggs. If\nthe cream be not perfectly sweet, and the eggs quite new, the thickening\nwill curdle in the soup. For a change you may put a dozen ripe tomatos\nin, first taking off their skins, by letting them stand a few minutes in\nhot water, when they may be easily peeled. When made in this way you\nmust thicken it with the flour only. Any part of the veal may be used,\nbut the shin or knuckle is the nicest.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88",
+        "type": "commit",
+        "size": 205,
+        "content": "tree eef0edde5daa94da5f297d4ddb5dfbc1980f0902\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622418 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622418 -0400\n\nAddition of barley\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab25a53ef5622d443ecb0492b7516725f0deac8f",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob 80dce0e74f0534811db734a68c23b49f98584d7a\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "adc97cfb874cdfb9d5ab17b54f3771dea6e02ccf",
+        "type": "tree",
+        "size": 268,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob cb20a10406172afd6ca3138ce36ecaf8b1269e8e\tgreen_pea.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae87cae12879a3c37d7cc994afc6395bcb0eaf99",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob a700acc970eccccc73be53cd269462176544e6d1\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b146bd7608eac53d9bf9e1a6963543588b555c64",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 1f2214c1b13b134d5508f41f6a3b77cc6a8f5182\nparent 588e5d2f04d49707fe4aab865e1deacaf7ef6787\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621881 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621881 -0400\n\nModification 5 to beef\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b1b94ec02f8ed87d0efa4c65fb38d5d6da7e8b32",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob fce0584b379f535e50e036db587db71884ea6b36\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b672b141d48c369fee6c4deeb32a904387594365",
+        "type": "commit",
+        "size": 262,
+        "content": "tree a125b9b655932711abceaf8962948e6b601d67b6\nparent e52ff405da5b7e1e9b0929939fa8405d81fe8a45\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622587 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622587 -0400\n\nModification 2 of dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b7c536a5883c8adaeb34d5e198c5a3dbbdc608b5",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob f75c193a1df47186727179f24867bc4d27a8991f\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b9f72b9158fa8c49fb4e4c10b26817ed867be803",
+        "type": "commit",
+        "size": 319,
+        "content": "tree 3fd8d53cf02de539b9a25a5941030451f76a152f\nparent b672b141d48c369fee6c4deeb32a904387594365\nparent 12c084412b952396962eb420716df01022b847cc\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622594 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622594 -0400\n\nMerge branch 'barley' into dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bccc8eabb5cfe2ec09959c7f4155aa73429fd604",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob e95f47e016dcc70b0b888df8e40e97b8aabafd4c\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob c517380440ed78865ffe3fa130b9738615c76618\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c4e6cca3ec6ae0148ed231f97257df8c311e015f",
+        "type": "blob",
+        "size": 390,
+        "content": "GRAVY SOUP.\n\nGet eight pounds of coarse lean beef--wash it clean and lay it in your\npot, put in the same ingredients as for the shin soup, with the same\nquantity of water, and follow the process directed for that. Strain the\nsoup through a sieve, and serve it up clear, with nothing more than\ntoasted bread in it; two table-spoonsful of mushroom catsup will add a\nfine flavour to the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c517380440ed78865ffe3fa130b9738615c76618",
+        "type": "blob",
+        "size": 1095,
+        "content": "VEAL SOUP.\n\nPUT INTO A POT three quarts of water, three onions cut small, one\nSPOONFUL of black pepper pounded, and two of salt, with two or three\nSLICES OF LEAN HAM; let it boil steadily two hours; skim it\nOCCASIONALLY, then put into it a shin of veal, let it boil two hours\nlonger; take out the slices of ham, and skim off the grease if any\nshould rise, take a gill of good cream, mix with it two table-spoonsful\nof flour very nicely, and the yelks of two eggs beaten well, strain this\nmixture, and add some chopped parsley; pour some soup on by degrees,\nstir it well, and pour it into the pot, continuing to stir until it has\nboiled two or three minutes to take off the raw taste of the eggs. If\nthe cream be not perfectly sweet, and the eggs quite new, the thickening\nwill curdle in the soup. For a change you may put a dozen ripe tomatos\nin, first taking off their skins, by letting them stand a few minutes in\nhot water, when they may be easily peeled. When made in this way you\nmust thicken it with the flour only. Any part of the veal may be used,\nbut the shin or knuckle is the nicest.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cb20a10406172afd6ca3138ce36ecaf8b1269e8e",
+        "type": "blob",
+        "size": 282,
+        "content": "GREEN PEA SOUP.\n\nMake it exactly as you do the dried pea soup, only in place of the\ncelery seed, put a handful of mint chopped small, and a pint of young\npeas, which must be boiled in the soup till tender; thicken it with a\nquarter of a pound of butter, and two spoonsful of flour.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d482e77aecb8e07da43e4cad6e0dcb59219e12af",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 508be4ff49d38465ad3de58f66d38f70e59f881f\nparent dc12ac1e10f2be70e8ecd52132a08da98a309c3a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405707134 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405707134 -0400\n\nModification 1 to green_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d616d97082eb7bb2dc6f180a7cca940993b7a56f",
+        "type": "commit",
+        "size": 258,
+        "content": "tree b1b94ec02f8ed87d0efa4c65fb38d5d6da7e8b32\nparent 2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405625055 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405625055 -0400\n\nModification 3 to gravy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d6b9ec0dfb972a6815ace42545cde5f2631cd776",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTAKE THE HIND SHIN of beef, cut off all the flesh off the leg-bone,\nWHICH MUST BE TAKEN AWAY entirely, or the soup will be greasy. Wash the\nMEAT CLEAN and lay it in a pot, sprinkle over it one small\nTABLE-SPOONFUL of pounded black pepper, and two of salt; three onions\nthe size of a hen's egg, cut small, six small carrots scraped and cut\nup, two small turnips pared and cut into dice; pour on three quarts of\nwater, cover the pot close, and keep it gently and steadily boiling five\nhours, which will leave about three pints of clear soup; do not let the\npot boil over, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9c5185186d95d233dc007c1927cb3bdd6cde35b",
+        "type": "commit",
+        "size": 231,
+        "content": "tree 770f14546ee2563a26c52afa5cc4139a96e5d360\nparent d616d97082eb7bb2dc6f180a7cca940993b7a56f\nauthor Edward Thomson <ethomson@github.com> 1464850465 -0500\ncommitter Edward Thomson <ethomson@github.com> 1464850465 -0500\n\nAdd a file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "da82b3a60c50cf5ac524ec3000d743447329465d",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, CUT OFF ONE INCH\nof the tops, and lay them in water, chop the stalks and PUT THEM ON THE\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "da9c51a23d02d931a486f45ad18cda05cf5d2b94",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 8032d630f37266bace093e353f7b97d7f8b20950\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621769 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621769 -0400\n\nModification 1 to beef\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dc12ac1e10f2be70e8ecd52132a08da98a309c3a",
+        "type": "commit",
+        "size": 274,
+        "content": "tree e7bb00c4eab291e08361fda376733a12b4150aa9\nparent edf7b3ffde1624c60d2d6b1a2bb792d86de172e0\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405706779 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405706779 -0400\n\nCherry picking \"Modification 1 to beef\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dfd3d25264693fcd7348ad286f3c34f3f6b30918",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 4fb698bde45d7d2833e3f2aacfbfe8a7e7f60a65\nparent 12f28ed978639d331269d9dc2b74e87db58e1057\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621661 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621661 -0400\n\nModification 2 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e4f809f826c1a9fc929874bc0e4644dd2f2a1af4",
+        "type": "commit",
+        "size": 259,
+        "content": "tree f63fa37e285bd11b0a7b48fa584a4091814a3ada\nparent aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622440 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622440 -0400\n\nModification 1 to barley\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e52ff405da5b7e1e9b0929939fa8405d81fe8a45",
+        "type": "commit",
+        "size": 262,
+        "content": "tree a01a6ee390f65d834375e072952deaee0c5e92f7\nparent 00f1b9a0948a7d5d14405eba6030efcdfbb8ff4a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622574 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622574 -0400\n\nModification 1 of dried_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e7bb00c4eab291e08361fda376733a12b4150aa9",
+        "type": "tree",
+        "size": 268,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 8d95ea62e621f1d38d230d9e7d206e41096d76af\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob cb20a10406172afd6ca3138ce36ecaf8b1269e8e\tgreen_pea.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e88cc0a6919a74599ce8e1dcb81eb2bbae33a645",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob 1914d57ddf6c5c997664521cc94f190df46dc1c2\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e95f47e016dcc70b0b888df8e40e97b8aabafd4c",
+        "type": "blob",
+        "size": 390,
+        "content": "GRAVY SOUP.\n\nGET EIGHT POUNDS of coarse lean beef--wash it clean and lay it in your\nPOT, put in the same ingredients as for the shin soup, with the same\nQUANTITY of water, and follow the process directed for that. Strain the\nsoup through a sieve, and serve it up clear, with nothing more than\ntoasted bread in it; two table-spoonsful of mushroom catsup will add a\nfine flavour to the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e9f22c10ffb378446c0bbcab7ee3d9d5a0040672",
+        "type": "blob",
+        "size": 399,
+        "content": "BARLEY SOUP.\n\nPUT ON THREE GILLS of barley, three quarts of water, few onions cut up,\nsix carrots scraped and cut into dice, an equal quantity of turnips cut\nsmall; boil it gently two hours, then put in four or five pounds of the\nrack or neck of mutton, a few slices of lean ham, with pepper and salt;\nboil it slowly two hours longer and serve it up. Tomatos are an\nexcellent addition to this soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ec725f5639730640f91cd0be5f2d6d7ac5d69c79",
+        "type": "blob",
+        "size": 576,
+        "content": "DRIED PEA SOUP.\n\nTAKE ONE QUART of split peas, or Lima beans, which are better; put them\nIN THREE QUARTS of very soft water with three onions chopped up, pepper\nAND SALT; boil them two hours; mash them well and pass them through a\nsieve; return the liquid into the pot, thicken it with a large piece of\nbutter and flour, put in some slices of nice salt pork, and a large\ntea-spoonful of celery seed pounded; boil it till the pork is done, and\nserve it up; have some toasted bread cut into dice and fried in butter,\nwhich must be put in the tureen before you pour in the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "edf7b3ffde1624c60d2d6b1a2bb792d86de172e0",
+        "type": "commit",
+        "size": 256,
+        "content": "tree adc97cfb874cdfb9d5ab17b54f3771dea6e02ccf\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405706696 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405706696 -0400\n\nAddition of green_pea\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee23c5eeedadf8595c0ff60a366d970a165e373d",
+        "type": "blob",
+        "size": 576,
+        "content": "DRIED PEA SOUP.\n\nTAKE ONE QUART of split peas, or Lima beans, which are better; put them\nIN THREE QUARTS of very soft water with three onions chopped up, pepper\nand salt; boil them two hours; mash them well and pass them through a\nsieve; return the liquid into the pot, thicken it with a large piece of\nbutter and flour, put in some slices of nice salt pork, and a large\ntea-spoonful of celery seed pounded; boil it till the pork is done, and\nserve it up; have some toasted bread cut into dice and fried in butter,\nwhich must be put in the tureen before you pour in the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eef0edde5daa94da5f297d4ddb5dfbc1980f0902",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 3486a9d4cdf0b7b4a702c199eed541dc3af13a03\tbarley.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "efad0b11c47cb2f0220cbd6f5b0f93bb99064b00",
+        "type": "commit",
+        "size": 262,
+        "content": "tree 85258e426a341cc1aa035ac7f6d18f84fed2ab38\nparent 7a05900f340af0252aaa4e34941f040c5d2fe7f7\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621696 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621696 -0400\n\nModification 5 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f556d5fef35003561dc0b64b37057d7541239105",
+        "type": "tree",
+        "size": 79,
+        "content": "100644 blob 3486a9d4cdf0b7b4a702c199eed541dc3af13a03\tbarley.txt\n100644 blob 6dfb87d20f3dbca02da4a39890114fd9ba6a51e7\tdried_pea.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f63fa37e285bd11b0a7b48fa584a4091814a3ada",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob e9f22c10ffb378446c0bbcab7ee3d9d5a0040672\tbarley.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f75c193a1df47186727179f24867bc4d27a8991f",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTAKE THE HIND SHIN of beef, cut off all the flesh off the leg-bone,\nWHICH MUST BE TAKEN AWAY entirely, or the soup will be greasy. Wash the\nMEAT CLEAN and lay it in a pot, sprinkle over it one small\nTABLE-SPOONFUL of pounded black pepper, and two of salt; three onions\nTHE SIZE of a hen's egg, cut small, six small carrots scraped and cut\nUP, two small turnips pared and cut into dice; pour on three quarts of\nWATER, cover the pot close, and keep it gently and steadily boiling five\nHOURS, which will leave about three pints of clear soup; do not let the\nPOT BOIL OVER, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f87d14a4a236582a0278a916340a793714256864",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 9a8535dfcaf7554c728d874f047c5461fb2c71d1\nparent 0ef2e2b2a2b8d6e1f8dff5e621e0eca21b693d0c\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405622366 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405622366 -0400\n\nModification 3 to veal\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fce0584b379f535e50e036db587db71884ea6b36",
+        "type": "blob",
+        "size": 390,
+        "content": "GRAVY SOUP.\n\nGET EIGHT POUNDS of coarse lean beef--wash it clean and lay it in your\nPOT, put in the same ingredients as for the shin soup, with the same\nQUANTITY of water, and follow the process directed for that. Strain the\nSOUP THROUGH A SIEVE, and serve it up clear, with nothing more than\ntoasted bread in it; two table-spoonsful of mushroom catsup will add a\nfine flavour to the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffb36e513f5fdf8a6ba850a20142676a2ac4807d",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, cut off one inch\nof the tops, and lay them in water, chop the stalks and put them on the\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffdfa89389040a87008c4ab1834120d3046daaea",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob 86a5415741ed3754ccb0cac1fc19fd82587840a4\tveal.txt\n",
+        "encoding": "utf-8"
+    }
+]

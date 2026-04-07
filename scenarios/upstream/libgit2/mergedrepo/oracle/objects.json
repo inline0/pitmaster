@@ -1,0 +1,212 @@
+[
+    {
+        "hash": "03db1d37504ca0c4f7c26d7776b0e28bdea08712",
+        "type": "tree",
+        "size": 160,
+        "content": "100644 blob 6aea5f295304c36144ad6e9247a291b7f8112399\tconflicts-one.txt\n100644 blob 8b3f43d2402825c200f835ca1762413e386fd0b2\tconflicts-two.txt\n100644 blob 4458b8bc9e72b6c8755ae456f60e9844d0538d8c\tone.txt\n100644 blob 8f3c06cff9a83757cec40c80bc9bf31a2582bde9\ttwo.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "170efc1023e0ed2390150bb4469c8456b63e8f91",
+        "type": "tree",
+        "size": 160,
+        "content": "100644 blob 53c1d95a01f4514b162066fc98564500c96c46ad\tconflicts-one.txt\n100644 blob d01885ea594926eae9ba5b54ad76692af5969f51\tconflicts-two.txt\n100644 blob 75938de1e367098b3e9a7b1ec3c4ac4548afffe4\tone.txt\n100644 blob 7b26923aaf452b1977eb08617c59475fb3f74b71\ttwo.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1f85ca51b8e0aac893a621b61a9c2661d6aa6d81",
+        "type": "blob",
+        "size": 20,
+        "content": "This is a conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "220bd62631c8cf7a83ef39c6b94595f00517211e",
+        "type": "blob",
+        "size": 28,
+        "content": "This is another conflict!!!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "32d55d59265db86dd690f0a7fc563db43e2bc6a6",
+        "type": "commit",
+        "size": 241,
+        "content": "tree 170efc1023e0ed2390150bb4469c8456b63e8f91\nparent 9a05ccb4e0f948de03128e095f39dae6976751c5\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351371979 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351371979 -0500\n\nmaster\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "38e2d82b9065a237904af4b780b4d68da6950534",
+        "type": "blob",
+        "size": 89,
+        "content": "<<<<<<< HEAD\nThis is definitely a conflict!\n=======\nThis is a conflict!!!\n>>>>>>> branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3a34580a35add43a4cf361e8e9a30060a905c876",
+        "type": "commit",
+        "size": 241,
+        "content": "tree 03db1d37504ca0c4f7c26d7776b0e28bdea08712\nparent 9a05ccb4e0f948de03128e095f39dae6976751c5\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351372106 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351372106 -0500\n\nmaster\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4458b8bc9e72b6c8755ae456f60e9844d0538d8c",
+        "type": "blob",
+        "size": 180,
+        "content": "This is file one!\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "478871385b9cd03908c5383acfd568bef023c6b3",
+        "type": "blob",
+        "size": 180,
+        "content": "This is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "516bd85f78061e09ccc714561d7b504672cb52da",
+        "type": "blob",
+        "size": 22,
+        "content": "This is a conflict!!!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "53c1d95a01f4514b162066fc98564500c96c46ad",
+        "type": "blob",
+        "size": 31,
+        "content": "This is definitely a conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6aea5f295304c36144ad6e9247a291b7f8112399",
+        "type": "blob",
+        "size": 35,
+        "content": "This is most certainly a conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7068e30a7f0090ae32db35dfa1e4189d8780fcb8",
+        "type": "blob",
+        "size": 105,
+        "content": "<<<<<<< HEAD\nThis is unquestionably another conflict!\n=======\nThis is another conflict!!!\n>>>>>>> branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "75938de1e367098b3e9a7b1ec3c4ac4548afffe4",
+        "type": "blob",
+        "size": 180,
+        "content": "This is file one!\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7b26923aaf452b1977eb08617c59475fb3f74b71",
+        "type": "blob",
+        "size": 216,
+        "content": "This is file two!\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "84af62840be1b1c47b778a8a249f3ff45155038c",
+        "type": "blob",
+        "size": 26,
+        "content": "This is another conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8871f7a2ee3addfc4ba39fbd0783c8e738d04cda",
+        "type": "blob",
+        "size": 270,
+        "content": "This is file two!\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\n<<<<<<< HEAD\n=======\nThis is file two.\n>>>>>>> branch\nThis is file two!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "887b153b165d32409c70163e0f734c090f12f673",
+        "type": "blob",
+        "size": 216,
+        "content": "This is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8aad34cc83733590e74b93d0f7cf00375e2a735a",
+        "type": "blob",
+        "size": 93,
+        "content": "<<<<<<< HEAD\nThis is most certainly a conflict!\n=======\nThis is a conflict!!!\n>>>>>>> branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b3f43d2402825c200f835ca1762413e386fd0b2",
+        "type": "blob",
+        "size": 43,
+        "content": "This is without question another conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b72416545c7e761b64cecad4f1686eae4078aa8",
+        "type": "blob",
+        "size": 180,
+        "content": "This is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f3c06cff9a83757cec40c80bc9bf31a2582bde9",
+        "type": "blob",
+        "size": 216,
+        "content": "This is file two!\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ffcc405925511824a2240a6d3686aa7f8c7ac50",
+        "type": "tree",
+        "size": 160,
+        "content": "100644 blob 516bd85f78061e09ccc714561d7b504672cb52da\tconflicts-one.txt\n100644 blob 220bd62631c8cf7a83ef39c6b94595f00517211e\tconflicts-two.txt\n100644 blob 8b72416545c7e761b64cecad4f1686eae4078aa8\tone.txt\n100644 blob 887b153b165d32409c70163e0f734c090f12f673\ttwo.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9a05ccb4e0f948de03128e095f39dae6976751c5",
+        "type": "commit",
+        "size": 194,
+        "content": "tree f72784290c151092abf04ce6b875068547f70406\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351371828 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351371828 -0500\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9d81f82fccc7dcd7de7a1ffead1815294c2e092c",
+        "type": "blob",
+        "size": 216,
+        "content": "This is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\nThis is file two.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b7cedb8ad4cbb22b6363f9578cbd749797f7ef0d",
+        "type": "blob",
+        "size": 234,
+        "content": "This is file one!\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\nThis is file one.\n<<<<<<< HEAD\n=======\nThis is file one.\n>>>>>>> branch\nThis is file one!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d01885ea594926eae9ba5b54ad76692af5969f51",
+        "type": "blob",
+        "size": 41,
+        "content": "This is unquestionably another conflict!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e2809157a7766f272e4cfe26e61ef2678a5357ff",
+        "type": "commit",
+        "size": 241,
+        "content": "tree 8ffcc405925511824a2240a6d3686aa7f8c7ac50\nparent 9a05ccb4e0f948de03128e095f39dae6976751c5\nauthor Edward Thomson <ethomson@edwardthomson.com> 1351371872 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1351371872 -0500\n\nbranch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e62cac5c88b9928f2695b934c70efa4285324478",
+        "type": "blob",
+        "size": 107,
+        "content": "<<<<<<< HEAD\nThis is without question another conflict!\n=======\nThis is another conflict!!!\n>>>>>>> branch\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f72784290c151092abf04ce6b875068547f70406",
+        "type": "tree",
+        "size": 160,
+        "content": "100644 blob 1f85ca51b8e0aac893a621b61a9c2661d6aa6d81\tconflicts-one.txt\n100644 blob 84af62840be1b1c47b778a8a249f3ff45155038c\tconflicts-two.txt\n100644 blob 478871385b9cd03908c5383acfd568bef023c6b3\tone.txt\n100644 blob 9d81f82fccc7dcd7de7a1ffead1815294c2e092c\ttwo.txt\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,737 @@
+[
+    {
+        "hash": "0228b21d477f67b9f7720565da9e760b84c8b85b",
+        "type": "commit",
+        "size": 193,
+        "content": "tree dc37c5f1521fb76fe1c1ac7b13187f9396a59247\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416942864 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416942864 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0418f28a75dc0c4951c01842e0d794843a88178a",
+        "type": "tree",
+        "size": 31,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "04fab819d8388295cbe3496310e4e53ef8f4a115",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\217.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "051229bf9d30ec923052ff42db8069ccdc17159d",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t./foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "07f9d4d85b75187e4db5b9cbcad3e6218582bd57",
+        "type": "tree",
+        "size": 77,
+        "content": "120000 blob 2a9eb82c733e31ae312cee349084dcbc6f69639a\t.gitmodules\n100644 blob 421376db9e8aee847e9d774891e73098a7415e94\tdummy-file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "099ed86cb8501ae483b1855c351fe1a506ac9631",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 8ce7a3ef59c3d602a0296321eb964218f3d52fae\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416941816 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416941816 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0a78e40e54cc471c0415ca0680550f242e7843e2",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0b8206dd72a3b3b932fb562f92d29199b9398390",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\254.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d45fb57852c2229346a800bd3fc58e32527a21c",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 27db66b046536a0e4f64c4f8c3a490641c3fa5e5\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "10cb44a89d1a9e8bf74de3f11a2a61ee833f13b1",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\255.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "119f6cd3535de0e2a15654947a7b1a5affbf1406",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\255.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1212c12915820e1ad523b6305c0dcdefea8b7e97",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 7d4e382485ace068fb83b768ba1a1c674afbdc1d\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416937412 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416937412 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "13e5f8be09e8b7db074fb39b96e08215cc4a36f1",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t.GIT/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "14e70ab559b4c6a8a6fc9b6f538bd1f3934be725",
+        "type": "blob",
+        "size": 32,
+        "content": "This writes to a symbolic link.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "15f7d9f9514eeb65b9588c49b10b1da145a729a2",
+        "type": "commit",
+        "size": 190,
+        "content": "tree e73a04f71f11ab9d7dde72ff793882757a03f16e\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1635c47d80914f0abfa43dd4234a948db5bdb107",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 8024458e7ee49c456fd8c45d3591e9936bf613b3\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16a701796bc3670e5c2fdaeccb7f1280c60b373f",
+        "type": "tree",
+        "size": 46,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoo/../.GIT/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "191381ee74dec49c89f99a62d055cb1058ba0de9",
+        "type": "blob",
+        "size": 4,
+        "content": ".git",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1e3c845808fa5883aa4bcf2f882172edb72a7a32",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 0d45fb57852c2229346a800bd3fc58e32527a21c\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416943690 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416943690 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "24676d5e93f9fa7b568f38d7bce01772908e982b",
+        "type": "tree",
+        "size": 32,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\tgit~2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26b665c162f67acae67779445f3c7b9782b0a6d7",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 7f924ca37670afa06c7a481a2487b728b2c0185a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417020695 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417020695 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "27db66b046536a0e4f64c4f8c3a490641c3fa5e5",
+        "type": "tree",
+        "size": 29,
+        "content": "040000 tree 0418f28a75dc0c4951c01842e0d794843a88178a\t..\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a9eb82c733e31ae312cee349084dcbc6f69639a",
+        "type": "blob",
+        "size": 10,
+        "content": "dummy-file",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b4b774d8c5441b22786531f34ffc77800cda8cf",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\256.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d23d51590ec2f53fe4b5bb3e5ca62e35e4ef85a",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\216.gIt\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "338190107c7ee7d8f5aa30061fc19b7d5ddcda86",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 421376db9e8aee847e9d774891e73098a7415e94\tdummy-file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35ae236308929a536fb4e852278a9b98c42babb3",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 81e2b84864f16ebd285b34a2b1e87ebb41f4c230\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "380b9e58872ccf1d858be4b0fc612514a080bc40",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t\".git\\342\\200\\214\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "39fb3af508440cf970b92767f6d081c811574d2a",
+        "type": "commit",
+        "size": 194,
+        "content": "tree 5d1ee4f24f66dcd62a30248588d33804656b2073\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416880042 +0000\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416880042 +0000\n\ndot GIT\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3b24e5c751ee9c7c89df32a0d959748aa3d0112c",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 886c0f5f71057d846f71f05a05fdffad332bc070\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "421376db9e8aee847e9d774891e73098a7415e94",
+        "type": "blob",
+        "size": 6,
+        "content": "dummy\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4414ac920acabc3eb00e3cf9375eeb0cb6859c15",
+        "type": "commit",
+        "size": 202,
+        "content": "tree 6c1f5f6fec515d33036b44c596bfae28fc460cba\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417747184 +0000\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417747184 +0000\n\n.git: as a tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "442894787eddb1e84a952f17a027590e2c6c02cd",
+        "type": "commit",
+        "size": 190,
+        "content": "tree eb82bf596b66f90e25f881ce9b92cb55bab4fdf5\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "46fe10fa23259b089ab050788b06df979cd7d054",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 380b9e58872ccf1d858be4b0fc612514a080bc40\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4aa347c8bb0456230f43f34833c97b9f52c40f62",
+        "type": "commit",
+        "size": 193,
+        "content": "tree af45aa1eb7edf804ed10f70efb96fd178527c17c\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416936402 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416936402 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d83272d0d372e1232ddc4ff3260d76fdfa2015a",
+        "type": "commit",
+        "size": 206,
+        "content": "tree 7bb1dd08b2c7d73084934954e4196e67004b0279\nauthor Edward Thomson <ethomson@edwardthomson.com> 1420918150 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1420918150 -0500\n\nnasty symbolic link\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5341a7b545d71198b076b8ba3374a75c9a290640",
+        "type": "commit",
+        "size": 193,
+        "content": "tree b83795b1e0eb54f22f7056119db132500d0cdc05\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416935828 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416935828 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5d1ee4f24f66dcd62a30248588d33804656b2073",
+        "type": "tree",
+        "size": 31,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.GIT\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6594bdbad86bbc8d3ed0806a23827203fbab56c6",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 0418f28a75dc0c4951c01842e0d794843a88178a\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416933889 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416933889 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68e8bce48725490c376d57ebc60f0170605951a5",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t./.GIT/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "697dc3d723a018538eb819d5db2035c15109af73",
+        "type": "commit",
+        "size": 193,
+        "content": "tree ef6ed8a2b15f95795aed82a974b995cace02dbfe\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416943576 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416943576 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6b7d8a5a48a3c753b75a8fe5196f9c8704ac64ad",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\252.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c1f5f6fec515d33036b44c596bfae28fc460cba",
+        "type": "tree",
+        "size": 32,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.git:\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "712ceb8eb3e57072447715bc4057c57aa50f629a",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 2b4b774d8c5441b22786531f34ffc77800cda8cf\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7a0538bc4e20aecb36ef221f2077eb30ebe0bcb2",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 04fab819d8388295cbe3496310e4e53ef8f4a115\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ae174dda8f105a582c593b52d74545a3565819d",
+        "type": "tree",
+        "size": 34,
+        "content": "100755 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7bb1dd08b2c7d73084934954e4196e67004b0279",
+        "type": "tree",
+        "size": 69,
+        "content": "120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tBADLINK\n040000 tree e51c3fa44fe981ec290c8f47fea736f3ff2af2a6\tbadlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7d4e382485ace068fb83b768ba1a1c674afbdc1d",
+        "type": "tree",
+        "size": 46,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoo/../.git/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7f924ca37670afa06c7a481a2487b728b2c0185a",
+        "type": "tree",
+        "size": 32,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.git.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8024458e7ee49c456fd8c45d3591e9936bf613b3",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\252.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "80a8fe4f10626c50b3a4fd065a4604bafc9f30fa",
+        "type": "blob",
+        "size": 8,
+        "content": "Whoops!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81e2b84864f16ebd285b34a2b1e87ebb41f4c230",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\".G\\342\\200\\215IT\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "82482ad2e683edfc14f7de359e4f9a5e88909c51",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 963fdf003bf7261b9155c5748dc0945349b69e68\tfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "886c0f5f71057d846f71f05a05fdffad332bc070",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\257.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "899ff28744bed5bece69c78ba752c7dc3e954629",
+        "type": "commit",
+        "size": 191,
+        "content": "tree 24676d5e93f9fa7b568f38d7bce01772908e982b\nauthor Edward Thomson <ethomson@microsoft.com> 1418402764 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1418402764 -0500\n\ngit~2/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8bcbb6e0c0f9554efd5401e1ec14a4b2595eb3bf",
+        "type": "commit",
+        "size": 193,
+        "content": "tree fd7a37d92197267e55e1fc0cc4f283a815bd79b8\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416943347 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416943347 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ce7a3ef59c3d602a0296321eb964218f3d52fae",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t\".git\\\\foobar\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f1dcd43aa0164eb6ec319c3ec8879ca5cf62c1e",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 82482ad2e683edfc14f7de359e4f9a5e88909c51\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416944802 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416944802 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "91602c85bb50dd834205edd30435b77d5bb9ccf0",
+        "type": "commit",
+        "size": 193,
+        "content": "tree c489e70ed6d9f6331770eae21a77d15afd11cd99\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417014602 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417014602 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "91cd2c95af92883550b45fcc838013ae7e2954df",
+        "type": "tree",
+        "size": 130,
+        "content": "120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tBADLINK\n040000 tree ac84d85a425b2a21fd0ffccacac6c48823fc98c8\tONE\n040000 tree e51c3fa44fe981ec290c8f47fea736f3ff2af2a6\tbadlink\n120000 blob 5e40c0877058c504203932e5136051cf3cd3519b\tone\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "94f37c29173c8fa45a232b17e745c82132b2fafd",
+        "type": "commit",
+        "size": 193,
+        "content": "tree ed4bc023f61dc345ff0084b922b229d24de206e7\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417023070 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417023070 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "96156716851c0afb4702b0d2c4ac8c496a730e29",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 2d23d51590ec2f53fe4b5bb3e5ca62e35e4ef85a\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "963fdf003bf7261b9155c5748dc0945349b69e68",
+        "type": "tree",
+        "size": 29,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t..\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "97c14994866466aeb73e769a6f34e07c7f4b53f7",
+        "type": "tree",
+        "size": 50,
+        "content": "040000 tree 338190107c7ee7d8f5aa30061fc19b7d5ddcda86\t.git::$INDEX_ALLOCATION\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9ab85e507899c19dca57778c9b6e5f1ec799b911",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 6b7d8a5a48a3c753b75a8fe5196f9c8704ac64ad\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9d5898503adc01d763e279ac8fcefbe865b19031",
+        "type": "commit",
+        "size": 210,
+        "content": "tree bce2dabe5766838216d95f199d95aa4fd479a084\nauthor Edward Thomson <ethomson@edwardthomson.com> 1420920048 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1420920048 -0500\n\nSymbolic link exploit 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e24726d64589ba02430da8cebb5712dad35593d",
+        "type": "commit",
+        "size": 190,
+        "content": "tree f2c059dab35f6534b3f16d90b2f1de308615320c\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e683cdaf9ea2727c891b4cf8f7f11e9e28a67ca",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoo/.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0d89aa95628fcd6b64fd5b23dd56b906b06bfe2",
+        "type": "tree",
+        "size": 161,
+        "content": "120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tBADLINK\n040000 tree ac84d85a425b2a21fd0ffccacac6c48823fc98c8\tONE\n040000 tree e868b1d6833710021785581a9e11dba8468f3a55\tasdf\n040000 tree e51c3fa44fe981ec290c8f47fea736f3ff2af2a6\tbadlink\n120000 blob 5e40c0877058c504203932e5136051cf3cd3519b\tone\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a576a98d3279989226992610372035b76a01a3e9",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 10cb44a89d1a9e8bf74de3f11a2a61ee833f13b1\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a78dde970cffbb71d67bef2a74aa72c6621d9819",
+        "type": "tree",
+        "size": 72,
+        "content": "120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tBADLINK\n040000 tree e51c3fa44fe981ec290c8f47fea736f3ff2af2a6\t\"bad\\342\\200\\214link\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ac84d85a425b2a21fd0ffccacac6c48823fc98c8",
+        "type": "tree",
+        "size": 31,
+        "content": "100644 blob 37caca323506ee595f5a37a2e2b7e76254143790\tmeh\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "af45aa1eb7edf804ed10f70efb96fd178527c17c",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t./.git/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b11df9aee97a65817e8904a74f5e6a1c62c7a275",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\357\\273\\277.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b83795b1e0eb54f22f7056119db132500d0cdc05",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t.git/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b8edf3ad62dbcbc983857a5bfee7b0181ee1a513",
+        "type": "commit",
+        "size": 204,
+        "content": "tree 97c14994866466aeb73e769a6f34e07c7f4b53f7\nauthor Johannes Schindelin <johannes.schindelin@gmx.de> 1568809620 +0200\ncommitter Johannes Schindelin <johannes.schindelin@gmx.de> 1568809620 +0200\n\nStreamy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb29ec85546d29b0bcc314242660d7772b0a3803",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\254.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bce2dabe5766838216d95f199d95aa4fd479a084",
+        "type": "tree",
+        "size": 69,
+        "content": "040000 tree e51c3fa44fe981ec290c8f47fea736f3ff2af2a6\tBADLINK\n120000 blob 191381ee74dec49c89f99a62d055cb1058ba0de9\tbadlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bf7ab4723fcc57ecc7fceccf591d6c4773491569",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 051229bf9d30ec923052ff42db8069ccdc17159d\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417015234 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417015234 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c2a2ddd339574e5cbfd9228be840eb1bf496de4e",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 119f6cd3535de0e2a15654947a7b1a5affbf1406\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c3a70f8a376f17adccfb52b48e2831bfef2a2172",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 0b8206dd72a3b3b932fb562f92d29199b9398390\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c489e70ed6d9f6331770eae21a77d15afd11cd99",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\tfoo/../foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c672414d4d08111145ef8202f21c95fa7e688aee",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t\".GIT\\\\foobar\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c8f98a1762ec016c30f0d73512df399dedefc3fd",
+        "type": "commit",
+        "size": 190,
+        "content": "tree b11df9aee97a65817e8904a74f5e6a1c62c7a275\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ccbbfdb796f9b03298f5c7225e8f830784e1a3b1",
+        "type": "commit",
+        "size": 205,
+        "content": "tree e4edb361e51932b5ccedbc7ee41b4d3a4289aece\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417747204 +0000\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417747204 +0000\n\n.git:foo as a tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd44b4ea1066b3fa1d4b3baad8dc1531aec287a6",
+        "type": "tree",
+        "size": 32,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\tgit~3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce22b3cd9a01efafc370879c1938e0c32fb6f195",
+        "type": "commit",
+        "size": 190,
+        "content": "tree bb29ec85546d29b0bcc314242660d7772b0a3803\nauthor Edward Thomson <ethomson@microsoft.com> 123456789 +0000\ncommitter Edward Thomson <ethomson@microsoft.com> 123456789 +0000\n\nNasty mac path",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cf6fcf8cdf7e8d4cda3b11b0ba02d0d5125fbbd7",
+        "type": "commit",
+        "size": 210,
+        "content": "tree a78dde970cffbb71d67bef2a74aa72c6621d9819\nauthor Edward Thomson <ethomson@edwardthomson.com> 1421265243 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1421265243 -0500\n\nSymbolic link exploit 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d2eb26d4938550487de59a017a7bfee8ca46b5f4",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 16a701796bc3670e5c2fdaeccb7f1280c60b373f\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416937560 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416937560 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dc37c5f1521fb76fe1c1ac7b13187f9396a59247",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob 80a8fe4f10626c50b3a4fd065a4604bafc9f30fa\t\".\\\\.GIT\\\\foobar\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "debdc4a004fda6141a17d9c297617be70d40248f",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 9e683cdaf9ea2727c891b4cf8f7f11e9e28a67ca\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417015611 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417015611 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e2377bdbc93b30a34ed5deefedded89b947ff8f4",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 68e8bce48725490c376d57ebc60f0170605951a5\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416937213 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416937213 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e30b60b120761f44ebd0f0a7b0e9445ce8e11d68",
+        "type": "commit",
+        "size": 196,
+        "content": "tree 07f9d4d85b75187e4db5b9cbcad3e6218582bd57\nauthor Carlos Martín Nieto <cmn@dwim.me> 1526991068 +0200\ncommitter Carlos Martín Nieto <cmn@dwim.me> 1526991068 +0200\n\nAdd a symlinked .gitmodules\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e399c4fc4c07cb7947d2f3d966bc374df6ccc691",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 0a78e40e54cc471c0415ca0680550f242e7843e2\nauthor Edward Thomson <ethomson@edwardthomson.com> 1417018904 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1417018904 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e4edb361e51932b5ccedbc7ee41b4d3a4289aece",
+        "type": "tree",
+        "size": 35,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.git:foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e51c3fa44fe981ec290c8f47fea736f3ff2af2a6",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob 14e70ab559b4c6a8a6fc9b6f538bd1f3934be725\tfoobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e73a04f71f11ab9d7dde72ff793882757a03f16e",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\201\\253.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e868b1d6833710021785581a9e11dba8468f3a55",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob 8bd6648ed130ac9ece0f89cd9a8fbbfd2608427a\tasdf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e87caf56c91ab8d14e4ee8eb56308533503d1885",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 13e5f8be09e8b7db074fb39b96e08215cc4a36f1\nauthor Edward Thomson <ethomson@edwardthomson.com> 1416936035 -0500\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1416936035 -0500\n\nSlashy.",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eb82bf596b66f90e25f881ce9b92cb55bab4fdf5",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\256.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ed4bc023f61dc345ff0084b922b229d24de206e7",
+        "type": "tree",
+        "size": 32,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\tgit~1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef6ed8a2b15f95795aed82a974b995cace02dbfe",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 0a78e40e54cc471c0415ca0680550f242e7843e2\t.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2c059dab35f6534b3f16d90b2f1de308615320c",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 7ae174dda8f105a582c593b52d74545a3565819d\t\"\\342\\200\\253.git\"\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fa9cfdbeaaf3a91ff4b84d74412cd59d9b16a615",
+        "type": "commit",
+        "size": 191,
+        "content": "tree cd44b4ea1066b3fa1d4b3baad8dc1531aec287a6\nauthor Edward Thomson <ethomson@microsoft.com> 1418402849 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1418402849 -0500\n\ngit~3/foobar\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fd7a37d92197267e55e1fc0cc4f283a815bd79b8",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 0418f28a75dc0c4951c01842e0d794843a88178a\t.\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "a3ac918e3a6604294b239cb956363e83d71abb3b",
+        "name": "refs/heads/binary"
+    },
+    {
+        "hash": "7f4c6d9d6ba363e3352f7c21807ca3a7835072b2",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "cd471f0d8770371e1bc78bcbb38db4c7e4106bd2",
+        "name": "refs/heads/multihunk"
+    },
+    {
+        "hash": "4ca10087e696d2ba78d07b146a118e9a7096ed4f",
+        "name": "refs/heads/rename"
+    }
+]

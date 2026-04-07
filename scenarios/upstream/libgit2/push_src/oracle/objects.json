@@ -1,0 +1,170 @@
+[
+    {
+        "hash": "08585692ce06452da6f82ae66b90d98b55536fca",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "27b7ce66243eb1403862d05f958c002312df173d",
+        "type": "commit",
+        "size": 226,
+        "content": "tree fffe95c7fd0a37fa2ed702f8f93b56b2196b3925\nparent a78705c3b2725f931d3ee05348d83cc26700f247\nauthor Congyi Wu <congyiwu@gmail.com> 1352923201 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923201 -0500\n\nedited fold\\b.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "28905c54ea45a4bed8d7b90f51bd8bd81eec8840",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob c10409136a7a75e025fa502a1b2fd7b62b77d279\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n100644 blob 366226fb970ac0caa9d3f55967ab01334a548f60\tfoldb.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "366226fb970ac0caa9d3f55967ab01334a548f60",
+        "type": "blob",
+        "size": 5,
+        "content": "edit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "36f79b2846017d3761e0a02d0bccd573e0f90c57",
+        "type": "tag",
+        "size": 171,
+        "content": "object d9b63a88223d8367516f50bd131a5f7349b7f3e4\ntype commit\ntag tag-commit-two\ntagger Edward Thomson <ethomson@microsoft.com> 1373660465 -0500\n\nThis is a tag to a commit.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5c0bb3d1b9449d1cc69d7519fd05166f01840915",
+        "type": "commit",
+        "size": 172,
+        "content": "tree 08585692ce06452da6f82ae66b90d98b55536fca\nauthor Congyi Wu <congyiwu@gmail.com> 1352923200 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923200 -0500\n\nadded a.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "61780798228d17af2d34fce4cfbdf35556832472",
+        "type": "blob",
+        "size": 2,
+        "content": "b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "64fd55f9b6390202db5e5666fd1fb339089fba4d",
+        "type": "tree",
+        "size": 177,
+        "content": "100644 blob f78a3106c85fb549c65198b2a2086276c6174928\t.gitmodules\n100644 blob c10409136a7a75e025fa502a1b2fd7b62b77d279\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n100644 blob 366226fb970ac0caa9d3f55967ab01334a548f60\tfoldb.txt\n160000 commit a65fedf39aefe402d3bb6e24df4d4f5fe4547750\tsubmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78981922613b2afb6025042ff6bd878ac1994e85",
+        "type": "blob",
+        "size": 2,
+        "content": "a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "805c54522e614f29f70d2413a0470247d8b424ac",
+        "type": "tag",
+        "size": 143,
+        "content": "object d9b63a88223d8367516f50bd131a5f7349b7f3e4\ntype commit\ntag tag-commit\ntagger Michael Schubert <schu@schu.io> 1356359113 +0100\n\ntag-commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "951bbbb90e2259a4c8950db78946784fb53fcbce",
+        "type": "commit",
+        "size": 335,
+        "content": "tree 64fd55f9b6390202db5e5666fd1fb339089fba4d\nparent d9b63a88223d8367516f50bd131a5f7349b7f3e4\nparent 27b7ce66243eb1403862d05f958c002312df173d\nparent fa38b91f199934685819bea316186d8b008c52a2\nauthor Congyi Wu <congyiwu@gmail.com> 1352923207 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923207 -0500\n\nmerge b3, b4, and b5 to master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a78705c3b2725f931d3ee05348d83cc26700f247",
+        "type": "commit",
+        "size": 234,
+        "content": "tree cd881f90f2933db2e4cc26b8c71fe6037ac7fe4c\nparent 5c0bb3d1b9449d1cc69d7519fd05166f01840915\nauthor Congyi Wu <congyiwu@gmail.com> 1352923200 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923200 -0500\n\nadded fold and fold/b.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b483ae7ba66decee9aee971f501221dea84b1498",
+        "type": "tag",
+        "size": 137,
+        "content": "object c10409136a7a75e025fa502a1b2fd7b62b77d279\ntype blob\ntag tag-blob\ntagger Michael Schubert <schu@schu.io> 1356359195 +0100\n\ntag-blob\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b4e1f2b375a64c1ccd40c5ff6aa8bc96839ba4fd",
+        "type": "tree",
+        "size": 140,
+        "content": "100644 blob f78a3106c85fb549c65198b2a2086276c6174928\t.gitmodules\n100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n160000 commit a65fedf39aefe402d3bb6e24df4d4f5fe4547750\tsubmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c10409136a7a75e025fa502a1b2fd7b62b77d279",
+        "type": "blob",
+        "size": 7,
+        "content": "a\nedit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd881f90f2933db2e4cc26b8c71fe6037ac7fe4c",
+        "type": "tree",
+        "size": 64,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9b63a88223d8367516f50bd131a5f7349b7f3e4",
+        "type": "commit",
+        "size": 221,
+        "content": "tree dcab83249f6f9d1ed735d651352a80519339b591\nparent a78705c3b2725f931d3ee05348d83cc26700f247\nauthor Congyi Wu <congyiwu@gmail.com> 1352923201 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923201 -0500\n\nedited a.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dcab83249f6f9d1ed735d651352a80519339b591",
+        "type": "tree",
+        "size": 64,
+        "content": "100644 blob c10409136a7a75e025fa502a1b2fd7b62b77d279\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eea4f2705eeec2db3813f2430829afce99cd00b5",
+        "type": "tag",
+        "size": 158,
+        "content": "object 36f79b2846017d3761e0a02d0bccd573e0f90c57\ntype tag\ntag tag-tag\ntagger Edward Thomson <ethomson@microsoft.com> 1373660489 -0500\n\nThis is a tag to a tag.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f78a3106c85fb549c65198b2a2086276c6174928",
+        "type": "blob",
+        "size": 65,
+        "content": "[submodule \"submodule\"]\n\tpath = submodule\n\turl = ../testrepo.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f8f7aefc2900a3d737cea9eee45729fd55761e1a",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 61780798228d17af2d34fce4cfbdf35556832472\tb.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fa38b91f199934685819bea316186d8b008c52a2",
+        "type": "commit",
+        "size": 272,
+        "content": "tree b4e1f2b375a64c1ccd40c5ff6aa8bc96839ba4fd\nparent a78705c3b2725f931d3ee05348d83cc26700f247\nauthor Congyi Wu <congyiwu@gmail.com> 1352923206 -0500\ncommitter Congyi Wu <congyiwu@gmail.com> 1352923206 -0500\n\nadded submodule named 'submodule' pointing to '../testrepo.git'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ff83aa4c5e5d28e3bcba2f5c6e2adc61286a4e5e",
+        "type": "tag",
+        "size": 137,
+        "content": "object dcab83249f6f9d1ed735d651352a80519339b591\ntype tree\ntag tag-tree\ntagger Michael Schubert <schu@schu.io> 1356359175 +0100\n\ntag-tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fffe95c7fd0a37fa2ed702f8f93b56b2196b3925",
+        "type": "tree",
+        "size": 101,
+        "content": "100644 blob 78981922613b2afb6025042ff6bd878ac1994e85\ta.txt\n040000 tree f8f7aefc2900a3d737cea9eee45729fd55761e1a\tfold\n100644 blob 366226fb970ac0caa9d3f55967ab01334a548f60\tfoldb.txt\n",
+        "encoding": "utf-8"
+    }
+]

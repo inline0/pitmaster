@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/renames",
+    "category": "upstream",
+    "description": "libgit2: renames",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

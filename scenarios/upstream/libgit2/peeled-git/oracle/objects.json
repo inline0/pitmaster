@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "0df1a5865c8abfc09f1f2182e6a31be550e99f07",
+        "type": "commit",
+        "size": 154,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Jeff King <peff@peff.net> 1367505936 -0400\ncommitter Jeff King <peff@peff.net> 1367505936 -0400\n\nfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c2596aa0151888587ec5c0187f261e63412d9e11",
+        "type": "tag",
+        "size": 129,
+        "content": "object 0df1a5865c8abfc09f1f2182e6a31be550e99f07\ntype commit\ntag foo\ntagger Jeff King <peff@peff.net> 1367505972 -0400\n\nannotated\n",
+        "encoding": "utf-8"
+    }
+]

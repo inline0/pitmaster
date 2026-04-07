@@ -1,0 +1,100 @@
+[
+    {
+        "hash": "01971e2453a407e4b9f6c865e2c37f4db21da294",
+        "type": "commit",
+        "size": 233,
+        "content": "tree 7c71f7606bd3bfb25d063c970804e7fc00b9605b\nparent 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\nauthor David Turner <dturner@twosigma.com> 1488564660 -0500\ncommitter David Turner <novalis@novalis.org> 1488568472 -0500\n\nAdd a submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "17f8ae8ebdd08a4bb272f61b897b308ad42b1b12",
+        "type": "commit",
+        "size": 253,
+        "content": "tree ab6cf22b4c67a274aa8d31b5877d92341e8c2a9c\nparent 01971e2453a407e4b9f6c865e2c37f4db21da294\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621645 -0400\ncommitter David Turner <novalis@novalis.org> 1488568485 -0500\n\nModification 1 to asparagus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42cdad903aef3e7b614675e6584a8be417941911",
+        "type": "tree",
+        "size": 227,
+        "content": "100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b7c5650008b2e747fe1809eeb5a1dde0e80850a",
+        "type": "blob",
+        "size": 1092,
+        "content": "SOUP WITH BOUILLI.\n\nTake the nicest part of the thick brisket of beef, about eight pounds,\nput it into a pot with every thing directed for the other soup; make it\nexactly in the same way, only put it on an hour sooner, that you may\nhave time to prepare the bouilli; after it has boiled five hours, take\nout the beef, cover up the soup and set it near the fire that it may\nkeep hot. Take the skin off the beef, have the yelk of an egg well\nbeaten, dip a feather in it and wash the top of your beef, sprinkle over\nit the crumb of stale bread finely grated, put it in a Dutch oven\npreviously heated, put the top on with coals enough to brown, but not\nburn the beef; let it stand nearly an hour, and prepare your gravy\nthus:--Take a sufficient quantity of soup and the vegetables boiled in\nit; add to it a table-spoonful of red wine, and two of mushroom catsup,\nthicken with a little bit of butter and a little brown flour; make it\nvery hot, pour it in your dish, and put the beef on it. Garnish it with\ngreen pickle, cut in thin slices, serve up the soup in a tureen with\nbits of toasted bread.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5b1e8bccf7787e942aecf61912f94a2c274f85a5",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTAKE FOUR LARGE BUNCHES of asparagus, scrape it nicely, cut off one inch\nof the tops, and lay them in water, chop the stalks and put them on the\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68af1fc7407fd9addf1701a87eb1c95c7494c598",
+        "type": "blob",
+        "size": 774,
+        "content": "OYSTER SOUP.\n\nWash and drain two quarts of oysters, put them on with three quarts of\nwater, three onions chopped up, two or three slices of lean ham, pepper\nand salt; boil it till reduced one-half, strain it through a sieve,\nreturn the liquid into the pot, put in one quart of fresh oysters, boil\nit till they are sufficiently done, and thicken the soup with four\nspoonsful of flour, two gills of rich cream, and the yelks of six new\nlaid eggs beaten well; boil it a few minutes after the thickening is put\nin. Take care that it does not curdle, and that the flour is not in\nlumps; serve it up with the last oysters that were put in. If the\nflavour of thyme be agreeable, you may put in a little, but take care\nthat it does not boil in it long enough to discolour the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68f6182f4c85d39e1309d97c7e456156dc9c0096",
+        "type": "blob",
+        "size": 1372,
+        "content": "BEEF SOUP.\n\nTake the hind shin of beef, cut off all the flesh off the leg-bone,\nwhich must be taken away entirely, or the soup will be greasy. Wash the\nmeat clean and lay it in a pot, sprinkle over it one small\ntable-spoonful of pounded black pepper, and two of salt; three onions\nthe size of a hen's egg, cut small, six small carrots scraped and cut\nup, two small turnips pared and cut into dice; pour on three quarts of\nwater, cover the pot close, and keep it gently and steadily boiling five\nhours, which will leave about three pints of clear soup; do not let the\npot boil over, but take off the scum carefully, as it rises. When it has\nboiled four hours, put in a small bundle of thyme and parsley, and a\npint of celery cut small, or a tea-spoonful of celery seed pounded.\nThese latter ingredients would lose their delicate flavour if boiled too\nmuch. Just before you take it up, brown it in the following manner: put\na small table-spoonful of nice brown sugar into an iron skillet, set it\non the fire and stir it till it melts and looks very dark, pour into it\na ladle full of the soup, a little at a time; stirring it all the while.\nStrain this browning and mix it well with the soup; take out the bundle\nof thyme and parsley, put the nicest pieces of meat in your tureen, and\npour on the soup and vegetables; put in some toasted bread cut in dice,\nand serve it up.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7c71f7606bd3bfb25d063c970804e7fc00b9605b",
+        "type": "tree",
+        "size": 306,
+        "content": "100644 blob f36de77de6f53dddafeb024ecaf375e45c3d9ddd\t.gitmodules\n100644 blob ffb36e513f5fdf8a6ba850a20142676a2ac4807d\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n160000 commit 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\tmy-submodule\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f",
+        "type": "commit",
+        "size": 286,
+        "content": "tree 42cdad903aef3e7b614675e6584a8be417941911\nauthor Edward Thomson <ethomson@edwardthomson.com> 1405621580 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1405621580 -0400\n\nInitial revision\n\nA few soup recipes from \"The Virginia Housewife\", available in the\npublic domain.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a7b066537e6be7109abfe4ff97b675d4e077da20",
+        "type": "blob",
+        "size": 1095,
+        "content": "VEAL SOUP.\n\nPut into a pot three quarts of water, three onions cut small, one\nspoonful of black pepper pounded, and two of salt, with two or three\nslices of lean ham; let it boil steadily two hours; skim it\noccasionally, then put into it a shin of veal, let it boil two hours\nlonger; take out the slices of ham, and skim off the grease if any\nshould rise, take a gill of good cream, mix with it two table-spoonsful\nof flour very nicely, and the yelks of two eggs beaten well, strain this\nmixture, and add some chopped parsley; pour some soup on by degrees,\nstir it well, and pour it into the pot, continuing to stir until it has\nboiled two or three minutes to take off the raw taste of the eggs. If\nthe cream be not perfectly sweet, and the eggs quite new, the thickening\nwill curdle in the soup. For a change you may put a dozen ripe tomatos\nin, first taking off their skins, by letting them stand a few minutes in\nhot water, when they may be easily peeled. When made in this way you\nmust thicken it with the flour only. Any part of the veal may be used,\nbut the shin or knuckle is the nicest.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ab6cf22b4c67a274aa8d31b5877d92341e8c2a9c",
+        "type": "tree",
+        "size": 306,
+        "content": "100644 blob f36de77de6f53dddafeb024ecaf375e45c3d9ddd\t.gitmodules\n100644 blob 5b1e8bccf7787e942aecf61912f94a2c274f85a5\tasparagus.txt\n100644 blob 68f6182f4c85d39e1309d97c7e456156dc9c0096\tbeef.txt\n100644 blob 4b7c5650008b2e747fe1809eeb5a1dde0e80850a\tbouilli.txt\n100644 blob c4e6cca3ec6ae0148ed231f97257df8c311e015f\tgravy.txt\n160000 commit 7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f\tmy-submodule\n100644 blob 68af1fc7407fd9addf1701a87eb1c95c7494c598\toyster.txt\n100644 blob a7b066537e6be7109abfe4ff97b675d4e077da20\tveal.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c4e6cca3ec6ae0148ed231f97257df8c311e015f",
+        "type": "blob",
+        "size": 390,
+        "content": "GRAVY SOUP.\n\nGet eight pounds of coarse lean beef--wash it clean and lay it in your\npot, put in the same ingredients as for the shin soup, with the same\nquantity of water, and follow the process directed for that. Strain the\nsoup through a sieve, and serve it up clear, with nothing more than\ntoasted bread in it; two table-spoonsful of mushroom catsup will add a\nfine flavour to the soup.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f36de77de6f53dddafeb024ecaf375e45c3d9ddd",
+        "type": "blob",
+        "size": 61,
+        "content": "[submodule \"my-submodule\"]\n\tpath = my-submodule\n\turl = bogus\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ffb36e513f5fdf8a6ba850a20142676a2ac4807d",
+        "type": "blob",
+        "size": 587,
+        "content": "ASPARAGUS SOUP.\n\nTake four large bunches of asparagus, scrape it nicely, cut off one inch\nof the tops, and lay them in water, chop the stalks and put them on the\nfire with a piece of bacon, a large onion cut up, and pepper and salt;\nadd two quarts of water, boil them till the stalks are quite soft, then\npulp them through a sieve, and strain the water to it, which must be put\nback in the pot; put into it a chicken cut up, with the tops of\nasparagus which had been laid by, boil it until these last articles are\nsufficiently done, thicken with flour, butter and milk, and serve it up.\n",
+        "encoding": "utf-8"
+    }
+]

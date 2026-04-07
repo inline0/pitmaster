@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "97896810b3210244a62a82458b8e0819ecfc6850",
+        "tree": "b60fd986699ba4e9e68bea07cf8e793f323ef888",
+        "parents": [
+            "09176a980273d801a3e37cc45c84af1366501ed9"
+        ],
+        "author": "Russell Belfer <arrbee@arrbee.com> 1332780781 2012-03-26 09:53:01 -0700",
+        "committer": "Russell Belfer <arrbee@arrbee.com> 1332780781 2012-03-26 09:53:01 -0700",
+        "message": "Setting up gitmodules"
+    },
+    {
+        "hash": "09176a980273d801a3e37cc45c84af1366501ed9",
+        "tree": "0f8fb758578188a8fdf04e29bac3ace81b4f3c9c",
+        "parents": [],
+        "author": "Russell Belfer <arrbee@arrbee.com> 1332365253 2012-03-21 14:27:33 -0700",
+        "committer": "Russell Belfer <arrbee@arrbee.com> 1332365253 2012-03-21 14:27:33 -0700",
+        "message": "initial commit"
+    }
+]

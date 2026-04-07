@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/filemodes",
+    "category": "upstream",
+    "description": "libgit2: filemodes",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

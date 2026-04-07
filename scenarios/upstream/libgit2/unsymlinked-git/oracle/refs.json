@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "a8595ccca04f40818ae0155c8f9c77a230e597b6",
+        "name": "refs/heads/exe-file"
+    },
+    {
+        "hash": "7fccd75616ec188b8f1b23d67506a334cc34a49d",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "806999882bf91d24241e4077906b9017605eb1f3",
+        "name": "refs/heads/reg-file"
+    }
+]

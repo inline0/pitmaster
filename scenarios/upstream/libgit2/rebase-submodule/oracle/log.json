@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "17f8ae8ebdd08a4bb272f61b897b308ad42b1b12",
+        "tree": "ab6cf22b4c67a274aa8d31b5877d92341e8c2a9c",
+        "parents": [
+            "01971e2453a407e4b9f6c865e2c37f4db21da294"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621645 2014-07-17 14:27:25 -0400",
+        "committer": "David Turner <novalis@novalis.org> 1488568485 2017-03-03 14:14:45 -0500",
+        "message": "Modification 1 to asparagus"
+    },
+    {
+        "hash": "01971e2453a407e4b9f6c865e2c37f4db21da294",
+        "tree": "7c71f7606bd3bfb25d063c970804e7fc00b9605b",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "David Turner <dturner@twosigma.com> 1488564660 2017-03-03 13:11:00 -0500",
+        "committer": "David Turner <novalis@novalis.org> 1488568472 2017-03-03 14:14:32 -0500",
+        "message": "Add a submodule"
+    },
+    {
+        "hash": "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f",
+        "tree": "42cdad903aef3e7b614675e6584a8be417941911",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "message": "Initial revision\n\nA few soup recipes from \"The Virginia Housewife\", available in the\npublic domain."
+    }
+]

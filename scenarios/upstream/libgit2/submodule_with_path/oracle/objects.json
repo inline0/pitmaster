@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "18372280a56a54340fa600aa91315065c6c4c693",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob 36683131578275f6a8fd1c539e0d5da0d8adff26\t.gitmodules\n040000 tree d545fc6b40ec9e67332b6a1d2dedcbdb1bffeb6b\tlib\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "36683131578275f6a8fd1c539e0d5da0d8adff26",
+        "type": "blob",
+        "size": 63,
+        "content": "[submodule \"testrepo\"]\n\tpath = lib/testrepo\n\turl = ../testrepo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "89ca686bb21bfb75dda99a02313831a0c418f921",
+        "type": "commit",
+        "size": 231,
+        "content": "tree b1620ef2628d10416a84d19c783e33dc4556c9c3\nparent c84bf57ba2254dba216ab5c6eb1a19fe8bd0e0d6\nauthor Edward Thomson <ethomson@microsoft.com> 1446668121 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1446668121 -0500\n\noops\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b1620ef2628d10416a84d19c783e33dc4556c9c3",
+        "type": "tree",
+        "size": 69,
+        "content": "100644 blob ba34c47dc9d3d0b1bb335b45c9d26ba1f0fc90c7\t.gitmodules\n040000 tree d545fc6b40ec9e67332b6a1d2dedcbdb1bffeb6b\tlib\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba34c47dc9d3d0b1bb335b45c9d26ba1f0fc90c7",
+        "type": "blob",
+        "size": 67,
+        "content": "[submodule \"testrepo\"]\n\tpath = lib/testrepo\n\turl = ../testrepo.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c84bf57ba2254dba216ab5c6eb1a19fe8bd0e0d6",
+        "type": "commit",
+        "size": 182,
+        "content": "tree 18372280a56a54340fa600aa91315065c6c4c693\nauthor Edward Thomson <ethomson@microsoft.com> 1446667628 -0500\ncommitter Edward Thomson <ethomson@microsoft.com> 1446667628 -0500\n\nfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d545fc6b40ec9e67332b6a1d2dedcbdb1bffeb6b",
+        "type": "tree",
+        "size": 36,
+        "content": "160000 commit a65fedf39aefe402d3bb6e24df4d4f5fe4547750\ttestrepo\n",
+        "encoding": "utf-8"
+    }
+]

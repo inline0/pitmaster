@@ -1,0 +1,254 @@
+[
+    {
+        "hash": "0d78578795b7ca49fd8df6c4b6d27c5c02d991d8",
+        "type": "blob",
+        "size": 112,
+        "content": "[submodule \"b\"]\n\tpath = b\n\turl = ../submod2_target/.git\n[submodule \"d\"]\n\tpath = d\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0e7ed140b514b8cae23254cb8656fe1674403aff",
+        "type": "commit",
+        "size": 219,
+        "content": "tree 966cf1b3598e195b31b2cde3784f9a19f0728a6f\nparent 9bdb75b73836a99e3dbeea640a81de81031fdc29\nauthor Russell Belfer <rb@github.com> 1349218374 -0700\ncommitter Russell Belfer <rb@github.com> 1349218374 -0700\n\nChanges #1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0ff461da9689266f482d8f6654a4400b4e33c586",
+        "type": "blob",
+        "size": 924,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "18aa7e45bbe4c3cc24a0b079696c59d36675af97",
+        "type": "tree",
+        "size": 76,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\t.gitmodules\n100644 blob 7154d3083461536dfc71ad5542f3e65e723a06c4\tREADME.md\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1b63caae4a5ca96f78e8dfefc376c6a39a142475",
+        "type": "commit",
+        "size": 219,
+        "content": "tree 9effc457877f109b2a4319e14bee613a15f2a00d\nparent 9b19edf33a03a0c59cdfc113bfa5c06179bf9b1a\nauthor Russell Belfer <rb@github.com> 1349219178 -0700\ncommitter Russell Belfer <rb@github.com> 1349219178 -0700\n\nChanges #4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1eabe82aa3b2365a394f6108f24435df6e193d02",
+        "type": "blob",
+        "size": 1010,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\n  0e7ed140b514b8cae23254cb8656fe1674403aff\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42061c01a1c70097d1e4579f29a5adf40abdec95",
+        "type": "blob",
+        "size": 9,
+        "content": "README.md",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "462838cee476a87e7cff32196b66fa18ed756592",
+        "type": "blob",
+        "size": 112,
+        "content": "[submodule \"e\"]\n\tpath = e\n\turl = ../submod2_target/.git\n[submodule \"d\"]\n\tpath = d\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63499e4ea8e096b831515ceb1d5a7593e4d87ae5",
+        "type": "blob",
+        "size": 5,
+        "content": "blob\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "681af94e10eaf262f3ab7cb9b8fd5f4158ba4d3e",
+        "type": "blob",
+        "size": 9,
+        "content": "notempty\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a9008602b811e69a9b7a2d83496f39a794fdeeb",
+        "type": "blob",
+        "size": 1096,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\n  0e7ed140b514b8cae23254cb8656fe1674403aff\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\n  9d0235c7a7edc0889a18f97a42ee6db9fe688447\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\n  9b19edf33a03a0c59cdfc113bfa5c06179bf9b1a\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6eae26c90e8ccc4d16208972119c40635489c6f0",
+        "type": "commit",
+        "size": 219,
+        "content": "tree 18aa7e45bbe4c3cc24a0b079696c59d36675af97\nparent 1b63caae4a5ca96f78e8dfefc376c6a39a142475\nauthor Russell Belfer <rb@github.com> 1349219278 -0700\ncommitter Russell Belfer <rb@github.com> 1349219278 -0700\n\nChanges #5\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6f39eabbb8a7541515e0d35971078bccb502e7e0",
+        "type": "blob",
+        "size": 56,
+        "content": "[submodule \"d\"]\n\tpath = d\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7154d3083461536dfc71ad5542f3e65e723a06c4",
+        "type": "blob",
+        "size": 1179,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\n  0e7ed140b514b8cae23254cb8656fe1674403aff\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\n  9d0235c7a7edc0889a18f97a42ee6db9fe688447\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\n  9b19edf33a03a0c59cdfc113bfa5c06179bf9b1a\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\n  1b63caae4a5ca96f78e8dfefc376c6a39a142475\n  Matches \"Changes #1\" except README.md\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7556c1d893a4c0ca85ac8ac51de47ff399758729",
+        "type": "tree",
+        "size": 220,
+        "content": "100644 blob f20b79342712e0b2315647cd8227a573fd3bc46e\t.gitmodules\n100644 blob 0ff461da9689266f482d8f6654a4400b4e33c586\tREADME.md\n040000 tree fde0147e3b59f381635a3b016e3fe6dacb70779d\ta\n100644 blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5\tb\n100755 blob e1152adcb9adf37ec551ada9ba377ab53aec3bad\tc\n120000 blob 42061c01a1c70097d1e4579f29a5adf40abdec95\td\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76fef844064c26d5e06c2508240dae661e7231b2",
+        "type": "blob",
+        "size": 56,
+        "content": "[submodule \"b\"]\n\tpath = b\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "79b9f23e85f55ea36a472a902e875bc1121a94cb",
+        "type": "commit",
+        "size": 175,
+        "content": "tree a0a9bad6f6f40325198f938a0e3ae981622d7707\nauthor Russell Belfer <rb@github.com> 1349216606 -0700\ncommitter Russell Belfer <rb@github.com> 1349216606 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8528da0ea65eacf1f74f9ed6696adbac547963ad",
+        "type": "blob",
+        "size": 881,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b3726b365824ad5a07c537247f4bc73ed7d37ea",
+        "type": "blob",
+        "size": 112,
+        "content": "[submodule \"d\"]\n\tpath = d\n\turl = ../submod2_target/.git\n[submodule \"e\"]\n\tpath = e\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "933e28c1c8a68838a763d250bdf0b2c6068289c3",
+        "type": "tree",
+        "size": 220,
+        "content": "100644 blob 6f39eabbb8a7541515e0d35971078bccb502e7e0\t.gitmodules\n100644 blob d75992dd02391e128dac332dcc78d649dd9ab095\tREADME.md\n100644 blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5\ta\n100755 blob e1152adcb9adf37ec551ada9ba377ab53aec3bad\tb\n120000 blob 42061c01a1c70097d1e4579f29a5adf40abdec95\tc\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\td\n040000 tree fde0147e3b59f381635a3b016e3fe6dacb70779d\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "962710fe5b4e453e9e827945b3487c525968ec4a",
+        "type": "blob",
+        "size": 112,
+        "content": "[submodule \"d\"]\n\tpath = d\n\turl = ../submod2_target/.git\n[submodule \"b\"]\n\tpath = b\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "966cf1b3598e195b31b2cde3784f9a19f0728a6f",
+        "type": "tree",
+        "size": 220,
+        "content": "100644 blob 6f39eabbb8a7541515e0d35971078bccb502e7e0\t.gitmodules\n100644 blob b1977dc4e573b812d4619754c98138c56999dc0d\tREADME.md\n100644 blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5\ta\n100755 blob e1152adcb9adf37ec551ada9ba377ab53aec3bad\tb\n120000 blob 42061c01a1c70097d1e4579f29a5adf40abdec95\tc\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\td\n040000 tree fde0147e3b59f381635a3b016e3fe6dacb70779d\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "99e8bab9ece009f0fba7eb41f850f4c12bedb9b7",
+        "type": "blob",
+        "size": 1282,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\n  0e7ed140b514b8cae23254cb8656fe1674403aff\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\n  9d0235c7a7edc0889a18f97a42ee6db9fe688447\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\n  9b19edf33a03a0c59cdfc113bfa5c06179bf9b1a\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\n  1b63caae4a5ca96f78e8dfefc376c6a39a142475\n  Matches \"Changes #1\" except README.md\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n  6eae26c90e8ccc4d16208972119c40635489c6f0\n  Matches \"Initial commit\" except README.md and .gitmodules\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9b19edf33a03a0c59cdfc113bfa5c06179bf9b1a",
+        "type": "commit",
+        "size": 219,
+        "content": "tree 933e28c1c8a68838a763d250bdf0b2c6068289c3\nparent 9d0235c7a7edc0889a18f97a42ee6db9fe688447\nauthor Russell Belfer <rb@github.com> 1349218971 -0700\ncommitter Russell Belfer <rb@github.com> 1349218971 -0700\n\nChanges #3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bdb75b73836a99e3dbeea640a81de81031fdc29",
+        "type": "commit",
+        "size": 223,
+        "content": "tree 7556c1d893a4c0ca85ac8ac51de47ff399758729\nparent 79b9f23e85f55ea36a472a902e875bc1121a94cb\nauthor Russell Belfer <rb@github.com> 1349217954 -0700\ncommitter Russell Belfer <rb@github.com> 1349217954 -0700\n\nCreate content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9d0235c7a7edc0889a18f97a42ee6db9fe688447",
+        "type": "commit",
+        "size": 219,
+        "content": "tree e4ed436a9eb0f198cda722886a5f8d6d6c836b7b\nparent 0e7ed140b514b8cae23254cb8656fe1674403aff\nauthor Russell Belfer <rb@github.com> 1349218698 -0700\ncommitter Russell Belfer <rb@github.com> 1349218698 -0700\n\nChanges #2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9effc457877f109b2a4319e14bee613a15f2a00d",
+        "type": "tree",
+        "size": 220,
+        "content": "100644 blob f20b79342712e0b2315647cd8227a573fd3bc46e\t.gitmodules\n100644 blob 6a9008602b811e69a9b7a2d83496f39a794fdeeb\tREADME.md\n040000 tree fde0147e3b59f381635a3b016e3fe6dacb70779d\ta\n100644 blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5\tb\n100755 blob e1152adcb9adf37ec551ada9ba377ab53aec3bad\tc\n120000 blob 42061c01a1c70097d1e4579f29a5adf40abdec95\td\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0a9bad6f6f40325198f938a0e3ae981622d7707",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 8528da0ea65eacf1f74f9ed6696adbac547963ad\tREADME.md\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b1977dc4e573b812d4619754c98138c56999dc0d",
+        "type": "blob",
+        "size": 967,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d75992dd02391e128dac332dcc78d649dd9ab095",
+        "type": "blob",
+        "size": 1053,
+        "content": "This is a test repo for libgit2 where tree entries have type changes\n\nThe key types that could be found in tree entries are:\n\n1 - GIT_FILEMODE_NEW             = 0000000\n2 - GIT_FILEMODE_TREE            = 0040000\n3 - GIT_FILEMODE_BLOB            = 0100644\n4 - GIT_FILEMODE_BLOB_EXECUTABLE = 0100755\n5 - GIT_FILEMODE_LINK            = 0120000\n6 - GIT_FILEMODE_COMMIT          = 0160000\n\nI will try to have every type of transition somewhere in the history\nof this repo.\n\nCommits\n-------\nInitial commit - a(1)    b(1)    c(1)    d(1)    e(1)\n  79b9f23e85f55ea36a472a902e875bc1121a94cb\nCreate content - a(1->2) b(1->3) c(1->4) d(1->5) e(1->6)\n  9bdb75b73836a99e3dbeea640a81de81031fdc29\nChanges #1     - a(2->3) b(3->4) c(4->5) d(5->6) e(6->2)\n  0e7ed140b514b8cae23254cb8656fe1674403aff\nChanges #2     - a(3->5) b(4->6) c(5->2) d(6->3) e(2->4)\n  9d0235c7a7edc0889a18f97a42ee6db9fe688447\nChanges #3     - a(5->3) b(6->4) c(2->5) d(3->6) e(4->2)\nChanges #4     - a(3->2) b(4->3) c(5->4) d(6->5) e(2->6)\nChanges #5     - a(2->1) b(3->1) c(4->1) d(5->1) e(6->1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dae2709d638df52212b1f43ff61797ebfedfcc7c",
+        "type": "blob",
+        "size": 72,
+        "content": "[submodule \"e\"]\n\tpath = e\n\turl = https://github.com/libgit2/libgit2.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e1152adcb9adf37ec551ada9ba377ab53aec3bad",
+        "type": "blob",
+        "size": 6,
+        "content": "blobx\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e4ed436a9eb0f198cda722886a5f8d6d6c836b7b",
+        "type": "tree",
+        "size": 220,
+        "content": "100644 blob 76fef844064c26d5e06c2508240dae661e7231b2\t.gitmodules\n100644 blob 1eabe82aa3b2365a394f6108f24435df6e193d02\tREADME.md\n120000 blob 42061c01a1c70097d1e4579f29a5adf40abdec95\ta\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tb\n040000 tree fde0147e3b59f381635a3b016e3fe6dacb70779d\tc\n100644 blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5\td\n100755 blob e1152adcb9adf37ec551ada9ba377ab53aec3bad\te\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f20b79342712e0b2315647cd8227a573fd3bc46e",
+        "type": "blob",
+        "size": 56,
+        "content": "[submodule \"e\"]\n\tpath = e\n\turl = ../submod2_target/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fde0147e3b59f381635a3b016e3fe6dacb70779d",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 681af94e10eaf262f3ab7cb9b8fd5f4158ba4d3e\tnotempty\n",
+        "encoding": "utf-8"
+    }
+]

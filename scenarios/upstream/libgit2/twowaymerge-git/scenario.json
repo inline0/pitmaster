@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/twowaymerge-git",
+    "category": "upstream",
+    "description": "libgit2: twowaymerge.git",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

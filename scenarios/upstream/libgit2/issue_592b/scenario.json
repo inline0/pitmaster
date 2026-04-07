@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/issue_592b",
+    "category": "upstream",
+    "description": "libgit2: issue_592b",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

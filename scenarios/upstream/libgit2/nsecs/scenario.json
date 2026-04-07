@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/nsecs",
+    "category": "upstream",
+    "description": "libgit2: nsecs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

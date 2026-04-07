@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/testrepo2",
+    "category": "upstream",
+    "description": "libgit2: testrepo2",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,45 @@
+error in tree 04fab819d8388295cbe3496310e4e53ef8f4a115: hasDotgit: contains '.git'
+error in tree 0418f28a75dc0c4951c01842e0d794843a88178a: hasDotgit: contains '.git'
+error in tree 051229bf9d30ec923052ff42db8069ccdc17159d: fullPathname: contains full pathnames
+error in tree 07f9d4d85b75187e4db5b9cbcad3e6218582bd57: gitmodulesSymlink: .gitmodules is a symbolic link
+error in tree 0b8206dd72a3b3b932fb562f92d29199b9398390: hasDotgit: contains '.git'
+error in tree 10cb44a89d1a9e8bf74de3f11a2a61ee833f13b1: hasDotgit: contains '.git'
+error in tree 119f6cd3535de0e2a15654947a7b1a5affbf1406: hasDotgit: contains '.git'
+error in tree 13e5f8be09e8b7db074fb39b96e08215cc4a36f1: fullPathname: contains full pathnames
+error in tree 13e5f8be09e8b7db074fb39b96e08215cc4a36f1: hasDotgit: contains '.git'
+error in tree 16a701796bc3670e5c2fdaeccb7f1280c60b373f: fullPathname: contains full pathnames
+error in tree 27db66b046536a0e4f64c4f8c3a490641c3fa5e5: hasDotdot: contains '..'
+error in tree 2b4b774d8c5441b22786531f34ffc77800cda8cf: hasDotgit: contains '.git'
+error in tree 2d23d51590ec2f53fe4b5bb3e5ca62e35e4ef85a: hasDotgit: contains '.git'
+error in tree 380b9e58872ccf1d858be4b0fc612514a080bc40: hasDotgit: contains '.git'
+error in tree 5d1ee4f24f66dcd62a30248588d33804656b2073: hasDotgit: contains '.git'
+error in tree 68e8bce48725490c376d57ebc60f0170605951a5: fullPathname: contains full pathnames
+error in tree 6b7d8a5a48a3c753b75a8fe5196f9c8704ac64ad: hasDotgit: contains '.git'
+error in tree 6c1f5f6fec515d33036b44c596bfae28fc460cba: hasDotgit: contains '.git'
+error in tree 7d4e382485ace068fb83b768ba1a1c674afbdc1d: fullPathname: contains full pathnames
+error in tree 7f924ca37670afa06c7a481a2487b728b2c0185a: hasDotgit: contains '.git'
+error in tree 8024458e7ee49c456fd8c45d3591e9936bf613b3: hasDotgit: contains '.git'
+error in tree 81e2b84864f16ebd285b34a2b1e87ebb41f4c230: hasDotgit: contains '.git'
+error in tree 886c0f5f71057d846f71f05a05fdffad332bc070: hasDotgit: contains '.git'
+error in tree 8ce7a3ef59c3d602a0296321eb964218f3d52fae: hasDotgit: contains '.git'
+error in tree 963fdf003bf7261b9155c5748dc0945349b69e68: hasDotdot: contains '..'
+error in tree 97c14994866466aeb73e769a6f34e07c7f4b53f7: hasDotgit: contains '.git'
+error in tree 9e683cdaf9ea2727c891b4cf8f7f11e9e28a67ca: fullPathname: contains full pathnames
+error in tree af45aa1eb7edf804ed10f70efb96fd178527c17c: fullPathname: contains full pathnames
+error in tree b11df9aee97a65817e8904a74f5e6a1c62c7a275: hasDotgit: contains '.git'
+error in tree b83795b1e0eb54f22f7056119db132500d0cdc05: fullPathname: contains full pathnames
+error in tree b83795b1e0eb54f22f7056119db132500d0cdc05: hasDotgit: contains '.git'
+error in tree bb29ec85546d29b0bcc314242660d7772b0a3803: hasDotgit: contains '.git'
+error in tree c489e70ed6d9f6331770eae21a77d15afd11cd99: fullPathname: contains full pathnames
+error in tree c672414d4d08111145ef8202f21c95fa7e688aee: hasDotgit: contains '.git'
+error in tree dc37c5f1521fb76fe1c1ac7b13187f9396a59247: hasDotgit: contains '.git'
+error in tree e4edb361e51932b5ccedbc7ee41b4d3a4289aece: hasDotgit: contains '.git'
+error in tree e73a04f71f11ab9d7dde72ff793882757a03f16e: hasDotgit: contains '.git'
+error in tree eb82bf596b66f90e25f881ce9b92cb55bab4fdf5: hasDotgit: contains '.git'
+error in tree ed4bc023f61dc345ff0084b922b229d24de206e7: hasDotgit: contains '.git'
+error in tree ef6ed8a2b15f95795aed82a974b995cace02dbfe: hasDot: contains '.'
+error in tree f2c059dab35f6534b3f16d90b2f1de308615320c: hasDotgit: contains '.git'
+error in tree fd7a37d92197267e55e1fc0cc4f283a815bd79b8: hasDot: contains '.'
+dangling tree 91cd2c95af92883550b45fcc838013ae7e2954df
+dangling tree a0d89aa95628fcd6b64fd5b23dd56b906b06bfe2
+dangling tree c672414d4d08111145ef8202f21c95fa7e688aee

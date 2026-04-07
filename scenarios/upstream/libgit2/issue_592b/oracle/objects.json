@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "3fbf1852f72fd268e36457b13a18cdd9a4c9ea35",
+        "type": "commit",
+        "size": 175,
+        "content": "tree aebe7a55922c7097ef91ca3a7bc327a901d87c2c\nauthor Russell Belfer <rb@github.com> 1337205933 -0700\ncommitter Russell Belfer <rb@github.com> 1337205933 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6fa891d3e578c83e1c03bdb9e0fdd8e6e934157f",
+        "type": "blob",
+        "size": 12,
+        "content": "You like me\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8007d41d5794e6ce4d4d2c97e370d5a9aa6d5213",
+        "type": "blob",
+        "size": 9,
+        "content": "ignored/\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a65fb6583a7c425284142f285bc359a2d6565513",
+        "type": "tree",
+        "size": 76,
+        "content": "040000 tree f7d75fbfad8b1d2e307ced287ea78aad403cdce3\tcontained\n100644 blob 6fa891d3e578c83e1c03bdb9e0fdd8e6e934157f\ttracked2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aebe7a55922c7097ef91ca3a7bc327a901d87c2c",
+        "type": "tree",
+        "size": 112,
+        "content": "100644 blob 8007d41d5794e6ce4d4d2c97e370d5a9aa6d5213\t.gitignore\n040000 tree a65fb6583a7c425284142f285bc359a2d6565513\tignored\n100644 blob 6fa891d3e578c83e1c03bdb9e0fdd8e6e934157f\ttracked1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b344b055867fcdc1f01eaa75056a43e868eb4fbc",
+        "type": "blob",
+        "size": 20,
+        "content": "You added me anyhow\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f7d75fbfad8b1d2e307ced287ea78aad403cdce3",
+        "type": "tree",
+        "size": 40,
+        "content": "100644 blob b344b055867fcdc1f01eaa75056a43e868eb4fbc\ttracked3.txt\n",
+        "encoding": "utf-8"
+    }
+]

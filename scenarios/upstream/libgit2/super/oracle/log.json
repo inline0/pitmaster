@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "79d0d58ca6aa1688a073d280169908454cad5b91",
+        "tree": "d757768b570a83e80d02edcc1032db14573e5034",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1442525492 2015-09-17 17:31:32 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1442525492 2015-09-17 17:31:32 -0400",
+        "message": "submodule"
+    }
+]

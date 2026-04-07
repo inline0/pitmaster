@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "ecef6a85173b6f446873a13f7b5a7b54a85cd912",
+        "tree": "b05c3bcc58e13ad8b9511524a3c93da41da075d6",
+        "parents": [
+            "7b4d7c3789b3581973c04087cb774c3c3576de2f"
+        ],
+        "author": "Colin Stolley <ccstolley@github.com> 1631215836 2021-09-09 14:30:36 -0500",
+        "committer": "Colin Stolley <ccstolley@github.com> 1631215836 2021-09-09 14:30:36 -0500",
+        "message": "mv badmode to goodmode and chmod 0644"
+    },
+    {
+        "hash": "7b4d7c3789b3581973c04087cb774c3c3576de2f",
+        "tree": "7befa2fd22f1eac690524d3dc292397fe1d4171a",
+        "parents": [
+            "f34c21cf4f9ea90916250bea563d840e51327f3f"
+        ],
+        "author": "Colin Stolley <ccstolley@github.com> 1631215792 2021-09-09 14:29:52 -0500",
+        "committer": "Colin Stolley <ccstolley@github.com> 1631215792 2021-09-09 14:29:52 -0500",
+        "message": "added somefile we can revert later"
+    },
+    {
+        "hash": "f34c21cf4f9ea90916250bea563d840e51327f3f",
+        "tree": "4cea9c19aa705624b6d882266f4fe8278d33e280",
+        "parents": [],
+        "author": "Colin Stolley <ccstolley@github.com> 1631215759 2021-09-09 14:29:19 -0500",
+        "committer": "Colin Stolley <ccstolley@github.com> 1631215759 2021-09-09 14:29:19 -0500",
+        "message": "added badmode with chmod 0755"
+    }
+]

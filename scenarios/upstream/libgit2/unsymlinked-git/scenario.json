@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/unsymlinked-git",
+    "category": "upstream",
+    "description": "libgit2: unsymlinked.git",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

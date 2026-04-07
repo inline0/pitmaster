@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/super",
+    "category": "upstream",
+    "description": "libgit2: super",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

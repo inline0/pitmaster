@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "a8595ccca04f40818ae0155c8f9c77a230e597b6",
+        "tree": "6fe5f5398af85fb3de8a6aba0339b6d3bfa26a27",
+        "parents": [
+            "806999882bf91d24241e4077906b9017605eb1f3"
+        ],
+        "author": "Author N. Ame <him@there.com> 1360155237 2013-02-06 13:53:57 +0100",
+        "committer": "Author N. Ame <him@there.com> 1360155237 2013-02-06 13:53:57 +0100",
+        "message": "...changed into an executable file."
+    },
+    {
+        "hash": "806999882bf91d24241e4077906b9017605eb1f3",
+        "tree": "d5278d05c8607ec420bfee4cf219fbc0eeebfd6a",
+        "parents": [
+            "7fccd75616ec188b8f1b23d67506a334cc34a49d"
+        ],
+        "author": "Author N. Ame <him@there.com> 1345048748 2012-08-15 18:39:08 +0200",
+        "committer": "Author N. Ame <him@there.com> 1345048748 2012-08-15 18:39:08 +0200",
+        "message": "...changed into a regular file."
+    },
+    {
+        "hash": "7fccd75616ec188b8f1b23d67506a334cc34a49d",
+        "tree": "5c87b6791e8b13da658a14d1ef7e09b5dc3bac8c",
+        "parents": [],
+        "author": "Author N. Ame <him@there.com> 1345048448 2012-08-15 18:34:08 +0200",
+        "committer": "Author N. Ame <him@there.com> 1345048448 2012-08-15 18:34:08 +0200",
+        "message": "With a symlink..."
+    }
+]

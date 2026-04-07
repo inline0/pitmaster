@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "9687e444bcbb85645cb496080434c292f1b57182",
+        "name": "refs/heads/empty-files"
+    },
+    {
+        "hash": "b8986fec0f7bde90f78ac72706e782d82f24f2f0",
+        "name": "refs/heads/ident"
+    },
+    {
+        "hash": "124f4293444614aa8da53be149792c2e43e9bfd9",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "1ec507638b806aba45d6142082885f2a9e88322d",
+        "name": "refs/heads/no-ident"
+    },
+    {
+        "hash": "6b9d5748663795f573ea857276eb2a5f8330efa0",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "9687e444bcbb85645cb496080434c292f1b57182",
+        "name": "refs/remotes/origin/empty-files"
+    },
+    {
+        "hash": "6b9d5748663795f573ea857276eb2a5f8330efa0",
+        "name": "refs/remotes/origin/master"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/mailmap",
+    "category": "upstream",
+    "description": "libgit2: mailmap",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "0607ee9d4ccce8e4c4fa13c2c7d727e7faba4e0e",
+        "type": "tree",
+        "size": 122,
+        "content": "100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\ta.txt\n040000 tree 7144be264b61825fbff68046fe999bdfe96a1792\tc\n100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\tl.txt\n040000 tree 7144be264b61825fbff68046fe999bdfe96a1792\tt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "49363a72a90d9424240258cd3759f23788ecf1d8",
+        "type": "tree",
+        "size": 66,
+        "content": "100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\ta.txt\n100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\tb.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4d383e87f0371ba8fa353f3912db6862b2625e85",
+        "type": "commit",
+        "size": 185,
+        "content": "tree 0607ee9d4ccce8e4c4fa13c2c7d727e7faba4e0e\nauthor nulltoken <emeric.fermas@gmail.com> 1331989635 +0100\ncommitter nulltoken <emeric.fermas@gmail.com> 1331989635 +0100\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7144be264b61825fbff68046fe999bdfe96a1792",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bede83ee10b5b3f00239660b00acec2d55fd0b84",
+        "type": "tree",
+        "size": 122,
+        "content": "100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\ta.txt\n040000 tree 7144be264b61825fbff68046fe999bdfe96a1792\tc\n100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\tl.txt\n040000 tree 49363a72a90d9424240258cd3759f23788ecf1d8\tt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e38fcc7a6060f5eb5b876e836b52ae4769363f21",
+        "type": "commit",
+        "size": 185,
+        "content": "tree bede83ee10b5b3f00239660b00acec2d55fd0b84\nauthor nulltoken <emeric.fermas@gmail.com> 1331989635 +0100\ncommitter nulltoken <emeric.fermas@gmail.com> 1332227062 +0100\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f1adef63cb08891a0942b76fc4b9c50c6c494bc7",
+        "type": "blob",
+        "size": 13,
+        "content": "nothing here\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,186 @@
+[
+    {
+        "hash": "0228b21d477f67b9f7720565da9e760b84c8b85b",
+        "name": "refs/heads/dot_backslash_dotcapitalgit_path"
+    },
+    {
+        "hash": "e2377bdbc93b30a34ed5deefedded89b947ff8f4",
+        "name": "refs/heads/dot_dotcapitalgit_path"
+    },
+    {
+        "hash": "4aa347c8bb0456230f43f34833c97b9f52c40f62",
+        "name": "refs/heads/dot_dotgit_path"
+    },
+    {
+        "hash": "8bcbb6e0c0f9554efd5401e1ec14a4b2595eb3bf",
+        "name": "refs/heads/dot_dotgit_tree"
+    },
+    {
+        "hash": "4414ac920acabc3eb00e3cf9375eeb0cb6859c15",
+        "name": "refs/heads/dot_git_colon"
+    },
+    {
+        "hash": "ccbbfdb796f9b03298f5c7225e8f830784e1a3b1",
+        "name": "refs/heads/dot_git_colon_stuff"
+    },
+    {
+        "hash": "26b665c162f67acae67779445f3c7b9782b0a6d7",
+        "name": "refs/heads/dot_git_dot"
+    },
+    {
+        "hash": "bf7ab4723fcc57ecc7fceccf591d6c4773491569",
+        "name": "refs/heads/dot_path"
+    },
+    {
+        "hash": "debdc4a004fda6141a17d9c297617be70d40248f",
+        "name": "refs/heads/dot_path_two"
+    },
+    {
+        "hash": "697dc3d723a018538eb819d5db2035c15109af73",
+        "name": "refs/heads/dot_tree"
+    },
+    {
+        "hash": "099ed86cb8501ae483b1855c351fe1a506ac9631",
+        "name": "refs/heads/dotcapitalgit_backslash_path"
+    },
+    {
+        "hash": "e87caf56c91ab8d14e4ee8eb56308533503d1885",
+        "name": "refs/heads/dotcapitalgit_path"
+    },
+    {
+        "hash": "39fb3af508440cf970b92767f6d081c811574d2a",
+        "name": "refs/heads/dotcapitalgit_tree"
+    },
+    {
+        "hash": "d2eb26d4938550487de59a017a7bfee8ca46b5f4",
+        "name": "refs/heads/dotdot_dotcapitalgit_path"
+    },
+    {
+        "hash": "1212c12915820e1ad523b6305c0dcdefea8b7e97",
+        "name": "refs/heads/dotdot_dotgit_path"
+    },
+    {
+        "hash": "1e3c845808fa5883aa4bcf2f882172edb72a7a32",
+        "name": "refs/heads/dotdot_dotgit_tree"
+    },
+    {
+        "hash": "91602c85bb50dd834205edd30435b77d5bb9ccf0",
+        "name": "refs/heads/dotdot_path"
+    },
+    {
+        "hash": "8f1dcd43aa0164eb6ec319c3ec8879ca5cf62c1e",
+        "name": "refs/heads/dotdot_tree"
+    },
+    {
+        "hash": "b8edf3ad62dbcbc983857a5bfee7b0181ee1a513",
+        "name": "refs/heads/dotgit_alternate_data_stream"
+    },
+    {
+        "hash": "099ed86cb8501ae483b1855c351fe1a506ac9631",
+        "name": "refs/heads/dotgit_backslash_path"
+    },
+    {
+        "hash": "46fe10fa23259b089ab050788b06df979cd7d054",
+        "name": "refs/heads/dotgit_hfs_ignorable_1"
+    },
+    {
+        "hash": "9ab85e507899c19dca57778c9b6e5f1ec799b911",
+        "name": "refs/heads/dotgit_hfs_ignorable_10"
+    },
+    {
+        "hash": "15f7d9f9514eeb65b9588c49b10b1da145a729a2",
+        "name": "refs/heads/dotgit_hfs_ignorable_11"
+    },
+    {
+        "hash": "c3a70f8a376f17adccfb52b48e2831bfef2a2172",
+        "name": "refs/heads/dotgit_hfs_ignorable_12"
+    },
+    {
+        "hash": "c2a2ddd339574e5cbfd9228be840eb1bf496de4e",
+        "name": "refs/heads/dotgit_hfs_ignorable_13"
+    },
+    {
+        "hash": "712ceb8eb3e57072447715bc4057c57aa50f629a",
+        "name": "refs/heads/dotgit_hfs_ignorable_14"
+    },
+    {
+        "hash": "3b24e5c751ee9c7c89df32a0d959748aa3d0112c",
+        "name": "refs/heads/dotgit_hfs_ignorable_15"
+    },
+    {
+        "hash": "c8f98a1762ec016c30f0d73512df399dedefc3fd",
+        "name": "refs/heads/dotgit_hfs_ignorable_16"
+    },
+    {
+        "hash": "35ae236308929a536fb4e852278a9b98c42babb3",
+        "name": "refs/heads/dotgit_hfs_ignorable_2"
+    },
+    {
+        "hash": "96156716851c0afb4702b0d2c4ac8c496a730e29",
+        "name": "refs/heads/dotgit_hfs_ignorable_3"
+    },
+    {
+        "hash": "7a0538bc4e20aecb36ef221f2077eb30ebe0bcb2",
+        "name": "refs/heads/dotgit_hfs_ignorable_4"
+    },
+    {
+        "hash": "1635c47d80914f0abfa43dd4234a948db5bdb107",
+        "name": "refs/heads/dotgit_hfs_ignorable_5"
+    },
+    {
+        "hash": "9e24726d64589ba02430da8cebb5712dad35593d",
+        "name": "refs/heads/dotgit_hfs_ignorable_6"
+    },
+    {
+        "hash": "ce22b3cd9a01efafc370879c1938e0c32fb6f195",
+        "name": "refs/heads/dotgit_hfs_ignorable_7"
+    },
+    {
+        "hash": "a576a98d3279989226992610372035b76a01a3e9",
+        "name": "refs/heads/dotgit_hfs_ignorable_8"
+    },
+    {
+        "hash": "442894787eddb1e84a952f17a027590e2c6c02cd",
+        "name": "refs/heads/dotgit_hfs_ignorable_9"
+    },
+    {
+        "hash": "5341a7b545d71198b076b8ba3374a75c9a290640",
+        "name": "refs/heads/dotgit_path"
+    },
+    {
+        "hash": "6594bdbad86bbc8d3ed0806a23827203fbab56c6",
+        "name": "refs/heads/dotgit_tree"
+    },
+    {
+        "hash": "94f37c29173c8fa45a232b17e745c82132b2fafd",
+        "name": "refs/heads/git_tilde1"
+    },
+    {
+        "hash": "899ff28744bed5bece69c78ba752c7dc3e954629",
+        "name": "refs/heads/git_tilde2"
+    },
+    {
+        "hash": "fa9cfdbeaaf3a91ff4b84d74412cd59d9b16a615",
+        "name": "refs/heads/git_tilde3"
+    },
+    {
+        "hash": "e30b60b120761f44ebd0f0a7b0e9445ce8e11d68",
+        "name": "refs/heads/gitmodules-symlink"
+    },
+    {
+        "hash": "e399c4fc4c07cb7947d2f3d966bc374df6ccc691",
+        "name": "refs/heads/master"
+    },
+    {
+        "hash": "4d83272d0d372e1232ddc4ff3260d76fdfa2015a",
+        "name": "refs/heads/symlink1"
+    },
+    {
+        "hash": "9d5898503adc01d763e279ac8fcefbe865b19031",
+        "name": "refs/heads/symlink2"
+    },
+    {
+        "hash": "cf6fcf8cdf7e8d4cda3b11b0ba02d0d5125fbbd7",
+        "name": "refs/heads/symlink3"
+    }
+]

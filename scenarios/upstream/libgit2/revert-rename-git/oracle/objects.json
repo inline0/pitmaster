@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "4cea9c19aa705624b6d882266f4fe8278d33e280",
+        "type": "tree",
+        "size": 35,
+        "content": "100755 blob f0f64c618e1646d2948a456ed7c4bcfad5536d68\tbadmode\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7b4d7c3789b3581973c04087cb774c3c3576de2f",
+        "type": "commit",
+        "size": 255,
+        "content": "tree 7befa2fd22f1eac690524d3dc292397fe1d4171a\nparent f34c21cf4f9ea90916250bea563d840e51327f3f\nauthor Colin Stolley <ccstolley@github.com> 1631215792 -0500\ncommitter Colin Stolley <ccstolley@github.com> 1631215792 -0500\n\nadded somefile we can revert later\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7befa2fd22f1eac690524d3dc292397fe1d4171a",
+        "type": "tree",
+        "size": 71,
+        "content": "100755 blob f0f64c618e1646d2948a456ed7c4bcfad5536d68\tbadmode\n100644 blob 9a5f957ea8072f9e72da17cc0037b81480468a63\tsomefile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9a5f957ea8072f9e72da17cc0037b81480468a63",
+        "type": "blob",
+        "size": 20,
+        "content": "added another file.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b05c3bcc58e13ad8b9511524a3c93da41da075d6",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob f0f64c618e1646d2948a456ed7c4bcfad5536d68\tgoodmode\n100644 blob 9a5f957ea8072f9e72da17cc0037b81480468a63\tsomefile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ecef6a85173b6f446873a13f7b5a7b54a85cd912",
+        "type": "commit",
+        "size": 258,
+        "content": "tree b05c3bcc58e13ad8b9511524a3c93da41da075d6\nparent 7b4d7c3789b3581973c04087cb774c3c3576de2f\nauthor Colin Stolley <ccstolley@github.com> 1631215836 -0500\ncommitter Colin Stolley <ccstolley@github.com> 1631215836 -0500\n\nmv badmode to goodmode and chmod 0644\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f0f64c618e1646d2948a456ed7c4bcfad5536d68",
+        "type": "blob",
+        "size": 23,
+        "content": "a file with a bad mode\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f34c21cf4f9ea90916250bea563d840e51327f3f",
+        "type": "commit",
+        "size": 202,
+        "content": "tree 4cea9c19aa705624b6d882266f4fe8278d33e280\nauthor Colin Stolley <ccstolley@github.com> 1631215759 -0500\ncommitter Colin Stolley <ccstolley@github.com> 1631215759 -0500\n\nadded badmode with chmod 0755\n",
+        "encoding": "utf-8"
+    }
+]

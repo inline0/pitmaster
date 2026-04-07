@@ -1,0 +1,401 @@
+[
+    {
+        "hash": "044bcd5c9bf5ebdd51e514a9a36457018f06f6e1",
+        "type": "commit",
+        "size": 234,
+        "content": "tree ef0dcd356d77221e9c27f4f3928ad28e80b87ceb\nparent 78db270c1841841f75a8157321bdcb50ab12e6c3\nauthor Edward <ethomson@edwardthomson.com> 1389142719 -0800\ncommitter Linquize <linquize@yahoo.com.hk> 1414222620 +0800\n\nAdd zero byte file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "04de00b358f13389948756732158eaaaefa1448c",
+        "type": "blob",
+        "size": 18,
+        "content": "lf\nlf\ncrlf\r\nlf\nlf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "097722be9b67b48dfe3b19396d02fd535300ee46",
+        "type": "tree",
+        "size": 463,
+        "content": "100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0aa76e474d259bd7c13eb726a1396c381db55c88",
+        "type": "blob",
+        "size": 27,
+        "content": "﻿crlf\r\ncrlf\r\ncrlf\r\ncrlf\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0d06894e14df22e066763ae906e0ed3eb79c205f",
+        "type": "tree",
+        "size": 142,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0e052888828a954ca17e5882638e3c6a083e75c0",
+        "type": "blob",
+        "size": 487,
+        "content": "⚽The rest is ASCII01.\r\nThe rest is ASCII02.\r\nThe rest is ASCII03.\r\nThe rest is ASCII04.\r\nThe rest is ASCII05.\r\nThe rest is ASCII06.\r\nThe rest is ASCII07.\r\nThe rest is ASCII08.\r\nThe rest is ASCII09.\r\nThe rest is ASCII10.\r\nThe rest is ASCII11.\r\nThe rest is ASCII12.\r\nThe rest is ASCII13.\r\nThe rest is ASCII14.\r\nThe rest is ASCII15.\r\nThe rest is ASCII16.\r\nThe rest is ASCII17.\r\nThe rest is ASCII18.\r\nThe rest is ASCII19.\r\nThe rest is ASCII20.\r\nThe rest is ASCII21.\r\nThe rest is ASCII22.\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0ff5a53f19bfd2b5eea1ba550295c47515678987",
+        "type": "blob",
+        "size": 27,
+        "content": "crlf\r\ncrlf\r\nlf\ncrlf\r\ncrlf\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1678031ee023a23bd3515e4e1693b661a69f0a73",
+        "type": "tree",
+        "size": 225,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16c72b67861f8524a5bebc05cd20472d3fca00da",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest1.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest2.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "18c637c5d9aba6eed226ee1840cd1ca2e6c4e4c5",
+        "type": "tree",
+        "size": 605,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "203555c5676d75cd80d69b50beb1f4b588c59ceb",
+        "type": "blob",
+        "size": 20,
+        "content": "\u0001one\ntwo\rthree\nfour\r",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "23f4582779e60bfa7f14750ad507399a58876611",
+        "type": "commit",
+        "size": 275,
+        "content": "tree cdd3dacc5c0501d5ea57bbdf90e3d80176606139\nparent 77afe26d93c49279ca90604c125496920753fede\nauthor Linquize <linquize@yahoo.com.hk> 1414331315 +0800\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433525754 -0400\n\nAdd files with many UTF-8 chars and few UTF-8 chars\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2ad3df895f68f4dda6a0a815c620b909bdd27c05",
+        "type": "tree",
+        "size": 645,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf.txt\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf.txt\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf.txt\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf.txt\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b55b4b94f655c857635b6a9005c056aa7de3532",
+        "type": "commit",
+        "size": 220,
+        "content": "tree fe085d9ace90cc675b87df15e1aeed0c3a31407f\nparent 78db270c1841841f75a8157321bdcb50ab12e6c3\nauthor Edward <ethomson@edwardthomson.com> 1358387894 -0600\ncommitter Linquize <linquize@yahoo.com.hk> 1414222560 +0800\n\nutf8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2bd9d81b51a867352bab307b89cbb5b4a69adfe1",
+        "type": "tree",
+        "size": 443,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2c03f9f407b576eae80327864bab572e282a33ea",
+        "type": "tree",
+        "size": 629,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "33cdead44e1c3ec178e39a4a69085280dbacf01b",
+        "type": "commit",
+        "size": 275,
+        "content": "tree 2ad3df895f68f4dda6a0a815c620b909bdd27c05\nparent 6c589757f65a970a6cc07c71c3f3d2528c611cbc\nauthor Linquize <linquize@yahoo.com.hk> 1414331315 +0800\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433525966 -0400\n\nAdd files with many UTF-8 chars and few UTF-8 chars\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "381cfe630df902bc29271a202d3277981180e4a6",
+        "type": "blob",
+        "size": 23,
+        "content": "﻿lf\r\nlf\r\nlf\r\nlf\r\nlf\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3f96bdca0e37616026afaa325c148cec4aa62d04",
+        "type": "commit",
+        "size": 236,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nparent 044bcd5c9bf5ebdd51e514a9a36457018f06f6e1\nauthor Jacques Germishuys <jacquesg@striata.com> 1427043575 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1427043575 +0200\n\nClear\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "417786fc35b3c71aa546e3f95eb5da3c8dad8c41",
+        "type": "blob",
+        "size": 20,
+        "content": "one\ntwo\rthree\r\nfour\r",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "47fbc2c28a18df0dc773276a253eb85c7516ca50",
+        "type": "blob",
+        "size": 20,
+        "content": "test2.txt's content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5afb6a14a864e30787857dd92af837e8cdd2cb1b",
+        "type": "commit",
+        "size": 260,
+        "content": "tree f2b745d7f47d114a3a6b31a7b628e61e804d1a58\nparent 6803c385642cebc8103fddd526ef395d75678a7e\nauthor Edward Thomson <ethomson@edwardthomson.com> 1433526035 -0400\ncommitter Edward Thomson <ethomson@microsoft.com> 1433776642 -0400\n\nutf8: some files w/ utf8 BOMs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6803c385642cebc8103fddd526ef395d75678a7e",
+        "type": "commit",
+        "size": 278,
+        "content": "tree 2c03f9f407b576eae80327864bab572e282a33ea\nparent 6c589757f65a970a6cc07c71c3f3d2528c611cbc\nauthor Edward Thomson <ethomson@microsoft.com> 1433776617 -0400\ncommitter Edward Thomson <ethomson@microsoft.com> 1433776617 -0400\n\nAdd files with many UTF-8 chars and few UTF-8 chars\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "69597764abeaa1a403ebf589d2ea579c6a8f877e",
+        "type": "commit",
+        "size": 238,
+        "content": "tree 920e90a663bea5d740989d5f935f6dfb473a0c5d\nparent de5bfa165999d9d6c6dbafad2a7e709f93ec30fd\nauthor Sven Strickroth <email@cs-ware.de> 1422200698 +0100\ncommitter Sven Strickroth <email@cs-ware.de> 1422200698 +0100\n\nAdd some binary files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6ae3e9c11a51f0aabebcffcbd5c00f4beed143c9",
+        "type": "tree",
+        "size": 111,
+        "content": "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest1.txt\n100644 blob 47fbc2c28a18df0dc773276a253eb85c7516ca50\ttest2.txt\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\ttest3.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c589757f65a970a6cc07c71c3f3d2528c611cbc",
+        "type": "commit",
+        "size": 247,
+        "content": "tree 2bd9d81b51a867352bab307b89cbb5b4a69adfe1\nparent c8d0b1ebcaccdd8f968c4aae3c2175e7fed651fe\nauthor Sven Strickroth <email@cs-ware.de> 1422200698 +0100\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433513346 -0400\n\nAdd some binary files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "77afe26d93c49279ca90604c125496920753fede",
+        "type": "commit",
+        "size": 264,
+        "content": "tree 18c637c5d9aba6eed226ee1840cd1ca2e6c4e4c5\nparent 6c589757f65a970a6cc07c71c3f3d2528c611cbc\nauthor Edward Thomson <ethomson@edwardthomson.com> 1433525685 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433525685 -0400\n\nutf8: some files w/ utf8 BOMs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "78db270c1841841f75a8157321bdcb50ab12e6c3",
+        "type": "commit",
+        "size": 178,
+        "content": "tree 0d06894e14df22e066763ae906e0ed3eb79c205f\nauthor Edward <ethomson@edwardthomson.com> 1358311998 -0600\ncommitter Linquize <linquize@yahoo.com.hk> 1414222500 +0800\n\ncrlf tests\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "799770d1cff46753a57db7a066159b5610da6e3a",
+        "type": "blob",
+        "size": 15,
+        "content": "lf\nlf\nlf\nlf\nlf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7cce67e58173e2b01f7db124ceaabe3183d19c49",
+        "type": "blob",
+        "size": 18,
+        "content": "﻿lf\nlf\nlf\nlf\nlf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "85340755cfe5e28c2835781978bb1cece91b3d0f",
+        "type": "blob",
+        "size": 24,
+        "content": "\u0001one\r\ntwo\r\nthree\r\nfour\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "920e90a663bea5d740989d5f935f6dfb473a0c5d",
+        "type": "tree",
+        "size": 406,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9687e444bcbb85645cb496080434c292f1b57182",
+        "type": "commit",
+        "size": 257,
+        "content": "tree 6ae3e9c11a51f0aabebcffcbd5c00f4beed143c9\nparent 97449da2d225557c558ac244384d487e66c3e591\nauthor Jacques Germishuys <jacquesg@striata.com> 1427043612 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1427043612 +0200\n\nAdded content to test2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "97449da2d225557c558ac244384d487e66c3e591",
+        "type": "commit",
+        "size": 254,
+        "content": "tree 16c72b67861f8524a5bebc05cd20472d3fca00da\nparent 3f96bdca0e37616026afaa325c148cec4aa62d04\nauthor Jacques Germishuys <jacquesg@striata.com> 1427043593 +0200\ncommitter Jacques Germishuys <jacquesg@striata.com> 1427043593 +0200\n\nAdded three empty files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9a6c3533fef19abd6eec8e61206b5c51982b80d9",
+        "type": "blob",
+        "size": 42,
+        "content": "Lets sing!\n♫♪♬♩\nEat food\n🍅🍕\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9d29b5bb165bf65637ffcb5ededb82ddd7c3fd13",
+        "type": "tree",
+        "size": 262,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a234455d62297f1856c4603686150c59fcb0aafe",
+        "type": "commit",
+        "size": 264,
+        "content": "tree c3e11722855ff260bd27418988ac1467c4e9e73a\nparent 2b55b4b94f655c857635b6a9005c056aa7de3532\nauthor Linquize <linquize@yahoo.com.hk> 1414331315 +0800\ncommitter Linquize <linquize@yahoo.com.hk> 1414331315 +0800\n\nAdd files with many UTF-8 chars and few UTF-8 chars\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966",
+        "type": "blob",
+        "size": 24,
+        "content": "crlf\r\ncrlf\r\ncrlf\r\ncrlf\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aaf083a9cb53dac3669dcfa0e48921580d629ec7",
+        "type": "blob",
+        "size": 21,
+        "content": "\u0001one\ntwo\rthree\r\nfour\r",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3",
+        "type": "blob",
+        "size": 20,
+        "content": "\u0001one\ntwo\nthree\nfour\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb29a7b46b5d4ba3ea17b238ae561b81d59dc818",
+        "type": "commit",
+        "size": 231,
+        "content": "tree 097722be9b67b48dfe3b19396d02fd535300ee46\nparent 6c589757f65a970a6cc07c71c3f3d2528c611cbc\nauthor Edward <ethomson@edwardthomson.com> 1358387894 -0600\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433525618 -0400\n\nutf8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c3e11722855ff260bd27418988ac1467c4e9e73a",
+        "type": "tree",
+        "size": 364,
+        "content": "100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf.txt\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf.txt\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf.txt\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf.txt\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c8d0b1ebcaccdd8f968c4aae3c2175e7fed651fe",
+        "type": "commit",
+        "size": 252,
+        "content": "tree 9d29b5bb165bf65637ffcb5ededb82ddd7c3fd13\nparent 044bcd5c9bf5ebdd51e514a9a36457018f06f6e1\nauthor Sven Strickroth <email@cs-ware.de> 1422039838 +0100\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433513342 -0400\n\nAdd mixed cr-lf-crlf files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd574f5a2baa4c79504f8837b730fa0b11defe99",
+        "type": "blob",
+        "size": 46,
+        "content": "Lets sing!\r\n♫♪♬♩\r\nEat food\r\n🍅🍕\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cdd3dacc5c0501d5ea57bbdf90e3d80176606139",
+        "type": "tree",
+        "size": 807,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf.txt\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf.txt\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf.txt\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf.txt\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4",
+        "type": "blob",
+        "size": 19,
+        "content": "one\ntwo\rthree\nfour\r",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dc88e3b917de821e25962bea7ec1f55c4ce2112c",
+        "type": "blob",
+        "size": 21,
+        "content": "﻿lf\nlf\ncrlf\r\nlf\nlf\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "de5bfa165999d9d6c6dbafad2a7e709f93ec30fd",
+        "type": "commit",
+        "size": 243,
+        "content": "tree 1678031ee023a23bd3515e4e1693b661a69f0a73\nparent 78db270c1841841f75a8157321bdcb50ab12e6c3\nauthor Sven Strickroth <email@cs-ware.de> 1422039838 +0100\ncommitter Sven Strickroth <email@cs-ware.de> 1422041815 +0100\n\nAdd mixed cr-lf-crlf files\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5062da7d7802cf492975eda580f09ac4876bd88",
+        "type": "commit",
+        "size": 264,
+        "content": "tree feab3713c4659bb22700042b3c55b8d60d0a952b\nparent 33cdead44e1c3ec178e39a4a69085280dbacf01b\nauthor Edward Thomson <ethomson@edwardthomson.com> 1433526035 -0400\ncommitter Edward Thomson <ethomson@edwardthomson.com> 1433526035 -0400\n\nutf8: some files w/ utf8 BOMs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "type": "blob",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea030d3c6cec212069eca698cabaa5b4550f1511",
+        "type": "blob",
+        "size": 30,
+        "content": "﻿crlf\r\ncrlf\r\nlf\ncrlf\r\ncrlf\r\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef0dcd356d77221e9c27f4f3928ad28e80b87ceb",
+        "type": "tree",
+        "size": 179,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2b745d7f47d114a3a6b31a7b628e61e804d1a58",
+        "type": "tree",
+        "size": 803,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8bom\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8bom\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8bom\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8bom\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f4d25b796d86387205a5498175d66e91d1e5006a",
+        "type": "blob",
+        "size": 465,
+        "content": "⚽The rest is ASCII01.\nThe rest is ASCII02.\nThe rest is ASCII03.\nThe rest is ASCII04.\nThe rest is ASCII05.\nThe rest is ASCII06.\nThe rest is ASCII07.\nThe rest is ASCII08.\nThe rest is ASCII09.\nThe rest is ASCII10.\nThe rest is ASCII11.\nThe rest is ASCII12.\nThe rest is ASCII13.\nThe rest is ASCII14.\nThe rest is ASCII15.\nThe rest is ASCII16.\nThe rest is ASCII17.\nThe rest is ASCII18.\nThe rest is ASCII19.\nThe rest is ASCII20.\nThe rest is ASCII21.\nThe rest is ASCII22.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fe085d9ace90cc675b87df15e1aeed0c3a31407f",
+        "type": "tree",
+        "size": 162,
+        "content": "100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "feab3713c4659bb22700042b3c55b8d60d0a952b",
+        "type": "tree",
+        "size": 819,
+        "content": "100644 blob a9a2e8913c1dbe2812fac5e6b4e0a4bd5d0d5966\tall-crlf\n100644 blob 0aa76e474d259bd7c13eb726a1396c381db55c88\tall-crlf-utf8bom\n100644 blob 799770d1cff46753a57db7a066159b5610da6e3a\tall-lf\n100644 blob 7cce67e58173e2b01f7db124ceaabe3183d19c49\tall-lf-utf8bom\n100644 blob 85340755cfe5e28c2835781978bb1cece91b3d0f\tbinary-all-crlf\n100644 blob af6fcf6da196f615d7cda269b55b5c4ecfb4a5b3\tbinary-all-lf\n100644 blob 203555c5676d75cd80d69b50beb1f4b588c59ceb\tbinary-mixed-lf-cr\n100644 blob aaf083a9cb53dac3669dcfa0e48921580d629ec7\tbinary-mixed-lf-cr-crlf\n100644 blob 0e052888828a954ca17e5882638e3c6a083e75c0\tfew-utf8-chars-crlf.txt\n100644 blob f4d25b796d86387205a5498175d66e91d1e5006a\tfew-utf8-chars-lf.txt\n100644 blob cd574f5a2baa4c79504f8837b730fa0b11defe99\tmany-utf8-chars-crlf.txt\n100644 blob 9a6c3533fef19abd6eec8e61206b5c51982b80d9\tmany-utf8-chars-lf.txt\n100644 blob d11e7ef63ba7db1db3b1b99cdbafc57a8549f8a4\tmixed-lf-cr\n100644 blob 417786fc35b3c71aa546e3f95eb5da3c8dad8c41\tmixed-lf-cr-crlf\n100644 blob 0ff5a53f19bfd2b5eea1ba550295c47515678987\tmore-crlf\n100644 blob ea030d3c6cec212069eca698cabaa5b4550f1511\tmore-crlf-utf8bom\n100644 blob 04de00b358f13389948756732158eaaaefa1448c\tmore-lf\n100644 blob dc88e3b917de821e25962bea7ec1f55c4ce2112c\tmore-lf-utf8bom\n100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\tzero-byte\n",
+        "encoding": "utf-8"
+    }
+]

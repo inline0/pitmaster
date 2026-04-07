@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/typechanges",
+    "category": "upstream",
+    "description": "libgit2: typechanges",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

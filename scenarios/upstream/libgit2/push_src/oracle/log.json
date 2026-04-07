@@ -1,0 +1,62 @@
+[
+    {
+        "hash": "951bbbb90e2259a4c8950db78946784fb53fcbce",
+        "tree": "64fd55f9b6390202db5e5666fd1fb339089fba4d",
+        "parents": [
+            "d9b63a88223d8367516f50bd131a5f7349b7f3e4",
+            "27b7ce66243eb1403862d05f958c002312df173d",
+            "fa38b91f199934685819bea316186d8b008c52a2"
+        ],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923207 2012-11-14 15:00:07 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923207 2012-11-14 15:00:07 -0500",
+        "message": "merge b3, b4, and b5 to master"
+    },
+    {
+        "hash": "fa38b91f199934685819bea316186d8b008c52a2",
+        "tree": "b4e1f2b375a64c1ccd40c5ff6aa8bc96839ba4fd",
+        "parents": [
+            "a78705c3b2725f931d3ee05348d83cc26700f247"
+        ],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923206 2012-11-14 15:00:06 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923206 2012-11-14 15:00:06 -0500",
+        "message": "added submodule named 'submodule' pointing to '../testrepo.git'"
+    },
+    {
+        "hash": "d9b63a88223d8367516f50bd131a5f7349b7f3e4",
+        "tree": "dcab83249f6f9d1ed735d651352a80519339b591",
+        "parents": [
+            "a78705c3b2725f931d3ee05348d83cc26700f247"
+        ],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923201 2012-11-14 15:00:01 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923201 2012-11-14 15:00:01 -0500",
+        "message": "edited a.txt"
+    },
+    {
+        "hash": "27b7ce66243eb1403862d05f958c002312df173d",
+        "tree": "fffe95c7fd0a37fa2ed702f8f93b56b2196b3925",
+        "parents": [
+            "a78705c3b2725f931d3ee05348d83cc26700f247"
+        ],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923201 2012-11-14 15:00:01 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923201 2012-11-14 15:00:01 -0500",
+        "message": "edited fold\\b.txt"
+    },
+    {
+        "hash": "a78705c3b2725f931d3ee05348d83cc26700f247",
+        "tree": "cd881f90f2933db2e4cc26b8c71fe6037ac7fe4c",
+        "parents": [
+            "5c0bb3d1b9449d1cc69d7519fd05166f01840915"
+        ],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923200 2012-11-14 15:00:00 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923200 2012-11-14 15:00:00 -0500",
+        "message": "added fold and fold/b.txt"
+    },
+    {
+        "hash": "5c0bb3d1b9449d1cc69d7519fd05166f01840915",
+        "tree": "08585692ce06452da6f82ae66b90d98b55536fca",
+        "parents": [],
+        "author": "Congyi Wu <congyiwu@gmail.com> 1352923200 2012-11-14 15:00:00 -0500",
+        "committer": "Congyi Wu <congyiwu@gmail.com> 1352923200 2012-11-14 15:00:00 -0500",
+        "message": "added a.txt"
+    }
+]

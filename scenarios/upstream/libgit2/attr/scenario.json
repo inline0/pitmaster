@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/attr",
+    "category": "upstream",
+    "description": "libgit2: attr",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

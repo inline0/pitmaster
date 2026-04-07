@@ -1,0 +1,370 @@
+[
+    {
+        "hash": "d9c5185186d95d233dc007c1927cb3bdd6cde35b",
+        "tree": "770f14546ee2563a26c52afa5cc4139a96e5d360",
+        "parents": [
+            "d616d97082eb7bb2dc6f180a7cca940993b7a56f"
+        ],
+        "author": "Edward Thomson <ethomson@github.com> 1464850465 2016-06-02 01:54:25 -0500",
+        "committer": "Edward Thomson <ethomson@github.com> 1464850465 2016-06-02 01:54:25 -0500",
+        "message": "Add a file"
+    },
+    {
+        "hash": "d482e77aecb8e07da43e4cad6e0dcb59219e12af",
+        "tree": "508be4ff49d38465ad3de58f66d38f70e59f881f",
+        "parents": [
+            "dc12ac1e10f2be70e8ecd52132a08da98a309c3a"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405707134 2014-07-18 14:12:14 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405707134 2014-07-18 14:12:14 -0400",
+        "message": "Modification 1 to green_pea"
+    },
+    {
+        "hash": "dc12ac1e10f2be70e8ecd52132a08da98a309c3a",
+        "tree": "e7bb00c4eab291e08361fda376733a12b4150aa9",
+        "parents": [
+            "edf7b3ffde1624c60d2d6b1a2bb792d86de172e0"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405706779 2014-07-18 14:06:19 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405706779 2014-07-18 14:06:19 -0400",
+        "message": "Cherry picking \"Modification 1 to beef\""
+    },
+    {
+        "hash": "edf7b3ffde1624c60d2d6b1a2bb792d86de172e0",
+        "tree": "adc97cfb874cdfb9d5ab17b54f3771dea6e02ccf",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405706696 2014-07-18 14:04:56 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405706696 2014-07-18 14:04:56 -0400",
+        "message": "Addition of green_pea"
+    },
+    {
+        "hash": "d616d97082eb7bb2dc6f180a7cca940993b7a56f",
+        "tree": "b1b94ec02f8ed87d0efa4c65fb38d5d6da7e8b32",
+        "parents": [
+            "2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405625055 2014-07-17 15:24:15 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405625055 2014-07-17 15:24:15 -0400",
+        "message": "Modification 3 to gravy"
+    },
+    {
+        "hash": "7f37fe2d7320360f8a9118b1ed8fba6f38481679",
+        "tree": "8f4de6c781b9ff9cedfd7f9f9f224e744f97b259",
+        "parents": [
+            "1b1d19799fcc89fa3cb821581fcf7f2e8fd2cc4d"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622618 2014-07-17 14:43:38 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622618 2014-07-17 14:43:38 -0400",
+        "message": "Modification 4 of dried_pea"
+    },
+    {
+        "hash": "1b1d19799fcc89fa3cb821581fcf7f2e8fd2cc4d",
+        "tree": "73f346c88d965227a03c0af8d555870b8c5021d4",
+        "parents": [
+            "b9f72b9158fa8c49fb4e4c10b26817ed867be803"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622610 2014-07-17 14:43:30 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622610 2014-07-17 14:43:30 -0400",
+        "message": "Modification 3 of dried_pea"
+    },
+    {
+        "hash": "b9f72b9158fa8c49fb4e4c10b26817ed867be803",
+        "tree": "3fd8d53cf02de539b9a25a5941030451f76a152f",
+        "parents": [
+            "b672b141d48c369fee6c4deeb32a904387594365",
+            "12c084412b952396962eb420716df01022b847cc"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622594 2014-07-17 14:43:14 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622594 2014-07-17 14:43:14 -0400",
+        "message": "Merge branch 'barley' into dried_pea"
+    },
+    {
+        "hash": "b672b141d48c369fee6c4deeb32a904387594365",
+        "tree": "a125b9b655932711abceaf8962948e6b601d67b6",
+        "parents": [
+            "e52ff405da5b7e1e9b0929939fa8405d81fe8a45"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622587 2014-07-17 14:43:07 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622587 2014-07-17 14:43:07 -0400",
+        "message": "Modification 2 of dried_pea"
+    },
+    {
+        "hash": "e52ff405da5b7e1e9b0929939fa8405d81fe8a45",
+        "tree": "a01a6ee390f65d834375e072952deaee0c5e92f7",
+        "parents": [
+            "00f1b9a0948a7d5d14405eba6030efcdfbb8ff4a"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622574 2014-07-17 14:42:54 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622574 2014-07-17 14:42:54 -0400",
+        "message": "Modification 1 of dried_pea"
+    },
+    {
+        "hash": "00f1b9a0948a7d5d14405eba6030efcdfbb8ff4a",
+        "tree": "f556d5fef35003561dc0b64b37057d7541239105",
+        "parents": [
+            "aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622562 2014-07-17 14:42:42 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622562 2014-07-17 14:42:42 -0400",
+        "message": "Addition of dried_pea"
+    },
+    {
+        "hash": "12c084412b952396962eb420716df01022b847cc",
+        "tree": "3da85aca38a95b44d77ef55a8deb445e49ba19b4",
+        "parents": [
+            "013cc32d341bab0e6f039f50f153c18986f16c58"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622467 2014-07-17 14:41:07 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622467 2014-07-17 14:41:07 -0400",
+        "message": "Modification 4 to barley"
+    },
+    {
+        "hash": "013cc32d341bab0e6f039f50f153c18986f16c58",
+        "tree": "78c320b06544e23d786a9ec84ee93861f2933094",
+        "parents": [
+            "9539b2cc291d6a6b1b266df8474d31fdd344dd79"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622457 2014-07-17 14:40:57 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622457 2014-07-17 14:40:57 -0400",
+        "message": "Modification 3 to barley"
+    },
+    {
+        "hash": "9539b2cc291d6a6b1b266df8474d31fdd344dd79",
+        "tree": "6d77ce8fa2cd93c6489236e33e45e35203ca748c",
+        "parents": [
+            "e4f809f826c1a9fc929874bc0e4644dd2f2a1af4"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622449 2014-07-17 14:40:49 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622449 2014-07-17 14:40:49 -0400",
+        "message": "Modification 2 to barley"
+    },
+    {
+        "hash": "e4f809f826c1a9fc929874bc0e4644dd2f2a1af4",
+        "tree": "f63fa37e285bd11b0a7b48fa584a4091814a3ada",
+        "parents": [
+            "aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622440 2014-07-17 14:40:40 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622440 2014-07-17 14:40:40 -0400",
+        "message": "Modification 1 to barley"
+    },
+    {
+        "hash": "aa4c42aecdfc7cd989bbc3209934ea7cda3f4d88",
+        "tree": "eef0edde5daa94da5f297d4ddb5dfbc1980f0902",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622418 2014-07-17 14:40:18 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622418 2014-07-17 14:40:18 -0400",
+        "message": "Addition of barley"
+    },
+    {
+        "hash": "f87d14a4a236582a0278a916340a793714256864",
+        "tree": "9a8535dfcaf7554c728d874f047c5461fb2c71d1",
+        "parents": [
+            "0ef2e2b2a2b8d6e1f8dff5e621e0eca21b693d0c"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622366 2014-07-17 14:39:26 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622366 2014-07-17 14:39:26 -0400",
+        "message": "Modification 3 to veal"
+    },
+    {
+        "hash": "0ef2e2b2a2b8d6e1f8dff5e621e0eca21b693d0c",
+        "tree": "bccc8eabb5cfe2ec09959c7f4155aa73429fd604",
+        "parents": [
+            "4cacc6f6e740a5bc64faa33e04b8ef0733d8a127",
+            "2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622344 2014-07-17 14:39:04 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622344 2014-07-17 14:39:04 -0400",
+        "message": "Merge branch 'gravy' into veal"
+    },
+    {
+        "hash": "4cacc6f6e740a5bc64faa33e04b8ef0733d8a127",
+        "tree": "740a804e8963759c98e5b8cb912e15ae74a7a4a6",
+        "parents": [
+            "3e8989b5a16d5258c935d998ef0e6bb139cc4757"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622338 2014-07-17 14:38:58 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622338 2014-07-17 14:38:58 -0400",
+        "message": "Modification 2 to veal"
+    },
+    {
+        "hash": "3e8989b5a16d5258c935d998ef0e6bb139cc4757",
+        "tree": "ffdfa89389040a87008c4ab1834120d3046daaea",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622323 2014-07-17 14:38:43 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622323 2014-07-17 14:38:43 -0400",
+        "message": "Modification 1 to veal"
+    },
+    {
+        "hash": "2aa3ce842094e08ebac152b3d6d5b0fff39f9c6e",
+        "tree": "63c18bf188b8a1ab0bad85161dc3fb43c48ed0db",
+        "parents": [
+            "4bed71df7017283cac61bbf726197ad6a5a18b84"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622301 2014-07-17 14:38:21 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622301 2014-07-17 14:38:21 -0400",
+        "message": "Modification 2 to gravy"
+    },
+    {
+        "hash": "4bed71df7017283cac61bbf726197ad6a5a18b84",
+        "tree": "e88cc0a6919a74599ce8e1dcb81eb2bbae33a645",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622290 2014-07-17 14:38:10 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622290 2014-07-17 14:38:10 -0400",
+        "message": "Modification 1 to gravy"
+    },
+    {
+        "hash": "4b21eb6eeeec7f8fc89a1d334faff9bd5f5f8c34",
+        "tree": "3c33b080bf75724c8899d8e703614cb59bfbd047",
+        "parents": [
+            "85f34ce9ca9e0f33d4146afec9cbe5a26757500a"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622073 2014-07-17 14:34:33 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622073 2014-07-17 14:34:33 -0400",
+        "message": "Conflicting modification 4 to asparagus"
+    },
+    {
+        "hash": "85f34ce9ca9e0f33d4146afec9cbe5a26757500a",
+        "tree": "6130e5fcbdce2aa8b3cfd84706c58a892e7d8dd0",
+        "parents": [
+            "0f5f6d3353be1a9966fa5767b7d604b051798224"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622054 2014-07-17 14:34:14 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622054 2014-07-17 14:34:14 -0400",
+        "message": "Conflicting modification 3 to asparagus"
+    },
+    {
+        "hash": "0f5f6d3353be1a9966fa5767b7d604b051798224",
+        "tree": "ab25a53ef5622d443ecb0492b7516725f0deac8f",
+        "parents": [
+            "33f915f9e4dbd9f4b24430e48731a59b45b15500"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622039 2014-07-17 14:33:59 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622039 2014-07-17 14:33:59 -0400",
+        "message": "Conflicting modification 2 to asparagus"
+    },
+    {
+        "hash": "33f915f9e4dbd9f4b24430e48731a59b45b15500",
+        "tree": "2b4ebffd3111546d278bb5df62e5630930b605fb",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405622026 2014-07-17 14:33:46 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405622026 2014-07-17 14:33:46 -0400",
+        "message": "Conflicting modification 1 to asparagus"
+    },
+    {
+        "hash": "b146bd7608eac53d9bf9e1a6963543588b555c64",
+        "tree": "1f2214c1b13b134d5508f41f6a3b77cc6a8f5182",
+        "parents": [
+            "588e5d2f04d49707fe4aab865e1deacaf7ef6787"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621881 2014-07-17 14:31:21 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621881 2014-07-17 14:31:21 -0400",
+        "message": "Modification 5 to beef"
+    },
+    {
+        "hash": "588e5d2f04d49707fe4aab865e1deacaf7ef6787",
+        "tree": "b7c536a5883c8adaeb34d5e198c5a3dbbdc608b5",
+        "parents": [
+            "3069cc907e6294623e5917ef6de663928c1febfb"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621870 2014-07-17 14:31:10 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621870 2014-07-17 14:31:10 -0400",
+        "message": "Modification 4 to beef"
+    },
+    {
+        "hash": "3069cc907e6294623e5917ef6de663928c1febfb",
+        "tree": "3f05a038dd89f51ba2b3d7b14ba1f8c00f0e31ac",
+        "parents": [
+            "8d1f13f93c4995760ac07d129246ac1ff64c0be9"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621859 2014-07-17 14:30:59 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621859 2014-07-17 14:30:59 -0400",
+        "message": "Modification 3 to beef"
+    },
+    {
+        "hash": "8d1f13f93c4995760ac07d129246ac1ff64c0be9",
+        "tree": "3252a0692ace4c4c709f22011227d9dc4845f289",
+        "parents": [
+            "da9c51a23d02d931a486f45ad18cda05cf5d2b94"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621844 2014-07-17 14:30:44 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621844 2014-07-17 14:30:44 -0400",
+        "message": "Modification 2 to beef"
+    },
+    {
+        "hash": "da9c51a23d02d931a486f45ad18cda05cf5d2b94",
+        "tree": "8032d630f37266bace093e353f7b97d7f8b20950",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621769 2014-07-17 14:29:29 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621769 2014-07-17 14:29:29 -0400",
+        "message": "Modification 1 to beef"
+    },
+    {
+        "hash": "efad0b11c47cb2f0220cbd6f5b0f93bb99064b00",
+        "tree": "85258e426a341cc1aa035ac7f6d18f84fed2ab38",
+        "parents": [
+            "7a05900f340af0252aaa4e34941f040c5d2fe7f7"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621696 2014-07-17 14:28:16 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621696 2014-07-17 14:28:16 -0400",
+        "message": "Modification 5 to asparagus"
+    },
+    {
+        "hash": "7a05900f340af0252aaa4e34941f040c5d2fe7f7",
+        "tree": "53f75e45a463033854e52fa8d39dc858e45537d0",
+        "parents": [
+            "400d89e8ee6cd91b67b1f45de1ca190e1c580c6f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621684 2014-07-17 14:28:04 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621684 2014-07-17 14:28:04 -0400",
+        "message": "Modification 4 to asparagus"
+    },
+    {
+        "hash": "400d89e8ee6cd91b67b1f45de1ca190e1c580c6f",
+        "tree": "022d3b6bbd0bfbdf147319476fb8bf405691cb0d",
+        "parents": [
+            "dfd3d25264693fcd7348ad286f3c34f3f6b30918"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621673 2014-07-17 14:27:53 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621673 2014-07-17 14:27:53 -0400",
+        "message": "Modification 3 to asparagus"
+    },
+    {
+        "hash": "dfd3d25264693fcd7348ad286f3c34f3f6b30918",
+        "tree": "4fb698bde45d7d2833e3f2aacfbfe8a7e7f60a65",
+        "parents": [
+            "12f28ed978639d331269d9dc2b74e87db58e1057"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621661 2014-07-17 14:27:41 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621661 2014-07-17 14:27:41 -0400",
+        "message": "Modification 2 to asparagus"
+    },
+    {
+        "hash": "12f28ed978639d331269d9dc2b74e87db58e1057",
+        "tree": "11fac10ca1b9318ce361a0be0c3d889d777e299c",
+        "parents": [
+            "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f"
+        ],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621645 2014-07-17 14:27:25 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621645 2014-07-17 14:27:25 -0400",
+        "message": "Modification 1 to asparagus"
+    },
+    {
+        "hash": "7c7bf85e978f1d18c0566f702d2cb7766b9c8d4f",
+        "tree": "42cdad903aef3e7b614675e6584a8be417941911",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "committer": "Edward Thomson <ethomson@edwardthomson.com> 1405621580 2014-07-17 14:26:20 -0400",
+        "message": "Initial revision\n\nA few soup recipes from \"The Virginia Housewife\", available in the\npublic domain."
+    }
+]

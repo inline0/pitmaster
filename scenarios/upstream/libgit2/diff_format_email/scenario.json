@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/diff_format_email",
+    "category": "upstream",
+    "description": "libgit2: diff_format_email",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/libgit2/userdiff",
+    "category": "upstream",
+    "description": "libgit2: userdiff",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

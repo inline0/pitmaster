@@ -1,0 +1,100 @@
+[
+    {
+        "hash": "088b64704e0d6b8bd061dea879418cb5442a3fbf",
+        "type": "tree",
+        "size": 32,
+        "content": "100755 blob f9e65619d93fdf2673882e0a261c5e93b1a84006\tNu.h\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "13a5e939bca25940c069fd2169d993dba328e30b",
+        "type": "tree",
+        "size": 29,
+        "content": "040000 tree 581fadd35b4cf320d102a152f918729011604773\tNu\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "19bf568e59e3a0b363cafb4106226e62d4a4c41c",
+        "type": "blob",
+        "size": 15,
+        "content": "../../objc/Nu.h",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "581fadd35b4cf320d102a152f918729011604773",
+        "type": "tree",
+        "size": 32,
+        "content": "120000 blob 19bf568e59e3a0b363cafb4106226e62d4a4c41c\tNu.h\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5c87b6791e8b13da658a14d1ef7e09b5dc3bac8c",
+        "type": "tree",
+        "size": 65,
+        "content": "040000 tree 13a5e939bca25940c069fd2169d993dba328e30b\tinclude\n040000 tree cf8f1cf5cce859c438d6cc067284cb5e161206e7\tobjc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6fe5f5398af85fb3de8a6aba0339b6d3bfa26a27",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree 837d176303c5005505ec1e4a30231c40930c0230\tinclude\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7fccd75616ec188b8f1b23d67506a334cc34a49d",
+        "type": "commit",
+        "size": 176,
+        "content": "tree 5c87b6791e8b13da658a14d1ef7e09b5dc3bac8c\nauthor Author N. Ame <him@there.com> 1345048448 +0200\ncommitter Author N. Ame <him@there.com> 1345048448 +0200\n\nWith a symlink...\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "806999882bf91d24241e4077906b9017605eb1f3",
+        "type": "commit",
+        "size": 238,
+        "content": "tree d5278d05c8607ec420bfee4cf219fbc0eeebfd6a\nparent 7fccd75616ec188b8f1b23d67506a334cc34a49d\nauthor Author N. Ame <him@there.com> 1345048748 +0200\ncommitter Author N. Ame <him@there.com> 1345048748 +0200\n\n...changed into a regular file.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "837d176303c5005505ec1e4a30231c40930c0230",
+        "type": "tree",
+        "size": 29,
+        "content": "040000 tree 088b64704e0d6b8bd061dea879418cb5442a3fbf\tNu\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a8595ccca04f40818ae0155c8f9c77a230e597b6",
+        "type": "commit",
+        "size": 242,
+        "content": "tree 6fe5f5398af85fb3de8a6aba0339b6d3bfa26a27\nparent 806999882bf91d24241e4077906b9017605eb1f3\nauthor Author N. Ame <him@there.com> 1360155237 +0100\ncommitter Author N. Ame <him@there.com> 1360155237 +0100\n\n...changed into an executable file.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cf8f1cf5cce859c438d6cc067284cb5e161206e7",
+        "type": "tree",
+        "size": 32,
+        "content": "100644 blob f9e65619d93fdf2673882e0a261c5e93b1a84006\tNu.h\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d5278d05c8607ec420bfee4cf219fbc0eeebfd6a",
+        "type": "tree",
+        "size": 34,
+        "content": "040000 tree f4e16fb76536591a41454194058d048d8e4dd2e9\tinclude\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f4e16fb76536591a41454194058d048d8e4dd2e9",
+        "type": "tree",
+        "size": 29,
+        "content": "040000 tree cf8f1cf5cce859c438d6cc067284cb5e161206e7\tNu\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f9e65619d93fdf2673882e0a261c5e93b1a84006",
+        "type": "blob",
+        "size": 16,
+        "content": "awesome content\n",
+        "encoding": "utf-8"
+    }
+]

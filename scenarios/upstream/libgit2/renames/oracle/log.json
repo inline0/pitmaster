@@ -1,0 +1,106 @@
+[
+    {
+        "hash": "41a766bb079e18ff6a24571831bd751168799a02",
+        "tree": "ba8b004914491b129b4feff51b5fd8553b8e8156",
+        "parents": [
+            "19dd32dfb1520a64e5bbaae8dce6ef423dfa2f13"
+        ],
+        "author": "Miguel Arroz <750683+arroz@users.noreply.github.com> 1641075426 2022-01-01 14:17:06 -0800",
+        "committer": "Miguel Arroz <750683+arroz@users.noreply.github.com> 1641075426 2022-01-01 14:17:06 -0800",
+        "message": "Adding file to be deleted on next commit"
+    },
+    {
+        "hash": "7e7bfb88ba9bc65fd700fee1819cf1c317aafa56",
+        "tree": "412a2eaf2c13103ea976b3b02c17abee7a358432",
+        "parents": [
+            "db98035f715427eef1f5e17f03e1801c05301e9e"
+        ],
+        "author": "Kartikaya Gupta <kats@pancake.staktrace.com> 1618487097 2021-04-15 07:44:57 -0400",
+        "committer": "Kartikaya Gupta <kats@pancake.staktrace.com> 1618487097 2021-04-15 07:44:57 -0400",
+        "message": "Copy/modify files around"
+    },
+    {
+        "hash": "db98035f715427eef1f5e17f03e1801c05301e9e",
+        "tree": "bf102db0c9c0c1513909a90e0611b5dddfc87c93",
+        "parents": [
+            "31e47d8c1fa36d7f8d537b96158e3f024de0a9f2"
+        ],
+        "author": "Kartikaya Gupta <kats@pancake.staktrace.com> 1618487039 2021-04-15 07:43:59 -0400",
+        "committer": "Kartikaya Gupta <kats@pancake.staktrace.com> 1618487039 2021-04-15 07:43:59 -0400",
+        "message": "This test needs to start with a minimum of four files"
+    },
+    {
+        "hash": "be053a189b0bbde545e0a3f59ce00b46ad29ce0d",
+        "tree": "2c136d294960f7d939f1ed1903f1ced78b874c87",
+        "parents": [
+            "19dd32dfb1520a64e5bbaae8dce6ef423dfa2f13"
+        ],
+        "author": "Patrick Steinhardt <ps@pks.im> 1519123913 2018-02-20 10:51:53 +0000",
+        "committer": "Patrick Steinhardt <ps@pks.im> 1519123913 2018-02-20 10:51:53 +0000",
+        "message": "Delete and rename"
+    },
+    {
+        "hash": "84d8efa38af7ace2b302de0adbda16b1f1cd2e1b",
+        "tree": "897dda8ecb7fa2e092bc3f9e2a179d7c1b0364db",
+        "parents": [
+            "19dd32dfb1520a64e5bbaae8dce6ef423dfa2f13"
+        ],
+        "author": "Patrick Steinhardt <ps@pks.im> 1519122628 2018-02-20 10:30:28 +0000",
+        "committer": "Patrick Steinhardt <ps@pks.im> 1519122628 2018-02-20 10:30:28 +0000",
+        "message": "Rewrite and delete"
+    },
+    {
+        "hash": "50e90273af7d826ff0a95865bcd3ba8412c447d9",
+        "tree": "b925b224cc91f897001a9993fbce169fdaa8858f",
+        "parents": [],
+        "author": "Rick Potts <rpotts@microsoft.com> 1370966087 2013-06-11 11:54:47 -0400",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1371487932 2013-06-17 11:52:12 -0500",
+        "message": "Base for similarity comparison"
+    },
+    {
+        "hash": "444a76ed3e45b183753f49376af30da8c3fe276a",
+        "tree": "3592953ff3ea5e8ba700c429f3aefe33c8806754",
+        "parents": [],
+        "author": "Edward Thomson <ethomson@microsoft.com> 1370889700 2013-06-10 13:41:40 -0500",
+        "committer": "Edward Thomson <ethomson@microsoft.com> 1370889700 2013-06-10 13:41:40 -0500",
+        "message": "similar files"
+    },
+    {
+        "hash": "19dd32dfb1520a64e5bbaae8dce6ef423dfa2f13",
+        "tree": "5e26abc56a5a84d89790f45416648899cbe13109",
+        "parents": [
+            "1c068dee5790ef1580cfc4cd670915b48d790084"
+        ],
+        "author": "Russell Belfer <rb@github.com> 1361486360 2013-02-21 14:39:20 -0800",
+        "committer": "Russell Belfer <rb@github.com> 1361486360 2013-02-21 14:39:20 -0800",
+        "message": "more renames and smallish modifications"
+    },
+    {
+        "hash": "1c068dee5790ef1580cfc4cd670915b48d790084",
+        "tree": "3c04741dd4b96c4ae4b00ec0f6e10c816a30aad2",
+        "parents": [
+            "2bc7f351d20b53f1c72c16c4b036e491c478c49a"
+        ],
+        "author": "Russell Belfer <rb@github.com> 1361485758 2013-02-21 14:29:18 -0800",
+        "committer": "Russell Belfer <rb@github.com> 1361485758 2013-02-21 14:29:18 -0800",
+        "message": "rewrites, copies with changes, etc."
+    },
+    {
+        "hash": "2bc7f351d20b53f1c72c16c4b036e491c478c49a",
+        "tree": "618c6f2f8740bd6049b2fb9eb93fc15726462745",
+        "parents": [
+            "31e47d8c1fa36d7f8d537b96158e3f024de0a9f2"
+        ],
+        "author": "Russell Belfer <rb@github.com> 1351024817 2012-10-23 13:40:17 -0700",
+        "committer": "Russell Belfer <rb@github.com> 1351024817 2012-10-23 13:40:17 -0700",
+        "message": "copy and rename with no change"
+    },
+    {
+        "hash": "31e47d8c1fa36d7f8d537b96158e3f024de0a9f2",
+        "tree": "03da7ad872536bd448da8d88eb7165338bf923a7",
+        "parents": [],
+        "author": "Russell Belfer <rb@github.com> 1351024687 2012-10-23 13:38:07 -0700",
+        "committer": "Russell Belfer <rb@github.com> 1351024687 2012-10-23 13:38:07 -0700",
+        "message": "Initial commit"
+    }
+]

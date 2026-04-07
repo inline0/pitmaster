@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "1068072702a28a82c78902cf5bf82c3864cf4356",
+        "type": "tree",
+        "size": 242,
+        "content": "100644 blob 176a458f94e0ea5272ce67c36bf30b6be9caf623\t.gitattributes\n100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\tCON\n100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\tLpt1\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\taaa.txt\n100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\taux\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\tfile.txt\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\tzzz.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "176a458f94e0ea5272ce67c36bf30b6be9caf623",
+        "type": "blob",
+        "size": 12,
+        "content": "* text=auto\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d7445a749d25269f32724aa621cb70b196bcc40",
+        "type": "tree",
+        "size": 200,
+        "content": "100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\tCON\n100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\tLpt1\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\taaa.txt\n100644 blob da623abd956bb2fd8052c708c7ed43f05d192d37\taux\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\tfile.txt\n100644 blob 8f45aad6f23b9509f8786c617e19c127ae76609a\tzzz.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3496991d72d500af36edef68bbfcccd1661d88db",
+        "type": "commit",
+        "size": 189,
+        "content": "tree 1068072702a28a82c78902cf5bf82c3864cf4356\nauthor Edward Thomson <ethomson@github.com> 1455626784 +0000\ncommitter Edward Thomson <ethomson@github.com> 1455643649 +0000\n\nInitial revision\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f45aad6f23b9509f8786c617e19c127ae76609a",
+        "type": "blob",
+        "size": 58,
+        "content": "This file has a legal name on (hopefully) every platform.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "da623abd956bb2fd8052c708c7ed43f05d192d37",
+        "type": "blob",
+        "size": 46,
+        "content": "This file has an illegal filename on Windows.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eac7621a652e5261ef1c1d3e7ae31b0d84fcbaba",
+        "type": "commit",
+        "size": 189,
+        "content": "tree 2d7445a749d25269f32724aa621cb70b196bcc40\nauthor Edward Thomson <ethomson@github.com> 1455626784 +0000\ncommitter Edward Thomson <ethomson@github.com> 1455626784 +0000\n\nInitial revision\n",
+        "encoding": "utf-8"
+    }
+]

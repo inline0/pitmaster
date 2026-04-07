@@ -1,0 +1,50 @@
+[
+    {
+        "hash": "a78705c3b2725f931d3ee05348d83cc26700f247",
+        "name": "refs/heads/b1"
+    },
+    {
+        "hash": "a78705c3b2725f931d3ee05348d83cc26700f247",
+        "name": "refs/heads/b2"
+    },
+    {
+        "hash": "d9b63a88223d8367516f50bd131a5f7349b7f3e4",
+        "name": "refs/heads/b3"
+    },
+    {
+        "hash": "27b7ce66243eb1403862d05f958c002312df173d",
+        "name": "refs/heads/b4"
+    },
+    {
+        "hash": "fa38b91f199934685819bea316186d8b008c52a2",
+        "name": "refs/heads/b5"
+    },
+    {
+        "hash": "951bbbb90e2259a4c8950db78946784fb53fcbce",
+        "name": "refs/heads/b6"
+    },
+    {
+        "hash": "b483ae7ba66decee9aee971f501221dea84b1498",
+        "name": "refs/tags/tag-blob"
+    },
+    {
+        "hash": "805c54522e614f29f70d2413a0470247d8b424ac",
+        "name": "refs/tags/tag-commit"
+    },
+    {
+        "hash": "36f79b2846017d3761e0a02d0bccd573e0f90c57",
+        "name": "refs/tags/tag-commit-two"
+    },
+    {
+        "hash": "951bbbb90e2259a4c8950db78946784fb53fcbce",
+        "name": "refs/tags/tag-lightweight"
+    },
+    {
+        "hash": "eea4f2705eeec2db3813f2430829afce99cd00b5",
+        "name": "refs/tags/tag-tag"
+    },
+    {
+        "hash": "ff83aa4c5e5d28e3bcba2f5c6e2adc61286a4e5e",
+        "name": "refs/tags/tag-tree"
+    }
+]

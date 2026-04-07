@@ -1,0 +1,162 @@
+[
+    {
+        "hash": "9b219343610c88a1187c996d0dc58330b55cee28",
+        "tree": "177d8634a28e26ec7819284752757ebe01a479d5",
+        "parents": [
+            "c37a783c20d92ac92362a78a32860f7eebf938ef",
+            "2224e191514cb4bd8c566d80dac22dfcb1e9bb83"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354077064 2012-11-27 20:31:04 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354077064 2012-11-27 20:31:04 -0800",
+        "message": "Merge branch 'first-branch' into second-branch"
+    },
+    {
+        "hash": "c37a783c20d92ac92362a78a32860f7eebf938ef",
+        "tree": "9a40a2f11c191f180c47e54b11567cb3c1e89b30",
+        "parents": [
+            "8b82fb1794cb1c8c7f172ec730a4c2db0ae3e650"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354077057 2012-11-27 20:30:57 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354077057 2012-11-27 20:30:57 -0800",
+        "message": "n"
+    },
+    {
+        "hash": "8b82fb1794cb1c8c7f172ec730a4c2db0ae3e650",
+        "tree": "a9cce3cd1b3efbda5b1f4a6dcc3f1570b2d3d74c",
+        "parents": [
+            "6ab5d28acbf3c3bdff276f7ccfdf29c1520e542f"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354077043 2012-11-27 20:30:43 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354077043 2012-11-27 20:30:43 -0800",
+        "message": "m"
+    },
+    {
+        "hash": "6ab5d28acbf3c3bdff276f7ccfdf29c1520e542f",
+        "tree": "102dce8e3081f398e4bdd9fd894dc85ac3ca6a67",
+        "parents": [
+            "7b8c336c45fc6895c1c60827260fe5d798e5d247"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354077038 2012-11-27 20:30:38 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354077038 2012-11-27 20:30:38 -0800",
+        "message": "l"
+    },
+    {
+        "hash": "7b8c336c45fc6895c1c60827260fe5d798e5d247",
+        "tree": "cbdd40facab1682754eb67f7a43f29e672903cf6",
+        "parents": [
+            "1f4c0311a24b63f6fc209a59a1e404942d4a5006"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354077024 2012-11-27 20:30:24 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354077024 2012-11-27 20:30:24 -0800",
+        "message": "k"
+    },
+    {
+        "hash": "2224e191514cb4bd8c566d80dac22dfcb1e9bb83",
+        "tree": "6cfca542b55b8b37017e6125a4b8f59a6eae6f11",
+        "parents": [
+            "a41a49f8f5cd9b6cb14a076bf8394881ed0b4d19"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076931 2012-11-27 20:28:51 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076931 2012-11-27 20:28:51 -0800",
+        "message": "j"
+    },
+    {
+        "hash": "a41a49f8f5cd9b6cb14a076bf8394881ed0b4d19",
+        "tree": "59b0cf7d74659e1cdb13305319d6d4ce2733c118",
+        "parents": [
+            "82bf9a1a10a4b25c1f14c9607b60970705e92545"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076919 2012-11-27 20:28:39 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076919 2012-11-27 20:28:39 -0800",
+        "message": "i"
+    },
+    {
+        "hash": "82bf9a1a10a4b25c1f14c9607b60970705e92545",
+        "tree": "d6f10d549cb335b9e6d38afc1f0088be69b50494",
+        "parents": [
+            "cdf97fd3bb48eb3827638bb33d208f5fd32d0aa6"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076908 2012-11-27 20:28:28 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076908 2012-11-27 20:28:28 -0800",
+        "message": "h"
+    },
+    {
+        "hash": "1c30b88f5f3ee66d78df6520a7de9e89b890818b",
+        "tree": "3151880ae2b363f1c262cf98b750c1f169a0d432",
+        "parents": [
+            "42b7311aa626e712891940c1ec5d5cba201946a4"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076890 2012-11-27 20:28:10 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076890 2012-11-27 20:28:10 -0800",
+        "message": "e"
+    },
+    {
+        "hash": "42b7311aa626e712891940c1ec5d5cba201946a4",
+        "tree": "9fe06a50f4d1634d6c6879854d01d80857388706",
+        "parents": [
+            "a953a018c5b10b20c86e69fef55ebc8ad4c5a417"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076886 2012-11-27 20:28:06 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076886 2012-11-27 20:28:06 -0800",
+        "message": "d"
+    },
+    {
+        "hash": "a953a018c5b10b20c86e69fef55ebc8ad4c5a417",
+        "tree": "fcf7e3f51c11d199ab7a78403ee4f9ccd028da25",
+        "parents": [
+            "bd1732c43c68d712ad09e1d872b9be6d4b9efdc4",
+            "cdf97fd3bb48eb3827638bb33d208f5fd32d0aa6"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076803 2012-11-27 20:26:43 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076803 2012-11-27 20:26:43 -0800",
+        "message": "Merge branch 'first-branch'"
+    },
+    {
+        "hash": "cdf97fd3bb48eb3827638bb33d208f5fd32d0aa6",
+        "tree": "d9acdc7ae7632adfeec67fa73c1e343cf4d1f47e",
+        "parents": [
+            "ef0488f0b722f0be8bcb90a7730ac7efafd1d694"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076686 2012-11-27 20:24:46 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076686 2012-11-27 20:24:46 -0800",
+        "message": "g"
+    },
+    {
+        "hash": "ef0488f0b722f0be8bcb90a7730ac7efafd1d694",
+        "tree": "3b287f8730c81d0b763c2d294618a5e32b67b4f8",
+        "parents": [
+            "0c8a3f1f3d5f421cf83048c7c73ee3b55a5e0f29"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354076679 2012-11-27 20:24:39 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354076679 2012-11-27 20:24:39 -0800",
+        "message": "f"
+    },
+    {
+        "hash": "bd1732c43c68d712ad09e1d872b9be6d4b9efdc4",
+        "tree": "765b32c65d38f04c4f287abda055818ec0f26912",
+        "parents": [
+            "0c8a3f1f3d5f421cf83048c7c73ee3b55a5e0f29"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354067038 2012-11-27 17:43:58 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354067038 2012-11-27 17:43:58 -0800",
+        "message": "c"
+    },
+    {
+        "hash": "0c8a3f1f3d5f421cf83048c7c73ee3b55a5e0f29",
+        "tree": "296e56023cdc034d2735fee8c0d85a659d1b07f4",
+        "parents": [
+            "1f4c0311a24b63f6fc209a59a1e404942d4a5006"
+        ],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354067028 2012-11-27 17:43:48 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354067028 2012-11-27 17:43:48 -0800",
+        "message": "b"
+    },
+    {
+        "hash": "1f4c0311a24b63f6fc209a59a1e404942d4a5006",
+        "tree": "496d6428b9cf92981dc9495211e6e1120fb6f2ba",
+        "parents": [],
+        "author": "Scott J. Goldman <scottjg@github.com> 1354067021 2012-11-27 17:43:41 -0800",
+        "committer": "Scott J. Goldman <scottjg@github.com> 1354067021 2012-11-27 17:43:41 -0800",
+        "message": "a"
+    }
+]

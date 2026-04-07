@@ -1,0 +1,149 @@
+[
+    {
+        "hash": "09460e5b6cbcb05a3e404593c32a3aa7221eca0e",
+        "type": "blob",
+        "size": 631,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = ../submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = ../submod2_target\n[submodule \"sm_changed_index\"]\n\tpath = sm_changed_index\n\turl = ../submod2_target\n[submodule \"sm_changed_head\"]\n\tpath = sm_changed_head\n\turl = ../submod2_target\n[submodule \"sm_changed_untracked_file\"]\n\tpath = sm_changed_untracked_file\n\turl = ../submod2_target\n[submodule \"sm_added_and_uncommited\"]\n\tpath = sm_added_and_uncommited\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "14fe9ccf104058df25e0a08361c4494e167ef243",
+        "type": "commit",
+        "size": 175,
+        "content": "tree d407f19e50c1da1ff584beafe0d6dac7237c5d06\nauthor Russell Belfer <rb@github.com> 1342559771 -0700\ncommitter Russell Belfer <rb@github.com> 1342559771 -0700\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22ce3e0311dda73a5992d54a4a595518d3876ea7",
+        "type": "blob",
+        "size": 696,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_index\"]\n\tpath = sm_changed_index\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_head\"]\n\tpath = sm_changed_head\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_untracked_file\"]\n\tpath = sm_changed_untracked_file\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "255546424b0efb847b1bfc91dbf7348b277f8970",
+        "type": "blob",
+        "size": 438,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_index\"]\n\tpath = sm_changed_index\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a30f1e6f94b20917005a21273f65b406d0f8bad",
+        "type": "blob",
+        "size": 317,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42cfb95cd01bf9225b659b5ee3edcc78e8eeb478",
+        "type": "blob",
+        "size": 26,
+        "content": "This is just a plain file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "57958699c2dc394f81cfc76950e9c3ac3025c398",
+        "type": "tree",
+        "size": 123,
+        "content": "100644 blob 9dbc299bc013ea253583b40bf327b5a6e4037b89\t.gitmodules\n100644 blob f990a25a74d1a8281ce2ab018ea8df66795cd60b\tREADME.txt\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_missing_commits\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5901da4f1c67756eeadc5121d206bec2431f253b",
+        "type": "commit",
+        "size": 227,
+        "content": "tree 57958699c2dc394f81cfc76950e9c3ac3025c398\nparent a9104bf89e911387244ef499413960ba472066d9\nauthor Russell Belfer <rb@github.com> 1342560036 -0700\ncommitter Russell Belfer <rb@github.com> 1342560036 -0700\n\nUpdating submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "607d96653d4d0a4f733107f7890c2e67b55b620d",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 7ba4c5c3561daa5ab1a86215cfb0587e96d404d6\tcontents\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7484482eb8db738cafa696993664607500a3f2b9",
+        "type": "commit",
+        "size": 241,
+        "content": "tree e3b83bf274ee065eee48734cf8c6dfaf5e81471c\nparent 5901da4f1c67756eeadc5121d206bec2431f253b\nauthor Russell Belfer <rb@github.com> 1342560288 -0700\ncommitter Russell Belfer <rb@github.com> 1342560288 -0700\n\nAdding a bunch more test content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7ba4c5c3561daa5ab1a86215cfb0587e96d404d6",
+        "type": "blob",
+        "size": 36,
+        "content": "This is a file in a plain directory\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "873585b94bdeabccea991ea5e3ec1a277895b698",
+        "type": "tree",
+        "size": 123,
+        "content": "100644 blob 9dbc299bc013ea253583b40bf327b5a6e4037b89\t.gitmodules\n100644 blob f990a25a74d1a8281ce2ab018ea8df66795cd60b\tREADME.txt\n160000 commit 5e4963595a9774b90524d35a807169049de8ccad\tsm_missing_commits\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "974cf7c73de336b0c4e019f918f3cee367d72e84",
+        "type": "blob",
+        "size": 557,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_index\"]\n\tpath = sm_changed_index\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n[submodule \"sm_changed_head\"]\n\tpath = sm_changed_head\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9dbc299bc013ea253583b40bf327b5a6e4037b89",
+        "type": "blob",
+        "size": 85,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a9104bf89e911387244ef499413960ba472066d9",
+        "type": "commit",
+        "size": 227,
+        "content": "tree 873585b94bdeabccea991ea5e3ec1a277895b698\nparent 14fe9ccf104058df25e0a08361c4494e167ef243\nauthor Russell Belfer <rb@github.com> 1342559831 -0700\ncommitter Russell Belfer <rb@github.com> 1342559831 -0700\n\nAdding a submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b614088620bbdc1d29549d223ceba0f4419fd4cb",
+        "type": "blob",
+        "size": 125,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d407f19e50c1da1ff584beafe0d6dac7237c5d06",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob f990a25a74d1a8281ce2ab018ea8df66795cd60b\tREADME.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d93e95571d92cceb5de28c205f1d5f3cc8b88bc8",
+        "type": "blob",
+        "size": 496,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = ../submod2_target\n[submodule \"sm_changed_file\"]\n\tpath = sm_changed_file\n\turl = ../submod2_target\n[submodule \"sm_changed_index\"]\n\tpath = sm_changed_index\n\turl = ../submod2_target\n[submodule \"sm_changed_head\"]\n\tpath = sm_changed_head\n\turl = ../submod2_target\n[submodule \"sm_changed_untracked_file\"]\n\tpath = sm_changed_untracked_file\n\turl = ../submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e3b83bf274ee065eee48734cf8c6dfaf5e81471c",
+        "type": "tree",
+        "size": 422,
+        "content": "100644 blob d93e95571d92cceb5de28c205f1d5f3cc8b88bc8\t.gitmodules\n100644 blob f990a25a74d1a8281ce2ab018ea8df66795cd60b\tREADME.txt\n040000 tree 607d96653d4d0a4f733107f7890c2e67b55b620d\tjust_a_dir\n100644 blob 42cfb95cd01bf9225b659b5ee3edcc78e8eeb478\tjust_a_file\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_changed_file\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_changed_head\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_changed_index\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_changed_untracked_file\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_missing_commits\n160000 commit 480095882d281ed676fe5b863569520e54a7d5c0\tsm_unchanged\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f54414c25e6d24fe39f5c3f128d7c8a17bc23833",
+        "type": "blob",
+        "size": 198,
+        "content": "[submodule \"sm_missing_commits\"]\n\tpath = sm_missing_commits\n\turl = ../submod2_target\n[submodule \"sm_unchanged\"]\n\tpath = sm_unchanged\n\turl = /Users/rb/src/libgit2/tests-clar/resources/submod2_target\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f990a25a74d1a8281ce2ab018ea8df66795cd60b",
+        "type": "blob",
+        "size": 95,
+        "content": "This is the submodule test data\nThis repo will have a bunch of submodules in different states\n\n",
+        "encoding": "utf-8"
+    }
+]
