@@ -15,7 +15,7 @@ final class AncestryChecker
 {
     private readonly MergeBase $mergeBase;
 
-    public function __construct(private readonly ObjectDatabase $objects)
+    public function __construct(ObjectDatabase $objects)
     {
         $this->mergeBase = new MergeBase($objects);
     }

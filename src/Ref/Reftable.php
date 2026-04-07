@@ -71,7 +71,7 @@ final class Reftable
             $blockStart = $reader->position();
             $blockType = $reader->readByte();
 
-            if ($blockType === 'r' || $blockType === ord('r')) {
+            if ($blockType === ord('r')) {
                 // Ref block
                 $restartCount = $reader->readByte();
                 // Simplified: read entries until block boundary
@@ -97,7 +97,7 @@ final class Reftable
                         $name = $entryReader->read($nameLen);
                         $valueType = $entryReader->readByte();
 
-                        if ($valueType === 1 && $entryReader->remaining() >= 20) {
+                        if ($valueType === 1) {
                             $hash = $entryReader->readHash20();
                             $reftable->refs[$name] = ObjectId::fromHex($hash);
                         } else {

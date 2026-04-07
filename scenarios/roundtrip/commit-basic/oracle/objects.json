@@ -1,26 +1,30 @@
 [
     {
-        "hash": "18571bc80b8bb6bdc6f4b56d56308529706cd685",
-        "type": "commit",
-        "size": 183,
-        "content": "tree 80c2db88bea290e4c2de81b5fa91e4c8ecc17db5\nauthor Test User <test@pitmaster.dev> 1775562170 +0200\ncommitter Test User <test@pitmaster.dev> 1775562170 +0200\n\nInitial commit via git\n"
-    },
-    {
         "hash": "52cbf1e6db2072f582908836269ebccf0ba050af",
         "type": "blob",
         "size": 21,
-        "content": "Hello from Pitmaster\n"
+        "content": "Hello from Pitmaster\n",
+        "encoding": "utf-8"
     },
     {
         "hash": "80c2db88bea290e4c2de81b5fa91e4c8ecc17db5",
         "type": "tree",
         "size": 74,
-        "content": "100644 blob 52cbf1e6db2072f582908836269ebccf0ba050af\thello.txt\n100644 blob b0b9fc8f6cc2f8f110306ed7f6d1ce079541b41f\treadme.md\n"
+        "content": "100644 blob 52cbf1e6db2072f582908836269ebccf0ba050af\thello.txt\n100644 blob b0b9fc8f6cc2f8f110306ed7f6d1ce079541b41f\treadme.md\n",
+        "encoding": "utf-8"
     },
     {
         "hash": "b0b9fc8f6cc2f8f110306ed7f6d1ce079541b41f",
         "type": "blob",
         "size": 13,
-        "content": "Another file\n"
+        "content": "Another file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd598932c4767f7f226e4bf9737414fa497ab495",
+        "type": "commit",
+        "size": 183,
+        "content": "tree 80c2db88bea290e4c2de81b5fa91e4c8ecc17db5\nauthor Test User <test@pitmaster.dev> 1775567878 +0200\ncommitter Test User <test@pitmaster.dev> 1775567878 +0200\n\nInitial commit via git\n",
+        "encoding": "utf-8"
     }
 ]

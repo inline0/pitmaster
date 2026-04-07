@@ -120,16 +120,14 @@ final class MyersDiff
                 array_unshift($ops, ['type' => 'equal', 'oldIdx' => $x, 'newIdx' => $y]);
             }
 
-            if ($step > 0) {
-                if ($prevK === $k + 1) {
-                    // Insert
-                    $y--;
-                    array_unshift($ops, ['type' => 'insert', 'oldIdx' => $x, 'newIdx' => $y]);
-                } else {
-                    // Delete
-                    $x--;
-                    array_unshift($ops, ['type' => 'delete', 'oldIdx' => $x, 'newIdx' => $y]);
-                }
+            if ($prevK === $k + 1) {
+                // Insert
+                $y--;
+                array_unshift($ops, ['type' => 'insert', 'oldIdx' => $x, 'newIdx' => $y]);
+            } else {
+                // Delete
+                $x--;
+                array_unshift($ops, ['type' => 'delete', 'oldIdx' => $x, 'newIdx' => $y]);
             }
         }
 

@@ -777,7 +777,8 @@ final class Repository
 
             $x = $entry->index->value;
             $y = $entry->worktree->value;
-            $lines[] = "1 {$x}{$y} N... 000000 000000 000000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 {$entry->path}";
+            $zero = str_repeat('0', 40);
+            $lines[] = "1 {$x}{$y} N... 000000 000000 000000 {$zero} {$zero} {$entry->path}";
         }
 
         return implode("\n", $lines) . ($lines !== [] ? "\n" : '');
@@ -943,10 +944,24 @@ final class Repository
                 $newHash = ObjectId::compute(ObjectType::Blob, $worktreeContent);
 
                 if (MyersDiff::isBinary($indexContent) || MyersDiff::isBinary($worktreeContent)) {
-                    $results[] = new DiffResult($entry->path, $entry->path, [], true, $entry->hash->hex, $newHash->hex);
+                    $results[] = new DiffResult(
+                        $entry->path,
+                        $entry->path,
+                        [],
+                        true,
+                        $entry->hash->hex,
+                        $newHash->hex
+                    );
                 } else {
                     $hunks = MyersDiff::diff($indexContent, $worktreeContent);
-                    $results[] = new DiffResult($entry->path, $entry->path, $hunks, false, $entry->hash->hex, $newHash->hex);
+                    $results[] = new DiffResult(
+                        $entry->path,
+                        $entry->path,
+                        $hunks,
+                        false,
+                        $entry->hash->hex,
+                        $newHash->hex
+                    );
                 }
             }
         }

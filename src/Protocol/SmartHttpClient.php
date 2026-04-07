@@ -38,11 +38,7 @@ final class SmartHttpClient
         $filtered = [];
 
         foreach ($pktLines as $line) {
-            if ($line === null) {
-                continue; // skip flush after service line
-            }
-
-            if (is_string($line) && str_starts_with($line, '# service=')) {
+            if (str_starts_with($line, '# service=')) {
                 continue;
             }
 

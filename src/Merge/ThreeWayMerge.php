@@ -69,7 +69,7 @@ final class ThreeWayMerge
                 $theirsIdx++;
             } elseif ($oursChanged && !$theirsChanged) {
                 // Only ours changed, take ours
-                if (isset($oursOps[$baseIdx]) && $oursOps[$baseIdx] === 'delete') {
+                if ($oursOps[$baseIdx] === 'delete') {
                     $baseIdx++;
                     $theirsIdx++;
                 } else {
@@ -80,9 +80,9 @@ final class ThreeWayMerge
                     $baseIdx++;
                     $theirsIdx++;
                 }
-            } elseif (!$oursChanged && $theirsChanged) {
+            } elseif ($theirsChanged) {
                 // Only theirs changed, take theirs
-                if (isset($theirsOps[$baseIdx]) && $theirsOps[$baseIdx] === 'delete') {
+                if ($theirsOps[$baseIdx] === 'delete') {
                     $baseIdx++;
                     $oursIdx++;
                 } else {

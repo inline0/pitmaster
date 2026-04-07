@@ -18,8 +18,6 @@ final class SparseCheckout
     /** @var array<int, string> Exclude patterns */
     private array $excludes = [];
 
-    private bool $coneMode = true;
-
     public function __construct(private readonly string $gitDir)
     {
         $this->load();
@@ -38,7 +36,6 @@ final class SparseCheckout
      */
     public function init(bool $coneMode = true): void
     {
-        $this->coneMode = $coneMode;
         $infoDir = $this->gitDir . '/info';
 
         if (!is_dir($infoDir)) {

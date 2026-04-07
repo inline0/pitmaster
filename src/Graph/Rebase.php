@@ -30,8 +30,6 @@ final class Rebase
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly RefDatabase $refs,
-        private readonly string $gitDir,
-        private readonly string $workDir,
     ) {
     }
 

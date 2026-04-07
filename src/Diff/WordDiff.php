@@ -35,8 +35,10 @@ final class WordDiff
         $li = 0;
 
         while ($oi < count($oldWords) || $ni < count($newWords)) {
-            if ($li < count($lcs) && $oi < count($oldWords) && $ni < count($newWords)
-                && $oldWords[$oi] === $lcs[$li] && $newWords[$ni] === $lcs[$li]) {
+            if (
+                $li < count($lcs) && $oi < count($oldWords) && $ni < count($newWords)
+                && $oldWords[$oi] === $lcs[$li] && $newWords[$ni] === $lcs[$li]
+            ) {
                 // Common word
                 $result .= $oldWords[$oi];
                 $oi++;

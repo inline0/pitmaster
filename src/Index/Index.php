@@ -101,7 +101,7 @@ final class Index
                 $pathSuffix = $reader->readNullTerminated();
 
                 if ($i > 0) {
-                    $prevPath = array_key_last($index->entries) ?? '';
+                    $prevPath = (string) array_key_last($index->entries);
                     $path = substr($prevPath, 0, max(0, strlen($prevPath) - $stripLen)) . $pathSuffix;
                 } else {
                     $path = $pathSuffix;

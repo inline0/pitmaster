@@ -66,18 +66,30 @@ final class TreeDiff
                 } elseif (!$oldEntry['isTree'] && !$newEntry['isTree']) {
                     $oldContent = $this->readBlobContent($oldEntry['hash']);
                     $newContent = $this->readBlobContent($newEntry['hash']);
-                    $results[] = $this->makeDiffResult($path, $oldContent, $newContent, $oldEntry['hash'], $newEntry['hash']);
+                    $results[] = $this->makeDiffResult(
+                        $path,
+                        $oldContent,
+                        $newContent,
+                        $oldEntry['hash'],
+                        $newEntry['hash']
+                    );
                 } else {
                     // Type change (file -> dir or dir -> file)
                     if ($oldEntry['isTree']) {
-                        $results = array_merge($results, $this->diff(ObjectId::fromHex($oldEntry['hash']), null, $path));
+                        $results = array_merge(
+                            $results,
+                            $this->diff(ObjectId::fromHex($oldEntry['hash']), null, $path)
+                        );
                     } else {
                         $oldContent = $this->readBlobContent($oldEntry['hash']);
                         $results[] = $this->makeDiffResult($path, $oldContent, '', $oldEntry['hash'], null);
                     }
 
                     if ($newEntry['isTree']) {
-                        $results = array_merge($results, $this->diff(null, ObjectId::fromHex($newEntry['hash']), $path));
+                        $results = array_merge(
+                            $results,
+                            $this->diff(null, ObjectId::fromHex($newEntry['hash']), $path)
+                        );
                     } else {
                         $newContent = $this->readBlobContent($newEntry['hash']);
                         $results[] = $this->makeDiffResult($path, '', $newContent, null, $newEntry['hash']);
@@ -138,7 +150,7 @@ final class TreeDiff
                     $newLines = explode("\n", $newContent);
                     $common = count(array_intersect($oldLines, $newLines));
                     $total = max(count($oldLines), count($newLines));
-                    $score = $total > 0 ? (int) (($common / $total) * 100) : 0;
+                    $score = (int) (($common / $total) * 100);
 
                     if ($score > $bestScore && $score >= 50) {
                         $bestScore = $score;
@@ -223,8 +235,13 @@ final class TreeDiff
         return '';
     }
 
-    private function makeDiffResult(string $path, string $oldContent, string $newContent, ?string $oldHash, ?string $newHash): DiffResult
-    {
+    private function makeDiffResult(
+        string $path,
+        string $oldContent,
+        string $newContent,
+        ?string $oldHash,
+        ?string $newHash,
+    ): DiffResult {
         if (MyersDiff::isBinary($oldContent) || MyersDiff::isBinary($newContent)) {
             return new DiffResult($path, $path, [], true, $oldHash, $newHash);
         }

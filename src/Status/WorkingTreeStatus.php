@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Status;
 
 use Pitmaster\Index\Index;
+use Pitmaster\Index\IndexEntry;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
@@ -83,15 +84,15 @@ final class WorkingTreeStatus
 
             if ($inIndex && !$inWorktree) {
                 $worktreeStatus = FileStatus::Deleted;
-            } elseif ($inIndex && $inWorktree) {
+            } elseif ($inIndex) {
                 if ($this->worktreeFileChanged($indexEntries[$path], $path)) {
                     $worktreeStatus = FileStatus::Modified;
                 }
-            } elseif (!$inIndex && !$inHead && $inWorktree) {
+            } elseif (!$inHead && $inWorktree) {
                 // Untracked
                 $entries[] = new StatusEntry($path, FileStatus::Untracked, FileStatus::Untracked);
                 continue;
-            } elseif (!$inIndex && $inWorktree) {
+            } elseif ($inWorktree) {
                 $worktreeStatus = FileStatus::Modified;
             }
 
@@ -134,7 +135,7 @@ final class WorkingTreeStatus
     /**
      * Check if a worktree file differs from its index entry.
      */
-    private function worktreeFileChanged(Index\IndexEntry $entry, string $path): bool
+    private function worktreeFileChanged(IndexEntry $entry, string $path): bool
     {
         $fullPath = $this->workDir . '/' . $path;
 

@@ -6,7 +6,6 @@ namespace Pitmaster\Merge;
 
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
-use Pitmaster\Storage\ObjectDatabase;
 
 /**
  * Recursive merge strategy.
@@ -16,7 +15,7 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class RecursiveMerge
 {
-    public function __construct(private readonly ObjectDatabase $objects)
+    public function __construct()
     {
     }
 
