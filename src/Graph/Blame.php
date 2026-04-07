@@ -45,8 +45,12 @@ final class Blame
             return [];
         }
 
-        // Start with the current version
+        // Start with the current version (strip trailing empty line from \n)
         $currentLines = explode("\n", $versions[0]['content']);
+
+        if ($currentLines !== [] && end($currentLines) === '') {
+            array_pop($currentLines);
+        }
         $blame = array_fill(0, count($currentLines), null);
 
         // Walk backwards assigning blame

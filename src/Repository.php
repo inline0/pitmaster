@@ -733,7 +733,13 @@ final class Repository
             }
 
             $path = $change->newPath;
-            $parentTreeMap = $this->flattenTree($commit->parents[0]);
+            $parentTreeId = $this->getCommitTree($commit->parents[0]);
+
+            if ($parentTreeId === null) {
+                continue;
+            }
+
+            $parentTreeMap = $this->flattenTree($parentTreeId);
 
             if (isset($parentTreeMap[$path])) {
                 $blob = $this->objects->read(ObjectId::fromHex($parentTreeMap[$path]));
