@@ -18,8 +18,13 @@ final class LooseRefStore implements RefStore
     {
     }
 
-    public function resolve(string $name): ?ObjectId
+    public function resolve(string $name, int $depth = 0): ?ObjectId
     {
+        // Guard against circular symbolic refs (e.g. refs/heads/loop -> refs/heads/loop)
+        if ($depth > 10) {
+            return null;
+        }
+
         $content = $this->readRefFile($name);
 
         if ($content === null) {
@@ -30,7 +35,7 @@ final class LooseRefStore implements RefStore
         $symbolic = SymbolicRef::parse($name, $content);
 
         if ($symbolic !== null) {
-            return $this->resolve($symbolic->target);
+            return $this->resolve($symbolic->target, $depth + 1);
         }
 
         $hex = trim($content);
