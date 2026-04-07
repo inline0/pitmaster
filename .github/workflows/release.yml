@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+
+      - run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Verify autoloader
+        run: |
+          php -r "require 'vendor/autoload.php'; new Pitmaster\Pitmaster(); echo 'Autoloader OK';"
+
+      - name: Create release archive
+        run: |
+          mkdir -p dist
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.claude' \
+            --exclude='tests' --exclude='scenarios' --exclude='fixtures' \
+            --exclude='config' --exclude='CLAUDE.md' --exclude='SUPPORT_MATRIX.md' \
+            --exclude='phpunit.xml*' --exclude='phpcs.xml' --exclude='phpstan.neon*' \
+            --exclude='.phpunit*' --exclude='.phpstan' \
+            --exclude='bin/oracle' --exclude='bin/actual' --exclude='bin/compare' \
+            --exclude='bin/test-scenario' --exclude='bin/test-regression' \
+            --exclude='bin/verify-compliance' --exclude='bin/support-matrix' \
+            --exclude='bin/acquire-*' \
+            . dist/pitmaster/
+          cd dist && zip -r ../pitmaster.zip pitmaster/
+
+      - name: Upload release asset
+        run: gh release upload "${{ github.event.release.tag_name }}" pitmaster.zip --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

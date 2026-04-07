@@ -1,12 +1,25 @@
 {
-    "name": "inline0/pitmaster",
-    "description": "Pure PHP Git implementation with oracle-driven testing against canonical git.",
+    "name": "pitmaster/pitmaster",
+    "description": "Pure PHP Git implementation. Reads and writes Git repositories without shelling out to git.",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "inline0",
+            "homepage": "https://github.com/inline0"
+        }
+    ],
+    "homepage": "https://github.com/inline0/pitmaster",
+    "support": {
+        "issues": "https://github.com/inline0/pitmaster/issues",
+        "source": "https://github.com/inline0/pitmaster"
+    },
+    "keywords": ["git", "php", "vcs", "repository", "diff", "merge", "pack"],
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "ext-zlib": "*"
+        "ext-zlib": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -23,19 +36,19 @@
             "Pitmaster\\Tests\\": "tests/"
         }
     },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
     "scripts": {
+        "test": "phpunit",
         "test:unit": "phpunit --testsuite unit",
+        "test:integration": "phpunit --testsuite integration",
+        "analyse": "phpstan analyse --configuration=phpstan.neon.dist --memory-limit=512M",
         "cs": "phpcs",
-        "cs:fix": "phpcbf",
-        "analyse": "phpstan analyse"
+        "cs:fix": "phpcbf"
     },
     "bin": [
-        "bin/pitmaster",
-        "bin/oracle",
-        "bin/actual",
-        "bin/compare",
-        "bin/test-scenario",
-        "bin/test-regression",
-        "bin/verify-compliance"
+        "bin/pitmaster"
     ]
 }
