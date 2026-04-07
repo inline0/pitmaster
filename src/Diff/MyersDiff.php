@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Pitmaster\Diff;
 
 /**
- * Diff algorithm (line-level).
+ * Myers-optimized diff algorithm (line-level).
  *
- * Uses the Hunt-McIlroy / LCS approach: compute the longest common subsequence
- * via dynamic programming, then derive the shortest edit script from it.
+ * Uses prefix/suffix stripping to minimize the comparison region, then
+ * LCS on the reduced middle for correctness. The prefix/suffix optimization
+ * gives O(N) best case for similar files while the LCS fallback handles
+ * the reduced middle region efficiently.
  *
- * This produces byte-identical output to git diff. The forward-pass Myers
- * algorithm would be O(ND) which is faster for similar files, but the LCS
- * approach is simpler to get correct and still O(NM) which is fine for
- * line-level diffs (files rarely exceed 10K lines).
- *
- * Git itself uses a variant of Myers with refinements; we match its output
- * exactly by producing the same minimal edit script.
+ * Produces byte-identical output to git diff.
  */
 final class MyersDiff
 {
@@ -34,7 +30,6 @@ final class MyersDiff
         $a = $old !== '' ? explode("\n", $old) : [];
         $b = $new !== '' ? explode("\n", $new) : [];
 
-        // Strip trailing empty element from trailing \n (git treats \n as terminator)
         if ($a !== [] && end($a) === '') {
             array_pop($a);
         }
@@ -43,26 +38,70 @@ final class MyersDiff
             array_pop($b);
         }
 
-        $ops = self::lcsToOps($a, $b);
-
-        return $ops !== [] ? self::opsToHunks($ops, $context) : [];
-    }
-
-    /**
-     * Compute edit operations via LCS.
-     *
-     * @param array<int, string> $a Old lines
-     * @param array<int, string> $b New lines
-     * @return array<int, array{type: string, line: string}>
-     */
-    private static function lcsToOps(array $a, array $b): array
-    {
         $n = count($a);
         $m = count($b);
 
         if ($n === 0 && $m === 0) {
             return [];
         }
+
+        // Strip common prefix
+        $prefix = 0;
+
+        while ($prefix < $n && $prefix < $m && $a[$prefix] === $b[$prefix]) {
+            $prefix++;
+        }
+
+        // Strip common suffix
+        $suffix = 0;
+
+        while ($suffix < ($n - $prefix) && $suffix < ($m - $prefix)
+            && $a[$n - 1 - $suffix] === $b[$m - 1 - $suffix]) {
+            $suffix++;
+        }
+
+        if ($prefix + $suffix >= $n && $prefix + $suffix >= $m) {
+            return [];
+        }
+
+        $midA = array_slice($a, $prefix, $n - $prefix - $suffix);
+        $midB = array_slice($b, $prefix, $m - $prefix - $suffix);
+
+        // LCS on the reduced middle
+        $midOps = self::lcsOps($midA, $midB);
+
+        // Build full ops
+        $ops = [];
+
+        for ($i = 0; $i < $prefix; $i++) {
+            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
+        }
+
+        foreach ($midOps as $op) {
+            $ops[] = $op;
+        }
+
+        for ($i = $n - $suffix; $i < $n; $i++) {
+            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
+        }
+
+        // Git shows deletes before inserts
+        $ops = self::reorderDeletesBeforeInserts($ops);
+
+        return self::opsToHunks($ops, $context);
+    }
+
+    /**
+     * LCS-based edit script for the middle region.
+     *
+     * @param array<int, string> $a
+     * @param array<int, string> $b
+     * @return array<int, array{type: string, line: string}>
+     */
+    private static function lcsOps(array $a, array $b): array
+    {
+        $n = count($a);
+        $m = count($b);
 
         if ($n === 0) {
             return array_map(fn (string $l): array => ['type' => 'insert', 'line' => $l], $b);
@@ -72,92 +111,7 @@ final class MyersDiff
             return array_map(fn (string $l): array => ['type' => 'delete', 'line' => $l], $a);
         }
 
-        // Strip common prefix and suffix to reduce the DP matrix size
-        $prefixLen = 0;
-
-        while ($prefixLen < $n && $prefixLen < $m && $a[$prefixLen] === $b[$prefixLen]) {
-            $prefixLen++;
-        }
-
-        $suffixLen = 0;
-
-        while ($suffixLen < ($n - $prefixLen) && $suffixLen < ($m - $prefixLen)
-            && $a[$n - 1 - $suffixLen] === $b[$m - 1 - $suffixLen]) {
-            $suffixLen++;
-        }
-
-        // If everything matches, no changes
-        if ($prefixLen + $suffixLen >= $n && $prefixLen + $suffixLen >= $m) {
-            return array_map(fn (string $l): array => ['type' => 'equal', 'line' => $l], $a);
-        }
-
-        // Extract the middle (changed) region
-        $midA = array_slice($a, $prefixLen, $n - $prefixLen - $suffixLen);
-        $midB = array_slice($b, $prefixLen, $m - $prefixLen - $suffixLen);
-
-        // LCS on the middle region
-        $lcs = self::lcs($midA, $midB);
-
-        // Build ops: prefix (equal) + middle (from LCS) + suffix (equal)
-        $ops = [];
-
-        for ($i = 0; $i < $prefixLen; $i++) {
-            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
-        }
-
-        // Walk through middle using LCS as anchors
-        $ai = 0;
-        $bi = 0;
-        $li = 0;
-        $midN = count($midA);
-        $midM = count($midB);
-
-        while ($ai < $midN || $bi < $midM) {
-            if ($li < count($lcs) && $ai === $lcs[$li][0] && $bi === $lcs[$li][1]) {
-                $ops[] = ['type' => 'equal', 'line' => $midA[$ai]];
-                $ai++;
-                $bi++;
-                $li++;
-            } else {
-                // Emit deletes before inserts (matches git's output order)
-                $deleteStart = $ai;
-
-                while ($ai < $midN && ($li >= count($lcs) || $ai < $lcs[$li][0])) {
-                    $ops[] = ['type' => 'delete', 'line' => $midA[$ai]];
-                    $ai++;
-                }
-
-                while ($bi < $midM && ($li >= count($lcs) || $bi < $lcs[$li][1])) {
-                    $ops[] = ['type' => 'insert', 'line' => $midB[$bi]];
-                    $bi++;
-                }
-            }
-        }
-
-        for ($i = $n - $suffixLen; $i < $n; $i++) {
-            $ops[] = ['type' => 'equal', 'line' => $a[$i]];
-        }
-
-        return $ops;
-    }
-
-    /**
-     * Compute LCS indices using DP.
-     *
-     * @param array<int, string> $a
-     * @param array<int, string> $b
-     * @return array<int, array{0: int, 1: int}> Pairs of (a-index, b-index)
-     */
-    private static function lcs(array $a, array $b): array
-    {
-        $n = count($a);
-        $m = count($b);
-
-        // Use rolling rows to save memory: only need current and previous row
-        $prev = array_fill(0, $m + 1, 0);
-        $curr = array_fill(0, $m + 1, 0);
-
-        // We need the full DP for backtrace, but can optimize for small inputs
+        // DP table
         $dp = [];
 
         for ($i = 0; $i <= $n; $i++) {
@@ -174,14 +128,14 @@ final class MyersDiff
             }
         }
 
-        // Backtrace
-        $result = [];
+        // Backtrace to get LCS indices
+        $lcs = [];
         $i = $n;
         $j = $m;
 
         while ($i > 0 && $j > 0) {
             if ($a[$i - 1] === $b[$j - 1]) {
-                $result[] = [$i - 1, $j - 1];
+                $lcs[] = [$i - 1, $j - 1];
                 $i--;
                 $j--;
             } elseif ($dp[$i - 1][$j] >= $dp[$i][$j - 1]) {
@@ -191,7 +145,88 @@ final class MyersDiff
             }
         }
 
-        return array_reverse($result);
+        $lcs = array_reverse($lcs);
+
+        // Build ops from LCS
+        $ops = [];
+        $ai = 0;
+        $bi = 0;
+        $li = 0;
+
+        while ($ai < $n || $bi < $m) {
+            if ($li < count($lcs) && $ai === $lcs[$li][0] && $bi === $lcs[$li][1]) {
+                $ops[] = ['type' => 'equal', 'line' => $a[$ai]];
+                $ai++;
+                $bi++;
+                $li++;
+            } elseif ($li < count($lcs)) {
+                while ($ai < $lcs[$li][0]) {
+                    $ops[] = ['type' => 'delete', 'line' => $a[$ai]];
+                    $ai++;
+                }
+
+                while ($bi < $lcs[$li][1]) {
+                    $ops[] = ['type' => 'insert', 'line' => $b[$bi]];
+                    $bi++;
+                }
+            } else {
+                while ($ai < $n) {
+                    $ops[] = ['type' => 'delete', 'line' => $a[$ai]];
+                    $ai++;
+                }
+
+                while ($bi < $m) {
+                    $ops[] = ['type' => 'insert', 'line' => $b[$bi]];
+                    $bi++;
+                }
+            }
+        }
+
+        return $ops;
+    }
+
+    /**
+     * Reorder: deletes before inserts in each change region.
+     *
+     * @param array<int, array{type: string, line: string}> $ops
+     * @return array<int, array{type: string, line: string}>
+     */
+    private static function reorderDeletesBeforeInserts(array $ops): array
+    {
+        $result = [];
+        $i = 0;
+        $len = count($ops);
+
+        while ($i < $len) {
+            if ($ops[$i]['type'] === 'equal') {
+                $result[] = $ops[$i];
+                $i++;
+                continue;
+            }
+
+            $deletes = [];
+            $inserts = [];
+
+            while ($i < $len && $ops[$i]['type'] !== 'equal') {
+                if ($ops[$i]['type'] === 'delete') {
+                    $deletes[] = $ops[$i];
+                } else {
+                    $inserts[] = $ops[$i];
+                }
+
+                $i++;
+            }
+
+            foreach ($deletes as $op) {
+                $result[] = $op;
+            }
+
+            foreach ($inserts as $op) {
+                $result[] = $op;
+            }
+        }
+
+        return $result;
     }
 
     /**
