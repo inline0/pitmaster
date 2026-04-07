@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "4a329f99dceeb2ae040990cd77bd984919a506b8",
+        "name": "refs/heads/feature"
+    },
+    {
+        "hash": "4a329f99dceeb2ae040990cd77bd984919a506b8",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "4a329f99dceeb2ae040990cd77bd984919a506b8",
+        "name": "refs/tags/v1.0"
+    }
+]

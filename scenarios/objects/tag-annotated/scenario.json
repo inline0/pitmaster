@@ -1,0 +1,11 @@
+{
+    "name": "objects/tag-annotated",
+    "category": "objects",
+    "description": "Read an annotated tag object",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

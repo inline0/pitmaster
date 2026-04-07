@@ -1,0 +1,225 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$root = dirname(__DIR__);
+$arguments = array_slice($argv, 1);
+$refreshOracle = false;
+$reportOnly = false;
+$fast = true;
+$requestedCategories = [];
+$jobs = defaultParallelJobs();
+$expectJobsValue = false;
+
+foreach ($arguments as $argument) {
+    if ($expectJobsValue) {
+        $jobs = normalizeJobsValue($argument);
+        $expectJobsValue = false;
+        continue;
+    }
+
+    if ($argument === '--refresh-oracle') {
+        $refreshOracle = true;
+        continue;
+    }
+
+    if ($argument === '--report-only') {
+        $reportOnly = true;
+        continue;
+    }
+
+    if ($argument === '--fast') {
+        $fast = true;
+        continue;
+    }
+
+    if ($argument === '--full') {
+        $fast = false;
+        continue;
+    }
+
+    if ($argument === '--jobs') {
+        $expectJobsValue = true;
+        continue;
+    }
+
+    if (str_starts_with($argument, '--jobs=')) {
+        $jobs = normalizeJobsValue(substr($argument, 7));
+        continue;
+    }
+
+    if (str_starts_with($argument, '--category=')) {
+        $requestedCategories[] = substr($argument, 11);
+        continue;
+    }
+
+    if ($argument === '--category') {
+        // Next arg is the category
+        continue;
+    }
+
+    $requestedCategories[] = $argument;
+}
+
+if ($expectJobsValue) {
+    fwrite(STDERR, "Missing value for --jobs.\n");
+    exit(1);
+}
+
+// Discover scenarios
+$scenarioRepo = new \Pitmaster\Tests\Oracle\ScenarioRepository($root);
+$allScenarios = $scenarioRepo->all();
+
+if ($requestedCategories !== []) {
+    $allScenarios = array_filter(
+        $allScenarios,
+        static fn ($s) => in_array($s->category(), $requestedCategories, true),
+    );
+}
+
+$scenarios = array_values($allScenarios);
+
+if ($scenarios === []) {
+    fwrite(STDOUT, "No scenarios found.\n");
+    exit(0);
+}
+
+$suiteStart = microtime(true);
+fwrite(STDOUT, sprintf("== Running %d scenarios (%d jobs, %s) ==\n", count($scenarios), $jobs, $fast ? 'fast' : 'full'));
+
+$pending = $scenarios;
+$running = [];
+$passed = 0;
+$failed = 0;
+
+while ($pending !== [] || $running !== []) {
+    while ($pending !== [] && count($running) < $jobs) {
+        $scenario = array_shift($pending);
+        $running[] = spawnScenarioProcess($root, $scenario->name, $refreshOracle, $reportOnly, $fast);
+    }
+
+    if ($running === []) {
+        break;
+    }
+
+    $completedIndex = null;
+    $completedStatus = null;
+
+    while ($completedIndex === null) {
+        foreach ($running as $index => $processInfo) {
+            $status = proc_get_status($processInfo['process']);
+
+            if (!$status['running']) {
+                $completedIndex = $index;
+                $completedStatus = $status;
+                break;
+            }
+        }
+
+        if ($completedIndex === null) {
+            usleep(100000);
+        }
+    }
+
+    $completed = $running[$completedIndex];
+    unset($running[$completedIndex]);
+    $running = array_values($running);
+
+    $exitCode = proc_close($completed['process']);
+
+    if ($exitCode === -1 && is_array($completedStatus) && isset($completedStatus['exitcode'])) {
+        $exitCode = $completedStatus['exitcode'];
+    }
+
+    $duration = microtime(true) - $completed['startedAt'];
+    $output = @file_get_contents($completed['outputPath']);
+    @unlink($completed['outputPath']);
+
+    if ($exitCode === 0) {
+        $passed++;
+        fwrite(STDOUT, sprintf("  PASS  %.2fs  %s\n", $duration, $completed['scenario']));
+    } else {
+        $failed++;
+        fwrite(STDOUT, sprintf("  FAIL  %.2fs  %s\n", $duration, $completed['scenario']));
+
+        if (is_string($output) && trim($output) !== '') {
+            foreach (explode("\n", trim($output)) as $line) {
+                fwrite(STDOUT, "        {$line}\n");
+            }
+        }
+
+        if (!$reportOnly) {
+            // Kill remaining
+            foreach ($running as $processInfo) {
+                proc_terminate($processInfo['process']);
+                proc_close($processInfo['process']);
+                @unlink($processInfo['outputPath']);
+            }
+
+            break;
+        }
+    }
+}
+
+$suiteDuration = microtime(true) - $suiteStart;
+fwrite(STDOUT, sprintf(
+    "\n== %d passed, %d failed in %.2fs ==\n",
+    $passed,
+    $failed,
+    $suiteDuration,
+));
+
+exit($failed > 0 && !$reportOnly ? 1 : 0);
+
+function spawnScenarioProcess(
+    string $root,
+    string $scenario,
+    bool $refreshOracle,
+    bool $reportOnly,
+    bool $fast,
+): array {
+    $outputPath = tempnam(sys_get_temp_dir(), 'pitmaster-regression-');
+
+    $command = sprintf(
+        'cd %s && ./bin/test-scenario%s%s%s %s',
+        escapeshellarg($root),
+        $refreshOracle ? ' --refresh-oracle' : '',
+        $reportOnly ? ' --report-only' : '',
+        $fast ? ' --fast' : '',
+        escapeshellarg($scenario),
+    );
+
+    $descriptors = [
+        0 => ['file', '/dev/null', 'r'],
+        1 => ['file', $outputPath, 'w'],
+        2 => ['file', $outputPath, 'a'],
+    ];
+
+    $process = proc_open($command, $descriptors, $pipes);
+
+    return [
+        'scenario' => $scenario,
+        'process' => $process,
+        'outputPath' => $outputPath,
+        'startedAt' => microtime(true),
+    ];
+}
+
+function defaultParallelJobs(): int
+{
+    $fromEnv = getenv('PITMASTER_TEST_JOBS');
+
+    if (is_string($fromEnv) && $fromEnv !== '') {
+        return normalizeJobsValue($fromEnv);
+    }
+
+    return 2;
+}
+
+function normalizeJobsValue(string $value): int
+{
+    return max(1, (int) $value);
+}

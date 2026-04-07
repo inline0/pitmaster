@@ -1,0 +1,93 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+use Pitmaster\Tests\Oracle\ScenarioRunner;
+
+$arguments = array_slice($argv, 1);
+$refreshOracle = false;
+$reportOnly = false;
+$scenarioName = null;
+
+foreach ($arguments as $argument) {
+    if ($argument === '--refresh-oracle') {
+        $refreshOracle = true;
+        continue;
+    }
+
+    if ($argument === '--report-only') {
+        $reportOnly = true;
+        continue;
+    }
+
+    if ($argument === '--fast') {
+        continue;
+    }
+
+    if ($scenarioName === null) {
+        $scenarioName = $argument;
+        continue;
+    }
+
+    fwrite(STDERR, "Usage: bin/test-scenario [--refresh-oracle] [--report-only] [--fast] <scenario>\n");
+    exit(1);
+}
+
+if ($scenarioName === null) {
+    fwrite(STDERR, "Usage: bin/test-scenario [--refresh-oracle] [--report-only] [--fast] <scenario>\n");
+    exit(1);
+}
+
+$root = dirname(__DIR__);
+$repo = new ScenarioRepository($root);
+$scenario = $repo->get($scenarioName);
+$runner = new ScenarioRunner();
+
+$result = $runner->run($scenario, $refreshOracle);
+
+// Output comparison details
+$comparison = $result['comparison'];
+$pass = $result['pass'];
+
+fwrite(STDOUT, sprintf("Scenario %s: %s\n", $scenarioName, $pass ? 'PASS' : 'FAIL'));
+
+foreach (['objects', 'refs', 'log'] as $output) {
+    $matchKey = $output . '_match';
+
+    if (isset($comparison[$matchKey])) {
+        fwrite(STDOUT, sprintf("  %s: %s\n", $output, $comparison[$matchKey] ? 'match' : 'MISMATCH'));
+    }
+}
+
+if (isset($comparison['fsck_clean'])) {
+    fwrite(STDOUT, sprintf("  fsck: %s\n", $comparison['fsck_clean'] ? 'clean' : 'ERRORS'));
+}
+
+if (!empty($comparison['expectation']['failures'])) {
+    fwrite(STDOUT, "Failures: " . implode(', ', $comparison['expectation']['failures']) . "\n");
+}
+
+// Show errors from oracle/actual stages
+if (!empty($result['oracle']['errors'])) {
+    fwrite(STDERR, "Oracle errors:\n");
+
+    foreach ($result['oracle']['errors'] as $error) {
+        fwrite(STDERR, "  {$error}\n");
+    }
+}
+
+if (!empty($result['actual']['errors'])) {
+    fwrite(STDERR, "Actual errors:\n");
+
+    foreach ($result['actual']['errors'] as $error) {
+        fwrite(STDERR, "  {$error}\n");
+    }
+}
+
+if (!$reportOnly && !$pass) {
+    exit(2);
+}

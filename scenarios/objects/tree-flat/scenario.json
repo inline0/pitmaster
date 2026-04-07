@@ -1,0 +1,11 @@
+{
+    "name": "objects/tree-flat",
+    "category": "objects",
+    "description": "Read a tree with multiple files in a flat directory",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,103 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Support\Json;
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+
+$root = dirname(__DIR__);
+$repo = new ScenarioRepository($root);
+$scenarios = $repo->all();
+
+if ($scenarios === []) {
+    fwrite(STDOUT, "No scenarios found.\n");
+    exit(0);
+}
+
+// Get git version
+$gitVersion = trim(shell_exec('git --version') ?? 'unknown');
+
+fwrite(STDOUT, "Pitmaster Compliance Report\n");
+fwrite(STDOUT, "===========================\n");
+fwrite(STDOUT, "Oracle: {$gitVersion}\n\n");
+
+// Group by category
+$categories = [];
+
+foreach ($scenarios as $scenario) {
+    $cat = $scenario->category() ?: 'uncategorized';
+    $categories[$cat][] = $scenario;
+}
+
+ksort($categories);
+
+$totalPassed = 0;
+$totalFailed = 0;
+
+foreach ($categories as $category => $categoryScenarios) {
+    $catPassed = 0;
+    $catFailed = 0;
+    $lines = [];
+
+    foreach ($categoryScenarios as $scenario) {
+        $reportPath = $scenario->reportPath();
+
+        if (!is_file($reportPath)) {
+            $lines[] = sprintf("  %-30s SKIP  (no report, run test-regression first)", $scenario->name);
+            $catFailed++;
+            continue;
+        }
+
+        $report = Json::decodeFile($reportPath);
+        $evaluation = $report['expectation'] ?? ['pass' => false, 'failures' => ['no-evaluation']];
+        $pass = $evaluation['pass'] ?? false;
+
+        if ($pass) {
+            $catPassed++;
+            $details = [];
+
+            foreach (['objects', 'refs', 'log'] as $output) {
+                if (isset($report[$output . '_match']) && $report[$output . '_match']) {
+                    $details[] = $output;
+                }
+            }
+
+            if (isset($report['fsck_clean']) && $report['fsck_clean']) {
+                $details[] = 'fsck clean';
+            }
+
+            $detailStr = $details !== [] ? '(' . implode(', ', $details) . ')' : '';
+            $lines[] = sprintf("  %-30s PASS  %s", $scenario->name, $detailStr);
+        } else {
+            $catFailed++;
+            $failures = $evaluation['failures'] ?? [];
+            $lines[] = sprintf("  %-30s FAIL  (%s)", $scenario->name, implode(', ', $failures));
+        }
+    }
+
+    $catTotal = $catPassed + $catFailed;
+    fwrite(STDOUT, sprintf(
+        "%s Scenarios:%s%d/%d passed\n",
+        ucfirst($category),
+        str_repeat(' ', max(1, 25 - strlen($category) - 11)),
+        $catPassed,
+        $catTotal,
+    ));
+
+    foreach ($lines as $line) {
+        fwrite(STDOUT, $line . "\n");
+    }
+
+    fwrite(STDOUT, "\n");
+
+    $totalPassed += $catPassed;
+    $totalFailed += $catFailed;
+}
+
+$total = $totalPassed + $totalFailed;
+fwrite(STDOUT, "Total: {$totalPassed}/{$total} scenarios passed\n");
+
+exit($totalFailed > 0 ? 1 : 0);

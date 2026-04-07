@@ -1,0 +1,11 @@
+{
+    "name": "log/log-linear",
+    "category": "log",
+    "description": "Walk a linear commit history (5 commits)",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

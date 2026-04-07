@@ -1,0 +1,104 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Pitmaster;
+
+$arguments = array_slice($argv, 1);
+
+if ($arguments === []) {
+    fwrite(STDERR, "Usage: pitmaster <command> [args...]\n");
+    fwrite(STDERR, "Commands: log, cat-file, status, diff, branches, tags, refs\n");
+    exit(1);
+}
+
+$command = array_shift($arguments);
+$repoPath = getcwd();
+
+try {
+    $repo = Pitmaster::open($repoPath);
+} catch (\Throwable $e) {
+    fwrite(STDERR, "Error: {$e->getMessage()}\n");
+    exit(1);
+}
+
+try {
+    match ($command) {
+        'log' => commandLog($repo, $arguments),
+        'cat-file' => commandCatFile($repo, $arguments),
+        'branches' => commandBranches($repo),
+        'tags' => commandTags($repo),
+        'refs' => commandRefs($repo),
+        default => (function () use ($command) {
+            fwrite(STDERR, "Unknown command: {$command}\n");
+            exit(1);
+        })(),
+    };
+} catch (\Throwable $e) {
+    fwrite(STDERR, "Error: {$e->getMessage()}\n");
+    exit(1);
+}
+
+function commandLog(\Pitmaster\Repository $repo, array $args): void
+{
+    $limit = 10;
+
+    if (isset($args[0]) && is_numeric($args[0])) {
+        $limit = (int) $args[0];
+    }
+
+    foreach ($repo->log($limit) as $commit) {
+        fwrite(STDOUT, "commit {$commit->id->hex}\n");
+
+        if ($commit->isMerge()) {
+            $parentHexes = array_map(fn ($p) => substr($p->hex, 0, 7), $commit->parents);
+            fwrite(STDOUT, "Merge: " . implode(' ', $parentHexes) . "\n");
+        }
+
+        fwrite(STDOUT, "Author: {$commit->author}\n");
+        fwrite(STDOUT, "\n");
+
+        foreach (explode("\n", trim($commit->message)) as $line) {
+            fwrite(STDOUT, "    {$line}\n");
+        }
+
+        fwrite(STDOUT, "\n");
+    }
+}
+
+function commandCatFile(\Pitmaster\Repository $repo, array $args): void
+{
+    if (!isset($args[0])) {
+        fwrite(STDERR, "Usage: pitmaster cat-file <hash>\n");
+        exit(1);
+    }
+
+    fwrite(STDOUT, $repo->catFile($args[0]));
+}
+
+function commandBranches(\Pitmaster\Repository $repo): void
+{
+    $current = $repo->branch();
+
+    foreach ($repo->branches() as $branch) {
+        $prefix = $branch === $current ? '* ' : '  ';
+        fwrite(STDOUT, "{$prefix}{$branch}\n");
+    }
+}
+
+function commandTags(\Pitmaster\Repository $repo): void
+{
+    foreach ($repo->tags() as $tag) {
+        fwrite(STDOUT, "{$tag}\n");
+    }
+}
+
+function commandRefs(\Pitmaster\Repository $repo): void
+{
+    foreach ($repo->allRefs() as $name => $hash) {
+        fwrite(STDOUT, "{$hash} {$name}\n");
+    }
+}

@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "364146b278a3f5e27c27339683c9090f48c22617",
+        "type": "commit",
+        "size": 174,
+        "content": "tree bc225ea23f53f06c0c5bd3ba2be85c2120d68417\nauthor Test User <test@pitmaster.dev> 1775560614 +0200\ncommitter Test User <test@pitmaster.dev> 1775560614 +0200\n\nAdd hello.txt\n"
+    },
+    {
+        "hash": "8ab686eafeb1f44702738c8b0f24f2567c36da6d",
+        "type": "blob",
+        "size": 14,
+        "content": "Hello, World!\n"
+    },
+    {
+        "hash": "bc225ea23f53f06c0c5bd3ba2be85c2120d68417",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 8ab686eafeb1f44702738c8b0f24f2567c36da6d\thello.txt\n"
+    }
+]

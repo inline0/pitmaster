@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "475baf131e771c90c20bcd3e19a9beff54072e04",
+        "tree": "b45b5a93eabc4a0c62630c05d8db5aaf9c8a36bd",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "message": "Add nested directory structure"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "refs/refs-loose",
+    "category": "refs",
+    "description": "Read loose refs (branches and tags)",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

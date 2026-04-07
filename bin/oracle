@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Tests\Oracle\OracleCapture;
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+
+$arguments = array_slice($argv, 1);
+$refresh = false;
+$scenarioName = null;
+
+foreach ($arguments as $argument) {
+    if ($argument === '--refresh') {
+        $refresh = true;
+        continue;
+    }
+
+    if ($scenarioName === null) {
+        $scenarioName = $argument;
+        continue;
+    }
+
+    fwrite(STDERR, "Usage: bin/oracle [--refresh] <scenario>\n");
+    exit(1);
+}
+
+if ($scenarioName === null) {
+    fwrite(STDERR, "Usage: bin/oracle [--refresh] <scenario>\n");
+    exit(1);
+}
+
+$repo = new ScenarioRepository(dirname(__DIR__));
+$scenario = $repo->get($scenarioName);
+
+if (!$refresh && is_dir($scenario->oracleDir()) && is_file($scenario->oracleDir() . '/objects.json')) {
+    fwrite(STDOUT, "Oracle output already exists for {$scenarioName}. Use --refresh to re-capture.\n");
+    exit(0);
+}
+
+fwrite(STDOUT, "Capturing oracle for {$scenarioName}...\n");
+
+$capture = new OracleCapture();
+$result = $capture->capture($scenario);
+
+if (!$result['success']) {
+    fwrite(STDERR, "Oracle capture failed:\n");
+
+    foreach ($result['errors'] as $error) {
+        fwrite(STDERR, "  {$error}\n");
+    }
+
+    exit(1);
+}
+
+fwrite(STDOUT, "Oracle captured for {$scenarioName}\n");

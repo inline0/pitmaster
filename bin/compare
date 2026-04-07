@@ -1,0 +1,92 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Support\Json;
+use Pitmaster\Tests\Oracle\ScenarioComparator;
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+
+$arguments = array_slice($argv, 1);
+$reportOnly = false;
+$scenarioName = null;
+
+foreach ($arguments as $argument) {
+    if ($argument === '--report-only') {
+        $reportOnly = true;
+        continue;
+    }
+
+    if ($scenarioName === null) {
+        $scenarioName = $argument;
+        continue;
+    }
+
+    fwrite(STDERR, "Usage: bin/compare [--report-only] <scenario>\n");
+    exit(1);
+}
+
+if ($scenarioName === null) {
+    fwrite(STDERR, "Usage: bin/compare [--report-only] <scenario>\n");
+    exit(1);
+}
+
+$repo = new ScenarioRepository(dirname(__DIR__));
+$scenario = $repo->get($scenarioName);
+
+$comparator = new ScenarioComparator();
+$report = $comparator->compare($scenario);
+
+// Write report
+$reportsDir = $scenario->reportsDir();
+
+if (!is_dir($reportsDir)) {
+    mkdir($reportsDir, 0777, true);
+}
+
+Json::encodeFile($scenario->reportPath(), $report);
+
+// Output results
+$evaluation = $report['expectation'] ?? ['pass' => false, 'failures' => ['no-evaluation']];
+$pass = $evaluation['pass'] ?? false;
+
+fwrite(STDOUT, sprintf(
+    "Compared %s: %s\n",
+    $scenario->name,
+    $pass ? 'PASS' : 'FAIL',
+));
+
+// Show match details
+foreach (['objects', 'refs', 'log'] as $output) {
+    $matchKey = $output . '_match';
+
+    if (isset($report[$matchKey])) {
+        fwrite(STDOUT, sprintf(
+            "  %s: %s\n",
+            $output,
+            $report[$matchKey] ? 'match' : 'MISMATCH',
+        ));
+    }
+}
+
+foreach ($scenario->operations() as $operation) {
+    $matchKey = $operation . '_match';
+
+    if (isset($report[$matchKey])) {
+        fwrite(STDOUT, sprintf(
+            "  %s: %s\n",
+            $operation,
+            $report[$matchKey] ? 'match' : 'MISMATCH',
+        ));
+    }
+}
+
+if (!empty($evaluation['failures'])) {
+    fwrite(STDOUT, "Failures: " . implode(', ', $evaluation['failures']) . "\n");
+}
+
+if (!$reportOnly && !$pass) {
+    exit(2);
+}

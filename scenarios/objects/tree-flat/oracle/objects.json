@@ -1,0 +1,32 @@
+[
+    {
+        "hash": "5a3311250c38e3bec6ec5facdfd97cca58a3dd71",
+        "type": "blob",
+        "size": 15,
+        "content": "File C content\n"
+    },
+    {
+        "hash": "5ad3089b76d1cb3df320c5bd24013fee727ed08f",
+        "type": "blob",
+        "size": 15,
+        "content": "File B content\n"
+    },
+    {
+        "hash": "6cb20aeb74f347be6ff4730a78dcd0aab08ea947",
+        "type": "tree",
+        "size": 99,
+        "content": "100644 blob 7ca13230c7f29c4a5e4264766442d52507db3460\ta.txt\n100644 blob 5ad3089b76d1cb3df320c5bd24013fee727ed08f\tb.txt\n100644 blob 5a3311250c38e3bec6ec5facdfd97cca58a3dd71\tc.txt\n"
+    },
+    {
+        "hash": "7ca13230c7f29c4a5e4264766442d52507db3460",
+        "type": "blob",
+        "size": 15,
+        "content": "File A content\n"
+    },
+    {
+        "hash": "f0f8ca1627f51a322d9bf8db1058b5cf3283d0f9",
+        "type": "commit",
+        "size": 176,
+        "content": "tree 6cb20aeb74f347be6ff4730a78dcd0aab08ea947\nauthor Test User <test@pitmaster.dev> 1775560615 +0200\ncommitter Test User <test@pitmaster.dev> 1775560615 +0200\n\nAdd three files\n"
+    }
+]

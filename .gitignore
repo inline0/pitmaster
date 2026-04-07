@@ -1,0 +1,5 @@
+/vendor/
+
+# Generated scenario outputs (oracle is committed, actual and reports are not)
+scenarios/**/actual/
+scenarios/**/reports/

@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "508b941d3e6b934f0015adc6ea0dd647c25fb02d",
+        "tree": "a9792f6f33554fc2c75e18a01ea16956a1e6daac",
+        "parents": [
+            "9219350e7b1e523c25debed6b5aed5f569e16d58"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "message": "Second commit"
+    },
+    {
+        "hash": "9219350e7b1e523c25debed6b5aed5f569e16d58",
+        "tree": "3ab2e03dea1bc23d0ef6715fd6395ce1629f1889",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775560654 2026-04-07 13:17:34 +0200",
+        "message": "First commit"
+    }
+]

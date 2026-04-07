@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "364146b278a3f5e27c27339683c9090f48c22617",
+        "tree": "bc225ea23f53f06c0c5bd3ba2be85c2120d68417",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1775560614 2026-04-07 13:16:54 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775560614 2026-04-07 13:16:54 +0200",
+        "message": "Add hello.txt"
+    }
+]
