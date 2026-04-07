@@ -54,7 +54,32 @@ final class PackIndex
         $magic = $reader->read(4);
 
         if ($magic !== self::MAGIC) {
-            throw PackParseException::invalidMagic($path ?: 'pack index');
+            // No magic = v1 index. Seek back and parse as v1.
+            $reader->seek(0);
+            $v1 = PackIndexV1::parse($reader);
+
+            // Convert v1 to our format
+            $index = new self();
+            $index->objectCount = $v1->objectCount();
+            $index->names = $v1->allHashes();
+
+            // Build fanout from sorted names
+            $index->fanout = array_fill(0, 256, 0);
+
+            foreach ($index->names as $i => $hash) {
+                $fb = (int) hexdec(substr($hash, 0, 2));
+
+                for ($j = $fb; $j < 256; $j++) {
+                    $index->fanout[$j]++;
+                }
+            }
+
+            // Get offsets
+            for ($i = 0; $i < $index->objectCount; $i++) {
+                $index->offsets[$i] = $v1->findOffset($index->names[$i]) ?? 0;
+            }
+
+            return $index;
         }
 
         $version = $reader->readUint32();

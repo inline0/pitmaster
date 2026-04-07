@@ -1,0 +1,22 @@
+[
+    {
+        "hash": "ee9057a07666b848c557e2e85c31d988d7e95593",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "8b881445dbce6773d9ac6760ec5a6393e8329980",
+        "name": "refs/tags/annotated"
+    },
+    {
+        "hash": "619646e1dae8656c50fc8ed3d4d79ef970745422",
+        "name": "refs/tags/lightweight"
+    },
+    {
+        "hash": "674ff8a55d478f060166d6b1465e218567d6ba14",
+        "name": "refs/tags/nested-target"
+    },
+    {
+        "hash": "ef3f6e5fcd9e18686fbe5f21a13e4fbc5b52bd96",
+        "name": "refs/tags/v2.0"
+    }
+]

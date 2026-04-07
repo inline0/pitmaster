@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "0aba3c4e51ff5453f32184b17ff8b69547500ae1",
+        "type": "commit",
+        "size": 154,
+        "content": "tree e5178bf970216c2dfed7b25e289afb895de0c7c4\nauthor Test <test@test.com> 1775597765 +0200\ncommitter Test <test@test.com> 1775597765 +0200\n\nunicode paths\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3a917a9c517bc176160900774c5e239b562b13ef",
+        "type": "blob",
+        "size": 6,
+        "content": "emoji\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0ad5148ef1ea064cfd01e79f3082b9aaedcb9c0",
+        "type": "blob",
+        "size": 8,
+        "content": "chinese\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b39b3b6d7f072529bdf7de8d150c8586a143bad3",
+        "type": "blob",
+        "size": 7,
+        "content": "umlaut\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c9c3825ad183e4b4bfac3b54f51fedf3538a136a",
+        "type": "blob",
+        "size": 6,
+        "content": "ascii\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5178bf970216c2dfed7b25e289afb895de0c7c4",
+        "type": "tree",
+        "size": 155,
+        "content": "100644 blob c9c3825ad183e4b4bfac3b54f51fedf3538a136a\tascii.txt\n100644 blob 3a917a9c517bc176160900774c5e239b562b13ef\treadme-🎉.txt\n100644 blob b39b3b6d7f072529bdf7de8d150c8586a143bad3\tüber.txt\n100644 blob a0ad5148ef1ea064cfd01e79f3082b9aaedcb9c0\t文件.txt\n",
+        "encoding": "utf-8"
+    }
+]

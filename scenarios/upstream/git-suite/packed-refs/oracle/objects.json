@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "1ef1d842b05e2f0afc8bc427e9245b9c1d97035f",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 94b334d80405218e281a6f5b48d31f73cd3af4be\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3216b31ed88e058dead48a3efa177216316ff73c",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 67e3ddb6ebc7d11989f10475ae627ac9dac194c6\nauthor Test <test@test.com> 1775597761 +0200\ncommitter Test <test@test.com> 1775597761 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "397c36609bde1684b834062f14122cbda5c09435",
+        "type": "commit",
+        "size": 199,
+        "content": "tree 1ef1d842b05e2f0afc8bc427e9245b9c1d97035f\nparent 3216b31ed88e058dead48a3efa177216316ff73c\nauthor Test <test@test.com> 1775597761 +0200\ncommitter Test <test@test.com> 1775597761 +0200\n\nafter pack\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "67e3ddb6ebc7d11989f10475ae627ac9dac194c6",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob d95f3ad14dee633a758d2e331151e950dd13e4ed\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "94b334d80405218e281a6f5b48d31f73cd3af4be",
+        "type": "blob",
+        "size": 13,
+        "content": "content\nmore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a505fc60af08ce86ccdc5bc81d5d932c3a789779",
+        "type": "tag",
+        "size": 129,
+        "content": "object 3216b31ed88e058dead48a3efa177216316ff73c\ntype commit\ntag v1.0\ntagger Test <test@test.com> 1775597761 +0200\n\nannotated tag\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d95f3ad14dee633a758d2e331151e950dd13e4ed",
+        "type": "blob",
+        "size": 8,
+        "content": "content\n",
+        "encoding": "utf-8"
+    }
+]

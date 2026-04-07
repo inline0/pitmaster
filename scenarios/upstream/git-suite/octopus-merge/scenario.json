@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/octopus-merge",
+    "category": "upstream",
+    "description": "git test suite: Octopus merge with 3+ branches (t6028)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

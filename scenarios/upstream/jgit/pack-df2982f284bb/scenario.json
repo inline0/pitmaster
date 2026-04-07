@@ -1,0 +1,11 @@
+{
+    "name": "upstream/jgit/pack-df2982f284bb",
+    "category": "upstream",
+    "description": "JGit pack: pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

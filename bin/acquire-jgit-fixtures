@@ -1,0 +1,74 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Import JGit pack file fixtures.
+ */
+
+$root = dirname(__DIR__);
+$source = '/tmp/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources';
+
+if (!is_dir($source)) {
+    fwrite(STDERR, "JGit fixtures not found.\n");
+    exit(1);
+}
+
+$upstreamDir = $root . '/scenarios/upstream/jgit';
+$imported = 0;
+
+// Find pack+idx pairs
+$packs = glob($source . '/pack-*.pack');
+
+foreach ($packs as $packFile) {
+    $basename = basename($packFile, '.pack');
+    $hash = substr($basename, 5);
+    $shortHash = substr($hash, 0, 12);
+    $idxFile = substr($packFile, 0, -5) . '.idx';
+
+    if (!is_file($idxFile)) {
+        continue;
+    }
+
+    // Skip known-bad fixtures (they test error handling, not reading)
+    if (str_contains($basename, 'bad')) {
+        fwrite(STDOUT, "  SKIP  {$basename} (malformed test fixture)\n");
+        continue;
+    }
+
+    $scenarioName = "pack-{$shortHash}";
+    $scenarioDir = $upstreamDir . '/' . $scenarioName;
+
+    if (is_dir($scenarioDir)) {
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    $realPack = realpath($packFile);
+    $realIdx = realpath($idxFile);
+
+    $setup = "#!/bin/bash\nset -e\ngit init .\nmkdir -p .git/objects/pack\n"
+        . "cp " . escapeshellarg($realPack) . " .git/objects/pack/\n"
+        . "cp " . escapeshellarg($realIdx) . " .git/objects/pack/\n"
+        . "FIRST_COMMIT=\$(git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | grep ' commit' | head -1 | cut -d' ' -f1)\n"
+        . "if [ -n \"\$FIRST_COMMIT\" ]; then git update-ref refs/heads/main \$FIRST_COMMIT 2>/dev/null || true; fi\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setup);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    file_put_contents($scenarioDir . '/scenario.json', json_encode([
+        'name' => 'upstream/jgit/' . $scenarioName,
+        'category' => 'upstream',
+        'description' => "JGit pack: {$basename}",
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => ['exact_match' => [], 'fsck_clean' => false],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$scenarioName}\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} JGit pack fixtures.\n");

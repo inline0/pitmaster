@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/large-tree",
+    "category": "upstream",
+    "description": "git test suite: Tree with many entries (t1010)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

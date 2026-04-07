@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "0bfea9180d8ed9263d9c0ea8ec8787e3b64a352c",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 1dc8847988deae3194f18d727606b35f13314112\trenamed.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1dc8847988deae3194f18d727606b35f13314112",
+        "type": "blob",
+        "size": 62,
+        "content": "this is the original content of the file that will be renamed\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "26cb223c256bb92656b3721e64f408a3a8cf6e02",
+        "type": "commit",
+        "size": 200,
+        "content": "tree 0bfea9180d8ed9263d9c0ea8ec8787e3b64a352c\nparent a04e61445c9517fd1f12ab7b5d2f3849d20f156c\nauthor Test <test@test.com> 1775597762 +0200\ncommitter Test <test@test.com> 1775597762 +0200\n\nrename file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a04e61445c9517fd1f12ab7b5d2f3849d20f156c",
+        "type": "commit",
+        "size": 148,
+        "content": "tree f275bf29c20187d969e8610d32149cacc094e3da\nauthor Test <test@test.com> 1775597762 +0200\ncommitter Test <test@test.com> 1775597762 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f275bf29c20187d969e8610d32149cacc094e3da",
+        "type": "tree",
+        "size": 40,
+        "content": "100644 blob 1dc8847988deae3194f18d727606b35f13314112\toriginal.txt\n",
+        "encoding": "utf-8"
+    }
+]

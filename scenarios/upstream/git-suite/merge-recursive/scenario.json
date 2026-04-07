@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/merge-recursive",
+    "category": "upstream",
+    "description": "git test suite: Recursive merge with multiple bases (t6036)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

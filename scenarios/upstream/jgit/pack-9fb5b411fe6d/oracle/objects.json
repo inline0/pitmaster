@@ -1,0 +1,9 @@
+[
+    {
+        "hash": "17768080a2318cd89bba4c8b87834401e2095703",
+        "type": "tag",
+        "size": 140,
+        "content": "object d86a2aada2f5e7ccf6f11880bfb9ab404e8a8864\ntype commit\ntag B\ntagger A U Thor <a.u.thor@example.com> 1112913133 -0700\n\nAn annotated tag\n",
+        "encoding": "utf-8"
+    }
+]

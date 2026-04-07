@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/merge-conflict",
+    "category": "upstream",
+    "description": "git test suite: Merge conflict markers (t7601)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

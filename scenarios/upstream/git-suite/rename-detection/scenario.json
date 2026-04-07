@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/rename-detection",
+    "category": "upstream",
+    "description": "git test suite: Rename detection (t4003)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

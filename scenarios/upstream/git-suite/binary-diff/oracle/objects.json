@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "2112e4bd76fa9dbb8dcb74ddd6dd7fd9940c6bf0",
+        "type": "commit",
+        "size": 160,
+        "content": "tree b7e95a833541f55ca750bb2bbb6a278cd3b4f23b\nauthor Test <test@test.com> 1775597750 +0200\ncommitter Test <test@test.com> 1775597750 +0200\n\ninitial with binary\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2b749457cb649308a775cf7f38e96a6831448825",
+        "type": "blob",
+        "size": 22,
+        "content": "AAECA21vZGlmaWVkIGJpbmFyeQQFBg==",
+        "encoding": "base64"
+    },
+    {
+        "hash": "56f484c55baf1780ffd77e5962b6e64f8190bf36",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob 2b749457cb649308a775cf7f38e96a6831448825\tbinary.dat\n100644 blob a39caff78e90d8dee0dd784f82551b5f40e24755\ttext.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "89cb3fe1bcf41208573116a922c23e8b1bc4cc6a",
+        "type": "commit",
+        "size": 200,
+        "content": "tree 56f484c55baf1780ffd77e5962b6e64f8190bf36\nparent 2112e4bd76fa9dbb8dcb74ddd6dd7fd9940c6bf0\nauthor Test <test@test.com> 1775597750 +0200\ncommitter Test <test@test.com> 1775597750 +0200\n\nmodify both\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8e27be7d6154a1f68ea9160ef0e18691d20560dc",
+        "type": "blob",
+        "size": 5,
+        "content": "text\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90fa503be7ba7945f97317d7a16d555e9573f6da",
+        "type": "blob",
+        "size": 20,
+        "content": "AAECA2JpbmFyeSBjb250ZW50BAU=",
+        "encoding": "base64"
+    },
+    {
+        "hash": "a39caff78e90d8dee0dd784f82551b5f40e24755",
+        "type": "blob",
+        "size": 14,
+        "content": "modified text\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b7e95a833541f55ca750bb2bbb6a278cd3b4f23b",
+        "type": "tree",
+        "size": 74,
+        "content": "100644 blob 90fa503be7ba7945f97317d7a16d555e9573f6da\tbinary.dat\n100644 blob 8e27be7d6154a1f68ea9160ef0e18691d20560dc\ttext.txt\n",
+        "encoding": "utf-8"
+    }
+]

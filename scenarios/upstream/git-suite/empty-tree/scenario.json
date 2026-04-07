@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/empty-tree",
+    "category": "upstream",
+    "description": "git test suite: Empty tree commit (t3600)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

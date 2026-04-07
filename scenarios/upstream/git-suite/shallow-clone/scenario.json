@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/shallow-clone",
+    "category": "upstream",
+    "description": "git test suite: Shallow repository (t5500)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,79 @@
+[
+    {
+        "hash": "003d886fac819901c00fa06f5141d98b5c0bdb2c",
+        "type": "blob",
+        "size": 17,
+        "content": "base\nleft change\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "14eca9ab53d345416f7b9d56ac5865051e7dfdf6",
+        "type": "commit",
+        "size": 145,
+        "content": "tree 7bee507cb7f5aa4dce34e6962366eeea27935c74\nauthor Test <test@test.com> 1775597756 +0200\ncommitter Test <test@test.com> 1775597756 +0200\n\nbase\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "22228ab12db847d4e349c15b5fcc3d2ffbbb8348",
+        "type": "commit",
+        "size": 257,
+        "content": "tree d54c5841404147ee371dacaf35eed73fc5135f6d\nparent 71e2818a334e57fbae114a023930263f4d2d8ed5\nparent 2cd7ba189dde09f111e5d4deba5544c2cd08f6c9\nauthor Test <test@test.com> 1775597756 +0200\ncommitter Test <test@test.com> 1775597756 +0200\n\nMerge branch 'right'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2cd7ba189dde09f111e5d4deba5544c2cd08f6c9",
+        "type": "commit",
+        "size": 194,
+        "content": "tree f4f50398db59b8581badc528cacaaff7c066af10\nparent 14eca9ab53d345416f7b9d56ac5865051e7dfdf6\nauthor Test <test@test.com> 1775597756 +0200\ncommitter Test <test@test.com> 1775597756 +0200\n\nright\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6bfe618b612904b949297f468bc2513a33db6850",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 003d886fac819901c00fa06f5141d98b5c0bdb2c\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "71e2818a334e57fbae114a023930263f4d2d8ed5",
+        "type": "commit",
+        "size": 193,
+        "content": "tree 6bfe618b612904b949297f468bc2513a33db6850\nparent 14eca9ab53d345416f7b9d56ac5865051e7dfdf6\nauthor Test <test@test.com> 1775597756 +0200\ncommitter Test <test@test.com> 1775597756 +0200\n\nleft\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7bee507cb7f5aa4dce34e6962366eeea27935c74",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob df967b96a579e45a18b8251732d16804b2e56a55\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d54c5841404147ee371dacaf35eed73fc5135f6d",
+        "type": "tree",
+        "size": 73,
+        "content": "100644 blob 003d886fac819901c00fa06f5141d98b5c0bdb2c\tfile.txt\n100644 blob e76420edb892d05fd7330c7441d4836af166d853\tother.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "df967b96a579e45a18b8251732d16804b2e56a55",
+        "type": "blob",
+        "size": 5,
+        "content": "base\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e76420edb892d05fd7330c7441d4836af166d853",
+        "type": "blob",
+        "size": 13,
+        "content": "right change\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f4f50398db59b8581badc528cacaaff7c066af10",
+        "type": "tree",
+        "size": 73,
+        "content": "100644 blob df967b96a579e45a18b8251732d16804b2e56a55\tfile.txt\n100644 blob e76420edb892d05fd7330c7441d4836af166d853\tother.txt\n",
+        "encoding": "utf-8"
+    }
+]

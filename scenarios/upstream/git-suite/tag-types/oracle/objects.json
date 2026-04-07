@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "1ef1d842b05e2f0afc8bc427e9245b9c1d97035f",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 94b334d80405218e281a6f5b48d31f73cd3af4be\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "619646e1dae8656c50fc8ed3d4d79ef970745422",
+        "type": "commit",
+        "size": 148,
+        "content": "tree 67e3ddb6ebc7d11989f10475ae627ac9dac194c6\nauthor Test <test@test.com> 1775597764 +0200\ncommitter Test <test@test.com> 1775597764 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "674ff8a55d478f060166d6b1465e218567d6ba14",
+        "type": "tag",
+        "size": 142,
+        "content": "object 619646e1dae8656c50fc8ed3d4d79ef970745422\ntype commit\ntag nested-target\ntagger Test <test@test.com> 1775597764 +0200\n\ntarget for nested\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "67e3ddb6ebc7d11989f10475ae627ac9dac194c6",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob d95f3ad14dee633a758d2e331151e950dd13e4ed\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b881445dbce6773d9ac6760ec5a6393e8329980",
+        "type": "tag",
+        "size": 142,
+        "content": "object 619646e1dae8656c50fc8ed3d4d79ef970745422\ntype commit\ntag annotated\ntagger Test <test@test.com> 1775597764 +0200\n\nannotated tag message\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "94b334d80405218e281a6f5b48d31f73cd3af4be",
+        "type": "blob",
+        "size": 13,
+        "content": "content\nmore\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d95f3ad14dee633a758d2e331151e950dd13e4ed",
+        "type": "blob",
+        "size": 8,
+        "content": "content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee9057a07666b848c557e2e85c31d988d7e95593",
+        "type": "commit",
+        "size": 195,
+        "content": "tree 1ef1d842b05e2f0afc8bc427e9245b9c1d97035f\nparent 619646e1dae8656c50fc8ed3d4d79ef970745422\nauthor Test <test@test.com> 1775597764 +0200\ncommitter Test <test@test.com> 1775597764 +0200\n\nsecond\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ef3f6e5fcd9e18686fbe5f21a13e4fbc5b52bd96",
+        "type": "tag",
+        "size": 125,
+        "content": "object ee9057a07666b848c557e2e85c31d988d7e95593\ntype commit\ntag v2.0\ntagger Test <test@test.com> 1775597765 +0200\n\nversion 2\n",
+        "encoding": "utf-8"
+    }
+]

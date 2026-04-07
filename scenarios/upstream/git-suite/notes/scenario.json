@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/notes",
+    "category": "upstream",
+    "description": "git test suite: Git notes (t3301)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

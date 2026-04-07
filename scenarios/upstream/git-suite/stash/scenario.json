@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/stash",
+    "category": "upstream",
+    "description": "git test suite: Git stash operations (t3903)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

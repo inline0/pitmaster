@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "397c36609bde1684b834062f14122cbda5c09435",
+        "name": "refs/heads/branch-after-pack"
+    },
+    {
+        "hash": "3216b31ed88e058dead48a3efa177216316ff73c",
+        "name": "refs/heads/branch-one"
+    },
+    {
+        "hash": "3216b31ed88e058dead48a3efa177216316ff73c",
+        "name": "refs/heads/branch-three"
+    },
+    {
+        "hash": "3216b31ed88e058dead48a3efa177216316ff73c",
+        "name": "refs/heads/branch-two"
+    },
+    {
+        "hash": "397c36609bde1684b834062f14122cbda5c09435",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "3216b31ed88e058dead48a3efa177216316ff73c",
+        "name": "refs/tags/lightweight-tag"
+    },
+    {
+        "hash": "a505fc60af08ce86ccdc5bc81d5d932c3a789779",
+        "name": "refs/tags/v1.0"
+    }
+]

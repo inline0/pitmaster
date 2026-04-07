@@ -1,0 +1,41 @@
+[
+    {
+        "hash": "71e2818a334e57fbae114a023930263f4d2d8ed5",
+        "tree": "6bfe618b612904b949297f468bc2513a33db6850",
+        "parents": [
+            "14eca9ab53d345416f7b9d56ac5865051e7dfdf6"
+        ],
+        "author": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "committer": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "message": "left"
+    },
+    {
+        "hash": "22228ab12db847d4e349c15b5fcc3d2ffbbb8348",
+        "tree": "d54c5841404147ee371dacaf35eed73fc5135f6d",
+        "parents": [
+            "71e2818a334e57fbae114a023930263f4d2d8ed5",
+            "2cd7ba189dde09f111e5d4deba5544c2cd08f6c9"
+        ],
+        "author": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "committer": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "message": "Merge branch 'right'"
+    },
+    {
+        "hash": "2cd7ba189dde09f111e5d4deba5544c2cd08f6c9",
+        "tree": "f4f50398db59b8581badc528cacaaff7c066af10",
+        "parents": [
+            "14eca9ab53d345416f7b9d56ac5865051e7dfdf6"
+        ],
+        "author": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "committer": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "message": "right"
+    },
+    {
+        "hash": "14eca9ab53d345416f7b9d56ac5865051e7dfdf6",
+        "tree": "7bee507cb7f5aa4dce34e6962366eeea27935c74",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "committer": "Test <test@test.com> 1775597756 2026-04-07 23:35:56 +0200",
+        "message": "base"
+    }
+]

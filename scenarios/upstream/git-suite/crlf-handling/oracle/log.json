@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "3ff6ffc2916b6b681c9897156fff91134b108f34",
+        "tree": "76361dea0082577424c45b8663d571ce95e4ecdb",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597751 2026-04-07 23:35:51 +0200",
+        "committer": "Test <test@test.com> 1775597751 2026-04-07 23:35:51 +0200",
+        "message": "files with different line endings"
+    }
+]

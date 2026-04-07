@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "2ceb84c5b388f7b9bb43259811758d564cfee17a",
+        "type": "blob",
+        "size": 15,
+        "content": "target content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4cbb553f3f4ac2ee7b01ff6c951d6bf583c39c15",
+        "type": "blob",
+        "size": 10,
+        "content": "target.txt",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6e6d35de60afd9c945d4a90e9fab3289013cc8fa",
+        "type": "tree",
+        "size": 74,
+        "content": "120000 blob 4cbb553f3f4ac2ee7b01ff6c951d6bf583c39c15\tlink.txt\n100644 blob 2ceb84c5b388f7b9bb43259811758d564cfee17a\ttarget.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7f428c601c512da00feaf73461c8cb0df169f916",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 6e6d35de60afd9c945d4a90e9fab3289013cc8fa\nauthor Test <test@test.com> 1775597764 +0200\ncommitter Test <test@test.com> 1775597764 +0200\n\nwith symlink\n",
+        "encoding": "utf-8"
+    }
+]

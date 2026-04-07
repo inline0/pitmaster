@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "b81767796c2c6334d13fec59c33b7088662cb7d9",
+        "tree": "dbdb40e225e2cd08985136ebf3d841b5bbe9e14a",
+        "parents": [
+            "ece8e87f12ee65ebeb6034f9abd0086aa6a7ea75"
+        ],
+        "author": "Test <test@test.com> 1775597868 2026-04-07 23:37:48 +0200",
+        "committer": "Test <test@test.com> 1775597868 2026-04-07 23:37:48 +0200",
+        "message": "add submodule"
+    },
+    {
+        "hash": "ece8e87f12ee65ebeb6034f9abd0086aa6a7ea75",
+        "tree": "98affaef511d9467e45d0f91f6d5e787c0543ada",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597868 2026-04-07 23:37:48 +0200",
+        "committer": "Test <test@test.com> 1775597868 2026-04-07 23:37:48 +0200",
+        "message": "main initial"
+    }
+]

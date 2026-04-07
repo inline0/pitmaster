@@ -1,0 +1,11 @@
+{
+    "name": "upstream/jgit/pack-546ff360fe34",
+    "category": "upstream",
+    "description": "JGit pack: pack-546ff360fe3488adb20860ce3436a2d6373d2796",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

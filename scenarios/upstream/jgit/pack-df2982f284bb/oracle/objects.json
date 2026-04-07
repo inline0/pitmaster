@@ -1,0 +1,478 @@
+[
+    {
+        "hash": "02ba32d3649e510002c21651936b7077aa75ffa9",
+        "type": "tree",
+        "size": 122,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 1004d0d7ac26fbf63050a234c9b88a46075719d3\tb\n040000 tree 49c5f851406e8004b816b8170f6f18e30ee877b9\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0966a434eb1a025db6b71485ab63a3bfbea520b6",
+        "type": "commit",
+        "size": 287,
+        "content": "tree 6c83a9d0a09ce6d12292314ed3d9e1f60e39feb0\nparent 2c349335b7f797072cf729c4f3bb0914ecb6dec9\nparent 58be4659bb571194ed4562d04b359d26216f526e\nauthor A U Thor <a.u.thor@example.com> 1112912233 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912233 -0700\n\nMerge branch 'master' into a\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "09efc7e59a839528ac7bda9fa020dc9101278680",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob da0f8ed91a8f2f0f067b3bdf26265d5ca48cf82c\ta1.txt\n100644 blob c1827f07e114c20547dc6a7296588870a4b5b62c\ta2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0a3d7772488b6b106fb62813c4d6d627918d9181",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob da0f8ed91a8f2f0f067b3bdf26265d5ca48cf82c\ta1\n100644 blob 15fae9e651043de0fd1deef588aa3fbf5a7a41c6\ta1.txt\n100644 blob 965361132e2f15897c9fd6c727beb5753057c38a\ta2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1004d0d7ac26fbf63050a234c9b88a46075719d3",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 86cec6b57d80fda40300fb0d667965a5c3c3572f\tb1.txt\n100644 blob 10da5895682013006950e7da534b705252b03be6\tb2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "10da5895682013006950e7da534b705252b03be6",
+        "type": "blob",
+        "size": 6,
+        "content": "b2\nb2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1203b03dc816ccbb67773f28b3c19318654b0bc8",
+        "type": "commit",
+        "size": 222,
+        "content": "tree be9b45333b66013bde1c7314efc50fabd9b39c6d\nparent bab66b48f836ed950c99134ef666436fb07a09a0\nauthor A U Thor <a.u.thor@example.com> 1112912893 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912893 -0700\n\nSecond c/c2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "15fae9e651043de0fd1deef588aa3fbf5a7a41c6",
+        "type": "blob",
+        "size": 6,
+        "content": "a1\na1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "16f9ec009e5568c435f473ba3a1df732d49ce8c3",
+        "type": "blob",
+        "size": 3,
+        "content": "c2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1fd7d579fb6ae3fe942dc09c2c783443d04cf21e",
+        "type": "blob",
+        "size": 6,
+        "content": "c1\nc1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "20a8ade77639491ea0bd667bf95de8abf3a434c8",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree e4ff0b72cb0994dbf7a9da260aeb461c9d882bb5\ta\n100644 blob 8230f48330e0055d9e0bc5a2a77718f6dd9324b8\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2675188fd86978d5bc4d7211698b2118ae3bf658",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 1fd7d579fb6ae3fe942dc09c2c783443d04cf21e\tc1.txt\n100644 blob 16f9ec009e5568c435f473ba3a1df732d49ce8c3\tc2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2c349335b7f797072cf729c4f3bb0914ecb6dec9",
+        "type": "commit",
+        "size": 221,
+        "content": "tree 8d6a2f2af0b2b96f320dd62fb6d9916fd2497dd9\nparent ac7e7e44c1885efb472ad54a78327d66bfc4ecef\nauthor A U Thor <a.u.thor@example.com> 1112912233 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912233 -0700\n\nFirst a/a2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2cc3f4155a8eda5c3f1bc85de0988c0155c8cc1c",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 86cec6b57d80fda40300fb0d667965a5c3c3572f\tb1.txt\n100644 blob e6bfff5c1d0f0ecd501552b43a1e13d8008abc31\tb2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "30a7b072d441dbfcfe0266b1c5fce94c22c447da",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "42e4e7c5e507e113ebbb7801b16b52cf867b7ce1",
+        "type": "commit",
+        "size": 184,
+        "content": "tree 62b15c9ddac853efbb00f59123f484b05b06d8b3\nauthor A U Thor <a.u.thor@example.com> 1112912653 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912653 -0700\n\nFirst c/c1, no parent\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "49322bb17d3acc9146f98c97d078513228bbf3c0",
+        "type": "commit",
+        "size": 338,
+        "content": "tree 6020a3b8d5d636e549ccbd0c53e2764684bb3125\nparent 6e1475206e57110fcef4b92320436c1e9872a322\nparent f73b95671f326616d66b2afb3bdfcdbbce110b44\nparent d0114ab8ac326bab30e3a657a0397578c5a1af88\nauthor A U Thor <a.u.thor@example.com> 1112913133 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112913133 -0700\n\nMerge branches 'c', 'd' and 'e'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "49c5f851406e8004b816b8170f6f18e30ee877b9",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 1fd7d579fb6ae3fe942dc09c2c783443d04cf21e\tc1.txt\n100644 blob 55a1a760df4b86a02094a904dfa511deb5655905\tc2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "55a1a760df4b86a02094a904dfa511deb5655905",
+        "type": "blob",
+        "size": 6,
+        "content": "c2\nc2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "58be4659bb571194ed4562d04b359d26216f526e",
+        "type": "commit",
+        "size": 226,
+        "content": "tree 30a7b072d441dbfcfe0266b1c5fce94c22c447da\nparent 6c8b137b1c652731597c89668f417b8695f28dd7\nauthor A U Thor <a.u.thor@example.com> 1112912113 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912113 -0700\n\nOn master again\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "59706a11bde2b9899a278838ef20a97e8f8795d2",
+        "type": "commit",
+        "size": 222,
+        "content": "tree a33a091b7c8de98b3a2ad2f21f88ea86f395d787\nparent c070ad8c08840c8116da865b2d65593a6bb9cd2a\nauthor A U Thor <a.u.thor@example.com> 1112912533 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912533 -0700\n\nSecond b/b1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5f25aaf573e7a094697987a927b833e088134674",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6020a3b8d5d636e549ccbd0c53e2764684bb3125",
+        "type": "tree",
+        "size": 122,
+        "content": "040000 tree 0a3d7772488b6b106fb62813c4d6d627918d9181\ta\n040000 tree 1004d0d7ac26fbf63050a234c9b88a46075719d3\tb\n040000 tree 49c5f851406e8004b816b8170f6f18e30ee877b9\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "62b15c9ddac853efbb00f59123f484b05b06d8b3",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 835da11381dee94c71a04164cdaa533d0673e4e5\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6462e7d8024396b14d7651e2ec11e2bbf07a05c4",
+        "type": "commit",
+        "size": 221,
+        "content": "tree a288d2cc3ee7d82f482e70ae7b6fedb4a039dd09\nparent 42e4e7c5e507e113ebbb7801b16b52cf867b7ce1\nauthor A U Thor <a.u.thor@example.com> 1112912713 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912713 -0700\n\nFirst c/c2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c83a9d0a09ce6d12292314ed3d9e1f60e39feb0",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree 09efc7e59a839528ac7bda9fa020dc9101278680\ta\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6c8b137b1c652731597c89668f417b8695f28dd7",
+        "type": "commit",
+        "size": 172,
+        "content": "tree c17b9ee9d0501fecadfac3b60ca485b14f5dbe98\nauthor A U Thor <a.u.thor@example.com> 1112912053 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912053 -0700\n\nOn master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6db9c2ebf75590eef973081736730a9ea169a0c4",
+        "type": "commit",
+        "size": 222,
+        "content": "tree 5f25aaf573e7a094697987a927b833e088134674\nparent d86a2aada2f5e7ccf6f11880bfb9ab404e8a8864\nauthor A U Thor <a.u.thor@example.com> 1112912353 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912353 -0700\n\nSecond a/a2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6e1475206e57110fcef4b92320436c1e9872a322",
+        "type": "commit",
+        "size": 282,
+        "content": "tree 02ba32d3649e510002c21651936b7077aa75ffa9\nparent 1203b03dc816ccbb67773f28b3c19318654b0bc8\nparent 7f822839a2fe9760f386cbbbcb3f92c5fe81def7\nauthor A U Thor <a.u.thor@example.com> 1112912953 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912953 -0700\n\nMerge branch 'b' into c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7f822839a2fe9760f386cbbbcb3f92c5fe81def7",
+        "type": "commit",
+        "size": 222,
+        "content": "tree acd0220f06f7e4db50ea5ba242f0dfed297b27af\nparent 59706a11bde2b9899a278838ef20a97e8f8795d2\nauthor A U Thor <a.u.thor@example.com> 1112912593 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912593 -0700\n\nSecond b/b2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81e462df7c747d5b8783af18bf83bffbef8dc2bc",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061\tb1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8230f48330e0055d9e0bc5a2a77718f6dd9324b8",
+        "type": "blob",
+        "size": 10,
+        "content": "On master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "82b1d08466e9505f8666b778744f9a3471a70c81",
+        "type": "blob",
+        "size": 20,
+        "content": "On master\nOn master\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "82fb2e7873759b74c41020a00abaea9c378a7a15",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree d4b9b11fc8006af3b05cf2b4611077ed6a9b8c07\tb\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "835da11381dee94c71a04164cdaa533d0673e4e5",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob ae9304576a6ec3419b231b2b9c8e33a06f97f9fb\tc1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83834a7afdaa1a1260568567f6ad90020389f664",
+        "type": "commit",
+        "size": 282,
+        "content": "tree 86265c33b19b2be71bdd7b8cb95823f2743d03a8\nparent 6462e7d8024396b14d7651e2ec11e2bbf07a05c4\nparent 6db9c2ebf75590eef973081736730a9ea169a0c4\nauthor A U Thor <a.u.thor@example.com> 1112912773 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912773 -0700\n\nMerge branch 'a' into c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83d2f0431bcdc9c2fd2c17b828143be6ee4fbe80",
+        "type": "commit",
+        "size": 221,
+        "content": "tree b9877f83f4c2ba0c3dd8fb2f6b5f04a0aaf18594\nparent 58be4659bb571194ed4562d04b359d26216f526e\nauthor A U Thor <a.u.thor@example.com> 1112912413 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912413 -0700\n\nFirst b/b1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "856ec208ae6cadac25a6d74f19b12bb27a24fe24",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree a4e0e50de469ac6e2fdf2ee81808f253d5b78fd3\ta\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "86265c33b19b2be71bdd7b8cb95823f2743d03a8",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 968a4b6caa8b55a68098e0495fbd9e75a7d05efa\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "86cec6b57d80fda40300fb0d667965a5c3c3572f",
+        "type": "blob",
+        "size": 6,
+        "content": "b1\nb1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8d6a2f2af0b2b96f320dd62fb6d9916fd2497dd9",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree 09efc7e59a839528ac7bda9fa020dc9101278680\ta\n100644 blob 8230f48330e0055d9e0bc5a2a77718f6dd9324b8\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8f50ba15d49353813cc6e20298002c0d17b0a9ee",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree d4b9b11fc8006af3b05cf2b4611077ed6a9b8c07\tb\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9188910f5d18434c2c8a3d78e8bef1a469c5626e",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 15fae9e651043de0fd1deef588aa3fbf5a7a41c6\ta1.txt\n100644 blob 965361132e2f15897c9fd6c727beb5753057c38a\ta2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "965361132e2f15897c9fd6c727beb5753057c38a",
+        "type": "blob",
+        "size": 6,
+        "content": "a2\na2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "968a4b6caa8b55a68098e0495fbd9e75a7d05efa",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob ae9304576a6ec3419b231b2b9c8e33a06f97f9fb\tc1.txt\n100644 blob 16f9ec009e5568c435f473ba3a1df732d49ce8c3\tc2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a288d2cc3ee7d82f482e70ae7b6fedb4a039dd09",
+        "type": "tree",
+        "size": 28,
+        "content": "040000 tree 968a4b6caa8b55a68098e0495fbd9e75a7d05efa\tc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a33a091b7c8de98b3a2ad2f21f88ea86f395d787",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 2cc3f4155a8eda5c3f1bc85de0988c0155c8cc1c\tb\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a4e0e50de469ac6e2fdf2ee81808f253d5b78fd3",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 15fae9e651043de0fd1deef588aa3fbf5a7a41c6\ta1.txt\n100644 blob c1827f07e114c20547dc6a7296588870a4b5b62c\ta2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ac7e7e44c1885efb472ad54a78327d66bfc4ecef",
+        "type": "commit",
+        "size": 221,
+        "content": "tree 20a8ade77639491ea0bd667bf95de8abf3a434c8\nparent 6c8b137b1c652731597c89668f417b8695f28dd7\nauthor A U Thor <a.u.thor@example.com> 1112912173 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912173 -0700\n\nFirst a/a1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "acd0220f06f7e4db50ea5ba242f0dfed297b27af",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 1004d0d7ac26fbf63050a234c9b88a46075719d3\tb\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae9304576a6ec3419b231b2b9c8e33a06f97f9fb",
+        "type": "blob",
+        "size": 3,
+        "content": "c1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b9877f83f4c2ba0c3dd8fb2f6b5f04a0aaf18594",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree 81e462df7c747d5b8783af18bf83bffbef8dc2bc\tb\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bab66b48f836ed950c99134ef666436fb07a09a0",
+        "type": "commit",
+        "size": 222,
+        "content": "tree f2aacb9368806d6502a03aa9da0834d4b50b9f0e\nparent 83834a7afdaa1a1260568567f6ad90020389f664\nauthor A U Thor <a.u.thor@example.com> 1112912833 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912833 -0700\n\nSecond c/c1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "be9b45333b66013bde1c7314efc50fabd9b39c6d",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 49c5f851406e8004b816b8170f6f18e30ee877b9\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c070ad8c08840c8116da865b2d65593a6bb9cd2a",
+        "type": "commit",
+        "size": 282,
+        "content": "tree 8f50ba15d49353813cc6e20298002c0d17b0a9ee\nparent d31f5a60d406e831d056b8ac2538d515100c2df2\nparent 6db9c2ebf75590eef973081736730a9ea169a0c4\nauthor A U Thor <a.u.thor@example.com> 1112912473 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912473 -0700\n\nMerge branch 'a' into b\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c17b9ee9d0501fecadfac3b60ca485b14f5dbe98",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 8230f48330e0055d9e0bc5a2a77718f6dd9324b8\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c1827f07e114c20547dc6a7296588870a4b5b62c",
+        "type": "blob",
+        "size": 3,
+        "content": "a2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061",
+        "type": "blob",
+        "size": 3,
+        "content": "b1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cd4bcfc27da62c6b840de700be1c60a7e69952a5",
+        "type": "tree",
+        "size": 66,
+        "content": "040000 tree 0a3d7772488b6b106fb62813c4d6d627918d9181\ta\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d0114ab8ac326bab30e3a657a0397578c5a1af88",
+        "type": "commit",
+        "size": 222,
+        "content": "tree cd4bcfc27da62c6b840de700be1c60a7e69952a5\nparent 6db9c2ebf75590eef973081736730a9ea169a0c4\nauthor A U Thor <a.u.thor@example.com> 1112913073 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112913073 -0700\n\nFourth a/a1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d31f5a60d406e831d056b8ac2538d515100c2df2",
+        "type": "commit",
+        "size": 221,
+        "content": "tree 82fb2e7873759b74c41020a00abaea9c378a7a15\nparent 83d2f0431bcdc9c2fd2c17b828143be6ee4fbe80\nauthor A U Thor <a.u.thor@example.com> 1112912473 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912473 -0700\n\nFirst b/b2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d4b9b11fc8006af3b05cf2b4611077ed6a9b8c07",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061\tb1.txt\n100644 blob e6bfff5c1d0f0ecd501552b43a1e13d8008abc31\tb2.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d86a2aada2f5e7ccf6f11880bfb9ab404e8a8864",
+        "type": "commit",
+        "size": 222,
+        "content": "tree 856ec208ae6cadac25a6d74f19b12bb27a24fe24\nparent 0966a434eb1a025db6b71485ab63a3bfbea520b6\nauthor A U Thor <a.u.thor@example.com> 1112912293 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112912293 -0700\n\nSecond a/a1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "da0f8ed91a8f2f0f067b3bdf26265d5ca48cf82c",
+        "type": "blob",
+        "size": 3,
+        "content": "a1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e4ff0b72cb0994dbf7a9da260aeb461c9d882bb5",
+        "type": "tree",
+        "size": 34,
+        "content": "100644 blob da0f8ed91a8f2f0f067b3bdf26265d5ca48cf82c\ta1.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e6bfff5c1d0f0ecd501552b43a1e13d8008abc31",
+        "type": "blob",
+        "size": 3,
+        "content": "b2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2aacb9368806d6502a03aa9da0834d4b50b9f0e",
+        "type": "tree",
+        "size": 94,
+        "content": "040000 tree 9188910f5d18434c2c8a3d78e8bef1a469c5626e\ta\n040000 tree 2675188fd86978d5bc4d7211698b2118ae3bf658\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f73b95671f326616d66b2afb3bdfcdbbce110b44",
+        "type": "commit",
+        "size": 221,
+        "content": "tree cd4bcfc27da62c6b840de700be1c60a7e69952a5\nparent 6db9c2ebf75590eef973081736730a9ea169a0c4\nauthor A U Thor <a.u.thor@example.com> 1112913013 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112913013 -0700\n\nThird a/a1\n",
+        "encoding": "utf-8"
+    }
+]

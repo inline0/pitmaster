@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "98affaef511d9467e45d0f91f6d5e787c0543ada",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob ba2906d0666cf726c7eaadd2cd3db615dedfdf3a\tmain.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a239b85dd9d93dd668b2542c1205c71165c1996c",
+        "type": "blob",
+        "size": 139,
+        "content": "[submodule \"subdir\"]\n\tpath = subdir\n\turl = /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-dbba8cc013453422/sub-source\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b81767796c2c6334d13fec59c33b7088662cb7d9",
+        "type": "commit",
+        "size": 202,
+        "content": "tree dbdb40e225e2cd08985136ebf3d841b5bbe9e14a\nparent ece8e87f12ee65ebeb6034f9abd0086aa6a7ea75\nauthor Test <test@test.com> 1775597868 +0200\ncommitter Test <test@test.com> 1775597868 +0200\n\nadd submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba2906d0666cf726c7eaadd2cd3db615dedfdf3a",
+        "type": "blob",
+        "size": 5,
+        "content": "main\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dbdb40e225e2cd08985136ebf3d841b5bbe9e14a",
+        "type": "tree",
+        "size": 109,
+        "content": "100644 blob a239b85dd9d93dd668b2542c1205c71165c1996c\t.gitmodules\n100644 blob ba2906d0666cf726c7eaadd2cd3db615dedfdf3a\tmain.txt\n160000 commit 99d2e3378820b9d5944704be83811a324f307513\tsubdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ece8e87f12ee65ebeb6034f9abd0086aa6a7ea75",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 98affaef511d9467e45d0f91f6d5e787c0543ada\nauthor Test <test@test.com> 1775597868 +0200\ncommitter Test <test@test.com> 1775597868 +0200\n\nmain initial\n",
+        "encoding": "utf-8"
+    }
+]

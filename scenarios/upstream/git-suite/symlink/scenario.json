@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/symlink",
+    "category": "upstream",
+    "description": "git test suite: Symbolic links (t3010)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

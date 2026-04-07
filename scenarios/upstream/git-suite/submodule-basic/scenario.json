@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/submodule-basic",
+    "category": "upstream",
+    "description": "git test suite: Basic submodule (t7400)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

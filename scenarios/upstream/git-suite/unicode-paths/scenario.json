@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/unicode-paths",
+    "category": "upstream",
+    "description": "git test suite: Unicode file paths (t3910)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

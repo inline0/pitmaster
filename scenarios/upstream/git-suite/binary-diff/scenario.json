@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/binary-diff",
+    "category": "upstream",
+    "description": "git test suite: Binary file handling (t4012)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

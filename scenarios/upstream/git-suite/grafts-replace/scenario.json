@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/grafts-replace",
+    "category": "upstream",
+    "description": "git test suite: Grafts and replace objects (t6050)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

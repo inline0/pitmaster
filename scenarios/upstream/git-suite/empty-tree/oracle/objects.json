@@ -1,0 +1,16 @@
+[
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cab58daa0d7225f570c85c2f0ec029f94c622ec3",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775597752 +0200\ncommitter Test <test@test.com> 1775597752 +0200\n\nempty commit\n",
+        "encoding": "utf-8"
+    }
+]

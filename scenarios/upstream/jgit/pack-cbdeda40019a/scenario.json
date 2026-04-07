@@ -1,0 +1,11 @@
+{
+    "name": "upstream/jgit/pack-cbdeda40019a",
+    "category": "upstream",
+    "description": "JGit pack: pack-cbdeda40019ae0e6e789088ea0f51f164f489d14",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

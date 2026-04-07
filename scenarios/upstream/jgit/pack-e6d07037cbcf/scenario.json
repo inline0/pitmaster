@@ -1,0 +1,11 @@
+{
+    "name": "upstream/jgit/pack-e6d07037cbcf",
+    "category": "upstream",
+    "description": "JGit pack: pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

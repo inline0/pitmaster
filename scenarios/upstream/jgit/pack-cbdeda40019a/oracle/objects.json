@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "2d04ee74dba30078c2dcdb713ddb8be4bc084d76",
+        "type": "blob",
+        "size": 8,
+        "content": "c/c1.txt",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "58728c938a9a8b9970cc09236caf94ada4689923",
+        "type": "blob",
+        "size": 140,
+        "content": "[submodule \"submodule\"]\n\tpath = submodule\n\turl = /home/fonseca/src/jgit/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/.git\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5ce00008cf3fb8f194f52742020bd40d78f3f1b3",
+        "type": "commit",
+        "size": 220,
+        "content": "tree c5ab27309491cf641eb11bb4b7a78641f280b482\nparent 49322bb17d3acc9146f98c97d078513228bbf3c0\nauthor A U Thor <a.u.thor@example.com> 1112913193 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112913193 -0700\n\nA symlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "62299a7ae290d685196e948a2fcb7d8c07f95c7d",
+        "type": "tree",
+        "size": 198,
+        "content": "100644 blob 58728c938a9a8b9970cc09236caf94ada4689923\t.gitmodules\n040000 tree 0a3d7772488b6b106fb62813c4d6d627918d9181\ta\n040000 tree 1004d0d7ac26fbf63050a234c9b88a46075719d3\tb\n040000 tree 49c5f851406e8004b816b8170f6f18e30ee877b9\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n160000 commit 49322bb17d3acc9146f98c97d078513228bbf3c0\tsubmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "68cb1f232964f3cd698afc1dafe583937203c587",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 62299a7ae290d685196e948a2fcb7d8c07f95c7d\nparent 49322bb17d3acc9146f98c97d078513228bbf3c0\nauthor A U Thor <a.u.thor@example.com> 1112913253 -0700\ncommitter A U Thor <a.u.thor@example.com> 1112913253 -0700\n\nA gitlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c5ab27309491cf641eb11bb4b7a78641f280b482",
+        "type": "tree",
+        "size": 161,
+        "content": "040000 tree 0a3d7772488b6b106fb62813c4d6d627918d9181\ta\n040000 tree 1004d0d7ac26fbf63050a234c9b88a46075719d3\tb\n040000 tree 49c5f851406e8004b816b8170f6f18e30ee877b9\tc\n100644 blob 82b1d08466e9505f8666b778744f9a3471a70c81\tmaster.txt\n120000 blob 2d04ee74dba30078c2dcdb713ddb8be4bc084d76\tsymlink.txt\n",
+        "encoding": "utf-8"
+    }
+]

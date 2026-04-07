@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "7f428c601c512da00feaf73461c8cb0df169f916",
+        "tree": "6e6d35de60afd9c945d4a90e9fab3289013cc8fa",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597764 2026-04-07 23:36:04 +0200",
+        "committer": "Test <test@test.com> 1775597764 2026-04-07 23:36:04 +0200",
+        "message": "with symlink"
+    }
+]

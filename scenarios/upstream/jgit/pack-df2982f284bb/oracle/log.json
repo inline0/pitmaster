@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "0966a434eb1a025db6b71485ab63a3bfbea520b6",
+        "tree": "6c83a9d0a09ce6d12292314ed3d9e1f60e39feb0",
+        "parents": [
+            "2c349335b7f797072cf729c4f3bb0914ecb6dec9",
+            "58be4659bb571194ed4562d04b359d26216f526e"
+        ],
+        "author": "A U Thor <a.u.thor@example.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "committer": "A U Thor <a.u.thor@example.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "message": "Merge branch 'master' into a"
+    },
+    {
+        "hash": "2c349335b7f797072cf729c4f3bb0914ecb6dec9",
+        "tree": "8d6a2f2af0b2b96f320dd62fb6d9916fd2497dd9",
+        "parents": [
+            "ac7e7e44c1885efb472ad54a78327d66bfc4ecef"
+        ],
+        "author": "A U Thor <a.u.thor@example.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "committer": "A U Thor <a.u.thor@example.com> 1112912233 2005-04-07 15:17:13 -0700",
+        "message": "First a/a2"
+    },
+    {
+        "hash": "ac7e7e44c1885efb472ad54a78327d66bfc4ecef",
+        "tree": "20a8ade77639491ea0bd667bf95de8abf3a434c8",
+        "parents": [
+            "6c8b137b1c652731597c89668f417b8695f28dd7"
+        ],
+        "author": "A U Thor <a.u.thor@example.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "committer": "A U Thor <a.u.thor@example.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "First a/a1"
+    },
+    {
+        "hash": "58be4659bb571194ed4562d04b359d26216f526e",
+        "tree": "30a7b072d441dbfcfe0266b1c5fce94c22c447da",
+        "parents": [
+            "6c8b137b1c652731597c89668f417b8695f28dd7"
+        ],
+        "author": "A U Thor <a.u.thor@example.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "committer": "A U Thor <a.u.thor@example.com> 1112912113 2005-04-07 15:15:13 -0700",
+        "message": "On master again"
+    },
+    {
+        "hash": "6c8b137b1c652731597c89668f417b8695f28dd7",
+        "tree": "c17b9ee9d0501fecadfac3b60ca485b14f5dbe98",
+        "parents": [],
+        "author": "A U Thor <a.u.thor@example.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "committer": "A U Thor <a.u.thor@example.com> 1112912053 2005-04-07 15:14:13 -0700",
+        "message": "On master"
+    }
+]

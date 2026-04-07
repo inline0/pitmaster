@@ -1,0 +1,31 @@
+[
+    {
+        "hash": "2a51427e28f017cd0c0d26e7f13f006bfbdd431a",
+        "tree": "65e564f0c1c7db6515d7f7dc99ab3bf8f0f1f7a0",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "committer": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "message": "initial"
+    },
+    {
+        "hash": "7b341e1c207e951776445b62792a77933081b7d6",
+        "tree": "92c5ae3a0629059d07771da568385668a86c167b",
+        "parents": [
+            "2a51427e28f017cd0c0d26e7f13f006bfbdd431a",
+            "96e3fe4e235c8d42891d2f124679e7cc45255c8a"
+        ],
+        "author": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "committer": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "message": "On main: second stash"
+    },
+    {
+        "hash": "96e3fe4e235c8d42891d2f124679e7cc45255c8a",
+        "tree": "92c5ae3a0629059d07771da568385668a86c167b",
+        "parents": [
+            "2a51427e28f017cd0c0d26e7f13f006bfbdd431a"
+        ],
+        "author": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "committer": "Test <test@test.com> 1775597763 2026-04-07 23:36:03 +0200",
+        "message": "index on main: 2a51427 initial"
+    }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "3ff6ffc2916b6b681c9897156fff91134b108f34",
+        "type": "commit",
+        "size": 174,
+        "content": "tree 76361dea0082577424c45b8663d571ce95e4ecdb\nauthor Test <test@test.com> 1775597751 +0200\ncommitter Test <test@test.com> 1775597751 +0200\n\nfiles with different line endings\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76361dea0082577424c45b8663d571ce95e4ecdb",
+        "type": "tree",
+        "size": 107,
+        "content": "100644 blob 83db48f84ec878fbfb30b46d16630e944e34f205\tcrlf.txt\n100644 blob 83db48f84ec878fbfb30b46d16630e944e34f205\tlf.txt\n100644 blob 83db48f84ec878fbfb30b46d16630e944e34f205\tmixed.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83db48f84ec878fbfb30b46d16630e944e34f205",
+        "type": "blob",
+        "size": 18,
+        "content": "line1\nline2\nline3\n",
+        "encoding": "utf-8"
+    }
+]

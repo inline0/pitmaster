@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Import GitPython test fixture repos.
+ */
+
+$root = dirname(__DIR__);
+$source = '/tmp/gitpython/test';
+
+if (!is_dir($source)) {
+    fwrite(STDERR, "GitPython fixtures not found.\n");
+    exit(1);
+}
+
+$upstreamDir = $root . '/scenarios/upstream/gitpython';
+$imported = 0;
+
+// Find .git directories in test/
+$gitDirs = [];
+exec("find " . escapeshellarg($source) . " -name '.git' -type d 2>/dev/null", $gitDirs);
+
+foreach ($gitDirs as $gitDir) {
+    $repoDir = dirname($gitDir);
+    $name = basename($repoDir);
+
+    if ($name === 'test' || $name === '.') {
+        continue;
+    }
+
+    // Check it has a HEAD
+    if (!is_file($gitDir . '/HEAD')) {
+        continue;
+    }
+
+    $scenarioDir = $upstreamDir . '/' . $name;
+
+    if (is_dir($scenarioDir)) {
+        continue;
+    }
+
+    mkdir($scenarioDir, 0777, true);
+
+    $realPath = realpath($gitDir);
+    $setup = "#!/bin/bash\nset -e\ngit init .\ncp -r " . escapeshellarg($realPath) . "/* .git/\ngit checkout -- . 2>/dev/null || true\n";
+
+    file_put_contents($scenarioDir . '/setup.sh', $setup);
+    chmod($scenarioDir . '/setup.sh', 0755);
+
+    file_put_contents($scenarioDir . '/scenario.json', json_encode([
+        'name' => 'upstream/gitpython/' . $name,
+        'category' => 'upstream',
+        'description' => "GitPython: {$name}",
+        'operations' => [],
+        'oracle_commands' => [],
+        'expectations' => ['exact_match' => [], 'fsck_clean' => false],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+    $imported++;
+    fwrite(STDOUT, "  OK    {$name}\n");
+}
+
+fwrite(STDOUT, "\nImported {$imported} GitPython fixtures.\n");

@@ -1,0 +1,16 @@
+[
+    {
+        "hash": "8bbde7aacf771a9afb6992434f1ae413e010c6d8",
+        "type": "tag",
+        "size": 630,
+        "content": "object fd608fbe625a2b456d9f15c2b1dc41f252057dd7\ntype blob\ntag spearce-gpg-pub\ntagger Shawn O. Pearce <spearce@spearce.org> 1173733330 -0400\n\nGPG key to sign egit.git archive.\n\nThis blob object contains the GPG public key I use to\nsign tags in the egit.git repository.\n\nTo use it to verify tags I signed do:\n\n  $ git-cat-file blob spearce-gpg-pub | gpg --import\n\nto import it into your keyring, and then:\n\n  $ git-verify-tag $tag_to_be_verified\n-----BEGIN PGP SIGNATURE-----\nVersion: GnuPG v1.4.6 (Darwin)\n\niD8DBQBF9b/XUNGUoZnrPF0RAiHTAJ9eEEP5Cy28ERQoag2EnAC5RmtmUwCbBzcb\nf6sEfg0jt5PoDX58jb/oG/8=\n=UYJj\n-----END PGP SIGNATURE-----\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fd608fbe625a2b456d9f15c2b1dc41f252057dd7",
+        "type": "blob",
+        "size": 1512,
+        "content": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: GnuPG v1.4.6 (Darwin)\n\nmQGiBEXQ8+oRBADV/g8pfqmUtXshSc0p7WoLYutgdCs5KAkBIM0J3ipQkeOd/nBw\nx5rrOm7+MIN6b85E+zsQPDINLQORE9FjkJdftsuSFZBEPE7Yq4yoN4I4/13njsgb\nvqCWclOjF52/k7OSm9UwKf6k6sndlRaKFr5SXkmueeXFn0HuPO1RhEr7awCgylkt\nWiLc7f25C9uLjj6ISGDGXMMD/jOujr/pljbLhPMdKUN2S24Qu8mqHneefZ2PUvar\nX6Lx1IhDvFXc/jIQYdh6KL922OAyhF7va7SSEaI0TY6XF2rCrUukxrsjsb8KetLd\nF4eqKBBExqHuzdFCtrclTQX20qeUz2bPz82lf3ymCM7u4+j7AC0Czng1/gnCSsK/\nQCtEBADNm5Ln1mC/LQioBANNhs07Iy6oXYwLMvjAmKVw5YWJ0EOR1jcjt3GAREiV\nyLooMQgw3+/QIYSqaV1eqb0Ff7jd5xMaeVPEhby1T290GLAl8yEhvabf0aYErSQw\nqgzr8L31H+kN7g7bPv2aLn5+LNahi5IcdggAIb1o6L26+Kvoc7QlU2hhd24gTy4g\nUGVhcmNlIDxzcGVhcmNlQHNwZWFyY2Uub3JnPohgBBMRAgAgBQJF0PPqAhsDBgsJ\nCAcDAgQVAggDBBYCAwECHgECF4AACgkQUNGUoZnrPF0BwQCgrQ2ZbzI7y3h/oY1K\n2Dd9c/T/ySMAnRDb7SljqmvYDtIGHuqIZKVZ2EILuQGNBEXQ8/YQBgCM0uZsJyS+\n55HdjBSjdDLn46VUDELsZOmKQ5VI8BmBe12RlSyrbTiEJ0EIIpvGoo15iZesckiI\nvEzuD5xQ/omZPYpdQ3OqwQKdksi8DH0twkXB7dlDvb6XjqQnSt/JsNupGA5asGe6\ne8oXemXRDQ/cDfbAlUnQTdZb4E67k9pvfPJ+D9rpnMiwqoMTYj+MJimi89iTd1ED\n7IYZwxotnjyh4LYhADG3MBZiGVE1EuVJwgs50drSAuN3G07i63f55msAAwYF/17B\nGwJUsTACVsw8f/o/ykM813GqaQlThmo2T7T7sBTi0yGLDbkK7a1yWO15HzLfVP+x\n3rvzU+RMTmM+vhvaKrdD9E5jC/4cnM6LzKdPjdkEAViOClF8OaVqrpJqlO+TyR4D\nvtvzU6O+gW9luScaXfP17ZheDirm/Q4SS9MRG3HddZbsXE5IyHdJFadstAvS2vpK\nP/kNQcpSHueIoEhof8AaR5NFMP0pLKeulNTI6WUBWpaDA1V3svlpEMQ6WXorFYhJ\nBBgRAgAJBQJF0PP2AhsMAAoJEFDRlKGZ6zxd2uAAnjoklBYV0XDpR5+f9VgYo9GV\noTEsAKCDz8Jzy089Etj5SW9wxpPkf+7SKw==\n=O5U0\n-----END PGP PUBLIC KEY BLOCK-----\n",
+        "encoding": "utf-8"
+    }
+]

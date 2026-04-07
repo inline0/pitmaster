@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "cab58daa0d7225f570c85c2f0ec029f94c622ec3",
+        "tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597752 2026-04-07 23:35:52 +0200",
+        "committer": "Test <test@test.com> 1775597752 2026-04-07 23:35:52 +0200",
+        "message": "empty commit"
+    }
+]

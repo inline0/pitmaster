@@ -1,0 +1,52 @@
+[
+    {
+        "hash": "a7a77734163718b8f8dfd5cb95dc430f8f441df7",
+        "tree": "54c1884b7b985dc0ead45a08e429399455fbdbf1",
+        "parents": [
+            "e8be9b2ebd778b881324a8fd293697a9d557772e"
+        ],
+        "author": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "committer": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "message": "branch a"
+    },
+    {
+        "hash": "296e4d9b12b45182e4fcb76fe9c2765c68c520c1",
+        "tree": "c55e91dfe247a7da0b86f92144c05e318e15463e",
+        "parents": [
+            "e8be9b2ebd778b881324a8fd293697a9d557772e"
+        ],
+        "author": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "committer": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "message": "branch b"
+    },
+    {
+        "hash": "74787109568195d5f98598c811f702cef1974c80",
+        "tree": "d6416870230d5411374b582bec9d5f80d925a38f",
+        "parents": [
+            "e8be9b2ebd778b881324a8fd293697a9d557772e"
+        ],
+        "author": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "committer": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "message": "branch c"
+    },
+    {
+        "hash": "3be91b2c2242174ce6e265686ddab034fded4359",
+        "tree": "626f0303ba89c144181ac00e595e5be7dd980d57",
+        "parents": [
+            "a7a77734163718b8f8dfd5cb95dc430f8f441df7",
+            "296e4d9b12b45182e4fcb76fe9c2765c68c520c1",
+            "74787109568195d5f98598c811f702cef1974c80"
+        ],
+        "author": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "committer": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "message": "octopus merge"
+    },
+    {
+        "hash": "e8be9b2ebd778b881324a8fd293697a9d557772e",
+        "tree": "7bee507cb7f5aa4dce34e6962366eeea27935c74",
+        "parents": [],
+        "author": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "committer": "Test <test@test.com> 1775597898 2026-04-07 23:38:18 +0200",
+        "message": "base"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/detached-head",
+    "category": "upstream",
+    "description": "git test suite: Detached HEAD state (t1501)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}

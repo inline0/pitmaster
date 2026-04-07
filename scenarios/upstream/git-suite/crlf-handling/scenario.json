@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-suite/crlf-handling",
+    "category": "upstream",
+    "description": "git test suite: CRLF line ending handling (t0027)",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": true
+    }
+}
