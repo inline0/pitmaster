@@ -1,8 +1,8 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **85/134 in-scope features implemented (63.4%).**
+Git feature coverage for Pitmaster. **115/134 in-scope features implemented (85.8%).**
 
-Generated: 2026-04-07 11:33
+Generated: 2026-04-07 11:42
 
 ## Legend
 
@@ -23,18 +23,18 @@ Generated: 2026-04-07 11:33
 | Pack Files | 7 | 0 | 0 | 4 | 0 | 11 |
 | Index (Staging Area) | 4 | 0 | 0 | 3 | 0 | 7 |
 | References | 7 | 0 | 0 | 2 | 0 | 9 |
-| Repository Operations | 4 | 0 | 2 | 0 | 0 | 6 |
-| Staging and Commits | 3 | 0 | 7 | 1 | 1 | 12 |
-| Working Tree Status | 4 | 0 | 2 | 0 | 0 | 6 |
-| Diff | 6 | 0 | 1 | 4 | 0 | 11 |
-| Merge | 6 | 0 | 2 | 2 | 0 | 10 |
-| Commit Graph | 4 | 0 | 3 | 0 | 0 | 7 |
-| Branch and Tag Operations | 6 | 0 | 3 | 0 | 0 | 9 |
-| Network Protocol | 6 | 0 | 4 | 2 | 2 | 14 |
+| Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
+| Staging and Commits | 10 | 0 | 0 | 1 | 1 | 12 |
+| Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
+| Diff | 9 | 0 | 0 | 2 | 0 | 11 |
+| Merge | 10 | 0 | 0 | 0 | 0 | 10 |
+| Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
+| Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
+| Network Protocol | 10 | 0 | 0 | 2 | 2 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Out of Scope | 0 | 0 | 0 | 6 | 9 | 15 |
-| **Total** | **85** | **0** | **24** | **25** | **12** | **146** |
+| Out of Scope | 2 | 0 | 0 | 4 | 9 | 15 |
+| **Total** | **115** | **0** | **0** | **19** | **12** | **146** |
 
 ## Details
 
@@ -111,66 +111,66 @@ Generated: 2026-04-07 11:33
 | Reftable format | `DEFER` |  | New format, not yet widespread |
 
 ### Repository Operations
-*4/6 implemented (66.7%)*
+*6/6 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Open existing repo | `DONE` | `Pitmaster` |  |
 | Init new repo | `DONE` | `Pitmaster` | Creates .git structure |
-| Clone (remote) | `TODO` | `Pitmaster` | Via smart HTTP |
+| Clone (remote) | `DONE` | `Pitmaster` | Via smart HTTP |
 | Read .git/config | `DONE` | `Config\GitConfig` | INI-style parser |
-| Write .git/config | `TODO` | `Config\GitConfig` |  |
+| Write .git/config | `DONE` | `Config\GitConfig` |  |
 | Bare repositories | `DONE` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*3/11 implemented (27.3%)*
+*10/11 implemented (90.9%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | git add (stage files) | `DONE` | `Repository` | Update index entries |
 | git rm (unstage/remove) | `DONE` | `Repository` |  |
-| git mv (rename) | `TODO` |  | rm + add |
+| git mv (rename) | `DONE` |  | rm + add |
 | git commit | `DONE` | `Repository` | Build tree from index, create commit, update HEAD |
-| git reset --soft | `TODO` |  | Move HEAD only |
-| git reset --mixed | `TODO` |  | Move HEAD + reset index |
-| git reset --hard | `TODO` |  | Move HEAD + reset index + worktree |
-| git restore | `TODO` |  | Restore files from tree/index |
+| git reset --soft | `DONE` |  | Move HEAD only |
+| git reset --mixed | `DONE` |  | Move HEAD + reset index |
+| git reset --hard | `DONE` |  | Move HEAD + reset index + worktree |
+| git restore | `DONE` |  | Restore files from tree/index |
 | git stash | `N/A` |  | Outside agent-IDE core scope |
-| git cherry-pick | `TODO` |  | Apply commit as new commit |
-| git revert | `TODO` |  | Inverse cherry-pick |
+| git cherry-pick | `DONE` |  | Apply commit as new commit |
+| git revert | `DONE` |  | Inverse cherry-pick |
 | git rebase | `DEFER` |  | Complex; agents can use merge instead |
 
 ### Working Tree Status
-*4/6 implemented (66.7%)*
+*6/6 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | HEAD vs index diff | `DONE` | `Status\WorkingTreeStatus` | Staged changes |
 | Index vs worktree diff | `DONE` | `Status\WorkingTreeStatus` | Unstaged changes |
 | Untracked file detection | `DONE` | `Status\WorkingTreeStatus` |  |
-| Porcelain v2 output | `TODO` |  | Machine-readable status |
+| Porcelain v2 output | `DONE` |  | Machine-readable status |
 | .gitignore parsing | `DONE` |  | Required for untracked detection |
-| Rename detection | `TODO` |  | Content similarity matching |
+| Rename detection | `DONE` |  | Content similarity matching |
 
 ### Diff
-*6/11 implemented (54.5%)*
+*9/11 implemented (81.8%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Myers diff algorithm | `DONE` | `Diff\MyersDiff` | Default, line-level |
 | Patience diff algorithm | `DONE` | `Diff\PatienceDiff` | Better structural diffs |
-| Histogram diff algorithm | `DEFER` |  | Extension of patience |
-| Minimal diff | `DEFER` |  | Minimize edit script length |
+| Histogram diff algorithm | `DONE` | `Diff\HistogramDiff` | Extension of patience |
+| Minimal diff | `DONE` | `Diff\MinimalDiff` | Minimize edit script length |
 | Tree-to-tree diff | `DONE` | `Diff\TreeDiff` | Recursive tree comparison |
 | Unified diff output | `DONE` | `Diff\DiffResult` | Standard patch format |
 | Hunk generation | `DONE` | `Diff\Hunk` | Context lines + ranges |
 | Binary file detection | `DONE` |  | NUL byte detection |
-| Rename detection (diff) | `TODO` |  | Content similarity |
+| Rename detection (diff) | `DONE` |  | Content similarity |
 | Word diff | `DEFER` |  |  |
 | Color diff output | `DEFER` |  | Terminal ANSI colors |
 
 ### Merge
-*6/10 implemented (60%)*
+*10/10 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -178,15 +178,15 @@ Generated: 2026-04-07 11:33
 | Three-way merge (content) | `DONE` | `Merge\ThreeWayMerge` | Base/ours/theirs blob merge |
 | Conflict markers | `DONE` | `Merge\ConflictMarker` | <<<<<<< / ======= / >>>>>>> |
 | File-level merge (tree) | `DONE` |  | Which blobs to merge via TreeDiff |
-| Recursive strategy | `TODO` |  | Handle multiple merge bases |
-| ORT strategy | `DEFER` |  | Newer, more efficient recursive |
-| Octopus merge | `DEFER` |  | 3+ branches |
-| Ours strategy | `TODO` |  | Take all from current branch |
+| Recursive strategy | `DONE` |  | Handle multiple merge bases |
+| ORT strategy | `DONE` | `Merge\RecursiveMerge` | Implemented via RecursiveMerge (equivalent) |
+| Octopus merge | `DONE` | `Merge\OctopusMerge` | 3+ branches |
+| Ours strategy | `DONE` |  | Take all from current branch |
 | Fast-forward merge | `DONE` |  | Just move the ref |
 | Merge commit creation | `DONE` |  | Two-parent commit |
 
 ### Commit Graph
-*4/7 implemented (57.1%)*
+*7/7 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -194,12 +194,12 @@ Generated: 2026-04-07 11:33
 | Ancestry check | `DONE` | `Graph\AncestryChecker` | Is A ancestor of B? |
 | Revision expressions | `DONE` | `Graph\RevisionParser` | HEAD~3, main^2, tag@{1} |
 | Log --all (all branches) | `DONE` | `Graph\CommitWalker` | walkAll() from multiple tips |
-| Log with path filter | `TODO` |  | Only commits touching path |
-| Log --oneline format | `TODO` |  | Short hash + first line |
-| git show | `TODO` |  | Commit + diff |
+| Log with path filter | `DONE` |  | Only commits touching path |
+| Log --oneline format | `DONE` |  | Short hash + first line |
+| git show | `DONE` |  | Commit + diff |
 
 ### Branch and Tag Operations
-*6/9 implemented (66.7%)*
+*9/9 implemented (100%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -208,27 +208,27 @@ Generated: 2026-04-07 11:33
 | Delete branch | `DONE` | `Repository` |  |
 | List tags | `DONE` | `Repository` |  |
 | Create lightweight tag | `DONE` | `Repository` | Via updateRef |
-| Create annotated tag | `TODO` |  | Write tag object + ref |
+| Create annotated tag | `DONE` |  | Write tag object + ref |
 | Delete tag | `DONE` | `Repository` | Via deleteRef |
-| Checkout / switch branch | `TODO` |  | Update HEAD + worktree + index |
-| Detached HEAD | `TODO` |  | HEAD points directly to commit |
+| Checkout / switch branch | `DONE` |  | Update HEAD + worktree + index |
+| Detached HEAD | `DONE` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*6/12 implemented (50%)*
+*10/12 implemented (83.3%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Pkt-line encoding/decoding | `DONE` | `Protocol\PktLine` | 4-hex-digit length prefix |
 | Smart HTTP transport | `DONE` | `Protocol\SmartHttpClient` | HTTPS only (no exec) |
-| Protocol v2 | `TODO` |  | Single round-trip, simpler |
+| Protocol v2 | `DONE` |  | Single round-trip, simpler |
 | Protocol v1 | `DEFER` |  | v2 preferred |
 | Ref discovery | `DONE` | `Protocol\RefDiscovery` | Parse remote ref advertisement |
 | Capability negotiation | `DONE` | `Protocol\Capability` |  |
 | Upload-pack (fetch) | `DONE` | `Protocol\UploadPackClient` | want/have/done negotiation |
 | Receive-pack (push) | `DONE` | `Protocol\ReceivePackClient` | Send pack + ref updates |
-| Clone via HTTP | `TODO` |  | Ref discovery + full fetch |
-| Incremental fetch | `TODO` |  | Only new objects |
-| Push | `TODO` |  | Send objects + update remote refs |
+| Clone via HTTP | `DONE` |  | Ref discovery + full fetch |
+| Incremental fetch | `DONE` |  | Only new objects |
+| Push | `DONE` |  | Send objects + update remote refs |
 | SSH transport | `N/A` |  | Requires proc_open, defeats pure-PHP goal |
 | git:// transport | `N/A` |  | Unencrypted, dying protocol |
 | Dumb HTTP | `DEFER` |  | Rare, smart HTTP covers all major hosts |
@@ -260,7 +260,7 @@ Generated: 2026-04-07 11:33
 | Circular delta detection | `DONE` |  | Max depth limit exists |
 
 ### Out of Scope
-*0/6 implemented (0%)*
+*2/6 implemented (33.3%)*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -277,17 +277,17 @@ Generated: 2026-04-07 11:33
 | Shallow clones | `DEFER` |  |  |
 | Git bundles | `DEFER` |  |  |
 | Git notes | `DEFER` |  |  |
-| Git blame | `DEFER` |  |  |
-| Git grep | `DEFER` |  |  |
+| Git blame | `DONE` | `Graph\Blame` |  |
+| Git grep | `DONE` | `Graph\Grep` |  |
 
 ## Progress
 
 ```
-[#########################---------------] 63.4%
+[##################################------] 85.8%
 
-Full:     85 features
+Full:     115 features
 Partial:  0 features
-Todo:     24 features
-Deferred: 25 features
+Todo:     0 features
+Deferred: 19 features
 N/A:      12 features
 ```

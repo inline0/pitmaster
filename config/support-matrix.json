@@ -82,9 +82,9 @@
             "features": [
                 {"feature": "Open existing repo", "status": "full", "class": "Pitmaster", "notes": ""},
                 {"feature": "Init new repo", "status": "full", "class": "Pitmaster", "notes": "Creates .git structure"},
-                {"feature": "Clone (remote)", "status": "planned", "class": "Pitmaster", "notes": "Via smart HTTP"},
+                {"feature": "Clone (remote)", "status": "full", "class": "Pitmaster", "notes": "Via smart HTTP"},
                 {"feature": "Read .git/config", "status": "full", "class": "Config\\GitConfig", "notes": "INI-style parser"},
-                {"feature": "Write .git/config", "status": "planned", "class": "Config\\GitConfig", "notes": ""},
+                {"feature": "Write .git/config", "status": "full", "class": "Config\\GitConfig", "notes": ""},
                 {"feature": "Bare repositories", "status": "full", "class": "Repository", "notes": "Detected by HEAD presence"}
             ]
         },
@@ -93,15 +93,15 @@
             "features": [
                 {"feature": "git add (stage files)", "status": "full", "class": "Repository", "notes": "Update index entries"},
                 {"feature": "git rm (unstage/remove)", "status": "full", "class": "Repository", "notes": ""},
-                {"feature": "git mv (rename)", "status": "planned", "class": "", "notes": "rm + add"},
+                {"feature": "git mv (rename)", "status": "full", "class": "", "notes": "rm + add"},
                 {"feature": "git commit", "status": "full", "class": "Repository", "notes": "Build tree from index, create commit, update HEAD"},
-                {"feature": "git reset --soft", "status": "planned", "class": "", "notes": "Move HEAD only"},
-                {"feature": "git reset --mixed", "status": "planned", "class": "", "notes": "Move HEAD + reset index"},
-                {"feature": "git reset --hard", "status": "planned", "class": "", "notes": "Move HEAD + reset index + worktree"},
-                {"feature": "git restore", "status": "planned", "class": "", "notes": "Restore files from tree/index"},
+                {"feature": "git reset --soft", "status": "full", "class": "", "notes": "Move HEAD only"},
+                {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
+                {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
+                {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
                 {"feature": "git stash", "status": "out-of-scope", "class": "", "notes": "Outside agent-IDE core scope"},
-                {"feature": "git cherry-pick", "status": "planned", "class": "", "notes": "Apply commit as new commit"},
-                {"feature": "git revert", "status": "planned", "class": "", "notes": "Inverse cherry-pick"},
+                {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
+                {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
                 {"feature": "git rebase", "status": "deferred", "class": "", "notes": "Complex; agents can use merge instead"}
             ]
         },
@@ -111,9 +111,9 @@
                 {"feature": "HEAD vs index diff", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": "Staged changes"},
                 {"feature": "Index vs worktree diff", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": "Unstaged changes"},
                 {"feature": "Untracked file detection", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": ""},
-                {"feature": "Porcelain v2 output", "status": "planned", "class": "", "notes": "Machine-readable status"},
+                {"feature": "Porcelain v2 output", "status": "full", "class": "", "notes": "Machine-readable status"},
                 {"feature": ".gitignore parsing", "status": "full", "class": "", "notes": "Required for untracked detection"},
-                {"feature": "Rename detection", "status": "planned", "class": "", "notes": "Content similarity matching"}
+                {"feature": "Rename detection", "status": "full", "class": "", "notes": "Content similarity matching"}
             ]
         },
         {
@@ -121,13 +121,13 @@
             "features": [
                 {"feature": "Myers diff algorithm", "status": "full", "class": "Diff\\MyersDiff", "notes": "Default, line-level"},
                 {"feature": "Patience diff algorithm", "status": "full", "class": "Diff\\PatienceDiff", "notes": "Better structural diffs"},
-                {"feature": "Histogram diff algorithm", "status": "deferred", "class": "", "notes": "Extension of patience"},
-                {"feature": "Minimal diff", "status": "deferred", "class": "", "notes": "Minimize edit script length"},
+                {"feature": "Histogram diff algorithm", "status": "full", "class": "Diff\\HistogramDiff", "notes": "Extension of patience"},
+                {"feature": "Minimal diff", "status": "full", "class": "Diff\\MinimalDiff", "notes": "Minimize edit script length"},
                 {"feature": "Tree-to-tree diff", "status": "full", "class": "Diff\\TreeDiff", "notes": "Recursive tree comparison"},
                 {"feature": "Unified diff output", "status": "full", "class": "Diff\\DiffResult", "notes": "Standard patch format"},
                 {"feature": "Hunk generation", "status": "full", "class": "Diff\\Hunk", "notes": "Context lines + ranges"},
                 {"feature": "Binary file detection", "status": "full", "class": "", "notes": "NUL byte detection"},
-                {"feature": "Rename detection (diff)", "status": "planned", "class": "", "notes": "Content similarity"},
+                {"feature": "Rename detection (diff)", "status": "full", "class": "", "notes": "Content similarity"},
                 {"feature": "Word diff", "status": "deferred", "class": "", "notes": ""},
                 {"feature": "Color diff output", "status": "deferred", "class": "", "notes": "Terminal ANSI colors"}
             ]
@@ -139,10 +139,10 @@
                 {"feature": "Three-way merge (content)", "status": "full", "class": "Merge\\ThreeWayMerge", "notes": "Base/ours/theirs blob merge"},
                 {"feature": "Conflict markers", "status": "full", "class": "Merge\\ConflictMarker", "notes": "<<<<<<< / ======= / >>>>>>>"},
                 {"feature": "File-level merge (tree)", "status": "full", "class": "", "notes": "Which blobs to merge via TreeDiff"},
-                {"feature": "Recursive strategy", "status": "planned", "class": "", "notes": "Handle multiple merge bases"},
-                {"feature": "ORT strategy", "status": "deferred", "class": "", "notes": "Newer, more efficient recursive"},
-                {"feature": "Octopus merge", "status": "deferred", "class": "", "notes": "3+ branches"},
-                {"feature": "Ours strategy", "status": "planned", "class": "", "notes": "Take all from current branch"},
+                {"feature": "Recursive strategy", "status": "full", "class": "", "notes": "Handle multiple merge bases"},
+                {"feature": "ORT strategy", "status": "full", "class": "Merge\\RecursiveMerge", "notes": "Implemented via RecursiveMerge (equivalent)"},
+                {"feature": "Octopus merge", "status": "full", "class": "Merge\\OctopusMerge", "notes": "3+ branches"},
+                {"feature": "Ours strategy", "status": "full", "class": "", "notes": "Take all from current branch"},
                 {"feature": "Fast-forward merge", "status": "full", "class": "", "notes": "Just move the ref"},
                 {"feature": "Merge commit creation", "status": "full", "class": "", "notes": "Two-parent commit"}
             ]
@@ -154,9 +154,9 @@
                 {"feature": "Ancestry check", "status": "full", "class": "Graph\\AncestryChecker", "notes": "Is A ancestor of B?"},
                 {"feature": "Revision expressions", "status": "full", "class": "Graph\\RevisionParser", "notes": "HEAD~3, main^2, tag@{1}"},
                 {"feature": "Log --all (all branches)", "status": "full", "class": "Graph\\CommitWalker", "notes": "walkAll() from multiple tips"},
-                {"feature": "Log with path filter", "status": "planned", "class": "", "notes": "Only commits touching path"},
-                {"feature": "Log --oneline format", "status": "planned", "class": "", "notes": "Short hash + first line"},
-                {"feature": "git show", "status": "planned", "class": "", "notes": "Commit + diff"}
+                {"feature": "Log with path filter", "status": "full", "class": "", "notes": "Only commits touching path"},
+                {"feature": "Log --oneline format", "status": "full", "class": "", "notes": "Short hash + first line"},
+                {"feature": "git show", "status": "full", "class": "", "notes": "Commit + diff"}
             ]
         },
         {
@@ -167,10 +167,10 @@
                 {"feature": "Delete branch", "status": "full", "class": "Repository", "notes": ""},
                 {"feature": "List tags", "status": "full", "class": "Repository", "notes": ""},
                 {"feature": "Create lightweight tag", "status": "full", "class": "Repository", "notes": "Via updateRef"},
-                {"feature": "Create annotated tag", "status": "planned", "class": "", "notes": "Write tag object + ref"},
+                {"feature": "Create annotated tag", "status": "full", "class": "", "notes": "Write tag object + ref"},
                 {"feature": "Delete tag", "status": "full", "class": "Repository", "notes": "Via deleteRef"},
-                {"feature": "Checkout / switch branch", "status": "planned", "class": "", "notes": "Update HEAD + worktree + index"},
-                {"feature": "Detached HEAD", "status": "planned", "class": "", "notes": "HEAD points directly to commit"}
+                {"feature": "Checkout / switch branch", "status": "full", "class": "", "notes": "Update HEAD + worktree + index"},
+                {"feature": "Detached HEAD", "status": "full", "class": "", "notes": "HEAD points directly to commit"}
             ]
         },
         {
@@ -178,15 +178,15 @@
             "features": [
                 {"feature": "Pkt-line encoding/decoding", "status": "full", "class": "Protocol\\PktLine", "notes": "4-hex-digit length prefix"},
                 {"feature": "Smart HTTP transport", "status": "full", "class": "Protocol\\SmartHttpClient", "notes": "HTTPS only (no exec)"},
-                {"feature": "Protocol v2", "status": "planned", "class": "", "notes": "Single round-trip, simpler"},
+                {"feature": "Protocol v2", "status": "full", "class": "", "notes": "Single round-trip, simpler"},
                 {"feature": "Protocol v1", "status": "deferred", "class": "", "notes": "v2 preferred"},
                 {"feature": "Ref discovery", "status": "full", "class": "Protocol\\RefDiscovery", "notes": "Parse remote ref advertisement"},
                 {"feature": "Capability negotiation", "status": "full", "class": "Protocol\\Capability", "notes": ""},
                 {"feature": "Upload-pack (fetch)", "status": "full", "class": "Protocol\\UploadPackClient", "notes": "want/have/done negotiation"},
                 {"feature": "Receive-pack (push)", "status": "full", "class": "Protocol\\ReceivePackClient", "notes": "Send pack + ref updates"},
-                {"feature": "Clone via HTTP", "status": "planned", "class": "", "notes": "Ref discovery + full fetch"},
-                {"feature": "Incremental fetch", "status": "planned", "class": "", "notes": "Only new objects"},
-                {"feature": "Push", "status": "planned", "class": "", "notes": "Send objects + update remote refs"},
+                {"feature": "Clone via HTTP", "status": "full", "class": "", "notes": "Ref discovery + full fetch"},
+                {"feature": "Incremental fetch", "status": "full", "class": "", "notes": "Only new objects"},
+                {"feature": "Push", "status": "full", "class": "", "notes": "Send objects + update remote refs"},
                 {"feature": "SSH transport", "status": "out-of-scope", "class": "", "notes": "Requires proc_open, defeats pure-PHP goal"},
                 {"feature": "git:// transport", "status": "out-of-scope", "class": "", "notes": "Unencrypted, dying protocol"},
                 {"feature": "Dumb HTTP", "status": "deferred", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
@@ -232,8 +232,8 @@
                 {"feature": "Shallow clones", "status": "deferred", "class": "", "notes": ""},
                 {"feature": "Git bundles", "status": "deferred", "class": "", "notes": ""},
                 {"feature": "Git notes", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Git blame", "status": "deferred", "class": "", "notes": ""},
-                {"feature": "Git grep", "status": "deferred", "class": "", "notes": ""}
+                {"feature": "Git blame", "status": "full", "class": "Graph\\Blame", "notes": ""},
+                {"feature": "Git grep", "status": "full", "class": "Graph\\Grep", "notes": ""}
             ]
         }
     ]

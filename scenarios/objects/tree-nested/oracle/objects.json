@@ -36,16 +36,16 @@
         "content": "source code\n"
     },
     {
-        "hash": "689410d1aeaa0fa3b04c476252095c0bb6c36410",
-        "type": "commit",
-        "size": 191,
-        "content": "tree b45b5a93eabc4a0c62630c05d8db5aaf9c8a36bd\nauthor Test User <test@pitmaster.dev> 1775561648 +0200\ncommitter Test User <test@pitmaster.dev> 1775561648 +0200\n\nAdd nested directory structure\n"
-    },
-    {
         "hash": "b45b5a93eabc4a0c62630c05d8db5aaf9c8a36bd",
         "type": "tree",
         "size": 98,
         "content": "100644 blob 3e5fd7fef477f3fa6ead50e50b359b2e12614f62\tREADME.md\n040000 tree 3d4713eea03d96fc2e56434cc1cf406f99d034b5\tdocs\n040000 tree 1ade0bf4218a6945bc345ad815167ff314818e08\tsrc\n"
+    },
+    {
+        "hash": "d39da7ed0505fbdd0639e6a836a0ad716bd4f7d0",
+        "type": "commit",
+        "size": 191,
+        "content": "tree b45b5a93eabc4a0c62630c05d8db5aaf9c8a36bd\nauthor Test User <test@pitmaster.dev> 1775562168 +0200\ncommitter Test User <test@pitmaster.dev> 1775562168 +0200\n\nAdd nested directory structure\n"
     },
     {
         "hash": "dfcaa10d372d874e1cab9c3ba8d0b683099c3826",

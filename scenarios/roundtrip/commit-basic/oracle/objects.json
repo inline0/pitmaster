@@ -1,15 +1,15 @@
 [
     {
+        "hash": "18571bc80b8bb6bdc6f4b56d56308529706cd685",
+        "type": "commit",
+        "size": 183,
+        "content": "tree 80c2db88bea290e4c2de81b5fa91e4c8ecc17db5\nauthor Test User <test@pitmaster.dev> 1775562170 +0200\ncommitter Test User <test@pitmaster.dev> 1775562170 +0200\n\nInitial commit via git\n"
+    },
+    {
         "hash": "52cbf1e6db2072f582908836269ebccf0ba050af",
         "type": "blob",
         "size": 21,
         "content": "Hello from Pitmaster\n"
-    },
-    {
-        "hash": "716b09f383c560949a1d48d41804fda2603389c4",
-        "type": "commit",
-        "size": 183,
-        "content": "tree 80c2db88bea290e4c2de81b5fa91e4c8ecc17db5\nauthor Test User <test@pitmaster.dev> 1775561651 +0200\ncommitter Test User <test@pitmaster.dev> 1775561651 +0200\n\nInitial commit via git\n"
     },
     {
         "hash": "80c2db88bea290e4c2de81b5fa91e4c8ecc17db5",

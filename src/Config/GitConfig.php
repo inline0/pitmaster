@@ -135,4 +135,64 @@ final class GitConfig
 
         return $result;
     }
+
+    /**
+     * Set a config value.
+     */
+    public function set(string $key, string $value): void
+    {
+        $this->values[$key] = $value;
+    }
+
+    /**
+     * Remove a config value.
+     */
+    public function unset(string $key): void
+    {
+        unset($this->values[$key]);
+    }
+
+    /**
+     * Write config to a file.
+     */
+    public function writeToFile(string $path): void
+    {
+        $sections = [];
+
+        foreach ($this->values as $key => $value) {
+            $parts = explode('.', $key);
+
+            if (count($parts) === 3) {
+                $sectionKey = $parts[0] . '.' . $parts[1];
+                $name = $parts[2];
+            } elseif (count($parts) === 2) {
+                $sectionKey = $parts[0];
+                $name = $parts[1];
+            } else {
+                continue;
+            }
+
+            $sections[$sectionKey][$name] = $value;
+        }
+
+        $lines = [];
+
+        foreach ($sections as $section => $entries) {
+            $dotPos = strpos($section, '.');
+
+            if ($dotPos !== false) {
+                $main = substr($section, 0, $dotPos);
+                $sub = substr($section, $dotPos + 1);
+                $lines[] = "[{$main} \"{$sub}\"]";
+            } else {
+                $lines[] = "[{$section}]";
+            }
+
+            foreach ($entries as $name => $value) {
+                $lines[] = "\t{$name} = {$value}";
+            }
+        }
+
+        file_put_contents($path, implode("\n", $lines) . "\n");
+    }
 }

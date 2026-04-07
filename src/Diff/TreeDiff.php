@@ -86,7 +86,102 @@ final class TreeDiff
             }
         }
 
-        return $results;
+        return $this->detectRenames($results);
+    }
+
+    /**
+     * Detect renames by matching deleted files with added files by content similarity.
+     *
+     * @param array<int, DiffResult> $results
+     * @return array<int, DiffResult>
+     */
+    private function detectRenames(array $results): array
+    {
+        $deleted = [];
+        $added = [];
+        $other = [];
+
+        foreach ($results as $i => $result) {
+            if ($result->oldHash !== null && $result->newHash === null && !$result->binary) {
+                $deleted[$i] = $result;
+            } elseif ($result->oldHash === null && $result->newHash !== null && !$result->binary) {
+                $added[$i] = $result;
+            } else {
+                $other[$i] = $result;
+            }
+        }
+
+        $matched = [];
+
+        foreach ($deleted as $di => $del) {
+            $bestScore = 0;
+            $bestIdx = null;
+
+            foreach ($added as $ai => $add) {
+                if (isset($matched[$ai])) {
+                    continue;
+                }
+
+                // Exact match by hash
+                if ($del->oldHash === $add->newHash) {
+                    $bestScore = 100;
+                    $bestIdx = $ai;
+                    break;
+                }
+
+                // Content similarity (simple: ratio of shared lines)
+                $oldContent = $this->readBlobContent($del->oldHash);
+                $newContent = $this->readBlobContent($add->newHash);
+
+                if ($oldContent !== '' && $newContent !== '') {
+                    $oldLines = explode("\n", $oldContent);
+                    $newLines = explode("\n", $newContent);
+                    $common = count(array_intersect($oldLines, $newLines));
+                    $total = max(count($oldLines), count($newLines));
+                    $score = $total > 0 ? (int) (($common / $total) * 100) : 0;
+
+                    if ($score > $bestScore && $score >= 50) {
+                        $bestScore = $score;
+                        $bestIdx = $ai;
+                    }
+                }
+            }
+
+            if ($bestIdx !== null) {
+                $add = $added[$bestIdx];
+                $oldContent = $this->readBlobContent($del->oldHash);
+                $newContent = $this->readBlobContent($add->newHash);
+                $hunks = MyersDiff::diff($oldContent, $newContent);
+
+                $other[] = new DiffResult(
+                    $del->oldPath,
+                    $add->newPath,
+                    $hunks,
+                    false,
+                    $del->oldHash,
+                    $add->newHash,
+                );
+
+                $matched[$bestIdx] = true;
+                unset($deleted[$di]);
+            }
+        }
+
+        // Add remaining unmatched deletes and adds
+        foreach ($deleted as $del) {
+            $other[] = $del;
+        }
+
+        foreach ($added as $ai => $add) {
+            if (!isset($matched[$ai])) {
+                $other[] = $add;
+            }
+        }
+
+        // Sort by path
+        usort($other, fn (DiffResult $a, DiffResult $b) => strcmp($a->newPath, $b->newPath));
+
+        return $other;
     }
 
     /**

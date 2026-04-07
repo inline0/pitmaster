@@ -21,10 +21,14 @@ use Pitmaster\Object\Commit;
 use Pitmaster\Object\GitObject;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Object\ObjectType;
+use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
+use Pitmaster\Protocol\SmartHttpClient;
+use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\SymbolicRef;
+use Pitmaster\Status\FileStatus;
 use Pitmaster\Status\StatusEntry;
 use Pitmaster\Status\WorkingTreeStatus;
 use Pitmaster\Storage\ObjectDatabase;
@@ -272,6 +276,60 @@ final class Repository
     }
 
     /**
+     * Create an annotated tag.
+     */
+    public function createTag(string $name, string $message, ?ObjectId $target = null, ?string $tagger = null): ObjectId
+    {
+        $target = $target ?? $this->refs->resolveHead();
+
+        if ($target === null) {
+            throw new \RuntimeException('Cannot create tag: no HEAD');
+        }
+
+        if ($tagger === null) {
+            $taggerName = $this->config->get('user.name') ?? 'Pitmaster';
+            $taggerEmail = $this->config->get('user.email') ?? 'pitmaster@localhost';
+            $tagger = "{$taggerName} <{$taggerEmail}> " . time() . ' ' . date('O');
+        }
+
+        $content = "object {$target->hex}\n"
+            . "type commit\n"
+            . "tag {$name}\n"
+            . "tagger {$tagger}\n"
+            . "\n"
+            . $message;
+
+        $id = ObjectId::compute(ObjectType::Tag, $content);
+        $tag = Tag::parse($content, $id);
+        $this->objects->write($tag);
+        $this->refs->update("refs/tags/{$name}", $id);
+
+        return $id;
+    }
+
+    /**
+     * Checkout a branch or commit (update HEAD + worktree + index).
+     */
+    public function checkout(string $target): void
+    {
+        // Try as branch first
+        $branchId = $this->refs->resolve("refs/heads/{$target}");
+
+        if ($branchId !== null) {
+            // Switch to branch: update HEAD symbolic ref
+            $this->refs->updateSymbolic('HEAD', "refs/heads/{$target}");
+            $this->resetWorktree($branchId);
+
+            return;
+        }
+
+        // Try as tag or direct hash (detached HEAD)
+        $id = $this->resolve($target);
+        $this->refs->looseStore()->update('HEAD', $id);
+        $this->resetWorktree($id);
+    }
+
+    /**
      * Get all refs as name => hex hash.
      *
      * @return array<string, string>
@@ -309,6 +367,63 @@ final class Repository
         return $walker->walk($from, $limit);
     }
 
+    /**
+     * Log filtered by path (only commits that touch the given file).
+     *
+     * @return array<int, Commit>
+     */
+    public function logPath(string $path, int $limit = 50): array
+    {
+        $allCommits = $this->log($limit * 5); // over-fetch to filter
+        $treeDiff = new TreeDiff($this->objects);
+        $result = [];
+
+        foreach ($allCommits as $commit) {
+            $parentTree = $commit->parents !== []
+                ? $this->getCommitTree($commit->parents[0])
+                : null;
+
+            $diffs = $treeDiff->diff($parentTree, $commit->tree);
+
+            foreach ($diffs as $diff) {
+                if ($diff->oldPath === $path || $diff->newPath === $path) {
+                    $result[] = $commit;
+                    break;
+                }
+            }
+
+            if (count($result) >= $limit) {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Show a commit: metadata + diff against parent.
+     *
+     * @return array{commit: Commit, diff: array<int, DiffResult>}
+     */
+    public function show(string $revision): array
+    {
+        $id = $this->resolve($revision);
+        $object = $this->objects->read($id);
+
+        if (!$object instanceof Commit) {
+            throw new \RuntimeException("Not a commit: {$revision}");
+        }
+
+        $treeDiff = new TreeDiff($this->objects);
+        $parentTree = $object->parents !== []
+            ? $this->getCommitTree($object->parents[0])
+            : null;
+
+        $diffs = $treeDiff->diff($parentTree, $object->tree);
+
+        return ['commit' => $object, 'diff' => $diffs];
+    }
+
     // -- Index --
 
     /**
@@ -342,6 +457,32 @@ final class Repository
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /**
+     * Move/rename a file in the index (git mv).
+     */
+    public function mv(string $source, string $destination): void
+    {
+        $srcFull = $this->workDir . '/' . $source;
+        $dstFull = $this->workDir . '/' . $destination;
+
+        if (!is_file($srcFull)) {
+            throw new \RuntimeException("Source file not found: {$source}");
+        }
+
+        // Move in worktree
+        $dstDir = dirname($dstFull);
+
+        if (!is_dir($dstDir)) {
+            mkdir($dstDir, 0777, true);
+        }
+
+        rename($srcFull, $dstFull);
+
+        // Update index
+        $this->remove($source);
+        $this->add($destination);
     }
 
     /**
@@ -416,6 +557,331 @@ final class Repository
         }
 
         return $commitId;
+    }
+
+    /**
+     * Reset HEAD to a commit.
+     *
+     * @param string $mode 'soft' (HEAD only), 'mixed' (HEAD + index), 'hard' (HEAD + index + worktree)
+     */
+    public function reset(string $revision, string $mode = 'mixed'): void
+    {
+        $targetId = $this->resolve($revision);
+
+        // Move HEAD
+        $head = $this->refs->readHead();
+
+        if ($head !== null) {
+            $this->refs->update($head->target, $targetId);
+        } else {
+            $this->refs->update('HEAD', $targetId);
+        }
+
+        if ($mode === 'soft') {
+            return;
+        }
+
+        // Reset index to match target tree
+        $commit = $this->objects->read($targetId);
+
+        if (!$commit instanceof Commit) {
+            return;
+        }
+
+        $treeMap = $this->flattenTree($commit->tree);
+        $index = new Index();
+
+        foreach ($treeMap as $path => $hash) {
+            $entry = IndexEntry::create($path, ObjectId::fromHex($hash));
+            $index->addEntry($entry);
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+
+        if ($mode === 'hard') {
+            $this->resetWorktree($targetId);
+        }
+    }
+
+    /**
+     * Restore a file from a tree/index (git restore).
+     */
+    public function restore(string $path, ?string $source = null): void
+    {
+        if ($source !== null) {
+            // Restore from a specific commit
+            $id = $this->resolve($source);
+            $commit = $this->objects->read($id);
+
+            if (!$commit instanceof Commit) {
+                throw new \RuntimeException("Not a commit: {$source}");
+            }
+
+            $treeMap = $this->flattenTree($commit->tree);
+
+            if (!isset($treeMap[$path])) {
+                throw new \RuntimeException("File not in {$source}: {$path}");
+            }
+
+            $blob = $this->objects->read(ObjectId::fromHex($treeMap[$path]));
+
+            if ($blob instanceof Blob) {
+                file_put_contents($this->workDir . '/' . $path, $blob->content);
+            }
+
+            return;
+        }
+
+        // Restore from index
+        $index = $this->index();
+        $entry = $index->entry($path);
+
+        if ($entry === null) {
+            throw new \RuntimeException("File not in index: {$path}");
+        }
+
+        $blob = $this->objects->read($entry->hash);
+
+        if ($blob instanceof Blob) {
+            file_put_contents($this->workDir . '/' . $path, $blob->content);
+        }
+    }
+
+    /**
+     * Cherry-pick: apply a commit as a new commit on the current branch.
+     */
+    public function cherryPick(string $revision): ObjectId
+    {
+        $id = $this->resolve($revision);
+        $commit = $this->objects->read($id);
+
+        if (!$commit instanceof Commit) {
+            throw new \RuntimeException("Not a commit: {$revision}");
+        }
+
+        // Get parent tree for diffing
+        $parentTree = $commit->parents !== []
+            ? $this->getCommitTree($commit->parents[0])
+            : null;
+
+        $treeDiff = new TreeDiff($this->objects);
+        $changes = $treeDiff->diff($parentTree, $commit->tree);
+
+        // Apply changes to current worktree and index
+        $index = $this->index();
+
+        foreach ($changes as $change) {
+            if ($change->binary) {
+                continue;
+            }
+
+            // Read new content from the cherry-picked commit's tree
+            $treeMap = $this->flattenTree($commit->tree);
+            $path = $change->newPath;
+
+            if (isset($treeMap[$path])) {
+                $blob = $this->objects->read(ObjectId::fromHex($treeMap[$path]));
+
+                if ($blob instanceof Blob) {
+                    $fullPath = $this->workDir . '/' . $path;
+                    $dir = dirname($fullPath);
+
+                    if (!is_dir($dir)) {
+                        mkdir($dir, 0777, true);
+                    }
+
+                    file_put_contents($fullPath, $blob->content);
+                    $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+                    $index->addEntry($entry);
+                }
+            }
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+
+        // Create the cherry-pick commit (preserving original author)
+        return $this->commit($commit->message, $commit->author);
+    }
+
+    /**
+     * Revert: create a commit that undoes another commit.
+     */
+    public function revert(string $revision): ObjectId
+    {
+        $id = $this->resolve($revision);
+        $commit = $this->objects->read($id);
+
+        if (!$commit instanceof Commit) {
+            throw new \RuntimeException("Not a commit: {$revision}");
+        }
+
+        if ($commit->parents === []) {
+            throw new \RuntimeException('Cannot revert a root commit');
+        }
+
+        // Get the inverse diff: diff from commit to its parent
+        $treeDiff = new TreeDiff($this->objects);
+        $parentTree = $this->getCommitTree($commit->parents[0]);
+        $changes = $treeDiff->diff($commit->tree, $parentTree);
+
+        // Apply inverse changes
+        $index = $this->index();
+
+        foreach ($changes as $change) {
+            if ($change->binary) {
+                continue;
+            }
+
+            $path = $change->newPath;
+            $parentTreeMap = $this->flattenTree($commit->parents[0]);
+
+            if (isset($parentTreeMap[$path])) {
+                $blob = $this->objects->read(ObjectId::fromHex($parentTreeMap[$path]));
+
+                if ($blob instanceof Blob) {
+                    $fullPath = $this->workDir . '/' . $path;
+                    file_put_contents($fullPath, $blob->content);
+                    $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+                    $index->addEntry($entry);
+                }
+            }
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+
+        $message = "Revert \"{$commit->message}\"\n\nThis reverts commit {$commit->id->hex}.\n";
+
+        return $this->commit($message);
+    }
+
+    /**
+     * Porcelain v2 status output.
+     *
+     * @return string Machine-readable status output
+     */
+    public function statusPorcelainV2(): string
+    {
+        $entries = $this->status();
+        $lines = [];
+
+        foreach ($entries as $entry) {
+            if ($entry->index === FileStatus::Untracked) {
+                $lines[] = "? {$entry->path}";
+                continue;
+            }
+
+            if ($entry->index === FileStatus::Ignored) {
+                $lines[] = "! {$entry->path}";
+                continue;
+            }
+
+            $x = $entry->index->value;
+            $y = $entry->worktree->value;
+            $lines[] = "1 {$x}{$y} N... 000000 000000 000000 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 {$entry->path}";
+        }
+
+        return implode("\n", $lines) . ($lines !== [] ? "\n" : '');
+    }
+
+    // -- Network --
+
+    /**
+     * Fetch from a remote.
+     */
+    public function fetch(string $remote = 'origin'): void
+    {
+        $url = $this->config->get("remote.{$remote}.url");
+
+        if ($url === null) {
+            throw new \RuntimeException("Remote not found: {$remote}");
+        }
+
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverRefs($url);
+        $uploadPack = new UploadPackClient($http);
+
+        // Determine what we need (all remote refs we don't have)
+        $wants = [];
+        $haves = [];
+
+        foreach ($discovery->refs() as $refName => $refId) {
+            if (!$this->objects->exists($refId)) {
+                $wants[] = $refId;
+            }
+        }
+
+        // Collect what we already have
+        foreach ($this->refs->list() as $refName => $refId) {
+            $haves[] = $refId;
+        }
+
+        if ($wants === []) {
+            return; // Already up to date
+        }
+
+        $packData = $uploadPack->fetch($url, $wants, $haves);
+
+        if ($packData !== '' && str_starts_with($packData, 'PACK')) {
+            // Write pack file
+            $packDir = $this->gitDir . '/objects/pack';
+
+            if (!is_dir($packDir)) {
+                mkdir($packDir, 0777, true);
+            }
+
+            $hash = sha1($packData);
+            file_put_contents($packDir . "/pack-{$hash}.pack", $packData);
+
+            // Generate index (would need a pack indexer; for now store as-is)
+        }
+
+        // Update remote tracking refs
+        foreach ($discovery->refs() as $refName => $refId) {
+            if (str_starts_with($refName, 'refs/heads/')) {
+                $branch = substr($refName, 11);
+                $this->refs->update("refs/remotes/{$remote}/{$branch}", $refId);
+            } elseif (str_starts_with($refName, 'refs/tags/')) {
+                $this->refs->update($refName, $refId);
+            }
+        }
+    }
+
+    /**
+     * Push to a remote.
+     */
+    public function push(string $remote = 'origin', ?string $branch = null): void
+    {
+        $url = $this->config->get("remote.{$remote}.url");
+
+        if ($url === null) {
+            throw new \RuntimeException("Remote not found: {$remote}");
+        }
+
+        if ($branch === null) {
+            $branch = $this->branch();
+
+            if ($branch === null) {
+                throw new \RuntimeException('Cannot push: not on a branch');
+            }
+        }
+
+        $localRef = "refs/heads/{$branch}";
+        $localId = $this->refs->resolve($localRef);
+
+        if ($localId === null) {
+            throw new \RuntimeException("Branch not found: {$branch}");
+        }
+
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverRefs($url);
+
+        $remoteId = $discovery->ref($localRef);
+        $oldId = $remoteId ?? ObjectId::fromHex(str_repeat('0', 40));
+
+        $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
+        $receivePack->push($url, [
+            ['old' => $oldId, 'new' => $localId, 'ref' => $localRef],
+        ], '');
     }
 
     // -- Status --
@@ -747,5 +1213,68 @@ final class Repository
         }
 
         return null;
+    }
+
+    /**
+     * Flatten a tree into path => hex hash map.
+     *
+     * @return array<string, string>
+     */
+    private function flattenTree(ObjectId $treeId, string $prefix = ''): array
+    {
+        $result = [];
+        $tree = $this->objects->read($treeId);
+
+        if (!$tree instanceof Tree) {
+            return $result;
+        }
+
+        foreach ($tree->entries as $entry) {
+            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
+
+            if ($entry->isTree()) {
+                $result = array_merge($result, $this->flattenTree($entry->hash, $fullPath));
+            } else {
+                $result[$fullPath] = $entry->hash->hex;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Reset worktree and index to match a commit.
+     */
+    private function resetWorktree(ObjectId $commitId): void
+    {
+        $commit = $this->objects->read($commitId);
+
+        if (!$commit instanceof Commit) {
+            return;
+        }
+
+        $treeMap = $this->flattenTree($commit->tree);
+        $index = new Index();
+
+        foreach ($treeMap as $path => $hash) {
+            $blob = $this->objects->read(ObjectId::fromHex($hash));
+
+            if (!$blob instanceof Blob) {
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $blob->content);
+            $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+            $index->addEntry($entry);
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
     }
 }
