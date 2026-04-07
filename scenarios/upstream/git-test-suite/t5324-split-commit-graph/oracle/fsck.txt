@@ -1,0 +1,3 @@
+error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects
+dangling tree 00c583e5f76b8c5b48daa0069cf166d8e738b8ee
+error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects

@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "error:",
+        "type": "unable",
+        "size": 0,
+        "content": "fatal: invalid object name 'error'.\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "00c583e5f76b8c5b48daa0069cf166d8e738b8ee",
+        "type": "tree",
+        "size": 30,
+        "content": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects\n100644 blob 8b137891791fe96927ad78e64b0aad7bded08bdc\t.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "580b2c9b55e93f7d20b8424c64f4a9432404eb01",
+        "type": "tree",
+        "size": 70,
+        "content": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects\n100644 blob 8b137891791fe96927ad78e64b0aad7bded08bdc\t.t\n100644 blob a009f0f055da4f82d4f41c380d102795196b93f6\tnew-commit.t\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+        "type": "blob",
+        "size": 1,
+        "content": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects\n\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a009f0f055da4f82d4f41c380d102795196b93f6",
+        "type": "blob",
+        "size": 11,
+        "content": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects\nnew-commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b7bee05dadc004008c4263c05ae6d54026560e16",
+        "type": "commit",
+        "size": 151,
+        "content": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects\ntree 580b2c9b55e93f7d20b8424c64f4a9432404eb01\nauthor Test <test@test.com> 1112912173 -0700\ncommitter Test <test@test.com> 1112912173 -0700\n\nnew-commit\n",
+        "encoding": "utf-8"
+    }
+]

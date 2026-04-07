@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5330-no-lazy-fetch-with-commit-graph",
+    "category": "upstream",
+    "description": "git t/: t5330-no-lazy-fetch-with-commit-graph",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

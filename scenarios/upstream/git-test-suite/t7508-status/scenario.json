@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7508-status",
+    "category": "upstream",
+    "description": "git t/: t7508-status",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

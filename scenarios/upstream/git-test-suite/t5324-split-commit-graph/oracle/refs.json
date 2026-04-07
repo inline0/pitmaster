@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "b7bee05dadc004008c4263c05ae6d54026560e16",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "b7bee05dadc004008c4263c05ae6d54026560e16",
+        "name": "refs/tags/new-commit"
+    }
+]

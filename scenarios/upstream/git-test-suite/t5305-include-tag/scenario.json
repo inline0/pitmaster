@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5305-include-tag",
+    "category": "upstream",
+    "description": "git t/: t5305-include-tag",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

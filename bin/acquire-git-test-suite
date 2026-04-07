@@ -33,10 +33,9 @@ $skipped = 0;
 $failed = 0;
 $existing = 0;
 
-// Infrastructure we can't provide
-$skipWords = ['httpd', 'daemon', 'git-svn', 'git-p4', 'cvs', 'gitweb',
-    'credential', 'terminal', 'lib-perl', 'lib-pager', 'gettext', 'lib-sudo',
-    'test_set_port', 'start_httpd', 'GIT_VALGRIND', 'test_external'];
+// Skip only scripts that truly need external infrastructure
+$skipWords = ['lib-httpd', 'start_httpd', 'git-svn', 'git-p4', 'lib-cvs',
+    'lib-gitweb', 'GIT_VALGRIND', 'test_external', 'lib-git-daemon'];
 
 foreach ($scripts as $scriptPath) {
     $basename = basename($scriptPath, '.sh');
@@ -67,38 +66,47 @@ foreach ($scripts as $scriptPath) {
         continue;
     }
 
-    // Extract only the first few test bodies (setup + first real test)
+    // Extract test bodies, scanning until we find commits
     $bodies = extractTestBodies($content);
     $commands = [];
-    $bodiesUsed = 0;
+    $hasCommit = false;
 
-    foreach ($bodies as $body) {
+    // First pass: find the first body that contains a commit
+    $firstCommitBody = -1;
+
+    foreach ($bodies as $i => $body) {
+        if (str_contains($body, 'commit') || str_contains($body, 'test_commit')
+            || str_contains($body, 'test_merge')
+        ) {
+            $firstCommitBody = $i;
+            break;
+        }
+    }
+
+    // Extract commands from bodies up to and including the first few with commits
+    $commitBodiesFound = 0;
+    $maxBodies = min(count($bodies), max($firstCommitBody + 5, 15));
+
+    for ($bi = 0; $bi < $maxBodies; $bi++) {
+        $body = $bodies[$bi];
+
         foreach (explode("\n", $body) as $line) {
             $cmd = filterCommand(trim($line));
 
             if ($cmd !== null) {
                 $commands[] = $cmd;
+
+                if (str_contains($cmd, 'commit') || str_contains($cmd, 'test_commit')
+                    || str_contains($cmd, 'test_merge')
+                ) {
+                    $hasCommit = true;
+                    $commitBodiesFound++;
+                }
             }
         }
 
-        $bodiesUsed++;
-
-        // Stop after enough bodies to create a repo with interesting state
-        // Usually the first 1-3 bodies set up the repo
-        $hasCommit = false;
-
-        foreach ($commands as $c) {
-            if (str_contains($c, 'commit') || str_contains($c, 'test_commit') || str_contains($c, 'test_merge')) {
-                $hasCommit = true;
-                break;
-            }
-        }
-
-        if ($hasCommit && $bodiesUsed >= 3) {
-            break;
-        }
-
-        if ($bodiesUsed >= 5) {
+        // Stop after we've captured enough commit-creating bodies
+        if ($hasCommit && $commitBodiesFound >= 3 && $bi > $firstCommitBody + 2) {
             break;
         }
     }
@@ -135,13 +143,44 @@ foreach ($scripts as $scriptPath) {
     mkdir($tmpDir, 0777, true);
     file_put_contents($tmpDir . '/setup.sh', $setup);
 
-    // Run setup and check validity (no timeout on macOS; use perl alarm)
-    $result = shell_exec(sprintf(
-        'cd %s && perl -e "alarm 15; exec @ARGV" bash setup.sh >/dev/null 2>&1; git rev-parse HEAD 2>/dev/null',
+    // Run setup
+    shell_exec(sprintf(
+        'cd %s && perl -e "alarm 20; exec @ARGV" bash setup.sh >/dev/null 2>&1',
         escapeshellarg($tmpDir),
     ));
 
-    $valid = ($result !== null && strlen(trim($result)) === 40);
+    // Check for valid repo — root first, then subdirs
+    $valid = false;
+    $result = shell_exec(sprintf('cd %s && git rev-parse HEAD 2>/dev/null', escapeshellarg($tmpDir)));
+
+    if ($result !== null && strlen(trim($result)) === 40) {
+        $valid = true;
+    } else {
+        foreach (@scandir($tmpDir) ?: [] as $sub) {
+            if ($sub === '.' || $sub === '..' || !is_dir($tmpDir . '/' . $sub)) {
+                continue;
+            }
+
+            $subResult = shell_exec(sprintf(
+                'cd %s && git rev-parse HEAD 2>/dev/null',
+                escapeshellarg($tmpDir . '/' . $sub),
+            ));
+
+            if ($subResult !== null && strlen(trim($subResult)) === 40) {
+                // Move subdir repo to root for oracle capture
+                shell_exec(sprintf(
+                    'rm -rf %s/.git && cp -r %s/%s/.git %s/.git 2>/dev/null',
+                    escapeshellarg($tmpDir),
+                    escapeshellarg($tmpDir),
+                    escapeshellarg($sub),
+                    escapeshellarg($tmpDir),
+                ));
+                $valid = true;
+                break;
+            }
+        }
+    }
+
     exec('rm -rf ' . escapeshellarg($tmpDir));
 
     if (!$valid) {
@@ -260,6 +299,31 @@ function filterCommand(string $line): ?string
 
     // Variable assignments that might be needed
     if (preg_match('/^[A-Z_]+=\$\(git /', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // cd commands (needed for tests that work in subdirs)
+    if (preg_match('/^cd\s/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // Subshell openers/closers
+    if ($line === '(' || $line === ')') {
+        return $line;
+    }
+
+    // chmod for executable files
+    if (preg_match('/^chmod\b/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // rm for cleanup
+    if (preg_match('/^rm\s/', $line)) {
+        return $line . ' 2>/dev/null || true';
+    }
+
+    // sed for file modification
+    if (preg_match('/^sed\b/', $line)) {
         return $line . ' 2>/dev/null || true';
     }
 

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5400-send-pack",
+    "category": "upstream",
+    "description": "git t/: t5400-send-pack",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

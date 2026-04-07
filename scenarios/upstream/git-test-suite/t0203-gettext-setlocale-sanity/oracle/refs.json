@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "d8f5fc366b83edb1201b97d50207b449e81bab3d",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "c8707f926acfbc7db1b4bf18d562d511c84313d0",
+        "name": "refs/tags/iso-c-commit"
+    },
+    {
+        "hash": "d8f5fc366b83edb1201b97d50207b449e81bab3d",
+        "name": "refs/tags/iso-utf8-commit"
+    }
+]

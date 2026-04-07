@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5572-pull-submodule",
+    "category": "upstream",
+    "description": "git t/: t5572-pull-submodule",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

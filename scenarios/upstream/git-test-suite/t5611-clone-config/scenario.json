@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5611-clone-config",
+    "category": "upstream",
+    "description": "git t/: t5611-clone-config",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,66 @@
+[
+    {
+        "hash": "0cfe8e9f03f810bea6f82155e8f4997b031984f0",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "1ac2f0afdc41c6ef61e072d4cab1eafddd5e1f8f",
+        "name": "refs/tags/MM-o"
+    },
+    {
+        "hash": "dd977a9cf1af5e459aba6cf354c7727d898bac9c",
+        "name": "refs/tags/MM-p"
+    },
+    {
+        "hash": "e3c74eeb81bb3273f36d4e1c5ccca93d459cf5b9",
+        "name": "refs/tags/MM-q"
+    },
+    {
+        "hash": "6420a330ae97a284cda2ad8bdf167d57be31bdf5",
+        "name": "refs/tags/MM-r"
+    },
+    {
+        "hash": "17d817090a334e19db3f123c5f626d86836cf323",
+        "name": "refs/tags/MM-s"
+    },
+    {
+        "hash": "1ac11d1f3b9c222c531737da9ae4d7e648596201",
+        "name": "refs/tags/MM-t"
+    },
+    {
+        "hash": "4b0075c50d70ae44c96b144cde4cab05ba374869",
+        "name": "refs/tags/MM-u"
+    },
+    {
+        "hash": "a72e5d37449ae1acf4b4c89d0f79187886bc768d",
+        "name": "refs/tags/MM-v"
+    },
+    {
+        "hash": "37bc1c8100554b4cdb77eef1fd9301b2a9cd5300",
+        "name": "refs/tags/MM-w"
+    },
+    {
+        "hash": "049287c4f14665b23d03a7003655830b1bd9cd85",
+        "name": "refs/tags/MM-x"
+    },
+    {
+        "hash": "66612fb6b21b85f761fb59ece6486912cf4f2b46",
+        "name": "refs/tags/MM1"
+    },
+    {
+        "hash": "0cfe8e9f03f810bea6f82155e8f4997b031984f0",
+        "name": "refs/tags/MMA"
+    },
+    {
+        "hash": "adec04363d40b9f2f9ceb14a2553a5a605f2eb74",
+        "name": "refs/tags/MMB"
+    },
+    {
+        "hash": "fabf610f653ac741f80a837b3da7a13c593bfe19",
+        "name": "refs/tags/MMC"
+    },
+    {
+        "hash": "371ae81cda7c2177c183d6d272b61f4c95508f35",
+        "name": "refs/tags/MMR"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5554-noop-fetch-negotiator",
+    "category": "upstream",
+    "description": "git t/: t5554-noop-fetch-negotiator",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

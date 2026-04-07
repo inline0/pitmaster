@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4035-diff-quiet",
+    "category": "upstream",
+    "description": "git t/: t4035-diff-quiet",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

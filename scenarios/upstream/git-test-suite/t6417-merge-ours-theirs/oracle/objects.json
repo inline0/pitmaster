@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "00d387369ce02bc635e2963d3a248b80bc4449e5",
+        "type": "commit",
+        "size": 213,
+        "content": "tree c225ec4c762a584c37cd1b6e674f3260fb9ec573\nparent c0818df6d5c66cce4980e45566e99e0cc5b0b160\nauthor Test <test@test.com> 1775601640 +0200\ncommitter Test <test@test.com> 1775601640 +0200\n\nadd link pointing to one\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "249315fd0b3e3c96523b3f412694598f9ff6b829",
+        "type": "blob",
+        "size": 10,
+        "content": "target-two",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4c3a9d87bf04ed50b48c4e9f1a796b816f6461e4",
+        "type": "blob",
+        "size": 10,
+        "content": "target-one",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "63d42425da37e1ed037ab094103086d8d89d89e7",
+        "type": "tree",
+        "size": 32,
+        "content": "120000 blob ce2225b25df68dc85e026f18d814ab80db813c02\tlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "65fdff0318e1c9b5d327712c8ec393b7a1decf30",
+        "type": "commit",
+        "size": 213,
+        "content": "tree dafad77ac5bae13704483961563aec5692762972\nparent c0818df6d5c66cce4980e45566e99e0cc5b0b160\nauthor Test <test@test.com> 1775601640 +0200\ncommitter Test <test@test.com> 1775601640 +0200\n\nadd link pointing to two\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c0818df6d5c66cce4980e45566e99e0cc5b0b160",
+        "type": "commit",
+        "size": 166,
+        "content": "tree 63d42425da37e1ed037ab094103086d8d89d89e7\nauthor Test <test@test.com> 1775601640 +0200\ncommitter Test <test@test.com> 1775601640 +0200\n\nadd link pointing to zero\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c225ec4c762a584c37cd1b6e674f3260fb9ec573",
+        "type": "tree",
+        "size": 32,
+        "content": "120000 blob 4c3a9d87bf04ed50b48c4e9f1a796b816f6461e4\tlink\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce2225b25df68dc85e026f18d814ab80db813c02",
+        "type": "blob",
+        "size": 11,
+        "content": "target-zero",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "dafad77ac5bae13704483961563aec5692762972",
+        "type": "tree",
+        "size": 32,
+        "content": "120000 blob 249315fd0b3e3c96523b3f412694598f9ff6b829\tlink\n",
+        "encoding": "utf-8"
+    }
+]

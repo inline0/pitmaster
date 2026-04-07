@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "01f9a2aac3e315c5caa00db4019f1d934171dba0",
+        "type": "blob",
+        "size": 7,
+        "content": "commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "407edfa563d89f73bef73b961c6a84af5b69a59e",
+        "type": "tag",
+        "size": 122,
+        "content": "object 8e35846d01583f8dd4e9990f725cc27095298823\ntype commit\ntag inner\ntagger Test <test@test.com> 1112911993 -0700\n\ninner\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8e35846d01583f8dd4e9990f725cc27095298823",
+        "type": "commit",
+        "size": 147,
+        "content": "tree ee640d8ab21d066f2cad8a5516de7ab7e5c68de7\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\ncommit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8ed46d008bc1b400b43fae9a7c69a06e06f1f31a",
+        "type": "tag",
+        "size": 119,
+        "content": "object 407edfa563d89f73bef73b961c6a84af5b69a59e\ntype tag\ntag outer\ntagger Test <test@test.com> 1112911993 -0700\n\nouter\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee640d8ab21d066f2cad8a5516de7ab7e5c68de7",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 01f9a2aac3e315c5caa00db4019f1d934171dba0\tcommit.t\n",
+        "encoding": "utf-8"
+    }
+]

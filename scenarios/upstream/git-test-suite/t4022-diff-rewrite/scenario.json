@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4022-diff-rewrite",
+    "category": "upstream",
+    "description": "git t/: t4022-diff-rewrite",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

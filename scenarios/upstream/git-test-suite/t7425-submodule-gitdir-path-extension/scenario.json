@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7425-submodule-gitdir-path-extension",
+    "category": "upstream",
+    "description": "git t/: t7425-submodule-gitdir-path-extension",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

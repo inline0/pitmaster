@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1460-refs-migrate",
+    "category": "upstream",
+    "description": "git t/: t1460-refs-migrate",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0009-git-dir-validation",
+    "category": "upstream",
+    "description": "git t/: t0009-git-dir-validation",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

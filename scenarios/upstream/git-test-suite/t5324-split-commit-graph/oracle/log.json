@@ -1,0 +1,12 @@
+[
+    {
+        "hash": "error: unable to normalize alternate object path: /var/folders/md/dsf21xb519973cm3z500mjp00000gp/T/pitmaster-scenario-6c5c017ba3cee2e0/../.git/objects",
+        "tree": "b7bee05dadc004008c4263c05ae6d54026560e16",
+        "parents": [
+            "580b2c9b55e93f7d20b8424c64f4a9432404eb01"
+        ],
+        "author": "",
+        "committer": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700",
+        "message": "Test <test@test.com> 1112912173 2005-04-07 15:16:13 -0700\nnew-commit"
+    }
+]

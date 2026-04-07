@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4065-diff-anchored",
+    "category": "upstream",
+    "description": "git t/: t4065-diff-anchored",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

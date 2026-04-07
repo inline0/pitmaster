@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t0203-gettext-setlocale-sanity",
+    "category": "upstream",
+    "description": "git t/: t0203-gettext-setlocale-sanity",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3415-rebase-autosquash",
+    "category": "upstream",
+    "description": "git t/: t3415-rebase-autosquash",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

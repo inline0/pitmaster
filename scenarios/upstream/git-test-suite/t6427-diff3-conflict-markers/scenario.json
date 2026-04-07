@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6427-diff3-conflict-markers",
+    "category": "upstream",
+    "description": "git t/: t6427-diff3-conflict-markers",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

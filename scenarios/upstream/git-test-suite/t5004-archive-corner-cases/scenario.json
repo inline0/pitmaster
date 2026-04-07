@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5004-archive-corner-cases",
+    "category": "upstream",
+    "description": "git t/: t5004-archive-corner-cases",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

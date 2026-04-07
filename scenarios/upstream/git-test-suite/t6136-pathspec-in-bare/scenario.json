@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6136-pathspec-in-bare",
+    "category": "upstream",
+    "description": "git t/: t6136-pathspec-in-bare",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3203-branch-output",
+    "category": "upstream",
+    "description": "git t/: t3203-branch-output",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4108-apply-threeway",
+    "category": "upstream",
+    "description": "git t/: t4108-apply-threeway",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

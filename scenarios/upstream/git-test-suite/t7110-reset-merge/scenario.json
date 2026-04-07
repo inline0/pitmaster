@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7110-reset-merge",
+    "category": "upstream",
+    "description": "git t/: t7110-reset-merge",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

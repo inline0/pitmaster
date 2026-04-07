@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "60e8bb7d82f740774d06565d4c85311b2ad8469d",
+        "type": "blob",
+        "size": 13,
+        "content": "iso-c-commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9c873f7caef428175a31caa26ebb227aa6ef0a64",
+        "type": "tree",
+        "size": 81,
+        "content": "100644 blob 60e8bb7d82f740774d06565d4c85311b2ad8469d\tiso-under-c\n100644 blob d3793ca92822cb6c88210a25d324e56b9ed40664\tiso-under-utf8\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c8707f926acfbc7db1b4bf18d562d511c84313d0",
+        "type": "commit",
+        "size": 153,
+        "content": "tree cee48cb170f7098a7d748e42d50d723be4c9616c\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\niso-c-commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cee48cb170f7098a7d748e42d50d723be4c9616c",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 60e8bb7d82f740774d06565d4c85311b2ad8469d\tiso-under-c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d3793ca92822cb6c88210a25d324e56b9ed40664",
+        "type": "blob",
+        "size": 16,
+        "content": "iso-utf8-commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d8f5fc366b83edb1201b97d50207b449e81bab3d",
+        "type": "commit",
+        "size": 204,
+        "content": "tree 9c873f7caef428175a31caa26ebb227aa6ef0a64\nparent c8707f926acfbc7db1b4bf18d562d511c84313d0\nauthor Test <test@test.com> 1112912053 -0700\ncommitter Test <test@test.com> 1112912053 -0700\n\niso-utf8-commit\n",
+        "encoding": "utf-8"
+    }
+]

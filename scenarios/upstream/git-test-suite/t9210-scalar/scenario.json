@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9210-scalar",
+    "category": "upstream",
+    "description": "git t/: t9210-scalar",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

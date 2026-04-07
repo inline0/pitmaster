@@ -1,0 +1,16 @@
+[
+    {
+        "hash": "3594aa8ecbde487254f0b5964a4063141e804e4c",
+        "type": "commit",
+        "size": 144,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@test.com> 1775601569 +0200\ncommitter Test <test@test.com> 1775601569 +0200\n\nfoo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "1dd8f49f69cb703025f239739d3f8f14a5326540",
+        "type": "blob",
+        "size": 30,
+        "content": "TILRAUN: Halló Heimur [abc]!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5a95f12d5cacff01d61aaf37e9ec464cca1f753b",
+        "type": "blob",
+        "size": 26,
+        "content": "TILRAUN: Hallóó Heimur!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d67ccaa280abce209018df2269091e95341e87ad",
+        "type": "blob",
+        "size": 24,
+        "content": "TILRAUN: Halló Heimur!\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eb3d85d3e76151e71c54f55e3b47f5f49dcefd89",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob d67ccaa280abce209018df2269091e95341e87ad\tfile\n100644 blob 5a95f12d5cacff01d61aaf37e9ec464cca1f753b\tfile2\n100644 blob 1dd8f49f69cb703025f239739d3f8f14a5326540\tfile3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fc7b3a0314fd1bc868aa3b566e672f9b8b6964b0",
+        "type": "commit",
+        "size": 146,
+        "content": "tree eb3d85d3e76151e71c54f55e3b47f5f49dcefd89\nauthor Test <test@test.com> 1775601650 +0200\ncommitter Test <test@test.com> 1775601650 +0200\n\nfirst\n",
+        "encoding": "utf-8"
+    }
+]

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5300-pack-object",
+    "category": "upstream",
+    "description": "git t/: t5300-pack-object",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

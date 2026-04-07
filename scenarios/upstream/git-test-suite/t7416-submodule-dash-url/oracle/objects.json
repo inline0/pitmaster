@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76ae75e247f89ca2520fdd6ba454e0da6b27bd96",
+        "type": "blob",
+        "size": 64,
+        "content": "[submodule \"testmodule\"]\n\tpath = testmodule\n\turl = ./testmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c51d0042cdcd9352b4a0b095c96b24e9b72c0faf",
+        "type": "commit",
+        "size": 155,
+        "content": "tree eb9304ec22355a2ec0e52f1fb29d8443aaf573d2\nauthor Test <test@test.com> 1112911993 -0700\ncommitter Test <test@test.com> 1112911993 -0700\n\nAdd testmodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "eb9304ec22355a2ec0e52f1fb29d8443aaf573d2",
+        "type": "tree",
+        "size": 77,
+        "content": "100644 blob 76ae75e247f89ca2520fdd6ba454e0da6b27bd96\t.gitmodules\n160000 commit 71a8f64a353f157ac2ccdc8ef2d14d8150a3811c\ttestmodule\n",
+        "encoding": "utf-8"
+    }
+]

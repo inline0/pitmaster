@@ -1,0 +1,34 @@
+[
+    {
+        "hash": "59b3d331e48cbc1c2ce3bda378a4f71ba7662af4",
+        "name": "refs/heads/dup-orig"
+    },
+    {
+        "hash": "99353e688691b1b4fa2a8f0aca00673fab2e1927",
+        "name": "refs/heads/dup-side"
+    },
+    {
+        "hash": "66efba6c125cd8fb594e86c9ff140213f2937317",
+        "name": "refs/heads/independent"
+    },
+    {
+        "hash": "1cacfc9d3f79604679af12ac1e32fdf05cec0a20",
+        "name": "refs/heads/mainline"
+    },
+    {
+        "hash": "442ae0af79dede34b77f9de1a519dac19408bdbd",
+        "name": "refs/heads/shy-diff"
+    },
+    {
+        "hash": "ebdd24ebdbe45c955967ae75817a3a533f6ff9c6",
+        "name": "refs/tags/dont-look-at-me"
+    },
+    {
+        "hash": "2602217f7b30b325343d0021e59c6bbe0808de31",
+        "name": "refs/tags/dup-base"
+    },
+    {
+        "hash": "1cacfc9d3f79604679af12ac1e32fdf05cec0a20",
+        "name": "refs/tags/to-cherry-pick"
+    }
+]

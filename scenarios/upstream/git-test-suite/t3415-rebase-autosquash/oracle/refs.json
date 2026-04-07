@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "151012bdd06bdaabab2478fea277f56069322de4",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "151012bdd06bdaabab2478fea277f56069322de4",
+        "name": "refs/tags/final-multisquash"
+    },
+    {
+        "hash": "151012bdd06bdaabab2478fea277f56069322de4",
+        "name": "refs/tags/final-presquash"
+    },
+    {
+        "hash": "151012bdd06bdaabab2478fea277f56069322de4",
+        "name": "refs/tags/final-shasquash"
+    }
+]

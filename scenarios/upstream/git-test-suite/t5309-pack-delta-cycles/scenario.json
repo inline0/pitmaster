@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5309-pack-delta-cycles",
+    "category": "upstream",
+    "description": "git t/: t5309-pack-delta-cycles",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3705-add-sparse-checkout",
+    "category": "upstream",
+    "description": "git t/: t3705-add-sparse-checkout",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

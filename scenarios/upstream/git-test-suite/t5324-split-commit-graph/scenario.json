@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5324-split-commit-graph",
+    "category": "upstream",
+    "description": "git t/: t5324-split-commit-graph",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

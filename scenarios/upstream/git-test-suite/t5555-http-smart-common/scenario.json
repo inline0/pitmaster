@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5555-http-smart-common",
+    "category": "upstream",
+    "description": "git t/: t5555-http-smart-common",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

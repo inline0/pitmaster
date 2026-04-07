@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7811-grep-open",
+    "category": "upstream",
+    "description": "git t/: t7811-grep-open",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

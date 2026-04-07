@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7700-repack",
+    "category": "upstream",
+    "description": "git t/: t7700-repack",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

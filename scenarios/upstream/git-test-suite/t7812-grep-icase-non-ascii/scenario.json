@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7812-grep-icase-non-ascii",
+    "category": "upstream",
+    "description": "git t/: t7812-grep-icase-non-ascii",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

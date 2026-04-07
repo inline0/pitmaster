@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t4067-diff-partial-clone",
+    "category": "upstream",
+    "description": "git t/: t4067-diff-partial-clone",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

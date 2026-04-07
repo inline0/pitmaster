@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7416-submodule-dash-url",
+    "category": "upstream",
+    "description": "git t/: t7416-submodule-dash-url",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

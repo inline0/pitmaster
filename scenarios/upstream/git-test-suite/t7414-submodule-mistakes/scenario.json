@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7414-submodule-mistakes",
+    "category": "upstream",
+    "description": "git t/: t7414-submodule-mistakes",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

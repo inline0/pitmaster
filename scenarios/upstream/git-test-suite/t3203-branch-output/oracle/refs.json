@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "0e41460acf2cef322a55436eb2de7abbe87608da",
+        "name": "refs/heads/branch-one"
+    },
+    {
+        "hash": "68f677517e5dbb61d9db3715435c482215f8fb47",
+        "name": "refs/heads/branch-two"
+    },
+    {
+        "hash": "0e41460acf2cef322a55436eb2de7abbe87608da",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "0e41460acf2cef322a55436eb2de7abbe87608da",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "0e41460acf2cef322a55436eb2de7abbe87608da",
+        "name": "refs/remotes/origin/branch-one"
+    },
+    {
+        "hash": "68f677517e5dbb61d9db3715435c482215f8fb47",
+        "name": "refs/remotes/origin/branch-two"
+    }
+]

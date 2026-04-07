@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t5325-reverse-index",
+    "category": "upstream",
+    "description": "git t/: t5325-reverse-index",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

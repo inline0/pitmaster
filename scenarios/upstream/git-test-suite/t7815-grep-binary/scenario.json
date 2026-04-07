@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t7815-grep-binary",
+    "category": "upstream",
+    "description": "git t/: t7815-grep-binary",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6417-merge-ours-theirs",
+    "category": "upstream",
+    "description": "git t/: t6417-merge-ours-theirs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

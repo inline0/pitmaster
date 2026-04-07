@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9700-perl-git",
+    "category": "upstream",
+    "description": "git t/: t9700-perl-git",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

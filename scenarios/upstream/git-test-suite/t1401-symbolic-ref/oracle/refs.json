@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "af1571c0eacc636f316d8f1977889c1729e0ae3b",
+        "name": "refs/heads/foo"
+    },
+    {
+        "hash": "2545fe1a335778e54f00c465b022b9e5f901c73e",
+        "name": "refs/heads/log1"
+    },
+    {
+        "hash": "e1313fff03f36c137fae30653f1f6e077df0c2e2",
+        "name": "refs/heads/log2"
+    },
+    {
+        "hash": "af1571c0eacc636f316d8f1977889c1729e0ae3b",
+        "name": "refs/tags/file"
+    },
+    {
+        "hash": "2545fe1a335778e54f00c465b022b9e5f901c73e",
+        "name": "refs/tags/one"
+    },
+    {
+        "hash": "e1313fff03f36c137fae30653f1f6e077df0c2e2",
+        "name": "refs/tags/two"
+    }
+]

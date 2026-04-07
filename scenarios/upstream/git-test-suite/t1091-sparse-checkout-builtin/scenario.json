@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t1091-sparse-checkout-builtin",
+    "category": "upstream",
+    "description": "git t/: t1091-sparse-checkout-builtin",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

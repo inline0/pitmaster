@@ -1,0 +1,72 @@
+[
+    {
+        "hash": "2884e19f6dae1842a29b7ce880d9a01a3cfb04b6",
+        "type": "tree",
+        "size": 67,
+        "content": "100644 blob 71a3a13936c11c9a64a9def10653a0acc059f2e8\tb2file\n100644 blob 4f11ade3983654e44598a373c244cd540247efba\tbfile\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4f11ade3983654e44598a373c244cd540247efba",
+        "type": "blob",
+        "size": 46,
+        "content": "adir/bdir/bfile line 1\nadir/bdir/bfile line 2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "685f9c7a68eee79a8cbc4c71115ea870d06f23fe",
+        "type": "tree",
+        "size": 99,
+        "content": "040000 tree d40541b5729de59cdc189362fa9e7f712ab38258\tadir\n100644 blob 9bc7ad0d42bb3581c31ef220203f8d951552b94f\tt2\n100644 blob 90e1cd734b1fb644c02ccaed0a9be5f4df6b72c9\ttextfile.c\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6b8a6186eb2e22206b1a295df3f01c66d4576034",
+        "type": "commit",
+        "size": 158,
+        "content": "tree 685f9c7a68eee79a8cbc4c71115ea870d06f23fe\nauthor Test <test@test.com> 1775601655 +0200\ncommitter Test <test@test.com> 1775601655 +0200\n\nFirst Commit (v1)\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "71a3a13936c11c9a64a9def10653a0acc059f2e8",
+        "type": "blob",
+        "size": 17,
+        "content": "adir/bdir/b2file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "90e1cd734b1fb644c02ccaed0a9be5f4df6b72c9",
+        "type": "blob",
+        "size": 17,
+        "content": "Simple text file\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9bc7ad0d42bb3581c31ef220203f8d951552b94f",
+        "type": "blob",
+        "size": 3,
+        "content": "t2\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d40541b5729de59cdc189362fa9e7f712ab38258",
+        "type": "tree",
+        "size": 98,
+        "content": "100644 blob f87edec08ec96b55b64ae01c03aa5694655971fc\ta2file\n100644 blob e09461bedc9a25fb4c655998f9af1a819c7ca1fd\tafile\n040000 tree 2884e19f6dae1842a29b7ce880d9a01a3cfb04b6\tbdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e09461bedc9a25fb4c655998f9af1a819c7ca1fd",
+        "type": "blob",
+        "size": 68,
+        "content": "adir/afile line1\nadir/afile line2\nadir/afile line3\nadir/afile line4\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f87edec08ec96b55b64ae01c03aa5694655971fc",
+        "type": "blob",
+        "size": 12,
+        "content": "adir/a2file\n",
+        "encoding": "utf-8"
+    }
+]

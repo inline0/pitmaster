@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t6010-merge-base",
+    "category": "upstream",
+    "description": "git t/: t6010-merge-base",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t3509-cherry-pick-merge-df",
+    "category": "upstream",
+    "description": "git t/: t3509-cherry-pick-merge-df",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}

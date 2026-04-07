@@ -1,0 +1,11 @@
+{
+    "name": "upstream/git-test-suite/t9402-git-cvsserver-refs",
+    "category": "upstream",
+    "description": "git t/: t9402-git-cvsserver-refs",
+    "operations": [],
+    "oracle_commands": [],
+    "expectations": {
+        "exact_match": [],
+        "fsck_clean": false
+    }
+}
