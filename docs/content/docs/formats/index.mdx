@@ -1,0 +1,208 @@
+---
+title: Index Format
+description: Git index (staging area) format, versions 2/3/4, extensions, conflict stages, and IndexWriter.
+---
+
+# Index Format
+
+The index file (`.git/index`) is the staging area. It records the files that will be included in the next commit, along with metadata for efficient status computation. Pitmaster reads and writes the index in binary format, supporting versions 2, 3, and 4.
+
+## Reading the index
+
+```php
+use Pitmaster\Index\Index;
+
+$index = Index::open('/path/to/.git/index');
+
+// Or through the repository
+$index = $repo->index();
+
+// Entry count
+echo $index->count();
+
+// Iterate entries
+foreach ($index->entries() as $entry) {
+    echo "{$entry->path} {$entry->hash->hex}\n";
+}
+
+// Look up a specific entry
+$entry = $index->entry('src/File.php');
+```
+
+## IndexEntry
+
+Each entry in the index is a readonly value object:
+
+```php
+use Pitmaster\Index\IndexEntry;
+
+$entry->path;       // File path relative to repo root
+$entry->hash;       // ObjectId of the blob
+$entry->mode;       // File mode (0100644, 0100755, 0120000, 0160000)
+$entry->size;       // File size in bytes
+$entry->ctime;      // Creation time (seconds)
+$entry->ctimeNs;    // Creation time nanoseconds
+$entry->mtime;      // Modification time (seconds)
+$entry->mtimeNs;    // Modification time nanoseconds
+$entry->dev;        // Device number
+$entry->ino;        // Inode number
+$entry->uid;        // User ID
+$entry->gid;        // Group ID
+$entry->flags;      // Raw flags field
+$entry->stage;      // Conflict stage (0 = normal, 1 = base, 2 = ours, 3 = theirs)
+```
+
+### Creating entries
+
+```php
+// From file stat
+$entry = IndexEntry::fromStat('src/File.php', $blobId, '/full/path/to/src/File.php');
+
+// Minimal (no stat info)
+$entry = IndexEntry::create('src/File.php', $blobId);
+
+// With explicit mode
+$entry = IndexEntry::create('deploy.sh', $blobId, 0100755);
+```
+
+## Modifying the index
+
+```php
+// Add or replace an entry
+$index->addEntry($entry);
+
+// Remove an entry
+$index->removeEntry('src/OldFile.php');
+```
+
+## Writing the index
+
+```php
+use Pitmaster\Index\IndexWriter;
+
+IndexWriter::write($index, '/path/to/.git/index');
+```
+
+Or through the repository (which handles this automatically):
+
+```php
+$repo->add('src/File.php');    // Reads file, creates blob, updates index, writes
+$repo->remove('old-file.txt'); // Removes from index, writes
+```
+
+## Binary format
+
+### Header
+
+```
+Signature:   DIRC (4 bytes, ASCII)
+Version:     4 bytes, big-endian (2, 3, or 4)
+Entry count: 4 bytes, big-endian
+```
+
+### Entry format (v2)
+
+Each entry is:
+
+```
+ctime seconds:     4 bytes, big-endian
+ctime nanoseconds: 4 bytes, big-endian
+mtime seconds:     4 bytes, big-endian
+mtime nanoseconds: 4 bytes, big-endian
+dev:               4 bytes, big-endian
+ino:               4 bytes, big-endian
+mode:              4 bytes, big-endian
+uid:               4 bytes, big-endian
+gid:               4 bytes, big-endian
+file size:         4 bytes, big-endian
+SHA-1:             20 bytes (raw binary)
+flags:             2 bytes, big-endian
+path:              variable length, NUL-terminated
+padding:           1-8 NUL bytes to align to 8-byte boundary
+```
+
+The flags field:
+- Bit 15: assume-valid flag
+- Bits 13-12: merge stage (0-3)
+- Bits 11-0: path name length (capped at 0xFFF; longer paths use v3 extended flags)
+
+### Version differences
+
+**Version 2**: the base format described above. Most common.
+
+**Version 3**: adds extended flags (2 extra bytes after the regular flags). Supports the `skip-worktree` and `intent-to-add` bits. Used when any entry needs extended flags.
+
+**Version 4**: adds path prefix compression. Instead of storing full paths, each entry stores the number of bytes to remove from the previous entry's path, followed by the new suffix. Significantly reduces index size for deeply nested trees.
+
+## Conflict stages
+
+During a merge conflict, a single path can have multiple index entries at different stages:
+
+| Stage | Meaning |
+|-------|---------|
+| 0 | Normal (no conflict) |
+| 1 | Base version (common ancestor) |
+| 2 | Ours (current branch) |
+| 3 | Theirs (branch being merged) |
+
+```php
+// During a conflict, entries have non-zero stages
+foreach ($index->entries() as $entry) {
+    if ($entry->stage > 0) {
+        echo "Conflict: {$entry->path} (stage {$entry->stage})\n";
+    }
+}
+```
+
+## Index extensions
+
+Extensions are appended after the entries, before the checksum. Each extension has a 4-byte signature, 4-byte size, and variable-length data.
+
+### TREE extension
+
+Caches pre-computed tree objects for directories. Speeds up `git status` and `git commit` by avoiding tree recomputation when only the index has changed.
+
+Signature: `TREE` (0x54524545)
+
+### REUC extension
+
+Records resolve-undo information. After a conflict is resolved, the original stage 1/2/3 entries are moved here so they can be restored with `git checkout -m`.
+
+Signature: `REUC` (0x52455543)
+
+### Other extensions
+
+Pitmaster also recognizes:
+- `EOIE` (end of index entry): marks where entries end and extensions begin
+- `IEOT` (index entry offset table): enables parallel index loading
+- `link` (split index): for very large repositories using split index
+
+Unrecognized extensions with uppercase first letters are required (Pitmaster will reject the index). Extensions with lowercase first letters are optional and can be safely ignored.
+
+## Checksum
+
+The index file ends with a 20-byte SHA-1 checksum of all preceding bytes. Pitmaster verifies this checksum on read and writes it on save.
+
+```php
+// Checksum verification happens automatically during Index::open()
+// A corrupted index will throw IndexParseException
+```
+
+## Index and status
+
+The index is central to status computation. `WorkingTreeStatus` compares:
+1. HEAD tree vs index: detects staged changes
+2. Index vs working tree: detects unstaged changes
+
+The stat fields (ctime, mtime, dev, ino, size) enable fast "has this file changed?" checks without reading file content. If the stat fields match, the file is assumed unchanged. If they differ, Pitmaster reads the file and computes its hash to check for actual content changes.
+
+## Assume-valid flag
+
+```php
+if ($entry->flags & 0x8000) {
+    // Entry has assume-valid set
+    // Skip stat check, assume file matches index
+}
+```
+
+This flag tells git (and Pitmaster) to skip checking this file during status, even if the stat fields have changed. Used for performance with large tracked files that rarely change.

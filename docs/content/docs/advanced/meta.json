@@ -1,0 +1,4 @@
+{
+  "title": "Advanced",
+  "pages": ["worktrees", "submodules", "stash", "hooks", "lfs"]
+}

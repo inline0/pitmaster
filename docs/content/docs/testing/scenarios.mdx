@@ -1,0 +1,283 @@
+---
+title: Scenarios
+description: Test scenario structure, creation, and execution.
+---
+
+# Scenarios
+
+Every testable behavior in Pitmaster is expressed as a scenario: a self-contained directory with a setup script, oracle output, actual output, and comparison reports.
+
+## Scenario structure
+
+```
+scenarios/diff/diff-add-lines/
+  scenario.json         # Metadata
+  setup.sh              # Creates repo state
+  oracle/               # Git output (generated)
+    objects.json
+    refs.json
+    log.json
+    diff.txt
+    status.txt
+    index.json
+    fsck.txt
+  actual/               # Pitmaster output (generated)
+    objects.json
+    refs.json
+    log.json
+    diff.txt
+    status.txt
+    index.json
+  reports/
+    comparison.json     # Diff results
+```
+
+## scenario.json
+
+```json
+{
+    "name": "diff-add-lines",
+    "category": "diff",
+    "description": "Diff after adding lines to an existing file",
+    "operations": ["diff", "status"],
+    "oracle_commands": {
+        "diff": "git diff",
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": ["diff", "status"],
+        "fsck_clean": true
+    }
+}
+```
+
+Fields:
+- `name`: unique identifier
+- `category`: grouping for selective runs
+- `description`: human-readable purpose
+- `operations`: which Pitmaster operations to test
+- `oracle_commands`: the git commands that produce the oracle output
+- `expectations`: matching rules for the comparator
+
+## setup.sh
+
+The setup script creates the test repository state using git commands. It must be deterministic (same output every time).
+
+```bash
+#!/bin/bash
+set -e
+
+# Initialize
+git init
+git config user.name "Test"
+git config user.email "test@test.com"
+
+# Create initial commit
+echo "Hello" > file.txt
+git add file.txt
+git commit -m "Initial commit"
+
+# Make changes
+echo "Hello" > file.txt
+echo "World" >> file.txt
+```
+
+The script runs in a fresh temporary directory. No cleanup needed.
+
+## Scenario categories
+
+| Category | What it tests | Scenario count |
+|----------|--------------|---------------|
+| `objects` | Object read/write (blob, tree, commit, tag) | ~14 |
+| `packs` | Pack file reading, delta resolution | ~6 |
+| `index` | Staging area read/write | ~4 |
+| `refs` | Reference resolution, packed-refs | ~4 |
+| `diff` | Diff algorithms and output | ~8 |
+| `merge` | Three-way merge, conflicts | ~6 |
+| `status` | Working tree status | ~6 |
+| `log` | Commit history walking | ~4 |
+| `protocol` | Network operations | ~3 |
+| `roundtrip` | Bidirectional compatibility | ~4 |
+| `upstream` | Third-party fixtures | Variable |
+
+## Running scenarios
+
+### Single scenario
+
+```bash
+# Full pipeline: oracle -> actual -> compare
+./bin/test-scenario diff-add-lines
+
+# Individual steps
+./bin/oracle diff-add-lines     # Capture git output
+./bin/actual diff-add-lines     # Capture Pitmaster output
+./bin/compare diff-add-lines    # Compare and generate report
+```
+
+### All scenarios
+
+```bash
+# Sequential
+./bin/test-regression
+
+# Parallel
+./bin/test-regression --jobs 4
+
+# By category
+./bin/test-regression --category diff
+./bin/test-regression --category objects --category packs
+
+# Fast mode (pass/fail only, no reports)
+./bin/test-regression --fast
+```
+
+### Refresh oracle
+
+```bash
+# Re-capture a specific scenario
+./bin/oracle --refresh diff-add-lines
+
+# Used after git upgrade or setup.sh change
+```
+
+## Creating a new scenario
+
+1. Create the directory:
+```bash
+mkdir -p scenarios/diff/diff-rename/
+```
+
+2. Write `scenario.json`:
+```json
+{
+    "name": "diff-rename",
+    "category": "diff",
+    "description": "Diff when a file is renamed",
+    "operations": ["diff", "status"],
+    "oracle_commands": {
+        "diff": "git diff --cached -M",
+        "status": "git status --porcelain"
+    },
+    "expectations": {
+        "exact_match": ["diff", "status"],
+        "fsck_clean": true
+    }
+}
+```
+
+3. Write `setup.sh`:
+```bash
+#!/bin/bash
+set -e
+
+git init
+git config user.name "Test"
+git config user.email "test@test.com"
+
+echo "content" > old-name.txt
+git add old-name.txt
+git commit -m "Initial"
+
+git mv old-name.txt new-name.txt
+```
+
+4. Run the full pipeline:
+```bash
+./bin/test-scenario diff-rename
+```
+
+## Comparison report
+
+After comparison, `reports/comparison.json` contains:
+
+```json
+{
+    "scenario": "diff-add-lines",
+    "pass": true,
+    "results": {
+        "diff": {
+            "mode": "exact",
+            "pass": true
+        },
+        "status": {
+            "mode": "exact",
+            "pass": true
+        },
+        "fsck": {
+            "mode": "fsck_clean",
+            "pass": true
+        }
+    },
+    "timestamp": "2026-04-07T12:00:00Z",
+    "git_version": "2.45.0"
+}
+```
+
+## Compliance report
+
+```bash
+./bin/verify-compliance
+```
+
+Aggregates all scenario results:
+
+```
+Pitmaster Compliance Report
+===========================
+Oracle: git version 2.45.0
+
+Object Scenarios:          14/14 passed
+  blob-simple              PASS  (exact: objects, fsck clean)
+  tree-flat                PASS  (exact: objects, tree listing)
+  commit-root              PASS  (exact: objects, log, fsck clean)
+  ...
+
+Diff Scenarios:            8/8 passed
+  diff-add-lines           PASS  (exact: diff output)
+  diff-rename              PASS  (exact: diff output)
+  ...
+
+Total: 56/56 scenarios passed
+```
+
+## Test infrastructure classes
+
+### OracleCapture
+
+```php
+use Pitmaster\Tests\Oracle\OracleCapture;
+```
+
+Runs git commands on a scenario's repository and saves structured output to `oracle/`.
+
+### ActualCapture
+
+```php
+use Pitmaster\Tests\Oracle\ActualCapture;
+```
+
+Runs Pitmaster operations on a scenario's repository and saves output to `actual/`.
+
+### ScenarioComparator
+
+```php
+use Pitmaster\Tests\Oracle\ScenarioComparator;
+```
+
+Diffs oracle vs actual output using the configured matching mode (exact, semantic, fsck_clean, superset).
+
+### ScenarioRunner
+
+```php
+use Pitmaster\Tests\Oracle\ScenarioRunner;
+```
+
+Orchestrates the full pipeline: setup, oracle, actual, compare.
+
+### ScenarioRepository
+
+```php
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+```
+
+Discovers and loads scenarios from disk. Supports filtering by name and category.

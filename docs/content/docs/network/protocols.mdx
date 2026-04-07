@@ -1,0 +1,172 @@
+---
+title: Protocols
+description: All supported network protocols for git communication.
+---
+
+# Protocols
+
+Pitmaster supports multiple network transport protocols for communicating with git servers. Smart HTTP is the primary transport. Additional protocols are available for broader compatibility.
+
+## Smart HTTP (primary)
+
+The recommended transport. Works over HTTPS, supports authentication via HTTP headers, and is the most widely deployed protocol.
+
+```php
+use Pitmaster\Protocol\SmartHttpClient;
+
+$http = new SmartHttpClient(timeout: 30);
+$discovery = $http->discoverRefs('https://github.com/user/repo.git');
+```
+
+See [Smart HTTP](/docs/network/smart-http) for full details.
+
+### Protocol v1
+
+The traditional smart HTTP protocol. All refs are sent during discovery, and negotiation uses want/have/done lines.
+
+```php
+use Pitmaster\Protocol\ProtocolV1;
+```
+
+### Protocol v2
+
+The newer protocol with structured commands (`ls-refs`, `fetch`). More efficient for repositories with many refs because the client can filter the ref list.
+
+Protocol v2 is negotiated automatically when the server advertises it via the `version 2` capability.
+
+## Dumb HTTP
+
+Fallback for servers that do not support the smart HTTP protocol. The dumb protocol fetches objects and packs individually via plain HTTP GET requests.
+
+```php
+use Pitmaster\Protocol\DumbHttpClient;
+
+$client = new DumbHttpClient();
+```
+
+Dumb HTTP limitations:
+- No negotiation (client must download everything)
+- No delta compression during transfer
+- Significantly slower than smart HTTP
+- Some servers (GitHub, GitLab) do not support it
+
+The dumb protocol fetches:
+1. `GET /info/refs` (plain text, no pkt-line)
+2. `GET /objects/info/packs` (list of available packs)
+3. `GET /objects/pack/pack-<hash>.pack` (individual pack files)
+4. `GET /objects/<xx>/<rest>` (individual loose objects)
+
+## SSH
+
+SSH transport uses the `ssh2` PHP extension to establish a connection, then runs `git-upload-pack` or `git-receive-pack` on the remote.
+
+```php
+use Pitmaster\Protocol\SshClient;
+
+$client = new SshClient();
+```
+
+SSH URLs:
+```
+git@github.com:user/repo.git
+ssh://git@github.com/user/repo.git
+```
+
+Requirements:
+- PHP `ssh2` extension (`pecl install ssh2`)
+- SSH key-based authentication
+
+The SSH transport runs `git-upload-pack` or `git-receive-pack` as a remote command and communicates over the SSH channel using the same pkt-line protocol as smart HTTP.
+
+Note: SSH requires the `ssh2` extension which is not part of a standard PHP installation. Smart HTTP is preferred when the `ssh2` extension is not available.
+
+## Git protocol (TCP)
+
+The native git protocol communicates over TCP port 9418 using PHP sockets.
+
+```php
+use Pitmaster\Protocol\GitProtocolClient;
+
+$client = new GitProtocolClient();
+```
+
+Git URLs:
+```
+git://github.com/user/repo.git
+```
+
+Characteristics:
+- No authentication (read-only in practice)
+- No encryption
+- Deprecated by most hosting providers
+- Uses the same pkt-line framing as smart HTTP
+
+The git protocol sends the service name and repository path as the initial request, then proceeds with standard pkt-line ref discovery and pack negotiation.
+
+## Bundles
+
+Git bundles are offline pack files with ref information. They allow transferring repository data without a network connection.
+
+```php
+use Pitmaster\Protocol\Bundle;
+
+// Read a bundle file
+$bundle = Bundle::open('/path/to/repo.bundle');
+$refs = $bundle->refs();
+$packData = $bundle->packData();
+```
+
+Bundle format:
+```
+# v2 git bundle\n
+-<prerequisite hash>\n   (zero or more)
+<hash> <refname>\n        (one or more)
+\n
+<pack data>               (standard pack file format)
+```
+
+Bundles are useful for:
+- Sneakernet transfers (USB drives)
+- Incremental backups
+- Seeding clones in air-gapped environments
+
+## Shallow clones
+
+Pitmaster supports shallow clones, where only a limited depth of commit history is fetched.
+
+```php
+use Pitmaster\Protocol\ShallowClone;
+```
+
+Shallow clone communicates depth limits using the `deepen` capability:
+```
+want <hash>
+deepen <depth>
+```
+
+The server responds with `shallow <hash>` lines indicating where the history was truncated. These are stored in `.git/shallow`.
+
+## Protocol comparison
+
+| Protocol | Auth | Encryption | Push | Typical use |
+|----------|------|-----------|------|-------------|
+| Smart HTTP | HTTP auth / tokens | HTTPS | Yes | Primary transport |
+| Dumb HTTP | HTTP auth | HTTPS | No | Legacy fallback |
+| SSH | SSH keys | SSH | Yes | Private repos, CI |
+| Git (TCP) | None | None | Rarely | Read-only mirrors |
+| Bundle | N/A | N/A | N/A | Offline transfer |
+
+## Transport selection
+
+Pitmaster selects the transport based on the URL scheme:
+
+| URL pattern | Transport |
+|------------|-----------|
+| `https://...` | Smart HTTP (falls back to dumb) |
+| `http://...` | Smart HTTP (falls back to dumb) |
+| `git@...:...` | SSH |
+| `ssh://...` | SSH |
+| `git://...` | Git protocol |
+| File path | Direct file access |
+
+The high-level `Pitmaster::clone()`, `$repo->fetch()`, and `$repo->push()` methods use smart HTTP. For other protocols, use the specific client classes directly.

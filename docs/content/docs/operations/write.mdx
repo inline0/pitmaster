@@ -1,0 +1,242 @@
+---
+title: Writing to Repositories
+description: Initialize repos, stage files, create commits, manage branches and tags.
+---
+
+# Writing to Repositories
+
+Pitmaster writes git repositories using the same binary formats as the canonical `git` binary. Objects are written to the loose object store (zlib-compressed), the index is written in v2 format, and refs are written as loose files. Written data is verifiable with `git fsck --strict`.
+
+## Initializing a repository
+
+```php
+use Pitmaster\Pitmaster;
+
+$repo = Pitmaster::init('/path/to/new-project');
+```
+
+This creates:
+- `.git/objects/` (empty object store)
+- `.git/refs/heads/` and `.git/refs/tags/` (empty ref directories)
+- `.git/HEAD` containing `ref: refs/heads/main`
+- `.git/config` with default settings
+
+## Staging files
+
+### add
+
+```php
+$repo->add('src/Feature.php');
+$repo->add('src/Feature.php', 'tests/FeatureTest.php', 'README.md');
+```
+
+For each file, Pitmaster:
+1. Reads the file content from the working tree
+2. Creates a `Blob` object and computes its SHA-1 hash
+3. Writes the blob to `.git/objects/` (zlib-compressed)
+4. Updates the index entry for that path with the new hash and file metadata
+
+### remove
+
+```php
+$repo->remove('old-file.txt');
+```
+
+Removes entries from the index without touching the working tree file. Equivalent to `git rm --cached`.
+
+### mv
+
+```php
+$repo->mv('old-name.php', 'new-name.php');
+```
+
+Renames the file in the working tree, removes the old index entry, and adds the new one.
+
+## Creating commits
+
+```php
+$commitId = $repo->commit('Fix null pointer bug');
+echo $commitId->hex;
+```
+
+The commit process:
+
+1. **Build tree from index**: the flat list of index entries is organized into a tree hierarchy (directories become tree objects, files are blob references). Each tree is written to the object store.
+2. **Determine parent**: the current HEAD commit becomes the parent. Root commits (first commit in a repo) have no parents.
+3. **Determine author**: taken from `.git/config` (`user.name`/`user.email`), then `PITMASTER_AUTHOR_NAME`/`PITMASTER_AUTHOR_EMAIL` constants, then defaults.
+4. **Write commit object**: the commit content (`tree`, `parent`, `author`, `committer`, message) is serialized, hashed, and written.
+5. **Update HEAD**: the branch ref that HEAD points to is updated to the new commit hash.
+
+### Custom author
+
+```php
+$author = 'Jane Smith <jane@example.com> 1700000000 +0000';
+$commitId = $repo->commit('Add feature', $author);
+```
+
+## Verifying with git fsck
+
+Objects written by Pitmaster pass `git fsck --strict`. This is verified by the oracle-driven test suite. You can verify manually:
+
+```bash
+cd /path/to/repo
+git fsck --strict
+```
+
+If Pitmaster writes an invalid object, `git fsck` will report the error. The oracle test scenarios run this check automatically on every round-trip scenario.
+
+## Managing branches
+
+### Create a branch
+
+```php
+// Branch from HEAD
+$repo->createBranch('feature/new-thing');
+
+// Branch from a specific commit
+$repo->createBranch('hotfix', $repo->resolve('v1.0.0'));
+```
+
+Creates a ref file at `.git/refs/heads/<name>` containing the target commit hash.
+
+### Delete a branch
+
+```php
+$repo->deleteBranch('feature/old');
+```
+
+### Switch branches
+
+```php
+$repo->checkout('feature/login');
+```
+
+Updates HEAD to a symbolic ref pointing to the branch, resets the index to match the branch tip's tree, and updates the working tree.
+
+### Check if merged
+
+```php
+if ($repo->isBranchMerged('feature/done')) {
+    $repo->deleteBranch('feature/done');
+}
+```
+
+## Managing tags
+
+### Lightweight tag
+
+```php
+$headId = $repo->resolve('HEAD');
+$repo->updateRef('refs/tags/v1.0.0', $headId);
+```
+
+A lightweight tag is just a ref pointing directly to a commit.
+
+### Annotated tag
+
+```php
+$tagId = $repo->createTag('v2.0.0', 'Release version 2.0.0');
+```
+
+An annotated tag creates a tag object (with tagger, message, and target) and a ref pointing to it. The tagger is derived from the repo config.
+
+### Custom tagger
+
+```php
+$tagId = $repo->createTag(
+    'v2.0.0',
+    'Release version 2.0.0',
+    $repo->resolve('HEAD'),
+    'Jane Smith <jane@example.com> 1700000000 +0000',
+);
+```
+
+## Updating refs directly
+
+```php
+$repo->updateRef('refs/heads/main', $commitId);
+$repo->updateRef('refs/tags/latest', $commitId);
+```
+
+## Writing objects directly
+
+For advanced use cases, you can write objects without going through the high-level API.
+
+### Write a blob
+
+```php
+use Pitmaster\Object\Blob;
+
+$blob = Blob::fromContent('Hello, world!');
+$id = $repo->writeObject($blob);
+echo $id->hex;  // SHA-1 of "blob 13\0Hello, world!"
+```
+
+### Write a tree
+
+```php
+use Pitmaster\Object\Tree;
+use Pitmaster\Object\TreeEntry;
+use Pitmaster\Object\ObjectId;
+
+$entries = [
+    new TreeEntry('100644', 'README.md', $blobId),
+    new TreeEntry('040000', 'src', $subtreeId),
+];
+
+$tree = Tree::fromEntries($entries);
+$id = $repo->writeObject($tree);
+```
+
+### Write a commit
+
+```php
+use Pitmaster\Object\Commit;
+use Pitmaster\Object\ObjectId;
+use Pitmaster\Object\ObjectType;
+
+$content = Commit::buildContent(
+    tree: $treeId,
+    parents: [$parentId],
+    author: 'Name <email> 1700000000 +0000',
+    committer: 'Name <email> 1700000000 +0000',
+    message: "Commit message\n",
+);
+
+$commitId = ObjectId::compute(ObjectType::Commit, $content);
+$commit = Commit::parse($content, $commitId);
+$repo->writeObject($commit);
+```
+
+## Reset
+
+```php
+// Soft: move HEAD only
+$repo->reset('HEAD~1', 'soft');
+
+// Mixed: move HEAD + reset index (default)
+$repo->reset('HEAD~1');
+
+// Hard: move HEAD + reset index + reset working tree
+$repo->reset('HEAD~3', 'hard');
+```
+
+## Restore
+
+```php
+// Restore a file from the index
+$repo->restore('src/File.php');
+
+// Restore a file from a specific commit
+$repo->restore('src/File.php', 'HEAD~1');
+```
+
+## Cherry-pick and revert
+
+```php
+// Apply a commit on the current branch
+$newId = $repo->cherryPick('abc123');
+
+// Undo a commit
+$revertId = $repo->revert('abc123');
+```

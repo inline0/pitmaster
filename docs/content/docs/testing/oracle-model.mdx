@@ -1,0 +1,165 @@
+---
+title: Oracle-Driven Testing
+description: How Pitmaster uses the canonical git binary as the oracle for correctness verification.
+---
+
+# Oracle-Driven Testing
+
+Pitmaster uses an oracle-driven testing model where the canonical `git` binary is the authority. Every behavior Pitmaster implements is verified by comparing its output against git's output on the same input. We never hardcode expected values. We never assert against hand-written fixtures. The oracle is always git itself, captured fresh.
+
+## The principle
+
+```
+Canonical git is to Pitmaster as Chromium is to a browser engine.
+```
+
+If `git` accepts what Pitmaster writes, and Pitmaster can read what `git` writes, the implementation is correct.
+
+## The pipeline
+
+Every test scenario follows a four-step pipeline:
+
+```
+1. SETUP    -> A script creates a repository state (files, branches, history)
+2. ORACLE   -> Canonical git performs operations, output is captured as truth
+3. ACTUAL   -> Pitmaster performs the same operations, output is captured
+4. COMPARE  -> Oracle vs actual, diff measures the gap
+```
+
+### Step 1: Setup
+
+A `setup.sh` script creates the test repository from scratch. It uses the `git` binary to create commits, branches, merges, and file states. The script is deterministic: same input always produces the same repository.
+
+### Step 2: Oracle capture
+
+The `bin/oracle` command runs git commands on the setup repository and captures structured output:
+
+| Output file | Git command | What it captures |
+|------------|------------|------------------|
+| `objects.json` | `git cat-file --batch-all-objects --buffer` | Every object: hash, type, size, content |
+| `refs.json` | `git for-each-ref --format='%(objectname) %(refname)'` | All refs with resolved hashes |
+| `log.json` | `git log --all --format=raw` | Full commit graph |
+| `diff.txt` | `git diff` | Unified diff output |
+| `status.txt` | `git status --porcelain=v2` | Working tree + index state |
+| `index.json` | `git ls-files --stage --debug` | All index entries |
+| `tree.json` | `git ls-tree -r <tree>` | Recursive tree listing |
+| `fsck.txt` | `git fsck --strict --no-progress` | Structural validation |
+| `verify-pack.txt` | `git verify-pack -v *.pack` | Pack structure, delta chains |
+
+### Step 3: Actual capture
+
+The `bin/actual` command runs the equivalent Pitmaster operations on the same repository and captures output in the same format.
+
+### Step 4: Compare
+
+The `bin/compare` command diffs the oracle output against the actual output and produces a report.
+
+## What oracle tests prove
+
+### Format compliance
+
+If Pitmaster writes objects and `git fsck --strict` passes, the binary format is correct.
+
+### Read compliance
+
+If Pitmaster reads objects from a git-created repo and `actual/objects.json` matches `oracle/objects.json`, the parser is correct.
+
+### Operation compliance
+
+If Pitmaster's diff/status/log output matches git's output on the same repo state, the algorithms are correct.
+
+### Round-trip compliance
+
+If Pitmaster writes a commit and then git reads it successfully, the write path is correct.
+
+## Comparison modes
+
+The comparator supports different matching modes per output:
+
+| Mode | Behavior | Used for |
+|------|----------|----------|
+| `exact` | Byte-for-byte identical | `diff.txt`, `status.txt`, `refs.json` |
+| `semantic` | Parsed and compared structurally (ignoring whitespace, field order) | `objects.json`, `log.json`, `index.json` |
+| `fsck_clean` | Both oracle and actual must show no errors | `fsck.txt` |
+| `superset` | Pitmaster output must contain everything in oracle (may have more) | `tree.json` |
+
+## Relationship to php-browser
+
+The oracle model mirrors the fixture system used by php-browser (a sibling project). The mapping is:
+
+| Concept | php-browser | Pitmaster |
+|---------|------------|-----------|
+| Oracle | Chromium via Playwright | Canonical `git` binary |
+| Actual | PHP renderer | Pitmaster (pure PHP) |
+| Fixture | `fixtures/<name>/` | `scenarios/<category>/<name>/` |
+| Oracle output | Screenshots + layout JSON | Git command outputs |
+| Actual output | Rendered PNG + layout | Pitmaster outputs |
+| Comparison | `ImageComparator` + `LayoutComparator` | `ScenarioComparator` |
+| Pipeline | `./bin/oracle` then `./bin/render` then `./bin/compare` | `./bin/oracle` then `./bin/actual` then `./bin/compare` |
+| Combined | `./bin/test-fixture <name>` | `./bin/test-scenario <name>` |
+| Regression | `./bin/test-regression --jobs N` | `./bin/test-regression --jobs N` |
+
+The CLI surface, directory layout, and runner semantics are intentionally aligned.
+
+## Round-trip scenarios
+
+The strongest proof of correctness. These test both directions:
+
+### Pitmaster writes, git reads
+
+```
+scenarios/roundtrip/commit-basic/
+  setup.sh          -> Pitmaster creates repo, adds files, commits
+  oracle/
+    fsck.txt        -> git fsck --strict (must be clean)
+    log.json        -> git log (must see the commit)
+    objects.json    -> git cat-file (must read all objects)
+```
+
+### Git writes, Pitmaster reads
+
+```
+scenarios/roundtrip/commit-basic-reverse/
+  setup.sh          -> git creates repo, adds files, commits
+  oracle/           -> git reads its own repo (baseline)
+  actual/           -> Pitmaster reads the git-created repo
+```
+
+## When to re-capture the oracle
+
+Oracle output is committed to the repository. Re-capture when:
+
+- A scenario's `setup.sh` changes
+- The git version used for testing is upgraded
+- `--refresh` is passed to `./bin/oracle`
+
+```bash
+# Re-capture a specific scenario
+./bin/oracle --refresh diff-add-lines
+
+# Re-capture all scenarios (after git upgrade)
+./bin/test-regression --refresh
+```
+
+## Running oracle tests
+
+```bash
+# Single scenario
+./bin/test-scenario diff-add-lines
+
+# All scenarios
+./bin/test-regression
+
+# Parallel execution
+./bin/test-regression --jobs 4
+
+# By category
+./bin/test-regression --category diff
+./bin/test-regression --category objects
+
+# Pass/fail only (no reports)
+./bin/test-regression --fast
+
+# Full compliance report
+./bin/verify-compliance
+```

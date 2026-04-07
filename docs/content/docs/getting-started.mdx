@@ -1,0 +1,173 @@
+---
+title: Getting Started
+description: Install Pitmaster and perform basic Git operations in PHP.
+---
+
+# Getting Started
+
+## Installation
+
+Install Pitmaster via Composer:
+
+```bash
+composer require pitmaster/pitmaster
+```
+
+## Requirements
+
+- **PHP 8.2+** with readonly classes, enums, and constructor promotion
+- **ext-zlib** for object compression/decompression (built-in on most installs)
+- **ext-mbstring** for UTF-8 path handling
+
+No other extensions are needed. Pitmaster does not use `exec()`, `proc_open()`, FFI, or any external binaries.
+
+## Open an existing repository
+
+```php
+use Pitmaster\Pitmaster;
+
+$repo = Pitmaster::open('/path/to/project');
+```
+
+This opens the repository at the given path. Pitmaster locates the `.git` directory (or resolves a `.git` file for linked worktrees) and initializes the object database, ref database, and config.
+
+## Check if a path is a repository
+
+```php
+if (Pitmaster::isRepository('/path/to/project')) {
+    $repo = Pitmaster::open('/path/to/project');
+}
+```
+
+## Initialize a new repository
+
+```php
+$repo = Pitmaster::init('/path/to/new-project');
+```
+
+This creates the `.git` directory structure with objects, refs, HEAD (pointing to `refs/heads/main`), and a default config.
+
+## Read the HEAD commit
+
+```php
+$head = $repo->head();
+
+echo "Commit: {$head->id->hex}\n";
+echo "Author: {$head->author}\n";
+echo "Message: {$head->message}\n";
+```
+
+The `head()` method resolves HEAD (following symbolic refs) and returns a `Commit` object.
+
+## List branches and tags
+
+```php
+// All branch names
+$branches = $repo->branches();
+// ['main', 'feature/login', 'bugfix/typo']
+
+// Current branch name (null if detached)
+$current = $repo->branch();
+// 'main'
+
+// All tag names
+$tags = $repo->tags();
+// ['v1.0.0', 'v1.1.0']
+```
+
+## Walk commit history
+
+```php
+// Last 20 commits from HEAD
+$commits = $repo->log(20);
+
+foreach ($commits as $commit) {
+    echo substr($commit->id->hex, 0, 7) . " {$commit->message}\n";
+}
+```
+
+You can also start from a specific commit:
+
+```php
+$from = $repo->resolve('feature/login');
+$commits = $repo->log(10, $from);
+```
+
+## Check working tree status
+
+```php
+use Pitmaster\Status\FileStatus;
+
+$entries = $repo->status();
+
+foreach ($entries as $entry) {
+    if ($entry->index === FileStatus::Untracked) {
+        echo "?? {$entry->path}\n";
+    } elseif ($entry->index === FileStatus::Modified) {
+        echo "M  {$entry->path}\n";
+    } elseif ($entry->worktree === FileStatus::Modified) {
+        echo " M {$entry->path}\n";
+    }
+}
+```
+
+## Stage files and commit
+
+```php
+// Stage specific files
+$repo->add('src/Feature.php', 'tests/FeatureTest.php');
+
+// Create a commit
+$commitId = $repo->commit('Add new feature with tests');
+
+echo "Created commit: {$commitId->hex}\n";
+```
+
+The commit uses the author name and email from the repository's `.git/config` (`user.name` and `user.email`). If those are not set, it falls back to the `PITMASTER_AUTHOR_NAME` and `PITMASTER_AUTHOR_EMAIL` constants, then to defaults.
+
+## Compute diffs
+
+```php
+// Unstaged changes (worktree vs index)
+$diffs = $repo->diff();
+
+foreach ($diffs as $diff) {
+    echo $diff->format(); // Unified diff output, matching git diff
+}
+
+// Staged changes (index vs HEAD)
+$staged = $repo->diffStaged();
+```
+
+## Clone a remote repository
+
+```php
+$repo = Pitmaster::clone('https://github.com/user/repo.git', '/path/to/destination');
+```
+
+This performs a full clone over smart HTTP: discovers refs, fetches the pack file, sets up remote tracking branches, and checks out the default branch.
+
+## Read any object by hash
+
+```php
+$object = $repo->readObject('abc123...');
+
+if ($object instanceof \Pitmaster\Object\Blob) {
+    echo $object->content;
+} elseif ($object instanceof \Pitmaster\Object\Commit) {
+    echo $object->message;
+}
+```
+
+## Configuration
+
+Pitmaster respects the repository's `.git/config` for author information and remote URLs. You can also set global defaults via PHP constants:
+
+```php
+define('PITMASTER_AUTHOR_NAME', 'Your Name');
+define('PITMASTER_AUTHOR_EMAIL', 'you@example.com');
+define('PITMASTER_HTTP_TIMEOUT', 60);        // Seconds
+define('PITMASTER_MAX_DELTA_CHAIN', 50);     // Max delta chain depth
+define('PITMASTER_MAX_PACK_MEMORY', '256M'); // Memory limit for pack ops
+define('PITMASTER_HASH_ALGO', 'sha1');       // sha1 or sha256
+```

@@ -1,0 +1,263 @@
+---
+title: Pack Files
+description: Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph.
+---
+
+# Pack Files
+
+Pack files are git's mechanism for efficient storage and transfer. Instead of storing each object as a separate zlib-compressed file, pack files combine many objects into a single file with optional delta compression. Almost every cloned repository uses pack files.
+
+## Pack file structure
+
+A pack file (`.git/objects/pack/pack-{hash}.pack`) contains:
+
+```
+Header:   PACK (4 bytes) + version (4 bytes, big-endian) + count (4 bytes, big-endian)
+Entries:  [type+size varint] [delta-base] [zlib-compressed data] ...
+Trailer:  20-byte SHA-1 checksum
+```
+
+### Object type encoding
+
+Each entry starts with a variable-length integer where the type and size are interleaved:
+
+```
+First byte: 1TTTSSSS
+  TTT  = object type (1-4 for base objects, 6 for OFS_DELTA, 7 for REF_DELTA)
+  SSSS = first 4 bits of uncompressed size
+  MSB  = 1 means more size bytes follow
+```
+
+Type values:
+| Value | Type |
+|-------|------|
+| 1 | Commit |
+| 2 | Tree |
+| 3 | Blob |
+| 4 | Tag |
+| 6 | OFS_DELTA (offset-based delta) |
+| 7 | REF_DELTA (hash-based delta) |
+
+## Reading pack files
+
+```php
+use Pitmaster\Pack\PackFile;
+
+$pack = new PackFile('/path/to/.git/objects/pack/pack-abc123.pack');
+
+// Read a specific object by offset
+$entry = $pack->readEntry($offset);
+
+// The entry includes type, size, and raw (possibly deltified) data
+```
+
+The `PackFile` class:
+1. Validates the `PACK` header and version number
+2. Parses the type/size varint for each entry
+3. Decompresses the zlib-compressed data
+4. For base objects: returns the content directly
+5. For delta objects: passes to the `DeltaResolver`
+
+## Pack index files
+
+Every `.pack` file has a corresponding `.idx` file for fast lookups. Without the index, finding an object requires scanning the entire pack.
+
+### v2 index format
+
+```
+Magic:    FF 74 4F 63 (identifies v2)
+Version:  00 00 00 02
+Fanout:   256 x 4-byte big-endian counts (cumulative)
+Names:    N x 20-byte SHA-1 hashes (sorted)
+CRC32s:   N x 4-byte CRC32 checksums
+Offsets:  N x 4-byte pack offsets (MSB=1 means large offset table)
+Large:    M x 8-byte offsets (for packs > 2GB)
+Checksums: 20-byte pack checksum + 20-byte index checksum
+```
+
+```php
+use Pitmaster\Pack\PackIndex;
+
+$index = new PackIndex('/path/to/pack-abc123.idx');
+
+// Look up an object
+$offset = $index->offsetFor($objectId);  // Returns pack file offset, or null
+
+// List all objects in the pack
+$hashes = $index->listObjects();
+```
+
+The fanout table enables O(log n) binary search: the 256 entries indicate how many hashes start with each possible first byte.
+
+### v1 index format
+
+Older format without CRC32 checksums. Pitmaster supports both.
+
+```php
+use Pitmaster\Pack\PackIndexV1;
+
+$index = new PackIndexV1('/path/to/pack-old.idx');
+```
+
+## Delta resolution
+
+Deltified objects store instructions for reconstructing content from a base object, rather than storing the full content. This achieves significant compression for similar objects (e.g., consecutive versions of the same file).
+
+### Delta types
+
+**OFS_DELTA** (type 6): the base object is identified by a negative offset within the same pack file. More common because it does not require knowing the base object's hash.
+
+**REF_DELTA** (type 7): the base object is identified by its 20-byte SHA-1 hash. The base might be in a different pack or in loose storage.
+
+### Delta instructions
+
+Delta content is a sequence of copy and insert instructions:
+
+```
+Copy:   1XXXXXXX [offset bytes] [size bytes]   (copy from base)
+Insert: 0LLLLLLL <L bytes of literal data>       (insert new data)
+```
+
+Copy instructions: the 7 X bits indicate which offset and size bytes are present. Offset is up to 4 bytes, size is up to 3 bytes. If size is zero, it means 0x10000 (65536) bytes.
+
+Insert instructions: the 7 L bits give the literal data length (1-127 bytes). L=0 is reserved/invalid.
+
+### DeltaApplier
+
+```php
+use Pitmaster\Pack\DeltaApplier;
+
+$result = DeltaApplier::apply($baseContent, $deltaInstructions);
+```
+
+The `DeltaApplier`:
+1. Reads the expected base size and result size from the delta header (LEB128 encoded)
+2. Iterates through instructions:
+   - Copy: extracts offset and size, copies bytes from the base content
+   - Insert: extracts length, copies literal bytes from the delta data
+3. Verifies the result size matches the expected size
+
+### DeltaResolver
+
+The `DeltaResolver` handles chains: a deltified object's base may itself be deltified.
+
+```php
+use Pitmaster\Pack\DeltaResolver;
+
+$resolver = new DeltaResolver($packFile);
+$content = $resolver->resolve($entry);
+```
+
+Chain resolution:
+1. Read the entry. If it is a base type (commit, tree, blob, tag), return it.
+2. If OFS_DELTA: compute the base offset (current offset minus the encoded negative offset), read the base entry, recurse.
+3. If REF_DELTA: look up the base by hash (may be in a different pack or in loose storage), recurse.
+4. Apply delta instructions on the resolved base.
+5. Enforce `PITMASTER_MAX_DELTA_CHAIN` (default 50) to prevent runaway chains.
+
+```php
+// Configure max chain depth
+define('PITMASTER_MAX_DELTA_CHAIN', 50);
+```
+
+## PackWriter
+
+Pitmaster can write pack files for network operations (push).
+
+```php
+use Pitmaster\Pack\PackWriter;
+```
+
+The `PackWriter`:
+1. Collects objects to include in the pack
+2. Serializes each object with type/size varint header
+3. Compresses content with zlib
+4. Writes the PACK header, entries, and SHA-1 trailer
+
+Currently writes only base objects (no delta compression). Delta compression is an optimization that can be added later; let `git gc` repack for storage efficiency.
+
+## PackEnumerator
+
+Iterate all objects in a pack file without an index:
+
+```php
+use Pitmaster\Pack\PackEnumerator;
+
+$enumerator = new PackEnumerator($packFile);
+
+foreach ($enumerator->entries() as $entry) {
+    echo "{$entry->type} at offset {$entry->offset}, size {$entry->size}\n";
+}
+```
+
+## MultiPackIndex
+
+For repositories with many pack files, the multi-pack-index (MIDX) provides a single lookup across all packs.
+
+```php
+use Pitmaster\Pack\MultiPackIndex;
+```
+
+The MIDX file (`.git/objects/pack/multi-pack-index`) contains:
+- A fanout table (like pack index v2)
+- Object IDs sorted across all packs
+- Pack file names and per-object pack assignments
+- Offsets into the individual pack files
+
+Pitmaster reads MIDX files but falls back to scanning individual `.idx` files if no MIDX exists.
+
+## CommitGraph
+
+The commit-graph file accelerates commit history traversal and merge base computation.
+
+```php
+use Pitmaster\Pack\CommitGraph;
+```
+
+Located at `.git/objects/info/commit-graph`, it contains:
+- Commit OIDs in sorted order
+- Parent information (indexed, not requiring object reads)
+- Generation numbers (for faster reachability queries)
+- Commit timestamps
+
+When present, `CommitWalker` and `MergeBase` use the commit-graph instead of reading individual commit objects, significantly improving performance for large repositories.
+
+## Variable-length integers
+
+Pack files use multiple variable-length integer encodings:
+
+### Git varint (type/size headers)
+
+MSB-continue encoding where the most significant bit indicates more bytes follow:
+
+```php
+use Pitmaster\Encoding\VarInt;
+
+$value = VarInt::decode($data, $offset);
+$encoded = VarInt::encode($value);
+```
+
+### LEB128 (delta headers)
+
+Used in delta instruction headers for base size and result size:
+
+```php
+use Pitmaster\Encoding\Leb128;
+
+$value = Leb128::decodeUnsigned($data, $offset);
+$value = Leb128::decodeSigned($data, $offset);
+```
+
+### BinaryReader
+
+Low-level byte stream with position tracking:
+
+```php
+use Pitmaster\Encoding\BinaryReader;
+
+$reader = new BinaryReader($data);
+$byte = $reader->readUint8();
+$int = $reader->readUint32BE();
+$bytes = $reader->read(20);
+$reader->position();  // Current offset
+```

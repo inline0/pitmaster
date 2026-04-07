@@ -1,0 +1,217 @@
+---
+title: Clone, Fetch, Push
+description: Network operations for cloning, fetching, and pushing repositories.
+---
+
+# Clone, Fetch, Push
+
+Pitmaster supports the three fundamental git network operations: clone (initial download), fetch (incremental download), and push (upload). All use the smart HTTP protocol by default.
+
+## Clone
+
+```php
+use Pitmaster\Pitmaster;
+
+$repo = Pitmaster::clone('https://github.com/user/repo.git', '/path/to/destination');
+```
+
+### Clone flow
+
+1. **Initialize**: create a new empty repository at the destination path
+2. **Configure remote**: save the URL as `remote.origin.url` and set up the fetch refspec
+3. **Discover refs**: `GET /info/refs?service=git-upload-pack` to learn what the server has
+4. **Negotiate**: send `want` lines for all remote refs (deduplicated by hash)
+5. **Receive pack**: download the pack file containing all requested objects
+6. **Write pack**: save the pack file to `.git/objects/pack/`
+7. **Index pack**: generate the `.idx` file for fast lookups
+8. **Set up refs**: create remote tracking branches (`refs/remotes/origin/*`) and tags
+9. **Set HEAD**: point HEAD to the default branch (from the server's `symref=HEAD:...` capability)
+10. **Checkout**: materialize the working tree by reading the HEAD commit's tree and writing all files
+
+```php
+// After clone, the repo is fully functional
+$repo = Pitmaster::clone($url, $path);
+$head = $repo->head();
+echo $head->message;
+
+$branches = $repo->branches();
+$files = $repo->status();
+```
+
+### Working tree materialization
+
+After receiving the pack, Pitmaster reads the HEAD commit's tree recursively and writes every blob to the working directory. It also builds the index from the tree entries so that `status()` reports a clean working tree.
+
+```php
+// Internal: flatten tree and write files
+foreach ($treeMap as $filePath => $blobHash) {
+    $blob = $repo->readObject($blobHash);
+    file_put_contents($path . '/' . $filePath, $blob->content);
+}
+```
+
+## Fetch
+
+```php
+$repo->fetch();              // Fetch from 'origin'
+$repo->fetch('upstream');    // Fetch from a named remote
+```
+
+### Fetch flow
+
+1. **Read remote URL**: from `.git/config` (`remote.<name>.url`)
+2. **Discover refs**: get the current state of all remote refs
+3. **Negotiate wants/haves**:
+   - Want: remote refs we do not have locally
+   - Have: local refs we already have (for delta negotiation)
+4. **Receive pack**: download only the new objects
+5. **Write pack**: save to `.git/objects/pack/`
+6. **Update tracking refs**: update `refs/remotes/<remote>/<branch>` for each remote branch
+
+```php
+// Fetch is incremental: only downloads what's new
+$repo->fetch();
+
+// After fetching, merge or rebase to incorporate changes
+$result = $repo->merge('origin/main');
+```
+
+### Already up to date
+
+If all remote refs already exist locally, the fetch is a no-op:
+
+```php
+// Internally: if $wants is empty, return immediately
+$repo->fetch();  // "Already up to date" (no network request for pack)
+```
+
+## Push
+
+```php
+$repo->push();                        // Push current branch to 'origin'
+$repo->push('origin', 'main');        // Push a specific branch
+$repo->push('upstream', 'feature');   // Push to a named remote
+```
+
+### Push flow
+
+1. **Read remote URL**: from `.git/config`
+2. **Determine what to push**: resolve the local branch to its commit hash
+3. **Discover remote refs**: get the current state of the remote branch (to compute the old hash)
+4. **Send ref update**: `<old-hash> <new-hash> refs/heads/<branch>`
+5. **Send pack data**: pack containing all objects the remote needs
+6. **Check result**: server responds with success/failure per ref
+
+```php
+// Push the current branch
+$repo->push();
+
+// Push a specific branch to a specific remote
+$repo->push('origin', 'feature/login');
+```
+
+### Push requirements
+
+- The current branch must exist locally
+- A remote must be configured with a URL
+- The remote must accept the push (authentication, permissions, non-fast-forward policies)
+
+### Force push
+
+Pitmaster sends the old hash from the remote's ref advertisement. If the remote ref has moved since you last fetched, the push will be rejected (non-fast-forward). Force push is not currently exposed in the high-level API.
+
+## UploadPackClient (fetch internals)
+
+```php
+use Pitmaster\Protocol\UploadPackClient;
+use Pitmaster\Protocol\SmartHttpClient;
+
+$http = new SmartHttpClient();
+$uploadPack = new UploadPackClient($http);
+
+// Fetch with explicit wants and haves
+$packData = $uploadPack->fetch($url, $wants, $haves);
+```
+
+The want/have negotiation builds a pkt-line request:
+
+```
+want <hash1> <capabilities>\n
+want <hash2>\n
+0000
+have <hash3>\n
+have <hash4>\n
+done\n
+0000
+```
+
+The server responds with acknowledgments and then the pack data (possibly side-band wrapped).
+
+## ReceivePackClient (push internals)
+
+```php
+use Pitmaster\Protocol\ReceivePackClient;
+use Pitmaster\Protocol\SmartHttpClient;
+
+$http = new SmartHttpClient();
+$receivePack = new ReceivePackClient($http);
+
+$receivePack->push($url, [
+    [
+        'old' => $oldId,      // Current remote hash (or zero hash for new branch)
+        'new' => $localId,    // Local commit hash to push
+        'ref' => 'refs/heads/main',
+    ],
+], $packData);
+```
+
+The push request format:
+
+```
+<old-hash> <new-hash> refs/heads/main\0<capabilities>\n
+0000
+PACK<pack data>
+```
+
+## Error handling
+
+```php
+use Pitmaster\Exceptions\ProtocolException;
+
+try {
+    $repo->fetch();
+} catch (ProtocolException $e) {
+    // Network unreachable, auth failed, server error, etc.
+    echo $e->getMessage();
+}
+
+try {
+    $repo->push();
+} catch (\RuntimeException $e) {
+    // Remote not configured, not on a branch, branch not found
+    echo $e->getMessage();
+}
+```
+
+## Remote configuration
+
+Remotes are stored in `.git/config`:
+
+```ini
+[remote "origin"]
+    url = https://github.com/user/repo.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+```
+
+Access via the config API:
+
+```php
+$config = $repo->config();
+$url = $config->get('remote.origin.url');
+$config->set('remote.upstream.url', 'https://github.com/other/repo.git');
+$config->set('remote.upstream.fetch', '+refs/heads/*:refs/remotes/upstream/*');
+```
+
+## Pack data for push
+
+Currently, Pitmaster collects all objects reachable from the commits being pushed and writes them as base objects (no delta compression) into a pack. This is functionally correct but produces larger packs than `git push`. Delta compression in pack writing is a planned optimization.

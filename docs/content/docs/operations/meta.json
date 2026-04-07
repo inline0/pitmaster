@@ -1,0 +1,4 @@
+{
+  "title": "Operations",
+  "pages": ["read", "write", "diff", "merge", "status"]
+}

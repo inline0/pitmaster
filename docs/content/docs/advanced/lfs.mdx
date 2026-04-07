@@ -1,0 +1,232 @@
+---
+title: Git LFS
+description: Git Large File Storage pointer parsing, batch API client, and file transfer.
+---
+
+# Git LFS
+
+Git Large File Storage (LFS) replaces large files in your repository with small pointer files. The actual file content is stored on a separate LFS server. Pitmaster can parse LFS pointers, detect LFS-tracked files, and communicate with LFS servers via the batch API.
+
+## LFS Pointer Files
+
+When a file is tracked by LFS, git stores a pointer file instead of the actual content:
+
+```
+version https://git-lfs.github.com/spec/v1
+oid sha256:4d7a214614ab2935c943f9e0ff69d22eadbb8f32b1258daaa5e2ca24d17e2393
+size 12345
+```
+
+The pointer contains:
+- `version`: the LFS spec version URL
+- `oid`: SHA-256 hash of the actual file content (prefixed with `sha256:`)
+- `size`: the actual file size in bytes
+
+### Parsing pointers
+
+```php
+use Pitmaster\Lfs\LfsPointer;
+
+$content = file_get_contents('.git-lfs-tracked-file');
+$pointer = LfsPointer::parse($content);
+
+if ($pointer !== null) {
+    echo "OID: {$pointer->oid}\n";
+    echo "Size: {$pointer->size}\n";
+    echo "Version: {$pointer->version}\n";
+}
+```
+
+`parse()` returns `null` if the content is not a valid LFS pointer.
+
+### Detecting pointers
+
+```php
+if (LfsPointer::isPointer($blobContent)) {
+    // This blob is an LFS pointer, not actual file content
+    $pointer = LfsPointer::parse($blobContent);
+}
+```
+
+`isPointer()` checks for the presence of the version URL, `oid sha256:`, and `size` fields without full parsing.
+
+### Creating pointers
+
+```php
+// From known OID and size
+$pointer = new LfsPointer(
+    oid: '4d7a214614ab2935c943f9e0ff69d22eadbb8f32b1258daaa5e2ca24d17e2393',
+    size: 12345,
+);
+
+// From file content (computes SHA-256 hash)
+$pointer = LfsPointer::forContent($actualFileContent);
+
+echo $pointer->oid;   // SHA-256 hash
+echo $pointer->size;  // Content length
+```
+
+### Serializing pointers
+
+```php
+$content = $pointer->serialize();
+// "version https://git-lfs.github.com/spec/v1\noid sha256:4d7a21...\nsize 12345\n"
+```
+
+## LFS Client
+
+The `LfsClient` communicates with LFS servers using the batch API (POST to `<url>/objects/batch`).
+
+### Creating a client
+
+```php
+use Pitmaster\Lfs\LfsClient;
+
+// From a git remote URL (appends /info/lfs)
+$client = LfsClient::fromRemoteUrl('https://github.com/user/repo.git');
+// LFS URL: https://github.com/user/repo.git/info/lfs
+
+// Direct URL
+$client = new LfsClient('https://lfs.example.com/repo', timeout: 60);
+```
+
+The `fromRemoteUrl()` method follows the standard convention: append `/info/lfs` to the git URL (adding `.git` if not present).
+
+### Downloading files
+
+```php
+// Single file download
+$content = $client->download($pointer->oid, $pointer->size);
+file_put_contents('large-file.bin', $content);
+```
+
+Under the hood, `download()`:
+1. Sends a batch request for the `download` operation
+2. Receives a download URL from the server
+3. Fetches the file content from that URL
+
+### Batch download
+
+```php
+$results = $client->batchDownload([
+    ['oid' => 'abc123...', 'size' => 12345],
+    ['oid' => 'def456...', 'size' => 67890],
+]);
+
+foreach ($results as $result) {
+    if ($result['error'] !== null) {
+        echo "Error: {$result['error']}\n";
+        continue;
+    }
+
+    if ($result['href'] !== null) {
+        // Download from $result['href']
+    }
+}
+```
+
+### Uploading files
+
+```php
+$client->upload($pointer->oid, $pointer->size, $fileContent);
+```
+
+Upload sends a batch request for the `upload` operation. If the server already has the object, it returns no upload URL and the operation is a no-op.
+
+### Batch upload
+
+```php
+$results = $client->batchUpload([
+    ['oid' => 'abc123...', 'size' => 12345],
+]);
+
+foreach ($results as $result) {
+    if ($result['href'] !== null) {
+        // Server needs this object, upload to $result['href']
+    }
+    // No href means server already has it
+}
+```
+
+## Batch API protocol
+
+The LFS batch API uses JSON over HTTP:
+
+### Request
+
+```
+POST <lfs-url>/objects/batch
+Content-Type: application/vnd.git-lfs+json
+Accept: application/vnd.git-lfs+json
+
+{
+    "operation": "download",
+    "transfers": ["basic"],
+    "objects": [
+        {"oid": "abc123...", "size": 12345}
+    ]
+}
+```
+
+### Response
+
+```json
+{
+    "objects": [
+        {
+            "oid": "abc123...",
+            "size": 12345,
+            "actions": {
+                "download": {
+                    "href": "https://storage.example.com/abc123...",
+                    "header": {
+                        "Authorization": "Bearer token"
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+
+## Integrating LFS with repository operations
+
+When reading a repository that uses LFS, blob content may be LFS pointers rather than actual file data. To get the real content:
+
+```php
+$blob = $repo->readObject($hash);
+
+if (LfsPointer::isPointer($blob->content)) {
+    $pointer = LfsPointer::parse($blob->content);
+    $remoteUrl = $repo->config()->get('remote.origin.url');
+    $client = LfsClient::fromRemoteUrl($remoteUrl);
+    $realContent = $client->download($pointer->oid, $pointer->size);
+} else {
+    $realContent = $blob->content;
+}
+```
+
+## Error handling
+
+LFS errors throw `ProtocolException`:
+
+```php
+use Pitmaster\Exceptions\ProtocolException;
+
+try {
+    $content = $client->download($oid, $size);
+} catch (ProtocolException $e) {
+    // Server unreachable, object not found, auth failed
+    echo "LFS error: {$e->getMessage()}\n";
+}
+```
+
+## LFS pointer properties
+
+The `LfsPointer` class is readonly:
+
+```php
+$pointer->oid;      // string: SHA-256 hash (hex)
+$pointer->size;     // int: file size in bytes
+$pointer->version;  // string: spec version URL
+```

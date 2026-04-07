@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.0] - 2026-04-08
+
+### Added
+- Linked worktree support: `Pitmaster::open()` handles `.git` files with `gitdir:` indirection
+- `Repository::commonGitDir()` for resolving the shared git directory
+- `Repository::defaultBranch()` with remote HEAD / local HEAD / fallback resolution
+- `Repository::isBranchMerged()` using ancestry / merge-base logic
+- `Repository::addWorktree()`, `removeWorktree()`, `worktrees()` lifecycle helpers
+- `Pitmaster::isRepository()` and `Pitmaster::isWorktree()` detection helpers
+- `Pitmaster::commonGitDir()` static helper
+- Clone now materializes the working tree (checked-out files present after clone)
+- Worktree add now creates a full checkout with files and index
+- Comprehensive OneDocs documentation site with 31 pages covering operations, binary formats, network, testing, and advanced features
+- 637 oracle scenarios from 8 upstream sources (libgit2: 63, go-git: 46, isomorphic-git: 71, dulwich: 6, JGit: 7, git test suite: 393, hand-picked: 19, own: 32)
+- README with logo and badges matching rudel/queuety style
+
+### Fixed
+- `RefDatabase` and `LooseRefStore` now accept separate per-worktree and common git dirs
+- Circular symbolic ref detection (depth guard)
+- Pack index v1 format auto-detection
+- PHPCS PSR-12 formatting
+
 ## [0.1.0] - 2026-04-07
 
 ### Added

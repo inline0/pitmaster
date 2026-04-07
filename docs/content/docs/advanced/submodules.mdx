@@ -1,0 +1,207 @@
+---
+title: Submodules
+description: Git submodule support with gitlink entries, .gitmodules parsing, and status tracking.
+---
+
+# Submodules
+
+Git submodules embed one repository inside another. A submodule is represented in the parent tree as a gitlink entry (mode `160000`) pointing to a specific commit in the submodule repository. The submodule's URL and path are declared in the `.gitmodules` file.
+
+## Concepts
+
+In the parent repository's tree:
+
+```
+100644 blob abc123...  README.md
+040000 tree def456...  src/
+160000 commit 789012... lib/external    <-- gitlink entry (submodule)
+```
+
+The gitlink entry records which commit of the submodule should be checked out. The actual submodule repository lives in `.git/modules/<name>/`.
+
+## SubmoduleManager
+
+```php
+use Pitmaster\Submodule\SubmoduleManager;
+
+$manager = new SubmoduleManager(
+    $repo->objectDatabase(),
+    $repo->workDir(),
+    $repo->gitDir(),
+);
+```
+
+### List submodules
+
+```php
+$submodules = $manager->list();
+
+foreach ($submodules as $sub) {
+    echo "{$sub->name}: {$sub->url} at {$sub->path}\n";
+    if ($sub->branch !== null) {
+        echo "  tracks branch: {$sub->branch}\n";
+    }
+}
+```
+
+### Submodule value object
+
+```php
+use Pitmaster\Submodule\Submodule;
+
+$sub->name;     // Submodule name (from .gitmodules section header)
+$sub->path;     // Path in the working tree
+$sub->url;      // Remote URL
+$sub->branch;   // Tracked branch (nullable)
+```
+
+## Parsing .gitmodules
+
+The `.gitmodules` file declares submodule configuration:
+
+```ini
+[submodule "lib/external"]
+    path = lib/external
+    url = https://github.com/vendor/lib.git
+    branch = main
+
+[submodule "tools/helper"]
+    path = tools/helper
+    url = https://github.com/vendor/helper.git
+```
+
+```php
+$content = file_get_contents('.gitmodules');
+$submodules = SubmoduleManager::parseGitmodules($content);
+
+foreach ($submodules as $sub) {
+    echo "{$sub->name} -> {$sub->url}\n";
+}
+```
+
+The parser handles:
+- Section headers: `[submodule "<name>"]`
+- Key-value pairs: `path = ...`, `url = ...`, `branch = ...`
+- Comments (lines starting with `#`)
+- Whitespace and indentation
+
+## Gitlink entries
+
+Gitlink entries are tree entries with mode `160000`. They point to a commit (not a tree or blob) in the submodule repository.
+
+```php
+$tree = $repo->readObject($treeHash);
+
+foreach ($tree->entries as $entry) {
+    if ($entry->isGitlink()) {
+        echo "Submodule at {$entry->name}: commit {$entry->hash->hex}\n";
+    }
+}
+```
+
+### TreeEntry detection
+
+```php
+$entry->isGitlink();  // true if mode is '160000'
+$entry->mode;         // '160000'
+```
+
+## Initializing submodules
+
+```php
+$manager->init();
+```
+
+For each submodule declared in `.gitmodules`, this:
+1. Creates `.git/modules/<name>/` directory
+2. Creates the submodule path directory if it does not exist
+3. Writes a `.git` file in the submodule path pointing to `.git/modules/<name>/`
+
+After initialization, you can open each submodule as a separate repository:
+
+```php
+$subRepo = Pitmaster::open($repo->workDir() . '/lib/external');
+```
+
+## Checking pinned commits
+
+```php
+$headCommit = $repo->head();
+$pinnedId = $manager->pinnedCommit('lib/external', $headCommit->tree);
+
+if ($pinnedId !== null) {
+    echo "lib/external is pinned to commit {$pinnedId->hex}\n";
+}
+```
+
+The `pinnedCommit()` method walks the tree hierarchy to find the gitlink entry at the given path and returns its target commit hash.
+
+## Submodule status
+
+```php
+$headCommit = $repo->head();
+$statuses = $manager->status($headCommit->tree);
+
+foreach ($statuses as $status) {
+    $expected = $status['expected'] ?? 'not pinned';
+    $actual = $status['actual'] ?? 'not initialized';
+    $dirty = $status['dirty'] ? ' (dirty)' : '';
+
+    echo "{$status['name']}: expected={$expected}, actual={$actual}{$dirty}\n";
+}
+```
+
+Status fields:
+- `name`: submodule name
+- `path`: path in the working tree
+- `expected`: commit hash pinned in the parent tree (null if not present)
+- `actual`: current HEAD of the submodule (null if not initialized)
+- `dirty`: true if expected and actual differ
+
+## Directory structure
+
+```
+project/
+  .git/
+    modules/
+      lib-external/        # Submodule's actual git directory
+        HEAD
+        objects/
+        refs/
+        ...
+  .gitmodules              # Submodule declarations
+  lib/
+    external/
+      .git                 # File: "gitdir: ../../.git/modules/lib-external"
+      src/
+      README.md
+  src/
+  README.md
+```
+
+## Submodule workflow
+
+```php
+// 1. Open the parent repo
+$repo = Pitmaster::open('/path/to/project');
+
+// 2. List submodules
+$manager = new SubmoduleManager(
+    $repo->objectDatabase(),
+    $repo->workDir(),
+    $repo->gitDir(),
+);
+
+$submodules = $manager->list();
+
+// 3. Initialize if needed
+$manager->init();
+
+// 4. Check status
+$statuses = $manager->status($repo->head()->tree);
+
+// 5. Open a submodule as its own repo
+$subRepo = Pitmaster::open($repo->workDir() . '/lib/external');
+$subHead = $subRepo->head();
+echo "Submodule HEAD: {$subHead->id->hex}\n";
+```

@@ -1,0 +1,4 @@
+{
+  "title": "Binary Formats",
+  "pages": ["objects", "pack-files", "index", "refs"]
+}

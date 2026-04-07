@@ -1,5 +1,9 @@
 <p align="center">
-  <strong>Pitmaster</strong>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./.github/logo-light.svg">
+    <img alt="Pitmaster" src="./.github/logo-light.svg" height="50">
+  </picture>
 </p>
 
 <p align="center">
