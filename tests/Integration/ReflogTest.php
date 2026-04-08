@@ -101,6 +101,109 @@ final class ReflogTest extends TestCase
         $this->assertGreaterThan(0, $reflog->count());
     }
 
+    #[Test]
+    public function pitmasterCommitWritesHeadAndBranchReflogs(): void
+    {
+        $defaultBranch = trim($this->git('branch --show-current'));
+        $oldHead = $this->repo->head()->id->hex;
+
+        $this->writeFile('a.txt', "fourth\n");
+        $this->repo->add('a.txt');
+        $newId = $this->repo->commit("Fourth\n");
+
+        $headLog = Reflog::open($this->tmpDir . '/.git', 'HEAD')->latest();
+        $branchLog = Reflog::open($this->tmpDir . '/.git', 'refs/heads/' . $defaultBranch)->latest();
+
+        $this->assertNotNull($headLog);
+        $this->assertNotNull($branchLog);
+        $this->assertSame($oldHead, $headLog['old']);
+        $this->assertSame($newId->hex, $headLog['new']);
+        $this->assertStringContainsString('commit: Fourth', $headLog['message']);
+        $this->assertSame($oldHead, $branchLog['old']);
+        $this->assertSame($newId->hex, $branchLog['new']);
+    }
+
+    #[Test]
+    public function pitmasterCreateBranchWritesBranchReflog(): void
+    {
+        $this->repo->createBranch('feature');
+
+        $reflog = Reflog::open($this->tmpDir . '/.git', 'refs/heads/feature')->latest();
+
+        $this->assertNotNull($reflog);
+        $this->assertSame(str_repeat('0', 40), $reflog['old']);
+        $this->assertSame($this->repo->head()->id->hex, $reflog['new']);
+        $this->assertStringContainsString('branch: Created from HEAD', $reflog['message']);
+    }
+
+    #[Test]
+    public function pitmasterCheckoutWritesHeadReflog(): void
+    {
+        $this->repo->createBranch('feature');
+        $oldHead = $this->repo->head()->id->hex;
+
+        $this->repo->checkout('feature');
+
+        $reflog = Reflog::open($this->tmpDir . '/.git', 'HEAD')->latest();
+
+        $this->assertNotNull($reflog);
+        $this->assertSame($oldHead, $reflog['old']);
+        $this->assertSame($oldHead, $reflog['new']);
+        $this->assertStringContainsString('checkout: moving from main to feature', $reflog['message']);
+    }
+
+    #[Test]
+    public function pitmasterResetWritesHeadAndBranchReflogs(): void
+    {
+        $defaultBranch = trim($this->git('branch --show-current'));
+
+        $this->writeFile('a.txt', "fourth\n");
+        $this->repo->add('a.txt');
+        $newId = $this->repo->commit("Fourth\n");
+        $target = trim($this->git('rev-parse HEAD~1'));
+
+        $this->repo->reset($target, 'mixed');
+
+        $headLog = Reflog::open($this->tmpDir . '/.git', 'HEAD')->latest();
+        $branchLog = Reflog::open($this->tmpDir . '/.git', 'refs/heads/' . $defaultBranch)->latest();
+
+        $this->assertNotNull($headLog);
+        $this->assertNotNull($branchLog);
+        $this->assertSame($newId->hex, $headLog['old']);
+        $this->assertSame($target, $headLog['new']);
+        $this->assertStringContainsString("reset: moving to {$target}", $headLog['message']);
+        $this->assertSame($newId->hex, $branchLog['old']);
+        $this->assertSame($target, $branchLog['new']);
+    }
+
+    #[Test]
+    public function pitmasterFastForwardMergeWritesHeadAndBranchReflogs(): void
+    {
+        $defaultBranch = trim($this->git('branch --show-current'));
+        $this->git('checkout -b feature');
+        $this->writeFile('feature.txt', "feature\n");
+        $this->git('add feature.txt');
+        $this->git('commit -m "Feature"');
+        $featureHead = trim($this->git('rev-parse HEAD'));
+        $this->git('checkout ' . $defaultBranch);
+        $oldHead = $this->repo->head()->id->hex;
+        $this->repo = Pitmaster::open($this->tmpDir);
+
+        $result = $this->repo->merge('feature');
+
+        $this->assertTrue($result->clean);
+        $headLog = Reflog::open($this->tmpDir . '/.git', 'HEAD')->latest();
+        $branchLog = Reflog::open($this->tmpDir . '/.git', 'refs/heads/' . $defaultBranch)->latest();
+
+        $this->assertNotNull($headLog);
+        $this->assertNotNull($branchLog);
+        $this->assertSame($oldHead, $headLog['old']);
+        $this->assertSame($featureHead, $headLog['new']);
+        $this->assertStringContainsString('merge feature: Fast-forward', $headLog['message']);
+        $this->assertSame($oldHead, $branchLog['old']);
+        $this->assertSame($featureHead, $branchLog['new']);
+    }
+
     private function git(string $cmd): string
     {
         return shell_exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($this->tmpDir), $cmd)) ?? '';

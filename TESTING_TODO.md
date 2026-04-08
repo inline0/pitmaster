@@ -1,8 +1,8 @@
 # Internal Testing and Hardening Backlog
 
 Current baseline:
-- `468 tests`
-- `1209 assertions`
+- `473 tests`
+- `1239 assertions`
 - core checks already green: `composer test`, `composer analyse`, `composer cs`
 
 Purpose:
@@ -40,7 +40,7 @@ Conventions:
   branch to detached, detached commit creation, branch recreation, and reflog shape.
 - [ ] `P0` Add direct tests for `checkout()` switching between:
   branch -> branch, branch -> detached commit, detached -> branch, and branch recreation.
-- [ ] `P0` Verify all ref-moving operations append correct reflog entries:
+- [~] `P0` Verify all ref-moving operations append correct reflog entries:
   commit, branch create/delete/rename, reset, checkout, merge, cherry-pick, revert, rebase, and worktree operations where applicable.
 
 ## P0 Consumer-Shaped Worktree Coverage
@@ -131,7 +131,7 @@ Conventions:
   staged-only stash, unstaged-only stash, untracked inclusion, conflict on apply/pop.
 - [ ] `P1` Add tests for sparse checkout interactions:
   checkout, status, add/remove, merge, reset, and branch switching under sparse patterns.
-- [ ] `P1` Add reflog read/write consistency tests for [src/Ref/Reflog.php](src/Ref/Reflog.php):
+- [~] `P1` Add reflog read/write consistency tests for [src/Ref/Reflog.php](src/Ref/Reflog.php):
   branch refs, `HEAD`, linked worktrees, and corruption handling.
 - [ ] `P1` Add tests for ref precedence:
   loose refs overriding packed refs, deleting loose refs revealing packed refs, symbolic chains.

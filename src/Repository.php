@@ -30,7 +30,7 @@ use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
-use Pitmaster\Ref\SymbolicRef;
+use Pitmaster\Ref\Reflog;
 use Pitmaster\Status\FileStatus;
 use Pitmaster\Status\StatusEntry;
 use Pitmaster\Status\WorkingTreeStatus;
@@ -478,7 +478,9 @@ final class Repository
             throw new \RuntimeException('Cannot create branch: no HEAD to derive from');
         }
 
-        $this->refs->update("refs/heads/{$name}", $target);
+        $refName = "refs/heads/{$name}";
+        $this->refs->update($refName, $target);
+        $this->appendReflogEntry($refName, null, $target, 'branch: Created from ' . ($from !== null ? $from->hex : 'HEAD'));
     }
 
     /**
@@ -527,6 +529,8 @@ final class Repository
     public function checkout(string $target): void
     {
         $trackedPaths = array_keys($this->index()->entries());
+        $oldHeadId = $this->refs->resolveHead();
+        $fromLabel = $this->currentLocationLabel($oldHeadId);
 
         // Try as branch first
         $branchId = $this->refs->resolve("refs/heads/{$target}");
@@ -534,6 +538,12 @@ final class Repository
         if ($branchId !== null) {
             // Switch to branch: update HEAD symbolic ref
             $this->refs->updateSymbolic('HEAD', "refs/heads/{$target}");
+            $this->appendReflogEntry(
+                'HEAD',
+                $oldHeadId,
+                $branchId,
+                "checkout: moving from {$fromLabel} to {$target}",
+            );
             $this->resetWorktree($branchId, $trackedPaths);
 
             return;
@@ -542,6 +552,12 @@ final class Repository
         // Try as tag or direct hash (detached HEAD)
         $id = $this->resolve($target);
         $this->refs->looseStore()->update('HEAD', $id);
+        $this->appendReflogEntry(
+            'HEAD',
+            $oldHeadId,
+            $id,
+            "checkout: moving from {$fromLabel} to " . $this->targetLabel($target, $id),
+        );
         $this->resetWorktree($id, $trackedPaths);
     }
 
@@ -759,16 +775,7 @@ final class Repository
         $commitId = ObjectId::compute(ObjectType::Commit, $content);
         $commit = Commit::parse($content, $commitId);
         $this->objects->write($commit);
-
-        // Update HEAD
-        $head = $this->refs->readHead();
-
-        if ($head !== null) {
-            $this->refs->update($head->target, $commitId);
-        } else {
-            // Detached HEAD or first commit
-            $this->refs->update('HEAD', $commitId);
-        }
+        $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($message));
 
         return $commitId;
     }
@@ -782,15 +789,7 @@ final class Repository
     {
         $targetId = $this->resolve($revision);
         $trackedPaths = array_keys($this->index()->entries());
-
-        // Move HEAD
-        $head = $this->refs->readHead();
-
-        if ($head !== null) {
-            $this->refs->update($head->target, $targetId);
-        } else {
-            $this->refs->update('HEAD', $targetId);
-        }
+        $this->moveHeadTo($targetId, "reset: moving to {$revision}");
 
         if ($mode === 'soft') {
             return;
@@ -1199,13 +1198,7 @@ final class Repository
 
         // Fast-forward check
         if ($baseId !== null && $baseId->equals($oursId)) {
-            // Fast-forward: just move HEAD
-            $head = $this->refs->readHead();
-
-            if ($head !== null) {
-                $this->refs->update($head->target, $theirsId);
-            }
-
+            $this->moveHeadTo($theirsId, "merge {$branch}: Fast-forward");
             $this->resetWorktree($theirsId, $trackedPaths);
 
             return new MergeResult(clean: true, commitId: $theirsId);
@@ -1324,11 +1317,7 @@ final class Repository
         $commit = Commit::parse($content, $commitId);
         $this->objects->write($commit);
 
-        $head = $this->refs->readHead();
-
-        if ($head !== null) {
-            $this->refs->update($head->target, $commitId);
-        }
+        $this->moveHeadTo($commitId, "merge {$branch}: Merge made by Pitmaster");
 
         $this->resetWorktree($commitId, $trackedPaths);
 
@@ -1683,5 +1672,69 @@ final class Repository
 
             file_put_contents($fullPath, $content);
         }
+    }
+
+    private function moveHeadTo(ObjectId $target, string $message): void
+    {
+        $oldHeadId = $this->refs->resolveHead();
+        $head = $this->refs->readHead();
+
+        if ($head !== null) {
+            $this->refs->update($head->target, $target);
+            $this->appendReflogEntry($head->target, $oldHeadId, $target, $message);
+        } else {
+            $this->refs->update('HEAD', $target);
+        }
+
+        $this->appendReflogEntry('HEAD', $oldHeadId, $target, $message);
+    }
+
+    private function appendReflogEntry(string $refName, ?ObjectId $oldId, ObjectId $newId, string $message): void
+    {
+        $logDir = $refName === 'HEAD' ? $this->gitDir : $this->commonDir;
+        $reflog = Reflog::open($logDir, $refName);
+        $reflog->append($oldId ?? $this->zeroObjectId(), $newId, $this->reflogIdentity(), $message);
+    }
+
+    private function reflogIdentity(): string
+    {
+        $name = $this->config->get('user.name')
+            ?? (defined('PITMASTER_AUTHOR_NAME') ? constant('PITMASTER_AUTHOR_NAME') : 'Pitmaster');
+        $email = $this->config->get('user.email')
+            ?? (defined('PITMASTER_AUTHOR_EMAIL') ? constant('PITMASTER_AUTHOR_EMAIL') : 'pitmaster@localhost');
+
+        return "{$name} <{$email}> " . time() . ' ' . date('O');
+    }
+
+    private function zeroObjectId(): ObjectId
+    {
+        return ObjectId::fromHex(str_repeat('0', 40));
+    }
+
+    private function subjectLine(string $message): string
+    {
+        $message = trim($message);
+
+        if ($message === '') {
+            return '(empty message)';
+        }
+
+        $lines = preg_split("/\r\n|\n|\r/", $message);
+
+        return trim((string) ($lines[0] ?? $message));
+    }
+
+    private function currentLocationLabel(?ObjectId $headId): string
+    {
+        return $this->branch() ?? substr(($headId ?? $this->zeroObjectId())->hex, 0, 7);
+    }
+
+    private function targetLabel(string $target, ObjectId $resolvedId): string
+    {
+        if ($target === $resolvedId->hex) {
+            return substr($resolvedId->hex, 0, 7);
+        }
+
+        return $target;
     }
 }
