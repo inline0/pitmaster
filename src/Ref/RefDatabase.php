@@ -15,6 +15,7 @@ final class RefDatabase implements RefStore
 {
     private readonly LooseRefStore $loose;
     private readonly PackedRefStore $packed;
+    private readonly string $commonDir;
 
     /**
      * @param string $gitDir Per-worktree git dir (HEAD, loose refs)
@@ -23,6 +24,7 @@ final class RefDatabase implements RefStore
     public function __construct(string $gitDir, ?string $commonDir = null)
     {
         $commonDir = $commonDir ?? $gitDir;
+        $this->commonDir = $commonDir;
 
         // HEAD and per-worktree refs from gitDir
         $this->loose = new LooseRefStore($gitDir, $commonDir);
@@ -94,6 +96,11 @@ final class RefDatabase implements RefStore
     public function delete(string $name): void
     {
         $this->loose->delete($name);
+
+        if ($this->packed->exists($name)) {
+            $this->packed->remove($name);
+            $this->packed->write();
+        }
     }
 
     public function looseStore(): LooseRefStore
@@ -104,5 +111,10 @@ final class RefDatabase implements RefStore
     public function packedStore(): PackedRefStore
     {
         return $this->packed;
+    }
+
+    public function commonDir(): string
+    {
+        return $this->commonDir;
     }
 }

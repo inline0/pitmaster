@@ -563,6 +563,36 @@ final class Repository
     }
 
     /**
+     * Pack shared refs into packed-refs and prune their loose files.
+     */
+    public function packRefs(): void
+    {
+        $refs = [];
+        $peeled = [];
+
+        foreach ($this->refs->list() as $name => $id) {
+            if (!$this->isPackableRef($name) || $this->isCommonSymbolicRef($name) || $this->isPerWorktreeRef($name)) {
+                continue;
+            }
+
+            $refs[$name] = $id;
+            $peeledId = $this->peelRefTarget($id);
+
+            if ($peeledId !== null) {
+                $peeled[$name] = $peeledId;
+            }
+        }
+
+        $packed = $this->refs->packedStore();
+        $packed->replace($refs, $peeled);
+        $packed->write();
+
+        foreach (array_keys($refs) as $name) {
+            $this->deleteLooseCommonRef($name);
+        }
+    }
+
+    /**
      * Checkout a branch or commit (update HEAD + worktree + index).
      */
     public function checkout(string $target): void
@@ -2256,5 +2286,81 @@ final class Repository
         }
 
         return $target;
+    }
+
+    private function isPackableRef(string $name): bool
+    {
+        if (!str_starts_with($name, 'refs/')) {
+            return false;
+        }
+
+        return !str_starts_with($name, 'refs/bisect/')
+            && !str_starts_with($name, 'refs/worktree/');
+    }
+
+    private function isCommonSymbolicRef(string $name): bool
+    {
+        $path = $this->commonDir . '/' . $name;
+
+        if (!is_file($path)) {
+            return false;
+        }
+
+        $content = file_get_contents($path);
+
+        return $content !== false && str_starts_with(trim($content), 'ref: ');
+    }
+
+    private function isPerWorktreeRef(string $name): bool
+    {
+        if ($this->gitDir === $this->commonDir) {
+            return false;
+        }
+
+        $perWorktree = $this->gitDir . '/' . $name;
+        $shared = $this->commonDir . '/' . $name;
+
+        return is_file($perWorktree) && !is_file($shared);
+    }
+
+    private function peelRefTarget(ObjectId $id): ?ObjectId
+    {
+        $current = $id;
+
+        while (true) {
+            $object = $this->objects->read($current);
+
+            if (!$object instanceof Tag) {
+                return $current->equals($id) ? null : $current;
+            }
+
+            $current = $object->object;
+        }
+    }
+
+    private function deleteLooseCommonRef(string $name): void
+    {
+        $path = $this->commonDir . '/' . $name;
+
+        if (!is_file($path)) {
+            return;
+        }
+
+        unlink($path);
+        $this->removeEmptyRefDirectories(dirname($path), $this->commonDir . '/refs');
+    }
+
+    private function removeEmptyRefDirectories(string $dir, string $root): void
+    {
+        while ($dir !== $root && str_starts_with($dir, $root) && is_dir($dir)) {
+            $entries = scandir($dir);
+
+            if ($entries === false || $entries !== ['.', '..']) {
+                return;
+            }
+
+            rmdir($dir);
+            $dir = dirname($dir);
+        }
     }
 }

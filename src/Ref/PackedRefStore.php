@@ -67,7 +67,7 @@ final class PackedRefStore implements RefStore
     {
         $this->ensureLoaded();
 
-        $lines = ["# pack-refs with: peeled fully-peeled sorted\n"];
+        $lines = ["# pack-refs with: peeled fully-peeled sorted \n"];
 
         ksort($this->refs);
 
@@ -89,6 +89,36 @@ final class PackedRefStore implements RefStore
     {
         $this->ensureLoaded();
         $this->refs[$name] = $id;
+    }
+
+    /**
+     * Set the peeled value for an annotated tag.
+     */
+    public function setPeeled(string $name, ObjectId $id): void
+    {
+        $this->ensureLoaded();
+        $this->peeled[$name] = $id;
+    }
+
+    /**
+     * Remove a ref from the packed-refs view.
+     */
+    public function remove(string $name): void
+    {
+        $this->ensureLoaded();
+        unset($this->refs[$name], $this->peeled[$name]);
+    }
+
+    /**
+     * Replace the full packed-refs contents in memory.
+     *
+     * @param array<string, ObjectId> $refs
+     * @param array<string, ObjectId> $peeled
+     */
+    public function replace(array $refs, array $peeled = []): void
+    {
+        $this->refs = $refs;
+        $this->peeled = $peeled;
     }
 
     private function ensureLoaded(): void
