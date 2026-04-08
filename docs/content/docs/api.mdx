@@ -1,19 +1,19 @@
 ---
-title: API Reference
-description: Complete public API reference for the Pitmaster facade and Repository class.
+title: API
+description: The Pitmaster\Pitmaster facade and Repository class provide the public PHP API.
 ---
 
-# API Reference
+# PHP API
 
-## Pitmaster Facade
+## `Pitmaster\Pitmaster`
 
-The `Pitmaster` class is the static entry point. It provides factory methods for opening, creating, and cloning repositories, plus detection helpers.
+The `Pitmaster\Pitmaster` class is the static entry point. It provides factory methods for opening, creating, and cloning repositories, plus detection helpers.
 
 ```php
 use Pitmaster\Pitmaster;
 ```
 
-### open
+### `open`
 
 ```php
 public static function open(string $path): Repository
@@ -27,7 +27,7 @@ Throws `InvalidArgumentException` if the path is not a git repository.
 $repo = Pitmaster::open('/home/user/project');
 ```
 
-### init
+### `init`
 
 ```php
 public static function init(string $path): Repository
@@ -41,7 +41,7 @@ Throws `RuntimeException` if a repository already exists at the path.
 $repo = Pitmaster::init('/home/user/new-project');
 ```
 
-### clone
+### `clone`
 
 ```php
 public static function clone(string $url, string $path): Repository
@@ -53,7 +53,7 @@ Clone a remote repository via smart HTTP. Initializes a new repo, discovers remo
 $repo = Pitmaster::clone('https://github.com/user/repo.git', '/tmp/repo');
 ```
 
-### isRepository
+### `isRepository`
 
 ```php
 public static function isRepository(string $path): bool
@@ -67,7 +67,7 @@ if (Pitmaster::isRepository('/path/to/check')) {
 }
 ```
 
-### isWorktree
+### `isWorktree`
 
 ```php
 public static function isWorktree(string $path): bool
@@ -81,7 +81,7 @@ if (Pitmaster::isWorktree('/path/to/worktree')) {
 }
 ```
 
-### commonGitDir
+### `commonGitDir`
 
 ```php
 public static function commonGitDir(string $path): ?string
@@ -96,9 +96,9 @@ $common = Pitmaster::commonGitDir('/path/to/worktree');
 
 ---
 
-## Repository
+## `Pitmaster\Repository`
 
-The `Repository` class is the main handle for all git operations. Obtain one via `Pitmaster::open()`, `Pitmaster::init()`, or `Pitmaster::clone()`.
+The `Pitmaster\Repository` class is the main handle for all git operations. Obtain one via `Pitmaster::open()`, `Pitmaster::init()`, or `Pitmaster::clone()`.
 
 ```php
 use Pitmaster\Repository;
@@ -106,11 +106,15 @@ use Pitmaster\Repository;
 
 ### Path accessors
 
+#### `gitDir`
+
 ```php
 public function gitDir(): string
 ```
 
 Returns the per-worktree git directory. For regular repos this is `.git/`. For linked worktrees, this is `.git/worktrees/<name>/`.
+
+#### `commonGitDir`
 
 ```php
 public function commonGitDir(): string
@@ -118,11 +122,15 @@ public function commonGitDir(): string
 
 Returns the shared git directory. Same as `gitDir()` for regular repos. For linked worktrees, this is the main repo's `.git/` directory (where objects, config, and packed-refs live).
 
+#### `workDir`
+
 ```php
 public function workDir(): string
 ```
 
 Returns the working tree root path.
+
+#### `isLinkedWorktree`
 
 ```php
 public function isLinkedWorktree(): bool
@@ -134,7 +142,7 @@ Returns `true` if this repository handle is a linked worktree.
 
 ### Objects
 
-#### readObject
+#### `readObject`
 
 ```php
 public function readObject(string $hash): GitObject
@@ -148,7 +156,7 @@ Throws `ObjectNotFoundException` if the hash is not found.
 $object = $repo->readObject('a1b2c3d4e5f6...');
 ```
 
-#### writeObject
+#### `writeObject`
 
 ```php
 public function writeObject(GitObject $object): ObjectId
@@ -163,7 +171,7 @@ $blob = Blob::fromContent('Hello, world!');
 $id = $repo->writeObject($blob);
 ```
 
-#### catFile
+#### `catFile`
 
 ```php
 public function catFile(string $hash): string
@@ -175,7 +183,7 @@ Return the raw content of an object, equivalent to `git cat-file -p`.
 echo $repo->catFile('a1b2c3d4...');
 ```
 
-#### objectExists
+#### `objectExists`
 
 ```php
 public function objectExists(string $hash): bool
@@ -183,7 +191,7 @@ public function objectExists(string $hash): bool
 
 Check if an object exists in the repository (loose or packed).
 
-#### listObjects
+#### `listObjects`
 
 ```php
 public function listObjects(): array
@@ -195,7 +203,7 @@ List all object hashes in the repository. Returns an array of hex strings.
 
 ### Refs
 
-#### head
+#### `head`
 
 ```php
 public function head(): Commit
@@ -205,7 +213,7 @@ Returns the current HEAD commit. Follows symbolic refs (HEAD -> refs/heads/main 
 
 Throws `RuntimeException` if HEAD does not point to a valid commit (e.g., empty repository).
 
-#### branch
+#### `branch`
 
 ```php
 public function branch(?string $name = null): ?string
@@ -220,7 +228,7 @@ $current = $repo->branch();        // 'main'
 $hash = $repo->branch('feature');   // 'abc123...' or null
 ```
 
-#### branches
+#### `branches`
 
 ```php
 public function branches(): array
@@ -233,7 +241,7 @@ $branches = $repo->branches();
 // ['bugfix/typo', 'feature/login', 'main']
 ```
 
-#### tags
+#### `tags`
 
 ```php
 public function tags(): array
@@ -241,7 +249,7 @@ public function tags(): array
 
 Returns a sorted array of all tag names (without the `refs/tags/` prefix).
 
-#### resolve
+#### `resolve`
 
 ```php
 public function resolve(string $revision): ObjectId
@@ -263,7 +271,7 @@ $id = $repo->resolve('v1.0.0');
 $id = $repo->resolve('feature/login');
 ```
 
-#### allRefs
+#### `allRefs`
 
 ```php
 public function allRefs(): array
@@ -276,7 +284,7 @@ $refs = $repo->allRefs();
 // ['refs/heads/main' => 'abc123...', 'refs/tags/v1.0.0' => 'def456...']
 ```
 
-#### updateRef
+#### `updateRef`
 
 ```php
 public function updateRef(string $name, ObjectId $target): void
@@ -288,7 +296,7 @@ Update a ref to point to a new target.
 $repo->updateRef('refs/heads/main', $commitId);
 ```
 
-#### createBranch
+#### `createBranch`
 
 ```php
 public function createBranch(string $name, ?ObjectId $from = null): void
@@ -301,7 +309,7 @@ $repo->createBranch('feature/new-thing');
 $repo->createBranch('hotfix', $repo->resolve('v1.0.0'));
 ```
 
-#### deleteBranch
+#### `deleteBranch`
 
 ```php
 public function deleteBranch(string $name): void
@@ -313,7 +321,7 @@ Delete a branch by name.
 $repo->deleteBranch('feature/old');
 ```
 
-#### createTag
+#### `createTag`
 
 ```php
 public function createTag(string $name, string $message, ?ObjectId $target = null, ?string $tagger = null): ObjectId
@@ -325,7 +333,7 @@ Create an annotated tag. If `$target` is null, tags the current HEAD. Returns th
 $tagId = $repo->createTag('v2.0.0', 'Release version 2.0.0');
 ```
 
-#### defaultBranch
+#### `defaultBranch`
 
 ```php
 public function defaultBranch(): string
@@ -333,7 +341,7 @@ public function defaultBranch(): string
 
 Resolve the repository's default branch. Checks the remote HEAD symref first, then the local HEAD, then falls back to `main` or `master`.
 
-#### isBranchMerged
+#### `isBranchMerged`
 
 ```php
 public function isBranchMerged(string $branch, ?string $target = null): bool
@@ -347,7 +355,7 @@ if ($repo->isBranchMerged('feature/done')) {
 }
 ```
 
-#### checkout
+#### `checkout`
 
 ```php
 public function checkout(string $target): void
@@ -364,7 +372,7 @@ $repo->checkout('abc123def456...');  // Detached HEAD
 
 ### Index
 
-#### index
+#### `index`
 
 ```php
 public function index(): Index
@@ -372,7 +380,7 @@ public function index(): Index
 
 Read and return the current index (staging area) from `.git/index`.
 
-#### add
+#### `add`
 
 ```php
 public function add(string ...$paths): void
@@ -384,7 +392,7 @@ Stage files. Reads each file from the working tree, creates a blob object, and u
 $repo->add('src/Feature.php', 'tests/FeatureTest.php');
 ```
 
-#### remove
+#### `remove`
 
 ```php
 public function remove(string ...$paths): void
@@ -396,7 +404,7 @@ Unstage files (equivalent to `git rm --cached`). Removes entries from the index 
 $repo->remove('old-file.txt');
 ```
 
-#### mv
+#### `mv`
 
 ```php
 public function mv(string $source, string $destination): void
@@ -412,7 +420,7 @@ $repo->mv('old-name.php', 'new-name.php');
 
 ### Commits
 
-#### commit
+#### `commit`
 
 ```php
 public function commit(string $message, ?string $author = null): ObjectId
@@ -426,7 +434,7 @@ The `$author` parameter is a full git author string (`Name <email> timestamp tim
 $id = $repo->commit('Fix null pointer bug');
 ```
 
-#### show
+#### `show`
 
 ```php
 public function show(string $revision): array
@@ -443,7 +451,7 @@ foreach ($result['diff'] as $diff) {
 }
 ```
 
-#### reset
+#### `reset`
 
 ```php
 public function reset(string $revision, string $mode = 'mixed'): void
@@ -459,7 +467,7 @@ $repo->reset('HEAD~1', 'soft');
 $repo->reset('main', 'hard');
 ```
 
-#### restore
+#### `restore`
 
 ```php
 public function restore(string $path, ?string $source = null): void
@@ -472,7 +480,7 @@ $repo->restore('src/File.php');                // From index
 $repo->restore('src/File.php', 'HEAD~1');      // From a commit
 ```
 
-#### cherryPick
+#### `cherryPick`
 
 ```php
 public function cherryPick(string $revision): ObjectId
@@ -484,7 +492,7 @@ Apply a commit as a new commit on the current branch, preserving the original au
 $newId = $repo->cherryPick('abc123');
 ```
 
-#### revert
+#### `revert`
 
 ```php
 public function revert(string $revision): ObjectId
@@ -500,7 +508,7 @@ $revertId = $repo->revert('abc123');
 
 ### Status
 
-#### status
+#### `status`
 
 ```php
 public function status(): array
@@ -517,7 +525,7 @@ foreach ($repo->status() as $entry) {
 }
 ```
 
-#### statusPorcelainV2
+#### `statusPorcelainV2`
 
 ```php
 public function statusPorcelainV2(): string
@@ -535,7 +543,7 @@ echo $repo->statusPorcelainV2();
 
 ### Diff
 
-#### diff
+#### `diff`
 
 ```php
 public function diff(?string $pathspec = null): array
@@ -551,7 +559,7 @@ foreach ($diffs as $diff) {
 }
 ```
 
-#### diffStaged
+#### `diffStaged`
 
 ```php
 public function diffStaged(?string $pathspec = null): array
@@ -563,7 +571,7 @@ Diff index against HEAD (staged changes). Returns `DiffResult[]`.
 $staged = $repo->diffStaged();
 ```
 
-#### diffTree
+#### `diffTree`
 
 ```php
 public function diffTree(ObjectId $a, ObjectId $b): array
@@ -581,7 +589,7 @@ $diffs = $repo->diffTree($commit1, $commit2);
 
 ### Log
 
-#### log
+#### `log`
 
 ```php
 public function log(int $limit = 50, ?ObjectId $from = null): array
@@ -593,7 +601,7 @@ Walk commit history in topological order. Returns `Commit[]`. If `$from` is null
 $commits = $repo->log(10);
 ```
 
-#### logPath
+#### `logPath`
 
 ```php
 public function logPath(string $path, int $limit = 50): array
@@ -609,7 +617,7 @@ $commits = $repo->logPath('src/Repository.php', 20);
 
 ### Merge
 
-#### merge
+#### `merge`
 
 ```php
 public function merge(string $branch): MergeResult
@@ -632,7 +640,7 @@ if ($result->clean) {
 }
 ```
 
-#### mergeBase
+#### `mergeBase`
 
 ```php
 public function mergeBase(ObjectId $a, ObjectId $b): ?ObjectId
@@ -651,7 +659,7 @@ $base = $repo->mergeBase(
 
 ### Network
 
-#### fetch
+#### `fetch`
 
 ```php
 public function fetch(string $remote = 'origin'): void
@@ -664,7 +672,7 @@ $repo->fetch();
 $repo->fetch('upstream');
 ```
 
-#### push
+#### `push`
 
 ```php
 public function push(string $remote = 'origin', ?string $branch = null): void
@@ -681,7 +689,7 @@ $repo->push('origin', 'feature/login');
 
 ### Worktrees
 
-#### addWorktree
+#### `addWorktree`
 
 ```php
 public function addWorktree(string $path, string $branch, ?ObjectId $from = null): Worktree
@@ -693,7 +701,7 @@ Add a linked worktree. Creates the branch if it does not exist, sets up the work
 $wt = $repo->addWorktree('/tmp/review', 'feature/review');
 ```
 
-#### removeWorktree
+#### `removeWorktree`
 
 ```php
 public function removeWorktree(string $pathOrName, bool $force = false): void
@@ -701,7 +709,7 @@ public function removeWorktree(string $pathOrName, bool $force = false): void
 
 Remove a linked worktree. Use `$force = true` to remove even if locked.
 
-#### worktrees
+#### `worktrees`
 
 ```php
 public function worktrees(): array
@@ -719,7 +727,7 @@ foreach ($repo->worktrees() as $wt) {
 
 ### Config
 
-#### config
+#### `config`
 
 ```php
 public function config(): GitConfig
@@ -739,7 +747,7 @@ $config->set('user.email', 'new@example.com');
 
 These methods expose internal components for advanced use cases.
 
-#### objectDatabase
+#### `objectDatabase`
 
 ```php
 public function objectDatabase(): ObjectDatabase
@@ -747,7 +755,7 @@ public function objectDatabase(): ObjectDatabase
 
 Access the raw object database (loose + pack stores).
 
-#### refDatabase
+#### `refDatabase`
 
 ```php
 public function refDatabase(): RefDatabase

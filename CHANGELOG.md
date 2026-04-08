@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.3] - 2026-04-08
+
+### Changed
+- Aligned the CLI and API docs page titles, navigation labels, and code-styled section headings with the shared Rudel and Queuety docs conventions
+
 ## [0.2.2] - 2026-04-08
 
 ### Added

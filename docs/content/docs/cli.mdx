@@ -1,6 +1,6 @@
 ---
-title: CLI Reference
-description: Pitmaster command-line interface for git operations.
+title: CLI
+description: Complete command reference for the Pitmaster CLI.
 ---
 
 # CLI Reference
@@ -13,7 +13,7 @@ Pitmaster includes a CLI that mirrors a subset of git commands. It operates on t
 
 ## Commands
 
-### log
+### `log`
 
 Show commit history.
 
@@ -27,7 +27,7 @@ Show commit history.
 
 Output includes commit hash (yellow), author, merge parents (if any), and the commit message indented.
 
-### show
+### `show`
 
 Show commit details and diff against parent.
 
@@ -43,7 +43,7 @@ Show commit details and diff against parent.
 
 Displays the commit metadata followed by a colorized unified diff.
 
-### cat-file
+### `cat-file`
 
 Print the raw content of a git object.
 
@@ -53,7 +53,7 @@ Print the raw content of a git object.
 
 Works with blobs, trees, commits, and tags. Equivalent to `git cat-file -p`.
 
-### status
+### `status`
 
 Show working tree status.
 
@@ -78,7 +78,7 @@ Untracked files:
 
 Staged files are shown in green, unstaged and untracked in red.
 
-### diff
+### `diff`
 
 Show changes between the index and the working tree (unstaged changes).
 
@@ -93,7 +93,7 @@ Show changes between the index and the working tree (unstaged changes).
 
 Output is colorized unified diff format matching `git diff`.
 
-### add
+### `add`
 
 Stage files for the next commit.
 
@@ -104,7 +104,7 @@ Stage files for the next commit.
 
 Each file is read from the working tree, written as a blob object, and the index is updated.
 
-### commit
+### `commit`
 
 Create a commit from the staged files.
 
@@ -120,7 +120,7 @@ Output:
 
 The author and committer are taken from `.git/config` (`user.name` and `user.email`).
 
-### branch
+### `branch`
 
 List branches or create a new one.
 
@@ -144,7 +144,7 @@ Output for listing:
   feature/login
 ```
 
-### tag
+### `tag`
 
 List tags or create a new one.
 
@@ -159,7 +159,7 @@ List tags or create a new one.
 ./bin/pitmaster tag v2.0.0 -m "Release version 2.0.0"
 ```
 
-### checkout
+### `checkout`
 
 Switch branches or detach HEAD.
 
@@ -173,7 +173,7 @@ Switch branches or detach HEAD.
 
 Updates HEAD, the index, and the working tree to match the target.
 
-### merge
+### `merge`
 
 Merge a branch into the current branch.
 
@@ -193,7 +193,7 @@ Output on conflict:
 CONFLICT in: src/File.php, src/Other.php
 ```
 
-### stash
+### `stash`
 
 Save and restore working directory changes.
 
@@ -223,7 +223,7 @@ stash@{0}: Work in progress on login
 stash@{1}: WIP on main
 ```
 
-### blame
+### `blame`
 
 Show line-by-line authorship of a file.
 
@@ -239,7 +239,7 @@ a1b2c3d4 (Dennis Johnson           )
 f5e6d7c8 (Jane Smith               ) declare(strict_types=1);
 ```
 
-### grep
+### `grep`
 
 Search file contents in the current HEAD tree.
 
@@ -256,7 +256,7 @@ src/Merge/ThreeWayMerge.php:25:    public function merge(string $base, string $o
 
 Paths are shown in magenta, line numbers in green.
 
-### refs
+### `refs`
 
 List all refs with their hashes.
 
@@ -272,7 +272,7 @@ abc123def456... refs/heads/main
 def456789012... refs/tags/v1.0.0
 ```
 
-### reset
+### `reset`
 
 Reset HEAD to a specific commit.
 
@@ -293,7 +293,7 @@ Output:
 HEAD is now at abc1234
 ```
 
-### init
+### `init`
 
 Initialize a new repository.
 
