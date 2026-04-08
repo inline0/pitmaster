@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pitmaster;
 
+use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 
@@ -102,7 +103,9 @@ final class Pitmaster
             }
 
             $hash = sha1($packData);
-            file_put_contents($packDir . "/pack-{$hash}.pack", $packData);
+            $packFile = $packDir . "/pack-{$hash}.pack";
+            file_put_contents($packFile, $packData);
+            PackIndexer::writeIndex($packFile);
         }
 
         // Set up refs
@@ -115,14 +118,6 @@ final class Pitmaster
             }
         }
 
-        // Index the pack so Pitmaster can read it
-        if ($packData !== '' && str_starts_with($packData, 'PACK')) {
-            $idxPackDir = $gitDir . '/objects/pack';
-            $idxHash = sha1($packData);
-            $packFile = $idxPackDir . "/pack-{$idxHash}.pack";
-            exec(sprintf('git index-pack %s 2>/dev/null', escapeshellarg($packFile)));
-        }
-
         // Set HEAD to default branch
         $headRef = $discovery->headSymref() ?? 'refs/heads/main';
         $headId = $discovery->ref($headRef) ?? $discovery->ref('HEAD');
@@ -131,28 +126,20 @@ final class Pitmaster
             if (str_starts_with($headRef, 'refs/heads/')) {
                 $repo->refDatabase()->update($headRef, $headId);
                 $repo->refDatabase()->updateSymbolic('HEAD', $headRef);
+            } else {
+                $repo->refDatabase()->update('HEAD', $headId);
             }
         }
 
-        // Materialize working tree: checkout HEAD into the work dir
-        $repo = self::open($path); // Re-open to pick up pack index
+        // Materialize working tree and index.
+        $repo = self::open($path);
 
         try {
-            $head = $repo->head();
-            $treeMap = self::flattenTreeStatic($repo, $head->tree);
-
-            foreach ($treeMap as $filePath => $blobHash) {
-                $blob = $repo->readObject($blobHash);
-
-                if ($blob instanceof \Pitmaster\Object\Blob) {
-                    $fullPath = $path . '/' . $filePath;
-                    $dir = dirname($fullPath);
-
-                    if (!is_dir($dir)) {
-                        mkdir($dir, 0777, true);
-                    }
-
-                    file_put_contents($fullPath, $blob->content);
+            if ($headId !== null) {
+                if (str_starts_with($headRef, 'refs/heads/')) {
+                    $repo->checkout(substr($headRef, 11));
+                } else {
+                    $repo->checkout($headId->hex);
                 }
             }
         } catch (\Throwable) {
@@ -200,30 +187,5 @@ final class Pitmaster
         } catch (\Throwable) {
             return null;
         }
-    }
-
-    /**
-     * @return array<string, string> path => hex hash
-     */
-    private static function flattenTreeStatic(Repository $repo, \Pitmaster\Object\ObjectId $treeId, string $prefix = ''): array
-    {
-        $result = [];
-        $tree = $repo->readObject($treeId->hex);
-
-        if (!$tree instanceof \Pitmaster\Object\Tree) {
-            return $result;
-        }
-
-        foreach ($tree->entries as $entry) {
-            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
-
-            if ($entry->isTree()) {
-                $result = array_merge($result, self::flattenTreeStatic($repo, $entry->hash, $fullPath));
-            } else {
-                $result[$fullPath] = $entry->hash->hex;
-            }
-        }
-
-        return $result;
     }
 }

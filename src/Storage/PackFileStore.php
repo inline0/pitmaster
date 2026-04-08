@@ -53,6 +53,14 @@ final class PackFileStore implements ObjectStore
     }
 
     /**
+     * Drop the cached pack list so newly written packs become visible.
+     */
+    public function refresh(): void
+    {
+        $this->packs = null;
+    }
+
+    /**
      * List all object hashes across all packs.
      *
      * @return array<int, string>

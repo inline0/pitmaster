@@ -62,16 +62,8 @@ final class ThreeWayMergeTest extends TestCase
         $this->assertSame(0, $result['conflicts']);
     }
 
-    /**
-     * NOTE: The current ThreeWayMerge implementation has a bug where both-sides-changed
-     * falls through to the "theirs changed" branch instead of the conflict branch.
-     * The elseif condition on line 83 checks only $theirsChanged without excluding
-     * $oursChanged, so when both change the same line differently, theirs wins silently.
-     * This test documents the current (incorrect) behavior. When the bug is fixed,
-     * this test should be updated to assert conflict markers are present.
-     */
     #[Test]
-    public function testBothChangedDifferentlyCurrentlyTakesTheirs(): void
+    public function testBothChangedDifferentlyProducesConflictMarkers(): void
     {
         $base = "line1\nline2\nline3";
         $ours = "line1\nours-change\nline3";
@@ -79,10 +71,12 @@ final class ThreeWayMergeTest extends TestCase
 
         $result = ThreeWayMerge::merge($base, $ours, $theirs, 'HEAD', 'incoming');
 
-        // Bug: should conflict, but currently takes theirs silently
-        $this->assertTrue($result['clean']);
-        $this->assertSame(0, $result['conflicts']);
+        $this->assertFalse($result['clean']);
+        $this->assertSame(1, $result['conflicts']);
+        $this->assertStringContainsString('<<<<<<< HEAD', $result['content']);
+        $this->assertStringContainsString('ours-change', $result['content']);
         $this->assertStringContainsString('theirs-change', $result['content']);
+        $this->assertStringContainsString('>>>>>>> incoming', $result['content']);
     }
 
     #[Test]

@@ -14,8 +14,10 @@ use Pitmaster\Graph\RevisionParser;
 use Pitmaster\Index\Index;
 use Pitmaster\Index\IndexEntry;
 use Pitmaster\Index\IndexWriter;
+use Pitmaster\Merge\ConflictMarker;
 use Pitmaster\Merge\MergeBase;
 use Pitmaster\Merge\MergeResult;
+use Pitmaster\Merge\ThreeWayMerge;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\GitObject;
@@ -24,6 +26,7 @@ use Pitmaster\Object\ObjectType;
 use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
+use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
@@ -527,13 +530,15 @@ final class Repository
      */
     public function checkout(string $target): void
     {
+        $trackedPaths = array_keys($this->index()->entries());
+
         // Try as branch first
         $branchId = $this->refs->resolve("refs/heads/{$target}");
 
         if ($branchId !== null) {
             // Switch to branch: update HEAD symbolic ref
             $this->refs->updateSymbolic('HEAD', "refs/heads/{$target}");
-            $this->resetWorktree($branchId);
+            $this->resetWorktree($branchId, $trackedPaths);
 
             return;
         }
@@ -541,7 +546,7 @@ final class Repository
         // Try as tag or direct hash (detached HEAD)
         $id = $this->resolve($target);
         $this->refs->looseStore()->update('HEAD', $id);
-        $this->resetWorktree($id);
+        $this->resetWorktree($id, $trackedPaths);
     }
 
     /**
@@ -722,13 +727,18 @@ final class Repository
     public function commit(string $message, ?string $author = null): ObjectId
     {
         $index = $this->index();
+        $treeId = $this->buildTreeFromIndex($index);
+        $headId = $this->refs->resolveHead();
 
-        if ($index->count() === 0) {
+        if ($headId === null && $index->count() === 0) {
             throw new \RuntimeException('Nothing to commit: index is empty');
         }
 
-        // Build tree from index
-        $treeId = $this->buildTreeFromIndex($index);
+        $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+
+        if ($headCommit instanceof Commit && $headCommit->tree->equals($treeId)) {
+            throw new \RuntimeException('Nothing to commit: tree unchanged');
+        }
 
         // Determine author/committer
         if ($author === null) {
@@ -743,7 +753,6 @@ final class Repository
 
         // Build commit
         $parents = [];
-        $headId = $this->refs->resolveHead();
 
         if ($headId !== null) {
             $parents[] = $headId;
@@ -782,6 +791,7 @@ final class Repository
     public function reset(string $revision, string $mode = 'mixed'): void
     {
         $targetId = $this->resolve($revision);
+        $trackedPaths = array_keys($this->index()->entries());
 
         // Move HEAD
         $head = $this->refs->readHead();
@@ -793,6 +803,11 @@ final class Repository
         }
 
         if ($mode === 'soft') {
+            return;
+        }
+
+        if ($mode === 'hard') {
+            $this->resetWorktree($targetId, $trackedPaths);
             return;
         }
 
@@ -812,10 +827,6 @@ final class Repository
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
-
-        if ($mode === 'hard') {
-            $this->resetWorktree($targetId);
-        }
     }
 
     /**
@@ -886,30 +897,7 @@ final class Repository
         $index = $this->index();
 
         foreach ($changes as $change) {
-            if ($change->binary) {
-                continue;
-            }
-
-            // Read new content from the cherry-picked commit's tree
-            $treeMap = $this->flattenTree($commit->tree);
-            $path = $change->newPath;
-
-            if (isset($treeMap[$path])) {
-                $blob = $this->objects->read(ObjectId::fromHex($treeMap[$path]));
-
-                if ($blob instanceof Blob) {
-                    $fullPath = $this->workDir . '/' . $path;
-                    $dir = dirname($fullPath);
-
-                    if (!is_dir($dir)) {
-                        mkdir($dir, 0777, true);
-                    }
-
-                    file_put_contents($fullPath, $blob->content);
-                    $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
-                    $index->addEntry($entry);
-                }
-            }
+            $this->applyIndexedChange($index, $change);
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
@@ -943,29 +931,7 @@ final class Repository
         $index = $this->index();
 
         foreach ($changes as $change) {
-            if ($change->binary) {
-                continue;
-            }
-
-            $path = $change->newPath;
-            $parentTreeId = $this->getCommitTree($commit->parents[0]);
-
-            if ($parentTreeId === null) {
-                continue;
-            }
-
-            $parentTreeMap = $this->flattenTree($parentTreeId);
-
-            if (isset($parentTreeMap[$path])) {
-                $blob = $this->objects->read(ObjectId::fromHex($parentTreeMap[$path]));
-
-                if ($blob instanceof Blob) {
-                    $fullPath = $this->workDir . '/' . $path;
-                    file_put_contents($fullPath, $blob->content);
-                    $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
-                    $index->addEntry($entry);
-                }
-            }
+            $this->applyIndexedChange($index, $change);
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
@@ -1044,17 +1010,17 @@ final class Repository
         $packData = $uploadPack->fetch($url, $wants, $haves);
 
         if ($packData !== '' && str_starts_with($packData, 'PACK')) {
-            // Write pack file
-            $packDir = $this->gitDir . '/objects/pack';
+            $packDir = $this->commonDir . '/objects/pack';
 
             if (!is_dir($packDir)) {
                 mkdir($packDir, 0777, true);
             }
 
             $hash = sha1($packData);
-            file_put_contents($packDir . "/pack-{$hash}.pack", $packData);
-
-            // Generate index (would need a pack indexer; for now store as-is)
+            $packPath = $packDir . "/pack-{$hash}.pack";
+            file_put_contents($packPath, $packData);
+            PackIndexer::writeIndex($packPath);
+            $this->objects->packStore()->refresh();
         }
 
         // Update remote tracking refs
@@ -1239,6 +1205,7 @@ final class Repository
     {
         $theirsId = $this->resolve($branch);
         $oursId = $this->refs->resolveHead();
+        $trackedPaths = array_keys($this->index()->entries());
 
         if ($oursId === null) {
             throw new \RuntimeException('Cannot merge: HEAD is not set');
@@ -1257,11 +1224,11 @@ final class Repository
                 $this->refs->update($head->target, $theirsId);
             }
 
+            $this->resetWorktree($theirsId, $trackedPaths);
+
             return new MergeResult(clean: true, commitId: $theirsId);
         }
 
-        // Three-way merge via tree diff
-        $treeDiff = new TreeDiff($this->objects);
         $oursCommit = $this->objects->read($oursId);
         $theirsCommit = $this->objects->read($theirsId);
 
@@ -1269,62 +1236,121 @@ final class Repository
             throw new \RuntimeException('Cannot merge: invalid commit objects');
         }
 
-        $baseTree = $baseId !== null ? $this->getCommitTree($baseId) : null;
-        $oursTree = $oursCommit->tree;
-        $theirsTree = $theirsCommit->tree;
+        $baseEntries = $baseId !== null ? $this->flattenTreeEntries($this->getCommitTree($baseId)) : [];
+        $oursEntries = $this->flattenTreeEntries($oursCommit->tree);
+        $theirsEntries = $this->flattenTreeEntries($theirsCommit->tree);
+        $allPaths = array_unique(array_merge(array_keys($baseEntries), array_keys($oursEntries), array_keys($theirsEntries)));
+        sort($allPaths);
 
-        // Diff base->ours and base->theirs
-        $oursChanges = $treeDiff->diff($baseTree, $oursTree);
-        $theirsChanges = $treeDiff->diff($baseTree, $theirsTree);
-
-        // For now, return a simple result indicating the merge was attempted
+        $mergedEntries = [];
+        $mergedContents = [];
         $conflicts = [];
-        $clean = true;
 
-        // Check for overlapping changes (simplistic conflict detection)
-        $oursFiles = [];
+        foreach ($allPaths as $path) {
+            $base = $baseEntries[$path] ?? null;
+            $ours = $oursEntries[$path] ?? null;
+            $theirs = $theirsEntries[$path] ?? null;
+            $baseHash = $base['hash'] ?? null;
+            $oursHash = $ours['hash'] ?? null;
+            $theirsHash = $theirs['hash'] ?? null;
 
-        foreach ($oursChanges as $change) {
-            $oursFiles[$change->oldPath] = true;
-        }
+            if ($oursHash === $theirsHash) {
+                if ($ours !== null) {
+                    $mergedEntries[$path] = $ours;
+                }
 
-        foreach ($theirsChanges as $change) {
-            if (isset($oursFiles[$change->oldPath])) {
-                $conflicts[] = $change->oldPath;
-                $clean = false;
-            }
-        }
-
-        if ($clean) {
-            // Create merge commit
-            $name = $this->config->get('user.name') ?? 'Pitmaster';
-            $email = $this->config->get('user.email') ?? 'pitmaster@localhost';
-            $timestamp = time();
-            $tz = date('O');
-            $author = "{$name} <{$email}> {$timestamp} {$tz}";
-
-            $content = Commit::buildContent(
-                tree: $theirsTree,
-                parents: [$oursId, $theirsId],
-                author: $author,
-                committer: $author,
-                message: "Merge branch '{$branch}'\n",
-            );
-
-            $commitId = ObjectId::compute(ObjectType::Commit, $content);
-            $commit = Commit::parse($content, $commitId);
-            $this->objects->write($commit);
-
-            $head = $this->refs->readHead();
-
-            if ($head !== null) {
-                $this->refs->update($head->target, $commitId);
+                continue;
             }
 
-            return new MergeResult(clean: true, commitId: $commitId);
+            if ($baseHash === $oursHash) {
+                if ($theirs !== null) {
+                    $mergedEntries[$path] = $theirs;
+                }
+
+                continue;
+            }
+
+            if ($baseHash === $theirsHash) {
+                if ($ours !== null) {
+                    $mergedEntries[$path] = $ours;
+                }
+
+                continue;
+            }
+
+            if ($ours === null || $theirs === null) {
+                $conflicts[] = $path;
+                $mergedContents[$path] = ConflictMarker::mark(
+                    $oursHash !== null ? $this->readBlobContent(ObjectId::fromHex($oursHash)) : '',
+                    $theirsHash !== null ? $this->readBlobContent(ObjectId::fromHex($theirsHash)) : '',
+                );
+                continue;
+            }
+
+            $baseContent = $baseHash !== null ? $this->readBlobContent(ObjectId::fromHex($baseHash)) : '';
+            $oursContent = $this->readBlobContent(ObjectId::fromHex($oursHash));
+            $theirsContent = $this->readBlobContent(ObjectId::fromHex($theirsHash));
+
+            if (
+                MyersDiff::isBinary($baseContent)
+                || MyersDiff::isBinary($oursContent)
+                || MyersDiff::isBinary($theirsContent)
+            ) {
+                $conflicts[] = $path;
+                $mergedContents[$path] = ConflictMarker::mark($oursContent, $theirsContent);
+                continue;
+            }
+
+            $merge = ThreeWayMerge::merge($baseContent, $oursContent, $theirsContent);
+
+            if (!$merge['clean']) {
+                $conflicts[] = $path;
+                $mergedContents[$path] = $merge['content'];
+                continue;
+            }
+
+            $blob = Blob::fromContent($merge['content']);
+            $this->objects->write($blob);
+            $mergedEntries[$path] = [
+                'hash' => $blob->id->hex,
+                'mode' => $ours['mode'],
+            ];
         }
 
-        return new MergeResult(clean: false, conflictPaths: $conflicts);
+        if ($conflicts !== []) {
+            $this->materializeConflictContents($mergedContents);
+
+            return new MergeResult(clean: false, conflictPaths: $conflicts, mergedContents: $mergedContents);
+        }
+
+        $treeId = $this->buildTreeFromEntries($mergedEntries);
+        $name = $this->config->get('user.name') ?? 'Pitmaster';
+        $email = $this->config->get('user.email') ?? 'pitmaster@localhost';
+        $timestamp = time();
+        $tz = date('O');
+        $author = "{$name} <{$email}> {$timestamp} {$tz}";
+
+        $content = Commit::buildContent(
+            tree: $treeId,
+            parents: [$oursId, $theirsId],
+            author: $author,
+            committer: $author,
+            message: "Merge branch '{$branch}'\n",
+        );
+
+        $commitId = ObjectId::compute(ObjectType::Commit, $content);
+        $commit = Commit::parse($content, $commitId);
+        $this->objects->write($commit);
+
+        $head = $this->refs->readHead();
+
+        if ($head !== null) {
+            $this->refs->update($head->target, $commitId);
+        }
+
+        $this->resetWorktree($commitId, $trackedPaths);
+
+        return new MergeResult(clean: true, commitId: $commitId);
     }
 
     /**
@@ -1456,9 +1482,14 @@ final class Repository
      *
      * @return array<string, string>
      */
-    private function flattenTree(ObjectId $treeId, string $prefix = ''): array
+    private function flattenTree(?ObjectId $treeId, string $prefix = ''): array
     {
         $result = [];
+
+        if ($treeId === null) {
+            return $result;
+        }
+
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
@@ -1479,9 +1510,44 @@ final class Repository
     }
 
     /**
+     * Flatten a tree into path => hash/mode map.
+     *
+     * @return array<string, array{hash: string, mode: int}>
+     */
+    private function flattenTreeEntries(?ObjectId $treeId, string $prefix = ''): array
+    {
+        $result = [];
+
+        if ($treeId === null) {
+            return $result;
+        }
+
+        $tree = $this->objects->read($treeId);
+
+        if (!$tree instanceof Tree) {
+            return $result;
+        }
+
+        foreach ($tree->entries as $entry) {
+            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
+
+            if ($entry->isTree()) {
+                $result = array_merge($result, $this->flattenTreeEntries($entry->hash, $fullPath));
+            } else {
+                $result[$fullPath] = [
+                    'hash' => $entry->hash->hex,
+                    'mode' => octdec($entry->mode),
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Reset worktree and index to match a commit.
      */
-    private function resetWorktree(ObjectId $commitId): void
+    private function resetWorktree(ObjectId $commitId, array $pathsToPrune = []): void
     {
         $commit = $this->objects->read($commitId);
 
@@ -1490,6 +1556,7 @@ final class Repository
         }
 
         $treeMap = $this->flattenTree($commit->tree);
+        $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
         $index = new Index();
 
         foreach ($treeMap as $path => $hash) {
@@ -1500,13 +1567,6 @@ final class Repository
             }
 
             $fullPath = $this->workDir . '/' . $path;
-            $dir = dirname($fullPath);
-
-            if (!is_dir($dir)) {
-                mkdir($dir, 0777, true);
-            }
-
-            file_put_contents($fullPath, $blob->content);
             $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
             $index->addEntry($entry);
         }
@@ -1519,7 +1579,16 @@ final class Repository
      */
     private function checkoutTree(ObjectId $treeId, string $targetDir): void
     {
-        $treeMap = $this->flattenTree($treeId);
+        $this->materializeTreeMap($this->flattenTree($treeId), $targetDir);
+    }
+
+    /**
+     * @param array<string, string> $treeMap
+     * @param array<int, string> $pathsToPrune
+     */
+    private function materializeTreeMap(array $treeMap, string $targetDir, array $pathsToPrune = []): void
+    {
+        $this->pruneMissingPaths($treeMap, $targetDir, $pathsToPrune);
 
         foreach ($treeMap as $path => $hash) {
             $blob = $this->objects->read(ObjectId::fromHex($hash));
@@ -1536,6 +1605,107 @@ final class Repository
             }
 
             file_put_contents($fullPath, $blob->content);
+        }
+    }
+
+    /**
+     * @param array<string, string> $treeMap
+     * @param array<int, string> $pathsToPrune
+     */
+    private function pruneMissingPaths(array $treeMap, string $targetDir, array $pathsToPrune): void
+    {
+        foreach (array_unique($pathsToPrune) as $path) {
+            if (isset($treeMap[$path])) {
+                continue;
+            }
+
+            $fullPath = $targetDir . '/' . $path;
+
+            if (is_file($fullPath) || is_link($fullPath)) {
+                unlink($fullPath);
+                $this->removeEmptyParentDirectories(dirname($fullPath), $targetDir);
+            }
+        }
+    }
+
+    private function removeEmptyParentDirectories(string $directory, string $stopAt): void
+    {
+        while ($directory !== $stopAt && str_starts_with($directory, $stopAt . '/')) {
+            if (!is_dir($directory)) {
+                $directory = dirname($directory);
+                continue;
+            }
+
+            $entries = scandir($directory);
+
+            if ($entries === false || count($entries) > 2) {
+                return;
+            }
+
+            rmdir($directory);
+            $directory = dirname($directory);
+        }
+    }
+
+    private function buildTreeFromEntries(array $entries): ObjectId
+    {
+        $index = new Index();
+
+        foreach ($entries as $path => $entry) {
+            $index->addEntry(IndexEntry::create($path, ObjectId::fromHex($entry['hash']), $entry['mode']));
+        }
+
+        return $this->buildTreeFromIndex($index);
+    }
+
+    private function applyIndexedChange(Index $index, DiffResult $change): void
+    {
+        if ($change->newHash === null) {
+            $path = $change->oldPath;
+            $fullPath = $this->workDir . '/' . $path;
+
+            if (is_file($fullPath) || is_link($fullPath)) {
+                unlink($fullPath);
+                $this->removeEmptyParentDirectories(dirname($fullPath), $this->workDir);
+            }
+
+            $index->removeEntry($path);
+
+            return;
+        }
+
+        $blob = $this->objects->read(ObjectId::fromHex($change->newHash));
+
+        if (!$blob instanceof Blob) {
+            return;
+        }
+
+        $path = $change->newPath;
+        $fullPath = $this->workDir . '/' . $path;
+        $dir = dirname($fullPath);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        file_put_contents($fullPath, $blob->content);
+        $index->addEntry(IndexEntry::fromStat($path, $blob->id, $fullPath));
+    }
+
+    /**
+     * @param array<string, string> $mergedContents
+     */
+    private function materializeConflictContents(array $mergedContents): void
+    {
+        foreach ($mergedContents as $path => $content) {
+            $fullPath = $this->workDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $content);
         }
     }
 }

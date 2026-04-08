@@ -67,6 +67,36 @@ final class ThreeWayMerge
                 $baseIdx++;
                 $oursIdx++;
                 $theirsIdx++;
+            } elseif ($oursChanged && $theirsChanged) {
+                // Both changed: conflict
+                $conflicts++;
+                $oursChunk = [];
+                $theirsChunk = [];
+
+                if ($oursIdx < count($oursLines)) {
+                    $oursChunk[] = $oursLines[$oursIdx];
+                    $oursIdx++;
+                }
+
+                if ($theirsIdx < count($theirsLines)) {
+                    $theirsChunk[] = $theirsLines[$theirsIdx];
+                    $theirsIdx++;
+                }
+
+                $result[] = "<<<<<<< {$oursLabel}";
+
+                foreach ($oursChunk as $line) {
+                    $result[] = $line;
+                }
+
+                $result[] = '=======';
+
+                foreach ($theirsChunk as $line) {
+                    $result[] = $line;
+                }
+
+                $result[] = ">>>>>>> {$theirsLabel}";
+                $baseIdx++;
             } elseif ($oursChanged && !$theirsChanged) {
                 // Only ours changed, take ours
                 if ($oursOps[$baseIdx] === 'delete') {
@@ -93,38 +123,6 @@ final class ThreeWayMerge
                     $baseIdx++;
                     $oursIdx++;
                 }
-            } else {
-                // Both changed: conflict
-                $conflicts++;
-                $oursChunk = [];
-                $theirsChunk = [];
-
-                // Collect the conflicting region from ours
-                if ($oursIdx < count($oursLines)) {
-                    $oursChunk[] = $oursLines[$oursIdx];
-                    $oursIdx++;
-                }
-
-                // Collect the conflicting region from theirs
-                if ($theirsIdx < count($theirsLines)) {
-                    $theirsChunk[] = $theirsLines[$theirsIdx];
-                    $theirsIdx++;
-                }
-
-                $result[] = "<<<<<<< {$oursLabel}";
-
-                foreach ($oursChunk as $line) {
-                    $result[] = $line;
-                }
-
-                $result[] = '=======';
-
-                foreach ($theirsChunk as $line) {
-                    $result[] = $line;
-                }
-
-                $result[] = ">>>>>>> {$theirsLabel}";
-                $baseIdx++;
             }
         }
 

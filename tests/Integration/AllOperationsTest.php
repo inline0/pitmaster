@@ -62,6 +62,9 @@ final class AllOperationsTest extends TestCase
         $gitLs = $this->git('ls-tree --name-only HEAD');
         $this->assertStringContainsString('a.txt', $gitLs);
         $this->assertStringContainsString('b.txt', $gitLs);
+        $this->assertFileExists($this->tmpDir . '/b.txt');
+        $this->assertSame("feature work\n", file_get_contents($this->tmpDir . '/b.txt'));
+        $this->assertSame('', trim($this->git('status --short')));
     }
 
     #[Test]
@@ -97,6 +100,9 @@ final class AllOperationsTest extends TestCase
         $head = $this->repo->head();
         $this->assertTrue($head->isMerge());
         $this->assertCount(2, $head->parents);
+        $this->assertSame("line 1\nline 2 modified on main\nline 3\n", file_get_contents($this->tmpDir . '/a.txt'));
+        $this->assertSame("line 1\nline 2 modified\nline 3\n", file_get_contents($this->tmpDir . '/b.txt'));
+        $this->assertSame('', trim($this->git('status --short')));
     }
 
     // ---- checkout ----
@@ -127,6 +133,28 @@ final class AllOperationsTest extends TestCase
         // Verify file content was updated
         $content = file_get_contents($this->tmpDir . '/a.txt');
         $this->assertSame("feature content\n", $content);
+    }
+
+    #[Test]
+    public function testCheckoutBranchRemovesFilesMissingOnTarget(): void
+    {
+        $this->writeFile('keep.txt', "keep\n");
+        $this->writeFile('remove.txt', "remove\n");
+        $this->repo->add('keep.txt', 'remove.txt');
+        $this->repo->commit("Base\n");
+
+        $this->git('checkout -b feature');
+        $this->git('rm remove.txt');
+        $this->git('commit -m "Remove file"');
+        $this->git('checkout main');
+
+        $this->assertFileExists($this->tmpDir . '/remove.txt');
+
+        $this->repo = Pitmaster::open($this->tmpDir);
+        $this->repo->checkout('feature');
+
+        $this->assertFileDoesNotExist($this->tmpDir . '/remove.txt');
+        $this->assertSame('', trim($this->git('status --short')));
     }
 
     // ---- stash ----
@@ -199,6 +227,27 @@ final class AllOperationsTest extends TestCase
         $this->assertStringContainsString('Add b.txt on feature', $gitLog);
     }
 
+    #[Test]
+    public function testCherryPickDeletesFiles(): void
+    {
+        $this->writeFile('keep.txt', "keep\n");
+        $this->writeFile('remove.txt', "remove\n");
+        $this->repo->add('keep.txt', 'remove.txt');
+        $this->repo->commit("Base\n");
+
+        $this->git('checkout -b feature');
+        $this->git('rm remove.txt');
+        $this->git('commit -m "Remove file on feature"');
+        $featureHead = trim($this->git('rev-parse HEAD'));
+
+        $this->git('checkout main');
+        $this->repo = Pitmaster::open($this->tmpDir);
+        $this->repo->cherryPick($featureHead);
+
+        $this->assertFileDoesNotExist($this->tmpDir . '/remove.txt');
+        $this->assertSame('', trim($this->git('status --short')));
+    }
+
     // ---- revert ----
 
     #[Test]
@@ -223,6 +272,23 @@ final class AllOperationsTest extends TestCase
         // Log should show the revert commit
         $gitLog = $this->git('log --oneline');
         $this->assertStringContainsString('Revert', $gitLog);
+    }
+
+    #[Test]
+    public function testRevertRemovesAddedFiles(): void
+    {
+        $this->writeFile('base.txt', "base\n");
+        $this->repo->add('base.txt');
+        $this->repo->commit("Base\n");
+
+        $this->writeFile('added.txt', "added\n");
+        $this->repo->add('added.txt');
+        $addedCommit = $this->repo->commit("Add file\n");
+
+        $this->repo->revert($addedCommit->hex);
+
+        $this->assertFileDoesNotExist($this->tmpDir . '/added.txt');
+        $this->assertSame('', trim($this->git('status --short')));
     }
 
     // ---- reset --mixed and --hard ----
@@ -302,6 +368,21 @@ final class AllOperationsTest extends TestCase
 
         $content = file_get_contents($this->tmpDir . '/a.txt');
         $this->assertSame("v1\n", $content);
+    }
+
+    #[Test]
+    public function testCommitCanCreateEmptyTree(): void
+    {
+        $this->writeFile('only.txt', "content\n");
+        $this->repo->add('only.txt');
+        $this->repo->commit("Add only file\n");
+
+        unlink($this->tmpDir . '/only.txt');
+        $this->repo->remove('only.txt');
+        $this->repo->commit("Remove only file\n");
+
+        $this->assertSame('', trim($this->git('ls-tree --name-only HEAD')));
+        $this->assertSame('', trim($this->git('status --short')));
     }
 
     // ---- mv ----

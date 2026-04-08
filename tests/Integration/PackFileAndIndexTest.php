@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Pitmaster\Object\Blob;
 use Pitmaster\Pack\PackEnumerator;
 use Pitmaster\Pack\PackFile;
+use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Pack\PackIndex;
 use Pitmaster\Storage\PackFileStore;
 
@@ -198,6 +199,27 @@ final class PackFileAndIndexTest extends TestCase
             $this->assertSame(40, strlen($hash));
             $this->assertTrue(ctype_xdigit($hash));
         }
+    }
+
+    #[Test]
+    public function packIndexerCanRebuildGitGeneratedIndex(): void
+    {
+        $packDir = $this->createPackedRepo();
+        $packFiles = $this->findPackFiles($packDir);
+        $packPath = $packDir . '/' . $packFiles[0];
+        $idxPath = substr($packPath, 0, -5) . '.idx';
+
+        unlink($idxPath);
+        $this->assertFileDoesNotExist($idxPath);
+
+        PackIndexer::writeIndex($packPath);
+        $this->assertFileExists($idxPath);
+
+        $pack = PackFile::open($packPath, $idxPath);
+        $hashes = $pack->allHashes();
+
+        $this->assertNotEmpty($hashes);
+        $this->assertNotNull($pack->read($hashes[0]));
     }
 
     #[Test]
