@@ -1,0 +1,7 @@
+line 1
+<<<<<<< HEAD
+other
+=======
+line 2
+>>>>>>> parent of dfa0ac9 (change)
+line 3

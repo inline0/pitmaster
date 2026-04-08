@@ -12,12 +12,12 @@ declare(strict_types=1);
  */
 
 $root = dirname(__DIR__);
-$gitTestDir = '/tmp/git-source/t';
+$gitTestDir = $root . '/fixtures/upstream/git/t';
 $shimPath = realpath($root . '/bin/git-test-shim.sh');
 $upstreamDir = $root . '/scenarios/upstream/git-test-suite';
 
 if (!is_dir($gitTestDir)) {
-    fwrite(STDERR, "Git test suite not found\n");
+    fwrite(STDERR, "Vendored git test suite not found at {$gitTestDir}\n");
     exit(1);
 }
 
@@ -36,6 +36,18 @@ $existing = 0;
 // Skip only scripts that truly need external infrastructure
 $skipWords = ['lib-httpd', 'start_httpd', 'git-svn', 'git-p4', 'lib-cvs',
     'lib-gitweb', 'GIT_VALGRIND', 'test_external', 'lib-git-daemon'];
+$normalizeNestedRepo = <<<'BASH'
+if ! git rev-parse HEAD >/dev/null 2>&1; then
+    for subdir in */; do
+        [ -d "${subdir}.git" ] || continue
+        if git -C "$subdir" rev-parse HEAD >/dev/null 2>&1; then
+            cp -R "$subdir". .
+            break
+        fi
+    done
+fi
+BASH;
+$normalizeNestedRepo .= "\n";
 
 foreach ($scripts as $scriptPath) {
     $basename = basename($scriptPath, '.sh');
@@ -136,10 +148,12 @@ foreach ($scripts as $scriptPath) {
         . "git config user.name \"Test\"\n"
         . "git config protocol.file.allow always 2>/dev/null || true\n\n"
         . "source " . escapeshellarg($shimPath) . "\n\n"
-        . implode("\n", $commands) . "\n\ntrue\n";
+        . implode("\n", $commands) . "\n\n"
+        . $normalizeNestedRepo . "\n"
+        . "true\n";
 
     // Test it
-    $tmpDir = sys_get_temp_dir() . '/git-suite-' . bin2hex(random_bytes(4));
+    $tmpDir = $root . '/.pitmaster/workspaces/git-suite-' . bin2hex(random_bytes(4));
     mkdir($tmpDir, 0777, true);
     file_put_contents($tmpDir . '/setup.sh', $setup);
 

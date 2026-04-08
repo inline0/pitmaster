@@ -1,0 +1,7 @@
+line 1
+<<<<<<< HEAD
+main change
+=======
+feature change
+>>>>>>> a445fa8 (feature)
+line 3

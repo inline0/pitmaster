@@ -51,6 +51,16 @@ final readonly class Scenario
     }
 
     /**
+     * Commands to run against Pitmaster-produced state for exact output parity.
+     *
+     * @return array<string, string>
+     */
+    public function actualCommands(): array
+    {
+        return (array) ($this->definition['actual_commands'] ?? []);
+    }
+
+    /**
      * Expectation rules.
      *
      * @return array<string, mixed>
@@ -91,6 +101,16 @@ final readonly class Scenario
     public function setupScriptPath(): string
     {
         return $this->scenarioDir() . '/setup.sh';
+    }
+
+    public function oracleScriptPath(): string
+    {
+        return $this->scenarioDir() . '/oracle.sh';
+    }
+
+    public function actualScriptPath(): string
+    {
+        return $this->scenarioDir() . '/actual.php';
     }
 
     public function oracleDir(): string

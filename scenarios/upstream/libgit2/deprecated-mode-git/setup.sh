@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
 
 # Copy libgit2 bare fixture: deprecated-mode.git
 git init .
-cp -r '/tmp/libgit2-fixtures/tests/resources/deprecated-mode.git'/* .git/
+cp -r "${PITMASTER_ROOT}/fixtures/upstream/libgit2/tests/resources/deprecated-mode.git"/* .git/
 git checkout -- . 2>/dev/null || true

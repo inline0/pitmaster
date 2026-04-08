@@ -6,6 +6,7 @@ Pure PHP Git implementation. Reads and writes Git repositories without shelling 
 
 ```bash
 # Testing (oracle-driven)
+./bin/verify-all                        # Required final gate: analyse + cs + phpunit + full oracle regression
 ./bin/test-scenario <name>               # Single scenario: oracle → actual → compare
 ./bin/test-regression                    # All scenarios
 ./bin/test-regression --jobs 4           # Parallel
@@ -21,6 +22,8 @@ Pure PHP Git implementation. Reads and writes Git repositories without shelling 
 
 # Unit tests (no git binary needed)
 composer test:unit                       # Isolated component tests
+composer test:oracle                     # Vendored upstream oracle corpus
+composer test                            # Full phpunit + oracle matrix
 
 # Code quality
 composer cs                              # Check coding standards
@@ -33,6 +36,16 @@ composer analyse                         # PHPStan static analysis
 ./bin/pitmaster status                   # Working tree status
 ./bin/pitmaster diff                     # Diff index vs worktree
 ```
+
+## Non-Negotiable Testing Rule
+
+After every meaningful work pass, run the full matrix from the repo root before treating the work as done:
+
+```bash
+./bin/verify-all
+```
+
+No partial sign-off. `composer test` is the full test matrix, not just PHPUnit. Upstream scenario fixtures must stay vendored under `fixtures/upstream`; scenario setup scripts and acquisition scripts must never depend on `/tmp` or `/private/tmp`.
 
 ## What This Is
 

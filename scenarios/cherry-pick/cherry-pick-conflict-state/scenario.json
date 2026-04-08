@@ -1,0 +1,44 @@
+{
+    "name": "cherry-pick-conflict-state",
+    "category": "cherry-pick",
+    "description": "Produce a textual cherry-pick conflict and compare the resulting conflict state against git",
+    "operations": [
+        "index",
+        "status",
+        "pit_status",
+        "cherry_pick_head",
+        "merge_msg",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "cherry_pick_head": "cat .git/CHERRY_PICK_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "cherry_pick_head": "cat .git/CHERRY_PICK_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "index",
+            "status",
+            "pit_status",
+            "cherry_pick_head",
+            "merge_msg",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

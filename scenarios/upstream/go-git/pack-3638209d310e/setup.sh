@@ -1,11 +1,12 @@
 #!/bin/bash
 set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
 
 # go-git pack fixture: pack-3638209d310e10ea8d90c362d568be65dd5e03a6
 git init .
 mkdir -p .git/objects/pack
-cp '/private/tmp/go-git-fixtures/data/pack-3638209d310e10ea8d90c362d568be65dd5e03a6.pack' .git/objects/pack/
-cp '/private/tmp/go-git-fixtures/data/pack-3638209d310e10ea8d90c362d568be65dd5e03a6.idx' .git/objects/pack/
+cp "${PITMASTER_ROOT}/fixtures/upstream/go-git/data/pack-3638209d310e10ea8d90c362d568be65dd5e03a6.pack" .git/objects/pack/
+cp "${PITMASTER_ROOT}/fixtures/upstream/go-git/data/pack-3638209d310e10ea8d90c362d568be65dd5e03a6.idx" .git/objects/pack/
 # Set HEAD to first commit found in pack
 FIRST_COMMIT=$(git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | grep ' commit' | head -1 | cut -d' ' -f1)
 if [ -n "$FIRST_COMMIT" ]; then

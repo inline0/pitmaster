@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Tests\Oracle;
 
 use Pitmaster\Support\Json;
+use Pitmaster\Tests\Support\Workspace;
 use RuntimeException;
 
 /**
@@ -21,15 +22,14 @@ final class OracleCapture
      */
     public function capture(Scenario $scenario): array
     {
-        $tempDir = sys_get_temp_dir() . '/pitmaster-oracle-' . bin2hex(random_bytes(8));
-        mkdir($tempDir, 0777, true);
+        $tempDir = Workspace::createDirectory('pitmaster-oracle-');
 
         try {
             $this->runSetup($scenario, $tempDir);
 
-            return $this->captureFromRepo($scenario, $tempDir);
+            return $this->captureFromRepo($scenario, $tempDir, true);
         } finally {
-            exec(sprintf('rm -rf %s', escapeshellarg($tempDir)));
+            Workspace::remove($tempDir);
         }
     }
 
@@ -38,12 +38,16 @@ final class OracleCapture
      *
      * @return array{success: bool, outputs: array<string, mixed>, errors: array<int, string>}
      */
-    public function captureFromRepo(Scenario $scenario, string $repoDir): array
+    public function captureFromRepo(Scenario $scenario, string $repoDir, bool $runOracleScript = false): array
     {
         $errors = [];
         $outputs = [];
 
         try {
+            if ($runOracleScript) {
+                $this->runOracleScript($scenario, $repoDir);
+            }
+
             // Always capture these baseline outputs
             $outputs['objects'] = $this->captureObjects($repoDir);
             $outputs['refs'] = $this->captureRefs($repoDir);
@@ -55,7 +59,7 @@ final class OracleCapture
                 $command = $scenario->oracleCommands()[$operation] ?? null;
 
                 if ($command !== null) {
-                    $outputs[$operation] = $this->runGitCommand($repoDir, $command);
+                    $outputs[$operation] = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
                 }
             }
 
@@ -111,8 +115,9 @@ final class OracleCapture
         }
 
         $command = sprintf(
-            'cd %s && bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
             escapeshellarg($tempDir),
+            escapeshellarg($scenario->rootPath),
             escapeshellarg($setupScript),
         );
 
@@ -121,6 +126,30 @@ final class OracleCapture
         if ($exitCode !== 0) {
             throw new RuntimeException(
                 "Setup script failed (exit {$exitCode}): " . implode("\n", $output)
+            );
+        }
+    }
+
+    private function runOracleScript(Scenario $scenario, string $repoDir): void
+    {
+        $oracleScript = $scenario->oracleScriptPath();
+
+        if (!is_file($oracleScript)) {
+            return;
+        }
+
+        $command = sprintf(
+            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
+            escapeshellarg($repoDir),
+            escapeshellarg($scenario->rootPath),
+            escapeshellarg($oracleScript),
+        );
+
+        exec($command, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            throw new RuntimeException(
+                "Oracle script failed (exit {$exitCode}): " . implode("\n", $output)
             );
         }
     }
@@ -272,14 +301,24 @@ final class OracleCapture
         return shell_exec($command) ?? '';
     }
 
-    private function runGitCommand(string $repoDir, string $command): string
+    private function runCommand(Scenario $scenario, string $repoDir, string $command): string
     {
         $fullCommand = sprintf(
-            'cd %s && %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s %s 2>&1',
             escapeshellarg($repoDir),
+            escapeshellarg($scenario->rootPath),
             $command,
         );
 
         return shell_exec($fullCommand) ?? '';
+    }
+
+    private function expandCommand(Scenario $scenario, string $command): string
+    {
+        return str_replace(
+            ['{{ROOT}}', '{{SCENARIO_DIR}}'],
+            [$scenario->rootPath, $scenario->scenarioDir()],
+            $command,
+        );
     }
 }

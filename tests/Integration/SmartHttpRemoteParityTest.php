@@ -6,6 +6,7 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Exceptions\ProtocolException;
 use Pitmaster\Pitmaster;
 
 final class SmartHttpRemoteParityTest extends TestCase
@@ -95,6 +96,91 @@ final class SmartHttpRemoteParityTest extends TestCase
         $this->git('fsck --full', $remoteDir);
         $this->git('clone ' . escapeshellarg($remoteUrl) . ' ' . escapeshellarg($verifyDir), $this->tmpDir);
         $this->assertSame("from pitmaster push\n", file_get_contents($verifyDir . '/pitmaster.txt'));
+    }
+
+    #[Test]
+    public function cloneImportsRemoteTagsAndNoOpFetchDoesNotWriteExtraPacks(): void
+    {
+        $projectRoot = $this->tmpDir . '/projects';
+        $sourceDir = $this->tmpDir . '/source';
+        $cloneDir = $this->tmpDir . '/clone';
+        $remoteDir = $projectRoot . '/remote.git';
+
+        mkdir($projectRoot, 0777, true);
+        $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
+        $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
+        $this->git('config user.email test@example.com', $sourceDir);
+        $this->git('config user.name Test', $sourceDir);
+
+        file_put_contents($sourceDir . '/README.md', "hello smart http\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m initial', $sourceDir);
+        $this->git('tag v1.0', $sourceDir);
+        $this->git('tag -a v1.1 -m "Release 1.1"', $sourceDir);
+        $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
+        $this->git('push origin main --tags', $sourceDir);
+
+        $this->startGitHttpBackendServer($projectRoot);
+        $remoteUrl = $this->baseUrl . '/remote.git';
+
+        $repo = Pitmaster::clone($remoteUrl, $cloneDir);
+
+        $this->assertSame(['v1.0', 'v1.1'], $repo->tags());
+        $this->assertSame("v1.0\nv1.1\n", $this->git('tag --list --sort=refname', $cloneDir));
+
+        $packDir = $cloneDir . '/.git/objects/pack';
+        $beforePacks = $this->packFiles($packDir);
+
+        $repo->fetch();
+
+        $this->assertSame($beforePacks, $this->packFiles($packDir));
+    }
+
+    #[Test]
+    public function pushRejectsNonFastForwardAgainstGitSmartHttp(): void
+    {
+        $projectRoot = $this->tmpDir . '/projects';
+        $sourceDir = $this->tmpDir . '/source';
+        $cloneDir = $this->tmpDir . '/clone';
+        $remoteDir = $projectRoot . '/remote.git';
+
+        mkdir($projectRoot, 0777, true);
+        $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
+        $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
+        $this->git('config user.email test@example.com', $sourceDir);
+        $this->git('config user.name Test', $sourceDir);
+        $this->git('config http.receivepack true', $remoteDir);
+        $this->git('config receive.denyNonFastForwards true', $remoteDir);
+
+        file_put_contents($sourceDir . '/README.md', "hello smart http\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m initial', $sourceDir);
+        $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
+        $this->git('push origin main', $sourceDir);
+
+        $this->startGitHttpBackendServer($projectRoot);
+        $remoteUrl = $this->baseUrl . '/remote.git';
+        $repo = Pitmaster::clone($remoteUrl, $cloneDir);
+
+        file_put_contents($sourceDir . '/remote.txt', "from remote\n");
+        $this->git('add remote.txt', $sourceDir);
+        $this->git('commit -m remote-update', $sourceDir);
+        $this->git('push origin main', $sourceDir);
+        $advancedHead = trim($this->git('rev-parse refs/heads/main', $remoteDir));
+
+        file_put_contents($cloneDir . '/pitmaster.txt', "stale push\n");
+        $repo->add('pitmaster.txt');
+        $repo->commit("Stale push\n");
+
+        $this->expectException(ProtocolException::class);
+        $this->expectExceptionMessage('non-fast-forward');
+
+        try {
+            $repo->push();
+        } finally {
+            $this->assertSame($advancedHead, trim($this->git('rev-parse refs/heads/main', $remoteDir)));
+            $this->assertStringNotContainsString('pitmaster.txt', $this->git('ls-tree --name-only refs/heads/main', $remoteDir));
+        }
     }
 
     private function startGitHttpBackendServer(string $projectRoot): void
@@ -191,5 +277,23 @@ final class SmartHttpRemoteParityTest extends TestCase
         }
 
         return $result . ($result === '' ? '' : "\n");
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function packFiles(string $packDir): array
+    {
+        if (!is_dir($packDir)) {
+            return [];
+        }
+
+        $packs = array_values(array_filter(
+            scandir($packDir) ?: [],
+            static fn (string $file): bool => str_ends_with($file, '.pack'),
+        ));
+        sort($packs);
+
+        return $packs;
     }
 }

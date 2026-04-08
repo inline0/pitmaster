@@ -1,0 +1,5 @@
+readme.txt: text: set
+readme.txt: eol: lf
+guide.md: diff: markdown
+docs/file.bin: custom: set
+archive.dat: diff: unset

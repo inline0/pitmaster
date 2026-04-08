@@ -8,10 +8,16 @@ declare(strict_types=1);
  */
 
 $root = dirname(__DIR__);
-$source = '/tmp/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources';
+$source = $root . '/fixtures/upstream/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources';
+$setupHeader = <<<'BASH'
+#!/bin/bash
+set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+BASH;
+$setupHeader .= "\n";
 
 if (!is_dir($source)) {
-    fwrite(STDERR, "JGit fixtures not found.\n");
+    fwrite(STDERR, "Vendored JGit fixtures not found at {$source}\n");
     exit(1);
 }
 
@@ -46,12 +52,14 @@ foreach ($packs as $packFile) {
 
     mkdir($scenarioDir, 0777, true);
 
-    $realPack = realpath($packFile);
-    $realIdx = realpath($idxFile);
+    $fixturePack = '${PITMASTER_ROOT}/fixtures/upstream/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources/' . basename($packFile);
+    $fixtureIdx = '${PITMASTER_ROOT}/fixtures/upstream/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources/' . basename($idxFile);
 
-    $setup = "#!/bin/bash\nset -e\ngit init .\nmkdir -p .git/objects/pack\n"
-        . "cp " . escapeshellarg($realPack) . " .git/objects/pack/\n"
-        . "cp " . escapeshellarg($realIdx) . " .git/objects/pack/\n"
+    $setup = $setupHeader
+        . "git init .\n"
+        . "mkdir -p .git/objects/pack\n"
+        . "cp " . escapeshellarg($fixturePack) . " .git/objects/pack/\n"
+        . "cp " . escapeshellarg($fixtureIdx) . " .git/objects/pack/\n"
         . "FIRST_COMMIT=\$(git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | grep ' commit' | head -1 | cut -d' ' -f1)\n"
         . "if [ -n \"\$FIRST_COMMIT\" ]; then git update-ref refs/heads/main \$FIRST_COMMIT 2>/dev/null || true; fi\n";
 

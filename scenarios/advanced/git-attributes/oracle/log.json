@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "4a1214ccd92690b001800542d76093febb9227c6",
+        "tree": "8806e1382bd71dc5ca93caf9755f116db54b1fd6",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1704153600 2024-01-02 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704153600 2024-01-02 00:00:00 +0000",
+        "message": "Add attributes"
+    }
+]

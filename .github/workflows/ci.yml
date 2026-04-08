@@ -73,6 +73,23 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: composer test:integration
 
+  test-oracle:
+    name: Oracle Regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring
+          ini-values: memory_limit=512M
+      - run: composer install --no-interaction --prefer-dist
+      - run: git config --global user.email "ci@pitmaster.dev"
+      - run: git config --global user.name "CI"
+      - run: git config --global init.defaultBranch main
+      - run: PITMASTER_TEST_JOBS=4 composer test:oracle
+
   docs:
     name: Docs Build
     runs-on: ubuntu-latest

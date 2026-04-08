@@ -8,11 +8,16 @@ declare(strict_types=1);
  */
 
 $root = dirname(__DIR__);
-$source = '/tmp/go-git-fixtures/data';
+$source = $root . '/fixtures/upstream/go-git/data';
+$setupHeader = <<<'BASH'
+#!/bin/bash
+set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+BASH;
+$setupHeader .= "\n";
 
 if (!is_dir($source)) {
     fwrite(STDERR, "go-git fixtures not found at {$source}\n");
-    fwrite(STDERR, "Run: git clone --depth=1 https://github.com/go-git/go-git-fixtures.git /tmp/go-git-fixtures\n");
     exit(1);
 }
 
@@ -37,9 +42,11 @@ foreach ($tarballs as $tarball) {
     mkdir($scenarioDir, 0777, true);
 
     // Create setup.sh that extracts the tarball
-    $setupContent = "#!/bin/bash\nset -e\n\n# Extract go-git fixture: {$basename}\n"
+    $fixturePath = '${PITMASTER_ROOT}/fixtures/upstream/go-git/data/' . basename($tarball);
+    $setupContent = $setupHeader
+        . "\n# Extract go-git fixture: {$basename}\n"
         . "git init .\n"
-        . "tar xzf " . escapeshellarg(realpath($tarball)) . " -C .git\n"
+        . "tar xzf " . escapeshellarg($fixturePath) . " -C .git\n"
         . "git checkout -- . 2>/dev/null || true\n";
 
     file_put_contents($scenarioDir . '/setup.sh', $setupContent);
@@ -93,11 +100,14 @@ foreach ($packs as $packFile) {
     mkdir($scenarioDir, 0777, true);
 
     // Create setup.sh that creates a repo with this pack
-    $setupContent = "#!/bin/bash\nset -e\n\n# go-git pack fixture: {$basename}\n"
+    $packPath = '${PITMASTER_ROOT}/fixtures/upstream/go-git/data/' . basename($packFile);
+    $idxPath = '${PITMASTER_ROOT}/fixtures/upstream/go-git/data/' . basename($idxFile);
+    $setupContent = $setupHeader
+        . "\n# go-git pack fixture: {$basename}\n"
         . "git init .\n"
         . "mkdir -p .git/objects/pack\n"
-        . "cp " . escapeshellarg(realpath($packFile)) . " .git/objects/pack/\n"
-        . "cp " . escapeshellarg(realpath($idxFile)) . " .git/objects/pack/\n"
+        . "cp " . escapeshellarg($packPath) . " .git/objects/pack/\n"
+        . "cp " . escapeshellarg($idxPath) . " .git/objects/pack/\n"
         . "# Set HEAD to first commit found in pack\n"
         . "FIRST_COMMIT=\$(git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | grep ' commit' | head -1 | cut -d' ' -f1)\n"
         . "if [ -n \"\$FIRST_COMMIT\" ]; then\n"

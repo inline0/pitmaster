@@ -1,0 +1,16 @@
+{
+    "name": "tag-delete",
+    "category": "refs",
+    "description": "Delete lightweight and annotated tags and compare the resulting refs and reachable objects",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": false
+    }
+}

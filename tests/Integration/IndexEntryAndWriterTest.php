@@ -139,4 +139,33 @@ final class IndexEntryAndWriterTest extends TestCase
         $entry3 = IndexEntry::create('file.txt', $hash, 0100644, 0, 3);
         $this->assertSame(3, $entry3->stage());
     }
+
+    #[Test]
+    public function writeAndReadConflictStagesForSamePath(): void
+    {
+        $index = new Index();
+        $base = ObjectId::fromHex(str_repeat('11', 20));
+        $ours = ObjectId::fromHex(str_repeat('22', 20));
+        $theirs = ObjectId::fromHex(str_repeat('33', 20));
+
+        $index->addEntry(IndexEntry::create('conflict.txt', $base, 0100644, 0, 1));
+        $index->addEntry(IndexEntry::create('conflict.txt', $ours, 0100644, 0, 2));
+        $index->addEntry(IndexEntry::create('conflict.txt', $theirs, 0100644, 0, 3));
+        IndexWriter::write($index, $this->tmpDir . '/.git/index');
+
+        $reread = Index::open($this->tmpDir . '/.git/index');
+        $stages = $reread->stageEntries('conflict.txt');
+
+        $this->assertCount(3, $reread->allEntries());
+        $this->assertNull($reread->entry('conflict.txt'));
+        $this->assertSame($base->hex, $stages[1]->hash->hex);
+        $this->assertSame($ours->hex, $stages[2]->hash->hex);
+        $this->assertSame($theirs->hex, $stages[3]->hash->hex);
+        $this->assertSame(
+            "100644 {$base->hex} 1\tconflict.txt\n"
+            . "100644 {$ours->hex} 2\tconflict.txt\n"
+            . "100644 {$theirs->hex} 3\tconflict.txt",
+            trim($this->git('ls-files --stage'))
+        );
+    }
 }

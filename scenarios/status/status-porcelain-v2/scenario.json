@@ -1,0 +1,24 @@
+{
+    "name": "status-porcelain-v2",
+    "category": "status",
+    "description": "Compare porcelain v2 status output directly against git",
+    "operations": [
+        "status"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2"
+    },
+    "actual_commands": {
+        "status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2"
+    },
+    "expectations": {
+        "exact_match": [
+            "status",
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

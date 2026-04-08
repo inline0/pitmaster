@@ -1,0 +1,48 @@
+{
+    "name": "merge-conflict-state",
+    "category": "merge",
+    "description": "Produce a textual merge conflict and compare the resulting conflict state against git",
+    "operations": [
+        "index",
+        "status",
+        "pit_status",
+        "merge_head",
+        "merge_msg",
+        "orig_head",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "merge_head": "cat .git/MERGE_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "orig_head": "cat .git/ORIG_HEAD",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "merge_head": "cat .git/MERGE_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "orig_head": "cat .git/ORIG_HEAD",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "index",
+            "status",
+            "pit_status",
+            "merge_head",
+            "merge_msg",
+            "orig_head",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

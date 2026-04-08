@@ -112,8 +112,14 @@ composer test:unit
 # Integration tests (verified against git)
 composer test:integration
 
-# All tests
+# Oracle regression corpus (vendored upstream fixtures)
+composer test:oracle
+
+# Full test matrix: phpunit + upstream oracle regression
 composer test
+
+# Full verification: analysis + standards + full test matrix
+./bin/verify-all
 
 # Static analysis
 composer analyse
@@ -122,7 +128,7 @@ composer analyse
 composer cs
 ```
 
-The current suite covers unit behavior, end-to-end repository operations, and round-trip comparisons against `git`. Run `composer test` for the current totals in this checkout.
+The upstream oracle fixtures are vendored under [`fixtures/upstream`](fixtures/upstream), so the full regression corpus is runnable from a fresh checkout without machine-local `/tmp` dependencies. Use `composer test` for the full matrix and `./bin/verify-all` for release-grade verification.
 
 ## Requirements
 

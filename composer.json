@@ -41,9 +41,19 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit",
+        "test": [
+            "@test:phpunit",
+            "@test:oracle"
+        ],
+        "test:phpunit": "phpunit",
         "test:unit": "phpunit --testsuite unit",
         "test:integration": "phpunit --testsuite integration",
+        "test:oracle": "./bin/test-regression",
+        "verify": [
+            "@analyse",
+            "@cs",
+            "@test"
+        ],
         "analyse": "phpstan analyse --configuration=phpstan.neon.dist --memory-limit=512M",
         "cs": "phpcs --warning-severity=0",
         "cs:fix": "phpcbf"

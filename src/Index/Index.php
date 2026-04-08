@@ -21,7 +21,7 @@ final class Index
 {
     private const MAGIC = 'DIRC';
 
-    /** @var array<string, IndexEntry> Keyed by path */
+    /** @var list<IndexEntry> */
     private array $entries = [];
 
     private int $version = 2;
@@ -101,7 +101,7 @@ final class Index
                 $pathSuffix = $reader->readNullTerminated();
 
                 if ($i > 0) {
-                    $prevPath = (string) array_key_last($index->entries);
+                    $prevPath = $index->entries[$i - 1]->path;
                     $path = substr($prevPath, 0, max(0, strlen($prevPath) - $stripLen)) . $pathSuffix;
                 } else {
                     $path = $pathSuffix;
@@ -133,7 +133,7 @@ final class Index
                 path: $path,
             );
 
-            $index->entries[$path] = $entry;
+            $index->entries[] = $entry;
         }
 
         // Parse extensions (if remaining data before the 20-byte checksum)
@@ -168,6 +168,8 @@ final class Index
             }
         }
 
+        $index->sortEntries();
+
         return $index;
     }
 
@@ -193,17 +195,39 @@ final class Index
      */
     public function entries(): array
     {
+        $entries = [];
+
+        foreach ($this->entries as $entry) {
+            if ($entry->stage() === 0) {
+                $entries[$entry->path] = $entry;
+            }
+        }
+
+        return $entries;
+    }
+
+    /**
+     * @return list<IndexEntry>
+     */
+    public function allEntries(): array
+    {
         return $this->entries;
     }
 
-    public function entry(string $path): ?IndexEntry
+    public function entry(string $path, int $stage = 0): ?IndexEntry
     {
-        return $this->entries[$path] ?? null;
+        foreach ($this->entries as $entry) {
+            if ($entry->path === $path && $entry->stage() === $stage) {
+                return $entry;
+            }
+        }
+
+        return null;
     }
 
-    public function has(string $path): bool
+    public function has(string $path, int $stage = 0): bool
     {
-        return isset($this->entries[$path]);
+        return $this->entry($path, $stage) !== null;
     }
 
     public function count(): int
@@ -221,16 +245,35 @@ final class Index
      */
     public function addEntry(IndexEntry $entry): void
     {
-        $this->entries[$entry->path] = $entry;
-        ksort($this->entries);
+        $stage = $entry->stage();
+        $this->entries = array_values(array_filter(
+            $this->entries,
+            static function (IndexEntry $existing) use ($entry, $stage): bool {
+                if ($existing->path !== $entry->path) {
+                    return true;
+                }
+
+                if ($stage === 0 || $existing->stage() === 0) {
+                    return false;
+                }
+
+                return $existing->stage() !== $stage;
+            },
+        ));
+        $this->entries[] = $entry;
+        $this->sortEntries();
     }
 
     /**
      * Remove an entry.
      */
-    public function removeEntry(string $path): void
+    public function removeEntry(string $path, ?int $stage = null): void
     {
-        unset($this->entries[$path]);
+        $this->entries = array_values(array_filter(
+            $this->entries,
+            static fn (IndexEntry $entry): bool => $entry->path !== $path
+                || ($stage !== null && $entry->stage() !== $stage),
+        ));
     }
 
     /**
@@ -238,14 +281,73 @@ final class Index
      */
     public function resolveConflict(string $path, IndexEntry $resolved): void
     {
-        // Remove any staged entries for this path
-        foreach ($this->entries as $key => $entry) {
-            if ($entry->path === $path && $entry->stage() !== 0) {
-                unset($this->entries[$key]);
+        $this->removeEntry($path);
+        $this->addEntry($resolved);
+    }
+
+    /**
+     * @return array<int, IndexEntry>
+     */
+    public function stageEntries(string $path): array
+    {
+        $entries = [];
+
+        foreach ($this->entries as $entry) {
+            if ($entry->path === $path) {
+                $entries[$entry->stage()] = $entry;
             }
         }
 
-        $this->entries[$path] = $resolved;
-        ksort($this->entries);
+        ksort($entries);
+
+        return $entries;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function paths(): array
+    {
+        $paths = [];
+
+        foreach ($this->entries as $entry) {
+            $paths[$entry->path] = true;
+        }
+
+        return array_keys($paths);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function unmergedPaths(): array
+    {
+        $paths = [];
+
+        foreach ($this->entries as $entry) {
+            if ($entry->stage() !== 0) {
+                $paths[$entry->path] = true;
+            }
+        }
+
+        return array_keys($paths);
+    }
+
+    public function hasUnmerged(): bool
+    {
+        return $this->unmergedPaths() !== [];
+    }
+
+    private function sortEntries(): void
+    {
+        usort($this->entries, static function (IndexEntry $a, IndexEntry $b): int {
+            $pathCompare = strcmp($a->path, $b->path);
+
+            if ($pathCompare !== 0) {
+                return $pathCompare;
+            }
+
+            return $a->stage() <=> $b->stage();
+        });
     }
 }

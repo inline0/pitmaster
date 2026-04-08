@@ -61,8 +61,11 @@ final class ScenarioComparator
         }
 
         // Fsck check
-        if (is_file($oracleDir . '/fsck.txt')) {
-            $fsck = trim((string) file_get_contents($oracleDir . '/fsck.txt'));
+        if (is_file($oracleDir . '/fsck.txt') && is_file($actualDir . '/fsck.txt')) {
+            $oracleFsck = (string) file_get_contents($oracleDir . '/fsck.txt');
+            $actualFsck = (string) file_get_contents($actualDir . '/fsck.txt');
+            $report['fsck_match'] = $oracleFsck === $actualFsck;
+            $fsck = trim($oracleFsck);
             $report['fsck_clean'] = $fsck === '' || str_contains($fsck, 'Checking object');
         }
 

@@ -1,0 +1,24 @@
+{
+    "name": "git-attributes",
+    "category": "advanced",
+    "description": "Compare Git attribute resolution output directly against git check-attr",
+    "operations": [
+        "attributes"
+    ],
+    "oracle_commands": {
+        "attributes": "bash \"{{SCENARIO_DIR}}/oracle-attributes.sh\""
+    },
+    "actual_commands": {
+        "attributes": "php \"{{SCENARIO_DIR}}/actual-attributes.php\""
+    },
+    "expectations": {
+        "exact_match": [
+            "attributes",
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

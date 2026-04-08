@@ -8,11 +8,16 @@ declare(strict_types=1);
  */
 
 $root = dirname(__DIR__);
-$source = '/tmp/isomorphic-git/__tests__/__fixtures__';
+$source = $root . '/fixtures/upstream/isomorphic-git/__tests__/__fixtures__';
+$setupHeader = <<<'BASH'
+#!/bin/bash
+set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+BASH;
+$setupHeader .= "\n";
 
 if (!is_dir($source)) {
     fwrite(STDERR, "isomorphic-git fixtures not found at {$source}\n");
-    fwrite(STDERR, "Run: git clone --depth=1 https://github.com/isomorphic-git/isomorphic-git.git /tmp/isomorphic-git\n");
     exit(1);
 }
 
@@ -45,9 +50,11 @@ foreach (scandir($source) as $entry) {
 
     mkdir($scenarioDir, 0777, true);
 
-    $setupContent = "#!/bin/bash\nset -e\n\n# isomorphic-git fixture: {$entry}\n"
+    $fixturePath = '${PITMASTER_ROOT}/fixtures/upstream/isomorphic-git/__tests__/__fixtures__/' . $entry;
+    $setupContent = $setupHeader
+        . "\n# isomorphic-git fixture: {$entry}\n"
         . "git init .\n"
-        . "cp -r " . escapeshellarg(realpath($sourcePath)) . "/* .git/\n"
+        . "cp -r " . escapeshellarg($fixturePath) . "/* .git/\n"
         . "git checkout -- . 2>/dev/null || true\n";
 
     file_put_contents($scenarioDir . '/setup.sh', $setupContent);

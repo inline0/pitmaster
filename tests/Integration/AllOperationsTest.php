@@ -131,7 +131,7 @@ final class AllOperationsTest extends TestCase
         $this->assertStringContainsString('<<<<<<< HEAD', $content);
         $this->assertStringContainsString('main change', $content);
         $this->assertStringContainsString('feature change', $content);
-        $this->assertStringContainsString('>>>>>>> incoming', $content);
+        $this->assertStringContainsString('>>>>>>> feature', $content);
     }
 
     #[Test]

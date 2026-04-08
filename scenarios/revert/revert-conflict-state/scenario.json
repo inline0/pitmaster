@@ -1,0 +1,44 @@
+{
+    "name": "revert-conflict-state",
+    "category": "revert",
+    "description": "Produce a textual revert conflict and compare the resulting conflict state against git",
+    "operations": [
+        "index",
+        "status",
+        "pit_status",
+        "revert_head",
+        "merge_msg",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "revert_head": "cat .git/REVERT_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "revert_head": "cat .git/REVERT_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "index",
+            "status",
+            "pit_status",
+            "revert_head",
+            "merge_msg",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

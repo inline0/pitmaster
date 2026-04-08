@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "4a1214ccd92690b001800542d76093febb9227c6",
+        "type": "commit",
+        "size": 175,
+        "content": "tree 8806e1382bd71dc5ca93caf9755f116db54b1fd6\nauthor Test User <test@pitmaster.dev> 1704153600 +0000\ncommitter Test User <test@pitmaster.dev> 1704153600 +0000\n\nAdd attributes\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5e8fb3bdb3823b1ee0420f98cccf3cdb5db15ab0",
+        "type": "blob",
+        "size": 3,
+        "content": "md\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83f9fcffd0078f983662cea622e98843de7f2b22",
+        "type": "blob",
+        "size": 4,
+        "content": "txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8806e1382bd71dc5ca93caf9755f116db54b1fd6",
+        "type": "tree",
+        "size": 186,
+        "content": "100644 blob edbadc7e6e6352052e99942ce1366d4ea94c5c12\t.gitattributes\n100644 blob f5ec5fb972bfa9aef034a87b2263c85468bf448d\tarchive.dat\n040000 tree 96b9e9d2cccd0288d45a55bf36bd4f57071c560e\tdocs\n100644 blob 5e8fb3bdb3823b1ee0420f98cccf3cdb5db15ab0\tguide.md\n100644 blob 83f9fcffd0078f983662cea622e98843de7f2b22\treadme.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "96b9e9d2cccd0288d45a55bf36bd4f57071c560e",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob ba077a4031add5b3a04384f8b9cfc414efbf47dd\tfile.bin\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba077a4031add5b3a04384f8b9cfc414efbf47dd",
+        "type": "blob",
+        "size": 4,
+        "content": "bin\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "edbadc7e6e6352052e99942ce1366d4ea94c5c12",
+        "type": "blob",
+        "size": 63,
+        "content": "*.txt text eol=lf\n*.md diff=markdown\ndocs/* custom\n*.dat -diff\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f5ec5fb972bfa9aef034a87b2263c85468bf448d",
+        "type": "blob",
+        "size": 4,
+        "content": "dat\n",
+        "encoding": "utf-8"
+    }
+]

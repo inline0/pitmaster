@@ -1,0 +1,16 @@
+{
+    "name": "branch-delete",
+    "category": "refs",
+    "description": "Delete a non-current branch and compare the resulting refs and history",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

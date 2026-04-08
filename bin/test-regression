@@ -5,6 +5,8 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+use Pitmaster\Tests\Support\Workspace;
+
 $root = dirname(__DIR__);
 $arguments = array_slice($argv, 1);
 $refreshOracle = false;
@@ -181,7 +183,7 @@ function spawnScenarioProcess(
     bool $reportOnly,
     bool $fast,
 ): array {
-    $outputPath = tempnam(sys_get_temp_dir(), 'pitmaster-regression-');
+    $outputPath = Workspace::createFile('regression-', '.log');
 
     $command = sprintf(
         'cd %s && ./bin/test-scenario%s%s%s %s',

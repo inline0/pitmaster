@@ -1,0 +1,6 @@
+Revert "change"
+
+This reverts commit dfa0ac92893fe826b34c5cdd125fdc7e484afb0a.
+
+# Conflicts:
+#	a.txt

@@ -1,0 +1,16 @@
+{
+    "name": "lightweight-tag-create",
+    "category": "refs",
+    "description": "Create a lightweight tag from HEAD and compare the resulting refs and object graph",
+    "operations": [],
+    "oracle_commands": {},
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

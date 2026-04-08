@@ -9,10 +9,16 @@ declare(strict_types=1);
 
 $root = dirname(__DIR__);
 $upstreamDir = $root . '/scenarios/upstream/libgit2';
-$source = '/tmp/libgit2-fixtures/tests/resources';
+$source = $root . '/fixtures/upstream/libgit2/tests/resources';
+$setupHeader = <<<'BASH'
+#!/bin/bash
+set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+BASH;
+$setupHeader .= "\n";
 
 if (!is_dir($source)) {
-    fwrite(STDERR, "libgit2 fixtures not found. Clone first.\n");
+    fwrite(STDERR, "Vendored libgit2 fixtures not found at {$source}\n");
     exit(1);
 }
 
@@ -56,11 +62,16 @@ foreach (scandir($source) as $name) {
     mkdir($scenarioDir, 0777, true);
 
     if ($type === 'gitted') {
-        $realPath = realpath($sourcePath . '/.gitted');
-        $setup = "#!/bin/bash\nset -e\ncp -r " . escapeshellarg($realPath) . " .git\ngit checkout -- . 2>/dev/null || true\n";
+        $fixturePath = '${PITMASTER_ROOT}/fixtures/upstream/libgit2/tests/resources/' . $name . '/.gitted';
+        $setup = $setupHeader
+            . 'cp -r ' . escapeshellarg($fixturePath) . " .git\n"
+            . "git checkout -- . 2>/dev/null || true\n";
     } else {
-        $realPath = realpath($sourcePath);
-        $setup = "#!/bin/bash\nset -e\ngit init .\ncp -r " . escapeshellarg($realPath) . "/* .git/\ngit checkout -- . 2>/dev/null || true\n";
+        $fixturePath = '${PITMASTER_ROOT}/fixtures/upstream/libgit2/tests/resources/' . $name;
+        $setup = $setupHeader
+            . "git init .\n"
+            . 'cp -r ' . escapeshellarg($fixturePath) . "/* .git/\n"
+            . "git checkout -- . 2>/dev/null || true\n";
     }
 
     file_put_contents($scenarioDir . '/setup.sh', $setup);

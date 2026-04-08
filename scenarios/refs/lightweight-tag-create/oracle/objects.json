@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "2ac1b11079575dee5b3a04121db11a6d58bb5cca",
+        "type": "commit",
+        "size": 175,
+        "content": "tree f976d434f1f1c827144a9c58cad26ed65f51bdb4\nauthor Test User <test@pitmaster.dev> 1704585600 +0000\ncommitter Test User <test@pitmaster.dev> 1704585600 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ce013625030ba8dba906f756967f9e9ca394464a",
+        "type": "blob",
+        "size": 6,
+        "content": "hello\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f976d434f1f1c827144a9c58cad26ed65f51bdb4",
+        "type": "tree",
+        "size": 35,
+        "content": "100644 blob ce013625030ba8dba906f756967f9e9ca394464a\tapp.txt\n",
+        "encoding": "utf-8"
+    }
+]

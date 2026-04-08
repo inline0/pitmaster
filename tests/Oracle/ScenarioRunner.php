@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Pitmaster\Tests\Oracle;
 
 use Pitmaster\Support\Json;
-use RuntimeException;
+use Pitmaster\Tests\Support\Workspace;
 
 /**
- * Orchestrates the full pipeline: setup -> oracle -> actual -> compare.
+ * Orchestrates the full pipeline: setup -> branch into oracle/actual -> compare.
  *
- * Setup runs once, producing a repo directory. Oracle captures git's view,
- * actual captures Pitmaster's view. Both read the same repo state.
+ * Setup runs once, producing an initial repo directory. Oracle and actual
+ * each receive a copy of that exact repo state before running their own
+ * scenario scripts and capture logic.
  */
 final class ScenarioRunner
 {
@@ -38,19 +39,20 @@ final class ScenarioRunner
      */
     public function run(Scenario $scenario, bool $refreshOracle = false): array
     {
-        // Create repo once, share between oracle and actual
-        $tempDir = sys_get_temp_dir() . '/pitmaster-scenario-' . bin2hex(random_bytes(8));
-        mkdir($tempDir, 0777, true);
+        $baseRepo = Workspace::createDirectory('pitmaster-scenario-base-');
+        $oracleRepo = Workspace::createDirectory('pitmaster-scenario-oracle-');
+        $actualRepo = Workspace::createDirectory('pitmaster-scenario-actual-');
 
         try {
-            // Run setup
-            $this->runSetup($scenario, $tempDir);
+            $this->runSetup($scenario, $baseRepo);
+            $this->normalizePreparedRepo($baseRepo);
+            $this->copyRepo($baseRepo, $oracleRepo);
+            $this->copyRepo($baseRepo, $actualRepo);
 
-            // Step 1: Oracle capture
             $oracleNeedsCapture = $refreshOracle || !$this->hasOracleOutput($scenario);
 
             if ($oracleNeedsCapture) {
-                $oracleResult = $this->oracle->captureFromRepo($scenario, $tempDir);
+                $oracleResult = $this->oracle->captureFromRepo($scenario, $oracleRepo, true);
             } else {
                 $oracleResult = ['success' => true, 'outputs' => [], 'errors' => []];
             }
@@ -64,8 +66,7 @@ final class ScenarioRunner
                 ];
             }
 
-            // Step 2: Actual capture (same repo)
-            $actualResult = $this->actual->captureFromRepo($scenario, $tempDir);
+            $actualResult = $this->actual->captureFromRepo($scenario, $actualRepo, true);
 
             if (!$actualResult['success']) {
                 return [
@@ -76,10 +77,7 @@ final class ScenarioRunner
                 ];
             }
 
-            // Step 3: Compare
             $comparison = $this->comparator->compare($scenario);
-
-            // Write report
             $reportsDir = $scenario->reportsDir();
 
             if (!is_dir($reportsDir)) {
@@ -97,7 +95,9 @@ final class ScenarioRunner
                 'comparison' => $comparison,
             ];
         } finally {
-            exec(sprintf('rm -rf %s', escapeshellarg($tempDir)));
+            Workspace::remove($baseRepo);
+            Workspace::remove($oracleRepo);
+            Workspace::remove($actualRepo);
         }
     }
 
@@ -106,21 +106,37 @@ final class ScenarioRunner
         $setupScript = $scenario->setupScriptPath();
 
         if (!is_file($setupScript)) {
-            throw new RuntimeException("Setup script not found: {$setupScript}");
+            throw new \RuntimeException("Setup script not found: {$setupScript}");
         }
 
         $command = sprintf(
-            'cd %s && bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
             escapeshellarg($tempDir),
+            escapeshellarg($scenario->rootPath),
             escapeshellarg($setupScript),
         );
 
         exec($command, $output, $exitCode);
 
         if ($exitCode !== 0) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 "Setup script failed (exit {$exitCode}): " . implode("\n", $output)
             );
+        }
+    }
+
+    private function copyRepo(string $sourceDir, string $targetDir): void
+    {
+        $command = sprintf(
+            'cp -R %s/. %s',
+            escapeshellarg($sourceDir),
+            escapeshellarg($targetDir),
+        );
+
+        exec($command, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            throw new \RuntimeException("Failed to copy prepared repo from {$sourceDir} to {$targetDir}");
         }
     }
 
@@ -129,5 +145,33 @@ final class ScenarioRunner
         $oracleDir = $scenario->oracleDir();
 
         return is_dir($oracleDir) && is_file($oracleDir . '/objects.json');
+    }
+
+    private function normalizePreparedRepo(string $repoDir): void
+    {
+        if ($this->isGitRepository($repoDir)) {
+            return;
+        }
+
+        foreach (@scandir($repoDir) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $candidate = $repoDir . '/' . $entry;
+
+            if (!is_dir($candidate) || !$this->isGitRepository($candidate)) {
+                continue;
+            }
+
+            $this->copyRepo($candidate, $repoDir);
+
+            return;
+        }
+    }
+
+    private function isGitRepository(string $path): bool
+    {
+        return is_dir($path . '/.git') || is_file($path . '/.git') || is_file($path . '/HEAD');
     }
 }

@@ -48,6 +48,7 @@ final class WorkingTreeStatus
 
         // Build index map: path => entry
         $indexEntries = $index->entries();
+        $unmergedPaths = array_flip($index->unmergedPaths());
 
         // Build worktree file list
         $ignore = GitIgnore::forRepo($this->workDir);
@@ -62,6 +63,11 @@ final class WorkingTreeStatus
         sort($allPaths);
 
         foreach ($allPaths as $path) {
+            if (isset($unmergedPaths[$path])) {
+                $entries[] = new StatusEntry($path, FileStatus::Unmerged, FileStatus::Unmerged);
+                continue;
+            }
+
             $inHead = isset($headTree[$path]);
             $inIndex = isset($indexEntries[$path]);
             $inWorktree = in_array($path, $worktreeFiles, true);

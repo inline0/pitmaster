@@ -14,7 +14,7 @@ final class IndexWriter
      */
     public static function serialize(Index $index): string
     {
-        $entries = $index->entries();
+        $entries = $index->allEntries();
         $body = '';
 
         foreach ($entries as $entry) {

@@ -1,0 +1,24 @@
+{
+    "name": "bundle-roundtrip",
+    "category": "advanced",
+    "description": "Compare bundle verification output after a Pitmaster parse/write roundtrip",
+    "operations": [
+        "bundle"
+    ],
+    "oracle_commands": {
+        "bundle": "bash \"{{SCENARIO_DIR}}/oracle-bundle.sh\""
+    },
+    "actual_commands": {
+        "bundle": "php \"{{SCENARIO_DIR}}/actual-bundle.php\" && git bundle verify source.bundle"
+    },
+    "expectations": {
+        "exact_match": [
+            "bundle",
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

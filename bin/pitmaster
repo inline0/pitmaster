@@ -23,7 +23,7 @@ if ($arguments === []) {
     fwrite(STDERR, "  diff                Show unstaged changes\n");
     fwrite(STDERR, "  diff --cached       Show staged changes\n");
     fwrite(STDERR, "  add <file...>       Stage files\n");
-    fwrite(STDERR, "  commit -m <msg>     Create a commit\n");
+    fwrite(STDERR, "  commit [-m <msg>]   Create a commit\n");
     fwrite(STDERR, "  branch [name]       List or create branches\n");
     fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
     fwrite(STDERR, "  checkout <ref>      Switch branches or detach HEAD\n");
@@ -60,7 +60,7 @@ try {
         'log' => commandLog($repo, $arguments),
         'show' => commandShow($repo, $arguments),
         'cat-file' => commandCatFile($repo, $arguments),
-        'status' => commandStatus($repo),
+        'status' => commandStatus($repo, $arguments),
         'diff' => commandDiff($repo, $arguments),
         'add' => commandAdd($repo, $arguments),
         'commit' => commandCommit($repo, $arguments),
@@ -139,8 +139,13 @@ function commandCatFile(Repository $repo, array $args): void
     fwrite(STDOUT, $repo->catFile($args[0]));
 }
 
-function commandStatus(Repository $repo): void
+function commandStatus(Repository $repo, array $args): void
 {
+    if (in_array('--porcelain=v2', $args, true)) {
+        fwrite(STDOUT, $repo->statusPorcelainV2());
+        return;
+    }
+
     $branch = $repo->branch();
 
     if ($branch !== null) {
@@ -159,18 +164,34 @@ function commandStatus(Repository $repo): void
     $staged = [];
     $unstaged = [];
     $untracked = [];
+    $unmerged = [];
 
     foreach ($entries as $entry) {
         if ($entry->index === \Pitmaster\Status\FileStatus::Untracked) {
             $untracked[] = $entry;
+        } elseif (
+            $entry->index === \Pitmaster\Status\FileStatus::Unmerged
+            || $entry->worktree === \Pitmaster\Status\FileStatus::Unmerged
+        ) {
+            $unmerged[] = $entry;
         } elseif ($entry->index !== \Pitmaster\Status\FileStatus::Unmodified) {
             $staged[] = $entry;
         }
 
         if ($entry->worktree !== \Pitmaster\Status\FileStatus::Unmodified
+            && $entry->worktree !== \Pitmaster\Status\FileStatus::Unmerged
             && $entry->index !== \Pitmaster\Status\FileStatus::Untracked
+            && $entry->index !== \Pitmaster\Status\FileStatus::Unmerged
         ) {
             $unstaged[] = $entry;
+        }
+    }
+
+    if ($unmerged !== []) {
+        fwrite(STDOUT, "\nUnmerged paths:\n");
+
+        foreach ($unmerged as $entry) {
+            fwrite(STDOUT, "\t\033[31munmerged:   {$entry->path}\033[0m\n");
         }
     }
 
@@ -242,14 +263,10 @@ function commandCommit(Repository $repo, array $args): void
         }
     }
 
-    if ($message === null) {
-        fwrite(STDERR, "Usage: pitmaster commit -m <message>\n");
-        exit(1);
-    }
-
     $id = $repo->commit($message);
     $branch = $repo->branch() ?? 'detached HEAD';
-    fwrite(STDOUT, "[{$branch} " . substr($id->hex, 0, 7) . "] {$message}\n");
+    $summary = trim((string) strtok($repo->head()->message, "\n"));
+    fwrite(STDOUT, "[{$branch} " . substr($id->hex, 0, 7) . "] {$summary}\n");
 }
 
 function commandBranch(Repository $repo, array $args): void

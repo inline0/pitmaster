@@ -113,7 +113,7 @@ final class Pitmaster
             if (str_starts_with($refName, 'refs/heads/')) {
                 $branch = substr($refName, 11);
                 $repo->refDatabase()->update("refs/remotes/origin/{$branch}", $refId);
-            } elseif (str_starts_with($refName, 'refs/tags/')) {
+            } elseif (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}')) {
                 $repo->refDatabase()->update($refName, $refId);
             }
         }

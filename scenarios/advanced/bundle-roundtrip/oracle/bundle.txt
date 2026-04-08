@@ -1,0 +1,7 @@
+source.bundle is okay
+The bundle contains these 3 refs:
+05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a refs/heads/feature
+05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a refs/heads/main
+05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1

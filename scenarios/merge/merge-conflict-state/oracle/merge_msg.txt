@@ -1,0 +1,4 @@
+Merge branch 'feature'
+
+# Conflicts:
+#	a.txt

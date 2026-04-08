@@ -11,6 +11,7 @@ enum FileStatus: string
     case Deleted = 'D';
     case Renamed = 'R';
     case Copied = 'C';
+    case Unmerged = 'U';
     case Untracked = '?';
     case Ignored = '!';
     case Unmodified = ' ';

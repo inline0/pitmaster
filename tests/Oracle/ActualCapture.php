@@ -10,6 +10,7 @@ use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Pitmaster;
 use Pitmaster\Support\Json;
+use Pitmaster\Tests\Support\Workspace;
 use RuntimeException;
 
 /**
@@ -26,15 +27,14 @@ final class ActualCapture
      */
     public function capture(Scenario $scenario): array
     {
-        $tempDir = sys_get_temp_dir() . '/pitmaster-actual-' . bin2hex(random_bytes(8));
-        mkdir($tempDir, 0777, true);
+        $tempDir = Workspace::createDirectory('pitmaster-actual-');
 
         try {
             $this->runSetup($scenario, $tempDir);
 
-            return $this->captureFromRepo($scenario, $tempDir);
+            return $this->captureFromRepo($scenario, $tempDir, true);
         } finally {
-            exec(sprintf('rm -rf %s', escapeshellarg($tempDir)));
+            Workspace::remove($tempDir);
         }
     }
 
@@ -43,12 +43,16 @@ final class ActualCapture
      *
      * @return array{success: bool, outputs: array<string, mixed>, errors: array<int, string>}
      */
-    public function captureFromRepo(Scenario $scenario, string $repoDir): array
+    public function captureFromRepo(Scenario $scenario, string $repoDir, bool $runActualScript = false): array
     {
         $errors = [];
         $outputs = [];
 
         try {
+            if ($runActualScript) {
+                $this->runActualScript($scenario, $repoDir);
+            }
+
             $repo = Pitmaster::open($repoDir);
 
             // Capture objects
@@ -59,6 +63,9 @@ final class ActualCapture
 
             // Capture log
             $outputs['log'] = $this->captureLog($repo);
+
+            // Capture git's validation of the repo that Pitmaster produced
+            $outputs['fsck'] = $this->captureFsck($repoDir);
 
             // Write to actual directory
             $actualDir = $scenario->actualDir();
@@ -77,6 +84,22 @@ final class ActualCapture
 
             if (isset($outputs['log'])) {
                 Json::encodeFile($actualDir . '/log.json', $outputs['log']);
+            }
+
+            if (isset($outputs['fsck'])) {
+                file_put_contents($actualDir . '/fsck.txt', $outputs['fsck']);
+            }
+
+            foreach ($scenario->operations() as $operation) {
+                $command = $scenario->actualCommands()[$operation] ?? null;
+
+                if ($command === null) {
+                    continue;
+                }
+
+                $output = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
+                $outputs[$operation] = $output;
+                file_put_contents($actualDir . '/' . $operation . '.txt', $output);
             }
         } catch (\Throwable $e) {
             $errors[] = $e->getMessage();
@@ -218,8 +241,9 @@ final class ActualCapture
         }
 
         $command = sprintf(
-            'cd %s && bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
             escapeshellarg($tempDir),
+            escapeshellarg($scenario->rootPath),
             escapeshellarg($setupScript),
         );
 
@@ -228,6 +252,62 @@ final class ActualCapture
         if ($exitCode !== 0) {
             throw new RuntimeException(
                 "Setup script failed (exit {$exitCode}): " . implode("\n", $output)
+            );
+        }
+    }
+
+    private function captureFsck(string $repoDir): string
+    {
+        $command = sprintf(
+            'cd %s && git fsck --strict --no-progress 2>&1',
+            escapeshellarg($repoDir),
+        );
+
+        return shell_exec($command) ?? '';
+    }
+
+    private function runCommand(Scenario $scenario, string $repoDir, string $command): string
+    {
+        $fullCommand = sprintf(
+            'cd %s && PITMASTER_ROOT=%s %s 2>&1',
+            escapeshellarg($repoDir),
+            escapeshellarg($scenario->rootPath),
+            $command,
+        );
+
+        return shell_exec($fullCommand) ?? '';
+    }
+
+    private function expandCommand(Scenario $scenario, string $command): string
+    {
+        return str_replace(
+            ['{{ROOT}}', '{{SCENARIO_DIR}}'],
+            [$scenario->rootPath, $scenario->scenarioDir()],
+            $command,
+        );
+    }
+
+    private function runActualScript(Scenario $scenario, string $repoDir): void
+    {
+        $actualScript = $scenario->actualScriptPath();
+
+        if (!is_file($actualScript)) {
+            return;
+        }
+
+        $command = sprintf(
+            'cd %s && PITMASTER_ROOT=%s %s %s 2>&1',
+            escapeshellarg($repoDir),
+            escapeshellarg($scenario->rootPath),
+            escapeshellarg(PHP_BINARY),
+            escapeshellarg($actualScript),
+        );
+
+        exec($command, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            throw new RuntimeException(
+                "Actual script failed (exit {$exitCode}): " . implode("\n", $output)
             );
         }
     }

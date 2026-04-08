@@ -1,0 +1,7 @@
+line 1
+<<<<<<< HEAD
+main change
+=======
+feature change
+>>>>>>> feature
+line 3

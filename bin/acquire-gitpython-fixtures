@@ -8,10 +8,16 @@ declare(strict_types=1);
  */
 
 $root = dirname(__DIR__);
-$source = '/tmp/gitpython/test';
+$source = $root . '/fixtures/upstream/gitpython/test';
+$setupHeader = <<<'BASH'
+#!/bin/bash
+set -e
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+BASH;
+$setupHeader .= "\n";
 
 if (!is_dir($source)) {
-    fwrite(STDERR, "GitPython fixtures not found.\n");
+    fwrite(STDERR, "Vendored GitPython fixtures not found at {$source}\n");
     exit(1);
 }
 
@@ -43,8 +49,11 @@ foreach ($gitDirs as $gitDir) {
 
     mkdir($scenarioDir, 0777, true);
 
-    $realPath = realpath($gitDir);
-    $setup = "#!/bin/bash\nset -e\ngit init .\ncp -r " . escapeshellarg($realPath) . "/* .git/\ngit checkout -- . 2>/dev/null || true\n";
+    $fixturePath = '${PITMASTER_ROOT}/fixtures/upstream/gitpython/test/' . $name . '/.git';
+    $setup = $setupHeader
+        . "git init .\n"
+        . "cp -r " . escapeshellarg($fixturePath) . "/* .git/\n"
+        . "git checkout -- . 2>/dev/null || true\n";
 
     file_put_contents($scenarioDir . '/setup.sh', $setup);
     chmod($scenarioDir . '/setup.sh', 0755);

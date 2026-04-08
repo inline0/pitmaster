@@ -1,0 +1,24 @@
+{
+    "name": "shallow-write",
+    "category": "advanced",
+    "description": "Compare Pitmaster shallow file writing against git's shallow repository interpretation",
+    "operations": [
+        "shallow"
+    ],
+    "oracle_commands": {
+        "shallow": "bash \"{{SCENARIO_DIR}}/oracle-shallow.sh\""
+    },
+    "actual_commands": {
+        "shallow": "php \"{{SCENARIO_DIR}}/actual-shallow.php\""
+    },
+    "expectations": {
+        "exact_match": [
+            "shallow",
+            "objects",
+            "refs",
+            "log",
+            "fsck"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -2,6 +2,7 @@
 /.phpunit.cache/
 /.phpunit.result.cache
 /.phpstan/
+/.pitmaster/
 composer.phar
 
 # Generated scenario outputs (oracle is committed, actual and reports are not)
