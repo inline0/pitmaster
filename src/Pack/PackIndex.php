@@ -6,6 +6,7 @@ namespace Pitmaster\Pack;
 
 use Pitmaster\Encoding\BinaryReader;
 use Pitmaster\Exceptions\PackParseException;
+use RuntimeException;
 
 /**
  * Pack index (.idx) file reader. Supports v2 format.
@@ -51,108 +52,97 @@ final class PackIndex
 
     public static function parse(BinaryReader $reader, string $path = ''): self
     {
-        $magic = $reader->read(4);
+        try {
+            $magic = $reader->read(4);
 
-        if ($magic !== self::MAGIC) {
-            // No magic = v1 index. Seek back and parse as v1.
-            $reader->seek(0);
-            $v1 = PackIndexV1::parse($reader);
+            if ($magic !== self::MAGIC) {
+                $reader->seek(0);
+                $v1 = PackIndexV1::parse($reader);
+                $index = new self();
+                $index->objectCount = $v1->objectCount();
+                $index->names = $v1->allHashes();
+                $index->fanout = array_fill(0, 256, 0);
 
-            // Convert v1 to our format
+                foreach ($index->names as $hash) {
+                    $fb = (int) hexdec(substr($hash, 0, 2));
+
+                    for ($j = $fb; $j < 256; $j++) {
+                        $index->fanout[$j]++;
+                    }
+                }
+
+                for ($i = 0; $i < $index->objectCount; $i++) {
+                    $index->offsets[$i] = $v1->findOffset($index->names[$i]) ?? 0;
+                }
+
+                return $index;
+            }
+
+            $version = $reader->readUint32();
+
+            if ($version !== 2) {
+                throw PackParseException::unsupportedVersion($version, $path ?: 'pack index');
+            }
+
             $index = new self();
-            $index->objectCount = $v1->objectCount();
-            $index->names = $v1->allHashes();
 
-            // Build fanout from sorted names
-            $index->fanout = array_fill(0, 256, 0);
+            for ($i = 0; $i < 256; $i++) {
+                $index->fanout[$i] = $reader->readUint32();
+            }
 
-            foreach ($index->names as $i => $hash) {
-                $fb = (int) hexdec(substr($hash, 0, 2));
+            $index->objectCount = $index->fanout[255];
+            $n = $index->objectCount;
+            $sha1Size = 8 + 1024 + ($n * 20) + ($n * 4) + ($n * 4) + 20 + 20;
+            $sha256Size = 8 + 1024 + ($n * 32) + ($n * 4) + ($n * 4) + 32 + 32;
 
-                for ($j = $fb; $j < 256; $j++) {
-                    $index->fanout[$j]++;
+            if ($reader->length() === $sha256Size && $reader->length() !== $sha1Size) {
+                $index->hashBytes = 32;
+            }
+
+            for ($i = 0; $i < $index->objectCount; $i++) {
+                if ($index->hashBytes === 32) {
+                    $index->names[$i] = $reader->readHash32();
+                } else {
+                    $index->names[$i] = $reader->readHash20();
                 }
             }
 
-            // Get offsets
+            $reader->skip($index->objectCount * 4);
+
+            $largeOffsetIndices = [];
+
             for ($i = 0; $i < $index->objectCount; $i++) {
-                $index->offsets[$i] = $v1->findOffset($index->names[$i]) ?? 0;
+                $offset = $reader->readUint32();
+
+                if ($offset & 0x80000000) {
+                    $largeOffsetIndices[$i] = $offset & 0x7FFFFFFF;
+                    $index->offsets[$i] = 0;
+                } else {
+                    $index->offsets[$i] = $offset;
+                }
+            }
+
+            if ($largeOffsetIndices !== []) {
+                $largeOffsets = [];
+                $maxLargeIndex = max($largeOffsetIndices);
+
+                for ($i = 0; $i <= $maxLargeIndex; $i++) {
+                    $high = $reader->readUint32();
+                    $low = $reader->readUint32();
+                    $largeOffsets[$i] = ($high << 32) | $low;
+                }
+
+                foreach ($largeOffsetIndices as $nameIdx => $largeIdx) {
+                    $index->offsets[$nameIdx] = $largeOffsets[$largeIdx];
+                }
             }
 
             return $index;
+        } catch (PackParseException $e) {
+            throw $e;
+        } catch (RuntimeException $e) {
+            throw PackParseException::truncated($path ?: 'pack index', $e->getMessage());
         }
-
-        $version = $reader->readUint32();
-
-        if ($version !== 2) {
-            throw PackParseException::unsupportedVersion($version, $path ?: 'pack index');
-        }
-
-        $index = new self();
-
-        // Fanout table: 256 cumulative counts
-        for ($i = 0; $i < 256; $i++) {
-            $index->fanout[$i] = $reader->readUint32();
-        }
-
-        $index->objectCount = $index->fanout[255];
-
-        // Detect SHA-256 by checking file size.
-        // v2 with SHA-1: 8 + 1024 + N*20 + N*4 + N*4 + 20 + 20
-        // v2 with SHA-256: 8 + 1024 + N*32 + N*4 + N*4 + 32 + 32
-        $n = $index->objectCount;
-        $sha1Size = 8 + 1024 + ($n * 20) + ($n * 4) + ($n * 4) + 20 + 20;
-        $sha256Size = 8 + 1024 + ($n * 32) + ($n * 4) + ($n * 4) + 32 + 32;
-
-        if ($reader->length() === $sha256Size && $reader->length() !== $sha1Size) {
-            $index->hashBytes = 32;
-        }
-
-        // Names: N x hash-sized entries
-        for ($i = 0; $i < $index->objectCount; $i++) {
-            if ($index->hashBytes === 32) {
-                $index->names[$i] = $reader->readHash32();
-            } else {
-                $index->names[$i] = $reader->readHash20();
-            }
-        }
-
-        // CRC32s: skip (N x 4 bytes)
-        $reader->skip($index->objectCount * 4);
-
-        // 4-byte offsets
-        $largeOffsetIndices = [];
-
-        for ($i = 0; $i < $index->objectCount; $i++) {
-            $offset = $reader->readUint32();
-
-            if ($offset & 0x80000000) {
-                // MSB set: index into large offset table
-                $largeOffsetIndices[$i] = $offset & 0x7FFFFFFF;
-                $index->offsets[$i] = 0; // placeholder
-            } else {
-                $index->offsets[$i] = $offset;
-            }
-        }
-
-        // Large offsets (8 bytes each) if any
-        if ($largeOffsetIndices !== []) {
-            $largeOffsets = [];
-            // We need to figure out how many large offsets there are
-            $maxLargeIndex = max($largeOffsetIndices);
-
-            for ($i = 0; $i <= $maxLargeIndex; $i++) {
-                $high = $reader->readUint32();
-                $low = $reader->readUint32();
-                $largeOffsets[$i] = ($high << 32) | $low;
-            }
-
-            foreach ($largeOffsetIndices as $nameIdx => $largeIdx) {
-                $index->offsets[$nameIdx] = $largeOffsets[$largeIdx];
-            }
-        }
-
-        return $index;
     }
 
     public function objectCount(): int

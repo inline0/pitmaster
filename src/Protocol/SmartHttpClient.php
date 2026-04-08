@@ -90,6 +90,7 @@ final class SmartHttpClient
                 'timeout' => $this->timeout,
                 'header' => "User-Agent: Pitmaster/1.0\r\n",
                 'follow_location' => true,
+                'ignore_errors' => true,
             ],
             'ssl' => [
                 'verify_peer' => true,
@@ -98,10 +99,18 @@ final class SmartHttpClient
         ]);
 
         $response = @file_get_contents($url, false, $context);
+        $headers = $http_response_header;
 
         if ($response === false) {
+            $status = $this->statusCode($headers);
+            if ($status !== null) {
+                throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
+            }
+
             throw new ProtocolException("HTTP GET failed: {$url}");
         }
+
+        $this->validateResponse($url, $headers, $expectedContentType);
 
         return $response;
     }
@@ -119,6 +128,7 @@ final class SmartHttpClient
                 ]),
                 'content' => $body,
                 'follow_location' => true,
+                'ignore_errors' => true,
             ],
             'ssl' => [
                 'verify_peer' => true,
@@ -127,11 +137,85 @@ final class SmartHttpClient
         ]);
 
         $response = @file_get_contents($url, false, $context);
+        $headers = $http_response_header;
 
         if ($response === false) {
+            $status = $this->statusCode($headers);
+            if ($status !== null) {
+                throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
+            }
+
             throw new ProtocolException("HTTP POST failed: {$url}");
         }
 
+        $this->validateResponse($url, $headers, $accept);
+
         return $response;
+    }
+
+    /**
+     * @param array<int, string> $headers
+     */
+    private function validateResponse(string $url, array $headers, string $expectedContentType): void
+    {
+        $status = $this->statusCode($headers);
+
+        if ($status === null) {
+            throw new ProtocolException("HTTP response missing status line: {$url}");
+        }
+
+        if ($status < 200 || $status >= 300) {
+            throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
+        }
+
+        $contentType = $this->contentType($headers);
+
+        if ($contentType === null) {
+            throw new ProtocolException("HTTP response missing Content-Type from {$url}");
+        }
+
+        if (!str_starts_with(strtolower($contentType), strtolower($expectedContentType))) {
+            throw new ProtocolException(
+                "Unexpected Content-Type {$contentType} from {$url}, expected {$expectedContentType}"
+            );
+        }
+    }
+
+    /**
+     * @param array<int, string> $headers
+     */
+    private function statusCode(array $headers): ?int
+    {
+        foreach ($headers as $header) {
+            if (preg_match('/^HTTP\/\d+(?:\.\d+)?\s+(\d{3})\b/i', $header, $matches) === 1) {
+                return (int) $matches[1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<int, string> $headers
+     */
+    private function contentType(array $headers): ?string
+    {
+        foreach ($headers as $header) {
+            if (stripos($header, 'Content-Type:') !== 0) {
+                continue;
+            }
+
+            $value = trim(substr($header, 13));
+
+            if ($value === '') {
+                return null;
+            }
+
+            $parts = explode(';', $value, 2);
+
+            return trim($parts[0]);
+        }
+
+        return null;
     }
 }

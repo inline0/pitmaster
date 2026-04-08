@@ -9,6 +9,7 @@ use Pitmaster\Encoding\VarInt;
 use Pitmaster\Exceptions\PackParseException;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Object\ObjectType;
+use RuntimeException;
 
 /**
  * Builds a v2 .idx file for an existing pack file without shelling out to git.
@@ -45,68 +46,74 @@ final class PackIndexer
      */
     private static function scanPack(string $packData, string $packPath): array
     {
-        $reader = new BinaryReader($packData);
-        $magic = $reader->read(4);
+        try {
+            $reader = new BinaryReader($packData);
+            $magic = $reader->read(4);
 
-        if ($magic !== 'PACK') {
-            throw PackParseException::invalidMagic($packPath);
-        }
-
-        $version = $reader->readUint32();
-
-        if ($version !== 2) {
-            throw PackParseException::unsupportedVersion($version, $packPath);
-        }
-
-        $objectCount = $reader->readUint32();
-        $packBodyLength = strlen($packData) - 20;
-        $packChecksum = substr($packData, -20);
-        $parsed = [];
-
-        for ($i = 0; $i < $objectCount; $i++) {
-            $entryOffset = $reader->position();
-
-            if ($entryOffset >= $packBodyLength) {
-                throw PackParseException::truncated($packPath, "missing pack entry {$i}");
+            if ($magic !== 'PACK') {
+                throw PackParseException::invalidMagic($packPath);
             }
 
-            $entry = self::readEntryHeader($reader, $entryOffset);
-            $dataOffset = $reader->position();
-            [$rawData, $consumedBytes] = self::inflateEntry(
-                substr($packData, $dataOffset, $packBodyLength - $dataOffset),
-                $entry->uncompressedSize,
-                $packPath,
-            );
+            $version = $reader->readUint32();
 
-            $reader->seek($dataOffset + $consumedBytes);
+            if ($version !== 2) {
+                throw PackParseException::unsupportedVersion($version, $packPath);
+            }
 
-            $entryBytes = substr($packData, $entryOffset, ($dataOffset - $entryOffset) + $consumedBytes);
-            $parsed[$entryOffset] = [
-                'entry' => $entry,
-                'data' => $rawData,
-                'crc32' => crc32($entryBytes) & 0xFFFFFFFF,
-            ];
+            $objectCount = $reader->readUint32();
+            $packBodyLength = strlen($packData) - 20;
+            $packChecksum = substr($packData, -20);
+            $parsed = [];
+
+            for ($i = 0; $i < $objectCount; $i++) {
+                $entryOffset = $reader->position();
+
+                if ($entryOffset >= $packBodyLength) {
+                    throw PackParseException::truncated($packPath, "missing pack entry {$i}");
+                }
+
+                $entry = self::readEntryHeader($reader, $entryOffset);
+                $dataOffset = $reader->position();
+                [$rawData, $consumedBytes] = self::inflateEntry(
+                    substr($packData, $dataOffset, $packBodyLength - $dataOffset),
+                    $entry->uncompressedSize,
+                    $packPath,
+                );
+
+                $reader->seek($dataOffset + $consumedBytes);
+
+                $entryBytes = substr($packData, $entryOffset, ($dataOffset - $entryOffset) + $consumedBytes);
+                $parsed[$entryOffset] = [
+                    'entry' => $entry,
+                    'data' => $rawData,
+                    'crc32' => crc32($entryBytes) & 0xFFFFFFFF,
+                ];
+            }
+
+            $resolved = [];
+            $hashToOffset = [];
+
+            foreach (array_keys($parsed) as $offset) {
+                self::resolveObjectAtOffset($offset, $parsed, $resolved, $hashToOffset);
+            }
+
+            $entries = [];
+
+            foreach ($resolved as $offset => $object) {
+                $entries[] = [
+                    'hash' => $object['id']->hex,
+                    'binary' => $object['id']->binary,
+                    'offset' => $offset,
+                    'crc32' => $parsed[$offset]['crc32'],
+                ];
+            }
+
+            return ['entries' => $entries, 'packChecksum' => $packChecksum];
+        } catch (PackParseException $e) {
+            throw $e;
+        } catch (RuntimeException $e) {
+            throw PackParseException::truncated($packPath, $e->getMessage());
         }
-
-        $resolved = [];
-        $hashToOffset = [];
-
-        foreach (array_keys($parsed) as $offset) {
-            self::resolveObjectAtOffset($offset, $parsed, $resolved, $hashToOffset);
-        }
-
-        $entries = [];
-
-        foreach ($resolved as $offset => $object) {
-            $entries[] = [
-                'hash' => $object['id']->hex,
-                'binary' => $object['id']->binary,
-                'offset' => $offset,
-                'crc32' => $parsed[$offset]['crc32'],
-            ];
-        }
-
-        return ['entries' => $entries, 'packChecksum' => $packChecksum];
     }
 
     private static function readEntryHeader(BinaryReader $reader, int $offset): PackEntry

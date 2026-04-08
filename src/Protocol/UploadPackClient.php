@@ -72,16 +72,15 @@ final class UploadPackClient
      */
     private function extractPackData(string $response): string
     {
-        // Always try side-band parsing first (GitHub and most servers use this).
-        // Side-band pkt-line format: length + channel byte + data
         $packData = '';
         $offset = 0;
         $length = strlen($response);
         $hasSideBand = false;
+        $errors = [];
 
         while ($offset < $length) {
             if ($offset + 4 > $length) {
-                break;
+                throw new ProtocolException('Truncated upload-pack response');
             }
 
             $hexLen = substr($response, $offset, 4);
@@ -91,17 +90,20 @@ final class UploadPackClient
                 continue;
             }
 
+            if (!ctype_xdigit($hexLen)) {
+                throw new ProtocolException("Invalid pkt-line length in upload-pack response: {$hexLen}");
+            }
+
             $lineLen = (int) hexdec($hexLen);
 
             if ($lineLen < 4) {
-                $offset += 4;
-                continue;
+                throw new ProtocolException("Invalid pkt-line length in upload-pack response: {$hexLen}");
             }
 
             $payloadLen = $lineLen - 4;
 
             if ($offset + 4 + $payloadLen > $length) {
-                break;
+                throw new ProtocolException('Truncated side-band packet in upload-pack response');
             }
 
             $payload = substr($response, $offset + 4, $payloadLen);
@@ -114,18 +116,29 @@ final class UploadPackClient
                     $hasSideBand = true;
                 } elseif ($channel === 2 || $channel === 3) {
                     $hasSideBand = true;
+                    if ($channel === 3) {
+                        $errors[] = trim(substr($payload, 1));
+                    }
+                } elseif (str_starts_with($payload, "ERR ")) {
+                    $errors[] = trim(substr($payload, 4));
                 }
-                // Other channels: NAK/ACK lines (not side-band)
             }
 
             $offset += $lineLen;
+        }
+
+        if ($errors !== []) {
+            throw new ProtocolException('upload-pack error: ' . implode('; ', array_filter($errors)));
         }
 
         if ($hasSideBand && $packData !== '' && str_starts_with($packData, 'PACK')) {
             return $packData;
         }
 
-        // No side-band: look for raw PACK data after NAK line
+        if ($hasSideBand) {
+            throw new ProtocolException('upload-pack response did not contain pack data');
+        }
+
         $nakPos = strpos($response, "NAK\n");
 
         if ($nakPos !== false) {
@@ -137,13 +150,16 @@ final class UploadPackClient
             }
         }
 
-        // Last resort: find PACK anywhere
         $packPos = strpos($response, 'PACK');
 
         if ($packPos !== false) {
             return substr($response, $packPos);
         }
 
-        return $response;
+        if (preg_match('/(?:^|\n)ERR (.+)/', $response, $matches) === 1) {
+            throw new ProtocolException('upload-pack error: ' . trim($matches[1]));
+        }
+
+        throw new ProtocolException('upload-pack response did not contain pack data');
     }
 }
