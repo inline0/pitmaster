@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2] - 2026-04-08
+
+### Added
+- Integration coverage for merge-conflict markers and HEAD stability
+- Integration coverage for tracked-file pruning during hard reset and detached checkout
+- Integration coverage for pack store refresh after new packs are written
+- Integration coverage for empty-tree and unchanged-tree commit semantics
+
 ## [0.2.1] - 2026-04-08
 
 ### Fixed

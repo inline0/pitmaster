@@ -105,6 +105,37 @@ final class AllOperationsTest extends TestCase
         $this->assertSame('', trim($this->git('status --short')));
     }
 
+    #[Test]
+    public function testMergeConflictWritesConflictMarkersAndKeepsHead(): void
+    {
+        $this->writeFile('a.txt', "line 1\nline 2\nline 3\n");
+        $this->repo->add('a.txt');
+        $this->repo->commit("Base\n");
+
+        $this->git('checkout -b feature');
+        $this->writeFile('a.txt', "line 1\nfeature change\nline 3\n");
+        $this->git('add a.txt');
+        $this->git('commit -m "Feature edit"');
+
+        $this->git('checkout main');
+        $this->writeFile('a.txt', "line 1\nmain change\nline 3\n");
+        $this->repo = Pitmaster::open($this->tmpDir);
+        $this->repo->add('a.txt');
+        $oursHead = $this->repo->commit("Main edit\n");
+
+        $result = $this->repo->merge('feature');
+
+        $this->assertFalse($result->clean);
+        $this->assertContains('a.txt', $result->conflictPaths);
+        $this->assertSame($oursHead->hex, $this->repo->head()->id->hex);
+
+        $content = file_get_contents($this->tmpDir . '/a.txt');
+        $this->assertStringContainsString('<<<<<<< HEAD', $content);
+        $this->assertStringContainsString('main change', $content);
+        $this->assertStringContainsString('feature change', $content);
+        $this->assertStringContainsString('>>>>>>> incoming', $content);
+    }
+
     // ---- checkout ----
 
     #[Test]
@@ -335,6 +366,25 @@ final class AllOperationsTest extends TestCase
         $this->assertSame("v1\n", $content);
     }
 
+    #[Test]
+    public function testResetHardRemovesTrackedFilesMissingInTarget(): void
+    {
+        $this->writeFile('keep.txt', "keep\n");
+        $this->repo->add('keep.txt');
+        $firstId = $this->repo->commit("First\n");
+
+        $this->writeFile('extra.txt', "extra\n");
+        $this->repo->add('extra.txt');
+        $this->repo->commit("Second\n");
+
+        $this->assertFileExists($this->tmpDir . '/extra.txt');
+
+        $this->repo->reset($firstId->hex, 'hard');
+
+        $this->assertFileDoesNotExist($this->tmpDir . '/extra.txt');
+        $this->assertSame('', trim($this->git('status --short')));
+    }
+
     // ---- restore ----
 
     #[Test]
@@ -371,6 +421,24 @@ final class AllOperationsTest extends TestCase
     }
 
     #[Test]
+    public function testCheckoutDetachedCommitRemovesTrackedFilesMissingInTarget(): void
+    {
+        $this->writeFile('keep.txt', "keep\n");
+        $this->repo->add('keep.txt');
+        $firstId = $this->repo->commit("First\n");
+
+        $this->writeFile('extra.txt', "extra\n");
+        $this->repo->add('extra.txt');
+        $this->repo->commit("Second\n");
+
+        $this->repo->checkout($firstId->hex);
+
+        $this->assertNull($this->repo->branch());
+        $this->assertFileDoesNotExist($this->tmpDir . '/extra.txt');
+        $this->assertSame('', trim($this->git('status --short')));
+    }
+
+    #[Test]
     public function testCommitCanCreateEmptyTree(): void
     {
         $this->writeFile('only.txt', "content\n");
@@ -383,6 +451,19 @@ final class AllOperationsTest extends TestCase
 
         $this->assertSame('', trim($this->git('ls-tree --name-only HEAD')));
         $this->assertSame('', trim($this->git('status --short')));
+    }
+
+    #[Test]
+    public function testCommitRejectsUnchangedTree(): void
+    {
+        $this->writeFile('a.txt', "content\n");
+        $this->repo->add('a.txt');
+        $this->repo->commit("Initial\n");
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Nothing to commit: tree unchanged');
+
+        $this->repo->commit("No-op\n");
     }
 
     // ---- mv ----

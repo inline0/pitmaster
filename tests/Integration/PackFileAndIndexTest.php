@@ -11,6 +11,7 @@ use Pitmaster\Pack\PackEnumerator;
 use Pitmaster\Pack\PackFile;
 use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Pack\PackIndex;
+use Pitmaster\Pack\PackWriter;
 use Pitmaster\Storage\PackFileStore;
 
 final class PackFileAndIndexTest extends TestCase
@@ -220,6 +221,28 @@ final class PackFileAndIndexTest extends TestCase
 
         $this->assertNotEmpty($hashes);
         $this->assertNotNull($pack->read($hashes[0]));
+    }
+
+    #[Test]
+    public function packFileStoreRefreshSeesNewlyWrittenPacks(): void
+    {
+        $packDir = $this->tmpDir . '/.git/objects/pack';
+        if (!is_dir($packDir)) {
+            mkdir($packDir, 0777, true);
+        }
+
+        $store = new PackFileStore($packDir);
+        $this->assertFalse($store->exists(Blob::fromContent("missing\n")->id));
+
+        $blob = Blob::fromContent("new pack content\n");
+        PackWriter::write($packDir, [$blob]);
+
+        $this->assertFalse($store->exists($blob->id));
+
+        $store->refresh();
+
+        $this->assertTrue($store->exists($blob->id));
+        $this->assertNotNull($store->read($blob->id));
     }
 
     #[Test]
