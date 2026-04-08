@@ -144,8 +144,6 @@ final class Repository
         return $this->isLinkedWorktree;
     }
 
-    // -- Default branch --
-
     /**
      * Resolve the repository's default/stable branch.
      *
@@ -208,8 +206,6 @@ final class Repository
 
         return $mergeBase->isAncestor($branchId, $targetId);
     }
-
-    // -- Worktree lifecycle --
 
     /**
      * Add a linked worktree with a full checkout.
@@ -285,8 +281,6 @@ final class Repository
         return $manager->list();
     }
 
-    // -- Objects --
-
     /**
      * Read any object by hash.
      */
@@ -335,8 +329,6 @@ final class Repository
     {
         return $this->objects->listAll();
     }
-
-    // -- Refs --
 
     /**
      * Current HEAD commit.
@@ -569,8 +561,6 @@ final class Repository
         return $result;
     }
 
-    // -- Log --
-
     /**
      * Walk commit history.
      *
@@ -648,8 +638,6 @@ final class Repository
         return ['commit' => $object, 'diff' => $diffs];
     }
 
-    // -- Index --
-
     /**
      * Read the current index.
      */
@@ -722,8 +710,6 @@ final class Repository
 
         IndexWriter::write($index, $this->gitDir . '/index');
     }
-
-    // -- Commits --
 
     /**
      * Create a commit from the current index.
@@ -975,8 +961,6 @@ final class Repository
         return implode("\n", $lines) . ($lines !== [] ? "\n" : '');
     }
 
-    // -- Network --
-
     /**
      * Fetch from a remote.
      */
@@ -1076,8 +1060,6 @@ final class Repository
         ], '');
     }
 
-    // -- Status --
-
     /**
      * Compute working tree status.
      *
@@ -1091,8 +1073,6 @@ final class Repository
 
         return $status->compute($index, $headId);
     }
-
-    // -- Diff --
 
     /**
      * Diff worktree vs index (unstaged changes).
@@ -1199,8 +1179,6 @@ final class Repository
 
         return $treeDiff->diff($a, $b);
     }
-
-    // -- Merge --
 
     /**
      * Merge a branch into HEAD.
@@ -1365,14 +1343,10 @@ final class Repository
         return (new MergeBase($this->objects))->find($a, $b);
     }
 
-    // -- Config --
-
     public function config(): GitConfig
     {
         return $this->config;
     }
-
-    // -- Internal access --
 
     public function objectDatabase(): ObjectDatabase
     {
@@ -1383,8 +1357,6 @@ final class Repository
     {
         return $this->refs;
     }
-
-    // -- Private helpers --
 
     /**
      * Build a tree hierarchy from flat index entries.

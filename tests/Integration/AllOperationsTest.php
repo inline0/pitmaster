@@ -35,8 +35,6 @@ final class AllOperationsTest extends TestCase
         exec('rm -rf ' . escapeshellarg($this->tmpDir));
     }
 
-    // ---- merge ----
-
     #[Test]
     public function testMergeFastForward(): void
     {
@@ -136,8 +134,6 @@ final class AllOperationsTest extends TestCase
         $this->assertStringContainsString('>>>>>>> incoming', $content);
     }
 
-    // ---- checkout ----
-
     #[Test]
     public function testCheckoutBranch(): void
     {
@@ -188,8 +184,6 @@ final class AllOperationsTest extends TestCase
         $this->assertSame('', trim($this->git('status --short')));
     }
 
-    // ---- stash ----
-
     #[Test]
     public function testStashPushAndPop(): void
     {
@@ -226,8 +220,6 @@ final class AllOperationsTest extends TestCase
         $content = file_get_contents($this->tmpDir . '/a.txt');
         $this->assertSame("modified\n", $content);
     }
-
-    // ---- cherry-pick ----
 
     #[Test]
     public function testCherryPick(): void
@@ -279,8 +271,6 @@ final class AllOperationsTest extends TestCase
         $this->assertSame('', trim($this->git('status --short')));
     }
 
-    // ---- revert ----
-
     #[Test]
     public function testRevert(): void
     {
@@ -321,8 +311,6 @@ final class AllOperationsTest extends TestCase
         $this->assertFileDoesNotExist($this->tmpDir . '/added.txt');
         $this->assertSame('', trim($this->git('status --short')));
     }
-
-    // ---- reset --mixed and --hard ----
 
     #[Test]
     public function testResetMixed(): void
@@ -384,8 +372,6 @@ final class AllOperationsTest extends TestCase
         $this->assertFileDoesNotExist($this->tmpDir . '/extra.txt');
         $this->assertSame('', trim($this->git('status --short')));
     }
-
-    // ---- restore ----
 
     #[Test]
     public function testRestore(): void
@@ -466,8 +452,6 @@ final class AllOperationsTest extends TestCase
         $this->repo->commit("No-op\n");
     }
 
-    // ---- mv ----
-
     #[Test]
     public function testMv(): void
     {
@@ -487,8 +471,6 @@ final class AllOperationsTest extends TestCase
         $this->assertNotNull($index->entry('new.txt'));
     }
 
-    // ---- diffStaged ----
-
     #[Test]
     public function testDiffStaged(): void
     {
@@ -503,8 +485,6 @@ final class AllOperationsTest extends TestCase
         $this->assertNotEmpty($staged);
         $this->assertTrue($staged[0]->hasChanges());
     }
-
-    // ---- show ----
 
     #[Test]
     public function testShow(): void
@@ -522,8 +502,6 @@ final class AllOperationsTest extends TestCase
         $this->assertSame('Update', trim($result['commit']->message));
         $this->assertNotEmpty($result['diff']);
     }
-
-    // ---- createTag (annotated) ----
 
     #[Test]
     public function testCreateAnnotatedTag(): void
@@ -543,8 +521,6 @@ final class AllOperationsTest extends TestCase
         $gitShow = $this->git('cat-file -t ' . $tagId->hex);
         $this->assertStringContainsString('tag', $gitShow);
     }
-
-    // ---- blame ----
 
     #[Test]
     public function testBlame(): void
@@ -566,8 +542,6 @@ final class AllOperationsTest extends TestCase
         $this->assertSame('line 3', $result[2]['content']);
     }
 
-    // ---- grep ----
-
     #[Test]
     public function testGrep(): void
     {
@@ -586,8 +560,6 @@ final class AllOperationsTest extends TestCase
         $this->assertContains('a.txt', $paths);
         $this->assertContains('b.txt', $paths);
     }
-
-    // ---- logPath (path-filtered log) ----
 
     #[Test]
     public function testLogPath(): void
@@ -610,8 +582,6 @@ final class AllOperationsTest extends TestCase
         $bLog = $this->repo->logPath('b.txt');
         $this->assertCount(1, $bLog); // "Add b"
     }
-
-    // ---- helpers ----
 
     private function writeFile(string $path, string $content): void
     {

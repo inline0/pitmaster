@@ -149,8 +149,6 @@ final class Pitmaster
         return $repo;
     }
 
-    // -- Detection helpers --
-
     /**
      * Check if a path is a git repository (regular or linked worktree).
      */

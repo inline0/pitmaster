@@ -78,8 +78,6 @@ final readonly class Scenario
         return (bool) ($this->expectations()['fsck_clean'] ?? true);
     }
 
-    // -- Paths --
-
     public function scenarioDir(): string
     {
         return $this->rootPath . '/scenarios/' . $this->name;
