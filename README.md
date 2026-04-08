@@ -20,7 +20,7 @@
 
 ## What is Pitmaster?
 
-Pitmaster reads and writes Git repositories in pure PHP. No `exec('git ...')`, no FFI, no extensions beyond what ships with every PHP install (`zlib`, `mbstring`, `json`). The canonical `git` binary is the oracle: if `git` accepts what Pitmaster writes, and Pitmaster can read what `git` writes, it is correct.
+Pitmaster reads and writes Git repositories in pure PHP. Core repository operations do not shell out to the `git` binary or rely on FFI. Objects, refs, pack files, the index, and smart HTTP transport are handled natively in PHP.
 
 **The problem:** PHP applications that need to interact with Git repositories either shell out to the `git` binary (requires `exec()`, hard to deploy, security surface) or use FFI/extension bindings (complex setup, version coupling). There's no way to read a pack file, create a commit, or diff two trees from pure PHP.
 
@@ -103,7 +103,7 @@ Pitmaster ships with a CLI that mirrors a subset of `git` commands:
 
 ## Testing
 
-Pitmaster is verified against the canonical `git` binary using an oracle-driven approach: set up a repo, capture `git`'s output, run Pitmaster on the same repo, diff the results.
+Pitmaster is exercised with unit tests, integration tests against the canonical `git` binary, and imported oracle-style scenarios from upstream Git implementations.
 
 ```bash
 # Unit tests (no git binary needed)
@@ -122,24 +122,7 @@ composer analyse
 composer cs
 ```
 
-### Test coverage
-
-```
-440 tests, 1,091 assertions
-101/101 classes tested
-521 oracle scenarios from 8 upstream sources:
-
-  32 Pitmaster (own scenarios)
-  17 libgit2       (C)
-  46 go-git        (Go)
-  71 isomorphic-git (JavaScript)
-   5 dulwich       (Python)
-  19 git test suite (hand-picked)
-   7 JGit          (Java)
- 324 git test suite (extracted from t/*.sh)
-```
-
-Every scenario runs `git` as the oracle and compares Pitmaster's output for objects, refs, and commit history.
+The current suite covers unit behavior, end-to-end repository operations, and round-trip comparisons against `git`. Run `composer test` for the current totals in this checkout.
 
 ## Requirements
 
@@ -148,7 +131,7 @@ Every scenario runs `git` as the oracle and compares Pitmaster's output for obje
 - `ext-mbstring` (built-in)
 - `ext-json` (built-in)
 
-No other extensions. No `exec()`. No FFI.
+Core repository operations do not require the `git` binary or FFI. Optional features have extra runtime expectations: hook execution uses `proc_open()`, and SSH transport requires `ext-ssh2`.
 
 ## Features
 

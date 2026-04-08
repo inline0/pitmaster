@@ -5,7 +5,7 @@ description: Pure PHP Git implementation. Read and write Git repositories withou
 
 # Pitmaster
 
-Pitmaster is a pure PHP library that reads and writes Git repositories natively. No `exec('git ...')`, no FFI, no extensions beyond what ships with every PHP install. The entire Git object model, pack file format, index format, and smart HTTP protocol are implemented in PHP.
+Pitmaster is a pure PHP library that reads and writes Git repositories natively. Core repository operations do not shell out to the `git` binary or use FFI. The Git object model, pack file format, index format, and smart HTTP transport are implemented in PHP.
 
 ## Why Pitmaster exists
 
@@ -31,8 +31,9 @@ Pitmaster eliminates the `git` dependency entirely. Your PHP application can rea
 - PHP 8.2 or later
 - `zlib` extension (built-in on virtually all PHP installs)
 - `mbstring` extension (for UTF-8 path handling)
+- `json` extension
 
-No other extensions. No FFI. No `exec()`.
+Core repository operations do not require the `git` binary. Optional features may need extra runtime capabilities: hook execution uses `proc_open()`, and SSH transport requires `ext-ssh2`.
 
 ## Quick example
 
@@ -60,13 +61,4 @@ $repo->add('src/Feature.php');
 $commitId = $repo->commit('Add new feature');
 ```
 
-## Correctness guarantee
-
-Pitmaster uses an oracle-driven testing model. The canonical `git` binary is the oracle: every behavior Pitmaster implements is verified by comparing its output against git's output on the same input. If `git` accepts what Pitmaster writes, and Pitmaster can read what `git` writes, it is correct. See the [Testing](/docs/testing/oracle-model) section for details.
-
-## Next steps
-
-- [Getting Started](/docs/getting-started) for installation and basic usage
-- [API Reference](/docs/api) for the full public API
-- [CLI Reference](/docs/cli) for the command-line interface
-- [Operations](/docs/operations/read) for detailed operation guides
+Start with [Getting Started](/docs/getting-started), then use [API](/docs/api), [CLI](/docs/cli), and [Operations](/docs/operations/read) for the rest of the surface area.

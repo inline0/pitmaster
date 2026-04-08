@@ -18,8 +18,9 @@ composer require pitmaster/pitmaster
 - **PHP 8.2+** with readonly classes, enums, and constructor promotion
 - **ext-zlib** for object compression/decompression (built-in on most installs)
 - **ext-mbstring** for UTF-8 path handling
+- **ext-json** for config and protocol payload handling
 
-No other extensions are needed. Pitmaster does not use `exec()`, `proc_open()`, FFI, or any external binaries.
+Core repository operations do not require the `git` binary, FFI, or external helpers. Optional features have additional runtime requirements: hook execution uses `proc_open()`, and SSH transport requires `ext-ssh2`.
 
 ## Open an existing repository
 

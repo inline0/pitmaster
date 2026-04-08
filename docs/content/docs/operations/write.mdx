@@ -76,14 +76,14 @@ $commitId = $repo->commit('Add feature', $author);
 
 ## Verifying with git fsck
 
-Objects written by Pitmaster pass `git fsck --strict`. This is verified by the oracle-driven test suite. You can verify manually:
+Pitmaster's integration coverage checks written objects against `git fsck --strict`, and you can verify the same manually:
 
 ```bash
 cd /path/to/repo
 git fsck --strict
 ```
 
-If Pitmaster writes an invalid object, `git fsck` will report the error. The oracle test scenarios run this check automatically on every round-trip scenario.
+If Pitmaster writes an invalid object, `git fsck` will report the error immediately.
 
 ## Managing branches
 
