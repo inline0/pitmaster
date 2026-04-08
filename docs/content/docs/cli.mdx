@@ -293,6 +293,24 @@ Output:
 HEAD is now at abc1234
 ```
 
+### `rebase`
+
+Rebase the current branch onto another ref.
+
+```bash
+# Start a rebase
+./bin/pitmaster rebase main
+
+# Continue after resolving conflicts
+./bin/pitmaster rebase --continue
+
+# Skip the current commit
+./bin/pitmaster rebase --skip
+
+# Abort and restore the original branch tip
+./bin/pitmaster rebase --abort
+```
+
 ### `init`
 
 Initialize a new repository.

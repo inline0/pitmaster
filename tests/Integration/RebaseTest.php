@@ -6,8 +6,6 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Pitmaster\Graph\Rebase;
-use Pitmaster\Object\ObjectId;
 use Pitmaster\Pitmaster;
 use Pitmaster\Repository;
 
@@ -62,14 +60,7 @@ final class RebaseTest extends TestCase
     #[Test]
     public function rebaseFeatureOntoMain(): void
     {
-        $mainId = ObjectId::fromHex(trim($this->git('rev-parse main')));
-
-        $rebase = new Rebase(
-            $this->repo->objectDatabase(),
-            $this->repo->refDatabase(),
-        );
-
-        $result = $rebase->rebase($mainId);
+        $result = $this->repo->rebase('main');
 
         $this->assertTrue($result['success']);
         $this->assertSame(2, $result['commits']);
@@ -79,14 +70,7 @@ final class RebaseTest extends TestCase
     #[Test]
     public function rebaseProducesCorrectCommitCount(): void
     {
-        $mainId = ObjectId::fromHex(trim($this->git('rev-parse main')));
-
-        $rebase = new Rebase(
-            $this->repo->objectDatabase(),
-            $this->repo->refDatabase(),
-        );
-
-        $rebase->rebase($mainId);
+        $this->repo->rebase('main');
 
         // After rebase, feature should have: base + main + feature1 + feature2 = 4 commits
         // Walk from new feature HEAD
@@ -98,14 +82,7 @@ final class RebaseTest extends TestCase
     #[Test]
     public function rebaseProducesFsckCleanRepo(): void
     {
-        $mainId = ObjectId::fromHex(trim($this->git('rev-parse main')));
-
-        $rebase = new Rebase(
-            $this->repo->objectDatabase(),
-            $this->repo->refDatabase(),
-        );
-
-        $rebase->rebase($mainId);
+        $this->repo->rebase('main');
 
         // git fsck should pass
         exec(

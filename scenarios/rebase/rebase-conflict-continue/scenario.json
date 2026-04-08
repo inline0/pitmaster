@@ -1,0 +1,35 @@
+{
+    "name": "rebase-conflict-continue",
+    "category": "rebase",
+    "description": "Resolve a rebase conflict and continue with a deterministic rewritten commit",
+    "operations": [
+        "status",
+        "head_ref",
+        "subjects",
+        "tree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse main..HEAD",
+        "tree": "git show -s --format=%T HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse main..HEAD",
+        "tree": "git show -s --format=%T HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "subjects",
+            "tree"
+        ],
+        "fsck_clean": false
+    }
+}

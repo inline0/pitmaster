@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "2bd1e8cc1d5bfda16b6956d512bbf1551ee9e7bb",
+        "type": "commit",
+        "size": 175,
+        "content": "tree ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c\nauthor Test User <test@pitmaster.dev> 1704758400 +0000\ncommitter Test User <test@pitmaster.dev> 1704758400 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob f2376e2bab6c5194410bd8a55630f83f933d2f34\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f208ab6ffdaa8f384bed6c8563d780aa99cc6f94",
+        "type": "tag",
+        "size": 144,
+        "content": "object 2bd1e8cc1d5bfda16b6956d512bbf1551ee9e7bb\ntype commit\ntag v1.1\ntagger Test User <test@pitmaster.dev> 1704758400 +0000\n\nAnnotated tag v1.1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2376e2bab6c5194410bd8a55630f83f933d2f34",
+        "type": "blob",
+        "size": 16,
+        "content": "initial content\n",
+        "encoding": "utf-8"
+    }
+]

@@ -33,19 +33,35 @@ final class Pitmaster
         }
 
         mkdir($gitDir, 0777, true);
-        mkdir($gitDir . '/objects', 0777, true);
-        mkdir($gitDir . '/refs/heads', 0777, true);
-        mkdir($gitDir . '/refs/tags', 0777, true);
+
+        foreach (
+            [
+            'hooks',
+            'info',
+            'objects/info',
+            'objects/pack',
+            'refs/heads',
+            'refs/tags',
+            ] as $dir
+        ) {
+            mkdir($gitDir . '/' . $dir, 0777, true);
+        }
 
         file_put_contents($gitDir . '/HEAD', "ref: refs/heads/main\n");
-        file_put_contents($gitDir . '/config', implode("\n", [
-            '[core]',
-            "\trepositoryformatversion = 0",
-            "\tfilemode = true",
-            "\tbare = false",
-            "\tlogallrefupdates = true",
+        file_put_contents(
+            $gitDir . '/description',
+            "Unnamed repository; edit this file 'description' to name the repository.\n",
+        );
+        file_put_contents($gitDir . '/info/exclude', implode("\n", [
+            '# git ls-files --others --exclude-from=.git/info/exclude',
+            "# Lines that start with '#' are comments.",
+            '# For a project mostly in C, the following would be a good set of',
+            '# exclude patterns (uncomment them if you want to use them):',
+            '# *.[oa]',
+            '# *~',
             '',
         ]));
+        file_put_contents($gitDir . '/config', self::initialConfig($path));
 
         return new Repository($path);
     }
@@ -184,6 +200,40 @@ final class Pitmaster
             return $repo->commonGitDir();
         } catch (\Throwable) {
             return null;
+        }
+    }
+
+    private static function initialConfig(string $path): string
+    {
+        $lines = [
+            '[core]',
+            "\trepositoryformatversion = 0",
+            "\tfilemode = true",
+            "\tbare = false",
+        ];
+
+        if (self::isCaseInsensitiveFilesystem($path)) {
+            $lines[] = "\tignorecase = true";
+        }
+
+        if (PHP_OS_FAMILY === 'Darwin') {
+            $lines[] = "\tprecomposeunicode = true";
+        }
+
+        $lines[] = '';
+
+        return implode("\n", $lines);
+    }
+
+    private static function isCaseInsensitiveFilesystem(string $path): bool
+    {
+        $probe = $path . '/.git/.pitmaster-case-check-aBc';
+        file_put_contents($probe, "x\n");
+
+        try {
+            return is_file($path . '/.git/.PITMASTER-CASE-CHECK-ABC');
+        } finally {
+            @unlink($probe);
         }
     }
 }

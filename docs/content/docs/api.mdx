@@ -321,6 +321,19 @@ Delete a branch by name.
 $repo->deleteBranch('feature/old');
 ```
 
+#### `createLightweightTag`
+
+```php
+public function createLightweightTag(string $name, ?ObjectId $target = null): void
+```
+
+Create a lightweight tag. If `$target` is null, tags the current HEAD directly.
+
+```php
+$repo->createLightweightTag('v2.0.0');
+$repo->createLightweightTag('hotfix-start', $repo->resolve('main~2'));
+```
+
 #### `createTag`
 
 ```php
@@ -331,6 +344,30 @@ Create an annotated tag. If `$target` is null, tags the current HEAD. Returns th
 
 ```php
 $tagId = $repo->createTag('v2.0.0', 'Release version 2.0.0');
+```
+
+#### `deleteTag`
+
+```php
+public function deleteTag(string $name): void
+```
+
+Delete a tag by name.
+
+```php
+$repo->deleteTag('v1.0.0');
+```
+
+#### `packRefs`
+
+```php
+public function packRefs(): void
+```
+
+Rewrite the shared `packed-refs` file from the current loose ref set and prune the corresponding shared loose refs. For linked worktrees, this writes to the common git directory.
+
+```php
+$repo->packRefs();
 ```
 
 #### `defaultBranch`
@@ -502,6 +539,27 @@ Create a commit that undoes another commit.
 
 ```php
 $revertId = $repo->revert('abc123');
+```
+
+#### `rebase`
+
+```php
+public function rebase(string $onto): array
+public function rebaseContinue(): array
+public function rebaseAbort(): void
+public function rebaseSkip(): array
+```
+
+Rebase the current branch onto another revision. Pitmaster currently covers linear rebases with Git-shaped stop state for conflicts, plus `--continue`, `--abort`, and `--skip`.
+
+```php
+$result = $repo->rebase('main');
+
+if (!$result['success']) {
+    // Resolve conflicts, then continue or skip/abort.
+    $repo->add('src/File.php');
+    $repo->rebaseContinue();
+}
 ```
 
 ---

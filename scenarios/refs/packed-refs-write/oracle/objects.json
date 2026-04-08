@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "4bb11fb38f461f8e1f42004de624abf168de7a2b",
+        "type": "commit",
+        "size": 222,
+        "content": "tree d6cd6db08dbdec7475d60b1adab36a2d529e4665\nparent 4fae244d64e46a4159cf9ec36efb25443c0723e9\nauthor Test User <test@pitmaster.dev> 1704672000 +0000\ncommitter Test User <test@pitmaster.dev> 1704672000 +0000\n\nSecond commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4fae244d64e46a4159cf9ec36efb25443c0723e9",
+        "type": "commit",
+        "size": 175,
+        "content": "tree ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c\nauthor Test User <test@pitmaster.dev> 1704585600 +0000\ncommitter Test User <test@pitmaster.dev> 1704585600 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "81992fc7df81c957caafb733ca827c9b01343784",
+        "type": "tag",
+        "size": 144,
+        "content": "object 4fae244d64e46a4159cf9ec36efb25443c0723e9\ntype commit\ntag v1.1\ntagger Test User <test@pitmaster.dev> 1704585600 +0000\n\nAnnotated tag v1.1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob f2376e2bab6c5194410bd8a55630f83f933d2f34\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d6cd6db08dbdec7475d60b1adab36a2d529e4665",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob e5d142aa9f9611340d5a27dd27a29c8514b1123a\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e5d142aa9f9611340d5a27dd27a29c8514b1123a",
+        "type": "blob",
+        "size": 16,
+        "content": "updated content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f2376e2bab6c5194410bd8a55630f83f933d2f34",
+        "type": "blob",
+        "size": 16,
+        "content": "initial content\n",
+        "encoding": "utf-8"
+    }
+]

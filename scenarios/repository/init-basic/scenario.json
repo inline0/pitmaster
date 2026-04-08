@@ -1,0 +1,44 @@
+{
+    "name": "init-basic",
+    "category": "repository",
+    "description": "Initialize a new repository and compare the resulting Git-facing layout and config against git init -b main",
+    "operations": [
+        "head",
+        "description",
+        "exclude",
+        "config",
+        "layout",
+        "status"
+    ],
+    "oracle_commands": {
+        "head": "cat .git/HEAD",
+        "description": "cat .git/description",
+        "exclude": "cat .git/info/exclude",
+        "config": "bash \"{{SCENARIO_DIR}}/config-snapshot.sh\"",
+        "layout": "bash \"{{SCENARIO_DIR}}/layout-snapshot.sh\"",
+        "status": "git status --porcelain=v2"
+    },
+    "actual_commands": {
+        "head": "cat .git/HEAD",
+        "description": "cat .git/description",
+        "exclude": "cat .git/info/exclude",
+        "config": "bash \"{{SCENARIO_DIR}}/config-snapshot.sh\"",
+        "layout": "bash \"{{SCENARIO_DIR}}/layout-snapshot.sh\"",
+        "status": "git status --porcelain=v2"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "head",
+            "description",
+            "exclude",
+            "config",
+            "layout",
+            "status"
+        ],
+        "fsck_clean": false
+    }
+}

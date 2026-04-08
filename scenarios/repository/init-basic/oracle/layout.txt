@@ -1,0 +1,12 @@
+file .git/HEAD
+file .git/config
+file .git/description
+dir .git/hooks
+dir .git/info
+file .git/info/exclude
+dir .git/objects
+dir .git/objects/info
+dir .git/objects/pack
+dir .git/refs
+dir .git/refs/heads
+dir .git/refs/tags

@@ -28,6 +28,10 @@ if ($arguments === []) {
     fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
     fwrite(STDERR, "  checkout <ref>      Switch branches or detach HEAD\n");
     fwrite(STDERR, "  merge <branch>      Merge a branch into HEAD\n");
+    fwrite(STDERR, "  rebase <ref>        Rebase HEAD onto another ref\n");
+    fwrite(STDERR, "  rebase --continue   Continue an in-progress rebase\n");
+    fwrite(STDERR, "  rebase --abort      Abort an in-progress rebase\n");
+    fwrite(STDERR, "  rebase --skip       Skip the current rebase commit\n");
     fwrite(STDERR, "  stash [pop|list]    Stash working directory changes\n");
     fwrite(STDERR, "  blame <file>        Show line-by-line authorship\n");
     fwrite(STDERR, "  grep <pattern>      Search file contents\n");
@@ -68,6 +72,7 @@ try {
         'tag' => commandTag($repo, $arguments),
         'checkout' => commandCheckout($repo, $arguments),
         'merge' => commandMerge($repo, $arguments),
+        'rebase' => commandRebase($repo, $arguments),
         'stash' => commandStash($repo, $arguments),
         'blame' => commandBlame($repo, $arguments),
         'grep' => commandGrep($repo, $arguments),
@@ -355,6 +360,31 @@ function commandMerge(Repository $repo, array $args): void
         fwrite(STDERR, "CONFLICT in: " . implode(', ', $result->conflictPaths) . "\n");
         exit(1);
     }
+}
+
+function commandRebase(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster rebase <ref>|--continue|--abort|--skip\n");
+        exit(1);
+    }
+
+    if ($args[0] === '--continue') {
+        $repo->rebaseContinue();
+        return;
+    }
+
+    if ($args[0] === '--abort') {
+        $repo->rebaseAbort();
+        return;
+    }
+
+    if ($args[0] === '--skip') {
+        $repo->rebaseSkip();
+        return;
+    }
+
+    $repo->rebase($args[0]);
 }
 
 function commandStash(Repository $repo, array $args): void

@@ -168,7 +168,8 @@ final class LooseRefStore implements RefStore
         // Shared refs (refs/heads, refs/tags, etc.) live in commonDir
         if (
             $name === 'HEAD' || $name === 'MERGE_HEAD' || $name === 'CHERRY_PICK_HEAD'
-            || $name === 'REVERT_HEAD' || $name === 'BISECT_HEAD' || $name === 'ORIG_HEAD'
+            || $name === 'REVERT_HEAD' || $name === 'REBASE_HEAD'
+            || $name === 'BISECT_HEAD' || $name === 'ORIG_HEAD'
         ) {
             return $this->gitDir . '/' . $name;
         }

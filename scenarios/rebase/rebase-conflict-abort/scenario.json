@@ -1,0 +1,32 @@
+{
+    "name": "rebase-conflict-abort",
+    "category": "rebase",
+    "description": "Abort an in-progress rebase and restore the original branch",
+    "operations": [
+        "status",
+        "head_ref",
+        "subjects"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format=%s --reverse main..HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format=%s --reverse main..HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "status",
+            "head_ref",
+            "subjects"
+        ],
+        "fsck_clean": false
+    }
+}

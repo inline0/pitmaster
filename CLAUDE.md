@@ -47,6 +47,16 @@ After every meaningful work pass, run the full matrix from the repo root before 
 
 No partial sign-off. `composer test` is the full test matrix, not just PHPUnit. Upstream scenario fixtures must stay vendored under `fixtures/upstream`; scenario setup scripts and acquisition scripts must never depend on `/tmp` or `/private/tmp`.
 
+## Autonomous Batch Protocol
+
+When [`ORACLE_PARITY_TODO.md`](ORACLE_PARITY_TODO.md) still has non-`Mapped` rows, treat [`SESSION_EXECUTION_QUEUE.md`](SESSION_EXECUTION_QUEUE.md) as the active execution queue for long work passes.
+
+1. Refresh the queue from the parity backlog before starting a large pass.
+2. Default behavior is to keep working through the queue instead of stopping after a single fix. Target a double-digit batch of completed items per autonomous pass unless a shared blocker or a red `./bin/verify-all` gate stops further work.
+3. A queue item is not done until code, Git-backed integration coverage, scenario coverage, and backlog/support-matrix updates all land together.
+4. Run targeted checks while iterating, then run `./bin/verify-all` after each completed wave and again at the end of the pass if anything changed after the last wave gate.
+5. If a row proves out of scope for stock Git or cannot honestly be kept as `DONE`, correct the claim immediately instead of leaving the overstatement in place.
+
 ## What This Is
 
 A library that operates on `.git` directories natively in PHP. It:

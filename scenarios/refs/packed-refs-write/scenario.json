@@ -1,0 +1,24 @@
+{
+    "name": "packed-refs-write",
+    "category": "refs",
+    "description": "Pack loose branches and tags and compare the resulting packed-refs file against git",
+    "operations": [
+        "packed_refs"
+    ],
+    "oracle_commands": {
+        "packed_refs": "cat .git/packed-refs"
+    },
+    "actual_commands": {
+        "packed_refs": "cat .git/packed-refs"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "packed_refs"
+        ],
+        "fsck_clean": true
+    }
+}

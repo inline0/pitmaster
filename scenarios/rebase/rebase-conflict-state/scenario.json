@@ -1,0 +1,68 @@
+{
+    "name": "rebase-conflict-state",
+    "category": "rebase",
+    "description": "Stop on a rebase conflict and compare Git's in-progress state",
+    "operations": [
+        "index",
+        "status",
+        "pit_status",
+        "rebase_head",
+        "merge_msg",
+        "orig_head",
+        "head_name",
+        "onto",
+        "rebase_orig_head",
+        "stopped_sha",
+        "message",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "rebase_head": "cat .git/REBASE_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "orig_head": "cat .git/ORIG_HEAD",
+        "head_name": "cat .git/rebase-merge/head-name",
+        "onto": "cat .git/rebase-merge/onto",
+        "rebase_orig_head": "cat .git/rebase-merge/orig-head",
+        "stopped_sha": "cat .git/rebase-merge/stopped-sha",
+        "message": "cat .git/rebase-merge/message",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "rebase_head": "cat .git/REBASE_HEAD",
+        "merge_msg": "cat .git/MERGE_MSG",
+        "orig_head": "cat .git/ORIG_HEAD",
+        "head_name": "cat .git/rebase-merge/head-name",
+        "onto": "cat .git/rebase-merge/onto",
+        "rebase_orig_head": "cat .git/rebase-merge/orig-head",
+        "stopped_sha": "cat .git/rebase-merge/stopped-sha",
+        "message": "cat .git/rebase-merge/message",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "index",
+            "status",
+            "pit_status",
+            "rebase_head",
+            "merge_msg",
+            "orig_head",
+            "head_name",
+            "onto",
+            "rebase_orig_head",
+            "stopped_sha",
+            "message",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

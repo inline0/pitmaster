@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "4bb11fb38f461f8e1f42004de624abf168de7a2b",
+        "tree": "d6cd6db08dbdec7475d60b1adab36a2d529e4665",
+        "parents": [
+            "4fae244d64e46a4159cf9ec36efb25443c0723e9"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672000 2024-01-08 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672000 2024-01-08 00:00:00 +0000",
+        "message": "Second commit"
+    },
+    {
+        "hash": "4fae244d64e46a4159cf9ec36efb25443c0723e9",
+        "tree": "ae54e1ae400e691dcd50652c1d7bcf8d756f7a6c",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1704585600 2024-01-07 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704585600 2024-01-07 00:00:00 +0000",
+        "message": "Initial commit"
+    }
+]

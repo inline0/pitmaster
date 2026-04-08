@@ -1,0 +1,31 @@
+{
+    "name": "rebase-clean",
+    "category": "rebase",
+    "description": "Replay a linear branch onto main and match Git's final rebased state",
+    "operations": [
+        "status",
+        "head_ref",
+        "subjects"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format=%s --reverse main..HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format=%s --reverse main..HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "subjects"
+        ],
+        "fsck_clean": false
+    }
+}

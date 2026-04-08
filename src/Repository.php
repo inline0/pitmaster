@@ -530,7 +530,7 @@ final class Repository
         if ($tagger === null) {
             $taggerName = $this->config->get('user.name') ?? 'Pitmaster';
             $taggerEmail = $this->config->get('user.email') ?? 'pitmaster@localhost';
-            $tagger = "{$taggerName} <{$taggerEmail}> " . time() . ' ' . date('O');
+            $tagger = $this->formattedIdentity($taggerName, $taggerEmail);
         }
 
         $content = "object {$target->hex}\n"
@@ -825,6 +825,15 @@ final class Repository
         $parents = $state['parents'] ?? ($headId !== null ? [$headId] : []);
         $author = $author ?? ($state['author'] ?? null);
         $commitId = $this->createCommitFromTree($treeId, $message, $parents, $author);
+
+        if (($state['type'] ?? null) === 'rebase') {
+            $this->moveDetachedHeadTo($commitId, 'rebase (continue): ' . $this->subjectLine($message));
+            $this->clearOperationState();
+            $this->advanceRebaseState();
+
+            return $commitId;
+        }
+
         $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($message));
         $this->clearOperationState();
 
@@ -1017,6 +1026,171 @@ final class Repository
         $this->resetWorktree($commitId, $trackedPaths);
 
         return $commitId;
+    }
+
+    /**
+     * Rebase the current branch onto another revision.
+     *
+     * @return array{success: bool, commits: int, conflicts: array<int, string>}
+     */
+    public function rebase(string $onto): array
+    {
+        $head = $this->refs->readHead();
+
+        if ($head === null || !str_starts_with($head->target, 'refs/heads/')) {
+            throw new \RuntimeException('Cannot rebase: HEAD must point to a branch');
+        }
+
+        if ($this->readRebaseState() !== null) {
+            throw new \RuntimeException('Cannot rebase: a rebase is already in progress');
+        }
+
+        $headId = $this->refs->resolveHead();
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot rebase: HEAD is not set');
+        }
+
+        $ontoId = $this->resolve($onto);
+        $mergeBase = new MergeBase($this->objects);
+        $baseId = $mergeBase->find($headId, $ontoId);
+
+        if ($baseId === null) {
+            throw new \RuntimeException('Cannot rebase: no common ancestor');
+        }
+
+        if ($baseId->equals($ontoId)) {
+            return ['success' => true, 'commits' => 0, 'conflicts' => []];
+        }
+
+        $trackedPaths = $this->index()->paths();
+        $this->refs->looseStore()->update('ORIG_HEAD', $headId);
+
+        if ($baseId->equals($headId)) {
+            $this->refs->update($head->target, $ontoId);
+            $this->appendReflogEntry(
+                $head->target,
+                $headId,
+                $ontoId,
+                'rebase (finish): ' . $this->shortRefName($head->target) . ' onto ' . $this->targetLabel($onto, $ontoId),
+            );
+            $this->appendReflogEntry(
+                'HEAD',
+                $headId,
+                $ontoId,
+                'rebase (finish): returning to ' . $this->shortRefName($head->target),
+            );
+            $this->resetWorktree($ontoId, $trackedPaths);
+
+            return ['success' => true, 'commits' => 0, 'conflicts' => []];
+        }
+
+        $commits = $this->rebaseCommitsToReplay($headId, $baseId);
+        $state = [
+            'headName' => $head->target,
+            'origHead' => $headId,
+            'onto' => $ontoId,
+            'current' => 0,
+            'commits' => array_map(static fn (Commit $commit): ObjectId => $commit->id, $commits),
+        ];
+
+        $this->detachHeadTo(
+            $ontoId,
+            'rebase (start): checkout ' . $this->targetLabel($onto, $ontoId),
+        );
+        $this->resetWorktree($ontoId, $trackedPaths);
+        $this->writeRebaseState($state);
+
+        return $this->continueRebaseSequence();
+    }
+
+    /**
+     * Continue an in-progress rebase after resolving conflicts.
+     *
+     * @return array{success: bool, commits: int, conflicts: array<int, string>}
+     */
+    public function rebaseContinue(): array
+    {
+        if ($this->readRebaseState() === null) {
+            throw new \RuntimeException('Cannot continue: no rebase in progress');
+        }
+
+        if ($this->index()->hasUnmerged()) {
+            throw new \RuntimeException('Cannot continue rebase with unmerged paths');
+        }
+
+        if ($this->refs->resolve('REBASE_HEAD') !== null) {
+            $this->commit();
+        }
+
+        return $this->continueRebaseSequence();
+    }
+
+    /**
+     * Skip the current commit in an in-progress rebase.
+     *
+     * @return array{success: bool, commits: int, conflicts: array<int, string>}
+     */
+    public function rebaseSkip(): array
+    {
+        $state = $this->readRebaseState();
+
+        if ($state === null) {
+            throw new \RuntimeException('Cannot skip: no rebase in progress');
+        }
+
+        $headId = $this->refs->resolveHead();
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot skip: HEAD is not set');
+        }
+
+        if ($this->refs->resolve('REBASE_HEAD') !== null) {
+            $trackedPaths = array_values(array_unique(array_merge(
+                $this->index()->paths(),
+                array_keys($this->flattenTree($this->getCommitTree($headId))),
+            )));
+            $this->resetWorktree($headId, $trackedPaths);
+            $this->advanceRebaseState();
+        }
+
+        return $this->continueRebaseSequence();
+    }
+
+    /**
+     * Abort an in-progress rebase and restore the original branch tip.
+     */
+    public function rebaseAbort(): void
+    {
+        $state = $this->readRebaseState();
+
+        if ($state === null) {
+            throw new \RuntimeException('Cannot abort: no rebase in progress');
+        }
+
+        $currentHeadId = $this->refs->resolveHead();
+        $branchId = $this->refs->resolve($state['headName']);
+        $trackedPaths = array_values(array_unique(array_merge(
+            $this->index()->paths(),
+            array_keys($this->flattenTree($this->getCommitTree($state['origHead']))),
+        )));
+
+        $this->refs->update($state['headName'], $state['origHead']);
+        $this->refs->updateSymbolic('HEAD', $state['headName']);
+        $this->appendReflogEntry(
+            'HEAD',
+            $currentHeadId,
+            $state['origHead'],
+            'rebase (abort): returning to ' . $this->shortRefName($state['headName']),
+        );
+        $this->appendReflogEntry(
+            $state['headName'],
+            $branchId,
+            $state['origHead'],
+            'rebase (abort): returning to ' . $this->shortRefName($state['headName']),
+        );
+        $this->resetWorktree($state['origHead'], $trackedPaths);
+        $this->clearRebaseState();
     }
 
     /**
@@ -1704,7 +1878,7 @@ final class Repository
     }
 
     /**
-     * @return array{parents: array<int, ObjectId>, author?: string, message?: string}|null
+     * @return array{parents: array<int, ObjectId>, author?: string, message?: string, type?: string}|null
      */
     private function pendingOperationState(?ObjectId $headId): ?array
     {
@@ -1740,6 +1914,19 @@ final class Repository
                     'message' => $message,
                 ];
             }
+
+            $rebaseHead = $this->refs->resolve('REBASE_HEAD');
+
+            if ($rebaseHead !== null && $this->readRebaseState() !== null) {
+                $picked = $this->objects->read($rebaseHead);
+
+                return [
+                    'parents' => [$headId],
+                    'author' => $picked instanceof Commit ? $picked->author : null,
+                    'message' => $message,
+                    'type' => 'rebase',
+                ];
+            }
         }
 
         return null;
@@ -1767,11 +1954,21 @@ final class Repository
     {
         $path = $this->gitDir . '/MERGE_MSG';
 
-        if (!is_file($path)) {
+        if (is_file($path)) {
+            $message = file_get_contents($path);
+
+            if ($message !== false) {
+                return $message;
+            }
+        }
+
+        $rebasePath = $this->gitDir . '/rebase-merge/message';
+
+        if (!is_file($rebasePath)) {
             return null;
         }
 
-        $message = file_get_contents($path);
+        $message = file_get_contents($rebasePath);
 
         return $message !== false ? $message : null;
     }
@@ -2029,7 +2226,7 @@ final class Repository
 
     private function clearOperationState(): void
     {
-        foreach (['MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD'] as $refName) {
+        foreach (['MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD', 'REBASE_HEAD'] as $refName) {
             $this->refs->looseStore()->delete($refName);
         }
 
@@ -2140,6 +2337,14 @@ final class Repository
     /**
      * @param array<int, string> $conflictPaths
      */
+    private function buildRebaseMessage(Commit $commit, array $conflictPaths): string
+    {
+        return rtrim($commit->message, "\n") . "\n\n" . $this->formatConflictComments($conflictPaths);
+    }
+
+    /**
+     * @param array<int, string> $conflictPaths
+     */
     private function formatConflictComments(array $conflictPaths): string
     {
         $lines = ["# Conflicts:"];
@@ -2159,6 +2364,350 @@ final class Repository
     private function revertConflictLabel(Commit $commit): string
     {
         return 'parent of ' . substr($commit->id->hex, 0, 7) . ' (' . $this->subjectLine($commit->message) . ')';
+    }
+
+    private function rebaseConflictLabel(Commit $commit): string
+    {
+        return substr($commit->id->hex, 0, 7) . ' (' . $this->subjectLine($commit->message) . ')';
+    }
+
+    /**
+     * @return array<int, Commit>
+     */
+    private function rebaseCommitsToReplay(ObjectId $headId, ObjectId $baseId): array
+    {
+        $commits = [];
+        $currentId = $headId;
+
+        while (!$currentId->equals($baseId)) {
+            $commit = $this->objects->read($currentId);
+
+            if (!$commit instanceof Commit) {
+                throw new \RuntimeException("Cannot rebase: invalid commit {$currentId->hex}");
+            }
+
+            if (count($commit->parents) > 1) {
+                throw new \RuntimeException('Cannot rebase merge commits yet');
+            }
+
+            if ($commit->parents === []) {
+                throw new \RuntimeException('Cannot rebase: commit history does not reach the merge base');
+            }
+
+            $commits[] = $commit;
+            $currentId = $commit->parents[0];
+        }
+
+        return array_reverse($commits);
+    }
+
+    /**
+     * @return array{success: bool, commits: int, conflicts: array<int, string>}
+     */
+    private function continueRebaseSequence(): array
+    {
+        $state = $this->readRebaseState();
+
+        if ($state === null) {
+            throw new \RuntimeException('Cannot continue: no rebase in progress');
+        }
+
+        $applied = 0;
+
+        while ($state['current'] < count($state['commits'])) {
+            $headId = $this->refs->resolveHead();
+            $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+            $replayId = $state['commits'][$state['current']];
+            $commit = $this->objects->read($replayId);
+
+            if (!$headCommit instanceof Commit || !$commit instanceof Commit) {
+                throw new \RuntimeException('Cannot continue rebase: missing commit state');
+            }
+
+            $parentTree = $commit->parents !== []
+                ? $this->getCommitTree($commit->parents[0])
+                : null;
+            $trackedPaths = array_values(array_unique(array_merge(
+                $this->index()->paths(),
+                array_keys($this->flattenTree($headCommit->tree)),
+                array_keys($this->flattenTree($commit->tree)),
+                array_keys($this->flattenTree($parentTree)),
+            )));
+            $merge = $this->mergeTreeEntries(
+                $parentTree,
+                $headCommit->tree,
+                $commit->tree,
+                'HEAD',
+                $this->rebaseConflictLabel($commit),
+            );
+
+            if ($merge['conflictPaths'] !== []) {
+                $message = $this->buildRebaseMessage($commit, $merge['conflictPaths']);
+                $this->writeOperationConflictState(
+                    $merge['mergedEntries'],
+                    $merge['conflictEntries'],
+                    $merge['conflictContents'],
+                    $trackedPaths,
+                    'REBASE_HEAD',
+                    $commit->id,
+                    $message,
+                    $state['origHead'],
+                );
+                $this->writeRebaseState($state, $commit, $message);
+
+                return [
+                    'success' => false,
+                    'commits' => $applied,
+                    'conflicts' => $merge['conflictPaths'],
+                ];
+            }
+
+            $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
+
+            if ($headCommit->tree->equals($treeId)) {
+                $state['current']++;
+                $this->writeRebaseState($state);
+                continue;
+            }
+
+            $commitId = $this->createCommitFromTree($treeId, $commit->message, [$headId], $commit->author);
+            $this->moveDetachedHeadTo($commitId, 'rebase (pick): ' . $this->subjectLine($commit->message));
+            $this->resetWorktree($commitId, $trackedPaths);
+            $state['current']++;
+            $this->writeRebaseState($state);
+            $applied++;
+        }
+
+        $this->finishRebase($state);
+
+        return ['success' => true, 'commits' => $applied, 'conflicts' => []];
+    }
+
+    /**
+     * @param array{
+     *   headName: string,
+     *   origHead: ObjectId,
+     *   onto: ObjectId,
+     *   current: int,
+     *   commits: array<int, ObjectId>
+     * } $state
+     */
+    private function writeRebaseState(array $state, ?Commit $stoppedCommit = null, ?string $message = null): void
+    {
+        $dir = $this->gitDir . '/rebase-merge';
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $json = [
+            'headName' => $state['headName'],
+            'origHead' => $state['origHead']->hex,
+            'onto' => $state['onto']->hex,
+            'current' => $state['current'],
+            'commits' => array_map(static fn (ObjectId $id): string => $id->hex, $state['commits']),
+        ];
+        $todoLines = array_map(function (ObjectId $id): string {
+            $commit = $this->objects->read($id);
+
+            if (!$commit instanceof Commit) {
+                throw new \RuntimeException("Cannot write rebase state: missing commit {$id->hex}");
+            }
+
+            return $this->rebaseTodoLine($commit);
+        }, $state['commits']);
+        $doneCount = $stoppedCommit !== null ? $state['current'] + 1 : $state['current'];
+        $todoStart = $stoppedCommit !== null ? $state['current'] + 1 : $state['current'];
+
+        file_put_contents($dir . '/pitmaster-state.json', json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+        file_put_contents($dir . '/head-name', $state['headName'] . "\n");
+        file_put_contents($dir . '/onto', $state['onto']->hex . "\n");
+        file_put_contents($dir . '/orig-head', $state['origHead']->hex . "\n");
+        file_put_contents($dir . '/end', count($state['commits']) . "\n");
+        file_put_contents($dir . '/git-rebase-todo.backup', $this->joinRebaseLines($todoLines));
+        file_put_contents($dir . '/done', $this->joinRebaseLines(array_slice($todoLines, 0, $doneCount)));
+        file_put_contents($dir . '/git-rebase-todo', $this->joinRebaseLines(array_slice($todoLines, $todoStart)));
+        file_put_contents($dir . '/interactive', '');
+        file_put_contents($dir . '/no-reschedule-failed-exec', '');
+        file_put_contents($dir . '/drop_redundant_commits', '');
+
+        if ($stoppedCommit !== null) {
+            file_put_contents($dir . '/msgnum', (string) ($state['current'] + 1) . "\n");
+            file_put_contents($dir . '/stopped-sha', $stoppedCommit->id->hex . "\n");
+            file_put_contents($dir . '/message', $message ?? rtrim($stoppedCommit->message, "\n") . "\n");
+            file_put_contents($dir . '/patch', $this->buildRebasePatch($stoppedCommit));
+            file_put_contents($dir . '/author-script', $this->buildAuthorScript($stoppedCommit->author));
+
+            return;
+        }
+
+        foreach (['msgnum', 'stopped-sha', 'message', 'patch', 'author-script'] as $file) {
+            @unlink($dir . '/' . $file);
+        }
+    }
+
+    /**
+     * @return array{
+     *   headName: string,
+     *   origHead: ObjectId,
+     *   onto: ObjectId,
+     *   current: int,
+     *   commits: array<int, ObjectId>
+     * }|null
+     */
+    private function readRebaseState(): ?array
+    {
+        $path = $this->gitDir . '/rebase-merge/pitmaster-state.json';
+
+        if (!is_file($path)) {
+            return null;
+        }
+
+        $content = file_get_contents($path);
+
+        if ($content === false) {
+            return null;
+        }
+
+        $state = json_decode($content, true);
+
+        if (!is_array($state)) {
+            return null;
+        }
+
+        $commits = [];
+
+        foreach (($state['commits'] ?? []) as $hex) {
+            if (!is_string($hex)) {
+                return null;
+            }
+
+            $commits[] = ObjectId::fromHex($hex);
+        }
+
+        if (!is_string($state['headName'] ?? null) || !is_string($state['origHead'] ?? null) || !is_string($state['onto'] ?? null)) {
+            return null;
+        }
+
+        return [
+            'headName' => $state['headName'],
+            'origHead' => ObjectId::fromHex($state['origHead']),
+            'onto' => ObjectId::fromHex($state['onto']),
+            'current' => (int) ($state['current'] ?? 0),
+            'commits' => $commits,
+        ];
+    }
+
+    private function advanceRebaseState(): void
+    {
+        $state = $this->readRebaseState();
+
+        if ($state === null) {
+            throw new \RuntimeException('Cannot advance rebase: no rebase in progress');
+        }
+
+        $state['current']++;
+        $this->writeRebaseState($state);
+    }
+
+    /**
+     * @param array{
+     *   headName: string,
+     *   origHead: ObjectId,
+     *   onto: ObjectId,
+     *   current: int,
+     *   commits: array<int, ObjectId>
+     * } $state
+     */
+    private function finishRebase(array $state): void
+    {
+        $headId = $this->refs->resolveHead();
+        $oldBranchId = $this->refs->resolve($state['headName']);
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot finish rebase: HEAD is not set');
+        }
+
+        $this->refs->update($state['headName'], $headId);
+        $this->appendReflogEntry(
+            $state['headName'],
+            $oldBranchId ?? $state['origHead'],
+            $headId,
+            'rebase (finish): ' . $this->shortRefName($state['headName']) . ' onto ' . substr($state['onto']->hex, 0, 7),
+        );
+        $this->refs->updateSymbolic('HEAD', $state['headName']);
+        $this->appendReflogEntry(
+            'HEAD',
+            $headId,
+            $headId,
+            'rebase (finish): returning to ' . $this->shortRefName($state['headName']),
+        );
+        $this->clearOperationState();
+        $this->clearRebaseState();
+    }
+
+    private function clearRebaseState(): void
+    {
+        $dir = $this->gitDir . '/rebase-merge';
+
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST,
+        );
+
+        foreach ($iterator as $path) {
+            if ($path->isDir()) {
+                rmdir($path->getPathname());
+                continue;
+            }
+
+            unlink($path->getPathname());
+        }
+
+        rmdir($dir);
+    }
+
+    private function rebaseTodoLine(Commit $commit): string
+    {
+        return "pick {$commit->id->hex} # {$this->subjectLine($commit->message)}";
+    }
+
+    /**
+     * @param array<int, string> $lines
+     */
+    private function joinRebaseLines(array $lines): string
+    {
+        return $lines === [] ? '' : implode("\n", $lines) . "\n";
+    }
+
+    private function buildRebasePatch(Commit $commit): string
+    {
+        $diffs = (new TreeDiff($this->objects))->diff(
+            $commit->parents !== [] ? $this->getCommitTree($commit->parents[0]) : null,
+            $commit->tree,
+        );
+        $parts = [];
+
+        foreach ($diffs as $diff) {
+            $parts[] = rtrim($diff->format(), "\n");
+        }
+
+        return $parts === [] ? '' : implode("\n", $parts) . "\n";
+    }
+
+    private function buildAuthorScript(string $author): string
+    {
+        if (preg_match('/^(.*) <([^>]+)> (\\d+) ([+-]\\d{4})$/', $author, $matches) === 1) {
+            return "GIT_AUTHOR_NAME='{$matches[1]}'\n"
+                . "GIT_AUTHOR_EMAIL='{$matches[2]}'\n"
+                . "GIT_AUTHOR_DATE='@{$matches[3]} {$matches[4]}'\n";
+        }
+
+        return '';
     }
 
     private function buildPushPackData(ObjectId $target, ?ObjectId $exclude = null): string
@@ -2239,6 +2788,18 @@ final class Repository
         $this->appendReflogEntry('HEAD', $oldHeadId, $target, $message);
     }
 
+    private function detachHeadTo(ObjectId $target, string $message): void
+    {
+        $oldHeadId = $this->refs->resolveHead();
+        $this->refs->looseStore()->update('HEAD', $target);
+        $this->appendReflogEntry('HEAD', $oldHeadId, $target, $message);
+    }
+
+    private function moveDetachedHeadTo(ObjectId $target, string $message): void
+    {
+        $this->detachHeadTo($target, $message);
+    }
+
     private function appendReflogEntry(string $refName, ?ObjectId $oldId, ObjectId $newId, string $message): void
     {
         $logDir = $refName === 'HEAD' ? $this->gitDir : $this->commonDir;
@@ -2253,12 +2814,55 @@ final class Repository
         $email = $this->config->get('user.email')
             ?? (defined('PITMASTER_AUTHOR_EMAIL') ? constant('PITMASTER_AUTHOR_EMAIL') : 'pitmaster@localhost');
 
-        return "{$name} <{$email}> " . time() . ' ' . date('O');
+        return $this->formattedIdentity($name, $email);
     }
 
     private function zeroObjectId(): ObjectId
     {
         return ObjectId::fromHex(str_repeat('0', 40));
+    }
+
+    private function formattedIdentity(string $name, string $email): string
+    {
+        [$timestamp, $timezone] = $this->identityDateParts();
+
+        return "{$name} <{$email}> {$timestamp} {$timezone}";
+    }
+
+    /**
+     * @return array{0: int, 1: string}
+     */
+    private function identityDateParts(): array
+    {
+        foreach (['PITMASTER_COMMITTER_DATE', 'GIT_COMMITTER_DATE', 'PITMASTER_AUTHOR_DATE', 'GIT_AUTHOR_DATE'] as $env) {
+            $value = getenv($env);
+
+            if ($value === false || trim($value) === '') {
+                continue;
+            }
+
+            return $this->parseIdentityDate($value);
+        }
+
+        return [time(), date('O')];
+    }
+
+    /**
+     * @return array{0: int, 1: string}
+     */
+    private function parseIdentityDate(string $value): array
+    {
+        if (preg_match('/^@?(\\d+) ([+-]\\d{4})$/', trim($value), $matches) === 1) {
+            return [(int) $matches[1], $matches[2]];
+        }
+
+        try {
+            $date = new \DateTimeImmutable($value);
+        } catch (\Exception) {
+            return [time(), date('O')];
+        }
+
+        return [$date->getTimestamp(), $date->format('O')];
     }
 
     private function subjectLine(string $message): string
@@ -2286,6 +2890,15 @@ final class Repository
         }
 
         return $target;
+    }
+
+    private function shortRefName(string $refName): string
+    {
+        if (str_starts_with($refName, 'refs/heads/')) {
+            return substr($refName, 11);
+        }
+
+        return $refName;
     }
 
     private function isPackableRef(string $name): bool

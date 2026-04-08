@@ -103,7 +103,7 @@ Generated: 2026-04-07 22:19
 | Loose ref read | `DONE` | `Ref\LooseRefStore` |  |
 | Loose ref write | `DONE` | `Ref\LooseRefStore` |  |
 | Packed refs read | `DONE` | `Ref\PackedRefStore` | With peeled values |
-| Packed refs write | `DONE` |  | Let git pack-refs handle this |
+| Packed refs write | `DONE` | `Repository` | Explicit `packRefs()` API rewrites `packed-refs` |
 | Symbolic ref (HEAD) | `DONE` | `Ref\SymbolicRef` | ref: refs/heads/main |
 | Ref database (composite) | `DONE` | `Ref\RefDatabase` | Loose priority over packed |
 | Reflog read | `DONE` | `Ref\Reflog` |  |
