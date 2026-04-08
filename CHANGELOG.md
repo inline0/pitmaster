@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.1] - 2026-04-08
+
+### Fixed
+- Pure-PHP pack indexing for fetched and cloned packs, removing the `git index-pack` dependency from repository reads
+- `fetch()` now writes packs into the common object directory and refreshes pack discovery
+- `checkout()`, hard reset, clone checkout, and fast-forward merges now keep worktree and index in sync, including tracked file deletions
+- Clean non-fast-forward merges now preserve both sides' non-conflicting changes and leave the repository clean
+- `cherryPick()` and `revert()` now apply file deletions correctly
+- Commits that remove the last tracked path can now produce the empty tree
+- `ThreeWayMerge` now reports same-line divergent edits as conflicts instead of silently taking "theirs"
+
 ## [0.2.0] - 2026-04-08
 
 ### Added
@@ -20,13 +31,6 @@
 - `RefDatabase` and `LooseRefStore` now accept separate per-worktree and common git dirs
 - Circular symbolic ref detection (depth guard)
 - Pack index v1 format auto-detection
-- Pure-PHP pack indexing for fetched and cloned packs, removing the `git index-pack` dependency from repository reads
-- `fetch()` now writes packs into the common object directory and refreshes pack discovery
-- `checkout()`, hard reset, clone checkout, and fast-forward merges now keep worktree and index in sync, including tracked file deletions
-- Clean non-fast-forward merges now preserve both sides' non-conflicting changes and leave the repository clean
-- `cherryPick()` and `revert()` now apply file deletions correctly
-- Commits that remove the last tracked path can now produce the empty tree
-- `ThreeWayMerge` now reports same-line divergent edits as conflicts instead of silently taking "theirs"
 - PHPCS PSR-12 formatting
 
 ## [0.1.0] - 2026-04-07
