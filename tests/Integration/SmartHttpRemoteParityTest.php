@@ -6,9 +6,9 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Pitmaster\Protocol\DumbHttpClient;
+use Pitmaster\Pitmaster;
 
-final class DumbHttpClientTest extends TestCase
+final class SmartHttpRemoteParityTest extends TestCase
 {
     private string $tmpDir;
 
@@ -21,7 +21,7 @@ final class DumbHttpClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->tmpDir = sys_get_temp_dir() . '/pitmaster-dumb-http-' . bin2hex(random_bytes(4));
+        $this->tmpDir = sys_get_temp_dir() . '/pitmaster-smart-http-' . bin2hex(random_bytes(4));
         mkdir($this->tmpDir, 0777, true);
     }
 
@@ -44,82 +44,72 @@ final class DumbHttpClientTest extends TestCase
     }
 
     #[Test]
-    public function canBeConstructedWithDefaultTimeout(): void
+    public function cloneFetchAndPushRoundTripAgainstGitSmartHttp(): void
     {
-        $client = new DumbHttpClient();
-
-        $this->assertInstanceOf(DumbHttpClient::class, $client);
-    }
-
-    #[Test]
-    public function canBeConstructedWithCustomTimeout(): void
-    {
-        $client = new DumbHttpClient(60);
-
-        $this->assertInstanceOf(DumbHttpClient::class, $client);
-    }
-
-    #[Test]
-    public function fetchesRefsLooseObjectsAndPacksFromActualDumbHttpExport(): void
-    {
-        $docRoot = $this->tmpDir . '/docroot';
+        $projectRoot = $this->tmpDir . '/projects';
         $sourceDir = $this->tmpDir . '/source';
-        $remoteDir = $docRoot . '/remote.git';
+        $cloneDir = $this->tmpDir . '/clone';
+        $remoteDir = $projectRoot . '/remote.git';
 
-        mkdir($docRoot, 0777, true);
-        file_put_contents($docRoot . '/health.txt', "ok\n");
-
+        mkdir($projectRoot, 0777, true);
         $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
         $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
         $this->git('config user.email test@example.com', $sourceDir);
         $this->git('config user.name Test', $sourceDir);
+        $this->git('config http.receivepack true', $remoteDir);
 
-        file_put_contents($sourceDir . '/README.md', "hello dumb http\n");
+        file_put_contents($sourceDir . '/README.md', "hello smart http\n");
         $this->git('add README.md', $sourceDir);
         $this->git('commit -m initial', $sourceDir);
         $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
         $this->git('push origin main', $sourceDir);
-        $this->git('update-server-info', $remoteDir);
 
-        $this->startStaticServer($docRoot);
-
-        $client = new DumbHttpClient();
+        $this->startGitHttpBackendServer($projectRoot);
         $remoteUrl = $this->baseUrl . '/remote.git';
 
-        $refs = $client->fetchRefs($remoteUrl);
-        $head = trim($this->git('rev-parse refs/heads/main', $remoteDir));
+        $repo = Pitmaster::clone($remoteUrl, $cloneDir);
+        $initialHead = trim($this->git('rev-parse refs/heads/main', $remoteDir));
 
-        $this->assertSame($head, $refs['refs/heads/main']->hex ?? null);
+        $this->assertSame("hello smart http\n", file_get_contents($cloneDir . '/README.md'));
+        $this->assertSame($initialHead, trim($this->git('rev-parse HEAD', $cloneDir)));
+        $this->assertSame($initialHead, trim($this->git('rev-parse refs/remotes/origin/main', $cloneDir)));
 
-        $loosePath = $remoteDir . '/objects/' . substr($head, 0, 2) . '/' . substr($head, 2);
-        $this->assertFileExists($loosePath);
-        $this->assertSame(file_get_contents($loosePath), $client->fetchObject($remoteUrl, $head));
+        file_put_contents($sourceDir . '/remote.txt', "from remote\n");
+        $this->git('add remote.txt', $sourceDir);
+        $this->git('commit -m remote-update', $sourceDir);
+        $this->git('push origin main', $sourceDir);
 
-        $this->git('repack -ad', $remoteDir);
-        $this->git('update-server-info', $remoteDir);
+        $repo->fetch();
+        $remoteHead = trim($this->git('rev-parse refs/heads/main', $remoteDir));
 
-        $packs = $client->fetchPackList($remoteUrl);
-        $this->assertNotSame([], $packs);
+        $this->assertSame($remoteHead, trim($this->git('rev-parse refs/remotes/origin/main', $cloneDir)));
 
-        $packName = $packs[0];
-        $this->assertSame(
-            file_get_contents($remoteDir . '/objects/pack/' . $packName),
-            $client->fetchPack($remoteUrl, $packName),
-        );
+        file_put_contents($cloneDir . '/pitmaster.txt', "from pitmaster push\n");
+        $repo->add('pitmaster.txt');
+        $localCommit = $repo->commit("Pitmaster push\n");
+        $repo->push();
+        $verifyDir = $this->tmpDir . '/verify';
+
+        $this->assertSame($localCommit->hex, trim($this->git('rev-parse refs/heads/main', $remoteDir)));
+        $this->assertSame("from pitmaster push\n", $this->git('show refs/heads/main:pitmaster.txt', $remoteDir));
+        $this->git('fsck --full', $remoteDir);
+        $this->git('clone ' . escapeshellarg($remoteUrl) . ' ' . escapeshellarg($verifyDir), $this->tmpDir);
+        $this->assertSame("from pitmaster push\n", file_get_contents($verifyDir . '/pitmaster.txt'));
     }
 
-    private function startStaticServer(string $docRoot): void
+    private function startGitHttpBackendServer(string $projectRoot): void
     {
         $port = $this->findFreePort();
+        $router = dirname(__DIR__) . '/Fixtures/git_http_backend_router.php';
         $this->baseUrl = "http://127.0.0.1:{$port}";
-        $this->serverLog = sys_get_temp_dir() . '/pitmaster-dumb-http-' . bin2hex(random_bytes(4)) . '.log';
-        $this->serverErrLog = sys_get_temp_dir() . '/pitmaster-dumb-http-' . bin2hex(random_bytes(4)) . '.err.log';
+        $this->serverLog = sys_get_temp_dir() . '/pitmaster-smart-http-' . bin2hex(random_bytes(4)) . '.log';
+        $this->serverErrLog = sys_get_temp_dir() . '/pitmaster-smart-http-' . bin2hex(random_bytes(4)) . '.err.log';
 
         $command = sprintf(
-            '%s -S 127.0.0.1:%d -t %s',
+            '%s -S 127.0.0.1:%d %s',
             escapeshellarg(PHP_BINARY),
             $port,
-            escapeshellarg($docRoot),
+            escapeshellarg($router),
         );
 
         $this->server = proc_open(
@@ -130,15 +120,19 @@ final class DumbHttpClientTest extends TestCase
                 2 => ['file', $this->serverErrLog, 'a'],
             ],
             $pipes,
-            $docRoot,
+            dirname(__DIR__, 2),
+            [
+                'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
+                'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+            ],
         );
 
         if (!is_resource($this->server)) {
-            $this->fail('Failed to start dumb HTTP test server');
+            $this->fail('Failed to start git-http-backend test server');
         }
 
         fclose($pipes[0]);
-        $this->waitUntilServerReady($this->baseUrl . '/health.txt');
+        $this->waitUntilServerReady();
     }
 
     private function findFreePort(): int
@@ -159,7 +153,7 @@ final class DumbHttpClientTest extends TestCase
         return (int) substr((string) strrchr($name, ':'), 1);
     }
 
-    private function waitUntilServerReady(string $healthUrl): void
+    private function waitUntilServerReady(): void
     {
         $context = stream_context_create([
             'http' => [
@@ -169,7 +163,7 @@ final class DumbHttpClientTest extends TestCase
         ]);
 
         for ($i = 0; $i < 50; $i++) {
-            $response = @file_get_contents($healthUrl, false, $context);
+            $response = @file_get_contents($this->baseUrl . '/health', false, $context);
 
             if ($response !== false) {
                 return;
@@ -179,7 +173,7 @@ final class DumbHttpClientTest extends TestCase
         }
 
         $stderr = is_file($this->serverErrLog) ? file_get_contents($this->serverErrLog) : '';
-        $this->fail('Dumb HTTP test server did not become ready: ' . trim((string) $stderr));
+        $this->fail('git-http-backend test server did not become ready: ' . trim((string) $stderr));
     }
 
     private function git(string $command, string $dir): string

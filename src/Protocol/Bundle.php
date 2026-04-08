@@ -128,9 +128,7 @@ final class Bundle
             $lines[] = "{$id->hex} {$name}";
         }
 
-        $lines[] = '';
-
-        return implode("\n", $lines) . $this->packData;
+        return implode("\n", $lines) . "\n\n" . $this->packData;
     }
 
     /**

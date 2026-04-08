@@ -14,6 +14,14 @@ final class PackWriter
 {
     /**
      * @param array<int, GitObject> $objects
+     */
+    public static function encode(array $objects): string
+    {
+        return self::buildPack($objects)['data'];
+    }
+
+    /**
+     * @param array<int, GitObject> $objects
      * @return array{packPath: string, idxPath: string, hash: string}
      */
     public static function write(string $packDir, array $objects): array

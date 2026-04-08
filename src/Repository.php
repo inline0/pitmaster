@@ -27,6 +27,7 @@ use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
 use Pitmaster\Pack\PackIndexer;
+use Pitmaster\Pack\PackWriter;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
@@ -488,7 +489,31 @@ final class Repository
      */
     public function deleteBranch(string $name): void
     {
-        $this->refs->delete("refs/heads/{$name}");
+        if ($this->branch() === $name) {
+            throw new \RuntimeException("Cannot delete checked out branch: {$name}");
+        }
+
+        $refName = "refs/heads/{$name}";
+
+        if (!$this->refs->exists($refName)) {
+            throw new \RuntimeException("Branch not found: {$name}");
+        }
+
+        $this->refs->delete($refName);
+    }
+
+    /**
+     * Create a lightweight tag.
+     */
+    public function createLightweightTag(string $name, ?ObjectId $target = null): void
+    {
+        $target = $target ?? $this->refs->resolveHead();
+
+        if ($target === null) {
+            throw new \RuntimeException('Cannot create tag: no HEAD');
+        }
+
+        $this->refs->update("refs/tags/{$name}", $target);
     }
 
     /**
@@ -521,6 +546,20 @@ final class Repository
         $this->refs->update("refs/tags/{$name}", $id);
 
         return $id;
+    }
+
+    /**
+     * Delete a tag.
+     */
+    public function deleteTag(string $name): void
+    {
+        $refName = "refs/tags/{$name}";
+
+        if (!$this->refs->exists($refName)) {
+            throw new \RuntimeException("Tag not found: {$name}");
+        }
+
+        $this->refs->delete($refName);
     }
 
     /**
@@ -939,6 +978,10 @@ final class Repository
     {
         $entries = $this->status();
         $lines = [];
+        $headId = $this->refs->resolveHead();
+        $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
+        $indexEntries = $this->index()->entries();
+        $zero = str_repeat('0', 40);
 
         foreach ($entries as $entry) {
             if ($entry->index === FileStatus::Untracked) {
@@ -951,10 +994,18 @@ final class Repository
                 continue;
             }
 
-            $x = $entry->index->value;
-            $y = $entry->worktree->value;
-            $zero = str_repeat('0', 40);
-            $lines[] = "1 {$x}{$y} N... 000000 000000 000000 {$zero} {$zero} {$entry->path}";
+            $x = $entry->index === FileStatus::Unmodified ? '.' : $entry->index->value;
+            $y = $entry->worktree === FileStatus::Unmodified ? '.' : $entry->worktree->value;
+            $headEntry = $headEntries[$entry->path] ?? null;
+            $indexEntry = $indexEntries[$entry->path] ?? null;
+            $worktreeMode = $this->worktreeMode($entry->path);
+            $headMode = $headEntry !== null ? sprintf('%06o', $headEntry['mode']) : '000000';
+            $indexMode = $indexEntry !== null ? sprintf('%06o', $indexEntry->mode) : '000000';
+            $workMode = $worktreeMode !== null ? sprintf('%06o', $worktreeMode) : '000000';
+            $headHash = $headEntry['hash'] ?? $zero;
+            $indexHash = $indexEntry?->hash->hex ?? $zero;
+
+            $lines[] = "1 {$x}{$y} N... {$headMode} {$indexMode} {$workMode} {$headHash} {$indexHash} {$entry->path}";
         }
 
         return implode("\n", $lines) . ($lines !== [] ? "\n" : '');
@@ -1053,10 +1104,16 @@ final class Repository
         $remoteId = $discovery->ref($localRef);
         $oldId = $remoteId ?? ObjectId::fromHex(str_repeat('0', 40));
 
+        if ($oldId->equals($localId)) {
+            return;
+        }
+
+        $packData = $this->buildPushPackData($localId, $remoteId);
+
         $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
         $receivePack->push($url, [
             ['old' => $oldId, 'new' => $localId, 'ref' => $localRef],
-        ], '');
+        ], $packData);
     }
 
     /**
@@ -1612,6 +1669,25 @@ final class Repository
         }
     }
 
+    private function worktreeMode(string $path): ?int
+    {
+        $fullPath = $this->workDir . '/' . $path;
+
+        if (is_link($fullPath)) {
+            return 0120000;
+        }
+
+        if (!file_exists($fullPath)) {
+            return null;
+        }
+
+        if (is_dir($fullPath)) {
+            return 0040000;
+        }
+
+        return is_executable($fullPath) ? 0100755 : 0100644;
+    }
+
     private function buildTreeFromEntries(array $entries): ObjectId
     {
         $index = new Index();
@@ -1671,6 +1747,69 @@ final class Repository
             }
 
             file_put_contents($fullPath, $content);
+        }
+    }
+
+    private function buildPushPackData(ObjectId $target, ?ObjectId $exclude = null): string
+    {
+        $objects = [];
+        $this->collectReachableObjects($target, $objects);
+
+        if ($exclude !== null && $this->objects->exists($exclude)) {
+            $excluded = [];
+            $this->collectReachableObjects($exclude, $excluded);
+
+            foreach (array_keys($excluded) as $hex) {
+                unset($objects[$hex]);
+            }
+        }
+
+        return $objects === [] ? '' : PackWriter::encode(array_values($objects));
+    }
+
+    /**
+     * @param array<string, GitObject> $objects
+     */
+    private function collectReachableObjects(ObjectId $start, array &$objects): void
+    {
+        $stack = [$start];
+
+        while ($stack !== []) {
+            $id = array_pop($stack);
+
+            if (!$id instanceof ObjectId || isset($objects[$id->hex])) {
+                continue;
+            }
+
+            $object = $this->objects->read($id);
+
+            if ($object === null) {
+                throw new \RuntimeException("Missing object required for push: {$id->hex}");
+            }
+
+            $objects[$id->hex] = $object;
+
+            if ($object instanceof Commit) {
+                $stack[] = $object->tree;
+
+                foreach ($object->parents as $parent) {
+                    $stack[] = $parent;
+                }
+
+                continue;
+            }
+
+            if ($object instanceof Tree) {
+                foreach ($object->entries as $entry) {
+                    $stack[] = $entry->hash;
+                }
+
+                continue;
+            }
+
+            if ($object instanceof Tag) {
+                $stack[] = $object->object;
+            }
         }
     }
 
