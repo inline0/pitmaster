@@ -692,13 +692,14 @@ $repo->push('origin', 'feature/login');
 #### `addWorktree`
 
 ```php
-public function addWorktree(string $path, string $branch, ?ObjectId $from = null): Worktree
+public function addWorktree(string $path, string $branch, ?ObjectId $from = null, ?string $name = null): Worktree
 ```
 
-Add a linked worktree. Creates the branch if it does not exist, sets up the worktree metadata, and materializes the working tree files.
+Add a linked worktree. Creates the branch if it does not exist, sets up the worktree metadata, and materializes the working tree files. Pass `$name` when you need a deterministic metadata slug that differs from the checkout directory basename.
 
 ```php
 $wt = $repo->addWorktree('/tmp/review', 'feature/review');
+$wt = $repo->addWorktree('/tmp/a/divine-child', 'feature/review', name: 'app-theme');
 ```
 
 #### `removeWorktree`

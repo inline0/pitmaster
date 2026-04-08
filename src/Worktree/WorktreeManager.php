@@ -69,9 +69,9 @@ final class WorktreeManager
     /**
      * Add a new linked worktree.
      */
-    public function add(string $path, string $branchOrCommit): Worktree
+    public function add(string $path, string $branchOrCommit, ?string $name = null): Worktree
     {
-        $name = basename($path);
+        $name = $this->worktreeName($path, $name);
         $wtDir = $this->gitDir . '/worktrees/' . $name;
 
         if (is_dir($wtDir)) {
@@ -81,37 +81,46 @@ final class WorktreeManager
         // Create worktree git metadata dir
         mkdir($wtDir, 0777, true);
 
-        // Create the worktree directory
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
-        }
-
-        // Write .git file in the worktree (not a directory)
-        $relativeGitDir = $this->relativePath($path, $wtDir);
-        file_put_contents($path . '/.git', "gitdir: {$relativeGitDir}\n");
-
-        // Write gitdir file in the worktree metadata (points back)
-        file_put_contents($wtDir . '/gitdir', $path . '/.git' . "\n");
-
-        // Write commondir (relative path to shared git dir)
-        file_put_contents($wtDir . '/commondir', "../..\n");
-
-        // Set HEAD for the worktree
-        $refs = new RefDatabase($this->gitDir);
-        $branchRef = "refs/heads/{$branchOrCommit}";
-        $branchId = $refs->resolve($branchRef);
-
-        if ($branchId !== null) {
-            file_put_contents($wtDir . '/HEAD', "ref: {$branchRef}\n");
-        } else {
-            // Detached HEAD
-            $id = $refs->resolve($branchOrCommit);
-
-            if ($id === null) {
-                throw new \RuntimeException("Cannot resolve: {$branchOrCommit}");
+        try {
+            // Create the worktree directory
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
             }
 
-            file_put_contents($wtDir . '/HEAD', $id->hex . "\n");
+            // Write .git file in the worktree (not a directory)
+            $relativeGitDir = $this->relativePath($path, $wtDir);
+            file_put_contents($path . '/.git', "gitdir: {$relativeGitDir}\n");
+
+            // Write gitdir file in the worktree metadata (points back)
+            file_put_contents($wtDir . '/gitdir', $path . '/.git' . "\n");
+
+            // Write commondir (relative path to shared git dir)
+            file_put_contents($wtDir . '/commondir', "../..\n");
+
+            // Set HEAD for the worktree
+            $refs = new RefDatabase($this->gitDir);
+            $branchRef = "refs/heads/{$branchOrCommit}";
+            $branchId = $refs->resolve($branchRef);
+
+            if ($branchId !== null) {
+                file_put_contents($wtDir . '/HEAD', "ref: {$branchRef}\n");
+            } else {
+                // Detached HEAD
+                $id = $refs->resolve($branchOrCommit);
+
+                if ($id === null) {
+                    throw new \RuntimeException("Cannot resolve: {$branchOrCommit}");
+                }
+
+                file_put_contents($wtDir . '/HEAD', $id->hex . "\n");
+            }
+        } catch (\Throwable $e) {
+            if (is_file($path . '/.git')) {
+                unlink($path . '/.git');
+            }
+
+            $this->removeDir($wtDir);
+            throw $e;
         }
 
         return $this->readLinkedWorktree($name, $wtDir);
@@ -120,8 +129,9 @@ final class WorktreeManager
     /**
      * Remove a linked worktree.
      */
-    public function remove(string $name, bool $force = false): void
+    public function remove(string $pathOrName, bool $force = false): void
     {
+        $name = $this->resolveWorktreeName($pathOrName);
         $wtDir = $this->gitDir . '/worktrees/' . $name;
 
         if (!is_dir($wtDir)) {
@@ -220,6 +230,7 @@ final class WorktreeManager
         }
 
         return new Worktree(
+            name: null,
             path: $this->workDir,
             gitDir: $this->gitDir,
             branch: $branch,
@@ -265,6 +276,7 @@ final class WorktreeManager
         $lockReason = $isLocked ? trim((string) file_get_contents($wtDir . '/locked')) : null;
 
         return new Worktree(
+            name: $name,
             path: $path,
             gitDir: $wtDir,
             branch: $branch,
@@ -274,6 +286,93 @@ final class WorktreeManager
             isLocked: $isLocked,
             lockReason: $lockReason ?: null,
         );
+    }
+
+    private function worktreeName(string $path, ?string $name): string
+    {
+        return $this->validateWorktreeName($name ?? basename($path));
+    }
+
+    private function validateWorktreeName(string $name): string
+    {
+        if ($name === '' || $name === '.' || $name === '..') {
+            throw new \RuntimeException('Worktree name must not be empty');
+        }
+
+        if (
+            str_contains($name, '/') ||
+            str_contains($name, '\\') ||
+            str_contains($name, "\0")
+        ) {
+            throw new \RuntimeException("Invalid worktree name: {$name}");
+        }
+
+        return $name;
+    }
+
+    private function resolveWorktreeName(string $pathOrName): string
+    {
+        $directDir = $this->gitDir . '/worktrees/' . $pathOrName;
+
+        if (!str_contains($pathOrName, '/') && !str_contains($pathOrName, '\\') && is_dir($directDir)) {
+            return $pathOrName;
+        }
+
+        $byPath = $this->findWorktreeNameByPath($pathOrName);
+
+        if ($byPath !== null) {
+            return $byPath;
+        }
+
+        $fallback = basename($pathOrName);
+        $fallbackDir = $this->gitDir . '/worktrees/' . $fallback;
+
+        if ($fallback !== '' && $fallback !== '.' && $fallback !== '..' && is_dir($fallbackDir)) {
+            return $fallback;
+        }
+
+        throw new \RuntimeException("Worktree not found: {$pathOrName}");
+    }
+
+    private function findWorktreeNameByPath(string $path): ?string
+    {
+        $worktreesDir = $this->gitDir . '/worktrees';
+
+        if (!is_dir($worktreesDir)) {
+            return null;
+        }
+
+        foreach (scandir($worktreesDir) as $name) {
+            if ($name === '.' || $name === '..') {
+                continue;
+            }
+
+            $wtDir = $worktreesDir . '/' . $name;
+
+            if (!is_dir($wtDir)) {
+                continue;
+            }
+
+            $worktree = $this->readLinkedWorktree($name, $wtDir);
+
+            if ($this->samePath($worktree->path, $path)) {
+                return $name;
+            }
+        }
+
+        return null;
+    }
+
+    private function samePath(string $left, string $right): bool
+    {
+        $leftReal = realpath($left);
+        $rightReal = realpath($right);
+
+        if ($leftReal !== false && $rightReal !== false) {
+            return $leftReal === $rightReal;
+        }
+
+        return rtrim($left, "/\\") === rtrim($right, "/\\");
     }
 
     private function relativePath(string $from, string $to): string

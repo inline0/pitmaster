@@ -216,8 +216,12 @@ final class Repository
      *
      * @return \Pitmaster\Worktree\Worktree
      */
-    public function addWorktree(string $path, string $branch, ?ObjectId $from = null): \Pitmaster\Worktree\Worktree
-    {
+    public function addWorktree(
+        string $path,
+        string $branch,
+        ?ObjectId $from = null,
+        ?string $name = null,
+    ): \Pitmaster\Worktree\Worktree {
         $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
 
         // Ensure the branch exists
@@ -229,7 +233,7 @@ final class Repository
             }
         }
 
-        $wt = $manager->add($path, $branch);
+        $wt = $manager->add($path, $branch, $name);
 
         // Materialize the working tree files
         $branchId = $this->refs->resolve("refs/heads/{$branch}");
@@ -266,7 +270,7 @@ final class Repository
     public function removeWorktree(string $pathOrName, bool $force = false): void
     {
         $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
-        $manager->remove(basename($pathOrName), $force);
+        $manager->remove($pathOrName, $force);
     }
 
     /**

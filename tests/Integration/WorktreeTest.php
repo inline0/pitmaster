@@ -6,6 +6,8 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Pitmaster;
+use Pitmaster\Repository;
 use Pitmaster\Worktree\WorktreeManager;
 
 /**
@@ -15,6 +17,7 @@ final class WorktreeTest extends TestCase
 {
     private string $tmpDir;
     private string $gitDir;
+    private Repository $repo;
 
     protected function setUp(): void
     {
@@ -24,6 +27,7 @@ final class WorktreeTest extends TestCase
         $this->git('config user.email test@pitmaster.dev');
         $this->git('config user.name "Test User"');
         $this->gitDir = $this->tmpDir . '/.git';
+        $this->repo = Pitmaster::open($this->tmpDir);
 
         // Need at least one commit for worktree operations
         $this->writeFile('a.txt', "content\n");
@@ -59,6 +63,7 @@ final class WorktreeTest extends TestCase
         $wt = $manager->add($linkedPath, 'feature');
 
         $this->assertFalse($wt->isMain);
+        $this->assertSame(basename($linkedPath), $wt->name);
         $this->assertSame('feature', $wt->branch);
 
         // Metadata directory should exist
@@ -69,6 +74,48 @@ final class WorktreeTest extends TestCase
 
         // Clean up linked worktree
         exec('rm -rf ' . escapeshellarg($linkedPath));
+    }
+
+    #[Test]
+    public function addAllowsSameBasenameWhenNamesDiffer(): void
+    {
+        $manager = new WorktreeManager($this->gitDir, $this->tmpDir);
+        $firstPath = $this->tmpDir . '-a/divine-child';
+        $secondPath = $this->tmpDir . '-b/divine-child';
+
+        $first = $manager->add($firstPath, 'feature', 'app-divine-child');
+        $second = $manager->add($secondPath, 'feature', 'sandbox-divine-child');
+
+        $this->assertSame('app-divine-child', $first->name);
+        $this->assertSame('sandbox-divine-child', $second->name);
+        $this->assertSame($firstPath, $first->path);
+        $this->assertSame($secondPath, $second->path);
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/app-divine-child');
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/sandbox-divine-child');
+        $this->assertFileExists($firstPath . '/.git');
+        $this->assertFileExists($secondPath . '/.git');
+
+        $worktrees = $manager->list();
+        $linkedNames = [];
+
+        foreach ($worktrees as $worktree) {
+            if (!$worktree->isMain) {
+                $linkedNames[] = $worktree->name;
+            }
+        }
+
+        sort($linkedNames);
+
+        $this->assertSame(['app-divine-child', 'sandbox-divine-child'], $linkedNames);
+
+        $manager->remove($firstPath);
+        $manager->remove('sandbox-divine-child');
+
+        $this->assertDirectoryDoesNotExist($this->gitDir . '/worktrees/app-divine-child');
+        $this->assertDirectoryDoesNotExist($this->gitDir . '/worktrees/sandbox-divine-child');
+
+        exec('rm -rf ' . escapeshellarg(dirname($firstPath)));
+        exec('rm -rf ' . escapeshellarg(dirname($secondPath)));
     }
 
     #[Test]
@@ -160,6 +207,43 @@ final class WorktreeTest extends TestCase
         $this->assertFalse($main->isDetached);
         $this->assertNotNull($main->branch);
         $this->assertNotNull($main->head);
+        $this->assertNull($main->name);
+    }
+
+    #[Test]
+    public function repositoryApiPassesExplicitMetadataNamesThrough(): void
+    {
+        $firstPath = $this->tmpDir . '-repo-a/divine-child';
+        $secondPath = $this->tmpDir . '-repo-b/divine-child';
+
+        $first = $this->repo->addWorktree($firstPath, 'feature', name: 'app-theme');
+        $second = $this->repo->addWorktree($secondPath, 'feature', name: 'sandbox-theme');
+
+        $this->assertSame('app-theme', $first->name);
+        $this->assertSame('sandbox-theme', $second->name);
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/app-theme');
+        $this->assertDirectoryExists($this->gitDir . '/worktrees/sandbox-theme');
+
+        $linkedNames = [];
+
+        foreach ($this->repo->worktrees() as $worktree) {
+            if (!$worktree->isMain) {
+                $linkedNames[] = $worktree->name;
+            }
+        }
+
+        sort($linkedNames);
+
+        $this->assertSame(['app-theme', 'sandbox-theme'], $linkedNames);
+
+        $this->repo->removeWorktree($firstPath);
+        $this->repo->removeWorktree('sandbox-theme');
+
+        $this->assertDirectoryDoesNotExist($this->gitDir . '/worktrees/app-theme');
+        $this->assertDirectoryDoesNotExist($this->gitDir . '/worktrees/sandbox-theme');
+
+        exec('rm -rf ' . escapeshellarg(dirname($firstPath)));
+        exec('rm -rf ' . escapeshellarg(dirname($secondPath)));
     }
 
     private function git(string $cmd): string

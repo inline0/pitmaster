@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4] - 2026-04-08
+
+### Fixed
+- Linked worktrees can now use an explicit metadata name instead of always keying `.git/worktrees/<name>` by `basename($path)`
+- `Repository::addWorktree()` and `WorktreeManager::add()` now support deterministic metadata slugs for colliding checkout basenames
+- Worktree listing now exposes the metadata name, and removal works by either metadata name or checkout path
+
 ## [0.2.3] - 2026-04-08
 
 ### Changed

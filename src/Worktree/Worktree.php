@@ -12,6 +12,7 @@ use Pitmaster\Object\ObjectId;
 final readonly class Worktree
 {
     public function __construct(
+        public ?string $name,
         public string $path,
         public string $gitDir,
         public ?string $branch,

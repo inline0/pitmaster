@@ -63,6 +63,20 @@ echo $wt->isDetached;  // false
 5. Checks out the branch's tree into the worktree directory
 6. Writes the index for the worktree
 
+### With an explicit metadata name
+
+Use the optional `name` argument when multiple linked worktrees can share the same checkout basename.
+
+```php
+$wt = $repo->addWorktree(
+    '/tmp/sandboxes/divine-child',
+    'feature/review',
+    name: 'sandbox-divine-child',
+);
+```
+
+That metadata name is used under `.git/worktrees/<name>/` instead of `basename($path)`.
+
 ### From a specific commit
 
 ```php
@@ -128,6 +142,7 @@ All operations work transparently:
 ```php
 use Pitmaster\Worktree\Worktree;
 
+$wt->name;          // Metadata name (null for the main worktree)
 $wt->path;          // Working directory path
 $wt->gitDir;        // Per-worktree git dir
 $wt->branch;        // Branch name (null if detached)
@@ -152,6 +167,7 @@ $worktrees = $manager->list();
 
 // Add
 $wt = $manager->add('/tmp/review', 'feature/review');
+$wt = $manager->add('/tmp/review', 'feature/review', 'review-app');
 
 // Remove
 $manager->remove('review');
