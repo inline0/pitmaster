@@ -1,0 +1,24 @@
+{
+    "name": "notes-merge",
+    "category": "notes",
+    "description": "Compare non-conflicting notes merges against Git",
+    "operations": [
+        "notes_list",
+        "latest_note"
+    ],
+    "oracle_commands": {
+        "notes_list": "cat .notes-list.txt",
+        "latest_note": "cat .latest-note.txt"
+    },
+    "actual_commands": {
+        "notes_list": "cat .notes-list.txt",
+        "latest_note": "cat .latest-note.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "notes_list",
+            "latest_note"
+        ],
+        "fsck_clean": true
+    }
+}

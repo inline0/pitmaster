@@ -1,0 +1,24 @@
+{
+    "name": "v1-upload-pack",
+    "category": "protocol",
+    "description": "Compare the normalized smart-HTTP upload-pack v1 request Pitmaster sends against Git's packet trace",
+    "operations": [
+        "upload_pack_request"
+    ],
+    "oracle_commands": {
+        "upload_pack_request": "cat .upload-pack-lines"
+    },
+    "actual_commands": {
+        "upload_pack_request": "cat .upload-pack-lines"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "upload_pack_request"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,11 @@
+command=ls-refs
+agent=<normalized>
+object-format=sha1
+0001
+peel
+symrefs
+unborn
+ref-prefix refs/heads/
+ref-prefix refs/tags/
+ref-prefix HEAD
+0000

@@ -1,0 +1,20 @@
+{
+    "name": "notes-worktree",
+    "category": "notes",
+    "description": "Verify linked worktrees can observe Pitmaster-written notes",
+    "operations": [
+        "linked-note"
+    ],
+    "oracle_commands": {
+        "linked-note": "cat .linked-note.txt"
+    },
+    "actual_commands": {
+        "linked-note": "cat .linked-note.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "linked-note"
+        ],
+        "fsck_clean": true
+    }
+}

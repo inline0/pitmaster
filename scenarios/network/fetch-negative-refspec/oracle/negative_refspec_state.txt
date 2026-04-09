@@ -1,0 +1,3 @@
+origin.main_matches_remote=yes
+origin.feature=absent
+fetch.refspecs=+refs/heads/*:refs/remotes/origin/*,^refs/heads/feature

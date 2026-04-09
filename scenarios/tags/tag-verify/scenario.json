@@ -1,0 +1,24 @@
+{
+    "name": "tag-verify",
+    "category": "tags",
+    "description": "Compare unsigned annotated tag verification behavior against Git",
+    "operations": [
+        "verify_state"
+    ],
+    "oracle_commands": {
+        "verify_state": "cat .verify-state"
+    },
+    "actual_commands": {
+        "verify_state": "cat .verify-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "verify_state"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "sparse-merge",
+    "category": "sparse",
+    "description": "Compare sparse-checkout merge behavior against Git",
+    "operations": [
+        "status",
+        "worktree_files",
+        "head_docs"
+    ],
+    "oracle_commands": {
+        "status": "cat .status.txt",
+        "worktree_files": "cat .worktree-files.txt",
+        "head_docs": "cat .head-docs.txt"
+    },
+    "actual_commands": {
+        "status": "cat .status.txt",
+        "worktree_files": "cat .worktree-files.txt",
+        "head_docs": "cat .head-docs.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "status",
+            "worktree_files",
+            "head_docs"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "71279fbb2c3d976da18385ba395b7febcea9fe1e",
+        "name": "refs/heads/linked"
+    },
+    {
+        "hash": "71279fbb2c3d976da18385ba395b7febcea9fe1e",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "296fc68408d903073140207b19a75a1008cd0fdb",
+        "name": "refs/notes/commits"
+    }
+]

@@ -1,0 +1,24 @@
+{
+    "name": "sparse-reset",
+    "category": "sparse",
+    "description": "Compare sparse-checkout hard reset behavior against Git",
+    "operations": [
+        "status",
+        "worktree_files"
+    ],
+    "oracle_commands": {
+        "status": "cat .status.txt",
+        "worktree_files": "cat .worktree-files.txt"
+    },
+    "actual_commands": {
+        "status": "cat .status.txt",
+        "worktree_files": "cat .worktree-files.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "status",
+            "worktree_files"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "name": "push-mirror",
+    "category": "network",
+    "description": "Compare mirror push branch and tag parity against Git smart HTTP",
+    "operations": [
+        "remote_refs"
+    ],
+    "oracle_commands": {
+        "remote_refs": "cat .remote-refs.txt"
+    },
+    "actual_commands": {
+        "remote_refs": "cat .remote-refs.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "remote_refs"
+        ],
+        "fsck_clean": true
+    }
+}

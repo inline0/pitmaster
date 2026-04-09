@@ -66,6 +66,30 @@ final class LooseObjectStore implements ObjectStore
     }
 
     /**
+     * Write an already-encoded loose object exactly as served by Git.
+     */
+    public function writeEncoded(ObjectId $id, string $encoded): ObjectId
+    {
+        $path = $this->objectPath($id);
+
+        if (is_file($path)) {
+            return $id;
+        }
+
+        $dir = dirname($path);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $tmp = $path . '.' . bin2hex(random_bytes(4));
+        file_put_contents($tmp, $encoded);
+        rename($tmp, $path);
+
+        return $id;
+    }
+
+    /**
      * List all loose object hashes.
      *
      * @return array<int, string> Hex hashes

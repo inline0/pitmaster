@@ -1,0 +1,100 @@
+[
+    {
+        "hash": "00a2261e01173ee701ebbc3c7c9a0db632c3d04c",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 33d288eb1f7752aeb7a9cf073cbf1d48cfc853eb\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1a9bbd812cacb7f151d8075d141e7f5fb67d546a",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob a92d664bc20a04b1621b1fc893d1196b41182fdf\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "33d288eb1f7752aeb7a9cf073cbf1d48cfc853eb",
+        "type": "blob",
+        "size": 78,
+        "content": "line 1\n<<<<<<< HEAD\nmain change\n=======\nfeature change\n>>>>>>> feature\nline 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "50bbcb3faf5cea0f8412fcd9ee2e2108d6c5b712",
+        "type": "commit",
+        "size": 216,
+        "content": "tree 8363000fd03fcc55e20a63b57d9691537b665bce\nparent fa44ce3196e0739d3e7d3dd315874c997bc752e8\nauthor Test User <test@pitmaster.dev> 1704412801 +0000\ncommitter Test User <test@pitmaster.dev> 1704412801 +0000\n\nfeature\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "57b207fd611634898761519cd0ba0ced221a8d02",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 9301542bf64d0a7fb0c4ac54d4be10ee582295f1\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5ea1ae7c7dd63a54eeb2979d45c65ae75d017b64",
+        "type": "commit",
+        "size": 213,
+        "content": "tree 57b207fd611634898761519cd0ba0ced221a8d02\nparent fa44ce3196e0739d3e7d3dd315874c997bc752e8\nauthor Test User <test@pitmaster.dev> 1704412802 +0000\ncommitter Test User <test@pitmaster.dev> 1704412802 +0000\n\nmain\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7d5584819f75fb419fe96d2954b8b49ed52fde13",
+        "type": "blob",
+        "size": 23,
+        "content": "line 1\nresolved\nline 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "8363000fd03fcc55e20a63b57d9691537b665bce",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob d9c24894bcde96fc90e585baee20466300cf78bb\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9301542bf64d0a7fb0c4ac54d4be10ee582295f1",
+        "type": "blob",
+        "size": 26,
+        "content": "line 1\nmain change\nline 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a92d664bc20a04b1621b1fc893d1196b41182fdf",
+        "type": "blob",
+        "size": 21,
+        "content": "line 1\nline 2\nline 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d9c24894bcde96fc90e585baee20466300cf78bb",
+        "type": "blob",
+        "size": 29,
+        "content": "line 1\nfeature change\nline 3\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ea8f200ffa94351c55dd0e4d2fc3ce0baf59be21",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 7d5584819f75fb419fe96d2954b8b49ed52fde13\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ed6081776a6e598fa8909e6e9bce7837572feae7",
+        "type": "commit",
+        "size": 279,
+        "content": "tree ea8f200ffa94351c55dd0e4d2fc3ce0baf59be21\nparent 5ea1ae7c7dd63a54eeb2979d45c65ae75d017b64\nparent 50bbcb3faf5cea0f8412fcd9ee2e2108d6c5b712\nauthor Test User <test@pitmaster.dev> 1705276810 +0000\ncommitter Test User <test@pitmaster.dev> 1705276810 +0000\n\nMerge branch 'feature'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fa44ce3196e0739d3e7d3dd315874c997bc752e8",
+        "type": "commit",
+        "size": 165,
+        "content": "tree 1a9bbd812cacb7f151d8075d141e7f5fb67d546a\nauthor Test User <test@pitmaster.dev> 1704412800 +0000\ncommitter Test User <test@pitmaster.dev> 1704412800 +0000\n\nbase\n",
+        "encoding": "utf-8"
+    }
+]

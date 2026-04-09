@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "ad49e77cf5fafe0ddb70ad6c2f02925f8389e98f",
+        "tree": "fdbfe18728de2b6b892c7e7982891a72a2884f43",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1700000060 2023-11-14 22:14:20 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000060 2023-11-14 22:14:20 +0000",
+        "message": "Add submodule"
+    }
+]

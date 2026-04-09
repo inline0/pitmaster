@@ -1,0 +1,23 @@
+{
+    "name": "grep-regex",
+    "category": "grep",
+    "description": "Compare Pitmaster grep regex and ignore-case matching against git grep",
+    "operations": [
+        "grep"
+    ],
+    "oracle_commands": {
+        "grep": "cat .grep.json"
+    },
+    "actual_commands": {
+        "grep": "cat .grep.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "grep"
+        ],
+        "fsck_clean": true
+    }
+}

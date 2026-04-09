@@ -1,0 +1,24 @@
+{
+    "name": "commit-author-env",
+    "category": "commit",
+    "description": "Compare commit author and committer environment handling against Git",
+    "operations": [
+        "commit_state"
+    ],
+    "oracle_commands": {
+        "commit_state": "cat .commit-state"
+    },
+    "actual_commands": {
+        "commit_state": "cat .commit-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "commit_state"
+        ],
+        "fsck_clean": true
+    }
+}

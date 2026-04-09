@@ -33,35 +33,32 @@ final class UploadPackClient
             return '';
         }
 
-        // Build request
-        $request = '';
-
-        // First want includes capabilities
-        $first = true;
-
-        foreach ($wants as $want) {
-            if ($first) {
-                $request .= PktLine::encode("want {$want->hex} multi_ack_detailed side-band-64k ofs-delta\n");
-                $first = false;
-            } else {
-                $request .= PktLine::encode("want {$want->hex}\n");
-            }
-        }
-
-        $request .= PktLine::flush();
-
-        // Send haves
-        foreach ($haves as $have) {
-            $request .= PktLine::encode("have {$have->hex}\n");
-        }
-
-        // Done
-        $request .= PktLine::encode("done\n");
+        $request = ProtocolV1::buildFetchRequest($wants, $haves);
 
         $response = $this->http->uploadPack($url, $request);
 
         // Parse response: may contain NAK/ACK lines, then pack data
         return $this->extractPackData($response);
+    }
+
+    /**
+     * Fetch objects from a remote using protocol v2.
+     *
+     * @param string $url Remote repository URL
+     * @param array<int, ObjectId> $wants Object IDs we want
+     * @param array<int, ObjectId> $haves Object IDs we already have
+     * @return string Raw pack data
+     */
+    public function fetchV2(string $url, array $wants, array $haves = []): string
+    {
+        if ($wants === []) {
+            return '';
+        }
+
+        $request = ProtocolV2::buildFetchRequest($wants, $haves);
+        $response = $this->http->uploadPackV2($url, $request);
+
+        return ProtocolV2::extractPackData($response);
     }
 
     /**

@@ -28,28 +28,38 @@ final class SmartHttpClient
      */
     public function discoverRefs(string $url): RefDiscovery
     {
+        return $this->discoverServiceRefs($url, 'git-upload-pack', 'application/x-git-upload-pack-advertisement');
+    }
+
+    /**
+     * Discover refs and capabilities from a remote receive-pack advertisement.
+     */
+    public function discoverReceivePackRefs(string $url): RefDiscovery
+    {
+        return $this->discoverServiceRefs($url, 'git-receive-pack', 'application/x-git-receive-pack-advertisement');
+    }
+
+    /**
+     * Discover refs from a remote URL using protocol v2.
+     */
+    public function discoverRefsV2(string $url): RefDiscovery
+    {
         $infoUrl = rtrim($url, '/') . '/info/refs?service=git-upload-pack';
-        $response = $this->get($infoUrl, 'application/x-git-upload-pack-advertisement');
+        $advertisement = $this->get(
+            $infoUrl,
+            'application/x-git-upload-pack-advertisement',
+            ['Git-Protocol: version=2'],
+        );
+        $capabilities = ProtocolV2::parseAdvertisement($advertisement);
+        $response = $this->post(
+            rtrim($url, '/') . '/git-upload-pack',
+            ProtocolV2::buildLsRefsRequest(),
+            'application/x-git-upload-pack-request',
+            'application/x-git-upload-pack-result',
+            ['Git-Protocol: version=2'],
+        );
 
-        // Skip the service announcement line
-        $pktLines = PktLine::decode($response);
-
-        // First pkt-line is "# service=git-upload-pack\n"
-        $filtered = [];
-
-        foreach ($pktLines as $line) {
-            if (!is_string($line)) {
-                continue; // skip flush (null) and delimiter (false) packets
-            }
-
-            if (str_starts_with($line, '# service=')) {
-                continue;
-            }
-
-            $filtered[] = $line;
-        }
-
-        return RefDiscovery::parse($filtered);
+        return ProtocolV2::parseLsRefsResponse($response, $capabilities);
     }
 
     /**
@@ -68,6 +78,22 @@ final class SmartHttpClient
     }
 
     /**
+     * POST to git-upload-pack (fetch) using protocol v2.
+     */
+    public function uploadPackV2(string $url, string $body): string
+    {
+        $packUrl = rtrim($url, '/') . '/git-upload-pack';
+
+        return $this->post(
+            $packUrl,
+            $body,
+            'application/x-git-upload-pack-request',
+            'application/x-git-upload-pack-result',
+            ['Git-Protocol: version=2'],
+        );
+    }
+
+    /**
      * POST to git-receive-pack (push).
      */
     public function receivePack(string $url, string $body): string
@@ -82,13 +108,36 @@ final class SmartHttpClient
         );
     }
 
-    private function get(string $url, string $expectedContentType): string
+    private function discoverServiceRefs(string $url, string $service, string $expectedContentType): RefDiscovery
     {
+        $infoUrl = rtrim($url, '/') . '/info/refs?service=' . $service;
+        $response = $this->get($infoUrl, $expectedContentType);
+        $pktLines = PktLine::decode($response);
+        $filtered = [];
+
+        foreach ($pktLines as $line) {
+            if (!is_string($line)) {
+                continue;
+            }
+
+            if (str_starts_with($line, '# service=')) {
+                continue;
+            }
+
+            $filtered[] = $line;
+        }
+
+        return RefDiscovery::parse($filtered);
+    }
+
+    private function get(string $url, string $expectedContentType, array $extraHeaders = []): string
+    {
+        $headers = array_merge(['User-Agent: Pitmaster/1.0'], $extraHeaders);
         $context = stream_context_create([
             'http' => [
                 'method' => 'GET',
                 'timeout' => $this->timeout,
-                'header' => "User-Agent: Pitmaster/1.0\r\n",
+                'header' => implode("\r\n", $headers),
                 'follow_location' => true,
                 'ignore_errors' => true,
             ],
@@ -115,17 +164,23 @@ final class SmartHttpClient
         return $response;
     }
 
-    private function post(string $url, string $body, string $contentType, string $accept): string
-    {
+    private function post(
+        string $url,
+        string $body,
+        string $contentType,
+        string $accept,
+        array $extraHeaders = [],
+    ): string {
+        $headers = array_merge([
+            "Content-Type: {$contentType}",
+            "Accept: {$accept}",
+            'User-Agent: Pitmaster/1.0',
+        ], $extraHeaders);
         $context = stream_context_create([
             'http' => [
                 'method' => 'POST',
                 'timeout' => $this->timeout,
-                'header' => implode("\r\n", [
-                    "Content-Type: {$contentType}",
-                    "Accept: {$accept}",
-                    'User-Agent: Pitmaster/1.0',
-                ]),
+                'header' => implode("\r\n", $headers),
                 'content' => $body,
                 'follow_location' => true,
                 'ignore_errors' => true,
@@ -154,10 +209,14 @@ final class SmartHttpClient
     }
 
     /**
-     * @param array<int, string> $headers
+     * @param array<int, string>|null $headers
      */
-    private function validateResponse(string $url, array $headers, string $expectedContentType): void
+    private function validateResponse(string $url, ?array $headers, string $expectedContentType): void
     {
+        if ($headers === null) {
+            throw new ProtocolException("HTTP response missing headers from {$url}");
+        }
+
         $status = $this->statusCode($headers);
 
         if ($status === null) {
@@ -182,10 +241,14 @@ final class SmartHttpClient
     }
 
     /**
-     * @param array<int, string> $headers
+     * @param array<int, string>|null $headers
      */
-    private function statusCode(array $headers): ?int
+    private function statusCode(?array $headers): ?int
     {
+        if ($headers === null) {
+            return null;
+        }
+
         foreach ($headers as $header) {
             if (preg_match('/^HTTP\/\d+(?:\.\d+)?\s+(\d{3})\b/i', $header, $matches) === 1) {
                 return (int) $matches[1];
@@ -196,10 +259,14 @@ final class SmartHttpClient
     }
 
     /**
-     * @param array<int, string> $headers
+     * @param array<int, string>|null $headers
      */
-    private function contentType(array $headers): ?string
+    private function contentType(?array $headers): ?string
     {
+        if ($headers === null) {
+            return null;
+        }
+
         foreach ($headers as $header) {
             if (stripos($header, 'Content-Type:') !== 0) {
                 continue;

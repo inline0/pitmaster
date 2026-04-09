@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "04dfd798d3cde842c24e346fe36d4ba5278cf5a9",
+        "type": "commit",
+        "size": 192,
+        "content": "tree 17158c461de2eaba2b53e583b5f751d29dce9792\nauthor Test User <test@pitmaster.dev> 1712563200 +0200\ncommitter Test User <test@pitmaster.dev> 1712566800 +0200\n\nHook subject\n\nPrepared-by: hook\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "17158c461de2eaba2b53e583b5f751d29dce9792",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 1add66fe2b349e8ee0d14c628b0862a343d290ef\ttracked.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1add66fe2b349e8ee0d14c628b0862a343d290ef",
+        "type": "blob",
+        "size": 12,
+        "content": "hook parity\n",
+        "encoding": "utf-8"
+    }
+]

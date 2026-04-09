@@ -1,0 +1,41 @@
+[
+    {
+        "hash": "138f8bec42362826351e090f711f208e7458b34e",
+        "tree": "e0917e0d4e17e09f13b0b395e52793d886c8f765",
+        "parents": [
+            "4a97399f33067798c0b6267d7b14a8396158ed79"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1775694819 2026-04-09 02:33:39 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1775694819 2026-04-09 02:33:39 +0200",
+        "message": "Current"
+    },
+    {
+        "hash": "ac5e61e2f0bc0bb3b37500f6327b7be5f3189580",
+        "tree": "5a07cd2159a130c9088e6d575922f896d4a31ac6",
+        "parents": [
+            "4a97399f33067798c0b6267d7b14a8396158ed79",
+            "c2cf7de4c80f86cdc83fbbb2e5707ba4655b07e1"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1700000020 2023-11-14 22:13:40 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000020 2023-11-14 22:13:40 +0000",
+        "message": "On main: conflict stash"
+    },
+    {
+        "hash": "c2cf7de4c80f86cdc83fbbb2e5707ba4655b07e1",
+        "tree": "db32889b314f762a74a6c73a51862d92a28fbc52",
+        "parents": [
+            "4a97399f33067798c0b6267d7b14a8396158ed79"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1700000020 2023-11-14 22:13:40 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000020 2023-11-14 22:13:40 +0000",
+        "message": "index on main: 4a97399 initial"
+    },
+    {
+        "hash": "4a97399f33067798c0b6267d7b14a8396158ed79",
+        "tree": "db32889b314f762a74a6c73a51862d92a28fbc52",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1699999990 2023-11-14 22:13:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1699999990 2023-11-14 22:13:10 +0000",
+        "message": "initial"
+    }
+]

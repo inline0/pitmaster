@@ -1,0 +1,20 @@
+{
+    "name": "pack-enumeration",
+    "category": "packs",
+    "description": "Compare pack object enumeration against Git show-index",
+    "operations": [
+        "pack_state"
+    ],
+    "oracle_commands": {
+        "pack_state": "cat .pack-state"
+    },
+    "actual_commands": {
+        "pack_state": "cat .pack-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "pack_state"
+        ],
+        "fsck_clean": false
+    }
+}

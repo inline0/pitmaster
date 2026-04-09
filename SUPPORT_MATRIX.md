@@ -1,15 +1,15 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **146/146 in-scope features implemented (100%).**
+Git feature coverage for Pitmaster. **93/146 rows Git-oracle-mapped today.**
 
-Generated: 2026-04-07 22:19
+Generated: 2026-04-09 00:58
 
 ## Legend
 
 | Status | Meaning |
 |--------|---------|
-| `DONE` | Fully implemented and oracle-verified |
-| `PART` | Partially implemented |
+| `DONE` | Implemented and Git-oracle-mapped |
+| `PART` | Implemented or partially implemented, but not yet fully Git-oracle-backed or dependent on an external oracle |
 | `TODO` | In scope, not yet implemented |
 | `DEFER` | Post-v1, not yet planned |
 | `N/A` | Out of scope (violates pure-PHP or outside agent-IDE scope) |
@@ -18,28 +18,28 @@ Generated: 2026-04-07 22:19
 
 | Category | Done | Partial | Todo | Deferred | N/A | Total |
 |----------|------|---------|------|----------|-----|-------|
-| Object Model | 11 | 0 | 0 | 0 | 0 | 11 |
+| Object Model | 10 | 1 | 0 | 0 | 0 | 11 |
 | Object Storage | 4 | 0 | 0 | 0 | 0 | 4 |
-| Pack Files | 11 | 0 | 0 | 0 | 0 | 11 |
+| Pack Files | 9 | 2 | 0 | 0 | 0 | 11 |
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
-| References | 9 | 0 | 0 | 0 | 0 | 9 |
-| Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 12 | 0 | 0 | 0 | 0 | 12 |
-| Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
-| Diff | 11 | 0 | 0 | 0 | 0 | 11 |
-| Merge | 10 | 0 | 0 | 0 | 0 | 10 |
-| Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
-| Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
-| Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
+| References | 7 | 2 | 0 | 0 | 0 | 9 |
+| Repository Operations | 2 | 4 | 0 | 0 | 0 | 6 |
+| Staging and Commits | 4 | 8 | 0 | 0 | 0 | 12 |
+| Working Tree Status | 5 | 1 | 0 | 0 | 0 | 6 |
+| Diff | 5 | 6 | 0 | 0 | 0 | 11 |
+| Merge | 2 | 8 | 0 | 0 | 0 | 10 |
+| Commit Graph | 2 | 5 | 0 | 0 | 0 | 7 |
+| Branch and Tag Operations | 7 | 2 | 0 | 0 | 0 | 9 |
+| Network Protocol | 12 | 2 | 0 | 0 | 0 | 14 |
+| Encoding | 0 | 5 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
-| **Total** | **146** | **0** | **0** | **0** | **0** | **146** |
+| Advanced Features | 8 | 7 | 0 | 0 | 0 | 15 |
+| **Total** | **93** | **53** | **0** | **0** | **0** | **146** |
 
 ## Details
 
 ### Object Model
-*11/11 implemented (100%)*
+*10/11 Git-oracle-mapped, 1 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -53,10 +53,10 @@ Generated: 2026-04-07 22:19
 | Annotated tag write | `DONE` | `Object\Tag` |  |
 | Lightweight tag | `DONE` | `Ref\RefDatabase` | Just a ref pointing to a commit |
 | ObjectId SHA-1 | `DONE` | `Object\ObjectId` | 40-char hex, 20-byte binary |
-| ObjectId SHA-256 | `DONE` | `Object\ObjectId` | Abstractable from day one, impl post-v1 |
+| ObjectId SHA-256 | `PART` | `Object\ObjectId` | Abstractable from day one, impl post-v1 |
 
 ### Object Storage
-*4/4 implemented (100%)*
+*4/4 Git-oracle-mapped*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -66,7 +66,7 @@ Generated: 2026-04-07 22:19
 | Object database (composite) | `DONE` | `Storage\ObjectDatabase` | Loose first, then packs |
 
 ### Pack Files
-*11/11 implemented (100%)*
+*9/11 Git-oracle-mapped, 2 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -79,11 +79,11 @@ Generated: 2026-04-07 22:19
 | Delta chain following | `DONE` | `Pack\PackFile` | Up to PITMASTER_MAX_DELTA_CHAIN depth |
 | Copy/insert instructions | `DONE` | `Pack\DeltaApplier` | Full delta instruction set |
 | Pack enumeration | `DONE` | `Pack\PackEnumerator` | Iterate all objects in pack |
-| Multi-pack-index (MIDX) | `DONE` |  | Performance optimization, not required |
-| Commit-graph file | `DONE` |  | Performance optimization, not required |
+| Multi-pack-index (MIDX) | `PART` |  | Performance optimization, not required |
+| Commit-graph file | `PART` |  | Performance optimization, not required |
 
 ### Index (Staging Area)
-*7/7 implemented (100%)*
+*7/7 Git-oracle-mapped*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -91,12 +91,12 @@ Generated: 2026-04-07 22:19
 | Index v2 write | `DONE` | `Index\IndexWriter` | Required for add/commit |
 | Index v3 read (extended flags) | `DONE` |  |  |
 | Index v4 read (path prefix compression) | `DONE` |  |  |
-| Conflict stages (1/2/3) | `DONE` | `Index\IndexEntry` | Required for merge |
+| Conflict stages (1/2/3) | `DONE` | `Index\IndexEntry` | Git-shaped unmerged index stages for merge-family conflicts |
 | Index extensions (TREE, REUC) | `DONE` |  |  |
 | Index diff (vs tree/worktree) | `DONE` | `Index\IndexDiff` | Required for status |
 
 ### References
-*9/9 implemented (100%)*
+*7/9 Git-oracle-mapped, 2 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -107,41 +107,41 @@ Generated: 2026-04-07 22:19
 | Symbolic ref (HEAD) | `DONE` | `Ref\SymbolicRef` | ref: refs/heads/main |
 | Ref database (composite) | `DONE` | `Ref\RefDatabase` | Loose priority over packed |
 | Reflog read | `DONE` | `Ref\Reflog` |  |
-| Reflog write | `DONE` | `Ref\Reflog` | Required for proper ref updates |
-| Reftable format | `DONE` |  | New format, not yet widespread |
+| Reflog write | `PART` | `Ref\Reflog` | Required for proper ref updates |
+| Reftable format | `PART` |  | New format, not yet widespread |
 
 ### Repository Operations
-*6/6 implemented (100%)*
+*2/6 Git-oracle-mapped, 4 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Open existing repo | `DONE` | `Pitmaster` |  |
 | Init new repo | `DONE` | `Pitmaster` | Creates .git structure |
-| Clone (remote) | `DONE` | `Pitmaster` | Via smart HTTP |
-| Read .git/config | `DONE` | `Config\GitConfig` | INI-style parser |
-| Write .git/config | `DONE` | `Config\GitConfig` |  |
-| Bare repositories | `DONE` | `Repository` | Detected by HEAD presence |
+| Clone (remote) | `PART` | `Pitmaster` | Via smart HTTP |
+| Read .git/config | `PART` | `Config\GitConfig` | INI-style parser |
+| Write .git/config | `PART` | `Config\GitConfig` |  |
+| Bare repositories | `PART` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*12/12 implemented (100%)*
+*4/12 Git-oracle-mapped, 8 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | git add (stage files) | `DONE` | `Repository` | Update index entries |
-| git rm (unstage/remove) | `DONE` | `Repository` |  |
-| git mv (rename) | `DONE` |  | rm + add |
+| git rm (unstage/remove) | `PART` | `Repository` |  |
+| git mv (rename) | `PART` |  | rm + add |
 | git commit | `DONE` | `Repository` | Build tree from index, create commit, update HEAD |
-| git reset --soft | `DONE` |  | Move HEAD only |
-| git reset --mixed | `DONE` |  | Move HEAD + reset index |
-| git reset --hard | `DONE` |  | Move HEAD + reset index + worktree |
-| git restore | `DONE` |  | Restore files from tree/index |
-| git stash | `DONE` | `Stash\Stash` | refs/stash + reflog stack |
-| git cherry-pick | `DONE` |  | Apply commit as new commit |
-| git revert | `DONE` |  | Inverse cherry-pick |
-| git rebase | `DONE` |  | Complex; agents can use merge instead |
+| git reset --soft | `PART` |  | Move HEAD only |
+| git reset --mixed | `PART` |  | Move HEAD + reset index |
+| git reset --hard | `PART` |  | Move HEAD + reset index + worktree |
+| git restore | `PART` |  | Restore files from tree/index |
+| git stash | `PART` | `Stash\Stash` | refs/stash + reflog stack |
+| git cherry-pick | `DONE` |  | Single-commit cherry-pick with conflict continue/abort |
+| git revert | `DONE` |  | Single-commit revert with conflict continue/abort |
+| git rebase | `PART` |  | Complex; agents can use merge instead |
 
 ### Working Tree Status
-*6/6 implemented (100%)*
+*5/6 Git-oracle-mapped, 1 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -150,56 +150,56 @@ Generated: 2026-04-07 22:19
 | Untracked file detection | `DONE` | `Status\WorkingTreeStatus` |  |
 | Porcelain v2 output | `DONE` |  | Machine-readable status |
 | .gitignore parsing | `DONE` |  | Required for untracked detection |
-| Rename detection | `DONE` |  | Content similarity matching |
+| Rename detection | `PART` |  | Content similarity matching |
 
 ### Diff
-*11/11 implemented (100%)*
+*5/11 Git-oracle-mapped, 6 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Myers diff algorithm | `DONE` | `Diff\MyersDiff` | Default, line-level |
-| Patience diff algorithm | `DONE` | `Diff\PatienceDiff` | Better structural diffs |
-| Histogram diff algorithm | `DONE` | `Diff\HistogramDiff` | Extension of patience |
-| Minimal diff | `DONE` | `Diff\MinimalDiff` | Minimize edit script length |
+| Patience diff algorithm | `PART` | `Diff\PatienceDiff` | Better structural diffs |
+| Histogram diff algorithm | `PART` | `Diff\HistogramDiff` | Extension of patience |
+| Minimal diff | `PART` | `Diff\MinimalDiff` | Minimize edit script length |
 | Tree-to-tree diff | `DONE` | `Diff\TreeDiff` | Recursive tree comparison |
 | Unified diff output | `DONE` | `Diff\DiffResult` | Standard patch format |
 | Hunk generation | `DONE` | `Diff\Hunk` | Context lines + ranges |
 | Binary file detection | `DONE` |  | NUL byte detection |
-| Rename detection (diff) | `DONE` |  | Content similarity |
-| Word diff | `DONE` |  |  |
-| Color diff output | `DONE` |  | Terminal ANSI colors |
+| Rename detection (diff) | `PART` |  | Content similarity |
+| Word diff | `PART` |  |  |
+| Color diff output | `PART` |  | Terminal ANSI colors |
 
 ### Merge
-*10/10 implemented (100%)*
+*2/10 Git-oracle-mapped, 8 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Merge base (LCA) | `DONE` | `Merge\MergeBase` | Lowest common ancestor |
-| Three-way merge (content) | `DONE` | `Merge\ThreeWayMerge` | Base/ours/theirs blob merge |
-| Conflict markers | `DONE` | `Merge\ConflictMarker` | <<<<<<< / ======= / >>>>>>> |
-| File-level merge (tree) | `DONE` |  | Which blobs to merge via TreeDiff |
-| Recursive strategy | `DONE` |  | Handle multiple merge bases |
-| ORT strategy | `DONE` | `Merge\RecursiveMerge` | Implemented via RecursiveMerge (equivalent) |
-| Octopus merge | `DONE` | `Merge\OctopusMerge` | 3+ branches |
-| Ours strategy | `DONE` |  | Take all from current branch |
+| Three-way merge (content) | `PART` | `Merge\ThreeWayMerge` | Base/ours/theirs blob merge |
+| Conflict markers | `PART` | `Merge\ConflictMarker` | <<<<<<< / ======= / >>>>>>> |
+| File-level merge (tree) | `PART` |  | Which blobs to merge via TreeDiff |
+| Recursive strategy | `PART` |  | Handle multiple merge bases |
+| ORT strategy | `PART` | `Merge\RecursiveMerge` | Implemented via RecursiveMerge (equivalent) |
+| Octopus merge | `PART` | `Merge\OctopusMerge` | 3+ branches |
+| Ours strategy | `PART` |  | Take all from current branch |
 | Fast-forward merge | `DONE` |  | Just move the ref |
-| Merge commit creation | `DONE` |  | Two-parent commit |
+| Merge commit creation | `PART` |  | Two-parent commit |
 
 ### Commit Graph
-*7/7 implemented (100%)*
+*2/7 Git-oracle-mapped, 5 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
-| Commit walk (log) | `DONE` | `Graph\CommitWalker` | Topological, newest-first |
+| Commit walk (log) | `PART` | `Graph\CommitWalker` | Topological, newest-first |
 | Ancestry check | `DONE` | `Graph\AncestryChecker` | Is A ancestor of B? |
 | Revision expressions | `DONE` | `Graph\RevisionParser` | HEAD~3, main^2, tag@{1} |
-| Log --all (all branches) | `DONE` | `Graph\CommitWalker` | walkAll() from multiple tips |
-| Log with path filter | `DONE` |  | Only commits touching path |
-| Log --oneline format | `DONE` |  | Short hash + first line |
-| git show | `DONE` |  | Commit + diff |
+| Log --all (all branches) | `PART` | `Graph\CommitWalker` | walkAll() from multiple tips |
+| Log with path filter | `PART` |  | Only commits touching path |
+| Log --oneline format | `PART` |  | Short hash + first line |
+| git show | `PART` |  | Commit + diff |
 
 ### Branch and Tag Operations
-*9/9 implemented (100%)*
+*7/9 Git-oracle-mapped, 2 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -210,15 +210,15 @@ Generated: 2026-04-07 22:19
 | Create lightweight tag | `DONE` | `Repository` | Via updateRef |
 | Create annotated tag | `DONE` |  | Write tag object + ref |
 | Delete tag | `DONE` | `Repository` | Via deleteRef |
-| Checkout / switch branch | `DONE` |  | Update HEAD + worktree + index |
-| Detached HEAD | `DONE` |  | HEAD points directly to commit |
+| Checkout / switch branch | `PART` |  | Update HEAD + worktree + index |
+| Detached HEAD | `PART` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*14/14 implemented (100%)*
+*12/14 Git-oracle-mapped, 2 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
-| Pkt-line encoding/decoding | `DONE` | `Protocol\PktLine` | 4-hex-digit length prefix |
+| Pkt-line encoding/decoding | `PART` | `Protocol\PktLine` | 4-hex-digit length prefix |
 | Smart HTTP transport | `DONE` | `Protocol\SmartHttpClient` | HTTPS only (no exec) |
 | Protocol v2 | `DONE` |  | Single round-trip, simpler |
 | Protocol v1 | `DONE` |  | v2 preferred |
@@ -229,23 +229,23 @@ Generated: 2026-04-07 22:19
 | Clone via HTTP | `DONE` |  | Ref discovery + full fetch |
 | Incremental fetch | `DONE` |  | Only new objects |
 | Push | `DONE` |  | Send objects + update remote refs |
-| SSH transport | `DONE` | `Protocol\SshClient` | Pure PHP via socket + key exchange |
+| SSH transport | `PART` | `Protocol\SshClient` | Pure PHP via socket + key exchange |
 | git:// transport | `DONE` | `Protocol\GitProtocolClient` | Raw TCP socket, pkt-line framing |
 | Dumb HTTP | `DONE` |  | Rare, smart HTTP covers all major hosts |
 
 ### Encoding
-*5/5 implemented (100%)*
+*0/5 Git-oracle-mapped, 5 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
-| LEB128 unsigned | `DONE` | `Encoding\Leb128` | Delta sizes |
-| Git varint (MSB-continue) | `DONE` | `Encoding\VarInt` | Pack headers |
-| OFS_DELTA offset encoding | `DONE` | `Encoding\VarInt` | Non-redundant offset |
-| Binary reader | `DONE` | `Encoding\BinaryReader` | Position-tracked byte stream |
-| Pkt-line format | `DONE` | `Protocol\PktLine` | 4-hex-digit length prefix |
+| LEB128 unsigned | `PART` | `Encoding\Leb128` | Delta sizes |
+| Git varint (MSB-continue) | `PART` | `Encoding\VarInt` | Pack headers |
+| OFS_DELTA offset encoding | `PART` | `Encoding\VarInt` | Non-redundant offset |
+| Binary reader | `PART` | `Encoding\BinaryReader` | Position-tracked byte stream |
+| Pkt-line format | `PART` | `Protocol\PktLine` | 4-hex-digit length prefix |
 
 ### Error Handling
-*9/9 implemented (100%)*
+*9/9 Git-oracle-mapped*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -253,40 +253,40 @@ Generated: 2026-04-07 22:19
 | CorruptObjectException | `DONE` | `Exceptions\CorruptObjectException` | Hash mismatch, bad header |
 | PackParseException | `DONE` | `Exceptions\PackParseException` | Bad magic, truncated, deep chain |
 | IndexParseException | `DONE` | `Exceptions\IndexParseException` |  |
-| MergeConflictException | `DONE` | `Exceptions\MergeConflictException` |  |
+| MergeConflictException | `DONE` | `Exceptions\MergeConflictException` | Raised for merge-family conflict stops |
 | ProtocolException | `DONE` | `Exceptions\ProtocolException` |  |
 | Malformed loose object handling | `DONE` |  | Graceful error, not crash |
 | Truncated pack handling | `DONE` |  |  |
 | Circular delta detection | `DONE` |  | Max depth limit exists |
 
 ### Advanced Features
-*15/15 implemented (100%)*
+*8/15 Git-oracle-mapped, 7 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Submodules | `DONE` | `Submodule\Submodule` | .gitmodules, gitlink entries, init/update/status |
 | Worktrees | `DONE` | `Worktree\Worktree` | Multiple working trees, .git file indirection |
-| Rerere | `DONE` | `Merge\Rerere` | Reuse recorded resolution of conflicts |
-| Bisect | `DONE` | `Graph\Bisect` | Binary search for bug-introducing commit |
+| Rerere | `PART` | `Merge\Rerere` | Reuse recorded resolution of conflicts |
+| Bisect | `PART` | `Graph\Bisect` | Binary search for bug-introducing commit |
 | Stash | `DONE` | `Stash\Stash` | Save/restore working directory state |
 | Sparse checkout | `DONE` | `Checkout\SparseCheckout` | Partial working tree via cone patterns |
-| Fsmonitor | `DONE` | `Status\Fsmonitor` | Filesystem change tracking for faster status |
-| Hooks | `DONE` | `Hooks\HookRunner` | Detect and invoke .git/hooks/ scripts |
-| Git LFS | `DONE` | `Lfs\LfsClient` | Pointer files, batch API, download/upload |
+| Fsmonitor | `PART` | `Status\Fsmonitor` | Filesystem change tracking for faster status |
+| Hooks | `PART` | `Hooks\HookRunner` | Detect and invoke .git/hooks/ scripts |
+| Git LFS | `PART` | `Lfs\LfsClient` | Pointer files, batch API, download/upload |
 | Git attributes | `DONE` | `Config\GitAttributes` |  |
-| Shallow clones | `DONE` | `Protocol\ShallowClone` |  |
+| Shallow clones | `PART` | `Protocol\ShallowClone` |  |
 | Git bundles | `DONE` | `Protocol\Bundle` |  |
 | Git notes | `DONE` | `Ref\Notes` |  |
 | Git blame | `DONE` | `Graph\Blame` |  |
-| Git grep | `DONE` | `Graph\Grep` |  |
+| Git grep | `PART` | `Graph\Grep` |  |
 
 ## Progress
 
 ```
-[########################################] 100%
+[#########################...............] 64%
 
-Full:     146 features
-Partial:  0 features
+Done:     93 features
+Partial:  53 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

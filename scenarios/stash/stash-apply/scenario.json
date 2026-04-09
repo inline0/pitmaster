@@ -1,0 +1,28 @@
+{
+    "name": "stash-apply",
+    "category": "stash",
+    "description": "Compare stash apply parity against Git for staged and unstaged changes",
+    "operations": [
+        "status",
+        "stash_list",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "cat .status.txt",
+        "stash_list": "cat .stash-list.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "actual_commands": {
+        "status": "cat .status.txt",
+        "stash_list": "cat .stash-list.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "status",
+            "stash_list",
+            "worktree"
+        ],
+        "fsck_clean": true
+    }
+}

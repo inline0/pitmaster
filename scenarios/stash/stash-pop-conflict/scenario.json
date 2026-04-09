@@ -1,0 +1,24 @@
+{
+    "name": "stash-pop-conflict",
+    "category": "stash",
+    "description": "Compare stash pop conflict behavior against Git",
+    "operations": [
+        "stash_list",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "stash_list": "cat .stash-list.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "actual_commands": {
+        "stash_list": "cat .stash-list.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "stash_list",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Pitmaster;
 
+use Pitmaster\Checkout\SparseCheckout;
 use Pitmaster\Config\GitConfig;
 use Pitmaster\Diff\DiffResult;
 use Pitmaster\Diff\MyersDiff;
 use Pitmaster\Diff\TreeDiff;
+use Pitmaster\Exceptions\MergeConflictException;
 use Pitmaster\Exceptions\ObjectNotFoundException;
 use Pitmaster\Graph\CommitWalker;
 use Pitmaster\Graph\RevisionParser;
+use Pitmaster\Hooks\HookRunner;
 use Pitmaster\Index\Index;
 use Pitmaster\Index\IndexEntry;
 use Pitmaster\Index\IndexWriter;
@@ -18,6 +21,7 @@ use Pitmaster\Merge\ConflictMarker;
 use Pitmaster\Merge\MergeBase;
 use Pitmaster\Merge\MergeResult;
 use Pitmaster\Merge\ThreeWayMerge;
+use Pitmaster\Exceptions\ProtocolException;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\GitObject;
@@ -28,6 +32,7 @@ use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
 use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Pack\PackWriter;
+use Pitmaster\Protocol\DumbHttpClient;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
@@ -527,14 +532,18 @@ final class Repository
             throw new \RuntimeException('Cannot create tag: no HEAD');
         }
 
+        $targetObject = $this->objects->read($target);
+
+        if ($targetObject === null) {
+            throw new \RuntimeException("Cannot create tag: target not found {$target->hex}");
+        }
+
         if ($tagger === null) {
-            $taggerName = $this->config->get('user.name') ?? 'Pitmaster';
-            $taggerEmail = $this->config->get('user.email') ?? 'pitmaster@localhost';
-            $tagger = $this->formattedIdentity($taggerName, $taggerEmail);
+            $tagger = $this->currentCommitterIdentity();
         }
 
         $content = "object {$target->hex}\n"
-            . "type commit\n"
+            . "type {$targetObject->type->value}\n"
             . "tag {$name}\n"
             . "tagger {$tagger}\n"
             . "\n"
@@ -810,6 +819,7 @@ final class Repository
         }
 
         $message = $this->resolveCommitMessage($message, $state);
+        $message = $this->prepareCommitMessage($message, $state);
         $treeId = $this->buildTreeFromIndex($index);
 
         if ($headId === null && $index->count() === 0) {
@@ -828,14 +838,16 @@ final class Repository
 
         if (($state['type'] ?? null) === 'rebase') {
             $this->moveDetachedHeadTo($commitId, 'rebase (continue): ' . $this->subjectLine($message));
-            $this->clearOperationState();
+            $this->clearOperationState(['REBASE_HEAD']);
             $this->advanceRebaseState();
+            $this->runPostCommitHook();
 
             return $commitId;
         }
 
         $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($message));
         $this->clearOperationState();
+        $this->runPostCommitHook();
 
         return $commitId;
     }
@@ -966,7 +978,7 @@ final class Repository
                 $this->buildCherryPickMessage($commit, $merge['conflictPaths']),
             );
 
-            throw new \RuntimeException('Cherry-pick stopped due to conflicts');
+            throw new MergeConflictException($merge['conflictPaths'], 'Cherry-pick stopped due to conflicts');
         }
 
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
@@ -975,6 +987,30 @@ final class Repository
         $this->resetWorktree($commitId, $trackedPaths);
 
         return $commitId;
+    }
+
+    /**
+     * Continue an in-progress cherry-pick after resolving conflicts.
+     */
+    public function cherryPickContinue(): ObjectId
+    {
+        if ($this->refs->resolve('CHERRY_PICK_HEAD') === null) {
+            throw new \RuntimeException('Cannot continue: no cherry-pick in progress');
+        }
+
+        if ($this->index()->hasUnmerged()) {
+            throw new \RuntimeException('Cannot continue cherry-pick with unmerged paths');
+        }
+
+        return $this->commit();
+    }
+
+    /**
+     * Abort an in-progress cherry-pick and restore the worktree to HEAD.
+     */
+    public function cherryPickAbort(): void
+    {
+        $this->abortHeadBasedOperation('CHERRY_PICK_HEAD', true);
     }
 
     /**
@@ -1017,7 +1053,7 @@ final class Repository
                 $this->buildRevertMessage($commit, $merge['conflictPaths']),
             );
 
-            throw new \RuntimeException('Revert stopped due to conflicts');
+            throw new MergeConflictException($merge['conflictPaths'], 'Revert stopped due to conflicts');
         }
 
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
@@ -1026,6 +1062,30 @@ final class Repository
         $this->resetWorktree($commitId, $trackedPaths);
 
         return $commitId;
+    }
+
+    /**
+     * Continue an in-progress revert after resolving conflicts.
+     */
+    public function revertContinue(): ObjectId
+    {
+        if ($this->refs->resolve('REVERT_HEAD') === null) {
+            throw new \RuntimeException('Cannot continue: no revert in progress');
+        }
+
+        if ($this->index()->hasUnmerged()) {
+            throw new \RuntimeException('Cannot continue revert with unmerged paths');
+        }
+
+        return $this->commit();
+    }
+
+    /**
+     * Abort an in-progress revert and restore the worktree to HEAD.
+     */
+    public function revertAbort(): void
+    {
+        $this->abortHeadBasedOperation('REVERT_HEAD', true);
     }
 
     /**
@@ -1072,13 +1132,13 @@ final class Repository
                 $head->target,
                 $headId,
                 $ontoId,
-                'rebase (finish): ' . $this->shortRefName($head->target) . ' onto ' . $this->targetLabel($onto, $ontoId),
+                'rebase (finish): ' . $head->target . ' onto ' . $ontoId->hex,
             );
             $this->appendReflogEntry(
                 'HEAD',
                 $headId,
                 $ontoId,
-                'rebase (finish): returning to ' . $this->shortRefName($head->target),
+                'rebase (finish): returning to ' . $head->target,
             );
             $this->resetWorktree($ontoId, $trackedPaths);
 
@@ -1150,7 +1210,7 @@ final class Repository
                 $this->index()->paths(),
                 array_keys($this->flattenTree($this->getCommitTree($headId))),
             )));
-            $this->resetWorktree($headId, $trackedPaths);
+            $this->resetWorktree($headId, $trackedPaths, ['REBASE_HEAD']);
             $this->advanceRebaseState();
         }
 
@@ -1169,7 +1229,6 @@ final class Repository
         }
 
         $currentHeadId = $this->refs->resolveHead();
-        $branchId = $this->refs->resolve($state['headName']);
         $trackedPaths = array_values(array_unique(array_merge(
             $this->index()->paths(),
             array_keys($this->flattenTree($this->getCommitTree($state['origHead']))),
@@ -1181,13 +1240,7 @@ final class Repository
             'HEAD',
             $currentHeadId,
             $state['origHead'],
-            'rebase (abort): returning to ' . $this->shortRefName($state['headName']),
-        );
-        $this->appendReflogEntry(
-            $state['headName'],
-            $branchId,
-            $state['origHead'],
-            'rebase (abort): returning to ' . $this->shortRefName($state['headName']),
+            'rebase (abort): returning to ' . $state['headName'],
         );
         $this->resetWorktree($state['origHead'], $trackedPaths);
         $this->clearRebaseState();
@@ -1273,53 +1326,48 @@ final class Repository
             throw new \RuntimeException("Remote not found: {$remote}");
         }
 
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverRefs($url);
-        $uploadPack = new UploadPackClient($http);
+        try {
+            $http = new SmartHttpClient();
+            $discovery = $http->discoverRefs($url);
+            $uploadPack = new UploadPackClient($http);
+            $trackedRefs = $this->plannedFetchRefs($remote, $discovery->refs());
 
-        // Determine what we need (all remote refs we don't have)
-        $wants = [];
-        $haves = [];
+            $wants = [];
+            $haves = [];
 
-        foreach ($discovery->refs() as $refName => $refId) {
-            if (!$this->objects->exists($refId)) {
-                $wants[] = $refId;
-            }
-        }
-
-        // Collect what we already have
-        foreach ($this->refs->list() as $refName => $refId) {
-            $haves[] = $refId;
-        }
-
-        if ($wants === []) {
-            return; // Already up to date
-        }
-
-        $packData = $uploadPack->fetch($url, $wants, $haves);
-
-        if ($packData !== '' && str_starts_with($packData, 'PACK')) {
-            $packDir = $this->commonDir . '/objects/pack';
-
-            if (!is_dir($packDir)) {
-                mkdir($packDir, 0777, true);
+            foreach ($trackedRefs as $trackedRef) {
+                if (!$this->objects->exists($trackedRef['id'])) {
+                    $wants[] = $trackedRef['id'];
+                }
             }
 
-            $hash = sha1($packData);
-            $packPath = $packDir . "/pack-{$hash}.pack";
-            file_put_contents($packPath, $packData);
-            PackIndexer::writeIndex($packPath);
-            $this->objects->packStore()->refresh();
-        }
-
-        // Update remote tracking refs
-        foreach ($discovery->refs() as $refName => $refId) {
-            if (str_starts_with($refName, 'refs/heads/')) {
-                $branch = substr($refName, 11);
-                $this->refs->update("refs/remotes/{$remote}/{$branch}", $refId);
-            } elseif (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}')) {
-                $this->refs->update($refName, $refId);
+            foreach ($this->refs->list() as $refId) {
+                $haves[] = $refId;
             }
+
+            if ($wants === []) {
+                return;
+            }
+
+            $packData = $uploadPack->fetch($url, $wants, $haves);
+
+            if ($packData !== '' && str_starts_with($packData, 'PACK')) {
+                $packDir = $this->commonDir . '/objects/pack';
+
+                if (!is_dir($packDir)) {
+                    mkdir($packDir, 0777, true);
+                }
+
+                $hash = sha1($packData);
+                $packPath = $packDir . "/pack-{$hash}.pack";
+                file_put_contents($packPath, $packData);
+                PackIndexer::writeIndex($packPath);
+                $this->objects->packStore()->refresh();
+            }
+
+            $this->updateFetchedRefs($trackedRefs, $discovery->refs());
+        } catch (ProtocolException $smartError) {
+            $this->fetchViaDumbHttp($remote, $url, $smartError);
         }
     }
 
@@ -1328,43 +1376,373 @@ final class Repository
      */
     public function push(string $remote = 'origin', ?string $branch = null): void
     {
+        $branch = $branch ?? $this->currentPushBranch();
+        $url = $this->remoteUrl($remote);
+        $localRef = "refs/heads/{$branch}";
+        $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverReceivePackRefs($url);
+        $remoteId = $discovery->ref($localRef);
+
+        $this->assertFastForwardPush($branch, $remoteId, $localId);
+        $this->pushUpdates($http, $url, $discovery, [[
+            'old' => $remoteId ?? $this->zeroObjectId(),
+            'new' => $localId,
+            'ref' => $localRef,
+        ]]);
+    }
+
+    /**
+     * Push with force-with-lease semantics.
+     *
+     * Uses the remote-tracking branch as the default lease when available.
+     */
+    public function pushForceWithLease(string $remote = 'origin', ?string $branch = null, ?ObjectId $expected = null): void
+    {
+        $branch = $branch ?? $this->currentPushBranch();
+        $url = $this->remoteUrl($remote);
+        $localRef = "refs/heads/{$branch}";
+        $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverReceivePackRefs($url);
+        $remoteId = $discovery->ref($localRef);
+        $leaseId = $expected ?? $this->refs->resolve("refs/remotes/{$remote}/{$branch}") ?? $remoteId ?? $this->zeroObjectId();
+
+        if (($remoteId ?? $this->zeroObjectId())->hex !== $leaseId->hex) {
+            throw new \RuntimeException("force-with-lease rejected for {$branch}: remote changed");
+        }
+
+        $this->pushUpdates($http, $url, $discovery, [[
+            'old' => $leaseId,
+            'new' => $localId,
+            'ref' => $localRef,
+        ]]);
+    }
+
+    /**
+     * Atomically push multiple local branches.
+     *
+     * @param array<int, string> $branches
+     */
+    public function pushAtomic(string $remote = 'origin', array $branches = []): void
+    {
+        if ($branches === []) {
+            $branches = [$this->currentPushBranch()];
+        }
+
+        $url = $this->remoteUrl($remote);
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverReceivePackRefs($url);
+        $capabilities = $discovery->capabilities();
+
+        if ($capabilities !== null && !$capabilities->has('atomic')) {
+            throw new \RuntimeException('Remote does not support atomic push');
+        }
+
+        $updates = [];
+
+        foreach ($branches as $branch) {
+            $localRef = "refs/heads/{$branch}";
+            $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
+            $remoteId = $discovery->ref($localRef);
+            $this->assertFastForwardPush($branch, $remoteId, $localId);
+            $updates[] = [
+                'old' => $remoteId ?? $this->zeroObjectId(),
+                'new' => $localId,
+                'ref' => $localRef,
+            ];
+        }
+
+        $this->pushUpdates($http, $url, $discovery, $updates, ['atomic']);
+    }
+
+    /**
+     * Mirror local branch and tag refs to the remote.
+     */
+    public function pushMirror(string $remote = 'origin'): void
+    {
         $url = $this->config->get("remote.{$remote}.url");
 
         if ($url === null) {
             throw new \RuntimeException("Remote not found: {$remote}");
         }
+        $http = new SmartHttpClient();
+        $discovery = $http->discoverReceivePackRefs($url);
+        $capabilities = $discovery->capabilities();
+        $zero = $this->zeroObjectId();
+        $localRefs = [];
+        $updates = [];
 
-        if ($branch === null) {
-            $branch = $this->branch();
+        foreach ($this->refs->list() as $refName => $refId) {
+            if (!$this->isMirrorPushRef($refName)) {
+                continue;
+            }
 
-            if ($branch === null) {
-                throw new \RuntimeException('Cannot push: not on a branch');
+            $localRefs[$refName] = $refId;
+            $remoteId = $discovery->ref($refName);
+
+            if ($remoteId !== null && $remoteId->equals($refId)) {
+                continue;
+            }
+
+            $updates[] = [
+                'old' => $remoteId ?? $zero,
+                'new' => $refId,
+                'ref' => $refName,
+            ];
+        }
+
+        foreach ($discovery->refs() as $refName => $remoteId) {
+            if (!$this->isMirrorPushRef($refName) || isset($localRefs[$refName])) {
+                continue;
+            }
+
+            if ($capabilities !== null && !$capabilities->has('delete-refs')) {
+                throw new \RuntimeException('Remote does not support ref deletions required for mirror push');
+            }
+
+            $updates[] = [
+                'old' => $remoteId,
+                'new' => $zero,
+                'ref' => $refName,
+            ];
+        }
+
+        $this->pushUpdates($http, $url, $discovery, $updates);
+    }
+
+    /**
+     * @param array<string, ObjectId> $remoteRefs
+     * @return list<array{src: string, dst: string, id: ObjectId}>
+     */
+    private function plannedFetchRefs(string $remote, array $remoteRefs): array
+    {
+        $refspecs = $this->config->getAll("remote.{$remote}.fetch");
+
+        if ($refspecs === []) {
+            $refspecs = ["+refs/heads/*:refs/remotes/{$remote}/*"];
+        }
+        $negativePatterns = [];
+
+        foreach ($refspecs as $refspec) {
+            if (str_starts_with($refspec, '^')) {
+                $negativePatterns[] = substr($refspec, 1);
             }
         }
 
-        $localRef = "refs/heads/{$branch}";
-        $localId = $this->refs->resolve($localRef);
+        $planned = [];
 
-        if ($localId === null) {
-            throw new \RuntimeException("Branch not found: {$branch}");
+        foreach ($refspecs as $refspec) {
+            if (str_starts_with($refspec, '^')) {
+                continue;
+            }
+
+            if (str_starts_with($refspec, '+')) {
+                $refspec = substr($refspec, 1);
+            }
+
+            [$srcPattern, $dstPattern] = array_pad(explode(':', $refspec, 2), 2, null);
+
+            if ($srcPattern === null || $dstPattern === null) {
+                continue;
+            }
+
+            foreach ($remoteRefs as $src => $id) {
+                if ($this->matchesRefspecPattern($negativePatterns, $src)) {
+                    continue;
+                }
+
+                $dst = $this->mapFetchRefspec($srcPattern, $dstPattern, $src);
+
+                if ($dst === null) {
+                    continue;
+                }
+
+                $planned[$dst] = [
+                    'src' => $src,
+                    'dst' => $dst,
+                    'id' => $id,
+                ];
+            }
         }
 
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverRefs($url);
+        return array_values($planned);
+    }
 
-        $remoteId = $discovery->ref($localRef);
-        $oldId = $remoteId ?? ObjectId::fromHex(str_repeat('0', 40));
+    private function fetchViaDumbHttp(string $remote, string $url, ProtocolException $smartError): void
+    {
+        try {
+            $client = new DumbHttpClient();
+            $remoteRefs = $client->fetchRefs($url);
+            $trackedRefs = $this->plannedFetchRefs($remote, $remoteRefs);
 
-        if ($oldId->equals($localId)) {
+            if ($trackedRefs === []) {
+                return;
+            }
+
+            $needsImport = false;
+
+            foreach ($trackedRefs as $trackedRef) {
+                if (!$this->objects->exists($trackedRef['id'])) {
+                    $needsImport = true;
+                    break;
+                }
+            }
+
+            if ($needsImport) {
+                $this->importDumbHttpObjects($client, $url, $trackedRefs, $remoteRefs);
+            }
+
+            $this->updateFetchedRefs($trackedRefs, $remoteRefs);
+        } catch (ProtocolException) {
+            throw $smartError;
+        }
+    }
+
+    /**
+     * @param list<array{src: string, dst: string, id: ObjectId}> $trackedRefs
+     * @param array<string, ObjectId> $remoteRefs
+     */
+    private function updateFetchedRefs(array $trackedRefs, array $remoteRefs): void
+    {
+        foreach ($trackedRefs as $trackedRef) {
+            $this->refs->update($trackedRef['dst'], $trackedRef['id']);
+        }
+
+        foreach ($remoteRefs as $refName => $refId) {
+            if (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}')) {
+                $this->refs->update($refName, $refId);
+            }
+        }
+    }
+
+    /**
+     * @param list<array{src: string, dst: string, id: ObjectId}> $trackedRefs
+     * @param array<string, ObjectId> $remoteRefs
+     */
+    private function importDumbHttpObjects(
+        DumbHttpClient $client,
+        string $url,
+        array $trackedRefs,
+        array $remoteRefs,
+    ): void {
+        $packs = $client->fetchPackList($url);
+
+        if ($packs !== []) {
+            foreach ($packs as $packName) {
+                $packData = $client->fetchPack($url, $packName);
+                $packPath = $this->commonDir . '/objects/pack/' . $packName;
+                $packDir = dirname($packPath);
+
+                if (!is_dir($packDir)) {
+                    mkdir($packDir, 0777, true);
+                }
+
+                file_put_contents($packPath, $packData);
+
+                if (str_ends_with($packName, '.pack')) {
+                    $idxName = preg_replace('/\.pack$/', '.idx', $packName) ?? ($packName . '.idx');
+                    $idxPath = $this->commonDir . '/objects/pack/' . $idxName;
+                    file_put_contents($idxPath, $client->fetchPack($url, $idxName));
+                    $idxPath = substr($packPath, 0, -5) . '.idx';
+
+                    if (!is_file($idxPath)) {
+                        PackIndexer::writeIndex($packPath);
+                    }
+                }
+            }
+
+            $this->objects->packStore()->refresh();
+
             return;
         }
 
-        $packData = $this->buildPushPackData($localId, $remoteId);
+        $seen = [];
 
-        $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
-        $receivePack->push($url, [
-            ['old' => $oldId, 'new' => $localId, 'ref' => $localRef],
-        ], $packData);
+        foreach ($trackedRefs as $trackedRef) {
+            $this->downloadDumbHttpObject($client, $url, $trackedRef['id'], $seen);
+        }
+
+        foreach ($remoteRefs as $refName => $refId) {
+            if (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}')) {
+                $this->downloadDumbHttpObject($client, $url, $refId, $seen);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, bool> $seen
+     */
+    private function downloadDumbHttpObject(
+        DumbHttpClient $client,
+        string $url,
+        ObjectId $id,
+        array &$seen,
+    ): void {
+        if (isset($seen[$id->hex]) || $this->objects->exists($id)) {
+            return;
+        }
+
+        $seen[$id->hex] = true;
+        $this->objects->looseStore()->writeEncoded($id, $client->fetchObject($url, $id->hex));
+        $object = $this->objects->read($id);
+
+        if ($object instanceof Commit) {
+            $this->downloadDumbHttpObject($client, $url, $object->tree, $seen);
+
+            foreach ($object->parents as $parent) {
+                $this->downloadDumbHttpObject($client, $url, $parent, $seen);
+            }
+
+            return;
+        }
+
+        if ($object instanceof Tree) {
+            foreach ($object->entries as $entry) {
+                $this->downloadDumbHttpObject($client, $url, $entry->hash, $seen);
+            }
+
+            return;
+        }
+
+        if ($object instanceof Tag) {
+            $this->downloadDumbHttpObject($client, $url, $object->object, $seen);
+        }
+    }
+
+    /**
+     * @param list<string> $patterns
+     */
+    private function matchesRefspecPattern(array $patterns, string $srcRef): bool
+    {
+        foreach ($patterns as $pattern) {
+            if ($this->mapFetchRefspec($pattern, $pattern, $srcRef) !== null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function mapFetchRefspec(string $srcPattern, string $dstPattern, string $srcRef): ?string
+    {
+        if (str_contains($srcPattern, '*') !== str_contains($dstPattern, '*')) {
+            return null;
+        }
+
+        if (!str_contains($srcPattern, '*')) {
+            return $srcRef === $srcPattern ? $dstPattern : null;
+        }
+
+        [$srcPrefix, $srcSuffix] = explode('*', $srcPattern, 2);
+
+        if (!str_starts_with($srcRef, $srcPrefix) || !str_ends_with($srcRef, $srcSuffix)) {
+            return null;
+        }
+
+        $wildcard = substr($srcRef, strlen($srcPrefix), strlen($srcRef) - strlen($srcPrefix) - strlen($srcSuffix));
+
+        return str_replace('*', $wildcard, $dstPattern);
     }
 
     /**
@@ -1376,7 +1754,7 @@ final class Repository
     {
         $index = $this->index();
         $headId = $this->refs->resolveHead();
-        $status = new WorkingTreeStatus($this->objects, $this->workDir);
+        $status = new WorkingTreeStatus($this->objects, $this->workDir, $this->gitDir);
 
         return $status->compute($index, $headId);
     }
@@ -1556,6 +1934,30 @@ final class Repository
         $this->resetWorktree($commitId, $trackedPaths);
 
         return new MergeResult(clean: true, commitId: $commitId);
+    }
+
+    /**
+     * Continue an in-progress merge after resolving conflicts.
+     */
+    public function mergeContinue(): ObjectId
+    {
+        if ($this->refs->resolve('MERGE_HEAD') === null) {
+            throw new \RuntimeException('Cannot continue: no merge in progress');
+        }
+
+        if ($this->index()->hasUnmerged()) {
+            throw new \RuntimeException('Cannot continue merge with unmerged paths');
+        }
+
+        return $this->commit();
+    }
+
+    /**
+     * Abort an in-progress merge and restore the worktree to the original HEAD.
+     */
+    public function mergeAbort(): void
+    {
+        $this->abortHeadBasedOperation('MERGE_HEAD', false);
     }
 
     /**
@@ -1746,7 +2148,10 @@ final class Repository
     /**
      * Reset worktree and index to match a commit.
      */
-    private function resetWorktree(ObjectId $commitId, array $pathsToPrune = []): void
+    /**
+     * @param array<int, string> $preserveRefs
+     */
+    private function resetWorktree(ObjectId $commitId, array $pathsToPrune = [], array $preserveRefs = []): void
     {
         $commit = $this->objects->read($commitId);
 
@@ -1754,10 +2159,13 @@ final class Repository
             return;
         }
 
-        $this->clearOperationState();
+        $this->clearOperationState($preserveRefs);
         $treeMap = $this->flattenTree($commit->tree);
+        $treeEntries = $this->flattenTreeEntries($commit->tree);
         $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
         $index = new Index();
+        $sparse = new SparseCheckout($this->gitDir);
+        $sparseEnabled = $sparse->isEnabled();
 
         foreach ($treeMap as $path => $hash) {
             $blob = $this->objects->read(ObjectId::fromHex($hash));
@@ -1767,7 +2175,19 @@ final class Repository
             }
 
             $fullPath = $this->workDir . '/' . $path;
-            $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+            $extendedFlags = $sparseEnabled && !$sparse->includes($path)
+                ? IndexEntry::EXTENDED_SKIP_WORKTREE
+                : 0;
+            $entry = is_file($fullPath)
+                ? IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags)
+                : IndexEntry::create(
+                    $path,
+                    $blob->id,
+                    $treeEntries[$path]['mode'] ?? 0100644,
+                    strlen($blob->content),
+                    0,
+                    $extendedFlags,
+                );
             $index->addEntry($entry);
         }
 
@@ -1788,9 +2208,10 @@ final class Repository
      */
     private function materializeTreeMap(array $treeMap, string $targetDir, array $pathsToPrune = []): void
     {
-        $this->pruneMissingPaths($treeMap, $targetDir, $pathsToPrune);
+        $materializedTreeMap = $this->materializedTreeMap($treeMap, $targetDir);
+        $this->pruneMissingPaths($materializedTreeMap, $targetDir, $pathsToPrune);
 
-        foreach ($treeMap as $path => $hash) {
+        foreach ($materializedTreeMap as $path => $hash) {
             $blob = $this->objects->read(ObjectId::fromHex($hash));
 
             if (!$blob instanceof Blob) {
@@ -1806,6 +2227,29 @@ final class Repository
 
             file_put_contents($fullPath, $blob->content);
         }
+    }
+
+    /**
+     * @param array<string, string> $treeMap
+     * @return array<string, string>
+     */
+    private function materializedTreeMap(array $treeMap, string $targetDir): array
+    {
+        if ($targetDir !== $this->workDir) {
+            return $treeMap;
+        }
+
+        $sparse = new SparseCheckout($this->gitDir);
+
+        if (!$sparse->isEnabled()) {
+            return $treeMap;
+        }
+
+        return array_filter(
+            $treeMap,
+            static fn (string $path): bool => $sparse->includes($path),
+            ARRAY_FILTER_USE_KEY,
+        );
     }
 
     /**
@@ -1891,6 +2335,7 @@ final class Repository
                 return [
                     'parents' => [$headId, $mergeHead],
                     'message' => $message,
+                    'type' => 'merge',
                 ];
             }
 
@@ -2003,8 +2448,8 @@ final class Repository
         ?string $author = null,
         ?string $committer = null,
     ): ObjectId {
-        $committer = $committer ?? $this->currentIdentity();
-        $author = $author ?? $committer;
+        $committer = $committer ?? $this->currentCommitterIdentity();
+        $author = $author ?? $this->currentAuthorIdentity();
 
         $content = Commit::buildContent(
             tree: $treeId,
@@ -2224,15 +2669,59 @@ final class Repository
         }
     }
 
-    private function clearOperationState(): void
+    /**
+     * @param array<int, string> $preserveRefs
+     */
+    private function clearOperationState(array $preserveRefs = []): void
     {
         foreach (['MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD', 'REBASE_HEAD'] as $refName) {
+            if (in_array($refName, $preserveRefs, true)) {
+                continue;
+            }
+
             $this->refs->looseStore()->delete($refName);
         }
 
         @unlink($this->gitDir . '/MERGE_MSG');
         @unlink($this->gitDir . '/AUTO_MERGE');
         @unlink($this->gitDir . '/MERGE_MODE');
+    }
+
+    /**
+     * Abort an in-progress merge-family operation and restore HEAD state in the worktree/index.
+     */
+    private function abortHeadBasedOperation(string $operationRef, bool $writeOrigHead): void
+    {
+        if ($this->refs->resolve($operationRef) === null) {
+            throw new \RuntimeException("Cannot abort: no {$this->humanOperationName($operationRef)} in progress");
+        }
+
+        $headId = $this->refs->resolveHead();
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot abort: HEAD is not set');
+        }
+
+        if ($writeOrigHead) {
+            $this->refs->looseStore()->update('ORIG_HEAD', $headId);
+        }
+
+        $trackedPaths = array_values(array_unique(array_merge(
+            $this->index()->paths(),
+            array_keys($this->flattenTree($this->getCommitTree($headId))),
+        )));
+
+        $this->resetWorktree($headId, $trackedPaths);
+    }
+
+    private function humanOperationName(string $operationRef): string
+    {
+        return match ($operationRef) {
+            'MERGE_HEAD' => 'merge',
+            'CHERRY_PICK_HEAD' => 'cherry-pick',
+            'REVERT_HEAD' => 'revert',
+            default => strtolower(str_replace('_HEAD', '', $operationRef)),
+        };
     }
 
     /**
@@ -2633,16 +3122,16 @@ final class Repository
             $state['headName'],
             $oldBranchId ?? $state['origHead'],
             $headId,
-            'rebase (finish): ' . $this->shortRefName($state['headName']) . ' onto ' . substr($state['onto']->hex, 0, 7),
+            'rebase (finish): ' . $state['headName'] . ' onto ' . $state['onto']->hex,
         );
         $this->refs->updateSymbolic('HEAD', $state['headName']);
         $this->appendReflogEntry(
             'HEAD',
             $headId,
             $headId,
-            'rebase (finish): returning to ' . $this->shortRefName($state['headName']),
+            'rebase (finish): returning to ' . $state['headName'],
         );
-        $this->clearOperationState();
+        $this->clearOperationState($this->refs->resolve('REBASE_HEAD') !== null ? ['REBASE_HEAD'] : []);
         $this->clearRebaseState();
     }
 
@@ -2710,21 +3199,55 @@ final class Repository
         return '';
     }
 
-    private function buildPushPackData(ObjectId $target, ?ObjectId $exclude = null): string
+    /**
+     * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     * @param array<int, string> $extraCapabilities
+     */
+    private function pushUpdates(
+        SmartHttpClient $http,
+        string $url,
+        \Pitmaster\Protocol\RefDiscovery $discovery,
+        array $updates,
+        array $extraCapabilities = [],
+    ): void {
+        if ($updates === []) {
+            return;
+        }
+
+        $packData = $this->buildPushPackDataForUpdates($updates, $discovery->refs());
+        $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
+        $receivePack->push($url, $updates, $packData, $this->pushCapabilities($discovery, $extraCapabilities));
+    }
+
+    /**
+     * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     * @param array<string, ObjectId> $remoteRefs
+     */
+    private function buildPushPackDataForUpdates(array $updates, array $remoteRefs): string
     {
         $objects = [];
-        $this->collectReachableObjects($target, $objects);
 
-        if ($exclude !== null && $this->objects->exists($exclude)) {
-            $excluded = [];
-            $this->collectReachableObjects($exclude, $excluded);
+        foreach ($updates as $update) {
+            if ($update['new']->equals($this->zeroObjectId())) {
+                continue;
+            }
 
-            foreach (array_keys($excluded) as $hex) {
-                unset($objects[$hex]);
+            $this->collectReachableObjects($update['new'], $objects);
+        }
+
+        $excluded = [];
+
+        foreach ($remoteRefs as $remoteId) {
+            if ($this->objects->exists($remoteId)) {
+                $this->collectReachableObjects($remoteId, $excluded);
             }
         }
 
-        return $objects === [] ? '' : PackWriter::encode(array_values($objects));
+        foreach (array_keys($excluded) as $hex) {
+            unset($objects[$hex]);
+        }
+
+        return PackWriter::encode(array_values($objects));
     }
 
     /**
@@ -2773,6 +3296,86 @@ final class Repository
         }
     }
 
+    private function currentPushBranch(): string
+    {
+        $branch = $this->branch();
+
+        if ($branch === null) {
+            throw new \RuntimeException('Cannot push: not on a branch');
+        }
+
+        return $branch;
+    }
+
+    private function remoteUrl(string $remote): string
+    {
+        $url = $this->config->get("remote.{$remote}.url");
+
+        if ($url === null) {
+            throw new \RuntimeException("Remote not found: {$remote}");
+        }
+
+        return $url;
+    }
+
+    private function requireLocalRef(string $refName, string $message): ObjectId
+    {
+        $id = $this->refs->resolve($refName);
+
+        if ($id === null) {
+            throw new \RuntimeException($message);
+        }
+
+        return $id;
+    }
+
+    private function assertFastForwardPush(string $branch, ?ObjectId $remoteId, ObjectId $localId): void
+    {
+        if ($remoteId === null) {
+            return;
+        }
+
+        $mergeBase = new MergeBase($this->objects);
+
+        if (!$mergeBase->isAncestor($remoteId, $localId)) {
+            throw new \RuntimeException("Push rejected: non-fast-forward update to {$branch}");
+        }
+    }
+
+    /**
+     * @param array<int, string> $extraCapabilities
+     * @return array<int, string>
+     */
+    private function pushCapabilities(\Pitmaster\Protocol\RefDiscovery $discovery, array $extraCapabilities = []): array
+    {
+        $capabilities = array_values(array_unique(array_merge(
+            \Pitmaster\Protocol\ProtocolV1::DEFAULT_PUSH_CAPABILITIES,
+            $extraCapabilities,
+        )));
+        $advertised = $discovery->capabilities();
+
+        if ($advertised === null) {
+            return $capabilities;
+        }
+
+        $result = [];
+
+        foreach ($capabilities as $capability) {
+            $name = explode('=', $capability, 2)[0];
+
+            if ($name === 'agent' || $advertised->has($name)) {
+                $result[] = $capability;
+            }
+        }
+
+        return $result;
+    }
+
+    private function isMirrorPushRef(string $refName): bool
+    {
+        return str_starts_with($refName, 'refs/heads/') || str_starts_with($refName, 'refs/tags/');
+    }
+
     private function moveHeadTo(ObjectId $target, string $message): void
     {
         $oldHeadId = $this->refs->resolveHead();
@@ -2804,17 +3407,31 @@ final class Repository
     {
         $logDir = $refName === 'HEAD' ? $this->gitDir : $this->commonDir;
         $reflog = Reflog::open($logDir, $refName);
-        $reflog->append($oldId ?? $this->zeroObjectId(), $newId, $this->currentIdentity(), $message);
+        $reflog->append($oldId ?? $this->zeroObjectId(), $newId, $this->currentCommitterIdentity(), $message);
     }
 
-    private function currentIdentity(): string
+    private function currentAuthorIdentity(): string
     {
-        $name = $this->config->get('user.name')
-            ?? (defined('PITMASTER_AUTHOR_NAME') ? constant('PITMASTER_AUTHOR_NAME') : 'Pitmaster');
-        $email = $this->config->get('user.email')
-            ?? (defined('PITMASTER_AUTHOR_EMAIL') ? constant('PITMASTER_AUTHOR_EMAIL') : 'pitmaster@localhost');
+        [$timestamp, $timezone] = $this->identityDateParts('author');
 
-        return $this->formattedIdentity($name, $email);
+        return $this->formattedIdentity(
+            $this->identityName('author'),
+            $this->identityEmail('author'),
+            $timestamp,
+            $timezone,
+        );
+    }
+
+    private function currentCommitterIdentity(): string
+    {
+        [$timestamp, $timezone] = $this->identityDateParts('committer');
+
+        return $this->formattedIdentity(
+            $this->identityName('committer'),
+            $this->identityEmail('committer'),
+            $timestamp,
+            $timezone,
+        );
     }
 
     private function zeroObjectId(): ObjectId
@@ -2822,9 +3439,11 @@ final class Repository
         return ObjectId::fromHex(str_repeat('0', 40));
     }
 
-    private function formattedIdentity(string $name, string $email): string
+    private function formattedIdentity(string $name, string $email, ?int $timestamp = null, ?string $timezone = null): string
     {
-        [$timestamp, $timezone] = $this->identityDateParts();
+        if ($timestamp === null || $timezone === null) {
+            [$timestamp, $timezone] = $this->identityDateParts('committer');
+        }
 
         return "{$name} <{$email}> {$timestamp} {$timezone}";
     }
@@ -2832,9 +3451,9 @@ final class Repository
     /**
      * @return array{0: int, 1: string}
      */
-    private function identityDateParts(): array
+    private function identityDateParts(string $role): array
     {
-        foreach (['PITMASTER_COMMITTER_DATE', 'GIT_COMMITTER_DATE', 'PITMASTER_AUTHOR_DATE', 'GIT_AUTHOR_DATE'] as $env) {
+        foreach ($this->identityDateEnvNames($role) as $env) {
             $value = getenv($env);
 
             if ($value === false || trim($value) === '') {
@@ -2845,6 +3464,155 @@ final class Repository
         }
 
         return [time(), date('O')];
+    }
+
+    private function identityName(string $role): string
+    {
+        foreach ($this->identityNameEnvNames($role) as $env) {
+            $value = getenv($env);
+
+            if ($value !== false && trim($value) !== '') {
+                return trim($value);
+            }
+        }
+
+        foreach ($this->identityNameConstants($role) as $constant) {
+            if (defined($constant) && trim((string) constant($constant)) !== '') {
+                return trim((string) constant($constant));
+            }
+        }
+
+        return $this->config->get('user.name') ?? 'Pitmaster';
+    }
+
+    private function identityEmail(string $role): string
+    {
+        foreach ($this->identityEmailEnvNames($role) as $env) {
+            $value = getenv($env);
+
+            if ($value !== false && trim($value) !== '') {
+                return trim($value);
+            }
+        }
+
+        foreach ($this->identityEmailConstants($role) as $constant) {
+            if (defined($constant) && trim((string) constant($constant)) !== '') {
+                return trim((string) constant($constant));
+            }
+        }
+
+        return $this->config->get('user.email') ?? 'pitmaster@localhost';
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function identityNameEnvNames(string $role): array
+    {
+        return $role === 'author'
+            ? ['PITMASTER_AUTHOR_NAME', 'GIT_AUTHOR_NAME']
+            : ['PITMASTER_COMMITTER_NAME', 'GIT_COMMITTER_NAME'];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function identityEmailEnvNames(string $role): array
+    {
+        return $role === 'author'
+            ? ['PITMASTER_AUTHOR_EMAIL', 'GIT_AUTHOR_EMAIL']
+            : ['PITMASTER_COMMITTER_EMAIL', 'GIT_COMMITTER_EMAIL'];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function identityDateEnvNames(string $role): array
+    {
+        return $role === 'author'
+            ? ['PITMASTER_AUTHOR_DATE', 'GIT_AUTHOR_DATE']
+            : ['PITMASTER_COMMITTER_DATE', 'GIT_COMMITTER_DATE'];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function identityNameConstants(string $role): array
+    {
+        return $role === 'author'
+            ? ['PITMASTER_AUTHOR_NAME']
+            : ['PITMASTER_COMMITTER_NAME', 'PITMASTER_AUTHOR_NAME'];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function identityEmailConstants(string $role): array
+    {
+        return $role === 'author'
+            ? ['PITMASTER_AUTHOR_EMAIL']
+            : ['PITMASTER_COMMITTER_EMAIL', 'PITMASTER_AUTHOR_EMAIL'];
+    }
+
+    /**
+     * @param array{message?: string, type?: string}|null $state
+     */
+    private function prepareCommitMessage(string $message, ?array $state): string
+    {
+        $hooks = new HookRunner($this->gitDir);
+
+        if (!$hooks->runAndCheck('pre-commit')) {
+            throw new \RuntimeException('pre-commit hook failed');
+        }
+
+        $messageFile = $this->gitDir . '/COMMIT_EDITMSG';
+        file_put_contents($messageFile, $message);
+
+        [$source, $sourceArg] = $this->commitMessageHookSource($state);
+        $prepareArgs = [$messageFile];
+
+        if ($source !== null) {
+            $prepareArgs[] = $source;
+        }
+
+        if ($sourceArg !== null) {
+            $prepareArgs[] = $sourceArg;
+        }
+
+        if (!$hooks->runAndCheck('prepare-commit-msg', $prepareArgs)) {
+            throw new \RuntimeException('prepare-commit-msg hook failed');
+        }
+
+        $preparedMessage = (string) file_get_contents($messageFile);
+
+        if (!$hooks->runAndCheck('commit-msg', [$messageFile])) {
+            throw new \RuntimeException('commit-msg hook failed');
+        }
+
+        $finalMessage = (string) file_get_contents($messageFile);
+
+        return $finalMessage !== '' ? $finalMessage : $preparedMessage;
+    }
+
+    /**
+     * @param array{type?: string}|null $state
+     * @return array{0: ?string, 1: ?string}
+     */
+    private function commitMessageHookSource(?array $state): array
+    {
+        if ($state === null) {
+            return ['message', null];
+        }
+
+        return match ($state['type'] ?? null) {
+            'merge' => ['merge', null],
+            default => ['message', null],
+        };
+    }
+
+    private function runPostCommitHook(): void
+    {
+        (new HookRunner($this->gitDir))->run('post-commit');
     }
 
     /**
@@ -2890,15 +3658,6 @@ final class Repository
         }
 
         return $target;
-    }
-
-    private function shortRefName(string $refName): string
-    {
-        if (str_starts_with($refName, 'refs/heads/')) {
-            return substr($refName, 11);
-        }
-
-        return $refName;
     }
 
     private function isPackableRef(string $name): bool

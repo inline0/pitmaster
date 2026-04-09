@@ -17,6 +17,9 @@ use Pitmaster\Object\ObjectId;
  */
 final readonly class IndexEntry
 {
+    public const EXTENDED_SKIP_WORKTREE = 0x4000;
+    public const EXTENDED_INTENT_TO_ADD = 0x2000;
+
     public function __construct(
         public int $ctimeSec,
         public int $ctimeNsec,
@@ -31,6 +34,7 @@ final readonly class IndexEntry
         public ObjectId $hash,
         public int $flags,
         public string $path,
+        public int $extendedFlags = 0,
     ) {
     }
 
@@ -49,6 +53,11 @@ final readonly class IndexEntry
         return $this->flags & 0x0FFF;
     }
 
+    public function skipWorktree(): bool
+    {
+        return ($this->extendedFlags & self::EXTENDED_SKIP_WORKTREE) !== 0;
+    }
+
     /**
      * Create an entry for staging a file.
      */
@@ -58,9 +67,14 @@ final readonly class IndexEntry
         int $mode = 0100644,
         int $fileSize = 0,
         int $stage = 0,
+        int $extendedFlags = 0,
     ): self {
         $now = time();
         $flags = min(strlen($path), 0xFFF) | ($stage << 12);
+
+        if ($extendedFlags !== 0) {
+            $flags |= 0x4000;
+        }
 
         return new self(
             ctimeSec: $now,
@@ -76,20 +90,25 @@ final readonly class IndexEntry
             hash: $hash,
             flags: $flags,
             path: $path,
+            extendedFlags: $extendedFlags,
         );
     }
 
     /**
      * Create from stat info for a real file.
      */
-    public static function fromStat(string $path, ObjectId $hash, string $fullPath): self
+    public static function fromStat(string $path, ObjectId $hash, string $fullPath, int $extendedFlags = 0): self
     {
         $stat = stat($fullPath);
         $mode = is_executable($fullPath) ? 0100755 : 0100644;
         $flags = min(strlen($path), 0xFFF);
 
+        if ($extendedFlags !== 0) {
+            $flags |= 0x4000;
+        }
+
         if ($stat === false) {
-            return self::create($path, $hash, $mode);
+            return self::create($path, $hash, $mode, 0, 0, $extendedFlags);
         }
 
         return new self(
@@ -106,6 +125,7 @@ final readonly class IndexEntry
             hash: $hash,
             flags: $flags,
             path: $path,
+            extendedFlags: $extendedFlags,
         );
     }
 }

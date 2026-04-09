@@ -1,0 +1,20 @@
+{
+    "name": "index-v4-read",
+    "category": "index",
+    "description": "Compare v4 index parsing against Git ls-files",
+    "operations": [
+        "index_state"
+    ],
+    "oracle_commands": {
+        "index_state": "cat .index-state"
+    },
+    "actual_commands": {
+        "index_state": "cat .index-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "index_state"
+        ],
+        "fsck_clean": false
+    }
+}

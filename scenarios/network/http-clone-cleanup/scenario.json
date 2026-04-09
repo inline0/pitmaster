@@ -1,0 +1,24 @@
+{
+    "name": "http-clone-cleanup",
+    "category": "network",
+    "description": "Compare failed HTTP clone cleanup behavior against Git",
+    "operations": [
+        "cleanup_state"
+    ],
+    "oracle_commands": {
+        "cleanup_state": "cat .cleanup-state"
+    },
+    "actual_commands": {
+        "cleanup_state": "cat .cleanup-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "cleanup_state"
+        ],
+        "fsck_clean": true
+    }
+}

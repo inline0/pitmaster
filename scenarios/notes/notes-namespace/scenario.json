@@ -1,0 +1,28 @@
+{
+    "name": "notes-namespace",
+    "category": "notes",
+    "description": "Verify Git can observe Pitmaster-written notes in a custom namespace",
+    "operations": [
+        "note",
+        "note-ref",
+        "note-list"
+    ],
+    "oracle_commands": {
+        "note": "cat .note.txt",
+        "note-ref": "cat .note-ref.txt",
+        "note-list": "cat .note-list.txt"
+    },
+    "actual_commands": {
+        "note": "cat .note.txt",
+        "note-ref": "cat .note-ref.txt",
+        "note-list": "cat .note-list.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "note",
+            "note-ref",
+            "note-list"
+        ],
+        "fsck_clean": true
+    }
+}

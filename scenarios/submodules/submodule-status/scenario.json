@@ -1,0 +1,24 @@
+{
+    "name": "submodule-status",
+    "category": "submodules",
+    "description": "Compare Pitmaster submodule list and status output against Git-observed values",
+    "operations": [
+        "submodule-list",
+        "submodule-status"
+    ],
+    "oracle_commands": {
+        "submodule-list": "cat .submodule-list.txt",
+        "submodule-status": "cat .submodule-status.txt"
+    },
+    "actual_commands": {
+        "submodule-list": "cat .submodule-list.txt",
+        "submodule-status": "cat .submodule-status.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "submodule-list",
+            "submodule-status"
+        ],
+        "fsck_clean": true
+    }
+}

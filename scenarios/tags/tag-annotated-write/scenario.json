@@ -1,0 +1,24 @@
+{
+    "name": "tag-annotated-write",
+    "category": "tags",
+    "description": "Compare annotated tag creation against Git",
+    "operations": [
+        "tag_state"
+    ],
+    "oracle_commands": {
+        "tag_state": "cat .tag-state"
+    },
+    "actual_commands": {
+        "tag_state": "cat .tag-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "tag_state"
+        ],
+        "fsck_clean": true
+    }
+}

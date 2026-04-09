@@ -1,0 +1,47 @@
+{
+    "name": "cherry-pick-conflict-abort",
+    "category": "cherry-pick",
+    "description": "Abort a cherry-pick conflict via the Pitmaster CLI",
+    "operations": [
+        "status",
+        "head_ref",
+        "subjects",
+        "parents",
+        "tree",
+        "worktree",
+        "orig_head"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "worktree": "cat a.txt",
+        "orig_head": "cat .git/ORIG_HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "worktree": "cat a.txt",
+        "orig_head": "cat .git/ORIG_HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "subjects",
+            "parents",
+            "tree",
+            "worktree",
+            "orig_head"
+        ],
+        "fsck_clean": false
+    }
+}

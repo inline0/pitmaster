@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "1b24e1dee6dbd6b6a4a1e026df90d105ac11f769",
+        "type": "commit",
+        "size": 173,
+        "content": "tree b08a8965dbc7d5029ecad109de34642025848240\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\ntree fixture\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "67e3ddb6ebc7d11989f10475ae627ac9dac194c6",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob d95f3ad14dee633a758d2e331151e950dd13e4ed\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b08a8965dbc7d5029ecad109de34642025848240",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree f97f9eb4118c42b6626053f10f696102aefada34\tdir\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "d95f3ad14dee633a758d2e331151e950dd13e4ed",
+        "type": "blob",
+        "size": 8,
+        "content": "content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f97f9eb4118c42b6626053f10f696102aefada34",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree 67e3ddb6ebc7d11989f10475ae627ac9dac194c6\tsub\n",
+        "encoding": "utf-8"
+    }
+]

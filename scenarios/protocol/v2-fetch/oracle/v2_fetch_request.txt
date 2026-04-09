@@ -1,0 +1,12 @@
+command=fetch
+agent=<normalized>
+object-format=sha1
+0001
+thin-pack
+no-progress
+ofs-delta
+want b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4
+want b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4
+want b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4
+done
+0000

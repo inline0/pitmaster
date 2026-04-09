@@ -6,6 +6,7 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Exceptions\MergeConflictException;
 use Pitmaster\Pitmaster;
 use Pitmaster\Repository;
 
@@ -51,16 +52,39 @@ final class MergeFamilyParityTest extends TestCase
         $resolved = "line 1\nresolved\nline 3\n";
         $this->writeFile($gitDir, 'a.txt', $resolved);
         $this->git($gitDir, 'add a.txt');
-        $this->git($gitDir, 'commit --no-edit');
-
-        $this->writeFile($pitDir, 'a.txt', $resolved);
-        $repo->add('a.txt');
-        $repo->commit();
+        $this->withDeterministicCommitDates(function () use ($gitDir, $repo, $pitDir, $resolved): void {
+            $this->git($gitDir, '-c core.editor=true merge --continue');
+            $this->writeFile($pitDir, 'a.txt', $resolved);
+            $repo->add('a.txt');
+            $repo->mergeContinue();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertNull($this->readGitFile($pitDir, 'MERGE_HEAD'));
+        $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+    }
+
+    #[Test]
+    public function mergeConflictAbortMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createMergeConflictPair();
+
+        $this->gitWithExit($gitDir, 'merge feature');
+        $repo = Pitmaster::open($pitDir);
+        $repo->merge('feature');
+
+        $this->gitWithExit($gitDir, 'merge --abort');
+        $repo->mergeAbort();
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame(file_get_contents($gitDir . '/a.txt'), file_get_contents($pitDir . '/a.txt'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
@@ -77,7 +101,7 @@ final class MergeFamilyParityTest extends TestCase
         try {
             $repo->cherryPick($pickId);
             self::fail('Expected cherry-pick conflict');
-        } catch (\RuntimeException $e) {
+        } catch (MergeConflictException $e) {
             $this->assertStringContainsString('conflict', strtolower($e->getMessage()));
         }
 
@@ -100,17 +124,18 @@ final class MergeFamilyParityTest extends TestCase
         try {
             $repo->cherryPick($pickId);
             self::fail('Expected cherry-pick conflict');
-        } catch (\RuntimeException) {
+        } catch (MergeConflictException) {
         }
 
         $resolved = "line 1\nresolved\nline 3\n";
         $this->writeFile($gitDir, 'a.txt', $resolved);
         $this->git($gitDir, 'add a.txt');
-        $this->git($gitDir, 'commit --no-edit');
-
-        $this->writeFile($pitDir, 'a.txt', $resolved);
-        $repo->add('a.txt');
-        $repo->commit();
+        $this->withDeterministicCommitDates(function () use ($gitDir, $repo, $pitDir, $resolved): void {
+            $this->git($gitDir, '-c core.editor=true cherry-pick --continue');
+            $this->writeFile($pitDir, 'a.txt', $resolved);
+            $repo->add('a.txt');
+            $repo->cherryPickContinue();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
@@ -119,6 +144,33 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertSame($this->git($gitDir, "show -s --format='%an <%ae>' HEAD"), $this->git($pitDir, "show -s --format='%an <%ae>' HEAD"));
         $this->assertNull($this->readGitFile($pitDir, 'CHERRY_PICK_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+    }
+
+    #[Test]
+    public function cherryPickConflictAbortMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir, 'pick' => $pickId] = $this->createCherryPickConflictPair();
+
+        $this->gitWithExit($gitDir, 'cherry-pick ' . escapeshellarg($pickId));
+        $repo = Pitmaster::open($pitDir);
+
+        try {
+            $repo->cherryPick($pickId);
+            self::fail('Expected cherry-pick conflict');
+        } catch (MergeConflictException) {
+        }
+
+        $this->gitWithExit($gitDir, 'cherry-pick --abort');
+        $repo->cherryPickAbort();
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame(file_get_contents($gitDir . '/a.txt'), file_get_contents($pitDir . '/a.txt'));
+        $this->assertNull($this->readGitFile($pitDir, 'CHERRY_PICK_HEAD'));
+        $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
     }
 
     #[Test]
@@ -132,7 +184,7 @@ final class MergeFamilyParityTest extends TestCase
         try {
             $repo->revert($revertId);
             self::fail('Expected revert conflict');
-        } catch (\RuntimeException $e) {
+        } catch (MergeConflictException $e) {
             $this->assertStringContainsString('conflict', strtolower($e->getMessage()));
         }
 
@@ -154,17 +206,18 @@ final class MergeFamilyParityTest extends TestCase
         try {
             $repo->revert($revertId);
             self::fail('Expected revert conflict');
-        } catch (\RuntimeException) {
+        } catch (MergeConflictException) {
         }
 
         $resolved = "line 1\nresolved\nline 3\n";
         $this->writeFile($gitDir, 'a.txt', $resolved);
         $this->git($gitDir, 'add a.txt');
-        $this->git($gitDir, 'commit --no-edit');
-
-        $this->writeFile($pitDir, 'a.txt', $resolved);
-        $repo->add('a.txt');
-        $repo->commit();
+        $this->withDeterministicCommitDates(function () use ($gitDir, $repo, $pitDir, $resolved): void {
+            $this->git($gitDir, '-c core.editor=true revert --continue');
+            $this->writeFile($pitDir, 'a.txt', $resolved);
+            $repo->add('a.txt');
+            $repo->revertContinue();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
@@ -173,6 +226,33 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertSame($this->git($gitDir, "show -s --format='%an <%ae>' HEAD"), $this->git($pitDir, "show -s --format='%an <%ae>' HEAD"));
         $this->assertNull($this->readGitFile($pitDir, 'REVERT_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+    }
+
+    #[Test]
+    public function revertConflictAbortMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertConflictPair();
+
+        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $repo = Pitmaster::open($pitDir);
+
+        try {
+            $repo->revert($revertId);
+            self::fail('Expected revert conflict');
+        } catch (MergeConflictException) {
+        }
+
+        $this->gitWithExit($gitDir, 'revert --abort');
+        $repo->revertAbort();
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame(file_get_contents($gitDir . '/a.txt'), file_get_contents($pitDir . '/a.txt'));
+        $this->assertNull($this->readGitFile($pitDir, 'REVERT_HEAD'));
+        $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
     }
 
     /**
@@ -324,6 +404,21 @@ final class MergeFamilyParityTest extends TestCase
         $content = file_get_contents($path);
 
         return $content !== false ? $content : null;
+    }
+
+    private function withDeterministicCommitDates(callable $callback): void
+    {
+        $previousAuthor = getenv('GIT_AUTHOR_DATE');
+        $previousCommitter = getenv('GIT_COMMITTER_DATE');
+        putenv('GIT_AUTHOR_DATE=2024-01-15T00:00:10+0000');
+        putenv('GIT_COMMITTER_DATE=2024-01-15T00:00:10+0000');
+
+        try {
+            $callback();
+        } finally {
+            putenv($previousAuthor === false ? 'GIT_AUTHOR_DATE' : "GIT_AUTHOR_DATE={$previousAuthor}");
+            putenv($previousCommitter === false ? 'GIT_COMMITTER_DATE' : "GIT_COMMITTER_DATE={$previousCommitter}");
+        }
     }
 
     private function runShell(string $command): void

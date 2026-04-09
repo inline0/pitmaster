@@ -91,6 +91,14 @@ final class DumbHttpClient
         return $packs;
     }
 
+    /**
+     * Fetch the remote HEAD file from a dumb HTTP export.
+     */
+    public function fetchHead(string $url): string
+    {
+        return $this->get(rtrim($url, '/') . '/HEAD');
+    }
+
     private function get(string $url): string
     {
         $context = stream_context_create([
@@ -99,15 +107,43 @@ final class DumbHttpClient
                 'timeout' => $this->timeout,
                 'header' => "User-Agent: Pitmaster/1.0\r\n",
                 'follow_location' => true,
+                'ignore_errors' => true,
             ],
         ]);
 
         $response = @file_get_contents($url, false, $context);
+        $headers = $http_response_header;
 
         if ($response === false) {
+            $status = $this->statusCode($headers);
+
+            if ($status !== null) {
+                throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
+            }
+
             throw new ProtocolException("Dumb HTTP GET failed: {$url}");
         }
 
+        $status = $this->statusCode($headers);
+
+        if ($status !== null && ($status < 200 || $status >= 300)) {
+            throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
+        }
+
         return $response;
+    }
+
+    /**
+     * @param array<int, string> $headers
+     */
+    private function statusCode(array $headers): ?int
+    {
+        foreach ($headers as $header) {
+            if (preg_match('/^HTTP\/\d+(?:\.\d+)?\s+(\d{3})\b/i', $header, $matches) === 1) {
+                return (int) $matches[1];
+            }
+        }
+
+        return null;
     }
 }

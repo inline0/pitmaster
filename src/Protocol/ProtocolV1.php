@@ -15,6 +15,26 @@ use Pitmaster\Object\ObjectId;
  */
 final class ProtocolV1
 {
+    public const DEFAULT_FETCH_CAPABILITIES = [
+        'multi_ack_detailed',
+        'no-done',
+        'side-band-64k',
+        'thin-pack',
+        'no-progress',
+        'ofs-delta',
+        'deepen-since',
+        'deepen-not',
+        'agent=Pitmaster/1.0',
+    ];
+
+    public const DEFAULT_PUSH_CAPABILITIES = [
+        'report-status-v2',
+        'side-band-64k',
+        'quiet',
+        'object-format=sha1',
+        'agent=Pitmaster/1.0',
+    ];
+
     /**
      * Parse v1 ref advertisement (the format used by most servers).
      *
@@ -42,7 +62,7 @@ final class ProtocolV1
     public static function buildFetchRequest(
         array $wants,
         array $haves = [],
-        array $capabilities = ['multi_ack_detailed', 'side-band-64k', 'ofs-delta'],
+        array $capabilities = self::DEFAULT_FETCH_CAPABILITIES,
     ): string {
         $request = '';
         $first = true;
@@ -64,6 +84,7 @@ final class ProtocolV1
         }
 
         $request .= PktLine::encode("done\n");
+        $request .= PktLine::flush();
 
         return $request;
     }
@@ -73,7 +94,7 @@ final class ProtocolV1
      *
      * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
      */
-    public static function buildPushRequest(array $updates): string
+    public static function buildPushRequest(array $updates, array $capabilities = self::DEFAULT_PUSH_CAPABILITIES): string
     {
         $request = '';
         $first = true;
@@ -82,7 +103,7 @@ final class ProtocolV1
             $line = "{$update['old']->hex} {$update['new']->hex} {$update['ref']}";
 
             if ($first) {
-                $line .= "\0report-status side-band-64k";
+                $line .= "\0 " . implode(' ', $capabilities);
                 $first = false;
             }
 

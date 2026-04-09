@@ -1,0 +1,16 @@
+[
+    {
+        "hash": "12925db9c3040739742c418bf4ed4e839f578719",
+        "type": "blob",
+        "size": 15,
+        "content": "missing object\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "76bbbdfd2a4cb8d79875f64cb48ff5228d5b7879",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 12925db9c3040739742c418bf4ed4e839f578719\ttracked.txt\n",
+        "encoding": "utf-8"
+    }
+]

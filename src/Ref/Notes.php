@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Ref;
 
 use Pitmaster\Object\Blob;
+use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Object\ObjectType;
 use Pitmaster\Object\Tree;
@@ -33,31 +34,21 @@ final class Notes
      */
     public function get(ObjectId $commitId, string $notesRef = self::DEFAULT_REF): ?string
     {
-        $treeId = $this->refs->resolve($notesRef);
+        $treeId = $this->notesTreeId($notesRef);
 
         if ($treeId === null) {
             return null;
         }
 
-        $tree = $this->objects->read($treeId);
+        $blobId = $this->findNoteBlobId($treeId, $commitId);
 
-        if (!$tree instanceof Tree) {
+        if ($blobId === null) {
             return null;
         }
 
-        $entry = $tree->entry($commitId->hex);
+        $blob = $this->objects->read($blobId);
 
-        if ($entry === null) {
-            return null;
-        }
-
-        $blob = $this->objects->read($entry->hash);
-
-        if (!$blob instanceof Blob) {
-            return null;
-        }
-
-        return $blob->content;
+        return $blob instanceof Blob ? rtrim($blob->content, "\n") : null;
     }
 
     /**
@@ -65,35 +56,17 @@ final class Notes
      */
     public function set(ObjectId $commitId, string $noteContent, string $notesRef = self::DEFAULT_REF): void
     {
-        // Write note blob
-        $blob = Blob::fromContent($noteContent);
+        $blob = Blob::fromContent(str_ends_with($noteContent, "\n") ? $noteContent : $noteContent . "\n");
         $this->objects->write($blob);
 
-        // Get existing notes tree
-        $entries = [];
-        $treeId = $this->refs->resolve($notesRef);
+        $entries = $this->readNoteMap($notesRef);
+        unset($entries[$commitId->hex]);
+        unset($entries[$this->notePath($commitId)]);
+        $entries[$commitId->hex] = $blob->id;
 
-        if ($treeId !== null) {
-            $tree = $this->objects->read($treeId);
-
-            if ($tree instanceof Tree) {
-                foreach ($tree->entries as $entry) {
-                    if ($entry->name !== $commitId->hex) {
-                        $entries[] = $entry;
-                    }
-                }
-            }
-        }
-
-        // Add new note entry
-        $entries[] = new TreeEntry('100644', $commitId->hex, $blob->id);
-
-        // Write new tree
-        $newTree = Tree::fromEntries($entries);
+        $newTree = $this->buildNotesTree($entries);
         $this->objects->write($newTree);
-
-        // Update notes ref
-        $this->refs->update($notesRef, $newTree->id);
+        $this->writeNotesRef($notesRef, $newTree);
     }
 
     /**
@@ -101,33 +74,23 @@ final class Notes
      */
     public function remove(ObjectId $commitId, string $notesRef = self::DEFAULT_REF): void
     {
-        $treeId = $this->refs->resolve($notesRef);
+        $entries = $this->readNoteMap($notesRef);
+        $removed = false;
 
-        if ($treeId === null) {
-            return;
-        }
-
-        $tree = $this->objects->read($treeId);
-
-        if (!$tree instanceof Tree) {
-            return;
-        }
-
-        $entries = [];
-
-        foreach ($tree->entries as $entry) {
-            if ($entry->name !== $commitId->hex) {
-                $entries[] = $entry;
+        foreach ([$this->notePath($commitId), $commitId->hex] as $path) {
+            if (isset($entries[$path])) {
+                unset($entries[$path]);
+                $removed = true;
             }
         }
 
-        if (count($entries) === count($tree->entries)) {
+        if (!$removed) {
             return; // Note didn't exist
         }
 
-        $newTree = Tree::fromEntries($entries);
+        $newTree = $this->buildNotesTree($entries);
         $this->objects->write($newTree);
-        $this->refs->update($notesRef, $newTree->id);
+        $this->writeNotesRef($notesRef, $newTree);
     }
 
     /**
@@ -137,28 +100,280 @@ final class Notes
      */
     public function listAll(string $notesRef = self::DEFAULT_REF): array
     {
-        $treeId = $this->refs->resolve($notesRef);
+        $notes = [];
+
+        foreach ($this->readNoteMap($notesRef) as $path => $blobId) {
+            $blob = $this->objects->read($blobId);
+
+            if ($blob instanceof Blob) {
+                $notes[str_replace('/', '', $path)] = rtrim($blob->content, "\n");
+            }
+        }
+
+        return $notes;
+    }
+
+    /**
+     * Merge notes from one ref into another.
+     */
+    public function merge(string $sourceRef, string $targetRef = self::DEFAULT_REF): void
+    {
+        $targetEntries = $this->readNoteMap($targetRef);
+        $sourceEntries = $this->readNoteMap($sourceRef);
+
+        foreach ($sourceEntries as $path => $blobId) {
+            if (!isset($targetEntries[$path])) {
+                $targetEntries[$path] = $blobId;
+                continue;
+            }
+
+            if ($targetEntries[$path]->hex === $blobId->hex) {
+                continue;
+            }
+
+            $targetBlob = $this->objects->read($targetEntries[$path]);
+            $sourceBlob = $this->objects->read($blobId);
+
+            if (
+                !$targetBlob instanceof Blob
+                || !$sourceBlob instanceof Blob
+                || rtrim($targetBlob->content, "\n") !== rtrim($sourceBlob->content, "\n")
+            ) {
+                throw new \RuntimeException("Cannot merge conflicting notes for {$path}");
+            }
+        }
+
+        $newTree = $this->buildNotesTree($targetEntries);
+        $this->objects->write($newTree);
+        $this->writeNotesRef($targetRef, $newTree, $sourceRef, "notes: merged from {$sourceRef}\n");
+    }
+
+    /**
+     * @return array<string, ObjectId>
+     */
+    private function readNoteMap(string $notesRef): array
+    {
+        $treeId = $this->notesTreeId($notesRef);
 
         if ($treeId === null) {
             return [];
         }
 
+        return $this->flattenNotesTree($treeId);
+    }
+
+    private function notesTreeId(string $notesRef): ?ObjectId
+    {
+        $objectId = $this->refs->resolve($notesRef);
+
+        if ($objectId === null) {
+            return null;
+        }
+
+        $object = $this->objects->read($objectId);
+
+        if ($object instanceof Commit) {
+            return $object->tree;
+        }
+
+        return $object instanceof Tree ? $object->id : null;
+    }
+
+    private function notePath(ObjectId $commitId): string
+    {
+        return substr($commitId->hex, 0, 2) . '/' . substr($commitId->hex, 2);
+    }
+
+    private function writeNotesRef(
+        string $notesRef,
+        Tree $tree,
+        ?string $extraParentRef = null,
+        string $message = "Notes added by 'git notes add'\n",
+    ): void {
+        $parent = $this->refs->resolve($notesRef);
+        $parents = [];
+
+        if ($parent !== null) {
+            $object = $this->objects->read($parent);
+
+            if ($object instanceof Commit) {
+                $parents[] = $parent;
+            }
+        }
+
+        if ($extraParentRef !== null) {
+            $extraParent = $this->refs->resolve($extraParentRef);
+            $extraObject = $extraParent !== null ? $this->objects->read($extraParent) : null;
+
+            if ($extraParent !== null && $extraObject instanceof Commit && !in_array($extraParent, $parents, false)) {
+                $parents[] = $extraParent;
+            }
+        }
+
+        $identity = $this->currentIdentity();
+        $content = Commit::buildContent(
+            tree: $tree->id,
+            parents: $parents,
+            author: $identity,
+            committer: $identity,
+            message: $message,
+        );
+        $commitId = ObjectId::compute(ObjectType::Commit, $content);
+        $commit = Commit::parse($content, $commitId);
+        $this->objects->write($commit);
+        $this->refs->update($notesRef, $commitId);
+    }
+
+    private function findNoteBlobId(ObjectId $treeId, ObjectId $commitId): ?ObjectId
+    {
+        foreach ([$this->notePath($commitId), $commitId->hex] as $path) {
+            $blobId = $this->findBlobAtPath($treeId, explode('/', $path));
+
+            if ($blobId !== null) {
+                return $blobId;
+            }
+        }
+
+        return null;
+    }
+
+    private function findBlobAtPath(ObjectId $treeId, array $parts): ?ObjectId
+    {
+        $tree = $this->objects->read($treeId);
+
+        if (!$tree instanceof Tree || $parts === []) {
+            return null;
+        }
+
+        $entry = $tree->entry(array_shift($parts));
+
+        if ($entry === null) {
+            return null;
+        }
+
+        if ($parts === []) {
+            return $entry->isBlob() ? $entry->hash : null;
+        }
+
+        return $entry->isTree() ? $this->findBlobAtPath($entry->hash, $parts) : null;
+    }
+
+    /**
+     * @return array<string, ObjectId>
+     */
+    private function flattenNotesTree(ObjectId $treeId, string $prefix = ''): array
+    {
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
             return [];
         }
 
-        $notes = [];
+        $result = [];
 
         foreach ($tree->entries as $entry) {
-            $blob = $this->objects->read($entry->hash);
+            $path = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
-            if ($blob instanceof Blob) {
-                $notes[$entry->name] = $blob->content;
+            if ($entry->isTree()) {
+                $result += $this->flattenNotesTree($entry->hash, $path);
+                continue;
+            }
+
+            if ($entry->isBlob()) {
+                $result[$path] = $entry->hash;
             }
         }
 
-        return $notes;
+        return $result;
+    }
+
+    /**
+     * @param array<string, ObjectId> $entries
+     */
+    private function buildNotesTree(array $entries): Tree
+    {
+        $tree = [];
+        ksort($entries);
+
+        foreach ($entries as $path => $blobId) {
+            $this->insertTreeEntry($tree, explode('/', $path), $blobId);
+        }
+
+        return $this->writeTreeNode($tree);
+    }
+
+    /**
+     * @param array<string, mixed> $node
+     * @param array<int, string> $parts
+     */
+    private function insertTreeEntry(array &$node, array $parts, ObjectId $blobId): void
+    {
+        $name = array_shift($parts);
+
+        if ($name === null) {
+            return;
+        }
+
+        if ($parts === []) {
+            $node[$name] = $blobId;
+            return;
+        }
+
+        $node[$name] ??= [];
+        $this->insertTreeEntry($node[$name], $parts, $blobId);
+    }
+
+    /**
+     * @param array<string, mixed> $node
+     */
+    private function writeTreeNode(array $node): Tree
+    {
+        ksort($node);
+        $entries = [];
+
+        foreach ($node as $name => $value) {
+            $name = (string) $name;
+
+            if ($value instanceof ObjectId) {
+                $entries[] = new TreeEntry('100644', $name, $value);
+                continue;
+            }
+
+            $tree = $this->writeTreeNode($value);
+            $this->objects->write($tree);
+            $entries[] = new TreeEntry('40000', $name, $tree->id);
+        }
+
+        return Tree::fromEntries($entries);
+    }
+
+    private function currentIdentity(): string
+    {
+        $name = getenv('GIT_COMMITTER_NAME')
+            ?: getenv('GIT_AUTHOR_NAME')
+            ?: 'Pitmaster';
+        $email = getenv('GIT_COMMITTER_EMAIL')
+            ?: getenv('GIT_AUTHOR_EMAIL')
+            ?: 'pitmaster@example.invalid';
+        $date = getenv('GIT_COMMITTER_DATE')
+            ?: getenv('GIT_AUTHOR_DATE')
+            ?: sprintf('%d %s', time(), date('O'));
+
+        return "{$name} <{$email}> {$this->normalizeDate($date)}";
+    }
+
+    private function normalizeDate(string $date): string
+    {
+        if (preg_match('/^@?(\d+)\s+([+-]\d{4})$/', $date, $matches) === 1) {
+            return $matches[1] . ' ' . $matches[2];
+        }
+
+        try {
+            $parsed = new \DateTimeImmutable($date);
+        } catch (\Exception) {
+            return sprintf('%d %s', time(), date('O'));
+        }
+
+        return $parsed->format('U O');
     }
 }

@@ -1,0 +1,20 @@
+{
+    "name": "push-atomic",
+    "category": "network",
+    "description": "Compare atomic push all-or-nothing behavior against Git smart HTTP",
+    "operations": [
+        "remote_refs"
+    ],
+    "oracle_commands": {
+        "remote_refs": "cat .remote-refs.txt"
+    },
+    "actual_commands": {
+        "remote_refs": "cat .remote-refs.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "remote_refs"
+        ],
+        "fsck_clean": true
+    }
+}

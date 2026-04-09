@@ -1,0 +1,23 @@
+{
+    "name": "grep-basic",
+    "category": "grep",
+    "description": "Compare Pitmaster grep output against git grep",
+    "operations": [
+        "grep"
+    ],
+    "oracle_commands": {
+        "grep": "cat .grep.json"
+    },
+    "actual_commands": {
+        "grep": "cat .grep.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "grep"
+        ],
+        "fsck_clean": true
+    }
+}

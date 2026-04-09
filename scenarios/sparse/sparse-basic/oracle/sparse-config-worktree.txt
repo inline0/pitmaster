@@ -1,0 +1,4 @@
+{
+    "core.sparsecheckout": "true",
+    "core.sparsecheckoutcone": "true"
+}

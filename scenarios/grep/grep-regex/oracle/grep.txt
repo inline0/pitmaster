@@ -1,0 +1,12 @@
+[
+    {
+        "path": "README.md",
+        "line": 1,
+        "content": "Hello root"
+    },
+    {
+        "path": "src/feature.txt",
+        "line": 2,
+        "content": "HELLO nested"
+    }
+]

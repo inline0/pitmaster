@@ -6,6 +6,7 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Pitmaster;
 use Pitmaster\Protocol\DumbHttpClient;
 
 final class DumbHttpClientTest extends TestCase
@@ -62,26 +63,9 @@ final class DumbHttpClientTest extends TestCase
     #[Test]
     public function fetchesRefsLooseObjectsAndPacksFromActualDumbHttpExport(): void
     {
-        $docRoot = $this->tmpDir . '/docroot';
-        $sourceDir = $this->tmpDir . '/source';
-        $remoteDir = $docRoot . '/remote.git';
+        [$sourceDir, $remoteDir] = $this->seedDumbHttpRemote('hello dumb http');
 
-        mkdir($docRoot, 0777, true);
-        file_put_contents($docRoot . '/health.txt', "ok\n");
-
-        $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
-        $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
-        $this->git('config user.email test@example.com', $sourceDir);
-        $this->git('config user.name Test', $sourceDir);
-
-        file_put_contents($sourceDir . '/README.md', "hello dumb http\n");
-        $this->git('add README.md', $sourceDir);
-        $this->git('commit -m initial', $sourceDir);
-        $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
-        $this->git('push origin main', $sourceDir);
-        $this->git('update-server-info', $remoteDir);
-
-        $this->startStaticServer($docRoot);
+        $this->startStaticServer(dirname($remoteDir));
 
         $client = new DumbHttpClient();
         $remoteUrl = $this->baseUrl . '/remote.git';
@@ -106,6 +90,89 @@ final class DumbHttpClientTest extends TestCase
             file_get_contents($remoteDir . '/objects/pack/' . $packName),
             $client->fetchPack($remoteUrl, $packName),
         );
+    }
+
+    #[Test]
+    public function cloneOverDumbHttpMatchesGitForPackedExport(): void
+    {
+        [$sourceDir, $remoteDir] = $this->seedDumbHttpRemote('dumb clone parity');
+        $pitClone = $this->tmpDir . '/pit-clone';
+        $gitClone = $this->tmpDir . '/git-clone';
+
+        $this->git('tag -a v1.0 -m v1.0', $sourceDir);
+        $this->git('push origin --tags', $sourceDir);
+        $this->git('repack -ad', $remoteDir);
+        $this->git('update-server-info', $remoteDir);
+        $this->startStaticServer(dirname($remoteDir));
+        $remoteUrl = $this->baseUrl . '/remote.git';
+
+        Pitmaster::clone($remoteUrl, $pitClone);
+        $this->git('clone ' . escapeshellarg($remoteUrl) . ' ' . escapeshellarg($gitClone), $this->tmpDir);
+
+        $this->assertSame(trim($this->git('rev-parse HEAD', $gitClone)), trim($this->git('rev-parse HEAD', $pitClone)));
+        $this->assertSame(trim($this->git('rev-parse refs/remotes/origin/main', $gitClone)), trim($this->git('rev-parse refs/remotes/origin/main', $pitClone)));
+        $this->assertSame(trim($this->git('rev-parse refs/tags/v1.0', $gitClone)), trim($this->git('rev-parse refs/tags/v1.0', $pitClone)));
+        $this->assertSame(file_get_contents($gitClone . '/README.md'), file_get_contents($pitClone . '/README.md'));
+        $this->assertSame('', trim($this->git('fsck --no-progress', $pitClone)));
+    }
+
+    #[Test]
+    public function fetchOverDumbHttpMatchesGitAfterRemoteAdvance(): void
+    {
+        [, $remoteDir] = $this->seedDumbHttpRemote('dumb fetch parity');
+        $pitClone = $this->tmpDir . '/pit-clone';
+        $gitClone = $this->tmpDir . '/git-clone';
+
+        $this->git('repack -ad', $remoteDir);
+        $this->git('update-server-info', $remoteDir);
+        $this->startStaticServer(dirname($remoteDir));
+        $remoteUrl = $this->baseUrl . '/remote.git';
+
+        $repo = Pitmaster::clone($remoteUrl, $pitClone);
+        $this->git('clone ' . escapeshellarg($remoteUrl) . ' ' . escapeshellarg($gitClone), $this->tmpDir);
+
+        $sourceDir = $this->tmpDir . '/source';
+        file_put_contents($sourceDir . '/README.md', "dumb fetch parity\nremote advance\n");
+        file_put_contents($sourceDir . '/notes.txt', "fetched over dumb http\n");
+        $this->git('add README.md notes.txt', $sourceDir);
+        $this->git('commit -m advance', $sourceDir);
+        $this->git('push origin main', $sourceDir);
+        $this->git('repack -ad', $remoteDir);
+        $this->git('update-server-info', $remoteDir);
+
+        $repo->fetch();
+        $this->git('fetch origin', $gitClone);
+
+        $this->assertSame(trim($this->git('rev-parse refs/remotes/origin/main', $gitClone)), trim($this->git('rev-parse refs/remotes/origin/main', $pitClone)));
+        $this->assertSame(trim($this->git('rev-parse refs/heads/main', $remoteDir)), trim($this->git('rev-parse refs/remotes/origin/main', $pitClone)));
+        $this->assertSame('', trim($this->git('fsck --no-progress', $pitClone)));
+    }
+
+    /**
+     * @return array{0: string, 1: string}
+     */
+    private function seedDumbHttpRemote(string $content): array
+    {
+        $docRoot = $this->tmpDir . '/docroot';
+        $sourceDir = $this->tmpDir . '/source';
+        $remoteDir = $docRoot . '/remote.git';
+
+        mkdir($docRoot, 0777, true);
+        file_put_contents($docRoot . '/health.txt', "ok\n");
+
+        $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
+        $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
+        $this->git('config user.email test@example.com', $sourceDir);
+        $this->git('config user.name Test', $sourceDir);
+
+        file_put_contents($sourceDir . '/README.md', $content . "\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m initial', $sourceDir);
+        $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
+        $this->git('push origin main', $sourceDir);
+        $this->git('update-server-info', $remoteDir);
+
+        return [$sourceDir, $remoteDir];
     }
 
     private function startStaticServer(string $docRoot): void

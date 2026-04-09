@@ -1,0 +1,24 @@
+{
+    "name": "git-protocol-fetch",
+    "category": "network",
+    "description": "Compare git:// fetch pack acquisition against Git",
+    "operations": [
+        "git_protocol_fetch_state"
+    ],
+    "oracle_commands": {
+        "git_protocol_fetch_state": "cat .git-protocol-fetch-state"
+    },
+    "actual_commands": {
+        "git_protocol_fetch_state": "cat .git-protocol-fetch-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "git_protocol_fetch_state"
+        ],
+        "fsck_clean": true
+    }
+}

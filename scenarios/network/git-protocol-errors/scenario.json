@@ -1,0 +1,24 @@
+{
+    "name": "git-protocol-errors",
+    "category": "network",
+    "description": "Compare git:// connection failure handling against Git",
+    "operations": [
+        "git_protocol_error_state"
+    ],
+    "oracle_commands": {
+        "git_protocol_error_state": "cat .git-protocol-error-state"
+    },
+    "actual_commands": {
+        "git_protocol_error_state": "cat .git-protocol-error-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "git_protocol_error_state"
+        ],
+        "fsck_clean": true
+    }
+}

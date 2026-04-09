@@ -1,0 +1,20 @@
+head=refs/heads/main
+cap agent=<normalized>
+cap deepen-not
+cap deepen-relative
+cap deepen-since
+cap include-tag
+cap multi_ack
+cap multi_ack_detailed
+cap no-done
+cap no-progress
+cap object-format=sha1
+cap ofs-delta
+cap shallow
+cap side-band
+cap side-band-64k
+cap symref=HEAD:refs/heads/main
+cap thin-pack
+ref HEAD=0aa1689265bfee6f22a79c3ee10a666998d30a2f
+ref refs/heads/main=0aa1689265bfee6f22a79c3ee10a666998d30a2f
+ref refs/tags/v1.0=0aa1689265bfee6f22a79c3ee10a666998d30a2f

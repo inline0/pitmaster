@@ -1,0 +1,28 @@
+{
+    "name": "v2-fetch",
+    "category": "protocol",
+    "description": "Compare the normalized smart-HTTP protocol v2 fetch request Pitmaster sends against Git's request",
+    "operations": [
+        "v2_fetch_request",
+        "pack_header"
+    ],
+    "oracle_commands": {
+        "v2_fetch_request": "cat .v2-fetch-lines",
+        "pack_header": "cat .pack-header"
+    },
+    "actual_commands": {
+        "v2_fetch_request": "cat .v2-fetch-lines",
+        "pack_header": "cat .pack-header"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "v2_fetch_request",
+            "pack_header"
+        ],
+        "fsck_clean": true
+    }
+}

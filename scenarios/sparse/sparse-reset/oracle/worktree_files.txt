@@ -1,0 +1,4 @@
+.status.txt
+.worktree-files.txt
+README.md
+src/app.txt

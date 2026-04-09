@@ -1,0 +1,24 @@
+{
+    "name": "fetch-noop",
+    "category": "network",
+    "description": "Compare no-op fetch pack-store stability against Git",
+    "operations": [
+        "noop_state"
+    ],
+    "oracle_commands": {
+        "noop_state": "cat .noop-state"
+    },
+    "actual_commands": {
+        "noop_state": "cat .noop-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "noop_state"
+        ],
+        "fsck_clean": true
+    }
+}

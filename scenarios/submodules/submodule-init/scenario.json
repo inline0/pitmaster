@@ -1,0 +1,24 @@
+{
+    "name": "submodule-init",
+    "category": "submodules",
+    "description": "Compare submodule init config parity against Git",
+    "operations": [
+        "submodule_config",
+        "submodule_gitdir"
+    ],
+    "oracle_commands": {
+        "submodule_config": "cat .submodule-config.txt",
+        "submodule_gitdir": "cat .submodule-gitdir.txt"
+    },
+    "actual_commands": {
+        "submodule_config": "cat .submodule-config.txt",
+        "submodule_gitdir": "cat .submodule-gitdir.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "submodule_config",
+            "submodule_gitdir"
+        ],
+        "fsck_clean": true
+    }
+}

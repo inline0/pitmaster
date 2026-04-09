@@ -44,6 +44,28 @@ INI;
             '+refs/heads/*:refs/remotes/origin/*',
             $config->get('remote.origin.fetch')
         );
+        $this->assertSame(
+            ['+refs/heads/*:refs/remotes/origin/*'],
+            $config->getAll('remote.origin.fetch')
+        );
+    }
+
+    #[Test]
+    public function testGetAllReturnsAllValuesForMultiValuedKeys(): void
+    {
+        $content = <<<'INI'
+[remote "origin"]
+    fetch = +refs/heads/*:refs/remotes/origin/*
+    fetch = ^refs/heads/feature
+INI;
+
+        $config = GitConfig::parse($content);
+
+        $this->assertSame('^refs/heads/feature', $config->get('remote.origin.fetch'));
+        $this->assertSame(
+            ['+refs/heads/*:refs/remotes/origin/*', '^refs/heads/feature'],
+            $config->getAll('remote.origin.fetch')
+        );
     }
 
     #[Test]
@@ -145,6 +167,29 @@ INI;
 
         $config->set('user.name', 'Jane Doe');
         $this->assertSame('Jane Doe', $config->get('user.name'));
+    }
+
+    #[Test]
+    public function testAppendPreservesMultipleValuesAndWriteToFile(): void
+    {
+        $config = GitConfig::parse('');
+        $config->append('remote.origin.fetch', '+refs/heads/*:refs/remotes/origin/*');
+        $config->append('remote.origin.fetch', '^refs/heads/feature');
+
+        $this->assertSame('^refs/heads/feature', $config->get('remote.origin.fetch'));
+        $this->assertSame(
+            ['+refs/heads/*:refs/remotes/origin/*', '^refs/heads/feature'],
+            $config->getAll('remote.origin.fetch')
+        );
+
+        $path = sys_get_temp_dir() . '/pitmaster-config-' . bin2hex(random_bytes(4)) . '.ini';
+        $config->writeToFile($path);
+        $written = file_get_contents($path);
+        @unlink($path);
+
+        $this->assertIsString($written);
+        $this->assertStringContainsString("\tfetch = +refs/heads/*:refs/remotes/origin/*\n", $written);
+        $this->assertStringContainsString("\tfetch = ^refs/heads/feature\n", $written);
     }
 
     #[Test]

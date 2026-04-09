@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "04dfd798d3cde842c24e346fe36d4ba5278cf5a9",
+        "tree": "17158c461de2eaba2b53e583b5f751d29dce9792",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1712563200 2024-04-08 10:00:00 +0200",
+        "committer": "Test User <test@pitmaster.dev> 1712566800 2024-04-08 11:00:00 +0200",
+        "message": "Hook subject\n\nPrepared-by: hook"
+    }
+]

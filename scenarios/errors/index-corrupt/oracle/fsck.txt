@@ -1,0 +1,3 @@
+notice: HEAD points to an unborn branch (main)
+notice: No default references
+fatal: .git/index: index file smaller than expected

@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "2e0996000b7e9019eabcad29391bf0f5c7702f0b",
+        "type": "blob",
+        "size": 9,
+        "content": "modified\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4a97399f33067798c0b6267d7b14a8396158ed79",
+        "type": "commit",
+        "size": 168,
+        "content": "tree db32889b314f762a74a6c73a51862d92a28fbc52\nauthor Test User <test@pitmaster.dev> 1699999990 +0000\ncommitter Test User <test@pitmaster.dev> 1699999990 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b48deed3a433909bfd6b6ab3d4b91348b6af464",
+        "type": "blob",
+        "size": 9,
+        "content": "original\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6a671e0762d5f1b62dccb9e5b82dc7052e17b7ca",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 2e0996000b7e9019eabcad29391bf0f5c7702f0b\ta.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7b3347709b4cc9c5bc310501aff692f5c8524087",
+        "type": "commit",
+        "size": 239,
+        "content": "tree db32889b314f762a74a6c73a51862d92a28fbc52\nparent 4a97399f33067798c0b6267d7b14a8396158ed79\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\nindex on main: 4a97399 initial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "891c7bc9f2810dd734704a92898d3024af32adf7",
+        "type": "commit",
+        "size": 275,
+        "content": "tree 6a671e0762d5f1b62dccb9e5b82dc7052e17b7ca\nparent 4a97399f33067798c0b6267d7b14a8396158ed79\nparent 7b3347709b4cc9c5bc310501aff692f5c8524087\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\nOn main: test stash",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "db32889b314f762a74a6c73a51862d92a28fbc52",
+        "type": "tree",
+        "size": 33,
+        "content": "100644 blob 4b48deed3a433909bfd6b6ab3d4b91348b6af464\ta.txt\n",
+        "encoding": "utf-8"
+    }
+]

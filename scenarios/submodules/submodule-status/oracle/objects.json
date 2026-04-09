@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "682809e2d82dc2e0b92d4d3ada236480ab620c44",
+        "type": "tree",
+        "size": 31,
+        "content": "160000 commit 595015625aef31637bf3ca6877f8e0f3770eac99\tlib\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9b9e90be0ade6d7cbb567c576bf568c70557ffb9",
+        "type": "blob",
+        "size": 57,
+        "content": "[submodule \"vendor/lib\"]\n\tpath = vendor/lib\n\turl = ./dep\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ad49e77cf5fafe0ddb70ad6c2f02925f8389e98f",
+        "type": "commit",
+        "size": 174,
+        "content": "tree fdbfe18728de2b6b892c7e7982891a72a2884f43\nauthor Test User <test@pitmaster.dev> 1700000060 +0000\ncommitter Test User <test@pitmaster.dev> 1700000060 +0000\n\nAdd submodule\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fdbfe18728de2b6b892c7e7982891a72a2884f43",
+        "type": "tree",
+        "size": 72,
+        "content": "100644 blob 9b9e90be0ade6d7cbb567c576bf568c70557ffb9\t.gitmodules\n040000 tree 682809e2d82dc2e0b92d4d3ada236480ab620c44\tvendor\n",
+        "encoding": "utf-8"
+    }
+]

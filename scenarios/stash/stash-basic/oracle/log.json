@@ -1,0 +1,31 @@
+[
+    {
+        "hash": "891c7bc9f2810dd734704a92898d3024af32adf7",
+        "tree": "6a671e0762d5f1b62dccb9e5b82dc7052e17b7ca",
+        "parents": [
+            "4a97399f33067798c0b6267d7b14a8396158ed79",
+            "7b3347709b4cc9c5bc310501aff692f5c8524087"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "message": "On main: test stash"
+    },
+    {
+        "hash": "7b3347709b4cc9c5bc310501aff692f5c8524087",
+        "tree": "db32889b314f762a74a6c73a51862d92a28fbc52",
+        "parents": [
+            "4a97399f33067798c0b6267d7b14a8396158ed79"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "message": "index on main: 4a97399 initial"
+    },
+    {
+        "hash": "4a97399f33067798c0b6267d7b14a8396158ed79",
+        "tree": "db32889b314f762a74a6c73a51862d92a28fbc52",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1699999990 2023-11-14 22:13:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1699999990 2023-11-14 22:13:10 +0000",
+        "message": "initial"
+    }
+]

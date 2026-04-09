@@ -1,0 +1,5 @@
+100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 0	src/org/eclipse/jgit/atest/foo.txt
+100644 323fae03f4606ea9991df8befbb2fca795e648fa 0	src/org/eclipse/jgit/atest/foobar.txt
+100644 5716ca5987cbf97d6bb54920bea6adde242d87e6 0	src/org/eclipse/jgit/other/bar.txt
+100644 9daeafb9864cf43055ae93beb0afd6c7d144bfa4 0	test.txt
+100644 180cf8328022becee9aaa2577a8f84ea2b9f3827 0	test.txt2

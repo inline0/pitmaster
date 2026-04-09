@@ -1,0 +1,9 @@
+refs/heads/feature
+refs/heads/main
+refs/tags/newtag
+[main]
+100644 blob 7190aa44e25b51558ef47a0cb0524ca7d55e784d	README.md
+[feature]
+100644 blob 7190aa44e25b51558ef47a0cb0524ca7d55e784d	README.md
+[newtag]
+100644 blob 7190aa44e25b51558ef47a0cb0524ca7d55e784d	README.md

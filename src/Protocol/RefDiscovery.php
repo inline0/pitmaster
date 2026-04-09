@@ -22,6 +22,19 @@ final class RefDiscovery
     private ?string $headSymref = null;
 
     /**
+     * @param array<string, ObjectId> $refs
+     */
+    public static function fromParsed(array $refs, ?Capability $capabilities = null, ?string $headSymref = null): self
+    {
+        $discovery = new self();
+        $discovery->refs = $refs;
+        $discovery->capabilities = $capabilities;
+        $discovery->headSymref = $headSymref;
+
+        return $discovery;
+    }
+
+    /**
      * Parse ref discovery response.
      *
      * @param array<int, mixed> $pktLines Decoded pkt-lines

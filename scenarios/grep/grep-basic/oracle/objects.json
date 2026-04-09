@@ -1,0 +1,65 @@
+[
+    {
+        "hash": "105f3dec4152387ba0e1fd71d1e9356e63d94fda",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 512c0e3bf0398e32720e335a936a99509cd1423e\tdata.bin\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "10dd49795dd37bb68b3256aca782845621e08bfb",
+        "type": "blob",
+        "size": 24,
+        "content": "first line\nhello nested\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "512c0e3bf0398e32720e335a936a99509cd1423e",
+        "type": "blob",
+        "size": 13,
+        "content": "aGVsbG8AYmluYXJ5Cg==",
+        "encoding": "base64"
+    },
+    {
+        "hash": "5ebbb4f9cf6de9651191b8626c43727e8503caa5",
+        "type": "tree",
+        "size": 128,
+        "content": "100644 blob e74ffb347ecea2a68452afdb9c678d4ac85bb1f3\tREADME.md\n040000 tree 105f3dec4152387ba0e1fd71d1e9356e63d94fda\tbin\n040000 tree fcb634ba157c631d60a564c174c41bf7e462bdd3\tdocs\n040000 tree a1ed72e05d1d7185e939508520426ab58794c11e\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a1ed72e05d1d7185e939508520426ab58794c11e",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 10dd49795dd37bb68b3256aca782845621e08bfb\tfeature.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a21716700eb299e95ee8eeb7f6746c3ef4ec65f7",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 5ebbb4f9cf6de9651191b8626c43727e8503caa5\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e74ffb347ecea2a68452afdb9c678d4ac85bb1f3",
+        "type": "blob",
+        "size": 15,
+        "content": "hello root\nbye\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f1adef63cb08891a0942b76fc4b9c50c6c494bc7",
+        "type": "blob",
+        "size": 13,
+        "content": "nothing here\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fcb634ba157c631d60a564c174c41bf7e462bdd3",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob f1adef63cb08891a0942b76fc4b9c50c6c494bc7\tguide.txt\n",
+        "encoding": "utf-8"
+    }
+]

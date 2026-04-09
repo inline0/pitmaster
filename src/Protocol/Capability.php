@@ -15,6 +15,17 @@ final class Capability
     private array $capabilities = [];
 
     /**
+     * @param array<string, ?string> $capabilities
+     */
+    public static function fromArray(array $capabilities): self
+    {
+        $cap = new self();
+        $cap->capabilities = $capabilities;
+
+        return $cap;
+    }
+
+    /**
      * Parse capabilities from a NUL-delimited string (v1 format).
      * Format: "capability1 capability2=value capability3"
      */

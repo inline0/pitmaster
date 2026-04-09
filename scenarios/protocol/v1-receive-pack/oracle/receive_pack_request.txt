@@ -1,0 +1,2 @@
+<old> <new> refs/heads/main\0 report-status-v2 side-band-64k quiet object-format=sha1 agent=<normalized>
+0000

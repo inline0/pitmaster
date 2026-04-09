@@ -98,7 +98,7 @@ final class SparseCheckoutTest extends TestCase
     }
 
     #[Test]
-    public function disableRemovesSparseCheckoutFile(): void
+    public function disableLeavesSparseCheckoutFileInPlace(): void
     {
         $sparse = new SparseCheckout($this->gitDir);
         $sparse->init();
@@ -106,7 +106,7 @@ final class SparseCheckoutTest extends TestCase
 
         $sparse->disable();
         $this->assertFalse($sparse->isEnabled());
-        $this->assertFileDoesNotExist($this->gitDir . '/info/sparse-checkout');
+        $this->assertFileExists($this->gitDir . '/info/sparse-checkout');
     }
 
     #[Test]

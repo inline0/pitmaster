@@ -1,0 +1,31 @@
+{
+    "name": "index-reuc-extension",
+    "category": "index",
+    "description": "Round-trip a Git-generated REUC index extension without changing the REUC payload or Git-visible state",
+    "operations": [
+        "reuc_extension_hex",
+        "status",
+        "ls_files_stage"
+    ],
+    "oracle_commands": {
+        "reuc_extension_hex": "php {{ROOT}}/tests/Fixtures/index_extension_hex.php .git/index REUC",
+        "status": "git status --porcelain=v2",
+        "ls_files_stage": "git ls-files --stage"
+    },
+    "actual_commands": {
+        "reuc_extension_hex": "php {{ROOT}}/tests/Fixtures/index_extension_hex.php .git/index REUC",
+        "status": "git status --porcelain=v2",
+        "ls_files_stage": "git ls-files --stage"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "reuc_extension_hex",
+            "status",
+            "ls_files_stage"
+        ],
+        "fsck_clean": false
+    }
+}

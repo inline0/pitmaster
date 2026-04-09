@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Pitmaster\Stash;
 
+use Pitmaster\Config\GitConfig;
+use Pitmaster\Exceptions\MergeConflictException;
 use Pitmaster\Index\Index;
 use Pitmaster\Index\IndexEntry;
 use Pitmaster\Index\IndexWriter;
+use Pitmaster\Merge\ThreeWayMerge;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
@@ -56,6 +59,14 @@ final class Stash
             throw new \RuntimeException('Cannot stash: HEAD is not a commit');
         }
 
+        $branch = $this->currentBranch();
+        $headSummary = substr($headId->hex, 0, 7) . ' ' . trim(strtok($headCommit->message, "\n"));
+        $stashMessage = $message !== ''
+            ? "On {$branch}: {$message}"
+            : "WIP on {$branch}: {$headSummary}";
+        $indexMessage = "index on {$branch}: {$headSummary}";
+        $identity = $this->currentIdentity();
+
         // Build tree from current index (staged state)
         $index = Index::open($this->gitDir . '/index');
         $indexTreeId = $this->buildTreeFromIndex($index);
@@ -64,9 +75,9 @@ final class Stash
         $indexContent = Commit::buildContent(
             tree: $indexTreeId,
             parents: [$headId],
-            author: $headCommit->committer,
-            committer: $headCommit->committer,
-            message: "index on {$this->currentBranch()}: {$message}\n",
+            author: $identity,
+            committer: $identity,
+            message: $indexMessage . "\n",
         );
         $indexCommitId = ObjectId::compute(ObjectType::Commit, $indexContent);
         $indexCommit = Commit::parse($indexContent, $indexCommitId);
@@ -76,16 +87,12 @@ final class Stash
         $worktreeTreeId = $this->buildTreeFromWorktree($index);
 
         // Create stash commit (worktree state, parents = HEAD + index commit)
-        if ($message === '') {
-            $message = "WIP on {$this->currentBranch()}";
-        }
-
         $stashContent = Commit::buildContent(
             tree: $worktreeTreeId,
             parents: [$headId, $indexCommitId],
-            author: $headCommit->committer,
-            committer: $headCommit->committer,
-            message: $message . "\n",
+            author: $identity,
+            committer: $identity,
+            message: $stashMessage . "\n",
         );
         $stashId = ObjectId::compute(ObjectType::Commit, $stashContent);
         $stashCommit = Commit::parse($stashContent, $stashId);
@@ -99,8 +106,8 @@ final class Stash
         $reflog->append(
             $oldStash ?? ObjectId::zero(),
             $stashId,
-            $headCommit->committer,
-            $message,
+            $identity,
+            $stashMessage,
         );
 
         // Reset worktree to HEAD
@@ -121,8 +128,7 @@ final class Stash
             throw new \RuntimeException('Invalid stash entry');
         }
 
-        // Restore worktree from stash tree
-        $this->restoreTree($stash->tree);
+        $this->applyStashCommit($stash);
     }
 
     /**
@@ -217,6 +223,39 @@ final class Stash
         }
 
         return 'HEAD';
+    }
+
+    private function currentIdentity(): string
+    {
+        $config = GitConfig::fromFile($this->gitDir . '/config');
+        $name = getenv('GIT_COMMITTER_NAME')
+            ?: getenv('GIT_AUTHOR_NAME')
+            ?: $config->get('user.name')
+            ?: 'Pitmaster';
+        $email = getenv('GIT_COMMITTER_EMAIL')
+            ?: getenv('GIT_AUTHOR_EMAIL')
+            ?: $config->get('user.email')
+            ?: 'pitmaster@example.invalid';
+        $date = getenv('GIT_COMMITTER_DATE')
+            ?: getenv('GIT_AUTHOR_DATE')
+            ?: sprintf('%d %s', time(), date('O'));
+
+        return "{$name} <{$email}> {$this->normalizeDate($date)}";
+    }
+
+    private function normalizeDate(string $date): string
+    {
+        if (preg_match('/^@?(\d+)\s+([+-]\d{4})$/', $date, $matches) === 1) {
+            return $matches[1] . ' ' . $matches[2];
+        }
+
+        try {
+            $parsed = new \DateTimeImmutable($date);
+        } catch (\Exception) {
+            return sprintf('%d %s', time(), date('O'));
+        }
+
+        return $parsed->format('U O');
     }
 
     private function buildTreeFromIndex(Index $index): ObjectId
@@ -327,23 +366,103 @@ final class Stash
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 
-    private function restoreTree(ObjectId $treeId): void
+    private function applyStashCommit(Commit $stash): void
     {
-        $treeMap = $this->flattenTree($treeId);
+        $headId = $this->refs->resolveHead();
+        $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+        $baseCommit = isset($stash->parents[0]) ? $this->objects->read($stash->parents[0]) : null;
 
-        foreach ($treeMap as $path => $hash) {
-            $blob = $this->objects->read(ObjectId::fromHex($hash));
+        if (!$headCommit instanceof Commit || !$baseCommit instanceof Commit) {
+            throw new \RuntimeException('Cannot apply stash without valid HEAD and base commits');
+        }
 
-            if ($blob instanceof Blob) {
-                $fullPath = $this->workDir . '/' . $path;
-                $dir = dirname($fullPath);
+        $baseEntries = $this->flattenTree($baseCommit->tree);
+        $currentEntries = $this->flattenTree($headCommit->tree);
+        $stashEntries = $this->flattenTree($stash->tree);
+        $allPaths = array_unique(array_merge(
+            array_keys($baseEntries),
+            array_keys($currentEntries),
+            array_keys($stashEntries),
+        ));
+        sort($allPaths);
 
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
+        $written = [];
+        $deleted = [];
+        $conflicts = [];
+
+        foreach ($allPaths as $path) {
+            $baseHash = $baseEntries[$path] ?? null;
+            $currentHash = $currentEntries[$path] ?? null;
+            $stashHash = $stashEntries[$path] ?? null;
+
+            if ($currentHash === $stashHash) {
+                if ($currentHash !== null) {
+                    $written[$path] = $this->readBlobContent(ObjectId::fromHex($currentHash));
                 }
 
-                file_put_contents($fullPath, $blob->content);
+                continue;
             }
+
+            if ($baseHash === $currentHash) {
+                if ($stashHash === null) {
+                    $deleted[] = $path;
+                } else {
+                    $written[$path] = $this->readBlobContent(ObjectId::fromHex($stashHash));
+                }
+
+                continue;
+            }
+
+            if ($baseHash === $stashHash) {
+                if ($currentHash === null) {
+                    $deleted[] = $path;
+                } else {
+                    $written[$path] = $this->readBlobContent(ObjectId::fromHex($currentHash));
+                }
+
+                continue;
+            }
+
+            $baseContent = $baseHash !== null ? $this->readBlobContent(ObjectId::fromHex($baseHash)) : '';
+            $currentContent = $currentHash !== null ? $this->readBlobContent(ObjectId::fromHex($currentHash)) : '';
+            $stashContent = $stashHash !== null ? $this->readBlobContent(ObjectId::fromHex($stashHash)) : '';
+            $merged = ThreeWayMerge::merge(
+                $baseContent,
+                $currentContent,
+                $stashContent,
+                'Updated upstream',
+                'Stashed changes',
+            );
+
+            $written[$path] = $merged['content'];
+
+            if (!$merged['clean']) {
+                $conflicts[] = $path;
+            }
+        }
+
+        foreach ($deleted as $path) {
+            $fullPath = $this->workDir . '/' . $path;
+
+            if (is_file($fullPath) || is_link($fullPath)) {
+                unlink($fullPath);
+                $this->removeEmptyParentDirectories(dirname($fullPath));
+            }
+        }
+
+        foreach ($written as $path => $content) {
+            $fullPath = $this->workDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $content);
+        }
+
+        if ($conflicts !== []) {
+            throw new MergeConflictException($conflicts, 'Stash apply stopped due to conflicts');
         }
     }
 
@@ -370,5 +489,31 @@ final class Stash
         }
 
         return $result;
+    }
+
+    private function readBlobContent(ObjectId $id): string
+    {
+        $object = $this->objects->read($id);
+
+        return $object instanceof Blob ? $object->content : '';
+    }
+
+    private function removeEmptyParentDirectories(string $directory): void
+    {
+        while ($directory !== $this->workDir && str_starts_with($directory, $this->workDir . '/')) {
+            if (!is_dir($directory)) {
+                $directory = dirname($directory);
+                continue;
+            }
+
+            $entries = scandir($directory);
+
+            if ($entries === false || count($entries) > 2) {
+                return;
+            }
+
+            rmdir($directory);
+            $directory = dirname($directory);
+        }
     }
 }

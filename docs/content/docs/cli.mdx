@@ -245,6 +245,7 @@ Search file contents in the current HEAD tree.
 
 ```bash
 ./bin/pitmaster grep "function merge"
+./bin/pitmaster grep -i -E "h.llo"
 ```
 
 Output:
@@ -253,6 +254,11 @@ Output:
 src/Repository.php:1238:    public function merge(string $branch): MergeResult
 src/Merge/ThreeWayMerge.php:25:    public function merge(string $base, string $ours, string $theirs): string
 ```
+
+Options:
+
+- `-i`, `--ignore-case`: case-insensitive matching
+- `-E`, `--extended-regexp`, `--regex`: treat the pattern as a regular expression
 
 Paths are shown in magenta, line numbers in green.
 
@@ -291,6 +297,54 @@ Output:
 
 ```
 HEAD is now at abc1234
+```
+
+### `merge`
+
+Merge a branch into the current HEAD, or continue/abort an in-progress merge conflict.
+
+```bash
+# Start a merge
+./bin/pitmaster merge feature
+
+# Continue after resolving conflicts
+./bin/pitmaster add a.txt
+./bin/pitmaster merge --continue
+
+# Abort and restore the pre-merge state
+./bin/pitmaster merge --abort
+```
+
+### `cherry-pick`
+
+Apply a commit on top of the current HEAD, or continue/abort an in-progress conflict.
+
+```bash
+# Start a cherry-pick
+./bin/pitmaster cherry-pick abc1234
+
+# Continue after resolving conflicts
+./bin/pitmaster add a.txt
+./bin/pitmaster cherry-pick --continue
+
+# Abort and restore HEAD
+./bin/pitmaster cherry-pick --abort
+```
+
+### `revert`
+
+Create a revert commit, or continue/abort an in-progress conflict.
+
+```bash
+# Start a revert
+./bin/pitmaster revert abc1234
+
+# Continue after resolving conflicts
+./bin/pitmaster add a.txt
+./bin/pitmaster revert --continue
+
+# Abort and restore HEAD
+./bin/pitmaster revert --abort
 ```
 
 ### `rebase`

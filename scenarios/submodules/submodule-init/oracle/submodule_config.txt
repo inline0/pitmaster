@@ -1,0 +1,2 @@
+submodule.vendor/lib.active true
+submodule.vendor/lib.url <root>/dep

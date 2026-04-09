@@ -1,0 +1,24 @@
+{
+    "name": "dumb-http-clone",
+    "category": "network",
+    "description": "Compare dumb HTTP clone behavior against Git for a packed static export",
+    "operations": [
+        "clone_state"
+    ],
+    "oracle_commands": {
+        "clone_state": "cat .clone-state"
+    },
+    "actual_commands": {
+        "clone_state": "cat .clone-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "clone_state"
+        ],
+        "fsck_clean": true
+    }
+}

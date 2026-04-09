@@ -28,13 +28,21 @@ if ($arguments === []) {
     fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
     fwrite(STDERR, "  checkout <ref>      Switch branches or detach HEAD\n");
     fwrite(STDERR, "  merge <branch>      Merge a branch into HEAD\n");
+    fwrite(STDERR, "  merge --continue    Continue an in-progress merge\n");
+    fwrite(STDERR, "  merge --abort       Abort an in-progress merge\n");
+    fwrite(STDERR, "  cherry-pick <rev>   Cherry-pick a commit onto HEAD\n");
+    fwrite(STDERR, "  cherry-pick --continue  Continue an in-progress cherry-pick\n");
+    fwrite(STDERR, "  cherry-pick --abort     Abort an in-progress cherry-pick\n");
+    fwrite(STDERR, "  revert <rev>        Revert a commit on HEAD\n");
+    fwrite(STDERR, "  revert --continue   Continue an in-progress revert\n");
+    fwrite(STDERR, "  revert --abort      Abort an in-progress revert\n");
     fwrite(STDERR, "  rebase <ref>        Rebase HEAD onto another ref\n");
     fwrite(STDERR, "  rebase --continue   Continue an in-progress rebase\n");
     fwrite(STDERR, "  rebase --abort      Abort an in-progress rebase\n");
     fwrite(STDERR, "  rebase --skip       Skip the current rebase commit\n");
     fwrite(STDERR, "  stash [pop|list]    Stash working directory changes\n");
     fwrite(STDERR, "  blame <file>        Show line-by-line authorship\n");
-    fwrite(STDERR, "  grep <pattern>      Search file contents\n");
+    fwrite(STDERR, "  grep [-i] [-E] <pattern>  Search file contents\n");
     fwrite(STDERR, "  refs                List all refs\n");
     fwrite(STDERR, "  init [path]         Initialize a new repository\n");
     exit(1);
@@ -72,6 +80,8 @@ try {
         'tag' => commandTag($repo, $arguments),
         'checkout' => commandCheckout($repo, $arguments),
         'merge' => commandMerge($repo, $arguments),
+        'cherry-pick' => commandCherryPick($repo, $arguments),
+        'revert' => commandRevert($repo, $arguments),
         'rebase' => commandRebase($repo, $arguments),
         'stash' => commandStash($repo, $arguments),
         'blame' => commandBlame($repo, $arguments),
@@ -347,9 +357,19 @@ function commandCheckout(Repository $repo, array $args): void
 
 function commandMerge(Repository $repo, array $args): void
 {
-    if (!isset($args[0])) {
-        fwrite(STDERR, "Usage: pitmaster merge <branch>\n");
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster merge <branch>|--continue|--abort\n");
         exit(1);
+    }
+
+    if ($args[0] === '--continue') {
+        $repo->mergeContinue();
+        return;
+    }
+
+    if ($args[0] === '--abort') {
+        $repo->mergeAbort();
+        return;
     }
 
     $result = $repo->merge($args[0]);
@@ -360,6 +380,46 @@ function commandMerge(Repository $repo, array $args): void
         fwrite(STDERR, "CONFLICT in: " . implode(', ', $result->conflictPaths) . "\n");
         exit(1);
     }
+}
+
+function commandCherryPick(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster cherry-pick <rev>|--continue|--abort\n");
+        exit(1);
+    }
+
+    if ($args[0] === '--continue') {
+        $repo->cherryPickContinue();
+        return;
+    }
+
+    if ($args[0] === '--abort') {
+        $repo->cherryPickAbort();
+        return;
+    }
+
+    $repo->cherryPick($args[0]);
+}
+
+function commandRevert(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster revert <rev>|--continue|--abort\n");
+        exit(1);
+    }
+
+    if ($args[0] === '--continue') {
+        $repo->revertContinue();
+        return;
+    }
+
+    if ($args[0] === '--abort') {
+        $repo->revertAbort();
+        return;
+    }
+
+    $repo->revert($args[0]);
 }
 
 function commandRebase(Repository $repo, array $args): void
@@ -451,14 +511,36 @@ function commandBlame(Repository $repo, array $args): void
 
 function commandGrep(Repository $repo, array $args): void
 {
-    if (!isset($args[0])) {
-        fwrite(STDERR, "Usage: pitmaster grep <pattern>\n");
+    $ignoreCase = false;
+    $regex = false;
+    $pattern = null;
+
+    foreach ($args as $arg) {
+        if ($arg === '-i' || $arg === '--ignore-case') {
+            $ignoreCase = true;
+            continue;
+        }
+
+        if ($arg === '-E' || $arg === '--extended-regexp' || $arg === '--regex') {
+            $regex = true;
+            continue;
+        }
+
+        $pattern = $arg;
+        break;
+    }
+
+    if ($pattern === null) {
+        fwrite(STDERR, "Usage: pitmaster grep [-i] [-E] <pattern>\n");
         exit(1);
     }
 
     $headCommit = $repo->head();
     $grep = new \Pitmaster\Graph\Grep($repo->objectDatabase());
-    $results = $grep->grep($headCommit->tree, $args[0]);
+    $results = $grep->grep($headCommit->tree, $pattern, '', [
+        'regex' => $regex,
+        'ignore_case' => $ignoreCase,
+    ]);
 
     foreach ($results as $match) {
         fwrite(STDOUT, "\033[35m{$match['path']}\033[0m:\033[32m{$match['line']}\033[0m:{$match['content']}\n");

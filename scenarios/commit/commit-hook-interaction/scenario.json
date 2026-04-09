@@ -1,0 +1,24 @@
+{
+    "name": "commit-hook-interaction",
+    "category": "commit",
+    "description": "Compare commit hook ordering and message editing against Git",
+    "operations": [
+        "hook_state"
+    ],
+    "oracle_commands": {
+        "hook_state": "cat .hook-state"
+    },
+    "actual_commands": {
+        "hook_state": "cat .hook-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "hook_state"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -18,6 +18,9 @@ final class GitConfig
     /** @var array<string, string> Flattened key => value pairs */
     private array $values = [];
 
+    /** @var array<string, list<string>> Full key => all values */
+    private array $multiValues = [];
+
     private function __construct()
     {
     }
@@ -59,6 +62,8 @@ final class GitConfig
                     $value = trim(substr($value, 0, $commentPos));
                 }
 
+                $config->multiValues[$key] ??= [];
+                $config->multiValues[$key][] = $value;
                 $config->values[$key] = $value;
             }
         }
@@ -84,6 +89,14 @@ final class GitConfig
     public function get(string $key, ?string $default = null): ?string
     {
         return $this->values[$key] ?? $default;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getAll(string $key): array
+    {
+        return $this->multiValues[$key] ?? [];
     }
 
     public function getBool(string $key, bool $default = false): bool
@@ -141,6 +154,17 @@ final class GitConfig
      */
     public function set(string $key, string $value): void
     {
+        $this->multiValues[$key] = [$value];
+        $this->values[$key] = $value;
+    }
+
+    /**
+     * Append a multi-valued config entry.
+     */
+    public function append(string $key, string $value): void
+    {
+        $this->multiValues[$key] ??= [];
+        $this->multiValues[$key][] = $value;
         $this->values[$key] = $value;
     }
 
@@ -149,6 +173,7 @@ final class GitConfig
      */
     public function unset(string $key): void
     {
+        unset($this->multiValues[$key]);
         unset($this->values[$key]);
     }
 
@@ -159,7 +184,7 @@ final class GitConfig
     {
         $sections = [];
 
-        foreach ($this->values as $key => $value) {
+        foreach ($this->multiValues as $key => $values) {
             $parts = explode('.', $key);
 
             if (count($parts) === 3) {
@@ -172,7 +197,12 @@ final class GitConfig
                 continue;
             }
 
-            $sections[$sectionKey][$name] = $value;
+            foreach ($values as $value) {
+                $sections[$sectionKey][] = [
+                    'name' => $name,
+                    'value' => $value,
+                ];
+            }
         }
 
         $lines = [];
@@ -188,8 +218,8 @@ final class GitConfig
                 $lines[] = "[{$section}]";
             }
 
-            foreach ($entries as $name => $value) {
-                $lines[] = "\t{$name} = {$value}";
+            foreach ($entries as $entry) {
+                $lines[] = "\t{$entry['name']} = {$entry['value']}";
             }
         }
 

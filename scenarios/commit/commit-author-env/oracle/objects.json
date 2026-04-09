@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "26a213c3a1ad70f7a1edd0c29c995ff65e0693dd",
+        "type": "commit",
+        "size": 241,
+        "content": "tree abf23fbeff1b236d315dbeaa45cea22663a64c8c\nauthor Alice Author <alice@example.com> 1712563200 +0200\ncommitter Chris Committer <chris@example.com> 1712566800 +0200\n\nSubject line\n\nBody paragraph\nSigned-off-by: Trailer <trailer@example.com>\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "92502075d98220ecb6aeb21f8b85f8f14e575a4b",
+        "type": "blob",
+        "size": 18,
+        "content": "author env parity\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "abf23fbeff1b236d315dbeaa45cea22663a64c8c",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 92502075d98220ecb6aeb21f8b85f8f14e575a4b\ttracked.txt\n",
+        "encoding": "utf-8"
+    }
+]

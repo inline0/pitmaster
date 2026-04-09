@@ -1,0 +1,24 @@
+{
+    "name": "v2-ls-refs",
+    "category": "protocol",
+    "description": "Compare the normalized smart-HTTP protocol v2 ls-refs request Pitmaster sends against Git's request",
+    "operations": [
+        "v2_ls_refs_request"
+    ],
+    "oracle_commands": {
+        "v2_ls_refs_request": "cat .v2-ls-refs-lines"
+    },
+    "actual_commands": {
+        "v2_ls_refs_request": "cat .v2-ls-refs-lines"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "v2_ls_refs_request"
+        ],
+        "fsck_clean": true
+    }
+}

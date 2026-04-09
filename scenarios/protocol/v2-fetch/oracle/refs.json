@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4",
+        "name": "refs/remotes/origin/main"
+    },
+    {
+        "hash": "b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4",
+        "name": "refs/tags/v1.0"
+    }
+]

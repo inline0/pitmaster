@@ -24,6 +24,9 @@ final class Index
     /** @var list<IndexEntry> */
     private array $entries = [];
 
+    /** @var list<array{signature: string, data: string}> */
+    private array $extensions = [];
+
     private int $version = 2;
 
     public function __construct()
@@ -131,6 +134,7 @@ final class Index
                 hash: $hash,
                 flags: $flags,
                 path: $path,
+                extendedFlags: $extendedFlags,
             );
 
             $index->entries[] = $entry;
@@ -140,32 +144,10 @@ final class Index
         while ($reader->remaining() > 20) {
             $sig = $reader->read(4);
             $extSize = $reader->readUint32();
-
-            if ($sig === 'TREE') {
-                // Cache tree extension: skip for now (read but don't use)
-                $reader->skip($extSize);
-            } elseif ($sig === 'REUC') {
-                // Resolve undo extension: skip
-                $reader->skip($extSize);
-            } elseif ($sig === 'link') {
-                // Split index extension: skip
-                $reader->skip($extSize);
-            } elseif ($sig === 'UNTR') {
-                // Untracked cache: skip
-                $reader->skip($extSize);
-            } elseif ($sig === 'FSMN') {
-                // FS monitor: skip
-                $reader->skip($extSize);
-            } elseif ($sig === 'EOIE') {
-                // End of index entry: skip
-                $reader->skip($extSize);
-            } elseif ($sig === 'IEOT') {
-                // Index entry offset table: skip
-                $reader->skip($extSize);
-            } else {
-                // Unknown extension: skip if first byte is uppercase (required), else optional
-                $reader->skip($extSize);
-            }
+            $index->extensions[] = [
+                'signature' => $sig,
+                'data' => $reader->read($extSize),
+            ];
         }
 
         $index->sortEntries();
@@ -214,6 +196,14 @@ final class Index
         return $this->entries;
     }
 
+    /**
+     * @return list<array{signature: string, data: string}>
+     */
+    public function extensions(): array
+    {
+        return $this->extensions;
+    }
+
     public function entry(string $path, int $stage = 0): ?IndexEntry
     {
         foreach ($this->entries as $entry) {
@@ -245,6 +235,10 @@ final class Index
      */
     public function addEntry(IndexEntry $entry): void
     {
+        $this->dropExtensions();
+        if ($entry->extendedFlags !== 0 && $this->version < 3) {
+            $this->version = 3;
+        }
         $stage = $entry->stage();
         $this->entries = array_values(array_filter(
             $this->entries,
@@ -269,6 +263,7 @@ final class Index
      */
     public function removeEntry(string $path, ?int $stage = null): void
     {
+        $this->dropExtensions();
         $this->entries = array_values(array_filter(
             $this->entries,
             static fn (IndexEntry $entry): bool => $entry->path !== $path
@@ -349,5 +344,10 @@ final class Index
 
             return $a->stage() <=> $b->stage();
         });
+    }
+
+    private function dropExtensions(): void
+    {
+        $this->extensions = [];
     }
 }

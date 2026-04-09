@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "226740d8a1246154eb39bbd750327f499b669422",
+        "tree": "6ef87e4866bb39fc85bfe688d272d56cbc7c6786",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1700000100 2023-11-14 22:15:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000100 2023-11-14 22:15:00 +0000",
+        "message": "Notes added by 'git notes add'"
+    },
+    {
+        "hash": "71279fbb2c3d976da18385ba395b7febcea9fe1e",
+        "tree": "5493a12f76e40b837ca03f8dc8c6bbb595a93cf8",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1700000000 2023-11-14 22:13:20 +0000",
+        "message": "initial"
+    }
+]

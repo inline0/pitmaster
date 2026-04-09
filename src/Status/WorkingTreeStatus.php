@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pitmaster\Status;
 
+use Pitmaster\Checkout\SparseCheckout;
 use Pitmaster\Index\Index;
 use Pitmaster\Index\IndexEntry;
 use Pitmaster\Object\Blob;
@@ -23,6 +24,7 @@ final class WorkingTreeStatus
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly string $workDir,
+        private readonly ?string $gitDir = null,
     ) {
     }
 
@@ -34,6 +36,7 @@ final class WorkingTreeStatus
     public function compute(Index $index, ?ObjectId $headCommitId): array
     {
         $entries = [];
+        $sparse = $this->gitDir !== null ? new SparseCheckout($this->gitDir) : null;
 
         // Build HEAD tree map: path => hash
         $headTree = [];
@@ -71,6 +74,7 @@ final class WorkingTreeStatus
             $inHead = isset($headTree[$path]);
             $inIndex = isset($indexEntries[$path]);
             $inWorktree = in_array($path, $worktreeFiles, true);
+            $sparseExcluded = $sparse !== null && $sparse->isEnabled() && !$sparse->includes($path);
 
             // Determine index status (HEAD vs index)
             $indexStatus = FileStatus::Unmodified;
@@ -88,9 +92,9 @@ final class WorkingTreeStatus
             // Determine worktree status (index vs worktree)
             $worktreeStatus = FileStatus::Unmodified;
 
-            if ($inIndex && !$inWorktree) {
+            if ($inIndex && !$inWorktree && !$sparseExcluded) {
                 $worktreeStatus = FileStatus::Deleted;
-            } elseif ($inIndex) {
+            } elseif ($inIndex && !$sparseExcluded) {
                 if ($this->worktreeFileChanged($indexEntries[$path], $path)) {
                     $worktreeStatus = FileStatus::Modified;
                 }
@@ -98,7 +102,7 @@ final class WorkingTreeStatus
                 // Untracked
                 $entries[] = new StatusEntry($path, FileStatus::Untracked, FileStatus::Untracked);
                 continue;
-            } elseif ($inWorktree) {
+            } elseif ($inWorktree && !$sparseExcluded) {
                 $worktreeStatus = FileStatus::Modified;
             }
 

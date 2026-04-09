@@ -1,0 +1,3 @@
+error: refs/heads/main: invalid sha1 pointer 78d44852327ab6aa72cbbdf1bba91fdc88850479
+error: HEAD: invalid sha1 pointer 78d44852327ab6aa72cbbdf1bba91fdc88850479
+notice: No default references

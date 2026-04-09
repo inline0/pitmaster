@@ -1,0 +1,24 @@
+{
+    "name": "push-non-fast-forward",
+    "category": "network",
+    "description": "Compare non-fast-forward push rejection against Git smart HTTP",
+    "operations": [
+        "rejected",
+        "remote_tree"
+    ],
+    "oracle_commands": {
+        "rejected": "cat .rejected.txt",
+        "remote_tree": "cat .remote-tree.txt"
+    },
+    "actual_commands": {
+        "rejected": "cat .rejected.txt",
+        "remote_tree": "cat .remote-tree.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "rejected",
+            "remote_tree"
+        ],
+        "fsck_clean": true
+    }
+}

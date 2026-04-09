@@ -1,0 +1,24 @@
+{
+    "name": "fetch-incremental",
+    "category": "network",
+    "description": "Compare incremental fetch behavior and no-op follow-up stability against Git",
+    "operations": [
+        "fetch_state"
+    ],
+    "oracle_commands": {
+        "fetch_state": "cat .fetch-state"
+    },
+    "actual_commands": {
+        "fetch_state": "cat .fetch-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "fetch_state"
+        ],
+        "fsck_clean": true
+    }
+}

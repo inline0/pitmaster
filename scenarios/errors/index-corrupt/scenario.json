@@ -1,0 +1,20 @@
+{
+    "name": "index-corrupt",
+    "category": "errors",
+    "description": "Compare corrupt-index failure handling against Git",
+    "operations": [
+        "error_state"
+    ],
+    "oracle_commands": {
+        "error_state": "cat .error-state"
+    },
+    "actual_commands": {
+        "error_state": "cat .error-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "error_state"
+        ],
+        "fsck_clean": false
+    }
+}

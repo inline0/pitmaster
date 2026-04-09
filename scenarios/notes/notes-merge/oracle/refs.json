@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "79a4b4cbf87c745c2cdae20a5adc04254372da6d",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "8f308f6c0278710d41026a5f77e5c11071241eb0",
+        "name": "refs/notes/commits"
+    },
+    {
+        "hash": "830c3c926bcea201cfa0ca59a593aa1f4ed93ceb",
+        "name": "refs/notes/review"
+    }
+]

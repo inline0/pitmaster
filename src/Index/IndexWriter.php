@@ -25,7 +25,15 @@ final class IndexWriter
             . pack('N', $index->version())
             . pack('N', count($entries));
 
-        $content = $header . $body;
+        $extensions = '';
+
+        foreach ($index->extensions() as $extension) {
+            $extensions .= $extension['signature']
+                . pack('N', strlen($extension['data']))
+                . $extension['data'];
+        }
+
+        $content = $header . $body . $extensions;
 
         // Append SHA-1 checksum of everything before it
         $checksum = sha1($content, true);
@@ -60,6 +68,10 @@ final class IndexWriter
             . pack('N', $entry->fileSize)
             . $entry->hash->binary
             . pack('n', $entry->flags);
+
+        if (($entry->flags & 0x4000) !== 0) {
+            $fixed .= pack('n', $entry->extendedFlags);
+        }
 
         $pathBytes = $entry->path . "\0";
         $entryData = $fixed . $pathBytes;

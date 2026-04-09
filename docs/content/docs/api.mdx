@@ -521,24 +521,36 @@ $repo->restore('src/File.php', 'HEAD~1');      // From a commit
 
 ```php
 public function cherryPick(string $revision): ObjectId
+public function cherryPickContinue(): ObjectId
+public function cherryPickAbort(): void
 ```
 
-Apply a commit as a new commit on the current branch, preserving the original author.
+Apply a commit as a new commit on the current branch, preserving the original author. If conflicts stop the operation, resolve them, stage the paths, then call `cherryPickContinue()` or `cherryPickAbort()`.
 
 ```php
 $newId = $repo->cherryPick('abc123');
+
+// After resolving conflicts:
+$repo->add('src/File.php');
+$repo->cherryPickContinue();
 ```
 
 #### `revert`
 
 ```php
 public function revert(string $revision): ObjectId
+public function revertContinue(): ObjectId
+public function revertAbort(): void
 ```
 
-Create a commit that undoes another commit.
+Create a commit that undoes another commit. If conflicts stop the revert, resolve them, stage the paths, then call `revertContinue()` or `revertAbort()`.
 
 ```php
 $revertId = $repo->revert('abc123');
+
+// After resolving conflicts:
+$repo->add('src/File.php');
+$repo->revertContinue();
 ```
 
 #### `rebase`
@@ -679,9 +691,11 @@ $commits = $repo->logPath('src/Repository.php', 20);
 
 ```php
 public function merge(string $branch): MergeResult
+public function mergeContinue(): ObjectId
+public function mergeAbort(): void
 ```
 
-Merge a branch into HEAD. Detects fast-forward merges automatically. For non-fast-forward merges, performs tree-level conflict detection and creates a merge commit if clean.
+Merge a branch into HEAD. Detects fast-forward merges automatically. For non-fast-forward merges, performs tree-level conflict detection and creates a merge commit if clean. Conflict stops write Git-shaped merge state to the index and worktree; resolve the paths, stage them, then call `mergeContinue()` or `mergeAbort()`.
 
 Returns a `MergeResult` with:
 - `clean`: whether the merge succeeded without conflicts
@@ -695,6 +709,8 @@ if ($result->clean) {
     echo "Merged: {$result->commitId->hex}\n";
 } else {
     echo "Conflicts in: " . implode(', ', $result->conflictPaths) . "\n";
+    $repo->add('src/File.php');
+    $repo->mergeContinue();
 }
 ```
 
@@ -734,13 +750,19 @@ $repo->fetch('upstream');
 
 ```php
 public function push(string $remote = 'origin', ?string $branch = null): void
+public function pushForceWithLease(string $remote = 'origin', ?string $branch = null, ?ObjectId $expected = null): void
+public function pushAtomic(string $remote = 'origin', array $branches = []): void
+public function pushMirror(string $remote = 'origin'): void
 ```
 
-Push the current branch (or a specified branch) to a remote.
+Push the current branch (or a specified branch) to a remote. Force-with-lease, atomic, and mirror variants are available for stricter or broader ref updates.
 
 ```php
 $repo->push();
 $repo->push('origin', 'feature/login');
+$repo->pushForceWithLease('origin', 'main', $repo->resolve('refs/remotes/origin/main'));
+$repo->pushAtomic('origin', ['main', 'release']);
+$repo->pushMirror();
 ```
 
 ---

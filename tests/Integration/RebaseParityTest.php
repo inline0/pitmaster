@@ -25,9 +25,12 @@ final class RebaseParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createCleanRebasePair();
 
-        $this->gitWithExit($gitDir, 'rebase main');
         $repo = Pitmaster::open($pitDir);
-        $result = $repo->rebase('main');
+        $result = $this->withDeterministicCommitDates('2024-01-12T00:00:10+0000', function () use ($gitDir, $repo): array {
+            $this->gitWithExit($gitDir, 'rebase main');
+
+            return $repo->rebase('main');
+        });
 
         $this->assertTrue($result['success']);
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
@@ -35,8 +38,12 @@ final class RebaseParityTest extends TestCase
         $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
         $this->assertSame($this->git($gitDir, 'log --format=%s --reverse main..HEAD'), $this->git($pitDir, 'log --format=%s --reverse main..HEAD'));
         $this->assertSame($this->readGitFile($gitDir, 'HEAD'), $this->readGitFile($pitDir, 'HEAD'));
-        $this->assertNull($this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'REBASE_HEAD'), $this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_MSG'), $this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertFalse(is_dir($pitDir . '/.git/rebase-merge'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/HEAD'), $this->readGitFile($pitDir, 'logs/HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/refs/heads/feature'), $this->readGitFile($pitDir, 'logs/refs/heads/feature'));
     }
 
     #[Test]
@@ -67,18 +74,22 @@ final class RebaseParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createConflictRebasePair();
 
-        $this->gitWithExit($gitDir, 'rebase main');
         $repo = Pitmaster::open($pitDir);
-        $repo->rebase('main');
+        $this->withDeterministicCommitDates('2024-01-14T00:00:10+0000', function () use ($gitDir, $repo): void {
+            $this->gitWithExit($gitDir, 'rebase main');
+            $repo->rebase('main');
+        });
 
         $resolved = "line 1\nresolved\nline 3\n";
         $this->writeFile($gitDir, 'a.txt', $resolved);
         $this->git($gitDir, 'add a.txt');
-        $this->gitWithExit($gitDir, '-c core.editor=true rebase --continue');
 
         $this->writeFile($pitDir, 'a.txt', $resolved);
         $repo->add('a.txt');
-        $repo->rebaseContinue();
+        $this->withDeterministicCommitDates('2024-01-14T00:00:11+0000', function () use ($gitDir, $repo): void {
+            $this->gitWithExit($gitDir, '-c core.editor=true rebase --continue');
+            $repo->rebaseContinue();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
@@ -86,8 +97,12 @@ final class RebaseParityTest extends TestCase
         $this->assertSame($this->git($gitDir, "show -s --format='%an <%ae>' HEAD"), $this->git($pitDir, "show -s --format='%an <%ae>' HEAD"));
         $this->assertSame($this->git($gitDir, 'log --format=%s --reverse main..HEAD'), $this->git($pitDir, 'log --format=%s --reverse main..HEAD'));
         $this->assertSame($this->readGitFile($gitDir, 'HEAD'), $this->readGitFile($pitDir, 'HEAD'));
-        $this->assertNull($this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'REBASE_HEAD'), $this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_MSG'), $this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertFalse(is_dir($pitDir . '/.git/rebase-merge'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/HEAD'), $this->readGitFile($pitDir, 'logs/HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/refs/heads/feature'), $this->readGitFile($pitDir, 'logs/refs/heads/feature'));
     }
 
     #[Test]
@@ -95,19 +110,25 @@ final class RebaseParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createConflictRebasePair();
 
-        $this->gitWithExit($gitDir, 'rebase main');
         $repo = Pitmaster::open($pitDir);
-        $repo->rebase('main');
-
-        $this->gitWithExit($gitDir, 'rebase --abort');
-        $repo->rebaseAbort();
+        $this->withDeterministicCommitDates('2024-01-15T00:00:10+0000', function () use ($gitDir, $repo): void {
+            $this->gitWithExit($gitDir, 'rebase main');
+            $repo->rebase('main');
+            $this->gitWithExit($gitDir, 'rebase --abort');
+            $repo->rebaseAbort();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
         $this->assertSame($this->readGitFile($gitDir, 'HEAD'), $this->readGitFile($pitDir, 'HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'REBASE_HEAD'), $this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_MSG'), $this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertFalse(is_dir($pitDir . '/.git/rebase-merge'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/HEAD'), $this->readGitFile($pitDir, 'logs/HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/refs/heads/feature'), $this->readGitFile($pitDir, 'logs/refs/heads/feature'));
     }
 
     #[Test]
@@ -115,19 +136,25 @@ final class RebaseParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createConflictRebasePair();
 
-        $this->gitWithExit($gitDir, 'rebase main');
         $repo = Pitmaster::open($pitDir);
-        $repo->rebase('main');
-
-        $this->gitWithExit($gitDir, 'rebase --skip');
-        $repo->rebaseSkip();
+        $this->withDeterministicCommitDates('2024-01-16T00:00:10+0000', function () use ($gitDir, $repo): void {
+            $this->gitWithExit($gitDir, 'rebase main');
+            $repo->rebase('main');
+            $this->gitWithExit($gitDir, 'rebase --skip');
+            $repo->rebaseSkip();
+        });
 
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
         $this->assertSame($this->readGitFile($gitDir, 'HEAD'), $this->readGitFile($pitDir, 'HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'REBASE_HEAD'), $this->readGitFile($pitDir, 'REBASE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_MSG'), $this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertFalse(is_dir($pitDir . '/.git/rebase-merge'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/HEAD'), $this->readGitFile($pitDir, 'logs/HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'logs/refs/heads/feature'), $this->readGitFile($pitDir, 'logs/refs/heads/feature'));
     }
 
     /**
@@ -197,6 +224,7 @@ final class RebaseParityTest extends TestCase
         $this->runShell(sprintf('git init -b main %s >/dev/null', escapeshellarg($dir)));
         $this->git($dir, 'config user.email test@pitmaster.dev');
         $this->git($dir, 'config user.name "Test User"');
+        $this->git($dir, 'config core.logAllRefUpdates true');
     }
 
     private function copyDir(string $source, string $target): void
@@ -259,6 +287,27 @@ final class RebaseParityTest extends TestCase
         $content = file_get_contents($path);
 
         return $content !== false ? $content : null;
+    }
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    private function withDeterministicCommitDates(string $date, callable $callback): mixed
+    {
+        $previousAuthor = getenv('GIT_AUTHOR_DATE');
+        $previousCommitter = getenv('GIT_COMMITTER_DATE');
+
+        putenv("GIT_AUTHOR_DATE={$date}");
+        putenv("GIT_COMMITTER_DATE={$date}");
+
+        try {
+            return $callback();
+        } finally {
+            putenv($previousAuthor === false ? 'GIT_AUTHOR_DATE' : "GIT_AUTHOR_DATE={$previousAuthor}");
+            putenv($previousCommitter === false ? 'GIT_COMMITTER_DATE' : "GIT_COMMITTER_DATE={$previousCommitter}");
+        }
     }
 
     private function runShell(string $command): void

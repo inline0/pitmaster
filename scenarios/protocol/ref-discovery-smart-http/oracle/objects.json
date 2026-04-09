@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "0aa1689265bfee6f22a79c3ee10a666998d30a2f",
+        "type": "commit",
+        "size": 168,
+        "content": "tree f484e06e0cf65cbc50f3f30de6260fd665031e1b\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f484e06e0cf65cbc50f3f30de6260fd665031e1b",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob fb443f121cca41ae1bfb16fac50ff8396a91d1c3\tREADME.md\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "fb443f121cca41ae1bfb16fac50ff8396a91d1c3",
+        "type": "blob",
+        "size": 22,
+        "content": "hello smart discovery\n",
+        "encoding": "utf-8"
+    }
+]

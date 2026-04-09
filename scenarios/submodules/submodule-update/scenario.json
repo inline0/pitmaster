@@ -1,0 +1,28 @@
+{
+    "name": "submodule-update",
+    "category": "submodules",
+    "description": "Compare submodule init/update parity against Git for a local submodule checkout",
+    "operations": [
+        "submodule_status",
+        "submodule_head",
+        "submodule_branch"
+    ],
+    "oracle_commands": {
+        "submodule_status": "cat .submodule-status.txt",
+        "submodule_head": "cat .submodule-head.txt",
+        "submodule_branch": "cat .submodule-branch.txt"
+    },
+    "actual_commands": {
+        "submodule_status": "cat .submodule-status.txt",
+        "submodule_head": "cat .submodule-head.txt",
+        "submodule_branch": "cat .submodule-branch.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "submodule_status",
+            "submodule_head",
+            "submodule_branch"
+        ],
+        "fsck_clean": true
+    }
+}

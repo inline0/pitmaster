@@ -1,0 +1,43 @@
+{
+    "name": "merge-conflict-continue",
+    "category": "merge",
+    "description": "Resolve a merge conflict and continue via the Pitmaster CLI",
+    "operations": [
+        "status",
+        "head_ref",
+        "subjects",
+        "parents",
+        "tree",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "subjects",
+            "parents",
+            "tree",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

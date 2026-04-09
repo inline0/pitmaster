@@ -1,0 +1,24 @@
+{
+    "name": "ref-discovery-git",
+    "category": "protocol",
+    "description": "Compare git:// ref discovery state against the Git-backed advertisement",
+    "operations": [
+        "discovery_state"
+    ],
+    "oracle_commands": {
+        "discovery_state": "cat .discovery-state"
+    },
+    "actual_commands": {
+        "discovery_state": "cat .discovery-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "discovery_state"
+        ],
+        "fsck_clean": true
+    }
+}

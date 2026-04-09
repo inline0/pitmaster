@@ -1,0 +1,24 @@
+{
+    "name": "stash-staged-only",
+    "category": "stash",
+    "description": "Verify staged-only stash apply matches Git-observed status and worktree state",
+    "operations": [
+        "status",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "cat .status.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "actual_commands": {
+        "status": "cat .status.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "status",
+            "worktree"
+        ],
+        "fsck_clean": true
+    }
+}

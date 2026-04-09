@@ -1,0 +1,23 @@
+{
+    "name": "blame-basic",
+    "category": "blame",
+    "description": "Compare Pitmaster blame output against git blame porcelain",
+    "operations": [
+        "blame"
+    ],
+    "oracle_commands": {
+        "blame": "cat .blame.json"
+    },
+    "actual_commands": {
+        "blame": "cat .blame.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "blame"
+        ],
+        "fsck_clean": true
+    }
+}

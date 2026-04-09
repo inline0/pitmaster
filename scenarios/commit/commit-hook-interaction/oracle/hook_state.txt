@@ -1,0 +1,10 @@
+[log]
+pre-commit
+prepare-commit-msg:message
+commit-msg
+post-commit
+[message]
+Hook subject
+
+Prepared-by: hook
+

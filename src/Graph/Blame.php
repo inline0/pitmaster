@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pitmaster\Graph;
 
-use Pitmaster\Diff\MyersDiff;
 use Pitmaster\Object\Blob;
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
@@ -46,32 +45,16 @@ final class Blame
         }
 
         // Start with the current version (strip trailing empty line from \n)
-        $currentLines = explode("\n", $versions[0]['content']);
-
-        if (end($currentLines) === '') {
-            array_pop($currentLines);
-        }
+        $currentLines = $this->lines($versions[0]['content']);
         $blame = array_fill(0, count($currentLines), null);
 
         // Walk backwards assigning blame
-        for ($i = 0; $i < count($versions) - 1; $i++) {
-            $newer = explode("\n", $versions[$i]['content']);
-            $older = explode("\n", $versions[$i + 1]['content']);
+        for ($i = 0; $i < count($versions); $i++) {
+            $newerLines = $this->lines($versions[$i]['content']);
 
-            // Lines present in newer but not in older were introduced by this commit
-            $hunks = MyersDiff::diff($versions[$i + 1]['content'], $versions[$i]['content']);
-
-            foreach ($hunks as $hunk) {
-                foreach ($hunk->lines as $line) {
-                    if (str_starts_with($line, '+')) {
-                        $lineNum = $hunk->newStart - 1;
-
-                        for ($j = $lineNum; $j < $lineNum + $hunk->newCount && $j < count($blame); $j++) {
-                            if ($blame[$j] === null) {
-                                $blame[$j] = $versions[$i]['commit'];
-                            }
-                        }
-                    }
+            foreach ($this->introducedLineIndexesForCommit($versions[$i]['commit'], $path, $newerLines) as $lineIndex) {
+                if ($blame[$lineIndex] === null) {
+                    $blame[$lineIndex] = $versions[$i]['commit'];
                 }
             }
         }
@@ -98,6 +81,109 @@ final class Blame
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<int, string> $newerLines
+     * @return array<int, int>
+     */
+    private function introducedLineIndexesForCommit(Commit $commit, string $path, array $newerLines): array
+    {
+        if ($commit->parents === []) {
+            return array_keys($newerLines);
+        }
+
+        $matchedNewIndexes = [];
+
+        foreach ($commit->parents as $parentId) {
+            $parent = $this->objects->read($parentId);
+
+            if (!$parent instanceof Commit) {
+                continue;
+            }
+
+            $content = $this->getFileContent($parent->tree, $path);
+
+            if ($content === null) {
+                continue;
+            }
+
+            foreach ($this->matchedLineIndexes($this->lines($content), $newerLines) as $lineIndex) {
+                $matchedNewIndexes[$lineIndex] = true;
+            }
+        }
+
+        $introduced = [];
+
+        foreach (array_keys($newerLines) as $index) {
+            if (!isset($matchedNewIndexes[$index])) {
+                $introduced[] = $index;
+            }
+        }
+
+        return $introduced;
+    }
+
+    /**
+     * @param array<int, string> $olderLines
+     * @param array<int, string> $newerLines
+     * @return array<int, int>
+     */
+    private function matchedLineIndexes(array $olderLines, array $newerLines): array
+    {
+        $oldCount = count($olderLines);
+        $newCount = count($newerLines);
+        $lcs = array_fill(0, $oldCount + 1, array_fill(0, $newCount + 1, 0));
+
+        for ($oldIndex = $oldCount - 1; $oldIndex >= 0; $oldIndex--) {
+            for ($newIndex = $newCount - 1; $newIndex >= 0; $newIndex--) {
+                if ($olderLines[$oldIndex] === $newerLines[$newIndex]) {
+                    $lcs[$oldIndex][$newIndex] = $lcs[$oldIndex + 1][$newIndex + 1] + 1;
+                    continue;
+                }
+
+                $lcs[$oldIndex][$newIndex] = max(
+                    $lcs[$oldIndex + 1][$newIndex],
+                    $lcs[$oldIndex][$newIndex + 1],
+                );
+            }
+        }
+
+        $matchedNewIndexes = [];
+        $oldIndex = 0;
+        $newIndex = 0;
+
+        while ($oldIndex < $oldCount && $newIndex < $newCount) {
+            if ($olderLines[$oldIndex] === $newerLines[$newIndex]) {
+                $matchedNewIndexes[$newIndex] = true;
+                $oldIndex++;
+                $newIndex++;
+                continue;
+            }
+
+            if ($lcs[$oldIndex + 1][$newIndex] >= $lcs[$oldIndex][$newIndex + 1]) {
+                $oldIndex++;
+                continue;
+            }
+
+            $newIndex++;
+        }
+
+        return array_keys($matchedNewIndexes);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function lines(string $content): array
+    {
+        $lines = explode("\n", $content);
+
+        if ($lines !== [] && end($lines) === '') {
+            array_pop($lines);
+        }
+
+        return $lines;
     }
 
     private function getFileContent(ObjectId $treeId, string $path): ?string

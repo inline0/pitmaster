@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pitmaster\Submodule;
 
+use Pitmaster\Config\GitConfig;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Object\Tree;
 use Pitmaster\Pitmaster;
@@ -106,21 +107,32 @@ final class SubmoduleManager
     public function init(): void
     {
         foreach ($this->list() as $submodule) {
-            $moduleDir = $this->gitDir . '/modules/' . $submodule->name;
+            $this->initSubmodule($submodule);
+        }
+    }
 
-            if (!is_dir($moduleDir)) {
-                mkdir($moduleDir, 0777, true);
+    /**
+     * Initialize and update submodules to the commits pinned in the given tree.
+     */
+    public function update(ObjectId $treeId): void
+    {
+        foreach ($this->list() as $submodule) {
+            $expected = $this->pinnedCommit($submodule->path, $treeId);
+
+            if ($expected === null) {
+                continue;
             }
 
-            // Write .git file in submodule path pointing to modules dir
+            $moduleDir = $this->initSubmodule($submodule, true);
             $submodulePath = $this->workDir . '/' . $submodule->path;
+            $sourcePath = $this->resolveSubmoduleUrl($submodule);
 
-            if (!is_dir($submodulePath)) {
-                mkdir($submodulePath, 0777, true);
-            }
+            $this->syncModuleRepository($sourcePath, $moduleDir);
+            $this->syncWorktreeFiles($sourcePath, $submodulePath);
+            $this->writeModuleMetadata($moduleDir, $submodulePath, $submodule->url);
 
-            $relativeGitDir = $this->relativePath($submodulePath, $moduleDir);
-            file_put_contents($submodulePath . '/.git', "gitdir: {$relativeGitDir}\n");
+            $repo = Pitmaster::open($submodulePath);
+            $repo->checkout($expected->hex);
         }
     }
 
@@ -208,5 +220,178 @@ final class SubmoduleManager
         $downs = array_slice($toParts, $common);
 
         return str_repeat('../', $ups) . implode('/', $downs);
+    }
+
+    private function initSubmodule(Submodule $submodule, bool $materialize = false): string
+    {
+        $moduleDir = $this->gitDir . '/modules/' . $submodule->name;
+        $submodulePath = $this->workDir . '/' . $submodule->path;
+
+        if (!is_dir($moduleDir)) {
+            mkdir($moduleDir, 0777, true);
+        }
+
+        if (!is_dir($submodulePath)) {
+            mkdir($submodulePath, 0777, true);
+        }
+
+        $config = GitConfig::fromFile($this->gitDir . '/config');
+        $config->set("submodule.{$submodule->name}.active", 'true');
+        $config->set("submodule.{$submodule->name}.url", $submodule->url);
+        $config->writeToFile($this->gitDir . '/config');
+
+        if ($materialize) {
+            $this->writeGitdirPointer($submodulePath, $moduleDir);
+        }
+
+        return $moduleDir;
+    }
+
+    private function writeGitdirPointer(string $submodulePath, string $moduleDir): void
+    {
+        $relativeGitDir = $this->relativePath($submodulePath, $moduleDir);
+        file_put_contents($submodulePath . '/.git', "gitdir: {$relativeGitDir}\n");
+    }
+
+    private function resolveSubmoduleUrl(Submodule $submodule): string
+    {
+        $url = $submodule->url;
+
+        if (str_starts_with($url, '/') || preg_match('/^[A-Za-z]:[\\\\\\/]/', $url) === 1) {
+            return $url;
+        }
+
+        if (preg_match('/^[A-Za-z][A-Za-z0-9+.-]*:\/\//', $url) === 1) {
+            throw new \RuntimeException("Submodule update currently supports only local paths: {$url}");
+        }
+
+        $resolved = realpath($this->workDir . '/' . $url);
+
+        if ($resolved === false) {
+            throw new \RuntimeException("Submodule source not found: {$url}");
+        }
+
+        return $resolved;
+    }
+
+    private function syncModuleRepository(string $sourcePath, string $moduleDir): void
+    {
+        $sourceGitDir = $this->resolveGitDir($sourcePath);
+        $this->removePath($moduleDir);
+        mkdir($moduleDir, 0777, true);
+        $this->copyTree($sourceGitDir, $moduleDir);
+    }
+
+    private function syncWorktreeFiles(string $sourcePath, string $submodulePath): void
+    {
+        foreach (scandir($submodulePath) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..' || $entry === '.git') {
+                continue;
+            }
+
+            $this->removePath($submodulePath . '/' . $entry);
+        }
+
+        foreach (scandir($sourcePath) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..' || $entry === '.git') {
+                continue;
+            }
+
+            $this->copyTree($sourcePath . '/' . $entry, $submodulePath . '/' . $entry);
+        }
+    }
+
+    private function writeModuleMetadata(string $moduleDir, string $submodulePath, string $url): void
+    {
+        file_put_contents($moduleDir . '/commondir', ".\n");
+
+        $config = GitConfig::fromFile($moduleDir . '/config');
+        $config->set('core.bare', 'false');
+        $config->set('core.worktree', $submodulePath);
+        $config->set('remote.origin.url', $url);
+        $config->writeToFile($moduleDir . '/config');
+    }
+
+    private function resolveGitDir(string $path): string
+    {
+        if (is_dir($path . '/.git')) {
+            return $path . '/.git';
+        }
+
+        if (is_file($path . '/.git')) {
+            $content = trim((string) file_get_contents($path . '/.git'));
+
+            if (!str_starts_with($content, 'gitdir: ')) {
+                throw new \RuntimeException("Invalid submodule source gitdir at {$path}");
+            }
+
+            $gitDir = substr($content, 8);
+
+            if (!str_starts_with($gitDir, '/')) {
+                $gitDir = $path . '/' . $gitDir;
+            }
+
+            return realpath($gitDir) ?: $gitDir;
+        }
+
+        if (is_file($path . '/HEAD')) {
+            return $path;
+        }
+
+        throw new \RuntimeException("Not a repository: {$path}");
+    }
+
+    private function copyTree(string $source, string $target): void
+    {
+        if (is_file($source)) {
+            $dir = dirname($target);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            copy($source, $target);
+
+            return;
+        }
+
+        if (!is_dir($source)) {
+            return;
+        }
+
+        if (!is_dir($target)) {
+            mkdir($target, 0777, true);
+        }
+
+        foreach (scandir($source) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $this->copyTree($source . '/' . $entry, $target . '/' . $entry);
+        }
+    }
+
+    private function removePath(string $path): void
+    {
+        if (is_link($path) || is_file($path)) {
+            unlink($path);
+
+            return;
+        }
+
+        if (!is_dir($path)) {
+            return;
+        }
+
+        foreach (scandir($path) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $this->removePath($path . '/' . $entry);
+        }
+
+        rmdir($path);
     }
 }

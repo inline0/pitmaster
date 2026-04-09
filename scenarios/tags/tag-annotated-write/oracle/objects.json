@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "05b1e3eb240d7eb9a50fd8f913dc63bf87776f58",
+        "type": "tag",
+        "size": 139,
+        "content": "object c16b356646f03a8b74b7d80ab1982a3a747bfcda\ntype commit\ntag v1.0\ntagger Tagger Test <tagger@example.com> 1712570400 +0200\n\nRelease 1.0\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "56818a3cf3312ad814efdc72833e7ee6df2dbc65",
+        "type": "blob",
+        "size": 11,
+        "content": "tag parity\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6ae4830fae79214d85b08b2585f23ddd10acb34e",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 56818a3cf3312ad814efdc72833e7ee6df2dbc65\ttracked.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c16b356646f03a8b74b7d80ab1982a3a747bfcda",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 6ae4830fae79214d85b08b2585f23ddd10acb34e\nauthor Test User <test@pitmaster.dev> 1712563200 +0200\ncommitter Test User <test@pitmaster.dev> 1712566800 +0200\n\ninitial\n",
+        "encoding": "utf-8"
+    }
+]

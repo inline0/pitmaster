@@ -1,0 +1,24 @@
+{
+    "name": "http-clone-refspec",
+    "category": "network",
+    "description": "Compare HTTP clone tracking config and single-branch fetch refspec behavior against Git",
+    "operations": [
+        "clone_refspec_state"
+    ],
+    "oracle_commands": {
+        "clone_refspec_state": "cat .clone-refspec-state"
+    },
+    "actual_commands": {
+        "clone_refspec_state": "cat .clone-refspec-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "clone_refspec_state"
+        ],
+        "fsck_clean": false
+    }
+}

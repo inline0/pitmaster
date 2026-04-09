@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "05cd9893cbae65bb06e1e0d0d7c784e1aa8d8419",
+        "type": "blob",
+        "size": 19,
+        "content": "Visible everywhere\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1c7aa3f751f1a0f1a52e34f61c9028eb4c51acaf",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 05cd9893cbae65bb06e1e0d0d7c784e1aa8d8419\t71279fbb2c3d976da18385ba395b7febcea9fe1e\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "296fc68408d903073140207b19a75a1008cd0fdb",
+        "type": "commit",
+        "size": 191,
+        "content": "tree 1c7aa3f751f1a0f1a52e34f61c9028eb4c51acaf\nauthor Test User <test@pitmaster.dev> 1775698150 +0200\ncommitter Test User <test@pitmaster.dev> 1775698150 +0200\n\nNotes added by 'git notes add'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5493a12f76e40b837ca03f8dc8c6bbb595a93cf8",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 98385dcaa80fe704cba30c173372418119473f91\ttracked.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "71279fbb2c3d976da18385ba395b7febcea9fe1e",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 5493a12f76e40b837ca03f8dc8c6bbb595a93cf8\nauthor Test User <test@pitmaster.dev> 1700000000 +0000\ncommitter Test User <test@pitmaster.dev> 1700000000 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "98385dcaa80fe704cba30c173372418119473f91",
+        "type": "blob",
+        "size": 13,
+        "content": "notes parity\n",
+        "encoding": "utf-8"
+    }
+]

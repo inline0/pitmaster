@@ -1,0 +1,2 @@
+notice: HEAD points to an unborn branch (main)
+notice: No default references

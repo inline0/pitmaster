@@ -28,6 +28,42 @@ if ($requestBody === false) {
     return;
 }
 
+$captureDir = getenv('PITMASTER_CAPTURE_HTTP_BODIES_DIR');
+
+if ($captureDir !== false && $captureDir !== '') {
+    if (!is_dir($captureDir)) {
+        mkdir($captureDir, 0777, true);
+    }
+
+    $captureName = preg_replace('/[^A-Za-z0-9._-]+/', '_', trim($path, '/')) ?: 'root';
+
+    if (($_SERVER['QUERY_STRING'] ?? '') !== '') {
+        parse_str((string) $_SERVER['QUERY_STRING'], $query);
+
+        if (isset($query['service']) && is_string($query['service']) && $query['service'] !== '') {
+            $captureName .= '.' . preg_replace('/[^A-Za-z0-9._-]+/', '_', $query['service']);
+        }
+    }
+
+    $basePath = $captureDir . '/' . $captureName;
+    $bodyPath = $basePath . '.body';
+    $headersPath = $basePath . '.headers.json';
+
+    if (file_exists($bodyPath) || file_exists($headersPath)) {
+        $suffix = 1;
+
+        while (file_exists($basePath . '.' . $suffix . '.body') || file_exists($basePath . '.' . $suffix . '.headers.json')) {
+            $suffix++;
+        }
+
+        $bodyPath = $basePath . '.' . $suffix . '.body';
+        $headersPath = $basePath . '.' . $suffix . '.headers.json';
+    }
+
+    file_put_contents($bodyPath, $requestBody);
+    file_put_contents($headersPath, json_encode(getallheaders(), JSON_PRETTY_PRINT) . "\n");
+}
+
 $env = [
     'GATEWAY_INTERFACE' => 'CGI/1.1',
     'GIT_PROJECT_ROOT' => $projectRoot,
@@ -52,6 +88,16 @@ if (isset($_SERVER['CONTENT_TYPE'])) {
 
 if (isset($_SERVER['CONTENT_LENGTH'])) {
     $env['CONTENT_LENGTH'] = (string) $_SERVER['CONTENT_LENGTH'];
+}
+
+foreach (getallheaders() as $name => $value) {
+    $upper = strtoupper(str_replace('-', '_', $name));
+
+    if (in_array($upper, ['CONTENT_TYPE', 'CONTENT_LENGTH'], true)) {
+        continue;
+    }
+
+    $env['HTTP_' . $upper] = $value;
 }
 
 $process = proc_open(

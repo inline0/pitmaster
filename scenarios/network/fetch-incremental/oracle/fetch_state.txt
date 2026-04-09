@@ -1,0 +1,3 @@
+origin.main_matches_remote=yes
+incremental_added=yes
+noop_stable=yes

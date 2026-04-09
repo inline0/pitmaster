@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pitmaster\Checkout;
 
+use Pitmaster\Config\GitConfig;
+
 /**
  * Sparse checkout: materialize only a subset of files in the working tree.
  *
@@ -28,7 +30,7 @@ final class SparseCheckout
      */
     public function isEnabled(): bool
     {
-        return is_file($this->gitDir . '/info/sparse-checkout');
+        return $this->configWorktree()->getBool('core.sparsecheckout', false);
     }
 
     /**
@@ -42,6 +44,16 @@ final class SparseCheckout
             mkdir($infoDir, 0777, true);
         }
 
+        $config = GitConfig::fromFile($this->gitDir . '/config');
+        $config->set('extensions.worktreeconfig', 'true');
+        $config->writeToFile($this->gitDir . '/config');
+
+        $worktreeConfig = $this->configWorktree();
+        $worktreeConfig->set('core.sparsecheckout', 'true');
+        $worktreeConfig->set('core.sparsecheckoutcone', $coneMode ? 'true' : 'false');
+        $worktreeConfig->unset('index.sparse');
+        $worktreeConfig->writeToFile($this->configWorktreePath());
+
         // Default: include everything
         file_put_contents($infoDir . '/sparse-checkout', "/*\n!/*/\n");
         $this->load();
@@ -54,10 +66,14 @@ final class SparseCheckout
      */
     public function set(array $directories): void
     {
+        $directories = array_values(array_unique(array_map(
+            static fn (string $directory): string => trim($directory, '/'),
+            $directories,
+        )));
+        sort($directories);
         $lines = ["/*\n", "!/*/\n"];
 
         foreach ($directories as $dir) {
-            $dir = trim($dir, '/');
             $lines[] = "/{$dir}/\n";
         }
 
@@ -126,11 +142,11 @@ final class SparseCheckout
      */
     public function disable(): void
     {
-        $path = $this->gitDir . '/info/sparse-checkout';
-
-        if (is_file($path)) {
-            unlink($path);
-        }
+        $worktreeConfig = $this->configWorktree();
+        $worktreeConfig->set('core.sparsecheckout', 'false');
+        $worktreeConfig->set('core.sparsecheckoutcone', 'false');
+        $worktreeConfig->set('index.sparse', 'false');
+        $worktreeConfig->writeToFile($this->configWorktreePath());
 
         $this->includes = [];
         $this->excludes = [];
@@ -176,5 +192,15 @@ final class SparseCheckout
     public function excludes(): array
     {
         return $this->excludes;
+    }
+
+    private function configWorktree(): GitConfig
+    {
+        return GitConfig::fromFile($this->configWorktreePath());
+    }
+
+    private function configWorktreePath(): string
+    {
+        return $this->gitDir . '/config.worktree';
     }
 }

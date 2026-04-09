@@ -1,0 +1,2 @@
+origin.main_matches_remote=yes
+notes.exists=no

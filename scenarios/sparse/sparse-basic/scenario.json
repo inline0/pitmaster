@@ -1,0 +1,27 @@
+{
+    "name": "sparse-basic",
+    "category": "sparse",
+    "description": "Compare sparse-checkout file and worktree config output against Git",
+    "operations": [
+        "sparse-file",
+        "sparse-config-worktree"
+    ],
+    "oracle_commands": {
+        "sparse-file": "cat .sparse-file.txt",
+        "sparse-config-worktree": "cat .sparse-config-worktree.json"
+    },
+    "actual_commands": {
+        "sparse-file": "cat .sparse-file.txt",
+        "sparse-config-worktree": "cat .sparse-config-worktree.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "sparse-file",
+            "sparse-config-worktree"
+        ],
+        "fsck_clean": false
+    }
+}

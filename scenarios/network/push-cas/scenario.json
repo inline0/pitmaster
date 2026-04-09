@@ -1,0 +1,24 @@
+{
+    "name": "push-cas",
+    "category": "network",
+    "description": "Compare force-with-lease push results against Git smart HTTP",
+    "operations": [
+        "remote_tree",
+        "remote_file"
+    ],
+    "oracle_commands": {
+        "remote_tree": "cat .remote-tree.txt",
+        "remote_file": "cat .remote-file.txt"
+    },
+    "actual_commands": {
+        "remote_tree": "cat .remote-tree.txt",
+        "remote_file": "cat .remote-file.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "remote_tree",
+            "remote_file"
+        ],
+        "fsck_clean": true
+    }
+}

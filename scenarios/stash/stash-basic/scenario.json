@@ -1,0 +1,32 @@
+{
+    "name": "stash-basic",
+    "category": "stash",
+    "description": "Verify Git sees the same stash list, commit, and worktree state after a Pitmaster stash push",
+    "operations": [
+        "stash-list",
+        "stash-commit",
+        "stash-file",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "stash-list": "cat .stash-list.txt",
+        "stash-commit": "cat .stash-commit.txt",
+        "stash-file": "cat .stash-file.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "actual_commands": {
+        "stash-list": "cat .stash-list.txt",
+        "stash-commit": "cat .stash-commit.txt",
+        "stash-file": "cat .stash-file.txt",
+        "worktree": "cat .worktree.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "stash-list",
+            "stash-commit",
+            "stash-file",
+            "worktree"
+        ],
+        "fsck_clean": true
+    }
+}

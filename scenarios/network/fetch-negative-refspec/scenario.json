@@ -1,0 +1,24 @@
+{
+    "name": "fetch-negative-refspec",
+    "category": "network",
+    "description": "Compare negative fetch refspec handling against Git",
+    "operations": [
+        "negative_refspec_state"
+    ],
+    "oracle_commands": {
+        "negative_refspec_state": "cat .negative-refspec-state"
+    },
+    "actual_commands": {
+        "negative_refspec_state": "cat .negative-refspec-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "negative_refspec_state"
+        ],
+        "fsck_clean": true
+    }
+}

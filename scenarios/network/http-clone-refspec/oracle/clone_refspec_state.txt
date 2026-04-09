@@ -1,0 +1,5 @@
+remote.origin.fetch=+refs/heads/main:refs/remotes/origin/main
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+origin.main=c9bb09df99708b0c8f9da6dace3b3c5d0af4ebc3
+origin.feature=absent

@@ -6,7 +6,6 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Pitmaster\Exceptions\ProtocolException;
 use Pitmaster\Pitmaster;
 
 final class SmartHttpRemoteParityTest extends TestCase
@@ -84,6 +83,8 @@ final class SmartHttpRemoteParityTest extends TestCase
         $remoteHead = trim($this->git('rev-parse refs/heads/main', $remoteDir));
 
         $this->assertSame($remoteHead, trim($this->git('rev-parse refs/remotes/origin/main', $cloneDir)));
+        $repo->reset('refs/remotes/origin/main', 'hard');
+        $this->assertSame($remoteHead, trim($this->git('rev-parse HEAD', $cloneDir)));
 
         file_put_contents($cloneDir . '/pitmaster.txt', "from pitmaster push\n");
         $repo->add('pitmaster.txt');
@@ -172,7 +173,7 @@ final class SmartHttpRemoteParityTest extends TestCase
         $repo->add('pitmaster.txt');
         $repo->commit("Stale push\n");
 
-        $this->expectException(ProtocolException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('non-fast-forward');
 
         try {

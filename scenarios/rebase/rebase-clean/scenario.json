@@ -5,17 +5,29 @@
     "operations": [
         "status",
         "head_ref",
-        "subjects"
+        "subjects",
+        "rebase_head_state",
+        "merge_msg_state",
+        "head_reflog",
+        "branch_reflog"
     ],
     "oracle_commands": {
         "status": "git status --porcelain=v2",
         "head_ref": "cat .git/HEAD",
-        "subjects": "git log --format=%s --reverse main..HEAD"
+        "subjects": "git log --format=%s --reverse main..HEAD",
+        "rebase_head_state": "test -e .git/REBASE_HEAD && printf 'present\\n' || printf 'absent\\n'",
+        "merge_msg_state": "test -e .git/MERGE_MSG && printf 'present\\n' || printf 'absent\\n'",
+        "head_reflog": "cat .git/logs/HEAD",
+        "branch_reflog": "cat .git/logs/refs/heads/feature"
     },
     "actual_commands": {
         "status": "git status --porcelain=v2",
         "head_ref": "cat .git/HEAD",
-        "subjects": "git log --format=%s --reverse main..HEAD"
+        "subjects": "git log --format=%s --reverse main..HEAD",
+        "rebase_head_state": "test -e .git/REBASE_HEAD && printf 'present\\n' || printf 'absent\\n'",
+        "merge_msg_state": "test -e .git/MERGE_MSG && printf 'present\\n' || printf 'absent\\n'",
+        "head_reflog": "cat .git/logs/HEAD",
+        "branch_reflog": "cat .git/logs/refs/heads/feature"
     },
     "expectations": {
         "exact_match": [
@@ -24,7 +36,11 @@
             "log",
             "status",
             "head_ref",
-            "subjects"
+            "subjects",
+            "rebase_head_state",
+            "merge_msg_state",
+            "head_reflog",
+            "branch_reflog"
         ],
         "fsck_clean": false
     }
