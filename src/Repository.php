@@ -2237,7 +2237,7 @@ final class Repository
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $this->buildMergeSubject($branch), [$oursId, $theirsId]);
 
-        $this->moveHeadTo($commitId, "merge {$branch}: Merge made by Pitmaster");
+        $this->moveHeadTo($commitId, "merge {$branch}: Merge made by the 'ort' strategy.");
 
         $this->resetWorktree($commitId, $trackedPaths);
         $this->runPostMergeHook();
@@ -2304,7 +2304,7 @@ final class Repository
 
         $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
         $commitId = $this->createCommitFromTree($currentTreeId, $this->buildOctopusMergeMessage($branches), $parentIds);
-        $this->moveHeadTo($commitId, 'merge ' . implode(' ', $branches) . ': Merge made by Pitmaster');
+        $this->moveHeadTo($commitId, "merge " . implode(' ', $branches) . ": Merge made by the 'octopus' strategy.");
         $this->resetWorktree($commitId, $trackedPaths);
         $this->runPostMergeHook();
 

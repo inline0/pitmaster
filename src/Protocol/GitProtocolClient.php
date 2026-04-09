@@ -75,6 +75,27 @@ final class GitProtocolClient
      */
     public function uploadPack(string $url, string $request): string
     {
+        $response = $this->uploadPackOnce($url, $request);
+
+        if (str_contains($response, 'PACK') || trim($response) === '') {
+            return $response;
+        }
+
+        // Some git-daemon builds can yield only the initial negotiation pkt-line
+        // on the first attempt; retry the full exchange once before surfacing it.
+        if (str_starts_with($response, "0008NAK\n")) {
+            $retry = $this->uploadPackOnce($url, $request);
+
+            if ($retry !== '') {
+                return $retry;
+            }
+        }
+
+        return $response;
+    }
+
+    private function uploadPackOnce(string $url, string $request): string
+    {
         $parsed = self::parseUrl($url);
         $socket = $this->connect($parsed['host'], $parsed['port']);
 
@@ -124,24 +145,34 @@ final class GitProtocolClient
     private function readAll($socket): string
     {
         $data = '';
+        $lastActivity = microtime(true);
 
-        while (!feof($socket)) {
+        while (true) {
             $chunk = fread($socket, 65536);
 
             if ($chunk === false) {
                 $meta = stream_get_meta_data($socket);
 
-                if ($meta['timed_out'] === true) {
+                if ($meta['eof'] === true || feof($socket)) {
                     break;
                 }
 
-                break;
+                if (microtime(true) - $lastActivity >= $this->timeout) {
+                    break;
+                }
+
+                usleep(10000);
+                continue;
             }
 
             if ($chunk === '') {
                 $meta = stream_get_meta_data($socket);
 
-                if ($meta['timed_out'] === true || $meta['eof'] === true) {
+                if ($meta['eof'] === true || feof($socket)) {
+                    break;
+                }
+
+                if (microtime(true) - $lastActivity >= $this->timeout) {
                     break;
                 }
 
@@ -150,6 +181,7 @@ final class GitProtocolClient
             }
 
             $data .= $chunk;
+            $lastActivity = microtime(true);
         }
 
         return $data;

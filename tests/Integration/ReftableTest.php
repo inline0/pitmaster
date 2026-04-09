@@ -67,16 +67,28 @@ final class ReftableTest extends TestCase
 
         $refFiles = glob($repoDir . '/.git/reftable/*.ref');
         sort($refFiles);
-        $table = Reftable::open((string) end($refFiles));
+        $combinedRefs = [];
+        $headTarget = null;
 
-        $this->assertNotNull($table);
-        $this->assertSame('refs/heads/main', $table->resolveSymbolic('HEAD'));
-        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/heads/main')), $table->resolve('refs/heads/main')?->hex);
-        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/heads/feature')), $table->resolve('refs/heads/feature')?->hex);
-        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/tags/v1')), $table->resolve('refs/tags/v1')?->hex);
+        foreach ($refFiles as $refFile) {
+            $table = Reftable::open($refFile);
+
+            $this->assertNotNull($table);
+
+            foreach ($table->refs() as $name => $id) {
+                $combinedRefs[$name] = $id->hex;
+            }
+
+            $headTarget = $table->resolveSymbolic('HEAD') ?? $headTarget;
+        }
+
+        $this->assertSame('refs/heads/main', $headTarget);
+        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/heads/main')), $combinedRefs['refs/heads/main'] ?? null);
+        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/heads/feature')), $combinedRefs['refs/heads/feature'] ?? null);
+        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse refs/tags/v1')), $combinedRefs['refs/tags/v1'] ?? null);
 
         $expectedRefs = $this->showRefMap($repoDir);
-        $actualRefs = array_map(static fn ($id) => $id->hex, $table->refs());
+        $actualRefs = $combinedRefs;
         ksort($expectedRefs);
         ksort($actualRefs);
 
