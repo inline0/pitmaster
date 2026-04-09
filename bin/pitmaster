@@ -27,9 +27,13 @@ if ($arguments === []) {
     fwrite(STDERR, "  branch [name]       List or create branches\n");
     fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
     fwrite(STDERR, "  checkout <ref>      Switch branches or detach HEAD\n");
-    fwrite(STDERR, "  merge <branch>      Merge a branch into HEAD\n");
+    fwrite(STDERR, "  merge <branch...>   Merge branches into HEAD\n");
     fwrite(STDERR, "  merge --continue    Continue an in-progress merge\n");
     fwrite(STDERR, "  merge --abort       Abort an in-progress merge\n");
+    fwrite(STDERR, "  bisect start <bad> <good>  Start bisect session\n");
+    fwrite(STDERR, "  bisect good [rev]   Mark current or given rev as good\n");
+    fwrite(STDERR, "  bisect bad [rev]    Mark current or given rev as bad\n");
+    fwrite(STDERR, "  bisect reset        Reset bisect session\n");
     fwrite(STDERR, "  cherry-pick <rev>   Cherry-pick a commit onto HEAD\n");
     fwrite(STDERR, "  cherry-pick --continue  Continue an in-progress cherry-pick\n");
     fwrite(STDERR, "  cherry-pick --abort     Abort an in-progress cherry-pick\n");
@@ -44,7 +48,7 @@ if ($arguments === []) {
     fwrite(STDERR, "  blame <file>        Show line-by-line authorship\n");
     fwrite(STDERR, "  grep [-i] [-E] <pattern>  Search file contents\n");
     fwrite(STDERR, "  refs                List all refs\n");
-    fwrite(STDERR, "  init [path]         Initialize a new repository\n");
+    fwrite(STDERR, "  init [path] [--object-format=<sha1|sha256>]  Initialize a new repository\n");
     exit(1);
 }
 
@@ -52,8 +56,19 @@ $command = array_shift($arguments);
 
 // Commands that don't need an existing repo
 if ($command === 'init') {
-    $path = $arguments[0] ?? getcwd();
-    Pitmaster::init($path);
+    $path = getcwd();
+    $objectFormat = 'sha1';
+
+    foreach ($arguments as $arg) {
+        if (str_starts_with($arg, '--object-format=')) {
+            $objectFormat = substr($arg, 16);
+            continue;
+        }
+
+        $path = $arg;
+    }
+
+    Pitmaster::init($path, $objectFormat);
     fwrite(STDOUT, "Initialized empty Pitmaster repository in {$path}/.git/\n");
     exit(0);
 }
@@ -80,6 +95,7 @@ try {
         'tag' => commandTag($repo, $arguments),
         'checkout' => commandCheckout($repo, $arguments),
         'merge' => commandMerge($repo, $arguments),
+        'bisect' => commandBisect($repo, $arguments),
         'cherry-pick' => commandCherryPick($repo, $arguments),
         'revert' => commandRevert($repo, $arguments),
         'rebase' => commandRebase($repo, $arguments),
@@ -361,8 +377,18 @@ function commandStatus(Repository $repo, array $args): void
 function commandDiff(Repository $repo, array $args): void
 {
     $cached = in_array('--cached', $args, true) || in_array('--staged', $args, true);
+    $algorithm = 'myers';
 
-    $results = $cached ? $repo->diffStaged() : $repo->diff();
+    foreach ($args as $arg) {
+        $algorithm = match ($arg) {
+            '--patience' => 'patience',
+            '--histogram' => 'histogram',
+            '--minimal' => 'minimal',
+            default => $algorithm,
+        };
+    }
+
+    $results = $cached ? $repo->diffStaged(null, $algorithm) : $repo->diff(null, $algorithm);
 
     foreach ($results as $diff) {
         fwrite(STDOUT, ColorDiff::colorize($diff->format()));
@@ -470,7 +496,7 @@ function commandCheckout(Repository $repo, array $args): void
 function commandMerge(Repository $repo, array $args): void
 {
     if ($args === []) {
-        fwrite(STDERR, "Usage: pitmaster merge <branch>|--continue|--abort\n");
+        fwrite(STDERR, "Usage: pitmaster merge <branch...>|-s <ours|ort|recursive> <branch>|--continue|--abort\n");
         exit(1);
     }
 
@@ -484,7 +510,20 @@ function commandMerge(Repository $repo, array $args): void
         return;
     }
 
-    $result = $repo->merge($args[0]);
+    if ($args[0] === '-s') {
+        if (isset($args[1], $args[2]) && in_array($args[1], ['ours', 'ort', 'recursive'], true)) {
+            $result = $repo->merge($args[2], $args[1]);
+
+            fwrite(STDOUT, "Merge successful.\n");
+
+            return;
+        }
+
+        fwrite(STDERR, "Unsupported merge strategy.\n");
+        exit(1);
+    }
+
+    $result = count($args) > 1 ? $repo->mergeOctopus($args) : $repo->merge($args[0]);
 
     if ($result->clean) {
         fwrite(STDOUT, "Merge successful.\n");
@@ -492,6 +531,45 @@ function commandMerge(Repository $repo, array $args): void
         fwrite(STDERR, "CONFLICT in: " . implode(', ', $result->conflictPaths) . "\n");
         exit(1);
     }
+}
+
+function commandBisect(Repository $repo, array $args): void
+{
+    if ($args === []) {
+        fwrite(STDERR, "Usage: pitmaster bisect start <bad> <good>|good [rev]|bad [rev]|reset\n");
+        exit(1);
+    }
+
+    match ($args[0]) {
+        'start' => (function () use ($repo, $args): void {
+            if (!isset($args[1], $args[2])) {
+                fwrite(STDERR, "Usage: pitmaster bisect start <bad> <good>\n");
+                exit(1);
+            }
+
+            $candidate = $repo->bisectStart($args[1], $args[2]);
+            fwrite(STDOUT, $candidate->hex . "\n");
+        })(),
+        'good' => (function () use ($repo, $args): void {
+            $candidate = $repo->bisectGood($args[1] ?? null);
+
+            if ($candidate !== null) {
+                fwrite(STDOUT, $candidate->hex . "\n");
+            }
+        })(),
+        'bad' => (function () use ($repo, $args): void {
+            $candidate = $repo->bisectBad($args[1] ?? null);
+
+            if ($candidate !== null) {
+                fwrite(STDOUT, $candidate->hex . "\n");
+            }
+        })(),
+        'reset' => $repo->bisectReset(),
+        default => (function (): void {
+            fwrite(STDERR, "Usage: pitmaster bisect start <bad> <good>|good [rev]|bad [rev]|reset\n");
+            exit(1);
+        })(),
+    };
 }
 
 function commandCherryPick(Repository $repo, array $args): void

@@ -33,6 +33,26 @@ final class FsmonitorTest extends TestCase
         file_put_contents($d, $c);
     }
 
+    private function git(string $command): string
+    {
+        exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($this->tmpDir), $command), $output, $exitCode);
+        $result = implode("\n", $output);
+
+        if ($exitCode !== 0) {
+            self::fail("git {$command} failed:\n{$result}");
+        }
+
+        return $result . ($result === '' ? '' : "\n");
+    }
+
+    private function installFsmonitorHook(string $script): void
+    {
+        $path = $this->tmpDir . '/.git/hooks/query-fsmonitor';
+        file_put_contents($path, $script);
+        chmod($path, 0755);
+        $this->git('config core.fsmonitor .git/hooks/query-fsmonitor');
+    }
+
     #[Test]
     public function isEnabledReturnsFalseByDefault(): void
     {
@@ -81,5 +101,52 @@ final class FsmonitorTest extends TestCase
         $result = $fsmon->query(null);
 
         $this->assertContains('file.txt', $result['files']);
+    }
+
+    #[Test]
+    public function queryUsesConfiguredFsmonitorHookProtocol(): void
+    {
+        $this->installFsmonitorHook(<<<'SH'
+#!/usr/bin/env bash
+printf '%s|%s\n' "$1" "$2" >> .git/fsmonitor.log
+printf 'hook-token\0tracked.txt\0nested/file.txt\0'
+SH);
+
+        $fsmon = new Fsmonitor($this->tmpDir . '/.git', $this->tmpDir);
+        $result = $fsmon->query('seed-token');
+
+        $this->assertSame('hook-token', $result['token']);
+        $this->assertSame(['tracked.txt', 'nested/file.txt'], $result['files']);
+        $this->assertSame("2|seed-token\n", file_get_contents($this->tmpDir . '/.git/fsmonitor.log'));
+    }
+
+    #[Test]
+    public function fsmonitorHookProtocolMatchesGitInvocationShape(): void
+    {
+        $this->writeFile('tracked.txt', "tracked\n");
+        $this->git('add tracked.txt');
+        $this->git('commit -m initial');
+        $this->installFsmonitorHook(<<<'SH'
+#!/usr/bin/env bash
+printf '%s|%s\n' "$1" "$2" >> .git/fsmonitor.log
+printf 'git-token\0tracked.txt\0'
+SH);
+
+        $this->git('update-index --fsmonitor');
+        $this->git('status --porcelain=v2');
+        $this->git('status --porcelain=v2');
+
+        $gitLog = array_values(array_filter(explode("\n", trim((string) file_get_contents($this->tmpDir . '/.git/fsmonitor.log')))));
+        $this->assertNotEmpty($gitLog);
+        $this->assertSame('2|git-token', end($gitLog));
+
+        unlink($this->tmpDir . '/.git/fsmonitor.log');
+
+        $fsmon = new Fsmonitor($this->tmpDir . '/.git', $this->tmpDir);
+        $result = $fsmon->query('git-token');
+
+        $this->assertSame('git-token', $result['token']);
+        $this->assertSame(['tracked.txt'], $result['files']);
+        $this->assertSame("2|git-token\n", file_get_contents($this->tmpDir . '/.git/fsmonitor.log'));
     }
 }

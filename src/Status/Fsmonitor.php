@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Pitmaster\Status;
 
+use Pitmaster\Config\GitConfig;
+
 /**
  * Filesystem monitor integration.
  *
- * Tracks which files have changed since the last query, allowing
- * status/diff to skip unchanged files. Uses a token-based protocol:
- * query with last token, receive list of changed files + new token.
+ * Git's canonical fsmonitor protocol invokes a configured hook/command with:
+ *   query-fsmonitor 2 <last-token>
  *
- * In pure PHP, we implement a polling-based monitor using file
- * modification times and a cached state file.
+ * The command returns a NUL-delimited payload:
+ *   <next-token>\0<path>\0<path>\0...
+ *
+ * When no usable fsmonitor hook is configured or the command fails, Pitmaster
+ * falls back to a polling scan so status/diff remain functional.
  */
 final class Fsmonitor
 {
@@ -29,15 +33,9 @@ final class Fsmonitor
      */
     public function isEnabled(): bool
     {
-        $configPath = $this->gitDir . '/config';
+        $value = GitConfig::fromFile($this->gitDir . '/config')->get('core.fsmonitor');
 
-        if (!is_file($configPath)) {
-            return false;
-        }
-
-        $content = file_get_contents($configPath);
-
-        return $content !== false && str_contains($content, 'core.fsmonitor');
+        return $value !== null && !$this->isFalseLike($value);
     }
 
     /**
@@ -47,6 +45,12 @@ final class Fsmonitor
      */
     public function query(?string $lastToken = null): array
     {
+        $hookResult = $this->queryHook($lastToken);
+
+        if ($hookResult !== null) {
+            return $hookResult;
+        }
+
         $lastTime = $lastToken !== null ? (int) $lastToken : 0;
         $currentTime = time();
         $changed = [];
@@ -121,5 +125,129 @@ final class Fsmonitor
                 }
             }
         }
+    }
+
+    /**
+     * @return array{files: array<int, string>, token: string}|null
+     */
+    private function queryHook(?string $lastToken): ?array
+    {
+        $command = $this->resolveHookCommand();
+
+        if ($command === null) {
+            return null;
+        }
+
+        $queryToken = $lastToken ?? '';
+        $descriptors = [
+            0 => ['file', '/dev/null', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
+        ];
+
+        $process = proc_open(
+            $command . ' ' . escapeshellarg('2') . ' ' . escapeshellarg($queryToken),
+            $descriptors,
+            $pipes,
+            $this->workDir,
+            [
+                'GIT_DIR' => $this->gitDir,
+                'GIT_WORK_TREE' => $this->workDir,
+            ],
+        );
+
+        if (!is_resource($process)) {
+            return null;
+        }
+
+        $stdout = stream_get_contents($pipes[1]) ?: '';
+        $stderr = stream_get_contents($pipes[2]) ?: '';
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        $exitCode = proc_close($process);
+
+        if ($exitCode !== 0 || ($stdout === '' && trim($stderr) !== '')) {
+            return null;
+        }
+
+        return $this->parseHookOutput($stdout);
+    }
+
+    /**
+     * @return array{files: array<int, string>, token: string}|null
+     */
+    private function parseHookOutput(string $output): ?array
+    {
+        $payload = rtrim($output, "\0\r\n");
+
+        if ($payload === '') {
+            return null;
+        }
+
+        $parts = explode("\0", $payload);
+        $token = array_shift($parts);
+
+        if ($token === null || $token === '') {
+            return null;
+        }
+
+        $files = array_values(array_filter($parts, static fn (string $path): bool => $path !== ''));
+
+        return [
+            'files' => $files,
+            'token' => $token,
+        ];
+    }
+
+    private function resolveHookCommand(): ?string
+    {
+        $value = GitConfig::fromFile($this->gitDir . '/config')->get('core.fsmonitor');
+
+        if ($value === null || $this->isFalseLike($value)) {
+            return null;
+        }
+
+        $path = $this->resolveConfiguredPath($value);
+
+        if ($path !== null) {
+            return escapeshellarg($path);
+        }
+
+        return $value;
+    }
+
+    private function resolveConfiguredPath(string $value): ?string
+    {
+        if ($value === '' || $this->isTrueLike($value)) {
+            return null;
+        }
+
+        if (str_starts_with($value, '/')) {
+            return is_file($value) ? $value : null;
+        }
+
+        $worktreePath = $this->workDir . '/' . $value;
+
+        if (is_file($worktreePath)) {
+            return $worktreePath;
+        }
+
+        $gitPath = $this->gitDir . '/' . $value;
+
+        if (is_file($gitPath)) {
+            return $gitPath;
+        }
+
+        return null;
+    }
+
+    private function isFalseLike(string $value): bool
+    {
+        return in_array(strtolower(trim($value)), ['false', 'no', 'off', '0'], true);
+    }
+
+    private function isTrueLike(string $value): bool
+    {
+        return in_array(strtolower(trim($value)), ['true', 'yes', 'on', '1'], true);
     }
 }

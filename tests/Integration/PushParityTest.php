@@ -90,6 +90,48 @@ final class PushParityTest extends TestCase
     }
 
     #[Test]
+    public function successfulPushAdvancesRemoteTrackingRefLikeGit(): void
+    {
+        [, $pitRemoteDir, $gitRemoteDir] = $this->initDualRemoteProject();
+        $pitCloneDir = $this->tmpDir . '/pit-clone-tracking';
+        $gitCloneDir = $this->tmpDir . '/git-clone-tracking';
+        $this->startGitHttpBackendServer($this->tmpDir . '/projects');
+        $pitRemoteUrl = $this->baseUrl . '/pit-remote.git';
+        $gitRemoteUrl = $this->baseUrl . '/git-remote.git';
+
+        $pitRepo = Pitmaster::clone($pitRemoteUrl, $pitCloneDir);
+        $this->git('clone ' . escapeshellarg($gitRemoteUrl) . ' ' . escapeshellarg($gitCloneDir), $this->tmpDir);
+        $this->configureUser($gitCloneDir);
+
+        file_put_contents($pitCloneDir . '/tracking.txt', "pit tracking\n");
+        $pitRepo->add('tracking.txt');
+        $pitRepo->commit("Tracking push\n");
+        $pitRepo->push();
+
+        file_put_contents($gitCloneDir . '/tracking.txt', "pit tracking\n");
+        $this->git('add tracking.txt', $gitCloneDir);
+        $this->git('commit -m "Tracking push"', $gitCloneDir);
+        $this->git('push origin main', $gitCloneDir);
+
+        $this->assertSame(
+            trim($this->git('rev-parse HEAD', $pitCloneDir)),
+            trim($this->git('rev-parse refs/remotes/origin/main', $pitCloneDir)),
+        );
+        $this->assertSame(
+            trim($this->git('rev-parse HEAD', $gitCloneDir)),
+            trim($this->git('rev-parse refs/remotes/origin/main', $gitCloneDir)),
+        );
+        $this->assertSame(
+            trim($this->git('rev-parse refs/heads/main', $pitRemoteDir)),
+            trim($this->git('rev-parse refs/remotes/origin/main', $pitCloneDir)),
+        );
+        $this->assertSame(
+            trim($this->git('rev-parse refs/heads/main', $gitRemoteDir)),
+            trim($this->git('rev-parse refs/remotes/origin/main', $gitCloneDir)),
+        );
+    }
+
+    #[Test]
     public function forceWithLeaseRejectsWhenTrackedLeaseIsStale(): void
     {
         [$sourceDir] = $this->initDualRemoteProject();

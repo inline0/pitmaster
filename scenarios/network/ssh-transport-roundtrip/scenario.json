@@ -1,0 +1,24 @@
+{
+    "name": "ssh-transport-roundtrip",
+    "category": "network",
+    "description": "Compare SSH clone, fetch, and push behavior against Git using a repo-local temporary sshd",
+    "operations": [
+        "ssh_state"
+    ],
+    "oracle_commands": {
+        "ssh_state": "cat .ssh-state"
+    },
+    "actual_commands": {
+        "ssh_state": "cat .ssh-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "ssh_state"
+        ],
+        "fsck_clean": false
+    }
+}

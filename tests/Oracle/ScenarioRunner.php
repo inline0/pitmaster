@@ -117,9 +117,10 @@ final class ScenarioRunner
         }
 
         $command = sprintf(
-            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s bash %s 2>&1',
             escapeshellarg($tempDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($tempDir),
             escapeshellarg($setupScript),
         );
 

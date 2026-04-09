@@ -23,6 +23,7 @@ final class AnnotatedTagParityTest extends TestCase
     {
         foreach (
             [
+            'GIT_AUTHOR_DATE',
             'GIT_COMMITTER_NAME',
             'GIT_COMMITTER_EMAIL',
             'GIT_COMMITTER_DATE',
@@ -105,7 +106,18 @@ final class AnnotatedTagParityTest extends TestCase
         $this->git($dir, 'config user.name Test');
         file_put_contents($dir . '/tracked.txt', "content\n");
         $this->git($dir, 'add tracked.txt');
-        $this->git($dir, 'commit -m initial');
+
+        $previousAuthor = getenv('GIT_AUTHOR_DATE');
+        $previousCommitter = getenv('GIT_COMMITTER_DATE');
+        putenv('GIT_AUTHOR_DATE=@1712566800 +0200');
+        putenv('GIT_COMMITTER_DATE=@1712566800 +0200');
+
+        try {
+            $this->git($dir, 'commit -m initial');
+        } finally {
+            putenv($previousAuthor === false ? 'GIT_AUTHOR_DATE' : 'GIT_AUTHOR_DATE=' . $previousAuthor);
+            putenv($previousCommitter === false ? 'GIT_COMMITTER_DATE' : 'GIT_COMMITTER_DATE=' . $previousCommitter);
+        }
     }
 
     private function setTaggerEnv(): void

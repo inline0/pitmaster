@@ -15,7 +15,7 @@ use Pitmaster\Object\ObjectId;
  *   Header: DIRC (4 bytes) + version (4 bytes) + entry count (4 bytes)
  *   Entries: sorted by path
  *   Extensions: optional
- *   Checksum: 20-byte SHA-1
+ *   Checksum: repository hash length (20-byte SHA-1 or 32-byte SHA-256)
  */
 final class Index
 {
@@ -28,30 +28,32 @@ final class Index
     private array $extensions = [];
 
     private int $version = 2;
+    private int $hashBytes;
 
-    public function __construct()
+    public function __construct(int $hashBytes = 20)
     {
+        $this->hashBytes = $hashBytes;
     }
 
     /**
      * Parse an index file.
      */
-    public static function open(string $path): self
+    public static function open(string $path, int $hashBytes = 20): self
     {
         if (!is_file($path)) {
-            return new self();
+            return new self($hashBytes);
         }
 
         $data = file_get_contents($path);
 
         if ($data === false) {
-            return new self();
+            return new self($hashBytes);
         }
 
-        return self::parse($data, $path);
+        return self::parse($data, $path, $hashBytes);
     }
 
-    public static function parse(string $data, string $path = ''): self
+    public static function parse(string $data, string $path = '', int $hashBytes = 20): self
     {
         $reader = new BinaryReader($data);
 
@@ -69,7 +71,7 @@ final class Index
 
         $entryCount = $reader->readUint32();
 
-        $index = new self();
+        $index = new self($hashBytes);
         $index->version = $version;
 
         for ($i = 0; $i < $entryCount; $i++) {
@@ -85,7 +87,7 @@ final class Index
             $uid = $reader->readUint32();
             $gid = $reader->readUint32();
             $fileSize = $reader->readUint32();
-            $hash = ObjectId::fromBinary($reader->read(20));
+            $hash = ObjectId::fromBinary($reader->read($hashBytes));
             $flags = $reader->readUint16();
 
             $pathLen = $flags & 0x0FFF;
@@ -140,8 +142,8 @@ final class Index
             $index->entries[] = $entry;
         }
 
-        // Parse extensions (if remaining data before the 20-byte checksum)
-        while ($reader->remaining() > 20) {
+        // Parse extensions (if remaining data before the trailing index checksum)
+        while ($reader->remaining() > $hashBytes) {
             $sig = $reader->read(4);
             $extSize = $reader->readUint32();
             $index->extensions[] = [
@@ -228,6 +230,16 @@ final class Index
     public function version(): int
     {
         return $this->version;
+    }
+
+    public function hashBytes(): int
+    {
+        return $this->hashBytes;
+    }
+
+    public function hashAlgo(): string
+    {
+        return $this->hashBytes === 32 ? 'sha256' : 'sha1';
     }
 
     /**

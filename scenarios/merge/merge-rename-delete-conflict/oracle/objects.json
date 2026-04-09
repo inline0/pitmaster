@@ -1,0 +1,51 @@
+[
+    {
+        "hash": "257cc5642cb1a054f08cc83f2d943e56fd3ebe99",
+        "type": "blob",
+        "size": 4,
+        "content": "foo\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "321b5e807129e1d47b19fcf59b1654ea621ede3e",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tB\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "562dcb9c803851e1253473ac3cb415eaf361491d",
+        "type": "tree",
+        "size": 29,
+        "content": "100644 blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99\tA\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "958e6df6b1e407d6b5f1e6cc66138e2d910030c4",
+        "type": "commit",
+        "size": 215,
+        "content": "tree 321b5e807129e1d47b19fcf59b1654ea621ede3e\nparent 9859ba0d1719a754ba5044b4eaad8486a2f8c910\nauthor Test User <test@pitmaster.dev> 1704499201 +0000\ncommitter Test User <test@pitmaster.dev> 1704499201 +0000\n\nrename\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9859ba0d1719a754ba5044b4eaad8486a2f8c910",
+        "type": "commit",
+        "size": 165,
+        "content": "tree 562dcb9c803851e1253473ac3cb415eaf361491d\nauthor Test User <test@pitmaster.dev> 1704499200 +0000\ncommitter Test User <test@pitmaster.dev> 1704499200 +0000\n\nbase\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aae480e2907df4783dfef88b11d31106bffaf5d8",
+        "type": "commit",
+        "size": 215,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nparent 9859ba0d1719a754ba5044b4eaad8486a2f8c910\nauthor Test User <test@pitmaster.dev> 1704499202 +0000\ncommitter Test User <test@pitmaster.dev> 1704499202 +0000\n\ndelete\n",
+        "encoding": "utf-8"
+    }
+]

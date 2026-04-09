@@ -1,0 +1,4 @@
+is_shallow=true
+head=19d3270846becdc3a6337f67879999fbe7edd88d
+commit_count=2
+shallow=e6c48ac218ce9e9a537c49c1dbe4be55578b81f0

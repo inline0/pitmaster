@@ -241,9 +241,10 @@ final class ActualCapture
         }
 
         $command = sprintf(
-            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s bash %s 2>&1',
             escapeshellarg($tempDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($tempDir),
             escapeshellarg($setupScript),
         );
 
@@ -259,7 +260,8 @@ final class ActualCapture
     private function captureFsck(string $repoDir): string
     {
         $command = sprintf(
-            'cd %s && git fsck --strict --no-progress 2>&1',
+            'cd %s && GIT_CEILING_DIRECTORIES=%s git fsck --strict --no-progress 2>&1',
+            escapeshellarg($repoDir),
             escapeshellarg($repoDir),
         );
 
@@ -269,9 +271,10 @@ final class ActualCapture
     private function runCommand(Scenario $scenario, string $repoDir, string $command): string
     {
         $fullCommand = sprintf(
-            'cd %s && PITMASTER_ROOT=%s %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s %s 2>&1',
             escapeshellarg($repoDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($repoDir),
             $command,
         );
 
@@ -296,9 +299,10 @@ final class ActualCapture
         }
 
         $command = sprintf(
-            'cd %s && PITMASTER_ROOT=%s %s %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s %s %s 2>&1',
             escapeshellarg($repoDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($repoDir),
             escapeshellarg(PHP_BINARY),
             escapeshellarg($actualScript),
         );

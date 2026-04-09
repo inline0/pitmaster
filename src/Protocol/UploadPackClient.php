@@ -15,7 +15,7 @@ use Pitmaster\Object\ObjectId;
  */
 final class UploadPackClient
 {
-    public function __construct(private readonly SmartHttpClient $http)
+    public function __construct(private readonly UploadPackTransport $transport)
     {
     }
 
@@ -27,18 +27,34 @@ final class UploadPackClient
      * @param array<int, ObjectId> $haves Object IDs we already have
      * @return string Raw pack data
      */
-    public function fetch(string $url, array $wants, array $haves = []): string
+    public function fetch(string $url, array $wants, array $haves = [], ?int $depth = null): string
+    {
+        return $this->fetchResult($url, $wants, $haves, $depth)['packData'];
+    }
+
+    /**
+     * Fetch objects plus shallow-state updates from a remote.
+     *
+     * @param string $url Remote repository URL
+     * @param array<int, ObjectId> $wants Object IDs we want
+     * @param array<int, ObjectId> $haves Object IDs we already have
+     * @return array{packData: string, shallow: list<ObjectId>, unshallow: list<ObjectId>}
+     */
+    public function fetchResult(string $url, array $wants, array $haves = [], ?int $depth = null): array
     {
         if ($wants === []) {
-            return '';
+            return [
+                'packData' => '',
+                'shallow' => [],
+                'unshallow' => [],
+            ];
         }
 
-        $request = ProtocolV1::buildFetchRequest($wants, $haves);
+        $request = ProtocolV1::buildFetchRequest($wants, $haves, ProtocolV1::DEFAULT_FETCH_CAPABILITIES, $depth);
 
-        $response = $this->http->uploadPack($url, $request);
+        $response = $this->transport->uploadPack($url, $request);
 
-        // Parse response: may contain NAK/ACK lines, then pack data
-        return $this->extractPackData($response);
+        return $this->extractResult($response);
     }
 
     /**
@@ -49,16 +65,35 @@ final class UploadPackClient
      * @param array<int, ObjectId> $haves Object IDs we already have
      * @return string Raw pack data
      */
-    public function fetchV2(string $url, array $wants, array $haves = []): string
+    public function fetchV2(string $url, array $wants, array $haves = [], ?int $depth = null): string
+    {
+        return $this->fetchV2Result($url, $wants, $haves, $depth)['packData'];
+    }
+
+    /**
+     * @param string $url Remote repository URL
+     * @param array<int, ObjectId> $wants Object IDs we want
+     * @param array<int, ObjectId> $haves Object IDs we already have
+     * @return array{packData: string, shallow: list<ObjectId>, unshallow: list<ObjectId>}
+     */
+    public function fetchV2Result(string $url, array $wants, array $haves = [], ?int $depth = null): array
     {
         if ($wants === []) {
-            return '';
+            return [
+                'packData' => '',
+                'shallow' => [],
+                'unshallow' => [],
+            ];
         }
 
-        $request = ProtocolV2::buildFetchRequest($wants, $haves);
-        $response = $this->http->uploadPackV2($url, $request);
+        $request = ProtocolV2::buildFetchRequest($wants, $haves, ProtocolV2::DEFAULT_FETCH_FEATURES, true, [], $depth);
+        if (!$this->transport instanceof SmartHttpClient) {
+            throw new ProtocolException('Protocol v2 fetch requires smart HTTP transport');
+        }
 
-        return ProtocolV2::extractPackData($response);
+        $response = $this->transport->uploadPackV2($url, $request);
+
+        return $this->extractResult($response, true);
     }
 
     /**
@@ -158,5 +193,39 @@ final class UploadPackClient
         }
 
         throw new ProtocolException('upload-pack response did not contain pack data');
+    }
+
+    /**
+     * @return array{packData: string, shallow: list<ObjectId>, unshallow: list<ObjectId>}
+     */
+    private function extractResult(string $response, bool $protocolV2 = false): array
+    {
+        $packData = $protocolV2 ? ProtocolV2::extractPackData($response) : $this->extractPackData($response);
+        $packPos = strpos($response, 'PACK');
+        $prefix = $packPos === false ? $response : substr($response, 0, $packPos);
+
+        return [
+            'packData' => $packData,
+            'shallow' => $this->extractObjectIdsFromPrefix($prefix, 'shallow'),
+            'unshallow' => $this->extractObjectIdsFromPrefix($prefix, 'unshallow'),
+        ];
+    }
+
+    /**
+     * @return list<ObjectId>
+     */
+    private function extractObjectIdsFromPrefix(string $prefix, string $keyword): array
+    {
+        $matches = [];
+        preg_match_all(
+            '/\b' . preg_quote($keyword, '/') . ' ([0-9a-f]{40}|[0-9a-f]{64})\n/i',
+            $prefix,
+            $matches,
+        );
+
+        return array_values(array_map(
+            static fn (string $hex): ObjectId => ObjectId::fromHex(strtolower($hex)),
+            $matches[1],
+        ));
     }
 }

@@ -153,8 +153,8 @@ final class PackedRefStore implements RefStore
             if ($line[0] === '^' && $lastRef !== null) {
                 $hex = substr($line, 1);
 
-                if (strlen($hex) >= 40 && ctype_xdigit(substr($hex, 0, 40))) {
-                    $this->peeled[$lastRef] = ObjectId::fromHex(substr($hex, 0, 40));
+                if (ObjectId::looksLikeHex($hex)) {
+                    $this->peeled[$lastRef] = ObjectId::fromHex($hex);
                 }
 
                 continue;
@@ -170,8 +170,8 @@ final class PackedRefStore implements RefStore
             $hex = substr($line, 0, $spacePos);
             $refName = substr($line, $spacePos + 1);
 
-            if (strlen($hex) >= 40 && ctype_xdigit(substr($hex, 0, 40))) {
-                $this->refs[$refName] = ObjectId::fromHex(substr($hex, 0, 40));
+            if (ObjectId::looksLikeHex($hex)) {
+                $this->refs[$refName] = ObjectId::fromHex($hex);
                 $lastRef = $refName;
             }
         }

@@ -1,0 +1,5 @@
+{
+    "patience": "diff --git a/article.txt b/article.txt\nindex 10be06f..ec2cc33 100644\n--- a/article.txt\n+++ b/article.txt\n@@ -1,6 +1,6 @@\n a\n unique1\n-repeat\n-repeat\n unique2\n+repeat\n+repeat\n z\n",
+    "histogram": "diff --git a/article.txt b/article.txt\nindex 10be06f..ec2cc33 100644\n--- a/article.txt\n+++ b/article.txt\n@@ -1,6 +1,6 @@\n a\n unique1\n-repeat\n-repeat\n unique2\n+repeat\n+repeat\n z\n",
+    "minimal": "diff --git a/article.txt b/article.txt\nindex 10be06f..ec2cc33 100644\n--- a/article.txt\n+++ b/article.txt\n@@ -1,6 +1,6 @@\n a\n unique1\n+unique2\n repeat\n repeat\n-unique2\n z\n"
+}

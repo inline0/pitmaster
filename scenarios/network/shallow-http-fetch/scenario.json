@@ -1,0 +1,24 @@
+{
+    "name": "shallow-http-fetch",
+    "category": "network",
+    "description": "Compare shallow smart HTTP deepen fetch semantics against Git",
+    "operations": [
+        "shallow_state"
+    ],
+    "oracle_commands": {
+        "shallow_state": "cat .shallow-state"
+    },
+    "actual_commands": {
+        "shallow_state": "cat .shallow-state"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "shallow_state"
+        ],
+        "fsck_clean": false
+    }
+}

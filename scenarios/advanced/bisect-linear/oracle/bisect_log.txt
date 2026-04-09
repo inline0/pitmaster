@@ -1,0 +1,7 @@
+# bad: [366ac5637c2b78fa5695075458f9b605a3edd866] c6
+# good: [c19e829936bc57b6fccf982d70cb5f206962d436] c1
+git bisect start '366ac5637c2b78fa5695075458f9b605a3edd866' 'c19e829936bc57b6fccf982d70cb5f206962d436'
+# good: [0b2f356e16c320a5d082cb463bb103cd4bca7bde] c3
+git bisect good 0b2f356e16c320a5d082cb463bb103cd4bca7bde
+# bad: [68a11da4ce5ec4b9d9058ac0b7e6643ba03dcaa2] c5
+git bisect bad 68a11da4ce5ec4b9d9058ac0b7e6643ba03dcaa2

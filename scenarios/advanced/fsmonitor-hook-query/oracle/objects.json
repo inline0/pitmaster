@@ -1,0 +1,37 @@
+[
+    {
+        "hash": "651dcde55b0861b81b2bfa9ff4483ee51a0477da",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 9d0e5c5644f82efcc0d94f9a992ec9c2861afafd\nauthor Test User <test@pitmaster.dev> 1705363210 +0000\ncommitter Test User <test@pitmaster.dev> 1705363210 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "79c53955ef856f16f2107446bc721c8879a1bd2e",
+        "type": "blob",
+        "size": 7,
+        "content": "nested\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "93a9e06d23ffb27541048940052c7a076c7a195a",
+        "type": "blob",
+        "size": 8,
+        "content": "tracked\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9d0e5c5644f82efcc0d94f9a992ec9c2861afafd",
+        "type": "tree",
+        "size": 72,
+        "content": "040000 tree a0bfcd746c0f863f39a713ec61daaf96aba0957f\tnested\n100644 blob 93a9e06d23ffb27541048940052c7a076c7a195a\ttracked.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a0bfcd746c0f863f39a713ec61daaf96aba0957f",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob 79c53955ef856f16f2107446bc721c8879a1bd2e\tfile.txt\n",
+        "encoding": "utf-8"
+    }
+]

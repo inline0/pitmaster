@@ -152,11 +152,19 @@ final class BinaryReader
     }
 
     /**
+     * Read a raw binary hash and return as hex.
+     */
+    public function readHash(int $bytes): string
+    {
+        return bin2hex($this->read($bytes));
+    }
+
+    /**
      * Read a raw binary SHA-1 hash (20 bytes) and return as hex.
      */
     public function readHash20(): string
     {
-        return bin2hex($this->read(20));
+        return $this->readHash(20);
     }
 
     /**
@@ -164,7 +172,7 @@ final class BinaryReader
      */
     public function readHash32(): string
     {
-        return bin2hex($this->read(32));
+        return $this->readHash(32);
     }
 
     /**

@@ -1,0 +1,6 @@
+core.repositoryformatversion=1
+core.filemode=true
+core.bare=false
+core.ignorecase=true
+core.precomposeunicode=true
+extensions.objectformat=sha256

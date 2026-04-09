@@ -18,4 +18,4 @@ PY
   git commit -m "commit ${i}" >/dev/null
 done
 
-git pack-objects --delta-base-offset --window=50 --depth=50 .git/objects/pack/codec-pack --all >/dev/null
+git rev-list --all | git pack-objects --delta-base-offset --window=50 --depth=50 .git/objects/pack/codec-pack --revs >/dev/null

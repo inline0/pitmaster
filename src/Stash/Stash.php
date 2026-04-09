@@ -69,7 +69,7 @@ final class Stash
         $identity = $this->currentIdentity();
 
         // Build tree from current index (staged state)
-        $index = Index::open($this->gitDir . '/index');
+        $index = Index::open($this->gitDir . '/index', $this->hashBytes());
         $indexTreeId = $this->buildTreeFromIndex($index);
 
         // Create index commit
@@ -80,7 +80,7 @@ final class Stash
             committer: $identity,
             message: $indexMessage . "\n",
         );
-        $indexCommitId = ObjectId::compute(ObjectType::Commit, $indexContent);
+        $indexCommitId = ObjectId::compute(ObjectType::Commit, $indexContent, $this->hashAlgo());
         $indexCommit = Commit::parse($indexContent, $indexCommitId);
         $this->objects->write($indexCommit);
 
@@ -95,7 +95,7 @@ final class Stash
             committer: $identity,
             message: $stashMessage . "\n",
         );
-        $stashId = ObjectId::compute(ObjectType::Commit, $stashContent);
+        $stashId = ObjectId::compute(ObjectType::Commit, $stashContent, $this->hashAlgo());
         $stashCommit = Commit::parse($stashContent, $stashId);
         $this->objects->write($stashCommit);
 
@@ -105,7 +105,7 @@ final class Stash
 
         $reflog = Reflog::open($this->gitDir, 'refs/stash');
         $reflog->append(
-            $oldStash ?? ObjectId::zero(),
+            $oldStash ?? ObjectId::zero($this->hashAlgo()),
             $stashId,
             $identity,
             $stashMessage,
@@ -282,7 +282,7 @@ final class Stash
 
             if (is_file($fullPath)) {
                 $content = file_get_contents($fullPath);
-                $blob = Blob::fromContent($content !== false ? $content : '');
+                $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
                 $this->objects->write($blob);
                 $worktreeEntry = IndexEntry::create($entry->path, $blob->id, $entry->mode);
             } else {
@@ -303,7 +303,7 @@ final class Stash
 
                 $fullPath = $this->workDir . '/' . $path;
                 $content = file_get_contents($fullPath);
-                $blob = Blob::fromContent($content !== false ? $content : '');
+                $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
                 $this->objects->write($blob);
                 $worktreeEntry = IndexEntry::fromStat($path, $blob->id, $fullPath);
                 $parts = explode('/', $path);
@@ -350,7 +350,7 @@ final class Stash
             $b->isTree() ? $b->name . '/' : $b->name,
         ));
 
-        $tree = Tree::fromEntries($entries);
+        $tree = Tree::fromEntries($entries, $this->hashAlgo());
         $this->objects->write($tree);
 
         return $tree->id;
@@ -365,7 +365,7 @@ final class Stash
         }
 
         $treeMap = $this->flattenTree($commit->tree);
-        $index = new Index();
+        $index = new Index($this->hashBytes());
 
         foreach ($treeMap as $path => $hash) {
             $blob = $this->objects->read(ObjectId::fromHex($hash));
@@ -597,5 +597,17 @@ final class Stash
                 $this->removeEmptyParentDirectories(dirname($fullPath));
             }
         }
+    }
+
+    private function hashAlgo(): string
+    {
+        return GitConfig::fromFile($this->gitDir . '/config')->get('extensions.objectformat') === 'sha256'
+            ? 'sha256'
+            : 'sha1';
+    }
+
+    private function hashBytes(): int
+    {
+        return ObjectId::hashBytesForAlgo($this->hashAlgo());
     }
 }

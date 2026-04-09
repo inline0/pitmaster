@@ -1,0 +1,32 @@
+{
+    "name": "merge-ort-strategy",
+    "category": "merge",
+    "description": "Explicit ort strategy selection matches git on a recursive criss-cross merge",
+    "operations": [
+        "status",
+        "pit_status",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "worktree": "cat f.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "worktree": "cat f.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "status",
+            "pit_status",
+            "worktree"
+        ],
+        "fsck_clean": true
+    }
+}

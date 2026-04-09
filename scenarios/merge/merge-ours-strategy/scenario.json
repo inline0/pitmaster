@@ -1,0 +1,31 @@
+{
+    "name": "merge-ours-strategy",
+    "category": "merge",
+    "description": "Compare repository-level ours-strategy merge commits against Git",
+    "operations": [
+        "status",
+        "parents",
+        "subject"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "parents": "git show -s --format=%P HEAD",
+        "subject": "git show -s --format=%s HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "parents": "git show -s --format=%P HEAD",
+        "subject": "git show -s --format=%s HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "parents",
+            "subject"
+        ],
+        "fsck_clean": true
+    }
+}

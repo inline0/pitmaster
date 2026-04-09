@@ -11,8 +11,11 @@ use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Protocol\DumbHttpClient;
+use Pitmaster\Protocol\ShallowClone;
+use Pitmaster\Protocol\SshClient;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
+use Pitmaster\Protocol\UploadPackTransport;
 
 /**
  * Static facade. Public API entry point.
@@ -30,7 +33,7 @@ final class Pitmaster
     /**
      * Initialize a new repository.
      */
-    public static function init(string $path): Repository
+    public static function init(string $path, string $objectFormat = 'sha1'): Repository
     {
         $gitDir = $path . '/.git';
 
@@ -67,7 +70,7 @@ final class Pitmaster
             '# *~',
             '',
         ]));
-        file_put_contents($gitDir . '/config', self::initialConfig($path));
+        file_put_contents($gitDir . '/config', self::initialConfig($path, $objectFormat));
 
         return new Repository($path);
     }
@@ -75,13 +78,14 @@ final class Pitmaster
     /**
      * Clone a remote repository via smart HTTP.
      */
-    public static function clone(string $url, string $path): Repository
+    public static function clone(string $url, string $path, ?int $depth = null): Repository
     {
         $pathExisted = file_exists($path);
 
         try {
             $repo = self::init($path);
             $gitDir = $path . '/.git';
+            $transport = self::uploadPackTransport($url);
 
             $config = $repo->config();
             $config->set('remote.origin.url', $url);
@@ -89,9 +93,8 @@ final class Pitmaster
             $config->writeToFile($gitDir . '/config');
 
             try {
-                $http = new SmartHttpClient();
-                $discovery = $http->discoverRefs($url);
-                $uploadPack = new UploadPackClient($http);
+                $discovery = $transport->discoverRefs($url);
+                $uploadPack = new UploadPackClient($transport);
 
                 $wants = [];
 
@@ -110,11 +113,20 @@ final class Pitmaster
                         }
                     }
 
-                    $packData = $uploadPack->fetch($url, $uniqueWants);
+                    $fetchResult = $uploadPack->fetchResult($url, $uniqueWants, [], $depth);
+                    $packData = $fetchResult['packData'];
 
                     if ($packData !== '' && str_starts_with($packData, 'PACK')) {
                         self::writePackFile($gitDir, $packData);
                     }
+
+                    self::applyShallowUpdates(
+                        $gitDir,
+                        $fetchResult['shallow'],
+                        $fetchResult['unshallow'],
+                        $uniqueWants,
+                        $depth,
+                    );
                 }
 
                 self::applyRemoteRefs($repo, $discovery->refs());
@@ -127,6 +139,10 @@ final class Pitmaster
                     $discovery->ref($discovery->headSymref() ?? 'refs/heads/main') ?? $discovery->ref('HEAD'),
                 );
             } catch (ProtocolException $smartError) {
+                if (!$transport instanceof SmartHttpClient) {
+                    throw $smartError;
+                }
+
                 try {
                     $dumb = new DumbHttpClient();
                     $refs = $dumb->fetchRefs($url);
@@ -194,11 +210,15 @@ final class Pitmaster
         }
     }
 
-    private static function initialConfig(string $path): string
+    private static function initialConfig(string $path, string $objectFormat = 'sha1'): string
     {
+        if (!in_array($objectFormat, ['sha1', 'sha256'], true)) {
+            throw new \InvalidArgumentException("Unsupported object format: {$objectFormat}");
+        }
+
         $lines = [
             '[core]',
-            "\trepositoryformatversion = 0",
+            "\trepositoryformatversion = " . ($objectFormat === 'sha256' ? '1' : '0'),
             "\tfilemode = true",
             "\tbare = false",
         ];
@@ -213,7 +233,20 @@ final class Pitmaster
 
         $lines[] = '';
 
+        if ($objectFormat === 'sha256') {
+            $lines[] = '[extensions]';
+            $lines[] = "\tobjectformat = sha256";
+            $lines[] = '';
+        }
+
         return implode("\n", $lines);
+    }
+
+    private static function uploadPackTransport(string $url): UploadPackTransport
+    {
+        return SshClient::isSshUrl($url)
+            ? new SshClient()
+            : new SmartHttpClient();
     }
 
     private static function isCaseInsensitiveFilesystem(string $path): bool
@@ -247,6 +280,105 @@ final class Pitmaster
                 PackIndexer::writeIndex($packFile);
             }
         }
+    }
+
+    /**
+     * @param list<ObjectId> $shallow
+     * @param list<ObjectId> $unshallow
+     * @param list<ObjectId> $tips
+     */
+    private static function applyShallowUpdates(
+        string $gitDir,
+        array $shallow,
+        array $unshallow,
+        array $tips = [],
+        ?int $depth = null,
+    ): void {
+        if ($depth !== null) {
+            $computed = self::computeDepthBoundaries(new \Pitmaster\Storage\ObjectDatabase($gitDir . '/objects'), $tips, $depth);
+
+            if ($computed !== []) {
+                ShallowClone::writeShallow($gitDir, $computed);
+
+                return;
+            }
+        }
+
+        $current = [];
+
+        foreach (ShallowClone::readShallow($gitDir) as $id) {
+            $current[$id->hex] = $id;
+        }
+
+        foreach ($shallow as $id) {
+            $current[$id->hex] = $id;
+        }
+
+        foreach ($unshallow as $id) {
+            unset($current[$id->hex]);
+        }
+
+        ShallowClone::writeShallow($gitDir, array_values($current));
+    }
+
+    /**
+     * @param list<ObjectId> $tips
+     * @return list<ObjectId>
+     */
+    private static function computeDepthBoundaries(\Pitmaster\Storage\ObjectDatabase $objects, array $tips, int $depth): array
+    {
+        if ($depth < 1 || $tips === []) {
+            return [];
+        }
+
+        $boundaries = [];
+        $queue = [];
+        $seen = [];
+
+        foreach ($tips as $tip) {
+            $queue[] = [$tip, 1];
+        }
+
+        while ($queue !== []) {
+            [$id, $level] = array_shift($queue);
+            $seenKey = $id->hex . ':' . $level;
+
+            if (isset($seen[$seenKey])) {
+                continue;
+            }
+
+            $seen[$seenKey] = true;
+            $object = $objects->read($id);
+
+            if (!$object instanceof Commit) {
+                continue;
+            }
+
+            if ($level >= $depth || $object->parents === []) {
+                $boundaries[$id->hex] = $id;
+                continue;
+            }
+
+            $allParentsPresent = true;
+
+            foreach ($object->parents as $parent) {
+                if (!$objects->exists($parent)) {
+                    $boundaries[$id->hex] = $id;
+                    $allParentsPresent = false;
+                    break;
+                }
+            }
+
+            if (!$allParentsPresent) {
+                continue;
+            }
+
+            foreach ($object->parents as $parent) {
+                $queue[] = [$parent, $level + 1];
+            }
+        }
+
+        return array_values($boundaries);
     }
 
     /**

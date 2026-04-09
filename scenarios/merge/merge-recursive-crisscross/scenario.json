@@ -1,0 +1,32 @@
+{
+    "name": "merge-recursive-crisscross",
+    "category": "merge",
+    "description": "Criss-cross merge uses a recursive virtual base and matches git for the final clean merge result",
+    "operations": [
+        "status",
+        "pit_status",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "pit_status": "git status --porcelain=v2",
+        "worktree": "cat f.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "pit_status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "worktree": "cat f.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "status",
+            "pit_status",
+            "worktree"
+        ],
+        "fsck_clean": true
+    }
+}

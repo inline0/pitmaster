@@ -1,0 +1,26 @@
+[
+    {
+        "hash": "68a11da4ce5ec4b9d9058ac0b7e6643ba03dcaa2",
+        "name": "refs/bisect/bad"
+    },
+    {
+        "hash": "0b2f356e16c320a5d082cb463bb103cd4bca7bde",
+        "name": "refs/bisect/good-0b2f356e16c320a5d082cb463bb103cd4bca7bde"
+    },
+    {
+        "hash": "c19e829936bc57b6fccf982d70cb5f206962d436",
+        "name": "refs/bisect/good-c19e829936bc57b6fccf982d70cb5f206962d436"
+    },
+    {
+        "hash": "366ac5637c2b78fa5695075458f9b605a3edd866",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "366ac5637c2b78fa5695075458f9b605a3edd866",
+        "name": "refs/tags/bad"
+    },
+    {
+        "hash": "c19e829936bc57b6fccf982d70cb5f206962d436",
+        "name": "refs/tags/good"
+    }
+]

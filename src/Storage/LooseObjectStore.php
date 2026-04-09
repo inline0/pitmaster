@@ -118,7 +118,7 @@ final class LooseObjectStore implements ObjectStore
                     continue;
                 }
 
-                if (strlen($suffix) === 38 && ctype_xdigit($suffix)) {
+                if ((strlen($suffix) === 38 || strlen($suffix) === 62) && ctype_xdigit($suffix)) {
                     $hashes[] = $prefix . $suffix;
                 }
             }

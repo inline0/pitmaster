@@ -259,7 +259,7 @@ final class WorktreeManager
             // Resolve the branch from the shared refs
             $refs = new RefDatabase($this->gitDir);
             $headId = $refs->resolve($symref->target);
-        } elseif (strlen($headContent) === 40 && ctype_xdigit($headContent)) {
+        } elseif (ObjectId::looksLikeHex($headContent)) {
             $headId = ObjectId::fromHex($headContent);
         }
 

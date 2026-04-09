@@ -78,13 +78,13 @@ final class CommitGraphAndMidxTest extends TestCase
         file_put_contents($this->tmpDir . '/tracked.txt', "base\n");
         $this->git('add tracked.txt');
         $this->git('commit -m base');
-        $this->git('pack-objects .git/objects/pack/pack-one --all >/dev/null');
+        $this->git('rev-list --all | git pack-objects .git/objects/pack/pack-one --revs >/dev/null');
 
         file_put_contents($this->tmpDir . '/tracked.txt', "changed\n");
         file_put_contents($this->tmpDir . '/extra.txt', "extra\n");
         $this->git('add tracked.txt extra.txt');
         $this->git('commit -m second');
-        $this->git('pack-objects .git/objects/pack/pack-two --all >/dev/null');
+        $this->git('rev-list --all | git pack-objects .git/objects/pack/pack-two --revs >/dev/null');
         $this->git('multi-pack-index write');
 
         $midx = MultiPackIndex::open($this->tmpDir . '/.git/objects/pack/multi-pack-index');

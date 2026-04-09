@@ -1,0 +1,52 @@
+[
+    {
+        "hash": "ac19c9db2edcff913254bc87366effe94562d187",
+        "tree": "c226844d85bbef948afd576bf353488755db2340",
+        "parents": [
+            "f068afc83af1f096160e03999a7e9fa23d2117c5"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "feature1"
+    },
+    {
+        "hash": "626ea7a5306b998bebec0a38f9379fed4b4ee4c3",
+        "tree": "5a45c204b3dedc945118693ca1c5f5b861d23344",
+        "parents": [
+            "f068afc83af1f096160e03999a7e9fa23d2117c5"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "feature2"
+    },
+    {
+        "hash": "df2565d01125a893d7554ecd08f6a05b995cf742",
+        "tree": "a88193df2dcd5c307e9105b1965b64f3db222428",
+        "parents": [
+            "517c36c8bfd54b102cb465ee07679264fde37fe4",
+            "ac19c9db2edcff913254bc87366effe94562d187",
+            "626ea7a5306b998bebec0a38f9379fed4b4ee4c3"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "Merge branches 'feature1', 'feature2'"
+    },
+    {
+        "hash": "f068afc83af1f096160e03999a7e9fa23d2117c5",
+        "tree": "4b36dfd79db36d8c59d1fb032de66b57f0457b65",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "base"
+    },
+    {
+        "hash": "517c36c8bfd54b102cb465ee07679264fde37fe4",
+        "tree": "7e87ed9237b89a40fafcbe8d725f22c93df3e069",
+        "parents": [
+            "f068afc83af1f096160e03999a7e9fa23d2117c5"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "main"
+    }
+]

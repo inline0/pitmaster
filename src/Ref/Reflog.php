@@ -85,7 +85,7 @@ final class Reflog
             mkdir($dir, 0777, true);
         }
 
-        $zeroHash = str_repeat('0', 40);
+        $zeroHash = str_repeat('0', strlen($newId->hex));
         $old = $oldId->hex !== '' ? $oldId->hex : $zeroHash;
         $new = $newId->hex;
 

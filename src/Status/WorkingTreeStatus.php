@@ -169,7 +169,7 @@ final class WorkingTreeStatus
             return true;
         }
 
-        $contentHash = ObjectId::compute(ObjectType::Blob, $content);
+        $contentHash = ObjectId::compute(ObjectType::Blob, $content, $entry->hash->algo);
 
         return !$contentHash->equals($entry->hash);
     }

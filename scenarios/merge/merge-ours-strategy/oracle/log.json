@@ -1,0 +1,41 @@
+[
+    {
+        "hash": "d47f801a00d80396b9aa69816fe3ccecd2ca8b1f",
+        "tree": "cc75a9aaea2872048c8c5a74e237ac8203a6fa3f",
+        "parents": [
+            "32dc23fd6fdf2ca629192763a0ff4868350637e9"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "feature"
+    },
+    {
+        "hash": "f68b118d0813bb61f7f744c15962b4e785901fdc",
+        "tree": "2b1edef3834b5bc10018425d4323110a42139fb7",
+        "parents": [
+            "6cba6fedd160f7a237b22235a3953cdad8326e35",
+            "d47f801a00d80396b9aa69816fe3ccecd2ca8b1f"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "Merge branch 'feature'"
+    },
+    {
+        "hash": "32dc23fd6fdf2ca629192763a0ff4868350637e9",
+        "tree": "48e531d5c71cddc7e839e6496e62defbe4d67541",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "base"
+    },
+    {
+        "hash": "6cba6fedd160f7a237b22235a3953cdad8326e35",
+        "tree": "2b1edef3834b5bc10018425d4323110a42139fb7",
+        "parents": [
+            "32dc23fd6fdf2ca629192763a0ff4868350637e9"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "main"
+    }
+]

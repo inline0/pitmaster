@@ -52,7 +52,7 @@ final class RevisionParser
     private function resolveBase(string $base): ?ObjectId
     {
         // Direct hash
-        if (strlen($base) === 40 && ctype_xdigit($base)) {
+        if (ObjectId::looksLikeHex($base)) {
             return ObjectId::fromHex($base);
         }
 

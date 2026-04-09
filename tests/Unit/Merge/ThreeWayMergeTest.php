@@ -120,4 +120,18 @@ final class ThreeWayMergeTest extends TestCase
         $this->assertSame('changed', $result['content']);
         $this->assertTrue($result['clean']);
     }
+
+    #[Test]
+    public function testDisjointInsertionsMergeCleanly(): void
+    {
+        $base = "a\nb\nc\nd\n";
+        $ours = "a\nleft\nb\nc\nd\n";
+        $theirs = "a\nb\nc\nright\nd\n";
+
+        $result = ThreeWayMerge::merge($base, $ours, $theirs);
+
+        $this->assertTrue($result['clean']);
+        $this->assertSame(0, $result['conflicts']);
+        $this->assertSame("a\nleft\nb\nc\nright\nd\n", $result['content']);
+    }
 }

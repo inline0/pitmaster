@@ -16,8 +16,10 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class TreeDiff
 {
-    public function __construct(private readonly ObjectDatabase $objects)
-    {
+    public function __construct(
+        private readonly ObjectDatabase $objects,
+        private readonly string $algorithm = 'myers',
+    ) {
     }
 
     /**
@@ -163,7 +165,7 @@ final class TreeDiff
                 $add = $added[$bestIdx];
                 $oldContent = $this->readBlobContent($del->oldHash);
                 $newContent = $this->readBlobContent($add->newHash);
-                $hunks = MyersDiff::diff($oldContent, $newContent);
+                $hunks = DiffAlgorithm::diff($oldContent, $newContent, $this->algorithm);
 
                 $other[] = new DiffResult(
                     $del->oldPath,
@@ -246,7 +248,7 @@ final class TreeDiff
             return new DiffResult($path, $path, [], true, $oldHash, $newHash);
         }
 
-        $hunks = MyersDiff::diff($oldContent, $newContent);
+        $hunks = DiffAlgorithm::diff($oldContent, $newContent, $this->algorithm);
 
         return new DiffResult($path, $path, $hunks, false, $oldHash, $newHash);
     }

@@ -1,0 +1,83 @@
+[
+    {
+        "hash": "69118369684d717478b12134017e85ed8425b8ae",
+        "tree": "bf9e71befe2b240d14ac522e6c232a250e01fc41",
+        "parents": [
+            "6ae9e68d54309a4b09230fa19a4739fce1d1caa8",
+            "5b76df05c01fa8b5ff274c5ec764dffdb02e5139"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672007 2024-01-08 00:00:07 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672007 2024-01-08 00:00:07 +0000",
+        "message": "Merge branch 'right' into left"
+    },
+    {
+        "hash": "5b76df05c01fa8b5ff274c5ec764dffdb02e5139",
+        "tree": "7f1ee626a85840002c8821633891b30ea0794496",
+        "parents": [
+            "eaa0be02962aae41c320b19de17a8a214e55ebbd"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672006 2024-01-08 00:00:06 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672006 2024-01-08 00:00:06 +0000",
+        "message": "E"
+    },
+    {
+        "hash": "eaa0be02962aae41c320b19de17a8a214e55ebbd",
+        "tree": "4405dcce3984e2c38a1368256f6fd0c788d13ff3",
+        "parents": [
+            "35c687fc6cb1bb14d6da383d391d6791c3db3578",
+            "1849888d9838a4b27f73dfd7bbd73c28510f68ef"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672005 2024-01-08 00:00:05 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672005 2024-01-08 00:00:05 +0000",
+        "message": "Merge branch 'left-base' into right"
+    },
+    {
+        "hash": "6ae9e68d54309a4b09230fa19a4739fce1d1caa8",
+        "tree": "f18d6d11264ee12e060127b7c74e34c377c3c8c7",
+        "parents": [
+            "e9c9727c51d10cb5f5d9d670fbb6d5e1d22b6d2c"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672004 2024-01-08 00:00:04 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672004 2024-01-08 00:00:04 +0000",
+        "message": "D"
+    },
+    {
+        "hash": "e9c9727c51d10cb5f5d9d670fbb6d5e1d22b6d2c",
+        "tree": "4405dcce3984e2c38a1368256f6fd0c788d13ff3",
+        "parents": [
+            "1849888d9838a4b27f73dfd7bbd73c28510f68ef",
+            "35c687fc6cb1bb14d6da383d391d6791c3db3578"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672003 2024-01-08 00:00:03 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672003 2024-01-08 00:00:03 +0000",
+        "message": "Merge branch 'right-base' into left"
+    },
+    {
+        "hash": "35c687fc6cb1bb14d6da383d391d6791c3db3578",
+        "tree": "f42709606124f6439704a54ec69e7a8eac4a87bd",
+        "parents": [
+            "53e3a031e4d8df8eb3cc83e487a632135d6f77e9"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672002 2024-01-08 00:00:02 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672002 2024-01-08 00:00:02 +0000",
+        "message": "C"
+    },
+    {
+        "hash": "1849888d9838a4b27f73dfd7bbd73c28510f68ef",
+        "tree": "56031505df2e67e081c20edae104b7c60a3c3365",
+        "parents": [
+            "53e3a031e4d8df8eb3cc83e487a632135d6f77e9"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1704672001 2024-01-08 00:00:01 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672001 2024-01-08 00:00:01 +0000",
+        "message": "B"
+    },
+    {
+        "hash": "53e3a031e4d8df8eb3cc83e487a632135d6f77e9",
+        "tree": "f747c06aa820f892c50cfb3f528382bd3be692d7",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1704672000 2024-01-08 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1704672000 2024-01-08 00:00:00 +0000",
+        "message": "A"
+    }
+]

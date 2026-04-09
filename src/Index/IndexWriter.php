@@ -35,8 +35,8 @@ final class IndexWriter
 
         $content = $header . $body . $extensions;
 
-        // Append SHA-1 checksum of everything before it
-        $checksum = sha1($content, true);
+        // Append the repository-hash checksum of everything before it.
+        $checksum = hash($index->hashAlgo(), $content, true);
 
         return $content . $checksum;
     }

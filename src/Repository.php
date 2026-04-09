@@ -6,6 +6,8 @@ namespace Pitmaster;
 
 use Pitmaster\Checkout\SparseCheckout;
 use Pitmaster\Config\GitConfig;
+use Pitmaster\Diff\DiffAlgorithm;
+use Pitmaster\Diff\DiffAlgorithmName;
 use Pitmaster\Diff\DiffResult;
 use Pitmaster\Diff\MyersDiff;
 use Pitmaster\Diff\TreeDiff;
@@ -33,8 +35,12 @@ use Pitmaster\Object\TreeEntry;
 use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Pack\PackWriter;
 use Pitmaster\Protocol\DumbHttpClient;
+use Pitmaster\Protocol\ReceivePackTransport;
+use Pitmaster\Protocol\ShallowClone;
+use Pitmaster\Protocol\SshClient;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
+use Pitmaster\Protocol\UploadPackTransport;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\Reflog;
 use Pitmaster\Ref\SymbolicRef;
@@ -274,7 +280,7 @@ final class Repository
 
                 // Write index for the worktree
                 $treeMap = $this->flattenTree($commit->tree);
-                $index = new Index();
+                $index = new Index($this->objectHashBytes());
 
                 foreach ($treeMap as $filePath => $hash) {
                     $fullPath = $path . '/' . $filePath;
@@ -454,7 +460,7 @@ final class Repository
     public function resolve(string $revision): ObjectId
     {
         // Direct hash
-        if (strlen($revision) === 40 && ctype_xdigit($revision)) {
+        if (ObjectId::looksLikeHex($revision)) {
             return ObjectId::fromHex($revision);
         }
 
@@ -576,7 +582,7 @@ final class Repository
             . "\n"
             . $message;
 
-        $id = ObjectId::compute(ObjectType::Tag, $content);
+        $id = ObjectId::compute(ObjectType::Tag, $content, $this->objectHashAlgo());
         $tag = Tag::parse($content, $id);
         $this->objects->write($tag);
         $this->refs->update("refs/tags/{$name}", $id);
@@ -827,7 +833,7 @@ final class Repository
      */
     public function index(): Index
     {
-        return Index::open($this->gitDir . '/index');
+        return Index::open($this->gitDir . '/index', $this->objectHashBytes());
     }
 
     /**
@@ -845,7 +851,7 @@ final class Repository
             }
 
             $content = file_get_contents($fullPath);
-            $blob = Blob::fromContent($content);
+            $blob = Blob::fromContent($content, $this->objectHashAlgo());
             $this->objects->write($blob);
 
             $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
@@ -1065,7 +1071,7 @@ final class Repository
         }
 
         $treeMap = $this->flattenTree($commit->tree);
-        $index = new Index();
+        $index = new Index($this->objectHashBytes());
 
         foreach ($treeMap as $path => $hash) {
             $entry = IndexEntry::create($path, ObjectId::fromHex($hash));
@@ -1435,7 +1441,7 @@ final class Repository
         $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
         $index = $this->index();
         $indexEntries = $index->entries();
-        $zero = str_repeat('0', 40);
+        $zero = $this->zeroObjectId()->hex;
 
         foreach ($entries as $entry) {
             if ($entry->index === FileStatus::Untracked) {
@@ -1501,7 +1507,7 @@ final class Repository
     /**
      * Fetch from a remote.
      */
-    public function fetch(string $remote = 'origin'): void
+    public function fetch(string $remote = 'origin', ?int $depth = null): void
     {
         $url = $this->config->get("remote.{$remote}.url");
 
@@ -1510,29 +1516,32 @@ final class Repository
         }
 
         try {
-            $http = new SmartHttpClient();
-            $discovery = $http->discoverRefs($url);
-            $uploadPack = new UploadPackClient($http);
+            $transport = $this->uploadPackTransport($url);
+            $discovery = $transport->discoverRefs($url);
+            $uploadPack = new UploadPackClient($transport);
             $trackedRefs = $this->plannedFetchRefs($remote, $discovery->refs());
 
             $wants = [];
             $haves = [];
 
             foreach ($trackedRefs as $trackedRef) {
-                if (!$this->objects->exists($trackedRef['id'])) {
+                if ($depth !== null || !$this->objects->exists($trackedRef['id'])) {
                     $wants[] = $trackedRef['id'];
                 }
             }
 
-            foreach ($this->refs->list() as $refId) {
-                $haves[] = $refId;
+            if ($depth === null) {
+                foreach ($this->refs->list() as $refId) {
+                    $haves[] = $refId;
+                }
             }
 
             if ($wants === []) {
                 return;
             }
 
-            $packData = $uploadPack->fetch($url, $wants, $haves);
+            $fetchResult = $uploadPack->fetchResult($url, $wants, $haves, $depth);
+            $packData = $fetchResult['packData'];
 
             if ($packData !== '' && str_starts_with($packData, 'PACK')) {
                 $packDir = $this->commonDir . '/objects/pack';
@@ -1548,8 +1557,19 @@ final class Repository
                 $this->objects->packStore()->refresh();
             }
 
+            $this->applyShallowUpdates(
+                $fetchResult['shallow'],
+                $fetchResult['unshallow'],
+                array_values(array_map(static fn (array $trackedRef): ObjectId => $trackedRef['id'], $trackedRefs)),
+                $depth,
+            );
+
             $this->updateFetchedRefs($trackedRefs, $discovery->refs());
         } catch (ProtocolException $smartError) {
+            if (!$this->isSmartHttpUrl($url)) {
+                throw $smartError;
+            }
+
             $this->fetchViaDumbHttp($remote, $url, $smartError);
         }
     }
@@ -1563,12 +1583,12 @@ final class Repository
         $url = $this->remoteUrl($remote);
         $localRef = "refs/heads/{$branch}";
         $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverReceivePackRefs($url);
+        $transport = $this->receivePackTransport($url);
+        $discovery = $transport->discoverReceivePackRefs($url);
         $remoteId = $discovery->ref($localRef);
 
         $this->assertFastForwardPush($branch, $remoteId, $localId);
-        $this->pushUpdates($remote, $http, $url, $discovery, [[
+        $this->pushUpdates($remote, $transport, $url, $discovery, [[
             'old' => $remoteId ?? $this->zeroObjectId(),
             'new' => $localId,
             'ref' => $localRef,
@@ -1586,8 +1606,8 @@ final class Repository
         $url = $this->remoteUrl($remote);
         $localRef = "refs/heads/{$branch}";
         $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverReceivePackRefs($url);
+        $transport = $this->receivePackTransport($url);
+        $discovery = $transport->discoverReceivePackRefs($url);
         $remoteId = $discovery->ref($localRef);
         $leaseId = $expected ?? $this->refs->resolve("refs/remotes/{$remote}/{$branch}") ?? $remoteId ?? $this->zeroObjectId();
 
@@ -1595,7 +1615,7 @@ final class Repository
             throw new \RuntimeException("force-with-lease rejected for {$branch}: remote changed");
         }
 
-        $this->pushUpdates($remote, $http, $url, $discovery, [[
+        $this->pushUpdates($remote, $transport, $url, $discovery, [[
             'old' => $leaseId,
             'new' => $localId,
             'ref' => $localRef,
@@ -1614,8 +1634,8 @@ final class Repository
         }
 
         $url = $this->remoteUrl($remote);
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverReceivePackRefs($url);
+        $transport = $this->receivePackTransport($url);
+        $discovery = $transport->discoverReceivePackRefs($url);
         $capabilities = $discovery->capabilities();
 
         if ($capabilities !== null && !$capabilities->has('atomic')) {
@@ -1636,7 +1656,7 @@ final class Repository
             ];
         }
 
-        $this->pushUpdates($remote, $http, $url, $discovery, $updates, ['atomic']);
+        $this->pushUpdates($remote, $transport, $url, $discovery, $updates, ['atomic']);
     }
 
     /**
@@ -1649,8 +1669,8 @@ final class Repository
         if ($url === null) {
             throw new \RuntimeException("Remote not found: {$remote}");
         }
-        $http = new SmartHttpClient();
-        $discovery = $http->discoverReceivePackRefs($url);
+        $transport = $this->receivePackTransport($url);
+        $discovery = $transport->discoverReceivePackRefs($url);
         $capabilities = $discovery->capabilities();
         $zero = $this->zeroObjectId();
         $localRefs = [];
@@ -1691,7 +1711,7 @@ final class Repository
             ];
         }
 
-        $this->pushUpdates($remote, $http, $url, $discovery, $updates);
+        $this->pushUpdates($remote, $transport, $url, $discovery, $updates);
     }
 
     /**
@@ -1797,6 +1817,104 @@ final class Repository
                 $this->refs->update($refName, $refId);
             }
         }
+    }
+
+    /**
+     * @param list<ObjectId> $shallow
+     * @param list<ObjectId> $unshallow
+     * @param list<ObjectId> $tips
+     */
+    private function applyShallowUpdates(
+        array $shallow,
+        array $unshallow,
+        array $tips = [],
+        ?int $depth = null,
+    ): void {
+        if ($depth !== null) {
+            $computed = $this->computeDepthBoundaries($tips, $depth);
+
+            if ($computed !== []) {
+                ShallowClone::writeShallow($this->commonDir, $computed);
+
+                return;
+            }
+        }
+
+        $current = [];
+
+        foreach (ShallowClone::readShallow($this->commonDir) as $id) {
+            $current[$id->hex] = $id;
+        }
+
+        foreach ($shallow as $id) {
+            $current[$id->hex] = $id;
+        }
+
+        foreach ($unshallow as $id) {
+            unset($current[$id->hex]);
+        }
+
+        ShallowClone::writeShallow($this->commonDir, array_values($current));
+    }
+
+    /**
+     * @param list<ObjectId> $tips
+     * @return list<ObjectId>
+     */
+    private function computeDepthBoundaries(array $tips, int $depth): array
+    {
+        if ($depth < 1 || $tips === []) {
+            return [];
+        }
+
+        $boundaries = [];
+        $queue = [];
+        $seen = [];
+
+        foreach ($tips as $tip) {
+            $queue[] = [$tip, 1];
+        }
+
+        while ($queue !== []) {
+            [$id, $level] = array_shift($queue);
+            $seenKey = $id->hex . ':' . $level;
+
+            if (isset($seen[$seenKey])) {
+                continue;
+            }
+
+            $seen[$seenKey] = true;
+            $object = $this->objects->read($id);
+
+            if (!$object instanceof Commit) {
+                continue;
+            }
+
+            if ($level >= $depth || $object->parents === []) {
+                $boundaries[$id->hex] = $id;
+                continue;
+            }
+
+            $allParentsPresent = true;
+
+            foreach ($object->parents as $parent) {
+                if (!$this->objects->exists($parent)) {
+                    $boundaries[$id->hex] = $id;
+                    $allParentsPresent = false;
+                    break;
+                }
+            }
+
+            if (!$allParentsPresent) {
+                continue;
+            }
+
+            foreach ($object->parents as $parent) {
+                $queue[] = [$parent, $level + 1];
+            }
+        }
+
+        return array_values($boundaries);
     }
 
     /**
@@ -1947,8 +2065,9 @@ final class Repository
      *
      * @return array<int, DiffResult>
      */
-    public function diff(?string $pathspec = null): array
+    public function diff(?string $pathspec = null, string $algorithm = 'myers'): array
     {
+        $algorithm = DiffAlgorithmName::normalize($algorithm);
         $index = $this->index();
         $results = [];
 
@@ -1962,7 +2081,7 @@ final class Repository
             if (!is_file($fullPath)) {
                 // Deleted in worktree
                 $oldContent = $this->readBlobContent($entry->hash);
-                $hunks = MyersDiff::diff($oldContent, '');
+                $hunks = DiffAlgorithm::diff($oldContent, '', $algorithm);
 
                 if ($hunks !== []) {
                     $results[] = new DiffResult($entry->path, $entry->path, $hunks, false, $entry->hash->hex, null);
@@ -1980,7 +2099,7 @@ final class Repository
             $indexContent = $this->readBlobContent($entry->hash);
 
             if ($indexContent !== $worktreeContent) {
-                $newHash = ObjectId::compute(ObjectType::Blob, $worktreeContent);
+                $newHash = ObjectId::compute(ObjectType::Blob, $worktreeContent, $this->objectHashAlgo());
 
                 if (MyersDiff::isBinary($indexContent) || MyersDiff::isBinary($worktreeContent)) {
                     $results[] = new DiffResult(
@@ -1992,7 +2111,7 @@ final class Repository
                         $newHash->hex
                     );
                 } else {
-                    $hunks = MyersDiff::diff($indexContent, $worktreeContent);
+                    $hunks = DiffAlgorithm::diff($indexContent, $worktreeContent, $algorithm);
                     $results[] = new DiffResult(
                         $entry->path,
                         $entry->path,
@@ -2013,7 +2132,7 @@ final class Repository
      *
      * @return array<int, DiffResult>
      */
-    public function diffStaged(?string $pathspec = null): array
+    public function diffStaged(?string $pathspec = null, string $algorithm = 'myers'): array
     {
         $headId = $this->refs->resolveHead();
 
@@ -2028,7 +2147,7 @@ final class Repository
         }
 
         $index = $this->index();
-        $treeDiff = new TreeDiff($this->objects);
+        $treeDiff = new TreeDiff($this->objects, DiffAlgorithmName::normalize($algorithm));
 
         // Build a tree from the index
         $indexTreeId = $this->buildTreeFromIndex($index);
@@ -2041,9 +2160,9 @@ final class Repository
      *
      * @return array<int, DiffResult>
      */
-    public function diffTree(ObjectId $a, ObjectId $b): array
+    public function diffTree(ObjectId $a, ObjectId $b, string $algorithm = 'myers'): array
     {
-        $treeDiff = new TreeDiff($this->objects);
+        $treeDiff = new TreeDiff($this->objects, DiffAlgorithmName::normalize($algorithm));
 
         return $treeDiff->diff($a, $b);
     }
@@ -2051,8 +2170,12 @@ final class Repository
     /**
      * Merge a branch into HEAD.
      */
-    public function merge(string $branch): MergeResult
+    public function merge(string $branch, string $strategy = 'recursive'): MergeResult
     {
+        if ($strategy === 'ours') {
+            return $this->mergeWithOursStrategy($branch);
+        }
+
         $theirsId = $this->resolve($branch);
         $oursId = $this->refs->resolveHead();
         $trackedPaths = $this->index()->paths();
@@ -2061,12 +2184,11 @@ final class Repository
             throw new \RuntimeException('Cannot merge: HEAD is not set');
         }
 
-        // Find merge base
         $mergeBaseFinder = new MergeBase($this->objects);
-        $baseId = $mergeBaseFinder->find($oursId, $theirsId);
+        $baseIds = $mergeBaseFinder->findAll($oursId, $theirsId);
+        $baseId = $baseIds[0] ?? null;
 
-        // Fast-forward check
-        if ($baseId !== null && $baseId->equals($oursId)) {
+        if ($mergeBaseFinder->isAncestor($oursId, $theirsId)) {
             $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
             $this->moveHeadTo($theirsId, "merge {$branch}: Fast-forward");
             $this->resetWorktree($theirsId, $trackedPaths);
@@ -2082,13 +2204,14 @@ final class Repository
             throw new \RuntimeException('Cannot merge: invalid commit objects');
         }
 
+        $baseTreeId = $this->resolveRecursiveMergeBaseTree($mergeBaseFinder, $baseIds);
         $merge = $this->mergeTreeEntries(
-            $baseId !== null ? $this->getCommitTree($baseId) : null,
+            $baseTreeId,
             $oursCommit->tree,
             $theirsCommit->tree,
             'HEAD',
             $branch,
-            $baseId !== null ? substr($baseId->hex, 0, 7) : 'base',
+            count($baseIds) > 1 ? 'recursive-base' : ($baseId !== null ? substr($baseId->hex, 0, 7) : 'base'),
         );
 
         if ($merge['conflictPaths'] !== []) {
@@ -2112,10 +2235,76 @@ final class Repository
 
         $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
-        $commitId = $this->createCommitFromTree($treeId, "Merge branch '{$branch}'\n", [$oursId, $theirsId]);
+        $commitId = $this->createCommitFromTree($treeId, $this->buildMergeSubject($branch), [$oursId, $theirsId]);
 
         $this->moveHeadTo($commitId, "merge {$branch}: Merge made by Pitmaster");
 
+        $this->resetWorktree($commitId, $trackedPaths);
+        $this->runPostMergeHook();
+
+        return new MergeResult(clean: true, commitId: $commitId);
+    }
+
+    /**
+     * Merge multiple branches with a clean octopus merge.
+     *
+     * @param array<int, string> $branches
+     */
+    public function mergeOctopus(array $branches): MergeResult
+    {
+        if (count($branches) < 2) {
+            throw new \RuntimeException('Octopus merge requires at least two branches');
+        }
+
+        $oursId = $this->refs->resolveHead();
+
+        if ($oursId === null) {
+            throw new \RuntimeException('Cannot merge: HEAD is not set');
+        }
+
+        $trackedPaths = $this->index()->paths();
+        $oursCommit = $this->objects->read($oursId);
+
+        if (!$oursCommit instanceof Commit) {
+            throw new \RuntimeException('Cannot merge: invalid HEAD commit');
+        }
+
+        $currentTreeId = $oursCommit->tree;
+        $parentIds = [$oursId];
+
+        foreach ($branches as $branch) {
+            $theirsId = $this->resolve($branch);
+            $theirsCommit = $this->objects->read($theirsId);
+
+            if (!$theirsCommit instanceof Commit) {
+                throw new \RuntimeException("Cannot merge: invalid commit object for {$branch}");
+            }
+
+            $baseId = (new MergeBase($this->objects))->find($oursId, $theirsId);
+            $merge = $this->mergeTreeEntries(
+                $baseId !== null ? $this->getCommitTree($baseId) : null,
+                $currentTreeId,
+                $theirsCommit->tree,
+                'HEAD',
+                $branch,
+                $baseId !== null ? substr($baseId->hex, 0, 7) : 'base',
+            );
+
+            if ($merge['conflictPaths'] !== []) {
+                return new MergeResult(
+                    clean: false,
+                    conflictPaths: $merge['conflictPaths'],
+                    mergedContents: $merge['conflictContents'],
+                );
+            }
+
+            $currentTreeId = $this->buildTreeFromEntries($merge['mergedEntries']);
+            $parentIds[] = $theirsId;
+        }
+
+        $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
+        $commitId = $this->createCommitFromTree($currentTreeId, $this->buildOctopusMergeMessage($branches), $parentIds);
+        $this->moveHeadTo($commitId, 'merge ' . implode(' ', $branches) . ': Merge made by Pitmaster');
         $this->resetWorktree($commitId, $trackedPaths);
         $this->runPostMergeHook();
 
@@ -2155,6 +2344,98 @@ final class Repository
     public function mergeBase(ObjectId $a, ObjectId $b): ?ObjectId
     {
         return (new MergeBase($this->objects))->find($a, $b);
+    }
+
+    /**
+     * Start a bisect session and checkout the first candidate commit.
+     */
+    public function bisectStart(string $bad, string $good): ObjectId
+    {
+        $badId = $this->resolve($bad);
+        $goodId = $this->resolve($good);
+        $headId = $this->refs->resolveHead();
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot bisect: HEAD is not set');
+        }
+
+        $startRef = $this->branch() ?? $headId->hex;
+        $candidate = $this->bisectManager()->start($badId, $goodId, $startRef, $this->bisectSubject(...));
+        $this->checkoutBisectCandidate($candidate, $headId);
+
+        return $candidate;
+    }
+
+    /**
+     * Mark a bisect candidate as good and checkout the next candidate.
+     */
+    public function bisectGood(?string $revision = null): ?ObjectId
+    {
+        $current = $revision !== null ? $this->resolve($revision) : $this->refs->resolveHead();
+
+        if ($current === null) {
+            throw new \RuntimeException('Cannot mark bisect good: HEAD is not set');
+        }
+
+        $headId = $this->refs->resolveHead();
+        $next = $this->bisectManager()->good($current, $this->bisectSubject(...));
+
+        if ($next !== null && ($headId === null || !$next->equals($headId))) {
+            $this->checkoutBisectCandidate($next, $headId);
+        }
+
+        return $next;
+    }
+
+    /**
+     * Mark a bisect candidate as bad and checkout the next candidate.
+     */
+    public function bisectBad(?string $revision = null): ?ObjectId
+    {
+        $current = $revision !== null ? $this->resolve($revision) : $this->refs->resolveHead();
+
+        if ($current === null) {
+            throw new \RuntimeException('Cannot mark bisect bad: HEAD is not set');
+        }
+
+        $headId = $this->refs->resolveHead();
+        $next = $this->bisectManager()->bad($current, $this->bisectSubject(...));
+
+        if ($next !== null && ($headId === null || !$next->equals($headId))) {
+            $this->checkoutBisectCandidate($next, $headId);
+        }
+
+        return $next;
+    }
+
+    /**
+     * Reset an in-progress bisect session and restore the starting location.
+     */
+    public function bisectReset(): void
+    {
+        $startPath = $this->gitDir . '/BISECT_START';
+        $start = is_file($startPath) ? trim((string) file_get_contents($startPath)) : '';
+        $this->bisectManager()->reset();
+
+        if ($start === '') {
+            return;
+        }
+
+        $branchTarget = $this->refs->resolve("refs/heads/{$start}");
+
+        if ($branchTarget !== null) {
+            $this->refs->updateSymbolic('HEAD', "refs/heads/{$start}");
+            $this->appendReflogEntry('HEAD', null, $branchTarget, 'checkout: moving from bisect to ' . $start);
+            $this->resetWorktree($branchTarget, $this->index()->paths());
+
+            return;
+        }
+
+        if (ObjectId::looksLikeHex($start)) {
+            $target = ObjectId::fromHex($start);
+            $this->detachHeadTo($target, 'checkout: moving from bisect to ' . substr($target->hex, 0, 7));
+            $this->resetWorktree($target, $this->index()->paths());
+        }
     }
 
     public function config(): GitConfig
@@ -2239,7 +2520,7 @@ final class Repository
             return strcmp($nameA, $nameB);
         });
 
-        $tree = Tree::fromEntries($entries);
+        $tree = Tree::fromEntries($entries, $this->objectHashAlgo());
         $this->objects->write($tree);
 
         return $tree->id;
@@ -2352,7 +2633,7 @@ final class Repository
         $treeMap = $this->flattenTree($commit->tree);
         $treeEntries = $this->flattenTreeEntries($commit->tree);
         $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
-        $index = new Index();
+        $index = new Index($this->objectHashBytes());
         $sparse = new SparseCheckout($this->gitDir);
         $sparseEnabled = $sparse->isEnabled();
 
@@ -2581,7 +2862,7 @@ final class Repository
             return null;
         }
 
-        return Blob::fromContent($content)->id->hex;
+        return Blob::fromContent($content, $this->objectHashAlgo())->id->hex;
     }
 
     private function removeWorktreePath(string $path): void
@@ -2773,13 +3054,179 @@ final class Repository
 
     private function buildTreeFromEntries(array $entries): ObjectId
     {
-        $index = new Index();
+        $index = new Index($this->objectHashBytes());
 
         foreach ($entries as $path => $entry) {
             $index->addEntry(IndexEntry::create($path, ObjectId::fromHex($entry['hash']), $entry['mode']));
         }
 
         return $this->buildTreeFromIndex($index);
+    }
+
+    private function mergeWithOursStrategy(string $branch): MergeResult
+    {
+        $theirsId = $this->resolve($branch);
+        $oursId = $this->refs->resolveHead();
+
+        if ($oursId === null) {
+            throw new \RuntimeException('Cannot merge: HEAD is not set');
+        }
+
+        $oursCommit = $this->objects->read($oursId);
+
+        if (!$oursCommit instanceof Commit) {
+            throw new \RuntimeException('Cannot merge: invalid HEAD commit');
+        }
+
+        $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
+        $commitId = $this->createCommitFromTree(
+            $oursCommit->tree,
+            $this->buildMergeSubject($branch),
+            [$oursId, $theirsId],
+        );
+
+        $this->moveHeadTo($commitId, "merge {$branch}: Merge made by the 'ours' strategy");
+        $this->resetWorktree($commitId, $this->index()->paths());
+        $this->runPostMergeHook();
+
+        return new MergeResult(clean: true, commitId: $commitId);
+    }
+
+    /**
+     * @param array<int, ObjectId> $baseIds
+     */
+    private function resolveRecursiveMergeBaseTree(MergeBase $mergeBaseFinder, array $baseIds): ?ObjectId
+    {
+        if ($baseIds === []) {
+            return null;
+        }
+
+        if (count($baseIds) === 1) {
+            return $this->getCommitTree($baseIds[0]);
+        }
+
+        return $this->buildVirtualMergeBaseTree($mergeBaseFinder, $baseIds);
+    }
+
+    /**
+     * @param array<int, ObjectId> $baseIds
+     */
+    private function buildVirtualMergeBaseTree(MergeBase $mergeBaseFinder, array $baseIds): ObjectId
+    {
+        $current = array_shift($baseIds);
+
+        if (!$current instanceof ObjectId) {
+            throw new \RuntimeException('Cannot build recursive merge base without merge bases');
+        }
+
+        if ($baseIds === []) {
+            return $this->getCommitTree($current);
+        }
+
+        $next = array_shift($baseIds);
+
+        if (!$next instanceof ObjectId) {
+            throw new \RuntimeException('Cannot build recursive merge base without merge bases');
+        }
+
+        $currentTreeId = $this->mergeBaseTreesRecursively($mergeBaseFinder, $current, $next);
+
+        foreach ($baseIds as $nextBase) {
+            $nextCommit = $this->objects->read($nextBase);
+
+            if (!$nextCommit instanceof Commit) {
+                throw new \RuntimeException('Cannot build recursive merge base from invalid commits');
+            }
+
+            $merge = $this->mergeTreeEntries(
+                null,
+                $currentTreeId,
+                $nextCommit->tree,
+                'recursive-base',
+                substr($nextBase->hex, 0, 7),
+                'base',
+            );
+
+            $currentTreeId = $this->buildTreeFromEntries($this->materializeMergeEntriesWithConflicts($merge));
+        }
+
+        return $currentTreeId;
+    }
+
+    private function mergeBaseTreesRecursively(
+        MergeBase $mergeBaseFinder,
+        ObjectId $oursId,
+        ObjectId $theirsId,
+    ): ObjectId {
+        if ($oursId->equals($theirsId)) {
+            return $this->getCommitTree($oursId);
+        }
+
+        $nestedBaseIds = $mergeBaseFinder->findAll($oursId, $theirsId);
+        $nestedBaseTreeId = null;
+
+        if ($nestedBaseIds !== []) {
+            $nestedBaseTreeId = count($nestedBaseIds) === 1
+                ? $this->getCommitTree($nestedBaseIds[0])
+                : $this->buildVirtualMergeBaseTree($mergeBaseFinder, $nestedBaseIds);
+        }
+
+        $oursCommit = $this->objects->read($oursId);
+        $theirsCommit = $this->objects->read($theirsId);
+
+        if (!$oursCommit instanceof Commit || !$theirsCommit instanceof Commit) {
+            throw new \RuntimeException('Cannot build recursive merge base from invalid commits');
+        }
+
+        $merge = $this->mergeTreeEntries(
+            $nestedBaseTreeId,
+            $oursCommit->tree,
+            $theirsCommit->tree,
+            substr($oursId->hex, 0, 7),
+            substr($theirsId->hex, 0, 7),
+            $nestedBaseIds !== [] ? substr($nestedBaseIds[0]->hex, 0, 7) : 'base',
+        );
+
+        return $this->buildTreeFromEntries($this->materializeMergeEntriesWithConflicts($merge));
+    }
+
+    /**
+     * @param array{
+     *   mergedEntries: array<string, array{hash: string, mode: int}>,
+     *   conflictEntries: array<string, array<int, array{hash: string, mode: int}>>,
+     *   conflictContents: array<string, string>,
+     *   conflictPaths: array<int, string>
+     * } $merge
+     * @return array<string, array{hash: string, mode: int}>
+     */
+    private function materializeMergeEntriesWithConflicts(array $merge): array
+    {
+        $entries = $merge['mergedEntries'];
+
+        foreach ($merge['conflictContents'] as $path => $content) {
+            $blob = Blob::fromContent($content, $this->objectHashAlgo());
+            $this->objects->write($blob);
+            $stages = $merge['conflictEntries'][$path] ?? [];
+            $mode = $stages[2]['mode'] ?? $stages[3]['mode'] ?? $stages[1]['mode'] ?? 0100644;
+            $entries[$path] = [
+                'hash' => $blob->id->hex,
+                'mode' => $mode,
+            ];
+        }
+
+        ksort($entries);
+
+        return $entries;
+    }
+
+    /**
+     * @param array<int, string> $branches
+     */
+    private function buildOctopusMergeMessage(array $branches): string
+    {
+        $quoted = array_map(static fn (string $branch): string => "'{$branch}'", $branches);
+
+        return 'Merge branches ' . implode(', ', $quoted) . "\n";
     }
 
     /**
@@ -2922,7 +3369,7 @@ final class Repository
             message: $message,
         );
 
-        $commitId = ObjectId::compute(ObjectType::Commit, $content);
+        $commitId = ObjectId::compute(ObjectType::Commit, $content, $this->objectHashAlgo());
         $commit = Commit::parse($content, $commitId);
         $this->objects->write($commit);
 
@@ -2948,7 +3395,12 @@ final class Repository
         $baseEntries = $this->flattenTreeEntries($baseTreeId);
         $oursEntries = $this->flattenTreeEntries($oursTreeId);
         $theirsEntries = $this->flattenTreeEntries($theirsTreeId);
+        $oursRenames = $this->detectExactRenames($baseEntries, $oursEntries);
+        $theirsRenames = $this->detectExactRenames($baseEntries, $theirsEntries);
+        $oursRenamedFrom = array_flip($oursRenames);
+        $theirsRenamedFrom = array_flip($theirsRenames);
         $allPaths = array_unique(array_merge(array_keys($baseEntries), array_keys($oursEntries), array_keys($theirsEntries)));
+        $allPaths = array_values(array_diff($allPaths, array_keys($oursRenames), array_keys($theirsRenames)));
         sort($allPaths);
 
         $mergedEntries = [];
@@ -2961,9 +3413,38 @@ final class Repository
             $base = $baseEntries[$path] ?? null;
             $ours = $oursEntries[$path] ?? null;
             $theirs = $theirsEntries[$path] ?? null;
+            $oursSource = $oursRenamedFrom[$path] ?? null;
+            $theirsSource = $theirsRenamedFrom[$path] ?? null;
+            $isRenameDestination = $oursSource !== null || $theirsSource !== null;
+
+            if ($base === null) {
+                $renameSource = $oursSource ?? $theirsSource;
+
+                if ($renameSource !== null) {
+                    $base = $baseEntries[$renameSource] ?? null;
+                }
+            }
+
+            if ($ours === null && $theirsSource !== null && !isset($oursRenames[$theirsSource])) {
+                $ours = $oursEntries[$theirsSource] ?? null;
+            }
+
+            if ($theirs === null && $oursSource !== null && !isset($theirsRenames[$oursSource])) {
+                $theirs = $theirsEntries[$oursSource] ?? null;
+            }
+
             $baseHash = $base['hash'] ?? null;
             $oursHash = $ours['hash'] ?? null;
             $theirsHash = $theirs['hash'] ?? null;
+
+            if ($isRenameDestination && $base !== null && ($ours === null || $theirs === null)) {
+                $conflictPaths[] = $path;
+                $conflictEntries[$path] = $this->conflictStageEntries($base, $ours, $theirs);
+                $conflictContents[$path] = $ours !== null
+                    ? $this->readBlobContent(ObjectId::fromHex($ours['hash']))
+                    : $this->readBlobContent(ObjectId::fromHex($theirs['hash']));
+                continue;
+            }
 
             if ($oursHash === $theirsHash) {
                 if ($ours !== null) {
@@ -3044,7 +3525,7 @@ final class Repository
                 continue;
             }
 
-            $blob = Blob::fromContent($merge['content']);
+            $blob = Blob::fromContent($merge['content'], $this->objectHashAlgo());
             $this->objects->write($blob);
             $mergedEntries[$path] = [
                 'hash' => $blob->id->hex,
@@ -3058,6 +3539,49 @@ final class Repository
             'conflictContents' => $conflictContents,
             'conflictPaths' => $conflictPaths,
         ];
+    }
+
+    /**
+     * @param array<string, array{hash: string, mode: int}> $baseEntries
+     * @param array<string, array{hash: string, mode: int}> $sideEntries
+     * @return array<string, string>
+     */
+    private function detectExactRenames(array $baseEntries, array $sideEntries): array
+    {
+        $removedByHash = [];
+        $addedByHash = [];
+
+        foreach ($baseEntries as $path => $entry) {
+            if (!isset($sideEntries[$path])) {
+                $removedByHash[$entry['hash']][] = $path;
+            }
+        }
+
+        foreach ($sideEntries as $path => $entry) {
+            if (!isset($baseEntries[$path])) {
+                $addedByHash[$entry['hash']][] = $path;
+            }
+        }
+
+        $renames = [];
+
+        foreach ($removedByHash as $hash => $paths) {
+            if (!isset($addedByHash[$hash])) {
+                continue;
+            }
+
+            $removedPaths = $paths;
+            $addedPaths = $addedByHash[$hash];
+            sort($removedPaths);
+            sort($addedPaths);
+            $pairCount = min(count($removedPaths), count($addedPaths));
+
+            for ($i = 0; $i < $pairCount; $i++) {
+                $renames[$removedPaths[$i]] = $addedPaths[$i];
+            }
+        }
+
+        return $renames;
     }
 
     /**
@@ -3110,7 +3634,7 @@ final class Repository
         $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
         $this->materializeConflictContents($conflictContents);
 
-        $index = new Index();
+        $index = new Index($this->objectHashBytes());
 
         foreach ($mergedEntries as $path => $entry) {
             $fullPath = $this->workDir . '/' . $path;
@@ -3242,7 +3766,7 @@ final class Repository
         $entries = $mergedEntries;
 
         foreach ($conflictContents as $path => $content) {
-            $blob = Blob::fromContent($content);
+            $blob = Blob::fromContent($content, $this->objectHashAlgo());
             $this->objects->write($blob);
             $entries[$path] = [
                 'hash' => $blob->id->hex,
@@ -3273,7 +3797,18 @@ final class Repository
      */
     private function buildMergeMessage(string $branch, array $conflictPaths): string
     {
-        return "Merge branch '{$branch}'\n\n" . $this->formatConflictComments($conflictPaths);
+        return $this->buildMergeSubject($branch) . "\n" . $this->formatConflictComments($conflictPaths);
+    }
+
+    private function buildMergeSubject(string $branch): string
+    {
+        $currentBranch = $this->branch();
+
+        if ($currentBranch !== null && !in_array($currentBranch, ['main', 'master'], true)) {
+            return "Merge branch '{$branch}' into {$currentBranch}\n";
+        }
+
+        return "Merge branch '{$branch}'\n";
     }
 
     /**
@@ -3287,8 +3822,8 @@ final class Repository
 
         return match (true) {
             $hasBase && $hasOurs && $hasTheirs => 'UU',
-            $hasBase && $hasOurs && !$hasTheirs => 'DU',
-            $hasBase && !$hasOurs && $hasTheirs => 'UD',
+            $hasBase && $hasOurs && !$hasTheirs => 'UD',
+            $hasBase && !$hasOurs && $hasTheirs => 'DU',
             !$hasBase && $hasOurs && $hasTheirs => 'AA',
             !$hasBase && $hasOurs => 'AU',
             !$hasBase && $hasTheirs => 'UA',
@@ -3697,7 +4232,7 @@ final class Repository
      */
     private function pushUpdates(
         string $remote,
-        SmartHttpClient $http,
+        ReceivePackTransport $transport,
         string $url,
         \Pitmaster\Protocol\RefDiscovery $discovery,
         array $updates,
@@ -3710,8 +4245,9 @@ final class Repository
         $this->runPrePushHook($remote, $url, $updates);
 
         $packData = $this->buildPushPackDataForUpdates($updates, $discovery->refs());
-        $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
+        $receivePack = new \Pitmaster\Protocol\ReceivePackClient($transport);
         $receivePack->push($url, $updates, $packData, $this->pushCapabilities($discovery, $extraCapabilities));
+        $this->updateRemoteTrackingRefsAfterPush($remote, $updates);
     }
 
     /**
@@ -3743,6 +4279,28 @@ final class Repository
         }
 
         return PackWriter::encode(array_values($objects));
+    }
+
+    /**
+     * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     */
+    private function updateRemoteTrackingRefsAfterPush(string $remote, array $updates): void
+    {
+        foreach ($updates as $update) {
+            if (!str_starts_with($update['ref'], 'refs/heads/')) {
+                continue;
+            }
+
+            $branch = substr($update['ref'], strlen('refs/heads/'));
+            $trackingRef = "refs/remotes/{$remote}/{$branch}";
+
+            if ($update['new']->equals($this->zeroObjectId())) {
+                $this->refs->delete($trackingRef);
+                continue;
+            }
+
+            $this->refs->update($trackingRef, $update['new']);
+        }
     }
 
     /**
@@ -3811,6 +4369,25 @@ final class Repository
         }
 
         return $url;
+    }
+
+    private function uploadPackTransport(string $url): UploadPackTransport
+    {
+        return SshClient::isSshUrl($url)
+            ? new SshClient()
+            : new SmartHttpClient();
+    }
+
+    private function receivePackTransport(string $url): ReceivePackTransport
+    {
+        return SshClient::isSshUrl($url)
+            ? new SshClient()
+            : new SmartHttpClient();
+    }
+
+    private function isSmartHttpUrl(string $url): bool
+    {
+        return !SshClient::isSshUrl($url);
     }
 
     private function requireLocalRef(string $refName, string $message): ObjectId
@@ -4045,7 +4622,17 @@ final class Repository
 
     private function zeroObjectId(): ObjectId
     {
-        return ObjectId::fromHex(str_repeat('0', 40));
+        return ObjectId::zero($this->objectHashAlgo());
+    }
+
+    private function objectHashAlgo(): string
+    {
+        return $this->config->get('extensions.objectformat') === 'sha256' ? 'sha256' : 'sha1';
+    }
+
+    private function objectHashBytes(): int
+    {
+        return ObjectId::hashBytesForAlgo($this->objectHashAlgo());
     }
 
     private function formattedIdentity(string $name, string $email, ?int $timestamp = null, ?string $timezone = null): string
@@ -4394,5 +4981,28 @@ final class Repository
             rmdir($dir);
             $dir = dirname($dir);
         }
+    }
+
+    private function bisectManager(): \Pitmaster\Graph\Bisect
+    {
+        return new \Pitmaster\Graph\Bisect($this->objects, $this->gitDir);
+    }
+
+    private function bisectSubject(ObjectId $id): string
+    {
+        $object = $this->objects->read($id);
+
+        if (!$object instanceof Commit) {
+            return $id->hex;
+        }
+
+        return $this->subjectLine($object->message);
+    }
+
+    private function checkoutBisectCandidate(ObjectId $candidate, ?ObjectId $oldHeadId): void
+    {
+        $label = $this->branch() ?? ($oldHeadId !== null ? substr($oldHeadId->hex, 0, 7) : 'HEAD');
+        $this->detachHeadTo($candidate, 'checkout: moving from ' . $label . ' to ' . substr($candidate->hex, 0, 7));
+        $this->resetWorktree($candidate, $this->index()->paths());
     }
 }

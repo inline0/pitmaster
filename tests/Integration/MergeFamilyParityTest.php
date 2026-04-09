@@ -78,6 +78,60 @@ final class MergeFamilyParityTest extends TestCase
     }
 
     #[Test]
+    public function disjointTextEditsMergeCleanlyLikeGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createDisjointMergePair();
+
+        $this->withDeterministicCommitDates(function () use ($gitDir, $pitDir): void {
+            $this->gitWithExit($gitDir, 'merge left');
+            $this->gitWithExit($gitDir, 'merge right');
+            $repo = Pitmaster::open($pitDir);
+            $repo->merge('left');
+            $repo->merge('right');
+        });
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame(file_get_contents($gitDir . '/f.txt'), file_get_contents($pitDir . '/f.txt'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+    }
+
+    #[Test]
+    public function renameDeleteConflictMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createRenameDeleteMergePair();
+
+        $this->gitWithExit($gitDir, 'merge rename');
+        $repo = Pitmaster::open($pitDir);
+        $result = $repo->merge('rename');
+
+        $this->assertFalse($result->clean);
+        $this->assertSame($this->git($gitDir, 'ls-files --stage'), $this->git($pitDir, 'ls-files --stage'));
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame(file_get_contents($gitDir . '/B'), file_get_contents($pitDir . '/B'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_HEAD'), $this->readGitFile($pitDir, 'MERGE_HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'MERGE_MSG'), $this->readGitFile($pitDir, 'MERGE_MSG'));
+    }
+
+    #[Test]
+    public function recursiveCrissCrossMergeMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createRecursiveCrissCrossPair();
+
+        $this->withDeterministicCommitDates(function () use ($gitDir, $pitDir): void {
+            $this->gitWithExit($gitDir, 'checkout left');
+            $this->gitWithExit($gitDir, 'merge right');
+            $repo = Pitmaster::open($pitDir);
+            $repo->checkout('left');
+            $repo->merge('right');
+        });
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame(file_get_contents($gitDir . '/f.txt'), file_get_contents($pitDir . '/f.txt'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+    }
+
+    #[Test]
     public function mergeConflictContinuationMatchesGit(): void
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createMergeConflictPair();
@@ -219,7 +273,7 @@ final class MergeFamilyParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertConflictPair();
 
-        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $this->gitWithExit($gitDir, 'revert --no-edit ' . escapeshellarg($revertId));
         $repo = Pitmaster::open($pitDir);
 
         try {
@@ -241,7 +295,7 @@ final class MergeFamilyParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertConflictPair();
 
-        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $this->gitWithExit($gitDir, 'revert --no-edit ' . escapeshellarg($revertId));
         $repo = Pitmaster::open($pitDir);
 
         try {
@@ -276,7 +330,7 @@ final class MergeFamilyParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertConflictPair();
 
-        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $this->gitWithExit($gitDir, 'revert --no-edit ' . escapeshellarg($revertId));
         $repo = Pitmaster::open($pitDir);
 
         try {
@@ -322,7 +376,7 @@ final class MergeFamilyParityTest extends TestCase
     {
         ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertCleanPair();
 
-        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $this->gitWithExit($gitDir, 'revert --no-edit ' . escapeshellarg($revertId));
         $repo = Pitmaster::open($pitDir);
         $repo->revert($revertId);
 
@@ -371,6 +425,83 @@ final class MergeFamilyParityTest extends TestCase
             $this->writeFile($dir, 'main.txt', "main\n");
             $this->git($dir, 'add main.txt');
             $this->git($dir, 'commit -m main');
+        });
+    }
+
+    /**
+     * @return array{git: string, pit: string}
+     */
+    private function createDisjointMergePair(): array
+    {
+        return $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'f.txt', "a\nb\nc\nd\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m base');
+            $this->git($dir, 'checkout -b left');
+            $this->writeFile($dir, 'f.txt', "a\nleft\nb\nc\nd\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m left');
+            $this->git($dir, 'checkout main');
+            $this->git($dir, 'checkout -b right');
+            $this->writeFile($dir, 'f.txt', "a\nb\nc\nright\nd\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m right');
+            $this->git($dir, 'checkout main');
+        });
+    }
+
+    /**
+     * @return array{git: string, pit: string}
+     */
+    private function createRenameDeleteMergePair(): array
+    {
+        return $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'A', "foo\n");
+            $this->git($dir, 'add A');
+            $this->git($dir, 'commit -m base');
+            $this->git($dir, 'checkout -b rename');
+            $this->git($dir, 'mv A B');
+            $this->git($dir, 'commit -m rename');
+            $this->git($dir, 'checkout main');
+            $this->git($dir, 'rm A');
+            $this->git($dir, 'commit -m delete');
+        });
+    }
+
+    /**
+     * @return array{git: string, pit: string}
+     */
+    private function createRecursiveCrissCrossPair(): array
+    {
+        return $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'f.txt', "one\ntwo\nthree\nfour\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m A');
+
+            $this->git($dir, 'checkout -b left');
+            $this->writeFile($dir, 'f.txt', "B1\ntwo\nthree\nfour\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m B');
+            $this->git($dir, 'branch left-base');
+
+            $this->git($dir, 'checkout main');
+            $this->git($dir, 'checkout -b right');
+            $this->writeFile($dir, 'f.txt', "one\ntwo\nthree\nC2\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m C');
+            $this->git($dir, 'branch right-base');
+
+            $this->git($dir, 'checkout left');
+            $this->git($dir, 'merge right-base --no-edit');
+            $this->writeFile($dir, 'f.txt', "B1\ntwo\nthree\nD2\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m D');
+
+            $this->git($dir, 'checkout right');
+            $this->git($dir, 'merge left-base --no-edit');
+            $this->writeFile($dir, 'f.txt', "E1\ntwo\nthree\nC2\n");
+            $this->git($dir, 'add f.txt');
+            $this->git($dir, 'commit -m E');
         });
     }
 

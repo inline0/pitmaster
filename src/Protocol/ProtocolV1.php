@@ -63,7 +63,12 @@ final class ProtocolV1
         array $wants,
         array $haves = [],
         array $capabilities = self::DEFAULT_FETCH_CAPABILITIES,
+        ?int $depth = null,
     ): string {
+        if ($depth !== null && !in_array('shallow', $capabilities, true)) {
+            $capabilities[] = 'shallow';
+        }
+
         $request = '';
         $first = true;
 
@@ -75,6 +80,10 @@ final class ProtocolV1
             } else {
                 $request .= PktLine::encode("want {$want->hex}\n");
             }
+        }
+
+        if ($depth !== null) {
+            $request .= PktLine::encode("deepen {$depth}\n");
         }
 
         $request .= PktLine::flush();

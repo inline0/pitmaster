@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pitmaster\Merge;
 
+use Pitmaster\Diff\MyersDiff;
+
 /**
  * Three-way merge algorithm operating on blob content.
  *
@@ -40,117 +42,282 @@ final class ThreeWayMerge
             return ['content' => $ours, 'clean' => true, 'conflicts' => 0];
         }
 
-        // Line-level three-way merge
-        $baseLines = $base !== '' ? explode("\n", $base) : [];
-        $oursLines = $ours !== '' ? explode("\n", $ours) : [];
-        $theirsLines = $theirs !== '' ? explode("\n", $theirs) : [];
+        $baseLines = MyersDiff::normalizeLines($base);
+        $oursLines = MyersDiff::normalizeLines($ours);
+        $theirsLines = MyersDiff::normalizeLines($theirs);
 
-        // Compute diffs from base to ours and base to theirs
-        $oursOps = self::computeOps($baseLines, $oursLines);
-        $theirsOps = self::computeOps($baseLines, $theirsLines);
+        $oursRegions = self::buildChangeRegions($baseLines, $oursLines);
+        $theirsRegions = self::buildChangeRegions($baseLines, $theirsLines);
 
-        // Walk through base lines and merge changes
-        $result = [];
-        $conflicts = 0;
-        $baseLen = count($baseLines);
-        $oursIdx = 0;
-        $theirsIdx = 0;
-        $baseIdx = 0;
-
-        while ($baseIdx < $baseLen || $oursIdx < count($oursLines) || $theirsIdx < count($theirsLines)) {
-            $oursChanged = isset($oursOps[$baseIdx]) && $oursOps[$baseIdx] !== 'keep';
-            $theirsChanged = isset($theirsOps[$baseIdx]) && $theirsOps[$baseIdx] !== 'keep';
-
-            if (!$oursChanged && !$theirsChanged) {
-                // Both unchanged, take base
-                if ($baseIdx < $baseLen) {
-                    $result[] = $baseLines[$baseIdx];
-                }
-                $baseIdx++;
-                $oursIdx++;
-                $theirsIdx++;
-            } elseif ($oursChanged && $theirsChanged) {
-                // Both changed: conflict
-                $conflicts++;
-                $oursChunk = [];
-                $theirsChunk = [];
-
-                if ($oursIdx < count($oursLines)) {
-                    $oursChunk[] = $oursLines[$oursIdx];
-                    $oursIdx++;
-                }
-
-                if ($theirsIdx < count($theirsLines)) {
-                    $theirsChunk[] = $theirsLines[$theirsIdx];
-                    $theirsIdx++;
-                }
-
-                $baseChunk = $baseIdx < $baseLen ? [$baseLines[$baseIdx]] : [];
-                $result[] = rtrim(ConflictMarker::mark(
-                    implode("\n", $oursChunk),
-                    implode("\n", $theirsChunk),
-                    $oursLabel,
-                    $theirsLabel,
-                    $conflictStyle === 'diff3' ? implode("\n", $baseChunk) : null,
-                    $baseLabel,
-                ), "\n");
-                $baseIdx++;
-            } elseif ($oursChanged && !$theirsChanged) {
-                // Only ours changed, take ours
-                if ($oursOps[$baseIdx] === 'delete') {
-                    $baseIdx++;
-                    $theirsIdx++;
-                } else {
-                    if ($oursIdx < count($oursLines)) {
-                        $result[] = $oursLines[$oursIdx];
-                    }
-                    $oursIdx++;
-                    $baseIdx++;
-                    $theirsIdx++;
-                }
-            } elseif ($theirsChanged) {
-                // Only theirs changed, take theirs
-                if ($theirsOps[$baseIdx] === 'delete') {
-                    $baseIdx++;
-                    $oursIdx++;
-                } else {
-                    if ($theirsIdx < count($theirsLines)) {
-                        $result[] = $theirsLines[$theirsIdx];
-                    }
-                    $theirsIdx++;
-                    $baseIdx++;
-                    $oursIdx++;
-                }
-            }
-        }
+        [$result, $conflicts] = self::mergeRegions(
+            $baseLines,
+            $oursRegions,
+            $theirsRegions,
+            $oursLabel,
+            $theirsLabel,
+            $conflictStyle,
+            $baseLabel,
+        );
 
         $content = implode("\n", $result);
+
+        if (
+            $content !== ''
+            && (str_ends_with($base, "\n") || str_ends_with($ours, "\n") || str_ends_with($theirs, "\n"))
+            && !str_ends_with($content, "\n")
+        ) {
+            $content .= "\n";
+        }
 
         return ['content' => $content, 'clean' => $conflicts === 0, 'conflicts' => $conflicts];
     }
 
     /**
-     * Compute simple line operations (keep/change/delete) from base to target.
-     *
-     * @param array<int, string> $base
-     * @param array<int, string> $target
-     * @return array<int, string>
+     * @param array<int, string> $baseLines
+     * @param array<int, string> $targetLines
+     * @return array<int, array{start: int, end: int, lines: array<int, string>}>
      */
-    private static function computeOps(array $base, array $target): array
+    private static function buildChangeRegions(array $baseLines, array $targetLines): array
     {
-        $ops = [];
-        $targetSet = array_flip($target);
+        $ops = MyersDiff::opsFromLines($baseLines, $targetLines);
+        $regions = [];
+        $baseIndex = 0;
+        $opIndex = 0;
+        $count = count($ops);
 
-        foreach ($base as $i => $line) {
-            if (isset($target[$i]) && $target[$i] === $line) {
-                $ops[$i] = 'keep';
-            } elseif (!isset($target[$i])) {
-                $ops[$i] = 'delete';
-            } else {
-                $ops[$i] = 'change';
+        while ($opIndex < $count) {
+            if ($ops[$opIndex]['type'] === 'equal') {
+                $baseIndex++;
+                $opIndex++;
+                continue;
+            }
+
+            $start = $baseIndex;
+            $replacement = [];
+
+            while ($opIndex < $count && $ops[$opIndex]['type'] !== 'equal') {
+                if ($ops[$opIndex]['type'] === 'delete') {
+                    $baseIndex++;
+                } elseif ($ops[$opIndex]['type'] === 'insert') {
+                    $replacement[] = $ops[$opIndex]['line'];
+                }
+
+                $opIndex++;
+            }
+
+            $regions[] = [
+                'start' => $start,
+                'end' => $baseIndex,
+                'lines' => $replacement,
+            ];
+        }
+
+        return $regions;
+    }
+
+    /**
+     * @param array<int, string> $baseLines
+     * @param array<int, array{start: int, end: int, lines: array<int, string>}> $oursRegions
+     * @param array<int, array{start: int, end: int, lines: array<int, string>}> $theirsRegions
+     * @return array{0: array<int, string>, 1: int}
+     *
+     */
+    private static function mergeRegions(
+        array $baseLines,
+        array $oursRegions,
+        array $theirsRegions,
+        string $oursLabel,
+        string $theirsLabel,
+        string $conflictStyle,
+        string $baseLabel,
+    ): array {
+        $result = [];
+        $conflicts = 0;
+        $baseIndex = 0;
+        $oursIndex = 0;
+        $theirsIndex = 0;
+        $oursCount = count($oursRegions);
+        $theirsCount = count($theirsRegions);
+
+        while ($oursIndex < $oursCount || $theirsIndex < $theirsCount) {
+            $nextOurs = $oursRegions[$oursIndex] ?? null;
+            $nextTheirs = $theirsRegions[$theirsIndex] ?? null;
+            $nextStart = min($nextOurs['start'] ?? PHP_INT_MAX, $nextTheirs['start'] ?? PHP_INT_MAX);
+
+            if ($baseIndex < $nextStart) {
+                foreach (array_slice($baseLines, $baseIndex, $nextStart - $baseIndex) as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $nextStart;
+            }
+
+            [$oursWindow, $theirsWindow, $windowEnd, $oursIndex, $theirsIndex] = self::collectWindow(
+                $oursRegions,
+                $theirsRegions,
+                $oursIndex,
+                $theirsIndex,
+                $nextStart,
+            );
+
+            if ($oursWindow === []) {
+                foreach (self::applyRegions($baseLines, $nextStart, $windowEnd, $theirsWindow) as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $windowEnd;
+                continue;
+            }
+
+            if ($theirsWindow === []) {
+                foreach (self::applyRegions($baseLines, $nextStart, $windowEnd, $oursWindow) as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $windowEnd;
+                continue;
+            }
+
+            $baseChunk = array_slice($baseLines, $nextStart, $windowEnd - $nextStart);
+            $oursChunk = self::applyRegions($baseLines, $nextStart, $windowEnd, $oursWindow);
+            $theirsChunk = self::applyRegions($baseLines, $nextStart, $windowEnd, $theirsWindow);
+
+            if ($oursChunk === $theirsChunk) {
+                foreach ($oursChunk as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $windowEnd;
+                continue;
+            }
+
+            if ($oursChunk === $baseChunk) {
+                foreach ($theirsChunk as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $windowEnd;
+                continue;
+            }
+
+            if ($theirsChunk === $baseChunk) {
+                foreach ($oursChunk as $line) {
+                    $result[] = $line;
+                }
+
+                $baseIndex = $windowEnd;
+                continue;
+            }
+
+            $conflicts++;
+            $result[] = rtrim(ConflictMarker::mark(
+                implode("\n", $oursChunk),
+                implode("\n", $theirsChunk),
+                $oursLabel,
+                $theirsLabel,
+                $conflictStyle === 'diff3' ? implode("\n", $baseChunk) : null,
+                $baseLabel,
+            ), "\n");
+            $baseIndex = $windowEnd;
+        }
+
+        if ($baseIndex < count($baseLines)) {
+            foreach (array_slice($baseLines, $baseIndex) as $line) {
+                $result[] = $line;
             }
         }
 
-        return $ops;
+        return [$result, $conflicts];
+    }
+
+    /**
+     * @param array<int, array{start: int, end: int, lines: array<int, string>}> $oursRegions
+     * @param array<int, array{start: int, end: int, lines: array<int, string>}> $theirsRegions
+     * @return array{
+     *   0: array<int, array{start: int, end: int, lines: array<int, string>}>,
+     *   1: array<int, array{start: int, end: int, lines: array<int, string>}>,
+     *   2: int,
+     *   3: int,
+     *   4: int
+     * }
+     */
+    private static function collectWindow(
+        array $oursRegions,
+        array $theirsRegions,
+        int $oursIndex,
+        int $theirsIndex,
+        int $windowStart,
+    ): array {
+        $oursWindow = [];
+        $theirsWindow = [];
+        $windowEnd = $windowStart;
+        $progress = true;
+
+        while ($progress) {
+            $progress = false;
+
+            if (
+                isset($oursRegions[$oursIndex])
+                && self::regionTouchesWindow($oursRegions[$oursIndex], $windowStart, $windowEnd)
+            ) {
+                $oursWindow[] = $oursRegions[$oursIndex];
+                $windowEnd = max($windowEnd, $oursRegions[$oursIndex]['end']);
+                $oursIndex++;
+                $progress = true;
+            }
+
+            if (
+                isset($theirsRegions[$theirsIndex])
+                && self::regionTouchesWindow($theirsRegions[$theirsIndex], $windowStart, $windowEnd)
+            ) {
+                $theirsWindow[] = $theirsRegions[$theirsIndex];
+                $windowEnd = max($windowEnd, $theirsRegions[$theirsIndex]['end']);
+                $theirsIndex++;
+                $progress = true;
+            }
+        }
+
+        return [$oursWindow, $theirsWindow, $windowEnd, $oursIndex, $theirsIndex];
+    }
+
+    /**
+     * @param array{start: int, end: int, lines: array<int, string>} $region
+     */
+    private static function regionTouchesWindow(array $region, int $windowStart, int $windowEnd): bool
+    {
+        if ($windowStart === $windowEnd) {
+            return $region['start'] === $windowStart;
+        }
+
+        return $region['start'] < $windowEnd;
+    }
+
+    /**
+     * @param array<int, string> $baseLines
+     * @param array<int, array{start: int, end: int, lines: array<int, string>}> $regions
+     * @return array<int, string>
+     */
+    private static function applyRegions(array $baseLines, int $windowStart, int $windowEnd, array $regions): array
+    {
+        $result = [];
+        $cursor = $windowStart;
+
+        foreach ($regions as $region) {
+            foreach (array_slice($baseLines, $cursor, $region['start'] - $cursor) as $line) {
+                $result[] = $line;
+            }
+
+            foreach ($region['lines'] as $line) {
+                $result[] = $line;
+            }
+
+            $cursor = $region['end'];
+        }
+
+        foreach (array_slice($baseLines, $cursor, $windowEnd - $cursor) as $line) {
+            $result[] = $line;
+        }
+
+        return $result;
     }
 }

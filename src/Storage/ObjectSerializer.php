@@ -18,7 +18,7 @@ use Pitmaster\Object\Tree;
  *
  * Format: <type> <size>\0<content>
  * Storage: zlib_encode(header + content)
- * Hash: sha1(header + content) computed over uncompressed data
+ * Hash: the repository object hash over header + content computed on uncompressed data
  */
 final class ObjectSerializer
 {
@@ -102,7 +102,8 @@ final class ObjectSerializer
             );
         }
 
-        $id = ObjectId::compute($type, $content);
+        $algo = $expectedHash !== null ? ObjectId::fromHex($expectedHash)->algo : 'sha1';
+        $id = ObjectId::compute($type, $content, $algo);
 
         if ($expectedHash !== null && $id->hex !== $expectedHash) {
             throw CorruptObjectException::hashMismatch($expectedHash, $id->hex);

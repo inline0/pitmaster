@@ -120,7 +120,10 @@ final class BisectTest extends TestCase
 
         $this->assertFileExists($this->tmpDir . '/.git/BISECT_START');
         $this->assertFileExists($this->tmpDir . '/.git/BISECT_LOG');
+        $this->assertFileExists($this->tmpDir . '/.git/BISECT_EXPECTED_REV');
+        $this->assertFileExists($this->tmpDir . '/.git/BISECT_TERMS');
         $this->assertFileExists($this->tmpDir . '/.git/refs/bisect/bad');
+        $this->assertFileExists($this->tmpDir . '/.git/refs/bisect/good-' . $this->commits[0]);
 
         // Bad should contain the bad commit hash
         $badContent = trim(file_get_contents($this->tmpDir . '/.git/refs/bisect/bad'));

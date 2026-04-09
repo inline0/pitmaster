@@ -115,4 +115,52 @@ final class MergeBaseTest extends TestCase
         $this->assertNotNull($result);
         $this->assertSame($a, $result->hex);
     }
+
+    #[Test]
+    public function findAllMatchesGitForCrissCrossHistory(): void
+    {
+        $this->writeFile('f.txt', "one\ntwo\nthree\nfour\n");
+        $this->git('add f.txt');
+        $this->git('commit -m "A"');
+
+        $this->git('checkout -b left');
+        $this->writeFile('f.txt', "B1\ntwo\nthree\nfour\n");
+        $this->git('add f.txt');
+        $this->git('commit -m "B"');
+        $this->git('branch left-base');
+
+        $this->git('checkout main');
+        $this->git('checkout -b right');
+        $this->writeFile('f.txt', "one\ntwo\nthree\nC2\n");
+        $this->git('add f.txt');
+        $this->git('commit -m "C"');
+        $this->git('branch right-base');
+
+        $this->git('checkout left');
+        $this->git('merge right-base --no-edit');
+        $this->writeFile('f.txt', "B1\ntwo\nthree\nD2\n");
+        $this->git('add f.txt');
+        $this->git('commit -m "D"');
+        $leftHead = trim($this->git('rev-parse HEAD'));
+
+        $this->git('checkout right');
+        $this->git('merge left-base --no-edit');
+        $this->writeFile('f.txt', "E1\ntwo\nthree\nC2\n");
+        $this->git('add f.txt');
+        $this->git('commit -m "E"');
+        $rightHead = trim($this->git('rev-parse HEAD'));
+
+        $gitBases = array_values(array_filter(explode("\n", trim($this->git("merge-base --all {$leftHead} {$rightHead}")))));
+        sort($gitBases);
+
+        $objects = new ObjectDatabase($this->tmpDir . '/.git/objects');
+        $mergeBase = new MergeBase($objects);
+        $pitBases = array_map(
+            static fn (ObjectId $id): string => $id->hex,
+            $mergeBase->findAll(ObjectId::fromHex($leftHead), ObjectId::fromHex($rightHead)),
+        );
+        sort($pitBases);
+
+        $this->assertSame($gitBases, $pitBases);
+    }
 }

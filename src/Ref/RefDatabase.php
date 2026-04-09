@@ -15,6 +15,7 @@ final class RefDatabase implements RefStore
 {
     private readonly LooseRefStore $loose;
     private readonly PackedRefStore $packed;
+    private readonly ?ReftableStore $reftable;
     private readonly string $commonDir;
 
     /**
@@ -30,10 +31,23 @@ final class RefDatabase implements RefStore
         $this->loose = new LooseRefStore($gitDir, $commonDir);
         // packed-refs from common dir
         $this->packed = new PackedRefStore($commonDir);
+        $this->reftable = ReftableStore::open($commonDir);
     }
 
     public function resolve(string $name): ?ObjectId
     {
+        if ($name === 'HEAD') {
+            $id = $this->loose->resolve('HEAD');
+
+            if ($id !== null) {
+                return $id;
+            }
+
+            $head = $this->readHead();
+
+            return $head !== null ? $this->resolve($head->target) : null;
+        }
+
         // Loose takes priority
         $id = $this->loose->resolve($name);
 
@@ -41,12 +55,26 @@ final class RefDatabase implements RefStore
             return $id;
         }
 
+        if ($this->reftable !== null) {
+            $id = $this->reftable->resolve($name);
+
+            if ($id !== null) {
+                return $id;
+            }
+        }
+
         return $this->packed->resolve($name);
     }
 
     public function exists(string $name): bool
     {
-        return $this->loose->exists($name) || $this->packed->exists($name);
+        if ($name === 'HEAD') {
+            return $this->readHead() !== null;
+        }
+
+        return $this->loose->exists($name)
+            || ($this->reftable?->exists($name) ?? false)
+            || $this->packed->exists($name);
     }
 
     /**
@@ -54,8 +82,9 @@ final class RefDatabase implements RefStore
      */
     public function list(): array
     {
-        // Packed first, then loose overrides
-        return array_merge($this->packed->list(), $this->loose->list());
+        $shared = $this->reftable?->list() ?? $this->packed->list();
+
+        return array_merge($shared, $this->loose->list());
     }
 
     /**
@@ -63,7 +92,13 @@ final class RefDatabase implements RefStore
      */
     public function readHead(): ?SymbolicRef
     {
-        return $this->loose->readHead();
+        $head = $this->loose->readHead();
+
+        if ($this->isUsableHead($head)) {
+            return $head;
+        }
+
+        return $this->reftable?->readHead();
     }
 
     /**
@@ -71,19 +106,7 @@ final class RefDatabase implements RefStore
      */
     public function resolveHead(): ?ObjectId
     {
-        $id = $this->loose->resolveHead();
-
-        if ($id !== null) {
-            return $id;
-        }
-
-        $head = $this->loose->readHead();
-
-        if ($head === null) {
-            return null;
-        }
-
-        return $this->resolve($head->target);
+        return $this->resolve('HEAD');
     }
 
     /**
@@ -128,5 +151,18 @@ final class RefDatabase implements RefStore
     public function commonDir(): string
     {
         return $this->commonDir;
+    }
+
+    private function isUsableHead(?SymbolicRef $head): bool
+    {
+        if ($head === null) {
+            return false;
+        }
+
+        if ($head->target === 'refs/heads/.invalid') {
+            return false;
+        }
+
+        return true;
     }
 }

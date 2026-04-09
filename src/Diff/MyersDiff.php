@@ -26,15 +26,18 @@ final class MyersDiff
             return [];
         }
 
-        $a = $old !== '' ? explode("\n", $old) : [];
-        $b = $new !== '' ? explode("\n", $new) : [];
+        return self::diffLines(self::normalizeLines($old), self::normalizeLines($new), $context);
+    }
 
-        if ($a !== [] && end($a) === '') {
-            array_pop($a);
-        }
-
-        if ($b !== [] && end($b) === '') {
-            array_pop($b);
+    /**
+     * @param array<int, string> $a
+     * @param array<int, string> $b
+     * @return array<int, Hunk>
+     */
+    public static function diffLines(array $a, array $b, int $context = self::CONTEXT_LINES): array
+    {
+        if ($a === $b) {
+            return [];
         }
 
         $n = count($a);
@@ -56,10 +59,33 @@ final class MyersDiff
             return self::opsToHunks($ops, $context);
         }
 
-        $ops = self::myers($a, $b, $n, $m);
-        $ops = self::reorderDeletesBeforeInserts($ops);
+        $ops = self::opsFromLines($a, $b);
 
         return self::opsToHunks($ops, $context);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function normalizeLines(string $content): array
+    {
+        $lines = $content !== '' ? explode("\n", $content) : [];
+
+        if ($lines !== [] && end($lines) === '') {
+            array_pop($lines);
+        }
+
+        return $lines;
+    }
+
+    /**
+     * @param array<int, string> $a
+     * @param array<int, string> $b
+     * @return array<int, array{type: string, line: string}>
+     */
+    public static function opsFromLines(array $a, array $b): array
+    {
+        return self::reorderDeletesBeforeInserts(self::myers($a, $b, count($a), count($b)));
     }
 
     /**
@@ -227,7 +253,7 @@ final class MyersDiff
      * @param array<int, array{type: string, line: string}> $ops
      * @return array<int, Hunk>
      */
-    private static function opsToHunks(array $ops, int $context): array
+    public static function opsToHunks(array $ops, int $context): array
     {
         $changeIndices = [];
 

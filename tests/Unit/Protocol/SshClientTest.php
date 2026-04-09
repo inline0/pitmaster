@@ -30,7 +30,7 @@ final class SshClientTest extends TestCase
         $this->assertSame('user', $result['user']);
         $this->assertSame('host', $result['host']);
         $this->assertSame(22, $result['port']);
-        $this->assertSame('path/to/repo.git', $result['path']);
+        $this->assertSame('/path/to/repo.git', $result['path']);
     }
 
     #[Test]
@@ -41,21 +41,18 @@ final class SshClientTest extends TestCase
         $this->assertSame('deploy', $result['user']);
         $this->assertSame('example.com', $result['host']);
         $this->assertSame(22, $result['port']);
-        $this->assertSame('var/git/project.git', $result['path']);
+        $this->assertSame('/var/git/project.git', $result['path']);
     }
 
     #[Test]
-    public function testParseSshUrlWithPortMatchesScpPattern(): void
+    public function testParseSshUrlWithPort(): void
     {
-        // URLs with ssh:// and a port (colon after host) are caught by the
-        // SCP-style regex before reaching the ssh:// branch. This is a known
-        // behavior of the current implementation.
         $result = SshClient::parseUrl('ssh://admin@server.io:2222/repos/project.git');
 
-        $this->assertSame('ssh://admin', $result['user']);
+        $this->assertSame('admin', $result['user']);
         $this->assertSame('server.io', $result['host']);
-        $this->assertSame(22, $result['port']);
-        $this->assertSame('2222/repos/project.git', $result['path']);
+        $this->assertSame(2222, $result['port']);
+        $this->assertSame('/repos/project.git', $result['path']);
     }
 
     #[Test]

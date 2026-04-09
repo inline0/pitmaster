@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "10be06f3492b62800a72ad29d4923281f8645482",
+        "type": "blob",
+        "size": 34,
+        "content": "a\nunique1\nrepeat\nrepeat\nunique2\nz\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "542822175a32035ec7d181dd9a3a9455e962a3bd",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 10be06f3492b62800a72ad29d4923281f8645482\tarticle.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "db366f2f8888b163734d9fbfc91f512badc841a5",
+        "type": "commit",
+        "size": 165,
+        "content": "tree 542822175a32035ec7d181dd9a3a9455e962a3bd\nauthor Test User <test@pitmaster.dev> 1704931200 +0000\ncommitter Test User <test@pitmaster.dev> 1704931200 +0000\n\nbase\n",
+        "encoding": "utf-8"
+    }
+]

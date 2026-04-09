@@ -23,36 +23,12 @@ final class PatienceDiff
             return [];
         }
 
-        $oldLines = $old !== '' ? explode("\n", $old) : [];
-        $newLines = $new !== '' ? explode("\n", $new) : [];
+        $ops = self::diffOps(
+            MyersDiff::normalizeLines($old),
+            MyersDiff::normalizeLines($new),
+        );
 
-        // Find unique lines in both sequences
-        $uniqueOld = self::findUnique($oldLines);
-        $uniqueNew = self::findUnique($newLines);
-
-        // Find the longest common subsequence of unique lines
-        $commonUnique = [];
-
-        foreach ($uniqueOld as $line => $oldIdx) {
-            if (isset($uniqueNew[$line])) {
-                $commonUnique[] = ['old' => $oldIdx, 'new' => $uniqueNew[$line], 'line' => $line];
-            }
-        }
-
-        // Sort by position in old file
-        usort($commonUnique, fn ($a, $b) => $a['old'] <=> $b['old']);
-
-        // Find LIS by new position to get the patience anchors
-        $anchors = self::longestIncreasingSubsequence($commonUnique);
-
-        if ($anchors === []) {
-            // No common unique lines; fall back to Myers
-            return MyersDiff::diff($old, $new, $context);
-        }
-
-        // Use anchors to split into segments and diff each with Myers
-        // For simplicity, delegate to Myers since the result format is identical
-        return MyersDiff::diff($old, $new, $context);
+        return MyersDiff::opsToHunks($ops, $context);
     }
 
     /**
@@ -121,5 +97,79 @@ final class PatienceDiff
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<int, string> $oldLines
+     * @param array<int, string> $newLines
+     * @return array<int, array{type: string, line: string}>
+     */
+    private static function diffOps(array $oldLines, array $newLines): array
+    {
+        if ($oldLines === $newLines) {
+            return array_map(
+                static fn (string $line): array => ['type' => 'equal', 'line' => $line],
+                $oldLines,
+            );
+        }
+
+        if ($oldLines === [] || $newLines === []) {
+            return MyersDiff::opsFromLines($oldLines, $newLines);
+        }
+
+        $anchors = self::anchors($oldLines, $newLines);
+
+        if ($anchors === []) {
+            return MyersDiff::opsFromLines($oldLines, $newLines);
+        }
+
+        $ops = [];
+        $oldStart = 0;
+        $newStart = 0;
+
+        foreach ($anchors as $anchor) {
+            $oldIndex = $anchor['old'];
+            $newIndex = $anchor['new'];
+            $ops = array_merge(
+                $ops,
+                self::diffOps(
+                    array_slice($oldLines, $oldStart, $oldIndex - $oldStart),
+                    array_slice($newLines, $newStart, $newIndex - $newStart),
+                ),
+            );
+            $ops[] = ['type' => 'equal', 'line' => $anchor['line']];
+            $oldStart = $oldIndex + 1;
+            $newStart = $newIndex + 1;
+        }
+
+        return array_merge(
+            $ops,
+            self::diffOps(
+                array_slice($oldLines, $oldStart),
+                array_slice($newLines, $newStart),
+            ),
+        );
+    }
+
+    /**
+     * @param array<int, string> $oldLines
+     * @param array<int, string> $newLines
+     * @return array<int, array{old: int, new: int, line: string}>
+     */
+    public static function anchors(array $oldLines, array $newLines): array
+    {
+        $uniqueOld = self::findUnique($oldLines);
+        $uniqueNew = self::findUnique($newLines);
+        $commonUnique = [];
+
+        foreach ($uniqueOld as $line => $oldIdx) {
+            if (isset($uniqueNew[$line])) {
+                $commonUnique[] = ['old' => $oldIdx, 'new' => $uniqueNew[$line], 'line' => $line];
+            }
+        }
+
+        usort($commonUnique, fn ($a, $b) => $a['old'] <=> $b['old']);
+
+        return self::longestIncreasingSubsequence($commonUnique);
     }
 }

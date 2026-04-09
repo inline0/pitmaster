@@ -1,0 +1,32 @@
+{
+    "name": "sha256-roundtrip",
+    "category": "repository",
+    "description": "Initialize a SHA-256 repository, create a commit and annotated tag, and compare the resulting object graph against git",
+    "operations": [
+        "head",
+        "config",
+        "status"
+    ],
+    "oracle_commands": {
+        "head": "cat .git/HEAD",
+        "config": "bash \"{{SCENARIO_DIR}}/config-snapshot.sh\"",
+        "status": "git status --porcelain=v2"
+    },
+    "actual_commands": {
+        "head": "cat .git/HEAD",
+        "config": "bash \"{{SCENARIO_DIR}}/config-snapshot.sh\"",
+        "status": "git status --porcelain=v2"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "head",
+            "config",
+            "status"
+        ],
+        "fsck_clean": true
+    }
+}

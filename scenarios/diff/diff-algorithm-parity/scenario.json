@@ -1,0 +1,23 @@
+{
+    "name": "diff-algorithm-parity",
+    "category": "diff",
+    "description": "Compare Pitmaster patience, histogram, and minimal diff output against git",
+    "operations": [
+        "diff_algorithms"
+    ],
+    "oracle_commands": {
+        "diff_algorithms": "cat .diff-algorithms.json"
+    },
+    "actual_commands": {
+        "diff_algorithms": "cat .diff-algorithms.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "diff_algorithms"
+        ],
+        "fsck_clean": true
+    }
+}

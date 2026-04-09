@@ -12,7 +12,7 @@ use Pitmaster\Object\ObjectId;
  */
 final class ReceivePackClient
 {
-    public function __construct(private readonly SmartHttpClient $http)
+    public function __construct(private readonly ReceivePackTransport $transport)
     {
     }
 
@@ -30,7 +30,7 @@ final class ReceivePackClient
         $request = ProtocolV1::buildPushRequest($updates, $capabilities ?? ProtocolV1::DEFAULT_PUSH_CAPABILITIES);
         $request .= $packData;
 
-        $response = $this->http->receivePack($url, $request);
+        $response = $this->transport->receivePack($url, $request);
         $this->validateResponse($response, $updates);
 
         return $response;

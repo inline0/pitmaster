@@ -28,6 +28,11 @@ final readonly class ObjectId
     public static function fromHex(string $hex): self
     {
         $hex = strtolower($hex);
+
+        if (!self::looksLikeHex($hex)) {
+            throw new \InvalidArgumentException("Invalid hex string for ObjectId: {$hex}");
+        }
+
         $algo = strlen($hex) === 64 ? 'sha256' : 'sha1';
         $binary = hex2bin($hex);
 
@@ -43,9 +48,32 @@ final readonly class ObjectId
      */
     public static function fromBinary(string $binary): self
     {
-        $algo = strlen($binary) === 32 ? 'sha256' : 'sha1';
+        $length = strlen($binary);
+
+        if ($length !== 20 && $length !== 32) {
+            throw new \InvalidArgumentException("Invalid binary hash length for ObjectId: {$length}");
+        }
+
+        $algo = $length === 32 ? 'sha256' : 'sha1';
 
         return new self(bin2hex($binary), $binary, $algo);
+    }
+
+    public static function looksLikeHex(string $value): bool
+    {
+        $length = strlen($value);
+
+        return ($length === 40 || $length === 64) && ctype_xdigit($value);
+    }
+
+    public static function hexLength(string $algo = 'sha1'): int
+    {
+        return $algo === 'sha256' ? 64 : 40;
+    }
+
+    public static function hashBytesForAlgo(string $algo = 'sha1'): int
+    {
+        return $algo === 'sha256' ? 32 : 20;
     }
 
     /**

@@ -148,6 +148,7 @@ final class ProtocolV2
         array $features = self::DEFAULT_FETCH_FEATURES,
         bool $done = true,
         array $serverOptions = [],
+        ?int $depth = null,
     ): string {
         if ($wants === []) {
             throw new ProtocolException('protocol v2 fetch requires at least one want');
@@ -157,6 +158,10 @@ final class ProtocolV2
 
         foreach ($features as $feature) {
             $request .= PktLine::encode($feature . "\n");
+        }
+
+        if ($depth !== null) {
+            $request .= PktLine::encode("deepen {$depth}\n");
         }
 
         foreach ($wants as $want) {

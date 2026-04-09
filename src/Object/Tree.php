@@ -23,12 +23,13 @@ final readonly class Tree extends GitObject
     /**
      * Parse tree object from raw content.
      *
-     * Tree format: repeated (<mode> <name>\0<20-byte binary hash>)
+     * Tree format: repeated (<mode> <name>\0<binary hash>)
      */
     public static function parse(string $content, ObjectId $id): self
     {
         $reader = new BinaryReader($content);
         $entries = [];
+        $hashBytes = $id->hashLength();
 
         while (!$reader->isEof()) {
             // Read "<mode> <name>\0"
@@ -45,8 +46,8 @@ final readonly class Tree extends GitObject
             $mode = substr($modeAndName, 0, $spacePos);
             $name = substr($modeAndName, $spacePos + 1);
 
-            // Read 20-byte binary hash
-            $hashHex = $reader->readHash20();
+            // Read the entry hash using the repository object format.
+            $hashHex = $reader->readHash($hashBytes);
             $hash = ObjectId::fromHex($hashHex);
 
             $entries[] = new TreeEntry($mode, $name, $hash);

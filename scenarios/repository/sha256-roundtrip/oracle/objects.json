@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "000f154348cff02b20fff31e49021884bfe11d8e17baad615a1a6babdbe1d3fa",
+        "type": "blob",
+        "size": 8,
+        "content": "tracked\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b8db5cf12f4e306440d9747569d697fa9fdbe3ea38a2e5ac687854e3ec8be2d9",
+        "type": "commit",
+        "size": 199,
+        "content": "tree badee88bae25ceec68c775638dd5349cbf08bd155ba052254f5b625ccf43c598\nauthor Test User <test@pitmaster.dev> 1705276810 +0000\ncommitter Test User <test@pitmaster.dev> 1705276810 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "badee88bae25ceec68c775638dd5349cbf08bd155ba052254f5b625ccf43c598",
+        "type": "tree",
+        "size": 51,
+        "content": "100644 blob 000f154348cff02b20fff31e49021884bfe11d8e17baad615a1a6babdbe1d3fa\ttracked.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bccf2591b0c101101b8f2bfc7b8faa2c933219c80fd3df0c685e81f408242fe0",
+        "type": "tag",
+        "size": 157,
+        "content": "object b8db5cf12f4e306440d9747569d697fa9fdbe3ea38a2e5ac687854e3ec8be2d9\ntype commit\ntag v1\ntagger Test User <test@pitmaster.dev> 1705276810 +0000\n\nRelease 1\n",
+        "encoding": "utf-8"
+    }
+]

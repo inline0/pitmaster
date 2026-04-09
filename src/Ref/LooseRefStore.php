@@ -9,7 +9,7 @@ use Pitmaster\Object\ObjectId;
 /**
  * Reads and writes loose refs from .git/refs/ and .git/HEAD.
  *
- * Loose refs are individual files containing a 40-char hex hash or
+ * Loose refs are individual files containing a 40- or 64-char hex hash or
  * a symbolic reference ("ref: refs/heads/main").
  */
 final class LooseRefStore implements RefStore
@@ -49,8 +49,8 @@ final class LooseRefStore implements RefStore
 
         $hex = trim($content);
 
-        if (strlen($hex) >= 40 && ctype_xdigit(substr($hex, 0, 40))) {
-            return ObjectId::fromHex(substr($hex, 0, 40));
+        if (ObjectId::looksLikeHex($hex)) {
+            return ObjectId::fromHex($hex);
         }
 
         return null;
@@ -214,8 +214,8 @@ final class LooseRefStore implements RefStore
 
             $trimmed = trim($content);
 
-            if (strlen($trimmed) >= 40 && ctype_xdigit(substr($trimmed, 0, 40))) {
-                $refs[$refName] = ObjectId::fromHex(substr($trimmed, 0, 40));
+            if (ObjectId::looksLikeHex($trimmed)) {
+                $refs[$refName] = ObjectId::fromHex($trimmed);
             } elseif (str_starts_with($trimmed, 'ref: ')) {
                 // Symbolic ref: resolve it
                 $target = substr($trimmed, 5);

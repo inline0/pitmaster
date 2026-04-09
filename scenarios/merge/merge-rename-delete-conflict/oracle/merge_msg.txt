@@ -1,0 +1,4 @@
+Merge branch 'rename'
+
+# Conflicts:
+#	B

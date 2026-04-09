@@ -6,6 +6,7 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Pitmaster;
 use Pitmaster\Ref\Reftable;
 
 final class ReftableTest extends TestCase
@@ -80,6 +81,31 @@ final class ReftableTest extends TestCase
         ksort($actualRefs);
 
         $this->assertSame($expectedRefs, $actualRefs);
+    }
+
+    #[Test]
+    public function pitmasterOpenUsesReftableBackendForHeadBranchesAndTags(): void
+    {
+        $repoDir = $this->tmpDir . '/public-repo';
+        $this->gitIn($this->tmpDir, 'init --initial-branch=main --ref-format=reftable ' . escapeshellarg($repoDir));
+        $this->gitIn($repoDir, 'config user.email test@pitmaster.dev');
+        $this->gitIn($repoDir, 'config user.name "Test User"');
+        file_put_contents($repoDir . '/tracked.txt', "tracked\n");
+        $this->gitIn($repoDir, 'add tracked.txt');
+        $this->gitIn($repoDir, 'commit -m initial');
+        $this->gitIn($repoDir, 'branch feature');
+        $this->gitIn($repoDir, 'tag -a v1 -m "Release 1"');
+
+        $repo = Pitmaster::open($repoDir);
+        $showRefMap = $this->showRefMap($repoDir);
+
+        $this->assertSame('main', $repo->branch());
+        $this->assertSame(['feature', 'main'], $repo->branches());
+        $this->assertSame(['v1'], $repo->tags());
+        $this->assertSame(trim($this->gitIn($repoDir, 'rev-parse HEAD')), $repo->head()->id->hex);
+        $this->assertSame($showRefMap['refs/heads/main'], $repo->resolve('refs/heads/main')->hex);
+        $this->assertSame($showRefMap['refs/heads/feature'], $repo->resolve('refs/heads/feature')->hex);
+        $this->assertSame($showRefMap['refs/tags/v1'], $repo->resolve('refs/tags/v1')->hex);
     }
 
     /**

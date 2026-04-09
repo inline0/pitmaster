@@ -1,0 +1,24 @@
+{
+    "name": "lfs-pointer-and-transfer",
+    "category": "advanced",
+    "description": "Compare Pitmaster LFS pointer generation and transfer results against a real git-lfs client talking to the same minimal LFS protocol shape",
+    "operations": [
+        "pointer",
+        "downloaded"
+    ],
+    "oracle_commands": {
+        "pointer": "cat pointer.txt",
+        "downloaded": "cat downloaded.txt"
+    },
+    "actual_commands": {
+        "pointer": "cat pointer.txt",
+        "downloaded": "cat downloaded.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "pointer",
+            "downloaded"
+        ],
+        "fsck_clean": false
+    }
+}

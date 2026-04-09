@@ -1,0 +1,20 @@
+{
+    "name": "fsmonitor-hook-query",
+    "category": "advanced",
+    "description": "Compare Pitmaster fsmonitor hook queries against Git's canonical version-2 hook contract",
+    "operations": [
+        "fsmonitor"
+    ],
+    "oracle_commands": {
+        "fsmonitor": "cat .fsmonitor.json"
+    },
+    "actual_commands": {
+        "fsmonitor": "cat .fsmonitor.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "fsmonitor"
+        ],
+        "fsck_clean": true
+    }
+}

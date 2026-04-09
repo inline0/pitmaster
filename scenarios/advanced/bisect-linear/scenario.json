@@ -1,0 +1,53 @@
+{
+    "name": "bisect-linear",
+    "category": "advanced",
+    "description": "Compare Pitmaster linear bisect state and candidate checkout against Git",
+    "operations": [
+        "head_ref",
+        "status",
+        "bisect_expected",
+        "bisect_log",
+        "bisect_start",
+        "bisect_terms",
+        "bisect_ancestors",
+        "bisect_names",
+        "bisect_refs"
+    ],
+    "oracle_commands": {
+        "head_ref": "cat .git/HEAD",
+        "status": "git status --porcelain=v2",
+        "bisect_expected": "cat .git/BISECT_EXPECTED_REV",
+        "bisect_log": "cat .git/BISECT_LOG",
+        "bisect_start": "cat .git/BISECT_START",
+        "bisect_terms": "cat .git/BISECT_TERMS",
+        "bisect_ancestors": "cat .git/BISECT_ANCESTORS_OK",
+        "bisect_names": "cat .git/BISECT_NAMES",
+        "bisect_refs": "git for-each-ref refs/bisect --format='%(refname) %(objectname)'"
+    },
+    "actual_commands": {
+        "head_ref": "cat .git/HEAD",
+        "status": "git status --porcelain=v2",
+        "bisect_expected": "cat .git/BISECT_EXPECTED_REV",
+        "bisect_log": "cat .git/BISECT_LOG",
+        "bisect_start": "cat .git/BISECT_START",
+        "bisect_terms": "cat .git/BISECT_TERMS",
+        "bisect_ancestors": "cat .git/BISECT_ANCESTORS_OK",
+        "bisect_names": "cat .git/BISECT_NAMES",
+        "bisect_refs": "git for-each-ref refs/bisect --format='%(refname) %(objectname)'"
+    },
+    "expectations": {
+        "exact_match": [
+            "refs",
+            "head_ref",
+            "status",
+            "bisect_expected",
+            "bisect_log",
+            "bisect_start",
+            "bisect_terms",
+            "bisect_ancestors",
+            "bisect_names",
+            "bisect_refs"
+        ],
+        "fsck_clean": true
+    }
+}

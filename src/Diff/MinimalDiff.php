@@ -18,6 +18,10 @@ final class MinimalDiff
      */
     public static function diff(string $old, string $new, int $context = 3): array
     {
-        return MyersDiff::diff($old, $new, $context);
+        return MyersDiff::diffLines(
+            MyersDiff::normalizeLines($old),
+            MyersDiff::normalizeLines($new),
+            $context,
+        );
     }
 }

@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 require getenv('PITMASTER_ROOT') . '/vendor/autoload.php';
 
-use Pitmaster\Ref\Reftable;
+use Pitmaster\Pitmaster;
 
-$files = glob(getcwd() . '/.git/reftable/*.ref') ?: [];
-sort($files);
-$table = Reftable::open((string) end($files));
+$repo = Pitmaster::open(getcwd());
 $refs = [];
 
-foreach ($table?->refs() ?? [] as $name => $id) {
+foreach ($repo->refDatabase()->list() as $name => $id) {
     $refs[$name] = $id->hex;
 }
 
 ksort($refs);
 
 $payload = [
-    'symref' => $table?->resolveSymbolic('HEAD'),
+    'symref' => $repo->refDatabase()->readHead()?->target,
+    'branch' => $repo->branch(),
     'refs' => $refs,
 ];
 

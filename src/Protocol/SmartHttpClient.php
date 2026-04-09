@@ -12,7 +12,7 @@ use Pitmaster\Exceptions\ProtocolException;
  * Communicates with git servers over HTTPS using the smart HTTP protocol.
  * Uses PHP's native stream functions (file_get_contents with stream context).
  */
-final class SmartHttpClient
+final class SmartHttpClient implements UploadPackTransport, ReceivePackTransport
 {
     private int $timeout;
 

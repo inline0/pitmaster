@@ -60,7 +60,7 @@ final class CodecParityTest extends TestCase
     public function packHeaderAndDeltaEncodingsMatchGit(): void
     {
         $this->createDeltaFriendlyHistory();
-        $this->git('pack-objects --delta-base-offset --window=50 --depth=50 .git/objects/pack/codec-pack --all >/dev/null');
+        $this->git('rev-list --all | git pack-objects --delta-base-offset --window=50 --depth=50 .git/objects/pack/codec-pack --revs >/dev/null');
 
         $packPath = $this->singlePath('.git/objects/pack/*.pack');
         $indexPath = $this->singlePath('.git/objects/pack/*.idx');

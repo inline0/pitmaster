@@ -77,6 +77,36 @@ final class CommitWriteParityTest extends TestCase
     }
 
     #[Test]
+    public function singleLineCommitMessageWithoutTrailingNewlineMatchesGitExactly(): void
+    {
+        $gitDir = $this->tmpDir . '/git-repo-single-line';
+        $pitDir = $this->tmpDir . '/pit-repo-single-line';
+        $message = 'single line subject';
+
+        $this->seedRepo($gitDir, "single line parity\n");
+        $this->seedRepo($pitDir, "single line parity\n");
+        $this->setIdentityEnv([
+            'GIT_AUTHOR_NAME' => 'Alice Author',
+            'GIT_AUTHOR_EMAIL' => 'alice@example.com',
+            'GIT_AUTHOR_DATE' => '@1712563200 +0200',
+            'GIT_COMMITTER_NAME' => 'Chris Committer',
+            'GIT_COMMITTER_EMAIL' => 'chris@example.com',
+            'GIT_COMMITTER_DATE' => '@1712566800 +0200',
+        ]);
+
+        $this->git(
+            $gitDir,
+            'commit --quiet --allow-empty -m ' . escapeshellarg($message),
+        );
+
+        $repo = Pitmaster::open($pitDir);
+        $repo->commit($message);
+
+        $this->assertSame(trim($this->git($gitDir, 'rev-parse HEAD')), trim($this->git($pitDir, 'rev-parse HEAD')));
+        $this->assertSame($this->git($gitDir, 'cat-file -p HEAD'), $this->git($pitDir, 'cat-file -p HEAD'));
+    }
+
+    #[Test]
     public function commitHooksRunInGitOrderAndCanEditMessage(): void
     {
         $gitDir = $this->tmpDir . '/git-hooks';

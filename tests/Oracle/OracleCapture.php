@@ -120,9 +120,10 @@ final class OracleCapture
         }
 
         $command = sprintf(
-            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s bash %s 2>&1',
             escapeshellarg($tempDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($tempDir),
             escapeshellarg($setupScript),
         );
 
@@ -144,9 +145,10 @@ final class OracleCapture
         }
 
         $command = sprintf(
-            'cd %s && PITMASTER_ROOT=%s bash %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s bash %s 2>&1',
             escapeshellarg($repoDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($repoDir),
             escapeshellarg($oracleScript),
         );
 
@@ -165,7 +167,8 @@ final class OracleCapture
     private function captureObjects(string $repoDir): array
     {
         $command = sprintf(
-            'cd %s && git cat-file --batch-all-objects --batch-check="%%(objectname) %%(objecttype) %%(objectsize)" 2>&1',
+            'cd %s && GIT_CEILING_DIRECTORIES=%s git cat-file --batch-all-objects --batch-check="%%(objectname) %%(objecttype) %%(objectsize)" 2>&1',
+            escapeshellarg($repoDir),
             escapeshellarg($repoDir),
         );
 
@@ -217,7 +220,8 @@ final class OracleCapture
     private function captureRefs(string $repoDir): array
     {
         $command = sprintf(
-            'cd %s && git for-each-ref --format="%%(objectname) %%(refname)" 2>&1',
+            'cd %s && GIT_CEILING_DIRECTORIES=%s git for-each-ref --format="%%(objectname) %%(refname)" 2>&1',
+            escapeshellarg($repoDir),
             escapeshellarg($repoDir),
         );
 
@@ -249,7 +253,8 @@ final class OracleCapture
     private function captureLog(string $repoDir): array
     {
         $command = sprintf(
-            'cd %s && git log --all --format="%%H%%n%%T%%n%%P%%n%%an <%%ae> %%at %%ai%%n%%cn <%%ce> %%ct %%ci%%n%%B%%x00" 2>&1',
+            'cd %s && GIT_CEILING_DIRECTORIES=%s git log --all --format="%%H%%n%%T%%n%%P%%n%%an <%%ae> %%at %%ai%%n%%cn <%%ce> %%ct %%ci%%n%%B%%x00" 2>&1',
+            escapeshellarg($repoDir),
             escapeshellarg($repoDir),
         );
 
@@ -299,7 +304,8 @@ final class OracleCapture
     private function captureFsck(string $repoDir): string
     {
         $command = sprintf(
-            'cd %s && git fsck --strict --no-progress 2>&1',
+            'cd %s && GIT_CEILING_DIRECTORIES=%s git fsck --strict --no-progress 2>&1',
+            escapeshellarg($repoDir),
             escapeshellarg($repoDir),
         );
 
@@ -309,9 +315,10 @@ final class OracleCapture
     private function runCommand(Scenario $scenario, string $repoDir, string $command): string
     {
         $fullCommand = sprintf(
-            'cd %s && PITMASTER_ROOT=%s %s 2>&1',
+            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s %s 2>&1',
             escapeshellarg($repoDir),
             escapeshellarg($scenario->rootPath),
+            escapeshellarg($repoDir),
             $command,
         );
 

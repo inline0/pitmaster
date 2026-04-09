@@ -1,0 +1,9 @@
+{
+    "enabled": true,
+    "token": "git-token",
+    "files": [
+        "tracked.txt",
+        "nested/file.txt"
+    ],
+    "log": "2|git-token"
+}

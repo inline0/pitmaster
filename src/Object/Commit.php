@@ -112,6 +112,10 @@ final readonly class Commit extends GitObject
         $lines[] = "author {$author}";
         $lines[] = "committer {$committer}";
 
+        if ($message !== '' && !str_ends_with($message, "\n")) {
+            $message .= "\n";
+        }
+
         return implode("\n", $lines) . "\n\n" . $message;
     }
 

@@ -13,6 +13,7 @@ ksort($refs);
 
 $payload = [
     'symref' => trim((string) shell_exec('git symbolic-ref HEAD')),
+    'branch' => trim((string) shell_exec('git branch --show-current')),
     'refs' => $refs,
 ];
 

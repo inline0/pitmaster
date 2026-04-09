@@ -36,11 +36,12 @@ final readonly class Tag extends GitObject
         $headerEnd = strpos($content, "\n\n");
 
         if ($headerEnd === false) {
-            throw CorruptObjectException::invalidContent($id->hex, 'tag missing blank line');
+            $headerSection = rtrim($content, "\n");
+            $message = '';
+        } else {
+            $headerSection = substr($content, 0, $headerEnd);
+            $message = substr($content, $headerEnd + 2);
         }
-
-        $headerSection = substr($content, 0, $headerEnd);
-        $message = substr($content, $headerEnd + 2);
 
         $object = null;
         $objectType = null;

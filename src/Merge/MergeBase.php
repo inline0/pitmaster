@@ -80,6 +80,47 @@ final class MergeBase
     }
 
     /**
+     * Find all lowest common ancestors for two commits.
+     *
+     * @return array<int, ObjectId>
+     */
+    public function findAll(ObjectId $a, ObjectId $b): array
+    {
+        if ($a->equals($b)) {
+            return [$a];
+        }
+
+        $ancestorsA = $this->collectAncestors($a);
+        $ancestorsB = $this->collectAncestors($b);
+        $commonHexes = array_keys(array_intersect_key($ancestorsA, $ancestorsB));
+        $lowest = [];
+
+        foreach ($commonHexes as $hex) {
+            $candidate = ObjectId::fromHex($hex);
+            $isLowest = true;
+
+            foreach ($commonHexes as $otherHex) {
+                if ($hex === $otherHex) {
+                    continue;
+                }
+
+                if ($this->isAncestor($candidate, ObjectId::fromHex($otherHex))) {
+                    $isLowest = false;
+                    break;
+                }
+            }
+
+            if ($isLowest) {
+                $lowest[] = $candidate;
+            }
+        }
+
+        usort($lowest, static fn (ObjectId $left, ObjectId $right): int => strcmp($left->hex, $right->hex));
+
+        return $lowest;
+    }
+
+    /**
      * Check if A is an ancestor of B (for fast-forward detection).
      */
     public function isAncestor(ObjectId $a, ObjectId $b): bool
@@ -115,5 +156,37 @@ final class MergeBase
         }
 
         return false;
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    private function collectAncestors(ObjectId $start): array
+    {
+        $ancestors = [];
+        $queue = [$start->hex];
+
+        while ($queue !== []) {
+            $hex = array_shift($queue);
+
+            if ($hex === null || isset($ancestors[$hex])) {
+                continue;
+            }
+
+            $ancestors[$hex] = true;
+            $commit = $this->objects->read(ObjectId::fromHex($hex));
+
+            if (!$commit instanceof Commit) {
+                continue;
+            }
+
+            foreach ($commit->parents as $parent) {
+                if (!isset($ancestors[$parent->hex])) {
+                    $queue[] = $parent->hex;
+                }
+            }
+        }
+
+        return $ancestors;
     }
 }

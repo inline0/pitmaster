@@ -9,23 +9,27 @@ use Pitmaster\Exceptions\ProtocolException;
 /**
  * SSH transport for git protocol.
  *
- * Implements SSH connection using PHP's socket functions and the SSH
- * protocol, without requiring proc_open() or the ssh2 extension.
- * Uses PHP stream wrappers (ssh2.shell) when available, falls back
- * to socket-level implementation.
+ * Uses the ssh2 extension when available and falls back to the system
+ * `ssh` binary otherwise.
  *
  * Connection string formats:
  *   git@host:user/repo.git
  *   ssh://user@host/path/to/repo.git
  *   ssh://user@host:port/path/to/repo.git
  */
-final class SshClient
+final class SshClient implements UploadPackTransport, ReceivePackTransport
 {
     private int $timeout;
 
     public function __construct(?int $timeout = null)
     {
         $this->timeout = $timeout ?? 30;
+    }
+
+    public static function isSshUrl(string $url): bool
+    {
+        return str_starts_with($url, 'ssh://')
+            || preg_match('/^[^@]+@[^:]+:.+$/', $url) === 1;
     }
 
     /**
@@ -35,16 +39,6 @@ final class SshClient
      */
     public static function parseUrl(string $url): array
     {
-        // SCP-style: user@host:path
-        if (preg_match('/^([^@]+)@([^:]+):(.+)$/', $url, $matches)) {
-            return [
-                'user' => $matches[1],
-                'host' => $matches[2],
-                'port' => 22,
-                'path' => $matches[3],
-            ];
-        }
-
         // ssh:// URL
         if (str_starts_with($url, 'ssh://')) {
             $parsed = parse_url($url);
@@ -53,7 +47,17 @@ final class SshClient
                 'user' => $parsed['user'] ?? 'git',
                 'host' => $parsed['host'] ?? '',
                 'port' => $parsed['port'] ?? 22,
-                'path' => ltrim($parsed['path'] ?? '', '/'),
+                'path' => $parsed['path'] ?? '',
+            ];
+        }
+
+        // SCP-style: user@host:path
+        if (preg_match('/^([^@]+)@([^:]+):(.+)$/', $url, $matches)) {
+            return [
+                'user' => $matches[1],
+                'host' => $matches[2],
+                'port' => 22,
+                'path' => $matches[3],
             ];
         }
 
@@ -110,6 +114,7 @@ final class SshClient
             $parsed['user'],
             "git-upload-pack '{$parsed['path']}'",
             '',
+            true,
         );
 
         $lines = PktLine::decode($response);
@@ -117,21 +122,35 @@ final class SshClient
         return RefDiscovery::parse($lines);
     }
 
+    public function discoverReceivePackRefs(string $url): RefDiscovery
+    {
+        $parsed = self::parseUrl($url);
+        $response = $this->execute(
+            $parsed['host'],
+            $parsed['port'],
+            $parsed['user'],
+            "git-receive-pack '{$parsed['path']}'",
+            '',
+            true,
+        );
+
+        return RefDiscovery::parse(PktLine::decode($response));
+    }
+
     /**
      * Execute a command over SSH using the ssh2 extension or stream wrapper.
      */
-    private function execute(string $host, int $port, string $user, string $command, string $input): string
+    private function execute(string $host, int $port, string $user, string $command, string $input, bool $allowExitWithOutput = false): string
     {
         // Try ssh2 extension first
         if (function_exists('ssh2_connect')) {
-            return $this->executeSsh2($host, $port, $user, $command, $input);
+            return $this->executeSsh2($host, $port, $user, $command, $input, $allowExitWithOutput);
         }
 
-        // Fall back to socket-based connection
-        return $this->executeSocket($host, $port, $user, $command, $input);
+        return $this->executeProcess($host, $port, $user, $command, $input, $allowExitWithOutput);
     }
 
-    private function executeSsh2(string $host, int $port, string $user, string $command, string $input): string
+    private function executeSsh2(string $host, int $port, string $user, string $command, string $input, bool $allowExitWithOutput): string
     {
         $connection = @ssh2_connect($host, $port);
 
@@ -182,30 +201,138 @@ final class SshClient
         $output = stream_get_contents($stream);
         fclose($stream);
 
-        return $output !== false ? $output : '';
-    }
-
-    private function executeSocket(string $host, int $port, string $user, string $command, string $input): string
-    {
-        // Pure socket implementation: connect to SSH port and speak the protocol.
-        // This is a simplified version; full SSH protocol is complex.
-        $socket = @stream_socket_client(
-            "tcp://{$host}:{$port}",
-            $errno,
-            $errstr,
-            $this->timeout,
-        );
-
-        if ($socket === false) {
-            throw new ProtocolException("SSH socket connection failed: {$host}:{$port} ({$errstr})");
+        if ($output !== false && ($output !== '' || $allowExitWithOutput)) {
+            return $output;
         }
 
-        // For production use, this would implement the full SSH handshake.
-        // As a practical fallback, suggest using the ssh2 extension.
-        fclose($socket);
+        return '';
+    }
 
-        throw new ProtocolException(
-            "SSH transport requires the ssh2 extension. Install it with: pecl install ssh2"
+    private function executeProcess(string $host, int $port, string $user, string $command, string $input, bool $allowExitWithOutput): string
+    {
+        $ssh = getenv('PITMASTER_SSH_COMMAND');
+        $ssh = is_string($ssh) && $ssh !== '' ? $ssh : 'ssh';
+        $identityFile = getenv('PITMASTER_SSH_IDENTITY_FILE');
+        $knownHosts = getenv('PITMASTER_SSH_KNOWN_HOSTS');
+        $strict = getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
+        $parts = [
+            $ssh,
+            '-o BatchMode=yes',
+            '-o ' . escapeshellarg('ConnectTimeout=' . $this->timeout),
+            '-p ' . (int) $port,
+        ];
+
+        if (is_string($identityFile) && $identityFile !== '') {
+            $parts[] = '-i ' . escapeshellarg($identityFile);
+        }
+
+        if (is_string($knownHosts) && $knownHosts !== '') {
+            $parts[] = '-o ' . escapeshellarg('UserKnownHostsFile=' . $knownHosts);
+        }
+
+        if (is_string($strict) && $strict !== '') {
+            $parts[] = '-o ' . escapeshellarg('StrictHostKeyChecking=' . $strict);
+        }
+
+        $parts[] = escapeshellarg($user . '@' . $host);
+        $parts[] = escapeshellarg($command);
+
+        $process = proc_open(
+            implode(' ', $parts),
+            [
+                0 => ['pipe', 'r'],
+                1 => ['pipe', 'w'],
+                2 => ['pipe', 'w'],
+            ],
+            $pipes,
         );
+
+        if (!is_resource($process)) {
+            throw new ProtocolException('Failed to start ssh process');
+        }
+
+        if ($input !== '' && str_starts_with($command, 'git-receive-pack ')) {
+            $this->readAdvertisement($pipes[1]);
+        }
+
+        fwrite($pipes[0], $input);
+        fclose($pipes[0]);
+
+        $stdout = stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        $exitCode = proc_close($process);
+
+        if ($exitCode !== 0) {
+            if ($allowExitWithOutput && $stdout !== false && $stdout !== '') {
+                return $stdout;
+            }
+
+            $message = trim((string) $stderr);
+            throw new ProtocolException($message !== '' ? "SSH command failed: {$message}" : 'SSH command failed');
+        }
+
+        return $stdout !== false ? $stdout : '';
+    }
+
+    /**
+     * Drain the initial receive-pack ref advertisement from a stateful SSH session.
+     *
+     * @param resource $stream
+     */
+    private function readAdvertisement($stream): void
+    {
+        while (true) {
+            $hexLen = $this->readExact($stream, 4);
+
+            if ($hexLen === null) {
+                throw new ProtocolException('SSH receive-pack advertisement ended unexpectedly');
+            }
+
+            if ($hexLen === PktLine::FLUSH) {
+                return;
+            }
+
+            if (!ctype_xdigit($hexLen)) {
+                throw new ProtocolException("Invalid pkt-line length in SSH receive-pack advertisement: {$hexLen}");
+            }
+
+            $lineLen = (int) hexdec($hexLen);
+
+            if ($lineLen < 4) {
+                throw new ProtocolException("Invalid pkt-line length in SSH receive-pack advertisement: {$hexLen}");
+            }
+
+            $payloadLen = $lineLen - 4;
+
+            if ($payloadLen === 0) {
+                continue;
+            }
+
+            if ($this->readExact($stream, $payloadLen) === null) {
+                throw new ProtocolException('Truncated SSH receive-pack advertisement');
+            }
+        }
+    }
+
+    /**
+     * @param resource $stream
+     */
+    private function readExact($stream, int $bytes): ?string
+    {
+        $buffer = '';
+
+        while (strlen($buffer) < $bytes) {
+            $chunk = fread($stream, $bytes - strlen($buffer));
+
+            if ($chunk === false || $chunk === '') {
+                return null;
+            }
+
+            $buffer .= $chunk;
+        }
+
+        return $buffer;
     }
 }
