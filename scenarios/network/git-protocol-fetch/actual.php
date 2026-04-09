@@ -51,7 +51,7 @@ function start_daemon(int $port, string $exportRoot)
     $process = proc_open(
         sprintf(
             '%s --verbose --reuseaddr --export-all --base-path=%s --listen=127.0.0.1 --port=%d %s',
-            escapeshellarg('/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-daemon'),
+            escapeshellarg(git_binary()) . ' daemon',
             escapeshellarg($exportRoot),
             $port,
             escapeshellarg($exportRoot),
@@ -98,4 +98,11 @@ function wait_until_ready(int $port): void
     }
 
     throw new RuntimeException('git daemon did not become ready');
+}
+
+function git_binary(): string
+{
+    $binary = trim((string) shell_exec('command -v git'));
+
+    return $binary !== '' ? $binary : 'git';
 }

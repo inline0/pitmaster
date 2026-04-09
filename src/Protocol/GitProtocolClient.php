@@ -88,6 +88,7 @@ final class GitProtocolClient
 
             // Send want/have/done
             fwrite($socket, $request);
+            stream_socket_shutdown($socket, STREAM_SHUT_WR);
 
             // Read pack response
             return $this->readAll($socket);

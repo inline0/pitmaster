@@ -1,0 +1,23 @@
+[
+    {
+        "hash": "93a9e06d23ffb27541048940052c7a076c7a195a",
+        "type": "blob",
+        "size": 8,
+        "content": "tracked\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bb4b944906967bcc06edee5f0321584890fe4b29",
+        "type": "commit",
+        "size": 168,
+        "content": "tree ee2b05fae45d889061de2909c925f87dc8f57d80\nauthor Test User <test@pitmaster.dev> 1705190400 +0000\ncommitter Test User <test@pitmaster.dev> 1705190400 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee2b05fae45d889061de2909c925f87dc8f57d80",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 93a9e06d23ffb27541048940052c7a076c7a195a\ttracked.txt\n",
+        "encoding": "utf-8"
+    }
+]

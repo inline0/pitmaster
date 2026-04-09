@@ -1,0 +1,30 @@
+{
+    "name": "remove-cached",
+    "category": "staging",
+    "description": "Remove a tracked path from the index without deleting the working tree file",
+    "operations": [
+        "status",
+        "index",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat tracked.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat tracked.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "status",
+            "index",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

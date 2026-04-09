@@ -22,9 +22,11 @@
             "objects",
             "refs",
             "log",
-            "reuc_extension_hex",
             "status",
             "ls_files_stage"
+        ],
+        "runtime_exact_match": [
+            "reuc_extension_hex"
         ],
         "fsck_clean": false
     }

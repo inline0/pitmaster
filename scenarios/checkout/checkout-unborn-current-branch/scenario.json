@@ -1,0 +1,34 @@
+{
+    "name": "checkout-unborn-current-branch",
+    "category": "checkout",
+    "description": "Checkout the current unborn branch without resolving it as a commit",
+    "operations": [
+        "status",
+        "head_ref",
+        "branch",
+        "checkout_result"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "checkout_result": "cat .checkout-result.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "checkout_result": "cat .checkout-result.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "status",
+            "head_ref",
+            "branch",
+            "checkout_result"
+        ],
+        "fsck_clean": false
+    }
+}

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 port="$(php -r '$s=stream_socket_server("tcp://127.0.0.1:0", $e, $m); $n=stream_socket_get_name($s, false); fclose($s); echo substr(strrchr($n, ":"), 1);')"
-"/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-daemon" \
+git daemon \
     --verbose --reuseaddr --export-all --base-path="$(pwd)/export" \
     --listen=127.0.0.1 --port="$port" "$(pwd)/export" \
     > .scenario-daemon.log 2> .scenario-daemon.err &

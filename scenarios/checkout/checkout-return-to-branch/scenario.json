@@ -1,0 +1,43 @@
+{
+    "name": "checkout-return-to-branch",
+    "category": "checkout",
+    "description": "Return from a detached HEAD to the branch tip and compare Git-observed state",
+    "operations": [
+        "status",
+        "head_ref",
+        "branch",
+        "subject",
+        "tree",
+        "head_reflog"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "subject": "git show -s --format=%s HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "head_reflog": "git reflog --format=%gs -n 3"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "subject": "git show -s --format=%s HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "head_reflog": "git reflog --format=%gs -n 3"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "branch",
+            "subject",
+            "tree",
+            "head_reflog"
+        ],
+        "fsck_clean": false
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "name": "mv-directory",
+    "category": "staging",
+    "description": "Rename a tracked directory, commit it, and compare the resulting tree against Git",
+    "operations": [
+        "status",
+        "index",
+        "tree",
+        "subject",
+        "paths"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "tree": "git show -s --format=%T HEAD",
+        "subject": "git show -s --format=%s HEAD",
+        "paths": "git ls-tree -r --name-only HEAD"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "tree": "git show -s --format=%T HEAD",
+        "subject": "git show -s --format=%s HEAD",
+        "paths": "git ls-tree -r --name-only HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "index",
+            "tree",
+            "subject",
+            "paths"
+        ],
+        "fsck_clean": false
+    }
+}

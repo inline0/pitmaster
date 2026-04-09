@@ -54,6 +54,28 @@ final class CheckoutParityTest extends TestCase
     }
 
     #[Test]
+    public function checkoutUnbornBranchFailureMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createRepoPair(static function (string $dir): void {
+        });
+
+        $gitResult = $this->gitWithExit($gitDir, 'checkout main');
+        $repo = Pitmaster::open($pitDir);
+
+        try {
+            $repo->checkout('main');
+            self::fail('Expected checkout of unborn branch to fail');
+        } catch (\RuntimeException $e) {
+            $this->assertStringContainsString('Cannot resolve revision', $e->getMessage());
+        }
+
+        $this->assertNotSame(0, $gitResult['exitCode']);
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'branch --show-current'), $this->git($pitDir, 'branch --show-current'));
+        $this->assertSame(file_get_contents($gitDir . '/.git/HEAD'), file_get_contents($pitDir . '/.git/HEAD'));
+    }
+
+    #[Test]
     public function checkoutRejectsUntrackedOverwriteLikeGit(): void
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createRepoPair(function (string $dir): void {
@@ -83,6 +105,36 @@ final class CheckoutParityTest extends TestCase
         $this->assertSame($this->git($gitDir, 'branch --show-current'), $this->git($pitDir, 'branch --show-current'));
         $this->assertSame($this->git($gitDir, 'show -s --format=%H HEAD'), $this->git($pitDir, 'show -s --format=%H HEAD'));
         $this->assertSame(file_get_contents($gitDir . '/new.txt'), file_get_contents($pitDir . '/new.txt'));
+    }
+
+    #[Test]
+    public function checkoutFromDetachedHeadBackToBranchMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir, 'detach' => $detachId] = $this->createRepoPair(function (string $dir): array {
+            $this->git($dir, 'config core.logAllRefUpdates true');
+            $this->writeFile($dir, 'a.txt', "one\n");
+            $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m first');
+            $detachId = trim($this->git($dir, 'rev-parse HEAD'));
+            $this->writeFile($dir, 'a.txt', "two\n");
+            $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m second');
+
+            return ['detach' => $detachId];
+        });
+
+        $this->git($gitDir, 'checkout ' . escapeshellarg($detachId));
+        $this->git($gitDir, 'checkout main');
+
+        $repo = Pitmaster::open($pitDir);
+        $repo->checkout($detachId);
+        $repo->checkout('main');
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'branch --show-current'), $this->git($pitDir, 'branch --show-current'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%H HEAD'), $this->git($pitDir, 'show -s --format=%H HEAD'));
+        $this->assertSame(file_get_contents($gitDir . '/.git/HEAD'), file_get_contents($pitDir . '/.git/HEAD'));
+        $this->assertSame($this->git($gitDir, 'reflog --format=%gs -n 3'), $this->git($pitDir, 'reflog --format=%gs -n 3'));
     }
 
     #[Test]

@@ -26,8 +26,9 @@ port="$(php -r '$s=stream_socket_server("tcp://127.0.0.1:0", $e, $m); $n=stream_
 echo "$port" > .scenario-port
 echo "http://127.0.0.1:$port/remote.git" > .remote-url
 
+git_exec_path="$(git --exec-path)"
 PITMASTER_GIT_HTTP_PROJECT_ROOT="$(pwd)/projects" \
-PITMASTER_GIT_HTTP_BACKEND="/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend" \
+PITMASTER_GIT_HTTP_BACKEND="$git_exec_path/git-http-backend" \
 php -S "127.0.0.1:$port" "$PITMASTER_ROOT/tests/Fixtures/git_http_backend_router.php" \
     > .scenario-server.log 2> .scenario-server.err &
 

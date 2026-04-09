@@ -123,13 +123,13 @@ Generated: 2026-04-09 08:17
 | Bare repositories | `DONE` | `Repository` | Dedicated bare open/read parity coverage |
 
 ### Staging and Commits
-*4/12 Git-oracle-mapped, 8 partial*
+*8/12 Git-oracle-mapped, 4 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | git add (stage files) | `DONE` | `Repository` | Update index entries |
-| git rm (unstage/remove) | `PART` | `Repository` |  |
-| git mv (rename) | `PART` |  | rm + add |
+| git rm (unstage/remove) | `PART` | `Repository` | Cached remove is Git-oracle-backed; tracked deletion remains partial |
+| git mv (rename) | `DONE` | `Repository` | File and directory rename parity is Git-backed |
 | git commit | `DONE` | `Repository` | Build tree from index, create commit, update HEAD |
 | git reset --soft | `DONE` |  | Conflict-state rejection now Git-proven |
 | git reset --mixed | `DONE` |  | Conflict-state cleanup now Git-proven |
@@ -199,7 +199,7 @@ Generated: 2026-04-09 08:17
 | git show | `PART` |  | Commit + diff |
 
 ### Branch and Tag Operations
-*8/9 Git-oracle-mapped, 1 partial*
+*9/9 Git-oracle-mapped, 0 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -210,7 +210,7 @@ Generated: 2026-04-09 08:17
 | Create lightweight tag | `DONE` | `Repository` | Via updateRef |
 | Create annotated tag | `DONE` |  | Write tag object + ref |
 | Delete tag | `DONE` | `Repository` | Via deleteRef |
-| Checkout / switch branch | `PART` |  | Update HEAD + worktree + index |
+| Checkout / switch branch | `DONE` | `Repository` | Overwrite protection, detached-to-branch, and unborn failure parity covered |
 | Detached HEAD | `DONE` |  | Detached commits and reflogs are Git-oracle-backed |
 
 ### Network Protocol

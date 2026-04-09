@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "1135dc8fe9d687210b292f7c0a8f73816a6b8d27",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree aca36043a008690ae51b8d7883f62d8b5a2e714e\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35515d332f9ad9e141cf5ad1a1362d32aaf8ca11",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 7140d986a81bf9062ade8b3ae5dcf54d89d9354d\tHelper.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35cccd8d00d8893c732dcd7748e2ef3736a259b7",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 1135dc8fe9d687210b292f7c0a8f73816a6b8d27\nauthor Test User <test@pitmaster.dev> 1705190400 +0000\ncommitter Test User <test@pitmaster.dev> 1705190400 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5de63f73d1154b0985490540bf4cec4151036128",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree aca36043a008690ae51b8d7883f62d8b5a2e714e\tapp\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7093374e3b1c7fda16c69f848ed8e2bddc424e8f",
+        "type": "blob",
+        "size": 24,
+        "content": "<?php\nreturn 'service';\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7140d986a81bf9062ade8b3ae5dcf54d89d9354d",
+        "type": "blob",
+        "size": 23,
+        "content": "<?php\nreturn 'helper';\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9cb9d7e6b1beb952e0f81efcd3a520c0e96bfcaf",
+        "type": "commit",
+        "size": 220,
+        "content": "tree 5de63f73d1154b0985490540bf4cec4151036128\nparent 35cccd8d00d8893c732dcd7748e2ef3736a259b7\nauthor Test User <test@pitmaster.dev> 1705276810 +0000\ncommitter Test User <test@pitmaster.dev> 1705276810 +0000\n\nRename tree\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aca36043a008690ae51b8d7883f62d8b5a2e714e",
+        "type": "tree",
+        "size": 72,
+        "content": "040000 tree 35515d332f9ad9e141cf5ad1a1362d32aaf8ca11\tNested\n100644 blob 7093374e3b1c7fda16c69f848ed8e2bddc424e8f\tService.php\n",
+        "encoding": "utf-8"
+    }
+]

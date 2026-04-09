@@ -1,0 +1,20 @@
+[
+    {
+        "hash": "9cb9d7e6b1beb952e0f81efcd3a520c0e96bfcaf",
+        "tree": "5de63f73d1154b0985490540bf4cec4151036128",
+        "parents": [
+            "35cccd8d00d8893c732dcd7748e2ef3736a259b7"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "Rename tree"
+    },
+    {
+        "hash": "35cccd8d00d8893c732dcd7748e2ef3736a259b7",
+        "tree": "1135dc8fe9d687210b292f7c0a8f73816a6b8d27",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1705190400 2024-01-14 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705190400 2024-01-14 00:00:00 +0000",
+        "message": "initial"
+    }
+]

@@ -844,25 +844,45 @@ final class Repository
      */
     public function mv(string $source, string $destination): void
     {
+        $source = trim($source, '/');
+        $destination = $this->resolvedMoveDestination($source, trim($destination, '/'));
         $srcFull = $this->workDir . '/' . $source;
         $dstFull = $this->workDir . '/' . $destination;
+        $index = $this->index();
+        $entries = $this->trackedEntriesForPath($index, $source);
 
-        if (!is_file($srcFull)) {
-            throw new \RuntimeException("Source file not found: {$source}");
+        if ($entries === []) {
+            throw new \RuntimeException("Source path not tracked: {$source}");
         }
 
-        // Move in worktree
+        if (!file_exists($srcFull) && !is_link($srcFull)) {
+            throw new \RuntimeException("Source path not found: {$source}");
+        }
+
+        if ($source === $destination) {
+            throw new \RuntimeException("Source and destination are the same: {$source}");
+        }
+
         $dstDir = dirname($dstFull);
 
         if (!is_dir($dstDir)) {
             mkdir($dstDir, 0777, true);
         }
 
-        rename($srcFull, $dstFull);
+        if (!rename($srcFull, $dstFull)) {
+            throw new \RuntimeException("Failed to move {$source} to {$destination}");
+        }
 
-        // Update index
-        $this->remove($source);
-        $this->add($destination);
+        foreach ($entries as $entry) {
+            $index->removeEntry($entry->path, $entry->stage());
+        }
+
+        foreach ($entries as $entry) {
+            $newPath = $this->movedPath($source, $destination, $entry->path);
+            $index->addEntry($this->relocateIndexEntry($entry, $newPath));
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
     }
 
     /**
@@ -2380,6 +2400,94 @@ final class Repository
         }
     }
 
+    private function resolvedMoveDestination(string $source, string $destination): string
+    {
+        $destinationFull = $this->workDir . '/' . $destination;
+
+        if (is_dir($destinationFull)) {
+            return trim($destination . '/' . basename($source), '/');
+        }
+
+        return $destination;
+    }
+
+    /**
+     * @return list<IndexEntry>
+     */
+    private function trackedEntriesForPath(Index $index, string $path): array
+    {
+        $entries = [];
+        $prefix = $path . '/';
+
+        foreach ($index->allEntries() as $entry) {
+            if ($entry->path === $path || str_starts_with($entry->path, $prefix)) {
+                $entries[] = $entry;
+            }
+        }
+
+        return $entries;
+    }
+
+    private function movedPath(string $source, string $destination, string $path): string
+    {
+        if ($path === $source) {
+            return $destination;
+        }
+
+        return $destination . substr($path, strlen($source));
+    }
+
+    private function relocateIndexEntry(IndexEntry $entry, string $path): IndexEntry
+    {
+        $fullPath = $this->workDir . '/' . $path;
+        $stat = @stat($fullPath);
+        $flags = min(strlen($path), 0x0FFF) | ($entry->stage() << 12);
+
+        if ($entry->assumeValid()) {
+            $flags |= 0x8000;
+        }
+
+        if ($entry->extendedFlags !== 0) {
+            $flags |= 0x4000;
+        }
+
+        if ($stat === false) {
+            return new IndexEntry(
+                ctimeSec: $entry->ctimeSec,
+                ctimeNsec: $entry->ctimeNsec,
+                mtimeSec: $entry->mtimeSec,
+                mtimeNsec: $entry->mtimeNsec,
+                dev: $entry->dev,
+                ino: $entry->ino,
+                mode: $entry->mode,
+                uid: $entry->uid,
+                gid: $entry->gid,
+                fileSize: $entry->fileSize,
+                hash: $entry->hash,
+                flags: $flags,
+                path: $path,
+                extendedFlags: $entry->extendedFlags,
+            );
+        }
+
+        return new IndexEntry(
+            ctimeSec: (int) $stat['ctime'],
+            ctimeNsec: 0,
+            mtimeSec: (int) $stat['mtime'],
+            mtimeNsec: 0,
+            dev: (int) $stat['dev'],
+            ino: (int) $stat['ino'],
+            mode: is_executable($fullPath) ? 0100755 : $entry->mode,
+            uid: (int) $stat['uid'],
+            gid: (int) $stat['gid'],
+            fileSize: (int) $stat['size'],
+            hash: $entry->hash,
+            flags: $flags,
+            path: $path,
+            extendedFlags: $entry->extendedFlags,
+        );
+    }
+
     private function worktreeMode(string $path): ?int
     {
         $fullPath = $this->workDir . '/' . $path;
@@ -3857,7 +3965,13 @@ final class Repository
 
     private function currentLocationLabel(?ObjectId $headId): string
     {
-        return $this->branch() ?? substr(($headId ?? $this->zeroObjectId())->hex, 0, 7);
+        $branch = $this->branch();
+
+        if ($branch !== null) {
+            return $branch;
+        }
+
+        return $headId !== null ? $headId->hex : substr($this->zeroObjectId()->hex, 0, 7);
     }
 
     private function targetLabel(string $target, ObjectId $resolvedId): string

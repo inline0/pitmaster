@@ -3,8 +3,9 @@ set -euo pipefail
 
 port="$(php -r '$s=stream_socket_server("tcp://127.0.0.1:0", $e, $m); $n=stream_socket_get_name($s, false); fclose($s); echo substr(strrchr($n, ":"), 1);')"
 base_url="http://127.0.0.1:$port"
+git_exec_path="$(git --exec-path)"
 PITMASTER_GIT_HTTP_PROJECT_ROOT="$(pwd)/projects" \
-PITMASTER_GIT_HTTP_BACKEND="/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend" \
+PITMASTER_GIT_HTTP_BACKEND="$git_exec_path/git-http-backend" \
 php -S "127.0.0.1:$port" "$PITMASTER_ROOT/tests/Fixtures/git_http_backend_router.php" \
     > .scenario-server.log 2> .scenario-server.err &
 server_pid=$!

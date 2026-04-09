@@ -60,7 +60,7 @@ function start_server(int $port, string $router, string $projectRoot)
         dirname($router, 3),
         [
             'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
-            'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+            'PITMASTER_GIT_HTTP_BACKEND' => git_http_backend_path(),
         ],
     );
 
@@ -103,4 +103,22 @@ function wait_until_ready(string $healthUrl): void
     }
 
     throw new RuntimeException('git-http-backend test server did not become ready');
+}
+
+function git_http_backend_path(): string
+{
+    $execPath = trim((string) shell_exec(escapeshellarg(git_binary()) . ' --exec-path'));
+
+    if ($execPath === '') {
+        throw new RuntimeException('Unable to resolve git --exec-path');
+    }
+
+    return $execPath . '/git-http-backend';
+}
+
+function git_binary(): string
+{
+    $binary = trim((string) shell_exec('command -v git'));
+
+    return $binary !== '' ? $binary : 'git';
 }
