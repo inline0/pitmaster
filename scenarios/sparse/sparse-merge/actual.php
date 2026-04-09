@@ -15,7 +15,7 @@ $repo->reset('HEAD', 'hard');
 $repo->merge('feature');
 
 run('git status --porcelain=v2 > .status.txt');
-run("find . -type f ! -path './.git/*' | sed 's#^\\./##' | sort > .worktree-files.txt");
+run("find . -type f ! -path './.git/*' ! -name '.status.txt' ! -name '.worktree-files.txt' | sed 's#^\\./##' | sort > .worktree-files.txt");
 run('git show HEAD:docs/guide.txt > .head-docs.txt');
 
 function run(string $command): void
