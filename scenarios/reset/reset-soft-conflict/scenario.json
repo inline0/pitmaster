@@ -1,0 +1,51 @@
+{
+    "name": "reset-soft-conflict",
+    "category": "reset",
+    "description": "Compare reset --soft parity while a cherry-pick conflict is in progress",
+    "operations": [
+        "status",
+        "index",
+        "worktree",
+        "head_ref",
+        "cherry_pick_head_state",
+        "merge_msg_state",
+        "head_reflog",
+        "reset_result"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt",
+        "head_ref": "cat .git/HEAD",
+        "cherry_pick_head_state": "test -e .git/CHERRY_PICK_HEAD && printf 'present\\n' || printf 'absent\\n'",
+        "merge_msg_state": "test -e .git/MERGE_MSG && printf 'present\\n' || printf 'absent\\n'",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "reset_result": "cat .reset-result.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt",
+        "head_ref": "cat .git/HEAD",
+        "cherry_pick_head_state": "test -e .git/CHERRY_PICK_HEAD && printf 'present\\n' || printf 'absent\\n'",
+        "merge_msg_state": "test -e .git/MERGE_MSG && printf 'present\\n' || printf 'absent\\n'",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "reset_result": "cat .reset-result.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "index",
+            "worktree",
+            "head_ref",
+            "cherry_pick_head_state",
+            "merge_msg_state",
+            "head_reflog",
+            "reset_result"
+        ],
+        "fsck_clean": false
+    }
+}

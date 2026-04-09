@@ -1,8 +1,8 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **93/146 rows Git-oracle-mapped today.**
+Git feature coverage for Pitmaster. **106/146 rows Git-oracle-mapped today.**
 
-Generated: 2026-04-09 00:58
+Generated: 2026-04-09 08:17
 
 ## Legend
 
@@ -22,19 +22,19 @@ Generated: 2026-04-09 00:58
 | Object Storage | 4 | 0 | 0 | 0 | 0 | 4 |
 | Pack Files | 9 | 2 | 0 | 0 | 0 | 11 |
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
-| References | 7 | 2 | 0 | 0 | 0 | 9 |
-| Repository Operations | 2 | 4 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 4 | 8 | 0 | 0 | 0 | 12 |
+| References | 8 | 1 | 0 | 0 | 0 | 9 |
+| Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
+| Staging and Commits | 7 | 5 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 5 | 1 | 0 | 0 | 0 | 6 |
 | Diff | 5 | 6 | 0 | 0 | 0 | 11 |
 | Merge | 2 | 8 | 0 | 0 | 0 | 10 |
-| Commit Graph | 2 | 5 | 0 | 0 | 0 | 7 |
-| Branch and Tag Operations | 7 | 2 | 0 | 0 | 0 | 9 |
+| Commit Graph | 6 | 1 | 0 | 0 | 0 | 7 |
+| Branch and Tag Operations | 8 | 1 | 0 | 0 | 0 | 9 |
 | Network Protocol | 12 | 2 | 0 | 0 | 0 | 14 |
 | Encoding | 0 | 5 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 8 | 7 | 0 | 0 | 0 | 15 |
-| **Total** | **93** | **53** | **0** | **0** | **0** | **146** |
+| **Total** | **106** | **40** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -107,20 +107,20 @@ Generated: 2026-04-09 00:58
 | Symbolic ref (HEAD) | `DONE` | `Ref\SymbolicRef` | ref: refs/heads/main |
 | Ref database (composite) | `DONE` | `Ref\RefDatabase` | Loose priority over packed |
 | Reflog read | `DONE` | `Ref\Reflog` |  |
-| Reflog write | `PART` | `Ref\Reflog` | Required for proper ref updates |
+| Reflog write | `DONE` | `Ref\Reflog` | Branch, sequencer, and linked-worktree writes are Git-oracle-backed |
 | Reftable format | `PART` |  | New format, not yet widespread |
 
 ### Repository Operations
-*2/6 Git-oracle-mapped, 4 partial*
+*6/6 Git-oracle-mapped*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Open existing repo | `DONE` | `Pitmaster` |  |
 | Init new repo | `DONE` | `Pitmaster` | Creates .git structure |
-| Clone (remote) | `PART` | `Pitmaster` | Via smart HTTP |
-| Read .git/config | `PART` | `Config\GitConfig` | INI-style parser |
-| Write .git/config | `PART` | `Config\GitConfig` |  |
-| Bare repositories | `PART` | `Repository` | Detected by HEAD presence |
+| Clone (remote) | `DONE` | `Pitmaster` | Smart and dumb HTTP, with cleanup/refspec parity |
+| Read .git/config | `DONE` | `Config\GitConfig` | Git-backed parse parity for subsections and multivalue keys |
+| Write .git/config | `DONE` | `Config\GitConfig` | Git can consume Pitmaster-written config files |
+| Bare repositories | `DONE` | `Repository` | Dedicated bare open/read parity coverage |
 
 ### Staging and Commits
 *4/12 Git-oracle-mapped, 8 partial*
@@ -131,9 +131,9 @@ Generated: 2026-04-09 00:58
 | git rm (unstage/remove) | `PART` | `Repository` |  |
 | git mv (rename) | `PART` |  | rm + add |
 | git commit | `DONE` | `Repository` | Build tree from index, create commit, update HEAD |
-| git reset --soft | `PART` |  | Move HEAD only |
-| git reset --mixed | `PART` |  | Move HEAD + reset index |
-| git reset --hard | `PART` |  | Move HEAD + reset index + worktree |
+| git reset --soft | `DONE` |  | Conflict-state rejection now Git-proven |
+| git reset --mixed | `DONE` |  | Conflict-state cleanup now Git-proven |
+| git reset --hard | `DONE` |  | Conflict-state and sparse-worktree parity covered |
 | git restore | `PART` |  | Restore files from tree/index |
 | git stash | `PART` | `Stash\Stash` | refs/stash + reflog stack |
 | git cherry-pick | `DONE` |  | Single-commit cherry-pick with conflict continue/abort |
@@ -186,20 +186,20 @@ Generated: 2026-04-09 00:58
 | Merge commit creation | `PART` |  | Two-parent commit |
 
 ### Commit Graph
-*2/7 Git-oracle-mapped, 5 partial*
+*6/7 Git-oracle-mapped, 1 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
-| Commit walk (log) | `PART` | `Graph\CommitWalker` | Topological, newest-first |
+| Commit walk (log) | `DONE` | `Graph\CommitWalker` | Public parity against `git log` |
 | Ancestry check | `DONE` | `Graph\AncestryChecker` | Is A ancestor of B? |
 | Revision expressions | `DONE` | `Graph\RevisionParser` | HEAD~3, main^2, tag@{1} |
-| Log --all (all branches) | `PART` | `Graph\CommitWalker` | walkAll() from multiple tips |
-| Log with path filter | `PART` |  | Only commits touching path |
-| Log --oneline format | `PART` |  | Short hash + first line |
+| Log --all (all branches) | `DONE` | `Graph\CommitWalker` | Public parity against `git log --all` |
+| Log with path filter | `DONE` |  | Public parity against `git log -- <path>` |
+| Log --oneline format | `DONE` |  | Public parity against `git log --oneline` |
 | git show | `PART` |  | Commit + diff |
 
 ### Branch and Tag Operations
-*7/9 Git-oracle-mapped, 2 partial*
+*8/9 Git-oracle-mapped, 1 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -211,7 +211,7 @@ Generated: 2026-04-09 00:58
 | Create annotated tag | `DONE` |  | Write tag object + ref |
 | Delete tag | `DONE` | `Repository` | Via deleteRef |
 | Checkout / switch branch | `PART` |  | Update HEAD + worktree + index |
-| Detached HEAD | `PART` |  | HEAD points directly to commit |
+| Detached HEAD | `DONE` |  | Detached commits and reflogs are Git-oracle-backed |
 
 ### Network Protocol
 *12/14 Git-oracle-mapped, 2 partial*

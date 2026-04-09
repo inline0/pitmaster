@@ -1,0 +1,31 @@
+{
+    "name": "worktree-add-reflog",
+    "category": "worktree",
+    "description": "Create a linked worktree and compare the branch plus linked HEAD reflogs",
+    "operations": [
+        "branch_reflog",
+        "linked_head_reflog",
+        "linked_branch"
+    ],
+    "oracle_commands": {
+        "branch_reflog": "git reflog show refs/heads/linked-feature --format=%gs -n 1",
+        "linked_head_reflog": "awk -F '\\t' '{print $2}' .git/worktrees/linked-feature/logs/HEAD",
+        "linked_branch": "git -C linked-feature branch --show-current"
+    },
+    "actual_commands": {
+        "branch_reflog": "git reflog show refs/heads/linked-feature --format=%gs -n 1",
+        "linked_head_reflog": "awk -F '\\t' '{print $2}' .git/worktrees/linked-feature/logs/HEAD",
+        "linked_branch": "git -C linked-feature branch --show-current"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "branch_reflog",
+            "linked_head_reflog",
+            "linked_branch"
+        ],
+        "fsck_clean": false
+    }
+}

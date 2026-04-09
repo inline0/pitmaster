@@ -1,0 +1,24 @@
+{
+    "name": "bare-open",
+    "category": "repository",
+    "description": "Open and inspect a bare repository and compare the observable state against git",
+    "operations": [
+        "bare_state"
+    ],
+    "oracle_commands": {
+        "bare_state": "bash \"{{SCENARIO_DIR}}/bare-state.sh\""
+    },
+    "actual_commands": {
+        "bare_state": "php \"{{SCENARIO_DIR}}/bare-state.php\""
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "bare_state"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -1,0 +1,6 @@
+is_bare=true
+branch=main
+head=eba74eb72c88f35c956feccdad0eb46419a936a7
+branches=feature|main
+log=eba74eb initial
+readme=bare parity

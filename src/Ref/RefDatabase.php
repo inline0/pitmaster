@@ -71,7 +71,19 @@ final class RefDatabase implements RefStore
      */
     public function resolveHead(): ?ObjectId
     {
-        return $this->loose->resolve('HEAD');
+        $id = $this->loose->resolveHead();
+
+        if ($id !== null) {
+            return $id;
+        }
+
+        $head = $this->loose->readHead();
+
+        if ($head === null) {
+            return null;
+        }
+
+        return $this->resolve($head->target);
     }
 
     /**

@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "4e3f456f9057321d38e51dfed992dd78111f1082",
+        "tree": "313eba2d168cdf6ede5f9caa87c9f1b5f7c3d304",
+        "parents": [
+            "af02c0075fcef8cc7114cce515309830a94a9a7a"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705536001 2024-01-18 00:00:01 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705536001 2024-01-18 00:00:01 +0000",
+        "message": "second"
+    },
+    {
+        "hash": "af02c0075fcef8cc7114cce515309830a94a9a7a",
+        "tree": "20e50a07feffafe7699bf38ff4027a606f406eaa",
+        "parents": [],
+        "author": "Test User <test@pitmaster.dev> 1705536000 2024-01-18 00:00:00 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705536000 2024-01-18 00:00:00 +0000",
+        "message": "first"
+    },
+    {
+        "hash": "7cd1b8ecbbad7776062ffc5a5b3ab95d9333b65f",
+        "tree": "75700aee76065957294686af57ad431f26ab79ff",
+        "parents": [
+            "af02c0075fcef8cc7114cce515309830a94a9a7a"
+        ],
+        "author": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "committer": "Test User <test@pitmaster.dev> 1705276810 2024-01-15 00:00:10 +0000",
+        "message": "detached"
+    }
+]

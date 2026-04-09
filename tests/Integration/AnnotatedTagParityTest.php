@@ -115,6 +115,9 @@ final class AnnotatedTagParityTest extends TestCase
             'GIT_COMMITTER_NAME' => 'Tagger Test',
             'GIT_COMMITTER_EMAIL' => 'tagger@example.com',
             'GIT_COMMITTER_DATE' => '@1712570400 +0200',
+            'PITMASTER_COMMITTER_NAME' => 'Tagger Test',
+            'PITMASTER_COMMITTER_EMAIL' => 'tagger@example.com',
+            'PITMASTER_COMMITTER_DATE' => '@1712570400 +0200',
             ] as $name => $value
         ) {
             putenv("{$name}={$value}");

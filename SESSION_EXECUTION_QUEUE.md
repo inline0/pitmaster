@@ -8,8 +8,8 @@ this file is the ordered burn-down plan.
 
 ## Current Target
 
-- Remaining audit rows: `53`
-- State mix: `51 Weak`, `2 External oracle`
+- Remaining audit rows: `40`
+- State mix: `38 Weak`, `2 External oracle`
 - Goal of this queue: convert the remaining rows into concrete multi-hour work
   waves so a single pass can close many rows without stopping after one fix.
 
@@ -29,65 +29,22 @@ An item is only done when all of the following land together:
 - Target `10+` completed items per autonomous pass.
 - Do not stop after a single row unless the repo is red or a real product
   decision blocks the next step.
+- Item numbers below are stable IDs. Gaps mean a queue item was completed and
+  removed in an earlier pass.
 
 ## Wave 1: Repo State And Sequencer Parity
 
-1. Reflog completion
-   Rows: `Reflog write`
-   Deliverables: cover branch delete/rename, linked-worktree reflogs, and
-   sequencer-driven reflog writes for cherry-pick, revert, and rebase.
-   Integration: extend [`tests/Integration/ReflogTest.php`](tests/Integration/ReflogTest.php).
-   Oracle: add local reflog scenarios where missing and bind
-   [`scenarios/upstream/git-test-suite/t1417-reflog-updateref/scenario.json`](scenarios/upstream/git-test-suite/t1417-reflog-updateref/scenario.json),
-   [`scenarios/upstream/git-test-suite/t1421-reflog-write/scenario.json`](scenarios/upstream/git-test-suite/t1421-reflog-write/scenario.json),
-   and [`scenarios/upstream/git-test-suite/t1415-worktree-refs/scenario.json`](scenarios/upstream/git-test-suite/t1415-worktree-refs/scenario.json).
-
-2. Clone edge-state parity
-   Rows: `Clone (remote)`, `Bare repositories`
-   Deliverables: broaden clone cleanup/config/bare behavior across smart HTTP,
-   dumb HTTP, and local/bare targets.
-   Integration: extend [`tests/Integration/SmartHttpRemoteParityTest.php`](tests/Integration/SmartHttpRemoteParityTest.php),
-   [`tests/Integration/HttpCloneParityTest.php`](tests/Integration/HttpCloneParityTest.php),
-   and add a bare-focused integration file.
-   Oracle: add local clone/bare scenarios and bind
-   [`scenarios/upstream/git-test-suite/t5600-clone-fail-cleanup/scenario.json`](scenarios/upstream/git-test-suite/t5600-clone-fail-cleanup/scenario.json),
-   [`scenarios/upstream/git-test-suite/t5611-clone-config/scenario.json`](scenarios/upstream/git-test-suite/t5611-clone-config/scenario.json),
-   [`scenarios/upstream/git-test-suite/t0035-safe-bare-repository/scenario.json`](scenarios/upstream/git-test-suite/t0035-safe-bare-repository/scenario.json),
-   and [`scenarios/upstream/libgit2/empty_bare-git/scenario.json`](scenarios/upstream/libgit2/empty_bare-git/scenario.json).
-
-3. Config parity
-   Rows: `Read .git/config`, `Write .git/config`
-   Deliverables: Git-backed read/write tests for quoting, subsections,
-   repeated keys, include handling, and files written by Pitmaster being
-   consumed by stock Git.
-   Integration: add/expand a config parity suite around
-   [`tests/Unit/Config/GitConfigTest.php`](tests/Unit/Config/GitConfigTest.php).
-   Oracle: add config scenarios and bind
-   [`scenarios/upstream/git-test-suite/t0026-eol-config/scenario.json`](scenarios/upstream/git-test-suite/t0026-eol-config/scenario.json),
-   [`scenarios/upstream/git-test-suite/t5611-clone-config/scenario.json`](scenarios/upstream/git-test-suite/t5611-clone-config/scenario.json),
-   and [`scenarios/upstream/git-test-suite/t1350-config-hooks-path/scenario.json`](scenarios/upstream/git-test-suite/t1350-config-hooks-path/scenario.json).
-
 4. Checkout and detach parity
-   Rows: `Checkout / switch branch`, `Detached HEAD`
-   Deliverables: broaden overwrite protection, unborn branch behavior,
-   detached commit creation, and reflog semantics.
+   Rows: `Checkout / switch branch`
+   Deliverables: finish branch recreation and unborn-branch behavior on top of
+   the now-proven overwrite protection.
    Integration: extend checkout/reflog suites with explicit Git comparisons.
-   Oracle: add local checkout/detach scenarios and bind
+   Oracle: keep the local checkout scenarios and bind
    [`scenarios/upstream/git-test-suite/t2018-checkout-branch/scenario.json`](scenarios/upstream/git-test-suite/t2018-checkout-branch/scenario.json),
    [`scenarios/upstream/git-test-suite/t2060-switch/scenario.json`](scenarios/upstream/git-test-suite/t2060-switch/scenario.json),
-   [`scenarios/upstream/git-test-suite/t2020-checkout-detach/scenario.json`](scenarios/upstream/git-test-suite/t2020-checkout-detach/scenario.json),
-   and [`scenarios/upstream/git-test-suite/t5610-clone-detached/scenario.json`](scenarios/upstream/git-test-suite/t5610-clone-detached/scenario.json).
-
-5. Reset parity
-   Rows: `git reset --soft`, `git reset --mixed`, `git reset --hard`
-   Deliverables: prove reset semantics against conflict states, sparse
-   checkout, and reflogs.
-   Integration: add a dedicated reset parity suite.
-   Oracle: add local reset scenarios and bind
-   [`scenarios/upstream/git-test-suite/t7102-reset/scenario.json`](scenarios/upstream/git-test-suite/t7102-reset/scenario.json),
-   [`scenarios/upstream/git-test-suite/t7111-reset-table/scenario.json`](scenarios/upstream/git-test-suite/t7111-reset-table/scenario.json),
-   [`scenarios/upstream/git-test-suite/t1005-read-tree-reset/scenario.json`](scenarios/upstream/git-test-suite/t1005-read-tree-reset/scenario.json),
-   and [`scenarios/upstream/isomorphic-git/test-resetIndex/scenario.json`](scenarios/upstream/isomorphic-git/test-resetIndex/scenario.json).
+   [`scenarios/checkout/checkout-overwrite-tracked/scenario.json`](scenarios/checkout/checkout-overwrite-tracked/scenario.json),
+   [`scenarios/checkout/checkout-overwrite-untracked/scenario.json`](scenarios/checkout/checkout-overwrite-untracked/scenario.json),
+   and [`scenarios/upstream/git-test-suite/t2015-checkout-unborn/scenario.json`](scenarios/upstream/git-test-suite/t2015-checkout-unborn/scenario.json).
 
 6. Restore parity
    Rows: `git restore`
@@ -128,17 +85,15 @@ An item is only done when all of the following land together:
    [`scenarios/upstream/git-test-suite/t3430-rebase-merges/scenario.json`](scenarios/upstream/git-test-suite/t3430-rebase-merges/scenario.json),
    and [`scenarios/upstream/libgit2/rebase/scenario.json`](scenarios/upstream/libgit2/rebase/scenario.json).
 
-10. Log and show public parity
-    Rows: `Commit walk (log)`, `Log --all (all branches)`, `Log with path filter`,
-    `Log --oneline format`, `git show`
-    Deliverables: compare public repository methods and CLI output directly
-    against `git log` / `git show`.
-    Integration: add dedicated log/show parity tests.
-    Oracle: add local log/show scenarios and bind
-    [`scenarios/log/log-linear/scenario.json`](scenarios/log/log-linear/scenario.json),
-    [`scenarios/log/log-branched/scenario.json`](scenarios/log/log-branched/scenario.json),
-    [`scenarios/upstream/isomorphic-git/test-log-file/scenario.json`](scenarios/upstream/isomorphic-git/test-log-file/scenario.json),
-    and [`scenarios/upstream/git-test-suite/t7007-show/scenario.json`](scenarios/upstream/git-test-suite/t7007-show/scenario.json).
+10. Show public parity
+    Rows: `git show`
+    Deliverables: Git-backed diff-text parity for `Repository::show()`,
+    including merge commits, tag targets, and formatting details instead of
+    only commit metadata and changed-path enumeration.
+    Integration: extend [`tests/Integration/LogShowParityTest.php`](tests/Integration/LogShowParityTest.php).
+    Oracle: extend [`scenarios/log/log-public-parity/scenario.json`](scenarios/log/log-public-parity/scenario.json)
+    and bind [`scenarios/upstream/git-test-suite/t7007-show/scenario.json`](scenarios/upstream/git-test-suite/t7007-show/scenario.json)
+    plus [`scenarios/upstream/git-test-suite/t4063-diff-blobs/scenario.json`](scenarios/upstream/git-test-suite/t4063-diff-blobs/scenario.json).
 
 ## Wave 2: Diff And Merge Truthfulness
 

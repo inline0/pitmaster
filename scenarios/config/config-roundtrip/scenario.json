@@ -1,0 +1,28 @@
+{
+    "name": "config-roundtrip",
+    "category": "config",
+    "description": "Compare Git config read and write behavior against Pitmaster's config parser and writer",
+    "operations": [
+        "config_read",
+        "config_write"
+    ],
+    "oracle_commands": {
+        "config_read": "bash \"{{SCENARIO_DIR}}/config-read.sh\" .git/config",
+        "config_write": "bash \"{{SCENARIO_DIR}}/config-write-oracle.sh\""
+    },
+    "actual_commands": {
+        "config_read": "php \"{{SCENARIO_DIR}}/config-read.php\" .git/config",
+        "config_write": "bash \"{{SCENARIO_DIR}}/config-write-actual.sh\""
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "config_read",
+            "config_write"
+        ],
+        "fsck_clean": true
+    }
+}

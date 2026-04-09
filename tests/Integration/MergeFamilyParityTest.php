@@ -144,6 +144,8 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertSame($this->git($gitDir, "show -s --format='%an <%ae>' HEAD"), $this->git($pitDir, "show -s --format='%an <%ae>' HEAD"));
         $this->assertNull($this->readGitFile($pitDir, 'CHERRY_PICK_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
     }
 
     #[Test]
@@ -171,6 +173,8 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertNull($this->readGitFile($pitDir, 'CHERRY_PICK_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
     }
 
     #[Test]
@@ -226,6 +230,8 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertSame($this->git($gitDir, "show -s --format='%an <%ae>' HEAD"), $this->git($pitDir, "show -s --format='%an <%ae>' HEAD"));
         $this->assertNull($this->readGitFile($pitDir, 'REVERT_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
     }
 
     #[Test]
@@ -253,6 +259,42 @@ final class MergeFamilyParityTest extends TestCase
         $this->assertNull($this->readGitFile($pitDir, 'REVERT_HEAD'));
         $this->assertNull($this->readGitFile($pitDir, 'MERGE_MSG'));
         $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
+    }
+
+    #[Test]
+    public function cleanCherryPickWritesGitLikeReflogs(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir, 'pick' => $pickId] = $this->createCherryPickCleanPair();
+
+        $this->gitWithExit($gitDir, 'cherry-pick ' . escapeshellarg($pickId));
+        $repo = Pitmaster::open($pitDir);
+        $repo->cherryPick($pickId);
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
+    }
+
+    #[Test]
+    public function cleanRevertWritesGitLikeReflogs(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir, 'revert' => $revertId] = $this->createRevertCleanPair();
+
+        $this->gitWithExit($gitDir, 'revert ' . escapeshellarg($revertId));
+        $repo = Pitmaster::open($pitDir);
+        $repo->revert($revertId);
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
     }
 
     /**
@@ -299,6 +341,26 @@ final class MergeFamilyParityTest extends TestCase
     }
 
     /**
+     * @return array{git: string, pit: string, pick: string}
+     */
+    private function createCherryPickCleanPair(): array
+    {
+        return $this->createRepoPair(function (string $dir): array {
+            $this->writeFile($dir, 'a.txt', "line 1\n");
+            $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m base');
+            $this->git($dir, 'checkout -b feature');
+            $this->writeFile($dir, 'feature.txt', "feature\n");
+            $this->git($dir, 'add feature.txt');
+            $this->git($dir, 'commit -m feature');
+            $pickId = trim($this->git($dir, 'rev-parse HEAD'));
+            $this->git($dir, 'checkout main');
+
+            return ['pick' => $pickId];
+        });
+    }
+
+    /**
      * @return array{git: string, pit: string, revert: string}
      */
     private function createRevertConflictPair(): array
@@ -317,6 +379,23 @@ final class MergeFamilyParityTest extends TestCase
             $this->git($dir, 'commit -m other');
 
             return ['revert' => $revertId];
+        });
+    }
+
+    /**
+     * @return array{git: string, pit: string, revert: string}
+     */
+    private function createRevertCleanPair(): array
+    {
+        return $this->createRepoPair(function (string $dir): array {
+            $this->writeFile($dir, 'a.txt', "line 1\n");
+            $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m base');
+            $this->writeFile($dir, 'a.txt', "line 1\nline 2\n");
+            $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m two');
+
+            return ['revert' => trim($this->git($dir, 'rev-parse HEAD'))];
         });
     }
 
@@ -404,6 +483,15 @@ final class MergeFamilyParityTest extends TestCase
         $content = file_get_contents($path);
 
         return $content !== false ? $content : null;
+    }
+
+    private function reflogMessage(string $dir, string $ref = 'HEAD'): string
+    {
+        $command = $ref === 'HEAD'
+            ? 'reflog --format=%gs -n 1'
+            : 'reflog show ' . escapeshellarg($ref) . ' --format=%gs -n 1';
+
+        return trim($this->git($dir, $command));
     }
 
     private function withDeterministicCommitDates(callable $callback): void

@@ -1,0 +1,4 @@
+hash=02a80bd33b08254a11f07fe9e09635fc6a621877
+subject=Main branch update
+path=README.md
+path=docs/guide.txt

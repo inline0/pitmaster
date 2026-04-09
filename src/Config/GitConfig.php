@@ -38,11 +38,11 @@ final class GitConfig
             }
 
             // Section header: [section] or [section "subsection"]
-            if (preg_match('/^\[(\w+)(?:\s+"([^"]*)")?\]$/', $line, $matches)) {
+            if (preg_match('/^\[([A-Za-z0-9][A-Za-z0-9.-]*)(?:\s+"((?:[^"\\\\]|\\\\.)*)")?\]$/', $line, $matches)) {
                 $section = strtolower($matches[1]);
 
                 if (isset($matches[2]) && $matches[2] !== '') {
-                    $currentSection = $section . '.' . $matches[2];
+                    $currentSection = $section . '.' . stripcslashes($matches[2]);
                 } else {
                     $currentSection = $section;
                 }
@@ -51,13 +51,13 @@ final class GitConfig
             }
 
             // Key = value
-            if (preg_match('/^(\w+)\s*=\s*(.*)$/', $line, $matches)) {
+            if (preg_match('/^([A-Za-z][A-Za-z0-9-]*)\s*(?:=\s*(.*))?$/', $line, $matches)) {
                 $key = $currentSection . '.' . strtolower($matches[1]);
-                $value = trim($matches[2]);
+                $value = isset($matches[2]) ? trim($matches[2]) : 'true';
 
                 // Strip inline comments
                 if (preg_match('/^"([^"]*)"/', $value, $quoted)) {
-                    $value = $quoted[1];
+                    $value = stripcslashes($quoted[1]);
                 } elseif (($commentPos = strpos($value, ' #')) !== false) {
                     $value = trim(substr($value, 0, $commentPos));
                 }
@@ -213,7 +213,7 @@ final class GitConfig
             if ($dotPos !== false) {
                 $main = substr($section, 0, $dotPos);
                 $sub = substr($section, $dotPos + 1);
-                $lines[] = "[{$main} \"{$sub}\"]";
+                $lines[] = "[{$main} \"" . addcslashes($sub, "\\\"") . "\"]";
             } else {
                 $lines[] = "[{$section}]";
             }

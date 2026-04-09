@@ -1,0 +1,39 @@
+{
+    "name": "checkout-overwrite-tracked",
+    "category": "checkout",
+    "description": "Reject branch checkout when a tracked file would be overwritten",
+    "operations": [
+        "status",
+        "head_ref",
+        "branch",
+        "worktree",
+        "checkout_result"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "worktree": "cat a.txt",
+        "checkout_result": "cat .checkout-result.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "worktree": "cat a.txt",
+        "checkout_result": "cat .checkout-result.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "branch",
+            "worktree",
+            "checkout_result"
+        ],
+        "fsck_clean": false
+    }
+}

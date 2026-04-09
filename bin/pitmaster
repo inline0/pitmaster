@@ -16,7 +16,7 @@ $arguments = array_slice($argv, 1);
 if ($arguments === []) {
     fwrite(STDERR, "Usage: pitmaster <command> [args...]\n\n");
     fwrite(STDERR, "Commands:\n");
-    fwrite(STDERR, "  log [N]             Show commit history (default 10)\n");
+    fwrite(STDERR, "  log [--all] [--oneline] [path] [N]  Show commit history (default 10)\n");
     fwrite(STDERR, "  show <rev>          Show commit details + diff\n");
     fwrite(STDERR, "  cat-file <hash>     Print object content\n");
     fwrite(STDERR, "  status              Show working tree status\n");
@@ -101,12 +101,44 @@ try {
 function commandLog(Repository $repo, array $args): void
 {
     $limit = 10;
+    $all = false;
+    $oneline = false;
+    $path = null;
 
-    if (isset($args[0]) && is_numeric($args[0])) {
-        $limit = (int) $args[0];
+    foreach ($args as $arg) {
+        if ($arg === '--all') {
+            $all = true;
+            continue;
+        }
+
+        if ($arg === '--oneline') {
+            $oneline = true;
+            continue;
+        }
+
+        if (is_numeric($arg)) {
+            $limit = (int) $arg;
+            continue;
+        }
+
+        if ($path === null) {
+            $path = $arg;
+        }
     }
 
-    foreach ($repo->log($limit) as $commit) {
+    if ($oneline) {
+        foreach ($repo->logOneline($limit, $all, $path) as $line) {
+            fwrite(STDOUT, "{$line}\n");
+        }
+
+        return;
+    }
+
+    $commits = $path !== null
+        ? $repo->logPath($path, $limit)
+        : ($all ? $repo->logAll($limit) : $repo->log($limit));
+
+    foreach ($commits as $commit) {
         fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
 
         if ($commit->isMerge()) {

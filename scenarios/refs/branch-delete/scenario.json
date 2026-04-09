@@ -2,13 +2,21 @@
     "name": "branch-delete",
     "category": "refs",
     "description": "Delete a non-current branch and compare the resulting refs and history",
-    "operations": [],
-    "oracle_commands": {},
+    "operations": [
+        "feature_reflog_state"
+    ],
+    "oracle_commands": {
+        "feature_reflog_state": "test -e .git/logs/refs/heads/feature && printf 'present\\n' || printf 'absent\\n'"
+    },
+    "actual_commands": {
+        "feature_reflog_state": "test -e .git/logs/refs/heads/feature && printf 'present\\n' || printf 'absent\\n'"
+    },
     "expectations": {
         "exact_match": [
             "objects",
             "refs",
             "log",
+            "feature_reflog_state",
             "fsck"
         ],
         "fsck_clean": true

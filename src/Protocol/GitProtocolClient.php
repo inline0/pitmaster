@@ -127,8 +127,25 @@ final class GitProtocolClient
         while (!feof($socket)) {
             $chunk = fread($socket, 65536);
 
-            if ($chunk === false || $chunk === '') {
+            if ($chunk === false) {
+                $meta = stream_get_meta_data($socket);
+
+                if ($meta['timed_out'] === true) {
+                    break;
+                }
+
                 break;
+            }
+
+            if ($chunk === '') {
+                $meta = stream_get_meta_data($socket);
+
+                if ($meta['timed_out'] === true || $meta['eof'] === true) {
+                    break;
+                }
+
+                usleep(10000);
+                continue;
             }
 
             $data .= $chunk;

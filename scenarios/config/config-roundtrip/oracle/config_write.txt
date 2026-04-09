@@ -1,0 +1,6 @@
+core.filemode=false
+core.logallrefupdates=true
+alias.lg=log --oneline
+remote.origin.url=https://example.com/repo.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*|^refs/heads/tmp
+branch.main.merge=refs/heads/main

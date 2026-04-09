@@ -1,0 +1,7 @@
+line 1
+<<<<<<< HEAD
+main change
+=======
+feature change
+>>>>>>> 6cd8074 (feature)
+line 3

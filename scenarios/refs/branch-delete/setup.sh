@@ -4,6 +4,7 @@ set -e
 git init .
 git config user.email "test@pitmaster.dev"
 git config user.name "Test User"
+git config core.logAllRefUpdates true
 export GIT_AUTHOR_DATE="2024-01-06T00:00:00+0000"
 export GIT_COMMITTER_DATE="2024-01-06T00:00:00+0000"
 

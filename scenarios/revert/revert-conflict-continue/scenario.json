@@ -8,7 +8,9 @@
         "subjects",
         "parents",
         "tree",
-        "worktree"
+        "worktree",
+        "head_reflog",
+        "branch_reflog"
     ],
     "oracle_commands": {
         "status": "git status --porcelain=v2",
@@ -16,7 +18,9 @@
         "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
         "parents": "git show -s --format=%P HEAD",
         "tree": "git show -s --format=%T HEAD",
-        "worktree": "cat a.txt"
+        "worktree": "cat a.txt",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "branch_reflog": "git reflog show refs/heads/other --format=%gs -n 1"
     },
     "actual_commands": {
         "status": "git status --porcelain=v2",
@@ -24,7 +28,9 @@
         "subjects": "git log --format='%s|%an <%ae>|%cn <%ce>' --reverse --all",
         "parents": "git show -s --format=%P HEAD",
         "tree": "git show -s --format=%T HEAD",
-        "worktree": "cat a.txt"
+        "worktree": "cat a.txt",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "branch_reflog": "git reflog show refs/heads/other --format=%gs -n 1"
     },
     "expectations": {
         "exact_match": [
@@ -36,7 +42,9 @@
             "subjects",
             "parents",
             "tree",
-            "worktree"
+            "worktree",
+            "head_reflog",
+            "branch_reflog"
         ],
         "fsck_clean": false
     }

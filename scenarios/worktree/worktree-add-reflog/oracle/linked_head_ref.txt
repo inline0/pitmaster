@@ -1,0 +1,1 @@
+gitdir: /Users/dennis/Local Sites/fabrikat/inline0/pitmaster/.pitmaster/workspaces/pitmaster-scenario-oracle-c351cdb90e49970c/.git/worktrees/linked-feature

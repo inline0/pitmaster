@@ -1,0 +1,51 @@
+{
+    "name": "detached-head-commit",
+    "category": "checkout",
+    "description": "Create a commit while detached and compare Git-observed state plus reflogs",
+    "operations": [
+        "status",
+        "head_ref",
+        "branch",
+        "subject",
+        "parents",
+        "tree",
+        "head_reflog",
+        "branch_reflog"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "subject": "git show -s --format=%s HEAD",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "head_reflog": "git reflog --format=%gs -n 2",
+        "branch_reflog": "git reflog show refs/heads/main --format=%gs -n 1"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "head_ref": "cat .git/HEAD",
+        "branch": "git branch --show-current",
+        "subject": "git show -s --format=%s HEAD",
+        "parents": "git show -s --format=%P HEAD",
+        "tree": "git show -s --format=%T HEAD",
+        "head_reflog": "git reflog --format=%gs -n 2",
+        "branch_reflog": "git reflog show refs/heads/main --format=%gs -n 1"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "status",
+            "head_ref",
+            "branch",
+            "subject",
+            "parents",
+            "tree",
+            "head_reflog",
+            "branch_reflog"
+        ],
+        "fsck_clean": false
+    }
+}

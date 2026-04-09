@@ -69,6 +69,9 @@ final class Repository
     /** Whether this is a linked worktree */
     private readonly bool $isLinkedWorktree;
 
+    /** Whether this repository has no working tree */
+    private readonly bool $isBare;
+
     public function __construct(string $path)
     {
         if (is_dir($path . '/.git')) {
@@ -77,6 +80,7 @@ final class Repository
             $this->gitDir = $path . '/.git';
             $this->commonDir = $this->gitDir;
             $this->isLinkedWorktree = false;
+            $this->isBare = false;
         } elseif (is_file($path . '/.git')) {
             // Linked worktree: .git is a file with "gitdir: <path>"
             $content = trim((string) file_get_contents($path . '/.git'));
@@ -95,6 +99,7 @@ final class Repository
             $this->workDir = $path;
             $this->gitDir = realpath($gitdir) ?: $gitdir;
             $this->isLinkedWorktree = true;
+            $this->isBare = false;
 
             // Resolve common dir from the worktree metadata
             $commonDirFile = $this->gitDir . '/commondir';
@@ -109,7 +114,8 @@ final class Repository
             }
         } elseif (is_file($path . '/HEAD')) {
             // Bare repo or .git directory passed directly
-            $this->workDir = dirname($path);
+            $this->isBare = basename($path) !== '.git';
+            $this->workDir = $this->isBare ? $path : dirname($path);
             $this->gitDir = $path;
             $this->commonDir = $path;
             $this->isLinkedWorktree = false;
@@ -148,6 +154,11 @@ final class Repository
     public function isLinkedWorktree(): bool
     {
         return $this->isLinkedWorktree;
+    }
+
+    public function isBare(): bool
+    {
+        return $this->isBare;
     }
 
     /**
@@ -225,6 +236,8 @@ final class Repository
         ?string $name = null,
     ): \Pitmaster\Worktree\Worktree {
         $manager = new \Pitmaster\Worktree\WorktreeManager($this->commonDir, $this->workDir);
+        $createdBranch = false;
+        $branchTarget = null;
 
         // Ensure the branch exists
         if ($this->refs->resolve("refs/heads/{$branch}") === null) {
@@ -232,6 +245,8 @@ final class Repository
 
             if ($target !== null) {
                 $this->refs->update("refs/heads/{$branch}", $target);
+                $createdBranch = true;
+                $branchTarget = $target;
             }
         }
 
@@ -241,6 +256,16 @@ final class Repository
         $branchId = $this->refs->resolve("refs/heads/{$branch}");
 
         if ($branchId !== null) {
+            if ($createdBranch) {
+                $this->appendReflogEntry(
+                    "refs/heads/{$branch}",
+                    null,
+                    $branchTarget ?? $branchId,
+                    'branch: Created from ' . ($from !== null ? $from->hex : 'HEAD'),
+                );
+            }
+
+            $this->appendLinkedWorktreeHeadReflog($wt->gitDir, $branchId);
             $commit = $this->objects->read($branchId);
 
             if ($commit instanceof Commit) {
@@ -505,6 +530,7 @@ final class Repository
         }
 
         $this->refs->delete($refName);
+        $this->deleteReflog($refName);
     }
 
     /**
@@ -614,6 +640,8 @@ final class Repository
         $branchId = $this->refs->resolve("refs/heads/{$target}");
 
         if ($branchId !== null) {
+            $this->assertSafeCheckout($branchId);
+
             // Switch to branch: update HEAD symbolic ref
             $this->refs->updateSymbolic('HEAD', "refs/heads/{$target}");
             $this->appendReflogEntry(
@@ -629,6 +657,7 @@ final class Repository
 
         // Try as tag or direct hash (detached HEAD)
         $id = $this->resolve($target);
+        $this->assertSafeCheckout($id);
         $this->refs->looseStore()->update('HEAD', $id);
         $this->appendReflogEntry(
             'HEAD',
@@ -673,6 +702,51 @@ final class Repository
         $walker = new CommitWalker($this->objects);
 
         return $walker->walk($from, $limit);
+    }
+
+    /**
+     * Walk commits reachable from every ref tip.
+     *
+     * @return array<int, Commit>
+     */
+    public function logAll(int $limit = 50): array
+    {
+        $tips = [];
+
+        foreach ($this->refs->list() as $id) {
+            $tips[$id->hex] = $id;
+        }
+
+        $headId = $this->refs->resolveHead();
+
+        if ($headId !== null) {
+            $tips[$headId->hex] = $headId;
+        }
+
+        if ($tips === []) {
+            return [];
+        }
+
+        $walker = new CommitWalker($this->objects);
+
+        return $walker->walkAll(array_values($tips), $limit);
+    }
+
+    /**
+     * Render log output in oneline format.
+     *
+     * @return list<string>
+     */
+    public function logOneline(int $limit = 50, bool $all = false, ?string $path = null): array
+    {
+        $commits = $path !== null
+            ? $this->logPath($path, $limit)
+            : ($all ? $this->logAll($limit) : $this->log($limit));
+
+        return array_map(
+            fn (Commit $commit): string => substr($commit->id->hex, 0, 7) . ' ' . $this->subjectLine($commit->message),
+            $commits,
+        );
     }
 
     /**
@@ -845,7 +919,7 @@ final class Repository
             return $commitId;
         }
 
-        $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($message));
+        $this->moveHeadTo($commitId, $this->commitReflogMessage($state, $message));
         $this->clearOperationState();
         $this->runPostCommitHook();
 
@@ -859,6 +933,10 @@ final class Repository
      */
     public function reset(string $revision, string $mode = 'mixed'): void
     {
+        if ($mode === 'soft' && $this->index()->hasUnmerged()) {
+            throw new \RuntimeException('Cannot do a soft reset in the middle of a merge.');
+        }
+
         $targetId = $this->resolve($revision);
         $oldHeadId = $this->refs->resolveHead();
         $trackedPaths = $this->index()->paths();
@@ -875,6 +953,7 @@ final class Repository
 
         if ($mode === 'hard') {
             $this->resetWorktree($targetId, $trackedPaths);
+            $this->clearOperationState();
             return;
         }
 
@@ -983,7 +1062,7 @@ final class Repository
 
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $commit->message, [$headId], $commit->author);
-        $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($commit->message));
+        $this->moveHeadTo($commitId, 'cherry-pick: ' . $this->subjectLine($commit->message));
         $this->resetWorktree($commitId, $trackedPaths);
 
         return $commitId;
@@ -1010,7 +1089,12 @@ final class Repository
      */
     public function cherryPickAbort(): void
     {
-        $this->abortHeadBasedOperation('CHERRY_PICK_HEAD', true);
+        $headId = $this->refs->resolveHead();
+        $this->abortHeadBasedOperation(
+            'CHERRY_PICK_HEAD',
+            true,
+            $headId !== null ? "reset: moving to {$headId->hex}" : null,
+        );
     }
 
     /**
@@ -1032,7 +1116,7 @@ final class Repository
         }
 
         $parentTree = $this->getCommitTree($commit->parents[0]);
-        $message = "Revert \"{$commit->message}\"\n\nThis reverts commit {$commit->id->hex}.\n";
+        $message = "Revert \"{$this->subjectLine($commit->message)}\"\n\nThis reverts commit {$commit->id->hex}.\n";
         $trackedPaths = $this->index()->paths();
         $merge = $this->mergeTreeEntries(
             $commit->tree,
@@ -1058,7 +1142,7 @@ final class Repository
 
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $message, [$headId]);
-        $this->moveHeadTo($commitId, 'commit: ' . $this->subjectLine($message));
+        $this->moveHeadTo($commitId, 'revert: ' . $this->subjectLine($message));
         $this->resetWorktree($commitId, $trackedPaths);
 
         return $commitId;
@@ -1085,7 +1169,12 @@ final class Repository
      */
     public function revertAbort(): void
     {
-        $this->abortHeadBasedOperation('REVERT_HEAD', true);
+        $headId = $this->refs->resolveHead();
+        $this->abortHeadBasedOperation(
+            'REVERT_HEAD',
+            true,
+            $headId !== null ? "reset: moving to {$headId->hex}" : null,
+        );
     }
 
     /**
@@ -2348,6 +2437,7 @@ final class Repository
                     'parents' => [$headId],
                     'author' => $picked instanceof Commit ? $picked->author : null,
                     'message' => $message,
+                    'type' => 'cherry-pick',
                 ];
             }
 
@@ -2357,6 +2447,7 @@ final class Repository
                 return [
                     'parents' => [$headId],
                     'message' => $message,
+                    'type' => 'revert',
                 ];
             }
 
@@ -2690,7 +2781,7 @@ final class Repository
     /**
      * Abort an in-progress merge-family operation and restore HEAD state in the worktree/index.
      */
-    private function abortHeadBasedOperation(string $operationRef, bool $writeOrigHead): void
+    private function abortHeadBasedOperation(string $operationRef, bool $writeOrigHead, ?string $headReflogMessage = null): void
     {
         if ($this->refs->resolve($operationRef) === null) {
             throw new \RuntimeException("Cannot abort: no {$this->humanOperationName($operationRef)} in progress");
@@ -2712,6 +2803,10 @@ final class Repository
         )));
 
         $this->resetWorktree($headId, $trackedPaths);
+
+        if ($headReflogMessage !== null) {
+            $this->appendReflogEntry('HEAD', $headId, $headId, $headReflogMessage);
+        }
     }
 
     private function humanOperationName(string $operationRef): string
@@ -3403,11 +3498,125 @@ final class Repository
         $this->detachHeadTo($target, $message);
     }
 
+    private function assertSafeCheckout(ObjectId $targetId): void
+    {
+        if ($this->isBare) {
+            return;
+        }
+
+        $headId = $this->refs->resolveHead();
+        $currentTree = $headId !== null ? $this->flattenTree($this->getCommitTree($headId)) : [];
+        $targetTree = $this->flattenTree($this->getCommitTree($targetId));
+        $pathsChanging = [];
+
+        foreach (array_keys(array_merge($currentTree, $targetTree)) as $path) {
+            if (($currentTree[$path] ?? null) !== ($targetTree[$path] ?? null)) {
+                $pathsChanging[$path] = true;
+            }
+        }
+
+        if ($pathsChanging === []) {
+            return;
+        }
+
+        $modified = [];
+        $untracked = [];
+
+        foreach ($this->status() as $entry) {
+            if ($entry->index === FileStatus::Ignored) {
+                continue;
+            }
+
+            if ($entry->index === FileStatus::Untracked) {
+                if (isset($targetTree[$entry->path])) {
+                    $untracked[] = $entry->path;
+                }
+
+                continue;
+            }
+
+            if (!isset($pathsChanging[$entry->path])) {
+                continue;
+            }
+
+            if ($entry->index !== FileStatus::Unmodified || $entry->worktree !== FileStatus::Unmodified) {
+                $modified[] = $entry->path;
+            }
+        }
+
+        if ($modified !== []) {
+            sort($modified);
+
+            throw new \RuntimeException(
+                'Your local changes to the following files would be overwritten by checkout: ' . implode(', ', $modified)
+            );
+        }
+
+        if ($untracked !== []) {
+            sort($untracked);
+
+            throw new \RuntimeException(
+                'The following untracked working tree files would be overwritten by checkout: ' . implode(', ', $untracked)
+            );
+        }
+    }
+
+    /**
+     * @param array{type?: string}|null $state
+     */
+    private function commitReflogMessage(?array $state, string $message): string
+    {
+        return match ($state['type'] ?? null) {
+            'cherry-pick' => 'commit (cherry-pick): ' . $this->subjectLine($message),
+            default => 'commit: ' . $this->subjectLine($message),
+        };
+    }
+
     private function appendReflogEntry(string $refName, ?ObjectId $oldId, ObjectId $newId, string $message): void
     {
+        if (!$this->shouldWriteReflog($refName)) {
+            return;
+        }
+
         $logDir = $refName === 'HEAD' ? $this->gitDir : $this->commonDir;
-        $reflog = Reflog::open($logDir, $refName);
+        $this->appendReflogEntryAt($logDir, $refName, $oldId, $newId, $message);
+    }
+
+    private function appendReflogEntryAt(string $gitDir, string $refName, ?ObjectId $oldId, ObjectId $newId, string $message): void
+    {
+        $reflog = Reflog::open($gitDir, $refName);
         $reflog->append($oldId ?? $this->zeroObjectId(), $newId, $this->currentCommitterIdentity(), $message);
+    }
+
+    private function appendLinkedWorktreeHeadReflog(string $gitDir, ObjectId $headId): void
+    {
+        if (!$this->shouldWriteReflog('HEAD')) {
+            return;
+        }
+
+        $zero = $this->zeroObjectId();
+        $this->appendReflogEntryAt($gitDir, 'HEAD', $zero, $headId, '');
+        $this->appendReflogEntryAt($gitDir, 'HEAD', $headId, $headId, 'reset: moving to HEAD');
+    }
+
+    private function shouldWriteReflog(string $refName): bool
+    {
+        if ($this->config->getBool('core.logallrefupdates')) {
+            return true;
+        }
+
+        $path = ($refName === 'HEAD' ? $this->gitDir : $this->commonDir) . '/logs/' . $refName;
+
+        return is_file($path);
+    }
+
+    private function deleteReflog(string $refName): void
+    {
+        $path = $this->commonDir . '/logs/' . $refName;
+
+        if (is_file($path)) {
+            unlink($path);
+        }
     }
 
     private function currentAuthorIdentity(): string
@@ -3654,7 +3863,7 @@ final class Repository
     private function targetLabel(string $target, ObjectId $resolvedId): string
     {
         if ($target === $resolvedId->hex) {
-            return substr($resolvedId->hex, 0, 7);
+            return $resolvedId->hex;
         }
 
         return $target;

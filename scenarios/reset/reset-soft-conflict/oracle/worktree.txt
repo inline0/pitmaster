@@ -1,0 +1,7 @@
+line 1
+<<<<<<< HEAD
+main change
+=======
+feature change
+>>>>>>> 319df79 (feature)
+line 3

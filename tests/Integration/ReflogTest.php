@@ -204,6 +204,43 @@ final class ReflogTest extends TestCase
         $this->assertSame($featureHead, $branchLog['new']);
     }
 
+    #[Test]
+    public function pitmasterDeleteBranchRemovesBranchReflog(): void
+    {
+        $this->repo->createBranch('feature-delete');
+
+        $this->assertFileExists($this->tmpDir . '/.git/logs/refs/heads/feature-delete');
+
+        $this->repo->deleteBranch('feature-delete');
+
+        $this->assertFileDoesNotExist($this->tmpDir . '/.git/logs/refs/heads/feature-delete');
+    }
+
+    #[Test]
+    public function pitmasterAddWorktreeWritesLinkedHeadAndBranchReflogs(): void
+    {
+        $linkedPath = $this->tmpDir . '-linked-reflog';
+        $headId = $this->repo->head()->id->hex;
+
+        try {
+            $worktree = $this->repo->addWorktree($linkedPath, 'linked-feature', name: 'linked-feature');
+
+            $branchLog = Reflog::open($this->tmpDir . '/.git', 'refs/heads/linked-feature')->latest();
+            $headLog = Reflog::open($worktree->gitDir, 'HEAD')->latest();
+
+            $this->assertNotNull($branchLog);
+            $this->assertNotNull($headLog);
+            $this->assertSame(str_repeat('0', 40), $branchLog['old']);
+            $this->assertSame($headId, $branchLog['new']);
+            $this->assertSame('branch: Created from HEAD', $branchLog['message']);
+            $this->assertSame($headId, $headLog['old']);
+            $this->assertSame($headId, $headLog['new']);
+            $this->assertSame('reset: moving to HEAD', $headLog['message']);
+        } finally {
+            exec('rm -rf ' . escapeshellarg($linkedPath));
+        }
+    }
+
     private function git(string $cmd): string
     {
         return shell_exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($this->tmpDir), $cmd)) ?? '';

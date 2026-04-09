@@ -9,6 +9,8 @@
         "parents",
         "tree",
         "worktree",
+        "head_reflog",
+        "branch_reflog",
         "orig_head"
     ],
     "oracle_commands": {
@@ -18,6 +20,8 @@
         "parents": "git show -s --format=%P HEAD",
         "tree": "git show -s --format=%T HEAD",
         "worktree": "cat a.txt",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "branch_reflog": "git reflog show refs/heads/other --format=%gs -n 1",
         "orig_head": "cat .git/ORIG_HEAD"
     },
     "actual_commands": {
@@ -27,6 +31,8 @@
         "parents": "git show -s --format=%P HEAD",
         "tree": "git show -s --format=%T HEAD",
         "worktree": "cat a.txt",
+        "head_reflog": "git reflog --format=%gs -n 1",
+        "branch_reflog": "git reflog show refs/heads/other --format=%gs -n 1",
         "orig_head": "cat .git/ORIG_HEAD"
     },
     "expectations": {
@@ -40,6 +46,8 @@
             "parents",
             "tree",
             "worktree",
+            "head_reflog",
+            "branch_reflog",
             "orig_head"
         ],
         "fsck_clean": false

@@ -1,0 +1,48 @@
+{
+    "name": "log-public-parity",
+    "category": "log",
+    "description": "Compare public log and show behavior against stock git",
+    "operations": [
+        "log_head",
+        "log_all",
+        "log_path",
+        "log_oneline_head",
+        "log_oneline_all",
+        "log_oneline_path",
+        "show_head"
+    ],
+    "oracle_commands": {
+        "log_head": "git log --format=%H -n 20",
+        "log_all": "git log --all --format=%H -n 20",
+        "log_path": "git log --format=%H -- docs/guide.txt",
+        "log_oneline_head": "git log --oneline --abbrev=7 -n 20",
+        "log_oneline_all": "git log --all --oneline --abbrev=7 -n 20",
+        "log_oneline_path": "git log --oneline --abbrev=7 -- docs/guide.txt",
+        "show_head": "bash \"{{SCENARIO_DIR}}/show.sh\" HEAD"
+    },
+    "actual_commands": {
+        "log_head": "php \"{{SCENARIO_DIR}}/log.php\" head",
+        "log_all": "php \"{{SCENARIO_DIR}}/log.php\" all",
+        "log_path": "php \"{{SCENARIO_DIR}}/log.php\" path docs/guide.txt",
+        "log_oneline_head": "php \"{{SCENARIO_DIR}}/log.php\" oneline-head",
+        "log_oneline_all": "php \"{{SCENARIO_DIR}}/log.php\" oneline-all",
+        "log_oneline_path": "php \"{{SCENARIO_DIR}}/log.php\" oneline-path docs/guide.txt",
+        "show_head": "php \"{{SCENARIO_DIR}}/show.php\" HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "log_head",
+            "log_all",
+            "log_path",
+            "log_oneline_head",
+            "log_oneline_all",
+            "log_oneline_path",
+            "show_head"
+        ],
+        "fsck_clean": true
+    }
+}
