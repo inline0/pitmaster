@@ -49,12 +49,10 @@ No partial sign-off. `composer test` is the full test matrix, not just PHPUnit. 
 
 ## Autonomous Batch Protocol
 
-When [`SESSION_EXECUTION_QUEUE.md`](SESSION_EXECUTION_QUEUE.md) exists, treat it as the active execution queue for long work passes and use [`ORACLE_PARITY_TODO.md`](ORACLE_PARITY_TODO.md) as the source-of-truth audit behind it. If the session queue does not exist, fall back to the remaining non-`Mapped` rows in the audit file, starting with the `Remaining High-Risk Rows` section and then continuing through the audit in file order.
-
-1. Default behavior is to keep working through the backlog instead of stopping after a single fix. Target a double-digit batch of completed rows per autonomous pass unless a shared blocker or a red `./bin/verify-all` gate stops further work.
-2. A row is not done until code, Git-backed integration coverage, scenario coverage, and backlog/support-matrix updates all land together.
+1. Default behavior is to keep working through related backlog items instead of stopping after a single fix. Target a substantial batch per autonomous pass unless a shared blocker or a red `./bin/verify-all` gate stops further work.
+2. A feature is not done until code, Git-backed integration coverage, scenario coverage, and support-matrix updates all land together.
 3. Run targeted checks while iterating, then run `./bin/verify-all` after each completed wave and again at the end of the pass if anything changed after the last wave gate.
-4. If a row proves out of scope for stock Git or cannot honestly be kept as `DONE`, correct the claim immediately instead of leaving the overstatement in place.
+4. If a feature cannot honestly remain `DONE`, correct the claim immediately instead of leaving the overstatement in place.
 
 ## What This Is
 
