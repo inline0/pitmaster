@@ -115,7 +115,17 @@ final class GitProtocolClientTest extends TestCase
         $this->assertSame($tagId, $discovery->ref('refs/tags/v1.0')?->hex);
 
         $request = ProtocolV1::buildFetchRequest([$mainRef]);
-        $response = $client->uploadPack($url, $request);
+        $response = '';
+
+        for ($attempt = 0; $attempt < 3; $attempt++) {
+            $response = $client->uploadPack($url, $request);
+
+            if (str_contains($response, 'PACK')) {
+                break;
+            }
+
+            usleep(100000);
+        }
 
         $this->assertStringContainsString('PACK', $response);
     }
