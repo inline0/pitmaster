@@ -24,8 +24,10 @@
             "log",
             "fsck",
             "head",
-            "config",
             "status"
+        ],
+        "runtime_exact_match": [
+            "config"
         ],
         "fsck_clean": true
     }
