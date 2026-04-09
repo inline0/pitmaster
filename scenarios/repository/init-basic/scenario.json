@@ -31,13 +31,15 @@
             "objects",
             "refs",
             "log",
-            "fsck",
             "head",
             "description",
             "exclude",
-            "config",
             "layout",
             "status"
+        ],
+        "runtime_exact_match": [
+            "fsck",
+            "config"
         ],
         "fsck_clean": false
     }
