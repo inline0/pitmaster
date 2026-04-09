@@ -16,8 +16,10 @@
             "objects",
             "refs",
             "log",
-            "fsck",
             "ssh_state"
+        ],
+        "runtime_exact_match": [
+            "fsck"
         ],
         "fsck_clean": false
     }
