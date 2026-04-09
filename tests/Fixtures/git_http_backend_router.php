@@ -19,6 +19,13 @@ if ($projectRoot === false || $projectRoot === '' || $backend === false || $back
     return;
 }
 
+if (!is_file($backend) || !is_executable($backend)) {
+    http_response_code(500);
+    header('Content-Type: text/plain');
+    echo "git-http-backend is not executable: {$backend}\n";
+    return;
+}
+
 $requestBody = file_get_contents('php://input');
 
 if ($requestBody === false) {

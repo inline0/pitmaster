@@ -11,6 +11,7 @@ use Pitmaster\Protocol\GitProtocolClient;
 use Pitmaster\Protocol\PktLine;
 use Pitmaster\Protocol\RefDiscovery;
 use Pitmaster\Protocol\SmartHttpClient;
+use Pitmaster\Tests\Integration\Support\GitTestRuntime;
 
 final class RefDiscoveryParityTest extends TestCase
 {
@@ -147,7 +148,7 @@ final class RefDiscoveryParityTest extends TestCase
             dirname(__DIR__, 2),
             [
                 'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
-                'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+                'PITMASTER_GIT_HTTP_BACKEND' => GitTestRuntime::gitHttpBackend(),
             ],
         );
 
@@ -167,7 +168,7 @@ final class RefDiscoveryParityTest extends TestCase
 
         $command = sprintf(
             '%s --verbose --reuseaddr --export-all --base-path=%s --listen=127.0.0.1 --port=%d %s',
-            escapeshellarg('/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-daemon'),
+            GitTestRuntime::gitDaemonCommand(),
             escapeshellarg($exportRoot),
             $port,
             escapeshellarg($exportRoot),

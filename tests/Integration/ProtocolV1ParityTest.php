@@ -10,6 +10,7 @@ use Pitmaster\Pitmaster;
 use Pitmaster\Protocol\PktLine;
 use Pitmaster\Protocol\ProtocolV1;
 use Pitmaster\Protocol\SmartHttpClient;
+use Pitmaster\Tests\Integration\Support\GitTestRuntime;
 
 final class ProtocolV1ParityTest extends TestCase
 {
@@ -225,7 +226,7 @@ final class ProtocolV1ParityTest extends TestCase
             dirname(__DIR__, 2),
             [
                 'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
-                'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+                'PITMASTER_GIT_HTTP_BACKEND' => GitTestRuntime::gitHttpBackend(),
                 'PITMASTER_CAPTURE_HTTP_BODIES_DIR' => $this->captureDir,
             ],
         );

@@ -77,7 +77,21 @@ final readonly class Scenario
      */
     public function exactMatch(): array
     {
-        return (array) ($this->expectations()['exact_match'] ?? []);
+        return array_values(array_unique(array_merge(
+            (array) ($this->expectations()['exact_match'] ?? []),
+            $this->runtimeExactMatch(),
+        )));
+    }
+
+    /**
+     * Outputs that should be compared against a fresh oracle capture on each run
+     * instead of the committed oracle snapshot.
+     *
+     * @return array<int, string>
+     */
+    public function runtimeExactMatch(): array
+    {
+        return (array) ($this->expectations()['runtime_exact_match'] ?? []);
     }
 
     /**

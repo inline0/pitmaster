@@ -128,6 +128,56 @@ SH);
         $this->assertTrue($result['comparison']['fsck_match']);
     }
 
+    #[Test]
+    public function runtimeExactMatchUsesFreshOracleWithoutRewritingCommittedSnapshots(): void
+    {
+        $scenarioDir = $this->tmpRoot . '/scenarios/index/runtime-exact-match';
+        mkdir($scenarioDir . '/oracle', 0777, true);
+
+        file_put_contents($scenarioDir . '/scenario.json', json_encode([
+            'name' => 'runtime-exact-match',
+            'category' => 'index',
+            'description' => 'Compare volatile output against a fresh oracle capture',
+            'operations' => ['head'],
+            'oracle_commands' => [
+                'head' => 'git rev-parse HEAD',
+            ],
+            'actual_commands' => [
+                'head' => 'git rev-parse HEAD',
+            ],
+            'expectations' => [
+                'runtime_exact_match' => ['head'],
+                'fsck_clean' => true,
+            ],
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+        file_put_contents($scenarioDir . '/setup.sh', <<<'SH'
+#!/bin/bash
+set -e
+git init -b main .
+git config user.email "test@pitmaster.dev"
+git config user.name "Test User"
+export GIT_AUTHOR_DATE="2024-01-11T00:00:00+0000"
+export GIT_COMMITTER_DATE="2024-01-11T00:00:00+0000"
+echo "hello" > app.txt
+git add app.txt
+git commit -m "Initial commit" >/dev/null
+SH);
+
+        file_put_contents($scenarioDir . '/oracle/objects.json', "[]\n");
+        file_put_contents($scenarioDir . '/oracle/head.txt', "stale-head\n");
+
+        $scenario = (new ScenarioRepository($this->tmpRoot))->get('index/runtime-exact-match');
+        $result = (new ScenarioRunner())->run($scenario, false);
+
+        $this->assertTrue(
+            $result['pass'],
+            json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?: 'runtime-exact-match',
+        );
+        $this->assertTrue($result['comparison']['head_match']);
+        $this->assertSame("stale-head\n", file_get_contents($scenarioDir . '/oracle/head.txt'));
+    }
+
     /**
      * @return array<int, array{0: string}>
      */

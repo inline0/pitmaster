@@ -23,9 +23,11 @@
             "refs",
             "log",
             "fsck",
-            "tree_extension_hex",
             "status",
             "ls_files_stage"
+        ],
+        "runtime_exact_match": [
+            "tree_extension_hex"
         ],
         "fsck_clean": true
     }

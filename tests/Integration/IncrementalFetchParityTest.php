@@ -7,6 +7,7 @@ namespace Pitmaster\Tests\Integration;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Pitmaster\Pitmaster;
+use Pitmaster\Tests\Integration\Support\GitTestRuntime;
 
 final class IncrementalFetchParityTest extends TestCase
 {
@@ -150,7 +151,7 @@ final class IncrementalFetchParityTest extends TestCase
             dirname(__DIR__, 2),
             [
                 'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
-                'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+                'PITMASTER_GIT_HTTP_BACKEND' => GitTestRuntime::gitHttpBackend(),
             ],
         );
 

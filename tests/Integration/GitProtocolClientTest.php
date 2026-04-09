@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Pitmaster\Exceptions\ProtocolException;
 use Pitmaster\Protocol\GitProtocolClient;
 use Pitmaster\Protocol\ProtocolV1;
+use Pitmaster\Tests\Integration\Support\GitTestRuntime;
 
 final class GitProtocolClientTest extends TestCase
 {
@@ -127,7 +128,7 @@ final class GitProtocolClientTest extends TestCase
 
         $command = sprintf(
             '%s --verbose --reuseaddr --export-all --base-path=%s --listen=127.0.0.1 --port=%d %s',
-            escapeshellarg('/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-daemon'),
+            GitTestRuntime::gitDaemonCommand(),
             escapeshellarg($exportRoot),
             $port,
             escapeshellarg($exportRoot),

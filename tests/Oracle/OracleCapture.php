@@ -38,8 +38,12 @@ final class OracleCapture
      *
      * @return array{success: bool, outputs: array<string, mixed>, errors: array<int, string>}
      */
-    public function captureFromRepo(Scenario $scenario, string $repoDir, bool $runOracleScript = false): array
-    {
+    public function captureFromRepo(
+        Scenario $scenario,
+        string $repoDir,
+        bool $runOracleScript = false,
+        bool $persist = true,
+    ): array {
         $errors = [];
         $outputs = [];
 
@@ -64,35 +68,36 @@ final class OracleCapture
             }
 
             // Write to oracle directory
-            $oracleDir = $scenario->oracleDir();
+            if ($persist) {
+                $oracleDir = $scenario->oracleDir();
 
-            if (!is_dir($oracleDir)) {
-                mkdir($oracleDir, 0777, true);
-            }
+                if (!is_dir($oracleDir)) {
+                    mkdir($oracleDir, 0777, true);
+                }
 
-            if (isset($outputs['objects'])) {
-                Json::encodeFile($oracleDir . '/objects.json', $outputs['objects']);
-            }
+                if (isset($outputs['objects'])) {
+                    Json::encodeFile($oracleDir . '/objects.json', $outputs['objects']);
+                }
 
-            if (isset($outputs['refs'])) {
-                Json::encodeFile($oracleDir . '/refs.json', $outputs['refs']);
-            }
+                if (isset($outputs['refs'])) {
+                    Json::encodeFile($oracleDir . '/refs.json', $outputs['refs']);
+                }
 
-            if (isset($outputs['log'])) {
-                Json::encodeFile($oracleDir . '/log.json', $outputs['log']);
-            }
+                if (isset($outputs['log'])) {
+                    Json::encodeFile($oracleDir . '/log.json', $outputs['log']);
+                }
 
-            if (isset($outputs['fsck'])) {
-                file_put_contents($oracleDir . '/fsck.txt', $outputs['fsck']);
-            }
+                if (isset($outputs['fsck'])) {
+                    file_put_contents($oracleDir . '/fsck.txt', $outputs['fsck']);
+                }
 
-            // Write operation-specific text outputs
-            foreach ($scenario->operations() as $operation) {
-                if (isset($outputs[$operation]) && is_string($outputs[$operation])) {
-                    file_put_contents(
-                        $oracleDir . '/' . $operation . '.txt',
-                        $outputs[$operation]
-                    );
+                foreach ($scenario->operations() as $operation) {
+                    if (isset($outputs[$operation]) && is_string($outputs[$operation])) {
+                        file_put_contents(
+                            $oracleDir . '/' . $operation . '.txt',
+                            $outputs[$operation]
+                        );
+                    }
                 }
             }
         } catch (\Throwable $e) {

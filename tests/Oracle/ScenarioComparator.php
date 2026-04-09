@@ -18,38 +18,55 @@ final class ScenarioComparator
      *
      * @return array<string, mixed>
      */
-    public function compare(Scenario $scenario): array
+    public function compare(Scenario $scenario, array $oracleOutputs = [], array $actualOutputs = []): array
     {
         $report = [];
         $oracleDir = $scenario->oracleDir();
         $actualDir = $scenario->actualDir();
+        $runtimeExact = array_fill_keys($scenario->runtimeExactMatch(), true);
 
-        // Compare objects
-        if (is_file($oracleDir . '/objects.json') && is_file($actualDir . '/objects.json')) {
+        if (isset($runtimeExact['objects'], $oracleOutputs['objects'], $actualOutputs['objects'])) {
+            $oracleObjects = $oracleOutputs['objects'];
+            $actualObjects = $actualOutputs['objects'];
+            $report['objects_match'] = $this->compareObjects($oracleObjects, $actualObjects);
+            $report['objects_detail'] = $this->objectsDiff($oracleObjects, $actualObjects);
+        } elseif (is_file($oracleDir . '/objects.json') && is_file($actualDir . '/objects.json')) {
             $oracleObjects = Json::decodeFile($oracleDir . '/objects.json');
             $actualObjects = Json::decodeFile($actualDir . '/objects.json');
             $report['objects_match'] = $this->compareObjects($oracleObjects, $actualObjects);
             $report['objects_detail'] = $this->objectsDiff($oracleObjects, $actualObjects);
         }
 
-        // Compare refs
-        if (is_file($oracleDir . '/refs.json') && is_file($actualDir . '/refs.json')) {
+        if (isset($runtimeExact['refs'], $oracleOutputs['refs'], $actualOutputs['refs'])) {
+            $oracleRefs = $oracleOutputs['refs'];
+            $actualRefs = $actualOutputs['refs'];
+            $report['refs_match'] = $this->compareRefs($oracleRefs, $actualRefs);
+            $report['refs_detail'] = $this->refsDiff($oracleRefs, $actualRefs);
+        } elseif (is_file($oracleDir . '/refs.json') && is_file($actualDir . '/refs.json')) {
             $oracleRefs = Json::decodeFile($oracleDir . '/refs.json');
             $actualRefs = Json::decodeFile($actualDir . '/refs.json');
             $report['refs_match'] = $this->compareRefs($oracleRefs, $actualRefs);
             $report['refs_detail'] = $this->refsDiff($oracleRefs, $actualRefs);
         }
 
-        // Compare log
-        if (is_file($oracleDir . '/log.json') && is_file($actualDir . '/log.json')) {
+        if (isset($runtimeExact['log'], $oracleOutputs['log'], $actualOutputs['log'])) {
+            $oracleLog = $oracleOutputs['log'];
+            $actualLog = $actualOutputs['log'];
+            $report['log_match'] = $this->compareLog($oracleLog, $actualLog);
+            $report['log_detail'] = $this->logDiff($oracleLog, $actualLog);
+        } elseif (is_file($oracleDir . '/log.json') && is_file($actualDir . '/log.json')) {
             $oracleLog = Json::decodeFile($oracleDir . '/log.json');
             $actualLog = Json::decodeFile($actualDir . '/log.json');
             $report['log_match'] = $this->compareLog($oracleLog, $actualLog);
             $report['log_detail'] = $this->logDiff($oracleLog, $actualLog);
         }
 
-        // Compare text outputs (diff, status, etc.)
         foreach ($scenario->operations() as $operation) {
+            if (isset($runtimeExact[$operation], $oracleOutputs[$operation], $actualOutputs[$operation])) {
+                $report[$operation . '_match'] = $oracleOutputs[$operation] === $actualOutputs[$operation];
+                continue;
+            }
+
             $oraclePath = $oracleDir . '/' . $operation . '.txt';
             $actualPath = $actualDir . '/' . $operation . '.txt';
 
@@ -60,8 +77,13 @@ final class ScenarioComparator
             }
         }
 
-        // Fsck check
-        if (is_file($oracleDir . '/fsck.txt') && is_file($actualDir . '/fsck.txt')) {
+        if (isset($runtimeExact['fsck'], $oracleOutputs['fsck'], $actualOutputs['fsck'])) {
+            $oracleFsck = (string) $oracleOutputs['fsck'];
+            $actualFsck = (string) $actualOutputs['fsck'];
+            $report['fsck_match'] = $oracleFsck === $actualFsck;
+            $fsck = trim($oracleFsck);
+            $report['fsck_clean'] = $fsck === '' || str_contains($fsck, 'Checking object');
+        } elseif (is_file($oracleDir . '/fsck.txt') && is_file($actualDir . '/fsck.txt')) {
             $oracleFsck = (string) file_get_contents($oracleDir . '/fsck.txt');
             $actualFsck = (string) file_get_contents($actualDir . '/fsck.txt');
             $report['fsck_match'] = $oracleFsck === $actualFsck;

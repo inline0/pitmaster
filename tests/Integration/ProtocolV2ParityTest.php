@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Pitmaster\Protocol\ProtocolV2;
 use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
+use Pitmaster\Tests\Integration\Support\GitTestRuntime;
 
 final class ProtocolV2ParityTest extends TestCase
 {
@@ -151,7 +152,7 @@ final class ProtocolV2ParityTest extends TestCase
             dirname(__DIR__, 2),
             [
                 'PITMASTER_GIT_HTTP_PROJECT_ROOT' => $projectRoot,
-                'PITMASTER_GIT_HTTP_BACKEND' => '/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git-http-backend',
+                'PITMASTER_GIT_HTTP_BACKEND' => GitTestRuntime::gitHttpBackend(),
                 'PITMASTER_CAPTURE_HTTP_BODIES_DIR' => $this->captureDir,
             ],
         );

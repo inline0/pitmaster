@@ -50,9 +50,12 @@ final class ScenarioRunner
             $this->copyRepo($baseRepo, $actualRepo);
 
             $oracleNeedsCapture = $refreshOracle || !$this->hasOracleOutput($scenario);
+            $runtimeOracleNeeded = $scenario->runtimeExactMatch() !== [];
 
             if ($oracleNeedsCapture) {
                 $oracleResult = $this->oracle->captureFromRepo($scenario, $oracleRepo, true);
+            } elseif ($runtimeOracleNeeded) {
+                $oracleResult = $this->oracle->captureFromRepo($scenario, $oracleRepo, true, false);
             } else {
                 $oracleResult = ['success' => true, 'outputs' => [], 'errors' => []];
             }
@@ -77,7 +80,11 @@ final class ScenarioRunner
                 ];
             }
 
-            $comparison = $this->comparator->compare($scenario);
+            $comparison = $this->comparator->compare(
+                $scenario,
+                $oracleResult['outputs'] ?? [],
+                $actualResult['outputs'] ?? [],
+            );
             $reportsDir = $scenario->reportsDir();
 
             if (!is_dir($reportsDir)) {
