@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.4']
+        php-version: ['8.4']
     steps:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
