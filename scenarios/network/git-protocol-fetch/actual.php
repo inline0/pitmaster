@@ -12,23 +12,27 @@ $daemon = start_daemon($port, getcwd() . '/export');
 
 try {
     $url = "git://127.0.0.1:{$port}/remote.git";
-    $client = new GitProtocolClient(10);
-    $mainRef = $client->discoverRefs($url)->ref('refs/heads/main');
-
-    if ($mainRef === null) {
-        throw new RuntimeException('Missing refs/heads/main advertisement');
-    }
-
     $response = '';
+    $mainRef = null;
 
-    for ($attempt = 0; $attempt < 3; $attempt++) {
+    for ($attempt = 0; $attempt < 10; $attempt++) {
+        $client = new GitProtocolClient(10);
+
+        if ($mainRef === null) {
+            $mainRef = $client->discoverRefs($url)->ref('refs/heads/main');
+
+            if ($mainRef === null) {
+                throw new RuntimeException('Missing refs/heads/main advertisement');
+            }
+        }
+
         $response = $client->uploadPack($url, ProtocolV1::buildFetchRequest([$mainRef]));
 
         if (str_contains($response, 'PACK')) {
             break;
         }
 
-        usleep(100000);
+        usleep(250000);
     }
 
     $packOffset = strpos($response, 'PACK');
