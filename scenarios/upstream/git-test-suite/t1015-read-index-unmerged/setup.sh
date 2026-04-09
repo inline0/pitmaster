@@ -5,7 +5,8 @@ git config user.email "test@test.com"
 git config user.name "Test"
 git config protocol.file.allow always 2>/dev/null || true
 
-source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+source "${PITMASTER_ROOT}/bin/git-test-shim.sh"
 
 test_create_repo df_plus_modify_delete 2>/dev/null || true
 test_write_lines a b c d e f g h >letters 2>/dev/null || true

@@ -5,7 +5,8 @@ git config user.email "test@test.com"
 git config user.name "Test"
 git config protocol.file.allow always 2>/dev/null || true
 
-source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+source "${PITMASTER_ROOT}/bin/git-test-shim.sh"
 
 mkdir path2 path3 pathx 2>/dev/null || true
 git update-index --add -- path0 path?/file? pathx/ju path7 path8 path9 path10 2>/dev/null || true

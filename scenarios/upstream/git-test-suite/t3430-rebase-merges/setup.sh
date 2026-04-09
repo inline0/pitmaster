@@ -5,7 +5,8 @@ git config user.email "test@test.com"
 git config user.name "Test"
 git config protocol.file.allow always 2>/dev/null || true
 
-source '/Users/dennis/Local Sites/fabrikat/inline0/pitmaster/bin/git-test-shim.sh'
+PITMASTER_ROOT="${PITMASTER_ROOT:-$(cd "$(dirname "$0")/../../../.." && pwd)}"
+source "${PITMASTER_ROOT}/bin/git-test-shim.sh"
 
 mv "$1" "$(git rev-parse --git-path ORIGINAL-TODO)" 2>/dev/null || true
 cp script-from-scratch "$1" 2>/dev/null || true
