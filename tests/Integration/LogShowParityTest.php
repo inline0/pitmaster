@@ -115,6 +115,34 @@ final class LogShowParityTest extends TestCase
         $this->assertSame($gitPaths, $paths);
     }
 
+    #[Test]
+    public function showAnnotatedTagPeelsToTheTaggedCommit(): void
+    {
+        $this->git('tag -a v1 -m "Release 1"');
+
+        $result = $this->repo->show('v1');
+        $paths = [];
+
+        foreach ($result['diff'] as $diff) {
+            $path = $diff->newPath ?? $diff->oldPath;
+
+            if ($path !== null) {
+                $paths[] = $path;
+            }
+        }
+
+        sort($paths);
+
+        $gitPaths = $this->gitLines('show --format= --name-only --no-renames $(git rev-list -n 1 v1)');
+        sort($gitPaths);
+
+        $this->assertArrayHasKey('tag', $result);
+        $this->assertSame(trim($this->git('rev-list -n 1 v1')), $result['commit']->id->hex);
+        $this->assertSame(trim($this->git('show --format=%s --no-patch $(git rev-list -n 1 v1)')), trim($result['commit']->message));
+        $this->assertSame('v1', $result['tag']->name);
+        $this->assertSame($gitPaths, $paths);
+    }
+
     private function seedHistory(): void
     {
         mkdir($this->tmpDir . '/docs', 0777, true);

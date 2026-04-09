@@ -9,7 +9,8 @@
         "log_oneline_head",
         "log_oneline_all",
         "log_oneline_path",
-        "show_head"
+        "show_head",
+        "show_tag"
     ],
     "oracle_commands": {
         "log_head": "git log --format=%H -n 20",
@@ -18,7 +19,8 @@
         "log_oneline_head": "git log --oneline --abbrev=7 -n 20",
         "log_oneline_all": "git log --all --oneline --abbrev=7 -n 20",
         "log_oneline_path": "git log --oneline --abbrev=7 -- docs/guide.txt",
-        "show_head": "bash \"{{SCENARIO_DIR}}/show.sh\" HEAD"
+        "show_head": "bash \"{{SCENARIO_DIR}}/show.sh\" HEAD",
+        "show_tag": "bash \"{{SCENARIO_DIR}}/show.sh\" v1"
     },
     "actual_commands": {
         "log_head": "php \"{{SCENARIO_DIR}}/log.php\" head",
@@ -27,7 +29,8 @@
         "log_oneline_head": "php \"{{SCENARIO_DIR}}/log.php\" oneline-head",
         "log_oneline_all": "php \"{{SCENARIO_DIR}}/log.php\" oneline-all",
         "log_oneline_path": "php \"{{SCENARIO_DIR}}/log.php\" oneline-path docs/guide.txt",
-        "show_head": "php \"{{SCENARIO_DIR}}/show.php\" HEAD"
+        "show_head": "php \"{{SCENARIO_DIR}}/show.php\" HEAD",
+        "show_tag": "php \"{{SCENARIO_DIR}}/show.php\" v1"
     },
     "expectations": {
         "exact_match": [
@@ -41,7 +44,8 @@
             "log_oneline_head",
             "log_oneline_all",
             "log_oneline_path",
-            "show_head"
+            "show_head",
+            "show_tag"
         ],
         "fsck_clean": true
     }

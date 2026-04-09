@@ -84,6 +84,13 @@
         "encoding": "utf-8"
     },
     {
+        "hash": "ed1fd148dac9ca640e440a8bb7c5541a59ad42a5",
+        "type": "tag",
+        "size": 131,
+        "content": "object 02a80bd33b08254a11f07fe9e09635fc6a621877\ntype commit\ntag v1\ntagger Test User <test@example.com> 1705795203 +0000\n\nRelease 1\n",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "efe93e726707a43c1408c9eb828f4b6b4ed04585",
         "type": "blob",
         "size": 9,

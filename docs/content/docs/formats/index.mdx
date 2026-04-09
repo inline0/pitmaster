@@ -87,7 +87,7 @@ Or through the repository (which handles this automatically):
 
 ```php
 $repo->add('src/File.php');    // Reads file, creates blob, updates index, writes
-$repo->remove('old-file.txt'); // Removes from index, writes
+$repo->remove('--cached', 'old-file.txt'); // Removes from index only, writes
 ```
 
 ## Binary format

@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "1135dc8fe9d687210b292f7c0a8f73816a6b8d27",
+        "type": "tree",
+        "size": 30,
+        "content": "040000 tree aca36043a008690ae51b8d7883f62d8b5a2e714e\tsrc\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "35515d332f9ad9e141cf5ad1a1362d32aaf8ca11",
+        "type": "tree",
+        "size": 38,
+        "content": "100644 blob 7140d986a81bf9062ade8b3ae5dcf54d89d9354d\tHelper.php\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7093374e3b1c7fda16c69f848ed8e2bddc424e8f",
+        "type": "blob",
+        "size": 24,
+        "content": "<?php\nreturn 'service';\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "7140d986a81bf9062ade8b3ae5dcf54d89d9354d",
+        "type": "blob",
+        "size": 23,
+        "content": "<?php\nreturn 'helper';\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "a81749eda3f0b12fb95cb74b81aed4406ffe714d",
+        "type": "commit",
+        "size": 168,
+        "content": "tree 1135dc8fe9d687210b292f7c0a8f73816a6b8d27\nauthor Test User <test@pitmaster.dev> 1705881601 +0000\ncommitter Test User <test@pitmaster.dev> 1705881601 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "aca36043a008690ae51b8d7883f62d8b5a2e714e",
+        "type": "tree",
+        "size": 72,
+        "content": "040000 tree 35515d332f9ad9e141cf5ad1a1362d32aaf8ca11\tNested\n100644 blob 7093374e3b1c7fda16c69f848ed8e2bddc424e8f\tService.php\n",
+        "encoding": "utf-8"
+    }
+]

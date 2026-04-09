@@ -31,10 +31,49 @@ final class MoveAndRemoveParityTest extends TestCase
 
         $this->git($gitDir, 'rm --cached tracked.txt');
         $repo = Pitmaster::open($pitDir);
-        $repo->remove('tracked.txt');
+        $repo->remove('--cached', 'tracked.txt');
 
         $this->assertFileExists($gitDir . '/tracked.txt');
         $this->assertFileExists($pitDir . '/tracked.txt');
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'ls-files --stage'), $this->git($pitDir, 'ls-files --stage'));
+    }
+
+    #[Test]
+    public function removeTrackedFileMatchesGitRm(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'tracked.txt', "tracked\n");
+            $this->git($dir, 'add tracked.txt');
+            $this->git($dir, 'commit -m initial');
+        });
+
+        $this->git($gitDir, 'rm tracked.txt');
+        $repo = Pitmaster::open($pitDir);
+        $repo->remove('tracked.txt');
+
+        $this->assertFileDoesNotExist($gitDir . '/tracked.txt');
+        $this->assertFileDoesNotExist($pitDir . '/tracked.txt');
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'ls-files --stage'), $this->git($pitDir, 'ls-files --stage'));
+    }
+
+    #[Test]
+    public function removeTrackedDirectoryRecursivelyMatchesGitRm(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'src/Service.php', "<?php\nreturn 'service';\n");
+            $this->writeFile($dir, 'src/Nested/Helper.php', "<?php\nreturn 'helper';\n");
+            $this->git($dir, 'add src');
+            $this->git($dir, 'commit -m initial');
+        });
+
+        $this->git($gitDir, 'rm -r src');
+        $repo = Pitmaster::open($pitDir);
+        $repo->remove('-r', 'src');
+
+        $this->assertDirectoryDoesNotExist($gitDir . '/src');
+        $this->assertDirectoryDoesNotExist($pitDir . '/src');
         $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
         $this->assertSame($this->git($gitDir, 'ls-files --stage'), $this->git($pitDir, 'ls-files --stage'));
     }

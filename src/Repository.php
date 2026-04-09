@@ -783,17 +783,23 @@ final class Repository
     }
 
     /**
-     * Show a commit: metadata + diff against parent.
+     * Show a commit-ish: metadata + diff against the first parent.
      *
-     * @return array{commit: Commit, diff: array<int, DiffResult>}
+     * @return array{commit: Commit, diff: array<int, DiffResult>, tag?: Tag}
      */
     public function show(string $revision): array
     {
         $id = $this->resolve($revision);
         $object = $this->objects->read($id);
+        $tag = null;
+
+        if ($object instanceof Tag) {
+            $tag = $object;
+            $object = $this->objects->read($object->object);
+        }
 
         if (!$object instanceof Commit) {
-            throw new \RuntimeException("Not a commit: {$revision}");
+            throw new \RuntimeException("Not a commit-ish: {$revision}");
         }
 
         $treeDiff = new TreeDiff($this->objects);
@@ -801,9 +807,16 @@ final class Repository
             ? $this->getCommitTree($object->parents[0])
             : null;
 
-        $diffs = $treeDiff->diff($parentTree, $object->tree);
+        $result = [
+            'commit' => $object,
+            'diff' => $treeDiff->diff($parentTree, $object->tree),
+        ];
 
-        return ['commit' => $object, 'diff' => $diffs];
+        if ($tag instanceof Tag) {
+            $result['tag'] = $tag;
+        }
+
+        return $result;
     }
 
     /**
@@ -886,14 +899,78 @@ final class Repository
     }
 
     /**
-     * Unstage files (git rm --cached).
+     * Remove tracked paths from the index and worktree (git rm).
+     *
+     * Supports `--cached` for index-only removal and `-r` / `--recursive`
+     * when removing tracked directories.
      */
     public function remove(string ...$paths): void
     {
+        ['cached' => $cached, 'recursive' => $recursive, 'paths' => $paths] = $this->parseRemoveArguments($paths);
+
+        if ($paths === []) {
+            throw new \RuntimeException('No pathspec given for remove');
+        }
+
+        if ($cached) {
+            $this->removeCached(...$paths);
+            return;
+        }
+
         $index = $this->index();
+        $headId = $this->refs->resolveHead();
+        $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
 
         foreach ($paths as $path) {
-            $index->removeEntry($path);
+            $entries = $this->trackedEntriesForPath($index, $path);
+
+            if ($entries === []) {
+                throw new \RuntimeException("pathspec '{$path}' did not match any tracked files");
+            }
+
+            $isDirectory = count($entries) > 1 || ($entries[0]->path !== $path && str_starts_with($entries[0]->path, $path . '/'));
+
+            if ($isDirectory && !$recursive) {
+                throw new \RuntimeException("not removing '{$path}' recursively without -r");
+            }
+
+            foreach ($entries as $entry) {
+                $this->assertRemoveEntryIsSafe($entry, $headEntries[$entry->path] ?? null, false);
+            }
+
+            foreach ($entries as $entry) {
+                $index->removeEntry($entry->path);
+                $this->removeWorktreePath($entry->path);
+            }
+        }
+
+        IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /**
+     * Remove tracked paths from the index only (git rm --cached).
+     */
+    public function removeCached(string ...$paths): void
+    {
+        if ($paths === []) {
+            throw new \RuntimeException('No pathspec given for remove');
+        }
+
+        $index = $this->index();
+        $headId = $this->refs->resolveHead();
+        $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
+
+        foreach ($paths as $path) {
+            $entries = $this->trackedEntriesForPath($index, $path);
+
+            if ($entries === []) {
+                throw new \RuntimeException("pathspec '{$path}' did not match any tracked files");
+            }
+
+            foreach ($entries as $entry) {
+                $this->assertRemoveEntryIsSafe($entry, $headEntries[$entry->path] ?? null, true);
+                $index->removeEntry($entry->path);
+            }
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
@@ -997,47 +1074,28 @@ final class Repository
     }
 
     /**
-     * Restore a file from a tree/index (git restore).
+     * Restore a path from the index or a source tree (git restore).
      */
-    public function restore(string $path, ?string $source = null): void
+    public function restore(string $path, ?string $source = null, bool $staged = false, bool $worktree = false): void
     {
-        if ($source !== null) {
-            // Restore from a specific commit
-            $id = $this->resolve($source);
-            $commit = $this->objects->read($id);
+        if (!$staged && !$worktree) {
+            $worktree = true;
+        }
 
-            if (!$commit instanceof Commit) {
-                throw new \RuntimeException("Not a commit: {$source}");
-            }
+        if ($staged) {
+            $this->restoreIndexPath($path, $source);
+        }
 
-            $treeMap = $this->flattenTree($commit->tree);
-
-            if (!isset($treeMap[$path])) {
-                throw new \RuntimeException("File not in {$source}: {$path}");
-            }
-
-            $blob = $this->objects->read(ObjectId::fromHex($treeMap[$path]));
-
-            if ($blob instanceof Blob) {
-                file_put_contents($this->workDir . '/' . $path, $blob->content);
-            }
-
+        if (!$worktree) {
             return;
         }
 
-        // Restore from index
-        $index = $this->index();
-        $entry = $index->entry($path);
-
-        if ($entry === null) {
-            throw new \RuntimeException("File not in index: {$path}");
+        if ($source !== null) {
+            $this->restoreWorktreePathFromTree($path, $source);
+            return;
         }
 
-        $blob = $this->objects->read($entry->hash);
-
-        if ($blob instanceof Blob) {
-            file_put_contents($this->workDir . '/' . $path, $blob->content);
-        }
+        $this->restoreWorktreePathFromIndex($path);
     }
 
     /**
@@ -2426,6 +2484,190 @@ final class Repository
         }
 
         return $entries;
+    }
+
+    /**
+     * @param list<string> $arguments
+     * @return array{cached: bool, recursive: bool, paths: list<string>}
+     */
+    private function parseRemoveArguments(array $arguments): array
+    {
+        $cached = false;
+        $recursive = false;
+        $paths = [];
+
+        foreach ($arguments as $argument) {
+            if ($argument === '--cached') {
+                $cached = true;
+                continue;
+            }
+
+            if ($argument === '-r' || $argument === '--recursive') {
+                $recursive = true;
+                continue;
+            }
+
+            $paths[] = $argument;
+        }
+
+        return [
+            'cached' => $cached,
+            'recursive' => $recursive,
+            'paths' => $paths,
+        ];
+    }
+
+    /**
+     * @param array{hash: string, mode: int}|null $headEntry
+     */
+    private function assertRemoveEntryIsSafe(IndexEntry $entry, ?array $headEntry, bool $cached): void
+    {
+        $indexHash = $entry->hash->hex;
+        $headHash = $headEntry['hash'] ?? null;
+        $worktreeHash = $this->worktreeBlobHash($entry->path);
+        $worktreeDiffersFromIndex = $worktreeHash !== null && $worktreeHash !== $indexHash;
+        $indexDiffersFromHead = $headHash !== null && $headHash !== $indexHash;
+
+        if ($cached) {
+            if ($worktreeDiffersFromIndex && $indexDiffersFromHead) {
+                throw new \RuntimeException("cannot remove '{$entry->path}' from the index because it has staged and unstaged changes");
+            }
+
+            return;
+        }
+
+        if ($worktreeDiffersFromIndex) {
+            throw new \RuntimeException("cannot remove '{$entry->path}' because it has local modifications");
+        }
+
+        if ($indexDiffersFromHead) {
+            throw new \RuntimeException("cannot remove '{$entry->path}' because it has staged changes");
+        }
+    }
+
+    private function worktreeBlobHash(string $path): ?string
+    {
+        $fullPath = $this->workDir . '/' . $path;
+
+        if (!is_file($fullPath)) {
+            return null;
+        }
+
+        $content = file_get_contents($fullPath);
+
+        if ($content === false) {
+            return null;
+        }
+
+        return Blob::fromContent($content)->id->hex;
+    }
+
+    private function removeWorktreePath(string $path): void
+    {
+        $fullPath = $this->workDir . '/' . $path;
+
+        if (!is_file($fullPath) && !is_link($fullPath)) {
+            return;
+        }
+
+        unlink($fullPath);
+        $this->removeEmptyParentDirectories(dirname($fullPath), $this->workDir);
+    }
+
+    private function restoreWorktreePathFromIndex(string $path): void
+    {
+        $index = $this->index();
+        $entry = $index->entry($path);
+
+        if ($entry === null) {
+            throw new \RuntimeException("File not in index: {$path}");
+        }
+
+        $blob = $this->objects->read($entry->hash);
+
+        if (!$blob instanceof Blob) {
+            throw new \RuntimeException("Index entry for {$path} is not a blob");
+        }
+
+        $this->writeRestoredBlob($path, $blob);
+    }
+
+    private function restoreWorktreePathFromTree(string $path, string $source): void
+    {
+        $entries = $this->sourceTreeEntries($source);
+        $entry = $entries[$path] ?? null;
+
+        if ($entry === null) {
+            $this->removeWorktreePath($path);
+            return;
+        }
+
+        $blob = $this->objects->read(ObjectId::fromHex($entry['hash']));
+
+        if (!$blob instanceof Blob) {
+            throw new \RuntimeException("Source entry for {$path} is not a blob");
+        }
+
+        $this->writeRestoredBlob($path, $blob);
+    }
+
+    private function restoreIndexPath(string $path, ?string $source): void
+    {
+        $index = $this->index();
+        $entries = $source !== null ? $this->sourceTreeEntries($source) : $this->sourceTreeEntries('HEAD');
+        $entry = $entries[$path] ?? null;
+
+        if ($entry === null) {
+            $index->removeEntry($path);
+            IndexWriter::write($index, $this->gitDir . '/index');
+            return;
+        }
+
+        $blob = $this->objects->read(ObjectId::fromHex($entry['hash']));
+
+        if (!$blob instanceof Blob) {
+            throw new \RuntimeException("Source entry for {$path} is not a blob");
+        }
+
+        $index->removeEntry($path);
+        $index->addEntry(IndexEntry::create(
+            $path,
+            $blob->id,
+            $entry['mode'],
+            strlen($blob->content),
+        ));
+        IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /**
+     * @return array<string, array{hash: string, mode: int}>
+     */
+    private function sourceTreeEntries(string $source): array
+    {
+        $id = $this->resolve($source);
+        $object = $this->objects->read($id);
+
+        if ($object instanceof Tag) {
+            $object = $this->objects->read($object->object);
+        }
+
+        if (!$object instanceof Commit) {
+            throw new \RuntimeException("Not a commit-ish: {$source}");
+        }
+
+        return $this->flattenTreeEntries($object->tree);
+    }
+
+    private function writeRestoredBlob(string $path, Blob $blob): void
+    {
+        $fullPath = $this->workDir . '/' . $path;
+        $parent = dirname($fullPath);
+
+        if (!is_dir($parent)) {
+            mkdir($parent, 0777, true);
+        }
+
+        file_put_contents($fullPath, $blob->content);
     }
 
     private function movedPath(string $source, string $destination, string $path): string

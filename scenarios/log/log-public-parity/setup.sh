@@ -27,3 +27,7 @@ git add README.md docs/guide.txt
 GIT_AUTHOR_DATE='2024-01-21T00:00:02+0000' \
 GIT_COMMITTER_DATE='2024-01-21T00:00:02+0000' \
 git commit -m "Main branch update" >/dev/null 2>&1
+
+GIT_AUTHOR_DATE='2024-01-21T00:00:03+0000' \
+GIT_COMMITTER_DATE='2024-01-21T00:00:03+0000' \
+git tag -a v1 -m "Release 1" >/dev/null 2>&1

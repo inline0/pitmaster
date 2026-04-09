@@ -433,12 +433,16 @@ $repo->add('src/Feature.php', 'tests/FeatureTest.php');
 
 ```php
 public function remove(string ...$paths): void
+public function removeCached(string ...$paths): void
 ```
 
-Unstage files (equivalent to `git rm --cached`). Removes entries from the index without deleting the working tree files.
+Remove tracked paths from both the index and the working tree. Supports `--cached` and `-r` / `--recursive` in the argument list for Git-shaped behavior.
 
 ```php
 $repo->remove('old-file.txt');
+$repo->remove('-r', 'src');
+$repo->remove('--cached', 'old-file.txt');
+$repo->removeCached('old-file.txt');
 ```
 
 #### `mv`
@@ -477,7 +481,7 @@ $id = $repo->commit('Fix null pointer bug');
 public function show(string $revision): array
 ```
 
-Show a commit's metadata and diff against its parent. Returns `['commit' => Commit, 'diff' => DiffResult[]]`.
+Show a commit-ish and its diff against the first parent. When the revision resolves to an annotated tag, the return value also includes `['tag' => Tag]` and `commit` is the peeled target commit.
 
 ```php
 $result = $repo->show('HEAD');
@@ -510,11 +514,13 @@ $repo->reset('main', 'hard');
 public function restore(string $path, ?string $source = null): void
 ```
 
-Restore a file from the index (default) or from a specific commit.
+Restore a path from the index or a specific source tree. By default Pitmaster restores the worktree from the index. Pass `staged: true` to restore the index, and `worktree: true` to restore both.
 
 ```php
-$repo->restore('src/File.php');                // From index
-$repo->restore('src/File.php', 'HEAD~1');      // From a commit
+$repo->restore('src/File.php');                                        // Worktree from index
+$repo->restore('src/File.php', staged: true);                          // Index from HEAD
+$repo->restore('src/File.php', 'HEAD~1');                              // Worktree from another commit
+$repo->restore('src/File.php', 'HEAD~1', staged: true, worktree: true); // Index + worktree from another commit
 ```
 
 #### `cherryPick`

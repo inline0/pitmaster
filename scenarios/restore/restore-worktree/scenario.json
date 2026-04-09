@@ -1,0 +1,30 @@
+{
+    "name": "restore-worktree",
+    "category": "restore",
+    "description": "Restore a modified tracked file from the index into the worktree",
+    "operations": [
+        "status",
+        "index",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "status",
+            "index",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

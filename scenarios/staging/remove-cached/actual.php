@@ -7,4 +7,4 @@ require dirname(__DIR__, 3) . '/vendor/autoload.php';
 use Pitmaster\Pitmaster;
 
 $repo = Pitmaster::open(getcwd());
-$repo->remove('tracked.txt');
+$repo->remove('--cached', 'tracked.txt');

@@ -1,0 +1,30 @@
+{
+    "name": "remove-recursive",
+    "category": "staging",
+    "description": "Remove a tracked directory recursively from the index and worktree",
+    "operations": [
+        "status",
+        "index",
+        "tree_exists"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "tree_exists": "sh -c 'test -e src && echo present || echo missing'"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "tree_exists": "sh -c 'test -e src && echo present || echo missing'"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "status",
+            "index",
+            "tree_exists"
+        ],
+        "fsck_clean": false
+    }
+}

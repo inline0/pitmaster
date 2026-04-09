@@ -1,0 +1,30 @@
+{
+    "name": "restore-source-both",
+    "category": "restore",
+    "description": "Restore both index and worktree from another commit",
+    "operations": [
+        "status",
+        "index",
+        "worktree"
+    ],
+    "oracle_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt"
+    },
+    "actual_commands": {
+        "status": "git status --porcelain=v2",
+        "index": "git ls-files --stage",
+        "worktree": "cat a.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "status",
+            "index",
+            "worktree"
+        ],
+        "fsck_clean": false
+    }
+}

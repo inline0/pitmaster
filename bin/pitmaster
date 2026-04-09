@@ -162,6 +162,18 @@ function commandShow(Repository $repo, array $args): void
     $result = $repo->show($rev);
     $commit = $result['commit'];
 
+    if (isset($result['tag'])) {
+        $tag = $result['tag'];
+        fwrite(STDOUT, "\033[33mtag {$tag->name}\033[0m\n");
+        fwrite(STDOUT, "Tagger: {$tag->tagger}\n\n");
+
+        foreach (explode("\n", trim($tag->message)) as $line) {
+            fwrite(STDOUT, "    {$line}\n");
+        }
+
+        fwrite(STDOUT, "\n");
+    }
+
     fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
     fwrite(STDOUT, "Author: {$commit->author}\n\n");
 

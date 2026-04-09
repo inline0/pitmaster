@@ -24,7 +24,7 @@ Generated: 2026-04-09 08:17
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
 | References | 8 | 1 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 7 | 5 | 0 | 0 | 0 | 12 |
+| Staging and Commits | 9 | 3 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 5 | 1 | 0 | 0 | 0 | 6 |
 | Diff | 5 | 6 | 0 | 0 | 0 | 11 |
 | Merge | 2 | 8 | 0 | 0 | 0 | 10 |
@@ -34,7 +34,7 @@ Generated: 2026-04-09 08:17
 | Encoding | 0 | 5 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 8 | 7 | 0 | 0 | 0 | 15 |
-| **Total** | **106** | **40** | **0** | **0** | **0** | **146** |
+| **Total** | **108** | **38** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -123,18 +123,18 @@ Generated: 2026-04-09 08:17
 | Bare repositories | `DONE` | `Repository` | Dedicated bare open/read parity coverage |
 
 ### Staging and Commits
-*8/12 Git-oracle-mapped, 4 partial*
+*10/12 Git-oracle-mapped, 2 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | git add (stage files) | `DONE` | `Repository` | Update index entries |
-| git rm (unstage/remove) | `PART` | `Repository` | Cached remove is Git-oracle-backed; tracked deletion remains partial |
+| git rm (unstage/remove) | `DONE` | `Repository` | Cached, tracked, and recursive remove parity are Git-backed |
 | git mv (rename) | `DONE` | `Repository` | File and directory rename parity is Git-backed |
 | git commit | `DONE` | `Repository` | Build tree from index, create commit, update HEAD |
 | git reset --soft | `DONE` |  | Conflict-state rejection now Git-proven |
 | git reset --mixed | `DONE` |  | Conflict-state cleanup now Git-proven |
 | git reset --hard | `DONE` |  | Conflict-state and sparse-worktree parity covered |
-| git restore | `PART` |  | Restore files from tree/index |
+| git restore | `DONE` |  | Worktree, staged, and source restore parity are Git-backed |
 | git stash | `PART` | `Stash\Stash` | refs/stash + reflog stack |
 | git cherry-pick | `DONE` |  | Single-commit cherry-pick with conflict continue/abort |
 | git revert | `DONE` |  | Single-commit revert with conflict continue/abort |

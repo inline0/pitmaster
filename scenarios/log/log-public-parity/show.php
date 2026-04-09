@@ -25,6 +25,10 @@ $lines = [
     'subject=' . strtok(trim($result['commit']->message), "\n"),
 ];
 
+if (isset($result['tag'])) {
+    $lines[] = 'tag=' . $result['tag']->name;
+}
+
 foreach ($paths as $path) {
     $lines[] = 'path=' . $path;
 }

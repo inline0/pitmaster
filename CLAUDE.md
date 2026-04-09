@@ -311,7 +311,7 @@ $repo->deleteBranch(string $name): void;
 // Index
 $repo->index(): Index;                                // Read current index
 $repo->add(string ...$paths): void;                   // Stage files
-$repo->remove(string ...$paths): void;                // Unstage files
+$repo->remove(string ...$paths): void;                // Remove tracked paths (supports --cached / -r)
 
 // Commits
 $repo->commit(string $message, ?Author $author = null): ObjectId;

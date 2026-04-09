@@ -6,5 +6,9 @@
     {
         "hash": "02a80bd33b08254a11f07fe9e09635fc6a621877",
         "name": "refs/heads/main"
+    },
+    {
+        "hash": "ed1fd148dac9ca640e440a8bb7c5541a59ad42a5",
+        "name": "refs/tags/v1"
     }
 ]

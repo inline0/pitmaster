@@ -99,10 +99,10 @@
                 {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
                 {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
                 {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
-                {"feature": "git stash", "status": "full", "class": "Stash\\Stash", "notes": "refs/stash + reflog stack"},
+                {"feature": "git stash", "status": "partial", "class": "Stash\\Stash", "notes": "refs/stash + reflog stack"},
                 {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
                 {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
-                {"feature": "git rebase", "status": "full", "class": "", "notes": "Complex; agents can use merge instead"}
+                {"feature": "git rebase", "status": "partial", "class": "", "notes": "Complex; agents can use merge instead"}
             ]
         },
         {
@@ -156,7 +156,7 @@
                 {"feature": "Log --all (all branches)", "status": "full", "class": "Graph\\CommitWalker", "notes": "walkAll() from multiple tips"},
                 {"feature": "Log with path filter", "status": "full", "class": "", "notes": "Only commits touching path"},
                 {"feature": "Log --oneline format", "status": "full", "class": "", "notes": "Short hash + first line"},
-                {"feature": "git show", "status": "full", "class": "", "notes": "Commit + diff"}
+                {"feature": "git show", "status": "partial", "class": "", "notes": "Commit + diff"}
             ]
         },
         {

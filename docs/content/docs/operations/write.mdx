@@ -40,9 +40,11 @@ For each file, Pitmaster:
 
 ```php
 $repo->remove('old-file.txt');
+$repo->remove('-r', 'src');
+$repo->remove('--cached', 'old-file.txt');
 ```
 
-Removes entries from the index without touching the working tree file. Equivalent to `git rm --cached`.
+Removes tracked paths from the index and working tree. Use `--cached` for index-only removal, or `-r` / `--recursive` for tracked directories.
 
 ### mv
 
@@ -224,11 +226,17 @@ $repo->reset('HEAD~3', 'hard');
 ## Restore
 
 ```php
-// Restore a file from the index
+// Restore a file from the index into the worktree
 $repo->restore('src/File.php');
 
-// Restore a file from a specific commit
+// Restore the index version from HEAD
+$repo->restore('src/File.php', staged: true);
+
+// Restore from a specific commit
 $repo->restore('src/File.php', 'HEAD~1');
+
+// Restore both index and worktree from a specific commit
+$repo->restore('src/File.php', 'HEAD~1', staged: true, worktree: true);
 ```
 
 ## Cherry-pick and revert
