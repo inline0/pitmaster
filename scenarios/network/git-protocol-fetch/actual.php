@@ -19,8 +19,25 @@ try {
         throw new RuntimeException('Missing refs/heads/main advertisement');
     }
 
-    $response = $client->uploadPack($url, ProtocolV1::buildFetchRequest([$mainRef]));
-    file_put_contents(getcwd() . '/.git-protocol-fetch-state', 'pack_header=' . substr($response, strpos($response, 'PACK'), 4) . "\n");
+    $response = '';
+
+    for ($attempt = 0; $attempt < 3; $attempt++) {
+        $response = $client->uploadPack($url, ProtocolV1::buildFetchRequest([$mainRef]));
+
+        if (str_contains($response, 'PACK')) {
+            break;
+        }
+
+        usleep(100000);
+    }
+
+    $packOffset = strpos($response, 'PACK');
+
+    if ($packOffset === false) {
+        throw new RuntimeException('upload-pack response did not contain PACK');
+    }
+
+    file_put_contents(getcwd() . '/.git-protocol-fetch-state', 'pack_header=' . substr($response, $packOffset, 4) . "\n");
 } finally {
     stop_daemon($daemon);
 }
