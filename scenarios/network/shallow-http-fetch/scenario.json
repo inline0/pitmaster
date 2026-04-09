@@ -16,8 +16,10 @@
             "objects",
             "refs",
             "log",
-            "fsck",
             "shallow_state"
+        ],
+        "runtime_exact_match": [
+            "fsck"
         ],
         "fsck_clean": false
     }
