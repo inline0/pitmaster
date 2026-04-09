@@ -216,7 +216,7 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         $knownHosts = getenv('PITMASTER_SSH_KNOWN_HOSTS');
         $strict = getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
         $parts = [
-            $ssh,
+            escapeshellarg($ssh),
             '-o BatchMode=yes',
             '-o ' . escapeshellarg('ConnectTimeout=' . $this->timeout),
             '-p ' . (int) $port,

@@ -121,6 +121,10 @@ composer test
 # Full verification: analysis + standards + full test matrix
 ./bin/verify-all
 
+# Optional multi-git smoke matrix when multiple git binaries are installed
+PITMASTER_TEST_GIT_BINARIES=/path/to/git-2.45:/path/to/git-2.46 \
+  phpunit --filter MultiGitVersionSmokeTest
+
 # Static analysis
 composer analyse
 
@@ -129,6 +133,8 @@ composer cs
 ```
 
 The upstream oracle fixtures are vendored under [`fixtures/upstream`](fixtures/upstream), so the full regression corpus is runnable from a fresh checkout without machine-local `/tmp` dependencies. Use `composer test` for the full matrix and `./bin/verify-all` for release-grade verification.
+
+Feature work and fixture changes use the same bar: keep scenarios self-contained inside the repo, avoid absolute-path and machine-local-port snapshots, and do not treat a change as done until `./bin/verify-all` is green.
 
 ## Requirements
 

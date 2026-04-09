@@ -46,6 +46,7 @@ After every meaningful work pass, run the full matrix from the repo root before 
 ```
 
 No partial sign-off. `composer test` is the full test matrix, not just PHPUnit. Upstream scenario fixtures must stay vendored under `fixtures/upstream`; scenario setup scripts and acquisition scripts must never depend on `/tmp` or `/private/tmp`.
+If multiple git binaries are available, run the representative smoke matrix with `PITMASTER_TEST_GIT_BINARIES=/path/git-a:/path/git-b phpunit --filter MultiGitVersionSmokeTest`.
 
 ## Autonomous Batch Protocol
 
@@ -666,16 +667,16 @@ Acquisition sources:
 
 ```bash
 # libgit2 fixtures (rename .gitted to .git)
-git clone --depth=1 https://github.com/libgit2/libgit2.git /tmp/libgit2
-cp -r /tmp/libgit2/tests/resources/testrepo.git scenarios/upstream/libgit2/testrepo.git
+git clone --depth=1 https://github.com/libgit2/libgit2.git .pitmaster/vendor/libgit2
+cp -r .pitmaster/vendor/libgit2/tests/resources/testrepo.git scenarios/upstream/libgit2/testrepo.git
 
 # go-git fixtures (tarballed .git directories)
-git clone --depth=1 https://github.com/go-git/go-git-fixtures.git /tmp/go-git-fixtures
+git clone --depth=1 https://github.com/go-git/go-git-fixtures.git .pitmaster/vendor/go-git-fixtures
 # Extract .tgz fixtures into scenarios/upstream/go-git/
 
 # Generate from git's test suite
-cd /tmp && git clone --depth=1 https://github.com/git/git.git
-cd git/t && bash t1000-read-tree-m-3way.sh --debug
+git clone --depth=1 https://github.com/git/git.git .pitmaster/vendor/git
+cd .pitmaster/vendor/git/t && bash t1000-read-tree-m-3way.sh --debug
 # Copy resulting test repos into scenarios/upstream/git-suite/
 ```
 

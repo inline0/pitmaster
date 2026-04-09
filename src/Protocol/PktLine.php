@@ -78,9 +78,13 @@ final class PktLine
                 continue;
             }
 
+            if (!ctype_xdigit($hexLen)) {
+                throw new ProtocolException("Invalid pkt-line length: {$hexLen}");
+            }
+
             $lineLen = (int) hexdec($hexLen);
 
-            if ($lineLen < 4) {
+            if ($lineLen < 4 || $lineLen > 65520) {
                 throw new ProtocolException("Invalid pkt-line length: {$hexLen}");
             }
 
@@ -125,10 +129,14 @@ final class PktLine
                 break;
             }
 
+            if (!ctype_xdigit($hexLen)) {
+                throw new ProtocolException("Invalid pkt-line length: {$hexLen}");
+            }
+
             $lineLen = (int) hexdec($hexLen);
 
-            if ($lineLen < 4) {
-                break;
+            if ($lineLen < 4 || $lineLen > 65520) {
+                throw new ProtocolException("Invalid pkt-line length: {$hexLen}");
             }
 
             $payloadLen = $lineLen - 4;
@@ -137,8 +145,8 @@ final class PktLine
             while (strlen($payload) < $payloadLen) {
                 $chunk = fread($stream, $payloadLen - strlen($payload));
 
-                if ($chunk === false) {
-                    break 2;
+                if ($chunk === false || $chunk === '') {
+                    throw new ProtocolException('Truncated pkt-line stream');
                 }
 
                 $payload .= $chunk;
