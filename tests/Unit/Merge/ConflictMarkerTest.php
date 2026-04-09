@@ -35,4 +35,19 @@ final class ConflictMarkerTest extends TestCase
         self::assertStringContainsString('<<<<<<< feature-branch', $result);
         self::assertStringContainsString('>>>>>>> main', $result);
     }
+
+    #[Test]
+    public function producesDiff3MarkersWhenBaseProvided(): void
+    {
+        $result = ConflictMarker::mark(
+            "our content\n",
+            "their content\n",
+            base: "base content\n",
+        );
+
+        self::assertStringContainsString('<<<<<<< HEAD', $result);
+        self::assertStringContainsString('||||||| base', $result);
+        self::assertStringContainsString('base content', $result);
+        self::assertStringContainsString('>>>>>>> incoming', $result);
+    }
 }

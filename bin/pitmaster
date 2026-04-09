@@ -161,31 +161,95 @@ function commandShow(Repository $repo, array $args): void
     $rev = $args[0] ?? 'HEAD';
     $result = $repo->show($rev);
     $commit = $result['commit'];
+    $color = outputSupportsColor();
 
     if (isset($result['tag'])) {
         $tag = $result['tag'];
-        fwrite(STDOUT, "\033[33mtag {$tag->name}\033[0m\n");
-        fwrite(STDOUT, "Tagger: {$tag->tagger}\n\n");
+        fwrite(STDOUT, decorateHeader("tag {$tag->name}", $color));
+        fwrite(STDOUT, "Tagger: " . identityPerson($tag->tagger) . "\n");
+        fwrite(STDOUT, "Date:   " . identityDate($tag->tagger) . "\n\n");
+        fwrite(STDOUT, rtrim($tag->message, "\n") . "\n\n");
+    }
 
-        foreach (explode("\n", trim($tag->message)) as $line) {
-            fwrite(STDOUT, "    {$line}\n");
+    fwrite(STDOUT, decorateHeader("commit {$commit->id->hex}", $color));
+
+    if ($commit->isMerge()) {
+        $parentHexes = array_map(static fn ($parent) => substr($parent->hex, 0, 7), $commit->parents);
+        fwrite(STDOUT, "Merge: " . implode(' ', $parentHexes) . "\n");
+    }
+
+    fwrite(STDOUT, "Author: " . identityPerson($commit->author) . "\n");
+    fwrite(STDOUT, "Date:   " . identityDate($commit->author) . "\n\n");
+    fwrite(STDOUT, indentMessage($commit->message));
+
+    if (!$commit->isMerge()) {
+        foreach ($result['diff'] as $diff) {
+            $formatted = $diff->format();
+            fwrite(STDOUT, $color ? ColorDiff::colorize($formatted) : $formatted);
         }
+    }
+}
 
-        fwrite(STDOUT, "\n");
+function outputSupportsColor(): bool
+{
+    return function_exists('stream_isatty') && stream_isatty(STDOUT);
+}
+
+function decorateHeader(string $header, bool $color): string
+{
+    if (!$color) {
+        return $header . "\n";
     }
 
-    fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
-    fwrite(STDOUT, "Author: {$commit->author}\n\n");
+    return "\033[33m{$header}\033[0m\n";
+}
 
-    foreach (explode("\n", trim($commit->message)) as $line) {
-        fwrite(STDOUT, "    {$line}\n");
+function identityPerson(string $identity): string
+{
+    if (preg_match('/^(.* <.*>) \d+ [+-]\d{4}$/', $identity, $matches) === 1) {
+        return $matches[1];
     }
 
-    fwrite(STDOUT, "\n");
+    return $identity;
+}
 
-    foreach ($result['diff'] as $diff) {
-        fwrite(STDOUT, ColorDiff::colorize($diff->format()));
+function identityDate(string $identity): string
+{
+    if (preg_match('/^.* <.*> (\d+) ([+-]\d{4})$/', $identity, $matches) !== 1) {
+        return $identity;
     }
+
+    $date = \DateTimeImmutable::createFromFormat('U', $matches[1]);
+
+    if ($date === false) {
+        return $identity;
+    }
+
+    try {
+        $date = $date->setTimezone(new \DateTimeZone($matches[2]));
+    } catch (\Exception) {
+        return $identity;
+    }
+
+    return $date->format('D M j H:i:s Y O');
+}
+
+function indentMessage(string $message): string
+{
+    $trimmed = trim($message);
+
+    if ($trimmed === '') {
+        return "\n";
+    }
+
+    $lines = explode("\n", $trimmed);
+    $output = '';
+
+    foreach ($lines as $line) {
+        $output .= "    {$line}\n";
+    }
+
+    return $output . "\n";
 }
 
 function commandCatFile(Repository $repo, array $args): void
@@ -262,9 +326,13 @@ function commandStatus(Repository $repo, array $args): void
                 \Pitmaster\Status\FileStatus::Added => 'new file',
                 \Pitmaster\Status\FileStatus::Modified => 'modified',
                 \Pitmaster\Status\FileStatus::Deleted => 'deleted',
+                \Pitmaster\Status\FileStatus::Renamed => 'renamed',
                 default => $entry->index->value,
             };
-            fwrite(STDOUT, "\t\033[32m{$action}:   {$entry->path}\033[0m\n");
+            $pathLabel = $entry->index === \Pitmaster\Status\FileStatus::Renamed && $entry->origPath !== null
+                ? "{$entry->origPath} -> {$entry->path}"
+                : $entry->path;
+            fwrite(STDOUT, "\t\033[32m{$action}:   {$pathLabel}\033[0m\n");
         }
     }
 

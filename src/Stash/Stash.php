@@ -18,6 +18,7 @@ use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\Reflog;
+use Pitmaster\Status\GitIgnore;
 use Pitmaster\Storage\ObjectDatabase;
 
 /**
@@ -45,7 +46,7 @@ final class Stash
      *
      * @return ObjectId The stash commit ID
      */
-    public function push(string $message = ''): ObjectId
+    public function push(string $message = '', bool $includeUntracked = false): ObjectId
     {
         $headId = $this->refs->resolveHead();
 
@@ -84,7 +85,7 @@ final class Stash
         $this->objects->write($indexCommit);
 
         // Build tree from worktree (including unstaged changes)
-        $worktreeTreeId = $this->buildTreeFromWorktree($index);
+        $worktreeTreeId = $this->buildTreeFromWorktree($index, $includeUntracked);
 
         // Create stash commit (worktree state, parents = HEAD + index commit)
         $stashContent = Commit::buildContent(
@@ -270,12 +271,14 @@ final class Stash
         return $this->writeTreeNode($root);
     }
 
-    private function buildTreeFromWorktree(Index $index): ObjectId
+    private function buildTreeFromWorktree(Index $index, bool $includeUntracked): ObjectId
     {
         $root = [];
+        $tracked = [];
 
         foreach ($index->entries() as $entry) {
             $fullPath = $this->workDir . '/' . $entry->path;
+            $tracked[$entry->path] = true;
 
             if (is_file($fullPath)) {
                 $content = file_get_contents($fullPath);
@@ -288,6 +291,24 @@ final class Stash
 
             $parts = explode('/', $entry->path);
             $this->insertIntoTreeNode($root, $parts, $worktreeEntry);
+        }
+
+        if ($includeUntracked) {
+            $ignore = GitIgnore::forRepo($this->workDir);
+
+            foreach ($this->scanWorktree($this->workDir, '', $ignore) as $path) {
+                if (isset($tracked[$path])) {
+                    continue;
+                }
+
+                $fullPath = $this->workDir . '/' . $path;
+                $content = file_get_contents($fullPath);
+                $blob = Blob::fromContent($content !== false ? $content : '');
+                $this->objects->write($blob);
+                $worktreeEntry = IndexEntry::fromStat($path, $blob->id, $fullPath);
+                $parts = explode('/', $path);
+                $this->insertIntoTreeNode($root, $parts, $worktreeEntry);
+            }
         }
 
         return $this->writeTreeNode($root);
@@ -362,6 +383,8 @@ final class Stash
                 $index->addEntry($entry);
             }
         }
+
+        $this->pruneWorktreeToTrackedPaths(array_keys($treeMap));
 
         IndexWriter::write($index, $this->gitDir . '/index');
     }
@@ -514,6 +537,65 @@ final class Stash
 
             rmdir($directory);
             $directory = dirname($directory);
+        }
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function scanWorktree(string $dir, string $prefix, GitIgnore $ignore): array
+    {
+        $files = [];
+        $entries = scandir($dir);
+
+        if ($entries === false) {
+            return $files;
+        }
+
+        foreach ($entries as $name) {
+            if ($name === '.' || $name === '..' || $name === '.git') {
+                continue;
+            }
+
+            $fullPath = $dir . '/' . $name;
+            $relPath = $prefix !== '' ? $prefix . '/' . $name : $name;
+
+            if ($ignore->isIgnored($relPath, is_dir($fullPath))) {
+                continue;
+            }
+
+            if (is_dir($fullPath)) {
+                $files = array_merge($files, $this->scanWorktree($fullPath, $relPath, $ignore));
+                continue;
+            }
+
+            if (is_file($fullPath)) {
+                $files[] = $relPath;
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param array<int, string> $trackedPaths
+     */
+    private function pruneWorktreeToTrackedPaths(array $trackedPaths): void
+    {
+        $tracked = array_fill_keys($trackedPaths, true);
+        $ignore = GitIgnore::forRepo($this->workDir);
+
+        foreach ($this->scanWorktree($this->workDir, '', $ignore) as $path) {
+            if (isset($tracked[$path])) {
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $path;
+
+            if (is_file($fullPath) || is_link($fullPath)) {
+                unlink($fullPath);
+                $this->removeEmptyParentDirectories(dirname($fullPath));
+            }
         }
     }
 }

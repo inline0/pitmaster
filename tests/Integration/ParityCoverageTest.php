@@ -98,6 +98,21 @@ final class ParityCoverageTest extends TestCase
     }
 
     #[Test]
+    public function statusPorcelainV2MatchesGitForStagedRename(): void
+    {
+        $this->writeFile('old.txt', "rename me\n");
+        $this->repo->add('old.txt');
+        $this->repo->commit("Initial\n");
+
+        $this->git('mv old.txt new.txt');
+
+        $this->assertSame(
+            $this->git('status --porcelain=v2'),
+            $this->repo->statusPorcelainV2(),
+        );
+    }
+
+    #[Test]
     public function gitAttributesParserMatchesGitCheckAttr(): void
     {
         $this->writeFile('.gitattributes', implode("\n", [

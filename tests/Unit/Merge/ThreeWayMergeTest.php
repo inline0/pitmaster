@@ -80,6 +80,22 @@ final class ThreeWayMergeTest extends TestCase
     }
 
     #[Test]
+    public function testDiff3ConflictStyleIncludesBaseSection(): void
+    {
+        $base = "line1\nline2\nline3";
+        $ours = "line1\nours-change\nline3";
+        $theirs = "line1\ntheirs-change\nline3";
+
+        $result = ThreeWayMerge::merge($base, $ours, $theirs, 'HEAD', 'incoming', 'diff3');
+
+        $this->assertFalse($result['clean']);
+        $this->assertStringContainsString('<<<<<<< HEAD', $result['content']);
+        $this->assertStringContainsString('||||||| base', $result['content']);
+        $this->assertStringContainsString('line2', $result['content']);
+        $this->assertStringContainsString('>>>>>>> incoming', $result['content']);
+    }
+
+    #[Test]
     public function testBaseEqualsOursTakesTheirs(): void
     {
         $base = 'original';

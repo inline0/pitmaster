@@ -1,0 +1,32 @@
+{
+    "name": "show-cli-parity",
+    "category": "log",
+    "description": "Compare pitmaster show CLI output against stock git show for single-parent, annotated-tag, and merge commits",
+    "operations": [
+        "show_single",
+        "show_tag",
+        "show_merge"
+    ],
+    "oracle_commands": {
+        "show_single": "git show --no-color HEAD^1",
+        "show_tag": "git show --no-color v1",
+        "show_merge": "git show --no-color HEAD"
+    },
+    "actual_commands": {
+        "show_single": "php \"{{ROOT}}/bin/pitmaster\" show HEAD^1",
+        "show_tag": "php \"{{ROOT}}/bin/pitmaster\" show v1",
+        "show_merge": "php \"{{ROOT}}/bin/pitmaster\" show HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "show_single",
+            "show_tag",
+            "show_merge"
+        ],
+        "fsck_clean": true
+    }
+}

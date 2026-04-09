@@ -1,9 +1,9 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **122/146 in-scope features fully implemented and oracle-verified (83.6%).**
-Partial support exists for **24/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **129/146 in-scope features fully implemented and oracle-verified (88.4%).**
+Partial support exists for **17/146** additional in-scope features (100% supported to some degree).
 
-Generated: 2026-04-09 10:42
+Generated: 2026-04-09 11:36
 
 ## Legend
 
@@ -25,17 +25,17 @@ Generated: 2026-04-09 10:42
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
 | References | 8 | 1 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 10 | 2 | 0 | 0 | 0 | 12 |
-| Working Tree Status | 5 | 1 | 0 | 0 | 0 | 6 |
+| Staging and Commits | 11 | 1 | 0 | 0 | 0 | 12 |
+| Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
 | Diff | 8 | 3 | 0 | 0 | 0 | 11 |
-| Merge | 3 | 7 | 0 | 0 | 0 | 10 |
-| Commit Graph | 6 | 1 | 0 | 0 | 0 | 7 |
+| Merge | 4 | 6 | 0 | 0 | 0 | 10 |
+| Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
 | Network Protocol | 13 | 1 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Advanced Features | 8 | 7 | 0 | 0 | 0 | 15 |
-| **Total** | **122** | **24** | **0** | **0** | **0** | **146** |
+| Advanced Features | 11 | 4 | 0 | 0 | 0 | 15 |
+| **Total** | **129** | **17** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -124,7 +124,7 @@ Generated: 2026-04-09 10:42
 | Bare repositories | `DONE` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*10/12 fully done (83.3%), 2 partial*
+*11/12 fully done (91.7%), 1 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -136,13 +136,13 @@ Generated: 2026-04-09 10:42
 | git reset --mixed | `DONE` |  | Move HEAD + reset index |
 | git reset --hard | `DONE` |  | Move HEAD + reset index + worktree |
 | git restore | `DONE` |  | Restore files from tree/index |
-| git stash | `PART` | `Stash\Stash` | Tracked-file stash push/apply/pop parity |
+| git stash | `DONE` | `Stash\Stash` | Tracked and untracked stash push/apply/pop conflict parity |
 | git cherry-pick | `DONE` |  | Apply commit as new commit |
 | git revert | `DONE` |  | Inverse cherry-pick |
 | git rebase | `PART` |  | Linear non-merge rebase lifecycle parity |
 
 ### Working Tree Status
-*5/6 fully done (83.3%), 1 partial*
+*6/6 fully done (100%), 0 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -151,7 +151,7 @@ Generated: 2026-04-09 10:42
 | Untracked file detection | `DONE` | `Status\WorkingTreeStatus` |  |
 | Porcelain v2 output | `DONE` |  | Machine-readable status |
 | .gitignore parsing | `DONE` |  | Required for untracked detection |
-| Rename detection | `PART` |  | Status-side rename reporting is not implemented |
+| Rename detection | `DONE` |  | Status-side staged rename reporting in porcelain and human status output |
 
 ### Diff
 *8/11 fully done (72.7%), 3 partial*
@@ -171,13 +171,13 @@ Generated: 2026-04-09 10:42
 | Color diff output | `DONE` |  | Terminal ANSI colors |
 
 ### Merge
-*3/10 fully done (30%), 7 partial*
+*4/10 fully done (40%), 6 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Merge base (LCA) | `DONE` | `Merge\MergeBase` | Lowest common ancestor |
 | Three-way merge (content) | `PART` | `Merge\ThreeWayMerge` | Basic clean/conflict content merges |
-| Conflict markers | `PART` | `Merge\ConflictMarker` | Default markers only; diff3 parity incomplete |
+| Conflict markers | `DONE` | `Merge\ConflictMarker` | Default and diff3 marker styles match Git for merge-family conflicts |
 | File-level merge (tree) | `PART` |  | Basic tree merge selection; rename/delete parity incomplete |
 | Recursive strategy | `PART` |  | Basic recursive merge helper; full multi-base parity incomplete |
 | ORT strategy | `PART` | `Merge\RecursiveMerge` | No dedicated ORT implementation |
@@ -187,7 +187,7 @@ Generated: 2026-04-09 10:42
 | Merge commit creation | `DONE` |  | Two-parent commit |
 
 ### Commit Graph
-*6/7 fully done (85.7%), 1 partial*
+*7/7 fully done (100%), 0 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
@@ -197,7 +197,7 @@ Generated: 2026-04-09 10:42
 | Log --all (all branches) | `DONE` | `Graph\CommitWalker` | walkAll() from multiple tips |
 | Log with path filter | `DONE` |  | Only commits touching path |
 | Log --oneline format | `DONE` |  | Short hash + first line |
-| git show | `PART` |  | Metadata plus first-parent tree diff |
+| git show | `DONE` |  | Git-shaped CLI/API parity for single-parent, annotated-tag, and merge commits |
 
 ### Branch and Tag Operations
 *9/9 fully done (100%), 0 partial*
@@ -261,18 +261,18 @@ Generated: 2026-04-09 10:42
 | Circular delta detection | `DONE` |  | Max depth limit exists |
 
 ### Advanced Features
-*8/15 fully done (53.3%), 7 partial*
+*11/15 fully done (73.3%), 4 partial*
 
 | Feature | Status | Class | Notes |
 |---------|--------|-------|-------|
 | Submodules | `DONE` | `Submodule\Submodule` | .gitmodules, gitlink entries, init/update/status |
 | Worktrees | `DONE` | `Worktree\Worktree` | Multiple working trees, .git file indirection |
-| Rerere | `PART` | `Merge\Rerere` | Local rr-cache record/replay helper |
+| Rerere | `DONE` | `Merge\Rerere` | Git-compatible rr-cache preimage/postimage read and write parity |
 | Bisect | `PART` | `Graph\Bisect` | Local linear bisect state helper |
-| Stash | `PART` | `Stash\Stash` | Tracked-file stash push/apply/pop parity |
+| Stash | `DONE` | `Stash\Stash` | Tracked and untracked stash push/apply/pop conflict parity |
 | Sparse checkout | `DONE` | `Checkout\SparseCheckout` | Partial working tree via cone patterns |
 | Fsmonitor | `PART` | `Status\Fsmonitor` | Polling helper, not canonical Git fsmonitor protocol |
-| Hooks | `PART` | `Hooks\HookRunner` | Commit hook and runner parity only |
+| Hooks | `DONE` | `Hooks\HookRunner` | Commit, checkout, merge, rebase, and push hook parity |
 | Git LFS | `PART` | `Lfs\LfsClient` | Pointer parsing and batch client; requires git-lfs oracle |
 | Git attributes | `DONE` | `Config\GitAttributes` |  |
 | Shallow clones | `PART` | `Protocol\ShallowClone` | Shallow-file semantics only; transport negotiation incomplete |
@@ -284,10 +284,10 @@ Generated: 2026-04-09 10:42
 ## Progress
 
 ```
-[#################################-------] 83.6% fully done
+[###################################-----] 88.4% fully done
 
-Full:     122 features
-Partial:  24 features
+Full:     129 features
+Partial:  17 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

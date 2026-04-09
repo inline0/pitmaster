@@ -41,6 +41,22 @@ final class MergeFamilyParityTest extends TestCase
     }
 
     #[Test]
+    public function mergeDiff3ConflictMarkersMatchGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createMergeConflictPair();
+        $this->git($gitDir, 'config merge.conflictstyle diff3');
+        $this->git($pitDir, 'config merge.conflictstyle diff3');
+
+        $this->gitWithExit($gitDir, 'merge feature');
+        $repo = Pitmaster::open($pitDir);
+        $result = $repo->merge('feature');
+
+        $this->assertFalse($result->clean);
+        $this->assertSame(file_get_contents($gitDir . '/a.txt'), file_get_contents($pitDir . '/a.txt'));
+        $this->assertMatchesRegularExpression('/^\|\|\|\|\|\|\| [0-9a-f]{7}$/m', (string) file_get_contents($pitDir . '/a.txt'));
+    }
+
+    #[Test]
     public function cleanMergeCommitMatchesGit(): void
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createCleanMergePair();

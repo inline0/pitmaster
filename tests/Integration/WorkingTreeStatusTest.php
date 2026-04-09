@@ -159,4 +159,26 @@ final class WorkingTreeStatusTest extends TestCase
         $this->assertNotNull($newEntry);
         $this->assertSame(FileStatus::Added, $newEntry->index);
     }
+
+    #[Test]
+    public function stagedRenameDetected(): void
+    {
+        $this->writeFile('old.txt', "content\n");
+        $this->git('add old.txt');
+        $this->git('commit -m "initial"');
+        $headHash = trim($this->git('rev-parse HEAD'));
+
+        $this->git('mv old.txt new.txt');
+
+        $objects = new ObjectDatabase($this->tmpDir . '/.git/objects');
+        $wts = new WorkingTreeStatus($objects, $this->tmpDir, $this->tmpDir . '/.git');
+        $index = Index::open($this->tmpDir . '/.git/index');
+        $entries = $wts->compute($index, ObjectId::fromHex($headHash));
+
+        $this->assertCount(1, $entries);
+        $this->assertSame('new.txt', $entries[0]->path);
+        $this->assertSame('old.txt', $entries[0]->origPath);
+        $this->assertSame(FileStatus::Renamed, $entries[0]->index);
+        $this->assertSame(100, $entries[0]->renameScore);
+    }
 }

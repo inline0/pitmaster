@@ -92,6 +92,15 @@ final class LogShowParityTest extends TestCase
     }
 
     #[Test]
+    public function pitmasterCliShowMatchesGitForSingleParentCommit(): void
+    {
+        $this->assertSame(
+            $this->gitOutput('show --no-color HEAD'),
+            $this->pitmasterOutput('show HEAD'),
+        );
+    }
+
+    #[Test]
     public function showMatchesGitSubjectAndChangedPaths(): void
     {
         $result = $this->repo->show('HEAD');
@@ -143,6 +152,28 @@ final class LogShowParityTest extends TestCase
         $this->assertSame($gitPaths, $paths);
     }
 
+    #[Test]
+    public function pitmasterCliShowMatchesGitForAnnotatedTag(): void
+    {
+        $this->git('tag -a v1 -m "Release 1"');
+
+        $this->assertSame(
+            $this->gitOutput('show --no-color v1'),
+            $this->pitmasterOutput('show v1'),
+        );
+    }
+
+    #[Test]
+    public function pitmasterCliShowMatchesGitForMergeCommit(): void
+    {
+        $this->git('merge feature');
+
+        $this->assertSame(
+            $this->gitOutput('show --no-color HEAD'),
+            $this->pitmasterOutput('show HEAD'),
+        );
+    }
+
     private function seedHistory(): void
     {
         mkdir($this->tmpDir . '/docs', 0777, true);
@@ -188,6 +219,11 @@ final class LogShowParityTest extends TestCase
         return array_values(array_filter(explode("\n", trim($this->git($command))), static fn (string $line): bool => $line !== ''));
     }
 
+    private function gitOutput(string $command): string
+    {
+        return $this->git($command) . "\n";
+    }
+
     /**
      * @return list<string>
      */
@@ -214,5 +250,30 @@ final class LogShowParityTest extends TestCase
         }
 
         return array_values(array_filter(explode("\n", trim($result)), static fn (string $line): bool => $line !== ''));
+    }
+
+    private function pitmasterOutput(string $command): string
+    {
+        $projectRoot = dirname(__DIR__, 2);
+
+        exec(
+            sprintf(
+                'cd %s && %s %s %s 2>&1',
+                escapeshellarg($this->tmpDir),
+                escapeshellarg(PHP_BINARY),
+                escapeshellarg($projectRoot . '/bin/pitmaster'),
+                $command,
+            ),
+            $output,
+            $exitCode,
+        );
+
+        $result = implode("\n", $output);
+
+        if ($exitCode !== 0) {
+            $this->fail("pitmaster {$command} failed:\n{$result}");
+        }
+
+        return $result . ($result === '' ? '' : "\n");
     }
 }

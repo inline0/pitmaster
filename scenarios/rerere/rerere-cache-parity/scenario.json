@@ -1,0 +1,28 @@
+{
+    "name": "rerere-cache-parity",
+    "category": "rerere",
+    "description": "Verify Pitmaster writes and resolves rr-cache entries compatibly with git rerere",
+    "operations": [
+        "preimage",
+        "postimage",
+        "resolved"
+    ],
+    "oracle_commands": {
+        "preimage": "cat .preimage.txt",
+        "postimage": "cat .postimage.txt",
+        "resolved": "cat .resolved.txt"
+    },
+    "actual_commands": {
+        "preimage": "cat .preimage.txt",
+        "postimage": "cat .postimage.txt",
+        "resolved": "cat .resolved.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "preimage",
+            "postimage",
+            "resolved"
+        ],
+        "fsck_clean": false
+    }
+}

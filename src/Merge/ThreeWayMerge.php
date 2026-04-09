@@ -24,6 +24,8 @@ final class ThreeWayMerge
         string $theirs,
         string $oursLabel = 'HEAD',
         string $theirsLabel = 'incoming',
+        string $conflictStyle = 'merge',
+        string $baseLabel = 'base',
     ): array {
         // Trivial cases
         if ($ours === $theirs) {
@@ -83,19 +85,15 @@ final class ThreeWayMerge
                     $theirsIdx++;
                 }
 
-                $result[] = "<<<<<<< {$oursLabel}";
-
-                foreach ($oursChunk as $line) {
-                    $result[] = $line;
-                }
-
-                $result[] = '=======';
-
-                foreach ($theirsChunk as $line) {
-                    $result[] = $line;
-                }
-
-                $result[] = ">>>>>>> {$theirsLabel}";
+                $baseChunk = $baseIdx < $baseLen ? [$baseLines[$baseIdx]] : [];
+                $result[] = rtrim(ConflictMarker::mark(
+                    implode("\n", $oursChunk),
+                    implode("\n", $theirsChunk),
+                    $oursLabel,
+                    $theirsLabel,
+                    $conflictStyle === 'diff3' ? implode("\n", $baseChunk) : null,
+                    $baseLabel,
+                ), "\n");
                 $baseIdx++;
             } elseif ($oursChanged && !$theirsChanged) {
                 // Only ours changed, take ours

@@ -99,7 +99,7 @@
                 {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
                 {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
                 {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
-                {"feature": "git stash", "status": "partial", "class": "Stash\\Stash", "notes": "Tracked-file stash push/apply/pop parity"},
+                {"feature": "git stash", "status": "full", "class": "Stash\\Stash", "notes": "Tracked and untracked stash push/apply/pop conflict parity"},
                 {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
                 {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
                 {"feature": "git rebase", "status": "partial", "class": "", "notes": "Linear non-merge rebase lifecycle parity"}
@@ -113,7 +113,7 @@
                 {"feature": "Untracked file detection", "status": "full", "class": "Status\\WorkingTreeStatus", "notes": ""},
                 {"feature": "Porcelain v2 output", "status": "full", "class": "", "notes": "Machine-readable status"},
                 {"feature": ".gitignore parsing", "status": "full", "class": "", "notes": "Required for untracked detection"},
-                {"feature": "Rename detection", "status": "partial", "class": "", "notes": "Status-side rename reporting is not implemented"}
+                {"feature": "Rename detection", "status": "full", "class": "", "notes": "Status-side staged rename reporting in porcelain and human status output"}
             ]
         },
         {
@@ -137,7 +137,7 @@
             "features": [
                 {"feature": "Merge base (LCA)", "status": "full", "class": "Merge\\MergeBase", "notes": "Lowest common ancestor"},
                 {"feature": "Three-way merge (content)", "status": "partial", "class": "Merge\\ThreeWayMerge", "notes": "Basic clean/conflict content merges"},
-                {"feature": "Conflict markers", "status": "partial", "class": "Merge\\ConflictMarker", "notes": "Default markers only; diff3 parity incomplete"},
+                {"feature": "Conflict markers", "status": "full", "class": "Merge\\ConflictMarker", "notes": "Default and diff3 marker styles match Git for merge-family conflicts"},
                 {"feature": "File-level merge (tree)", "status": "partial", "class": "", "notes": "Basic tree merge selection; rename/delete parity incomplete"},
                 {"feature": "Recursive strategy", "status": "partial", "class": "", "notes": "Basic recursive merge helper; full multi-base parity incomplete"},
                 {"feature": "ORT strategy", "status": "partial", "class": "Merge\\RecursiveMerge", "notes": "No dedicated ORT implementation"},
@@ -156,7 +156,7 @@
                 {"feature": "Log --all (all branches)", "status": "full", "class": "Graph\\CommitWalker", "notes": "walkAll() from multiple tips"},
                 {"feature": "Log with path filter", "status": "full", "class": "", "notes": "Only commits touching path"},
                 {"feature": "Log --oneline format", "status": "full", "class": "", "notes": "Short hash + first line"},
-                {"feature": "git show", "status": "partial", "class": "", "notes": "Metadata plus first-parent tree diff"}
+                {"feature": "git show", "status": "full", "class": "", "notes": "Git-shaped CLI/API parity for single-parent, annotated-tag, and merge commits"}
             ]
         },
         {
@@ -221,12 +221,12 @@
             "features": [
                 {"feature": "Submodules", "status": "full", "class": "Submodule\\Submodule", "notes": ".gitmodules, gitlink entries, init/update/status"},
                 {"feature": "Worktrees", "status": "full", "class": "Worktree\\Worktree", "notes": "Multiple working trees, .git file indirection"},
-                {"feature": "Rerere", "status": "partial", "class": "Merge\\Rerere", "notes": "Local rr-cache record/replay helper"},
+                {"feature": "Rerere", "status": "full", "class": "Merge\\Rerere", "notes": "Git-compatible rr-cache preimage/postimage read and write parity"},
                 {"feature": "Bisect", "status": "partial", "class": "Graph\\Bisect", "notes": "Local linear bisect state helper"},
-                {"feature": "Stash", "status": "partial", "class": "Stash\\Stash", "notes": "Tracked-file stash push/apply/pop parity"},
+                {"feature": "Stash", "status": "full", "class": "Stash\\Stash", "notes": "Tracked and untracked stash push/apply/pop conflict parity"},
                 {"feature": "Sparse checkout", "status": "full", "class": "Checkout\\SparseCheckout", "notes": "Partial working tree via cone patterns"},
                 {"feature": "Fsmonitor", "status": "partial", "class": "Status\\Fsmonitor", "notes": "Polling helper, not canonical Git fsmonitor protocol"},
-                {"feature": "Hooks", "status": "partial", "class": "Hooks\\HookRunner", "notes": "Commit hook and runner parity only"},
+                {"feature": "Hooks", "status": "full", "class": "Hooks\\HookRunner", "notes": "Commit, checkout, merge, rebase, and push hook parity"},
                 {"feature": "Git LFS", "status": "partial", "class": "Lfs\\LfsClient", "notes": "Pointer parsing and batch client; requires git-lfs oracle"},
                 {"feature": "Git attributes", "status": "full", "class": "Config\\GitAttributes", "notes": ""},
                 {"feature": "Shallow clones", "status": "partial", "class": "Protocol\\ShallowClone", "notes": "Shallow-file semantics only; transport negotiation incomplete"},

@@ -37,6 +37,7 @@ use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\Reflog;
+use Pitmaster\Ref\SymbolicRef;
 use Pitmaster\Status\FileStatus;
 use Pitmaster\Status\StatusEntry;
 use Pitmaster\Status\WorkingTreeStatus;
@@ -651,6 +652,7 @@ final class Repository
                 "checkout: moving from {$fromLabel} to {$target}",
             );
             $this->resetWorktree($branchId, $trackedPaths);
+            $this->runPostCheckoutHook($oldHeadId, $branchId);
 
             return;
         }
@@ -666,6 +668,7 @@ final class Repository
             "checkout: moving from {$fromLabel} to " . $this->targetLabel($target, $id),
         );
         $this->resetWorktree($id, $trackedPaths);
+        $this->runPostCheckoutHook($oldHeadId, $id);
     }
 
     /**
@@ -1122,6 +1125,7 @@ final class Repository
             $commit->tree,
             'HEAD',
             $this->cherryPickConflictLabel($commit),
+            $commit->parents !== [] ? substr($commit->parents[0]->hex, 0, 7) : 'base',
         );
 
         if ($merge['conflictPaths'] !== []) {
@@ -1202,6 +1206,7 @@ final class Repository
             $parentTree,
             'HEAD',
             $this->revertConflictLabel($commit),
+            substr($commit->id->hex, 0, 7),
         );
 
         if ($merge['conflictPaths'] !== []) {
@@ -1277,6 +1282,8 @@ final class Repository
         if ($headId === null) {
             throw new \RuntimeException('Cannot rebase: HEAD is not set');
         }
+
+        $this->runPreRebaseHook($onto, $head);
 
         $ontoId = $this->resolve($onto);
         $mergeBase = new MergeBase($this->objects);
@@ -1474,6 +1481,15 @@ final class Repository
             $headHash = $headEntry['hash'] ?? $zero;
             $indexHash = $indexEntry?->hash->hex ?? $zero;
 
+            if ($entry->index === FileStatus::Renamed && $entry->origPath !== null) {
+                $oldHeadEntry = $headEntries[$entry->origPath] ?? null;
+                $headMode = $oldHeadEntry !== null ? sprintf('%06o', $oldHeadEntry['mode']) : '000000';
+                $headHash = $oldHeadEntry['hash'] ?? $zero;
+                $renameScore = sprintf('R%03d', $entry->renameScore ?? 100);
+                $trackedLines[] = "2 {$x}{$y} N... {$headMode} {$indexMode} {$workMode} {$headHash} {$indexHash} {$renameScore} {$entry->path}\t{$entry->origPath}";
+                continue;
+            }
+
             $trackedLines[] = "1 {$x}{$y} N... {$headMode} {$indexMode} {$workMode} {$headHash} {$indexHash} {$entry->path}";
         }
 
@@ -1552,7 +1568,7 @@ final class Repository
         $remoteId = $discovery->ref($localRef);
 
         $this->assertFastForwardPush($branch, $remoteId, $localId);
-        $this->pushUpdates($http, $url, $discovery, [[
+        $this->pushUpdates($remote, $http, $url, $discovery, [[
             'old' => $remoteId ?? $this->zeroObjectId(),
             'new' => $localId,
             'ref' => $localRef,
@@ -1579,7 +1595,7 @@ final class Repository
             throw new \RuntimeException("force-with-lease rejected for {$branch}: remote changed");
         }
 
-        $this->pushUpdates($http, $url, $discovery, [[
+        $this->pushUpdates($remote, $http, $url, $discovery, [[
             'old' => $leaseId,
             'new' => $localId,
             'ref' => $localRef,
@@ -1620,7 +1636,7 @@ final class Repository
             ];
         }
 
-        $this->pushUpdates($http, $url, $discovery, $updates, ['atomic']);
+        $this->pushUpdates($remote, $http, $url, $discovery, $updates, ['atomic']);
     }
 
     /**
@@ -1675,7 +1691,7 @@ final class Repository
             ];
         }
 
-        $this->pushUpdates($http, $url, $discovery, $updates);
+        $this->pushUpdates($remote, $http, $url, $discovery, $updates);
     }
 
     /**
@@ -2054,6 +2070,7 @@ final class Repository
             $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
             $this->moveHeadTo($theirsId, "merge {$branch}: Fast-forward");
             $this->resetWorktree($theirsId, $trackedPaths);
+            $this->runPostMergeHook();
 
             return new MergeResult(clean: true, commitId: $theirsId);
         }
@@ -2071,6 +2088,7 @@ final class Repository
             $theirsCommit->tree,
             'HEAD',
             $branch,
+            $baseId !== null ? substr($baseId->hex, 0, 7) : 'base',
         );
 
         if ($merge['conflictPaths'] !== []) {
@@ -2099,6 +2117,7 @@ final class Repository
         $this->moveHeadTo($commitId, "merge {$branch}: Merge made by Pitmaster");
 
         $this->resetWorktree($commitId, $trackedPaths);
+        $this->runPostMergeHook();
 
         return new MergeResult(clean: true, commitId: $commitId);
     }
@@ -2116,7 +2135,10 @@ final class Repository
             throw new \RuntimeException('Cannot continue merge with unmerged paths');
         }
 
-        return $this->commit();
+        $commitId = $this->commit();
+        $this->runPostMergeHook();
+
+        return $commitId;
     }
 
     /**
@@ -2921,6 +2943,7 @@ final class Repository
         ObjectId $theirsTreeId,
         string $oursLabel,
         string $theirsLabel,
+        string $baseLabel = 'base',
     ): array {
         $baseEntries = $this->flattenTreeEntries($baseTreeId);
         $oursEntries = $this->flattenTreeEntries($oursTreeId);
@@ -2932,6 +2955,7 @@ final class Repository
         $conflictEntries = [];
         $conflictContents = [];
         $conflictPaths = [];
+        $conflictStyle = $this->mergeConflictStyle();
 
         foreach ($allPaths as $path) {
             $base = $baseEntries[$path] ?? null;
@@ -2992,11 +3016,26 @@ final class Repository
             if ($base === null) {
                 $conflictPaths[] = $path;
                 $conflictEntries[$path] = $this->conflictStageEntries($base, $ours, $theirs);
-                $conflictContents[$path] = ConflictMarker::mark($oursContent, $theirsContent, $oursLabel, $theirsLabel);
+                $conflictContents[$path] = ConflictMarker::mark(
+                    $oursContent,
+                    $theirsContent,
+                    $oursLabel,
+                    $theirsLabel,
+                    $conflictStyle === 'diff3' ? '' : null,
+                    $baseLabel,
+                );
                 continue;
             }
 
-            $merge = ThreeWayMerge::merge($baseContent, $oursContent, $theirsContent, $oursLabel, $theirsLabel);
+            $merge = ThreeWayMerge::merge(
+                $baseContent,
+                $oursContent,
+                $theirsContent,
+                $oursLabel,
+                $theirsLabel,
+                $conflictStyle,
+                $baseLabel,
+            );
 
             if (!$merge['clean']) {
                 $conflictPaths[] = $path;
@@ -3167,6 +3206,13 @@ final class Repository
             'REVERT_HEAD' => 'revert',
             default => strtolower(str_replace('_HEAD', '', $operationRef)),
         };
+    }
+
+    private function mergeConflictStyle(): string
+    {
+        return strtolower((string) ($this->config->get('merge.conflictstyle') ?? 'merge')) === 'diff3'
+            ? 'diff3'
+            : 'merge';
     }
 
     /**
@@ -3373,6 +3419,7 @@ final class Repository
                 $commit->tree,
                 'HEAD',
                 $this->rebaseConflictLabel($commit),
+                $commit->parents !== [] ? substr($commit->parents[0]->hex, 0, 7) : 'base',
             );
 
             if ($merge['conflictPaths'] !== []) {
@@ -3649,6 +3696,7 @@ final class Repository
      * @param array<int, string> $extraCapabilities
      */
     private function pushUpdates(
+        string $remote,
         SmartHttpClient $http,
         string $url,
         \Pitmaster\Protocol\RefDiscovery $discovery,
@@ -3658,6 +3706,8 @@ final class Repository
         if ($updates === []) {
             return;
         }
+
+        $this->runPrePushHook($remote, $url, $updates);
 
         $packData = $this->buildPushPackDataForUpdates($updates, $discovery->refs());
         $receivePack = new \Pitmaster\Protocol\ReceivePackClient($http);
@@ -4172,6 +4222,51 @@ final class Repository
     private function runPostCommitHook(): void
     {
         (new HookRunner($this->gitDir))->run('post-commit');
+    }
+
+    private function runPostCheckoutHook(?ObjectId $oldHeadId, ObjectId $newHeadId): void
+    {
+        (new HookRunner($this->gitDir))->run('post-checkout', [
+            ($oldHeadId ?? $this->zeroObjectId())->hex,
+            $newHeadId->hex,
+            '1',
+        ]);
+    }
+
+    private function runPostMergeHook(): void
+    {
+        (new HookRunner($this->gitDir))->run('post-merge', ['0']);
+    }
+
+    private function runPreRebaseHook(string $onto, SymbolicRef $head): void
+    {
+        if (!(new HookRunner($this->gitDir))->runAndCheck('pre-rebase', [$onto])) {
+            throw new \RuntimeException('pre-rebase hook failed');
+        }
+    }
+
+    /**
+     * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     */
+    private function runPrePushHook(string $remote, string $url, array $updates): void
+    {
+        $stdin = [];
+
+        foreach ($updates as $update) {
+            $stdin[] = sprintf(
+                '%s %s %s %s',
+                $update['new']->equals($this->zeroObjectId()) ? '(delete)' : $update['ref'],
+                $update['new']->hex,
+                $update['ref'],
+                $update['old']->hex,
+            );
+        }
+
+        $input = $stdin === [] ? null : implode("\n", $stdin) . "\n";
+
+        if (!(new HookRunner($this->gitDir))->runAndCheck('pre-push', [$remote, $url], $input)) {
+            throw new \RuntimeException('pre-push hook failed');
+        }
     }
 
     /**

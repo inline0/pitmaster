@@ -6,6 +6,7 @@ namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Pitmaster\Hooks\HookRunner;
 use Pitmaster\Object\ObjectId;
 use Pitmaster\Pitmaster;
 use Pitmaster\Tests\Integration\Support\GitTestRuntime;
@@ -267,6 +268,98 @@ final class PushParityTest extends TestCase
         $this->git('fsck --full', $pitRemoteDir);
     }
 
+    #[Test]
+    public function prePushHookMatchesGit(): void
+    {
+        [$sourceDir, $remoteDir] = $this->initSingleRemoteProject();
+        $pitCloneDir = $this->tmpDir . '/pit-clone-hook';
+        $gitCloneDir = $this->tmpDir . '/git-clone-hook';
+        $this->startGitHttpBackendServer($this->tmpDir . '/projects');
+        $remoteUrl = $this->baseUrl . '/hook-remote.git';
+
+        $pitRepo = Pitmaster::clone($remoteUrl, $pitCloneDir);
+        $this->git('clone ' . escapeshellarg($remoteUrl) . ' ' . escapeshellarg($gitCloneDir), $this->tmpDir);
+        $this->configureUser($gitCloneDir);
+
+        $hook = "#!/bin/sh\n"
+            . "echo \"$1|$2\" >> .hook-log\n"
+            . "cat >> .hook-log\n"
+            . "exit 1\n";
+        (new HookRunner($pitCloneDir . '/.git'))->install('pre-push', $hook);
+        (new HookRunner($gitCloneDir . '/.git'))->install('pre-push', $hook);
+
+        file_put_contents($pitCloneDir . '/hook.txt', "pit hook push\n");
+        $pitRepo->add('hook.txt');
+        putenv('GIT_AUTHOR_DATE=@1700000100 +0000');
+        putenv('GIT_COMMITTER_DATE=@1700000100 +0000');
+        $pitRepo->commit("Hook push\n");
+        file_put_contents($gitCloneDir . '/hook.txt', "pit hook push\n");
+        $this->git('add hook.txt', $gitCloneDir);
+        $this->gitWithEnv($gitCloneDir, [
+            'GIT_AUTHOR_DATE' => '@1700000100 +0000',
+            'GIT_COMMITTER_DATE' => '@1700000100 +0000',
+        ], 'commit -m "Hook push"');
+        putenv('GIT_AUTHOR_DATE');
+        putenv('GIT_COMMITTER_DATE');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('pre-push hook failed');
+
+        try {
+            $pitRepo->push();
+        } finally {
+            exec(
+                sprintf('cd %s && git push origin main >/dev/null 2>&1', escapeshellarg($gitCloneDir)),
+                $output,
+                $exitCode,
+            );
+            $this->assertNotSame(0, $exitCode);
+            [$gitRemoteLine, $gitUpdateLine] = explode("\n", trim((string) file_get_contents($gitCloneDir . '/.hook-log')));
+            [$pitRemoteLine, $pitUpdateLine] = explode("\n", trim((string) file_get_contents($pitCloneDir . '/.hook-log')));
+            $this->assertSame($gitRemoteLine, $pitRemoteLine);
+
+            $gitUpdate = preg_split('/\s+/', trim($gitUpdateLine)) ?: [];
+            $pitUpdate = preg_split('/\s+/', trim($pitUpdateLine)) ?: [];
+
+            $this->assertSame('refs/heads/main', $gitUpdate[0] ?? null);
+            $this->assertSame('refs/heads/main', $pitUpdate[0] ?? null);
+            $this->assertSame(trim($this->git('rev-parse HEAD', $gitCloneDir)), $gitUpdate[1] ?? null);
+            $this->assertSame(trim($this->git('rev-parse HEAD', $pitCloneDir)), $pitUpdate[1] ?? null);
+            $this->assertSame('refs/heads/main', $gitUpdate[2] ?? null);
+            $this->assertSame('refs/heads/main', $pitUpdate[2] ?? null);
+            $this->assertSame($gitUpdate[3] ?? null, $pitUpdate[3] ?? null);
+            $this->assertSame(
+                trim($this->git('rev-parse refs/heads/main', $remoteDir)),
+                trim($this->git('rev-parse refs/remotes/origin/main', $gitCloneDir)),
+            );
+        }
+    }
+
+    /**
+     * @return array{string, string}
+     */
+    private function initSingleRemoteProject(): array
+    {
+        $projectRoot = $this->tmpDir . '/projects';
+        $sourceDir = $this->tmpDir . '/single-source';
+        $remoteDir = $projectRoot . '/hook-remote.git';
+
+        mkdir($projectRoot, 0777, true);
+        $this->git('init --initial-branch=main ' . escapeshellarg($sourceDir), $this->tmpDir);
+        $this->git('init --bare --initial-branch=main ' . escapeshellarg($remoteDir), $this->tmpDir);
+        $this->git('config user.email test@example.com', $sourceDir);
+        $this->git('config user.name Test', $sourceDir);
+        $this->git('config http.receivepack true', $remoteDir);
+
+        file_put_contents($sourceDir . '/README.md', "hello hook parity\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m initial', $sourceDir);
+        $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
+        $this->git('push origin main', $sourceDir);
+
+        return [$sourceDir, $remoteDir];
+    }
+
     /**
      * @return array{string, string, string}
      */
@@ -405,6 +498,31 @@ final class PushParityTest extends TestCase
     private function git(string $command, string $dir): string
     {
         exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($dir), $command), $output, $exitCode);
+        $result = implode("\n", $output);
+
+        if ($exitCode !== 0) {
+            $this->fail("git {$command} failed in {$dir}:\n{$result}");
+        }
+
+        return $result . ($result === '' ? '' : "\n");
+    }
+
+    /**
+     * @param array<string, string> $env
+     */
+    private function gitWithEnv(string $dir, array $env, string $command): string
+    {
+        $prefix = [];
+
+        foreach ($env as $name => $value) {
+            $prefix[] = sprintf('%s=%s', $name, escapeshellarg($value));
+        }
+
+        exec(
+            sprintf('cd %s && %s git %s 2>&1', escapeshellarg($dir), implode(' ', $prefix), $command),
+            $output,
+            $exitCode,
+        );
         $result = implode("\n", $output);
 
         if ($exitCode !== 0) {

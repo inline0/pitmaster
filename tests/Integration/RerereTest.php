@@ -128,8 +128,105 @@ final class RerereTest extends TestCase
         $this->assertNull($result);
     }
 
+    #[Test]
+    public function resolveReadsGitGeneratedRerereCache(): void
+    {
+        $gitRepo = $this->tmpDir . '/git-rerere';
+        mkdir($gitRepo, 0777, true);
+        $this->gitIn($gitRepo, 'init --initial-branch=main');
+        $this->gitIn($gitRepo, 'config user.email test@pitmaster.dev');
+        $this->gitIn($gitRepo, 'config user.name "Test User"');
+        $this->gitIn($gitRepo, 'config rerere.enabled true');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nline2\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m base');
+        $this->gitIn($gitRepo, 'checkout -b feature');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nfeature\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m feature');
+        $this->gitIn($gitRepo, 'checkout main');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nmain\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m main');
+        $this->gitWithExit($gitRepo, 'merge feature');
+        $conflicted = (string) file_get_contents($gitRepo . '/a.txt');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nresolved\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'rerere');
+
+        $rerere = new Rerere($gitRepo . '/.git');
+
+        $this->assertSame("line1\nresolved\n", $rerere->resolve($conflicted));
+        $this->assertCount(1, $rerere->listRecorded());
+    }
+
+    #[Test]
+    public function recordWritesSamePreimageAndPostimageAsGitRerere(): void
+    {
+        $gitRepo = $this->tmpDir . '/git-rerere-record';
+        $pitRepo = $this->tmpDir . '/pit-rerere-record';
+        mkdir($gitRepo, 0777, true);
+        mkdir($pitRepo, 0777, true);
+        $this->gitIn($gitRepo, 'init --initial-branch=main');
+        $this->gitIn($gitRepo, 'config user.email test@pitmaster.dev');
+        $this->gitIn($gitRepo, 'config user.name "Test User"');
+        $this->gitIn($gitRepo, 'config rerere.enabled true');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nline2\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m base');
+        $this->gitIn($gitRepo, 'checkout -b feature');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nfeature\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m feature');
+        $this->gitIn($gitRepo, 'checkout main');
+        $this->writeFile($gitRepo, 'a.txt', "line1\nmain\n");
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'commit -m main');
+        $this->gitWithExit($gitRepo, 'merge feature');
+        $conflicted = (string) file_get_contents($gitRepo . '/a.txt');
+        $resolved = "line1\nresolved\n";
+        $this->writeFile($gitRepo, 'a.txt', $resolved);
+        $this->gitIn($gitRepo, 'add a.txt');
+        $this->gitIn($gitRepo, 'rerere');
+
+        $this->gitIn($pitRepo, 'init --initial-branch=main');
+        $rerere = new Rerere($pitRepo . '/.git');
+        $rerere->record($conflicted, $resolved);
+
+        $gitHash = basename((string) current(glob($gitRepo . '/.git/rr-cache/*', GLOB_ONLYDIR)));
+        $pitHash = basename((string) current(glob($pitRepo . '/.git/rr-cache/*', GLOB_ONLYDIR)));
+        $this->assertNotSame('', $pitHash);
+        $this->assertFileExists($pitRepo . '/.git/rr-cache/' . $pitHash . '/preimage');
+        $this->assertFileExists($pitRepo . '/.git/rr-cache/' . $pitHash . '/postimage');
+        $this->assertSame(
+            file_get_contents($gitRepo . '/.git/rr-cache/' . $gitHash . '/preimage'),
+            file_get_contents($pitRepo . '/.git/rr-cache/' . $pitHash . '/preimage'),
+        );
+        $this->assertSame(
+            file_get_contents($gitRepo . '/.git/rr-cache/' . $gitHash . '/postimage'),
+            file_get_contents($pitRepo . '/.git/rr-cache/' . $pitHash . '/postimage'),
+        );
+    }
+
     private function git(string $cmd): string
     {
         return shell_exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($this->tmpDir), $cmd)) ?? '';
+    }
+
+    private function gitIn(string $dir, string $cmd): string
+    {
+        return shell_exec(sprintf('cd %s && git %s 2>&1', escapeshellarg($dir), $cmd)) ?? '';
+    }
+
+    private function gitWithExit(string $dir, string $cmd): int
+    {
+        exec(sprintf('cd %s && git %s >/dev/null 2>&1', escapeshellarg($dir), $cmd), $output, $exitCode);
+
+        return $exitCode;
+    }
+
+    private function writeFile(string $dir, string $path, string $content): void
+    {
+        file_put_contents($dir . '/' . $path, $content);
     }
 }

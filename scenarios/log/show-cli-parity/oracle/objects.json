@@ -1,0 +1,114 @@
+[
+    {
+        "hash": "02a80bd33b08254a11f07fe9e09635fc6a621877",
+        "type": "commit",
+        "size": 223,
+        "content": "tree 9e5899d939cac850e917c931f9f69482bf8b257a\nparent 3480a31f99a52b92b552c26ef443ba8e8f034f53\nauthor Test User <test@example.com> 1705795202 +0000\ncommitter Test User <test@example.com> 1705795202 +0000\n\nMain branch update\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "0446f530ae7bda3e54536481be1f1155eca0436c",
+        "type": "commit",
+        "size": 224,
+        "content": "tree 5befbce1af15afdf8c3b7d9a9ae24739d086c176\nparent 3480a31f99a52b92b552c26ef443ba8e8f034f53\nauthor Test User <test@example.com> 1705795201 +0000\ncommitter Test User <test@example.com> 1705795201 +0000\n\nFeature branch work\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "066d6bcc355373b513505ca41c2d0fde1f49e227",
+        "type": "tree",
+        "size": 107,
+        "content": "100644 blob 06d707374951c9fb07a92bd40fa2ba9a06585606\tREADME.md\n040000 tree cf01a0936121fa54887b02288bd656c74f7bc202\tdocs\n100644 blob bac0ee79a7406f740faf7597ca3b863ff847490c\tfeature.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "06d707374951c9fb07a92bd40fa2ba9a06585606",
+        "type": "blob",
+        "size": 20,
+        "content": "initial\nmain update\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "1a643c8efbfff1f54ba83e3be5bf25e8625d79be",
+        "type": "blob",
+        "size": 9,
+        "content": "guide v1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2a08f1ff7a36256d778194ed4673c654a8244d7f",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob 1a643c8efbfff1f54ba83e3be5bf25e8625d79be\tguide.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "3480a31f99a52b92b552c26ef443ba8e8f034f53",
+        "type": "commit",
+        "size": 171,
+        "content": "tree 6dde8e60535aacd9bcd07416b3934146dd3cc3a0\nauthor Test User <test@example.com> 1705795200 +0000\ncommitter Test User <test@example.com> 1705795200 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "531df75e7c4941bd6f21f5f4f072fb4ef81f9959",
+        "type": "commit",
+        "size": 275,
+        "content": "tree 066d6bcc355373b513505ca41c2d0fde1f49e227\nparent 02a80bd33b08254a11f07fe9e09635fc6a621877\nparent 0446f530ae7bda3e54536481be1f1155eca0436c\nauthor Test User <test@example.com> 1705795204 +0000\ncommitter Test User <test@example.com> 1705795204 +0000\n\nMerge branch 'feature'\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "5befbce1af15afdf8c3b7d9a9ae24739d086c176",
+        "type": "tree",
+        "size": 107,
+        "content": "100644 blob e79c5e8f964493290a409888d5413a737e8e5dd5\tREADME.md\n040000 tree 2a08f1ff7a36256d778194ed4673c654a8244d7f\tdocs\n100644 blob bac0ee79a7406f740faf7597ca3b863ff847490c\tfeature.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6dde8e60535aacd9bcd07416b3934146dd3cc3a0",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob e79c5e8f964493290a409888d5413a737e8e5dd5\tREADME.md\n040000 tree 2a08f1ff7a36256d778194ed4673c654a8244d7f\tdocs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "9e5899d939cac850e917c931f9f69482bf8b257a",
+        "type": "tree",
+        "size": 68,
+        "content": "100644 blob 06d707374951c9fb07a92bd40fa2ba9a06585606\tREADME.md\n040000 tree cf01a0936121fa54887b02288bd656c74f7bc202\tdocs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "bac0ee79a7406f740faf7597ca3b863ff847490c",
+        "type": "blob",
+        "size": 13,
+        "content": "feature work\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "cf01a0936121fa54887b02288bd656c74f7bc202",
+        "type": "tree",
+        "size": 37,
+        "content": "100644 blob efe93e726707a43c1408c9eb828f4b6b4ed04585\tguide.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "e79c5e8f964493290a409888d5413a737e8e5dd5",
+        "type": "blob",
+        "size": 8,
+        "content": "initial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ed1fd148dac9ca640e440a8bb7c5541a59ad42a5",
+        "type": "tag",
+        "size": 131,
+        "content": "object 02a80bd33b08254a11f07fe9e09635fc6a621877\ntype commit\ntag v1\ntagger Test User <test@example.com> 1705795203 +0000\n\nRelease 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "efe93e726707a43c1408c9eb828f4b6b4ed04585",
+        "type": "blob",
+        "size": 9,
+        "content": "guide v2\n",
+        "encoding": "utf-8"
+    }
+]

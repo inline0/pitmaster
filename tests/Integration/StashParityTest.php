@@ -163,6 +163,50 @@ final class StashParityTest extends TestCase
         $this->assertSame(trim($this->gitIn($gitDir, 'stash list')), $this->formatList($stash));
     }
 
+    #[Test]
+    public function stashWithUntrackedFilesMatchesGit(): void
+    {
+        $source = $this->tmpDir . '/source-untracked';
+        $pitDir = $this->tmpDir . '/pit-untracked';
+        $gitDir = $this->tmpDir . '/git-untracked';
+        $this->createBaseRepo($source);
+        $this->copyRepo($source, $pitDir);
+        $this->copyRepo($source, $gitDir);
+
+        file_put_contents($pitDir . '/notes.txt', "notes\n");
+        file_put_contents($gitDir . '/notes.txt', "notes\n");
+
+        $pitRepo = Pitmaster::open($pitDir);
+        $stash = new Stash(
+            $pitRepo->objectDatabase(),
+            $pitRepo->refDatabase(),
+            $pitRepo->gitDir(),
+            $pitRepo->workDir(),
+        );
+        putenv('GIT_AUTHOR_DATE=@1700000030 +0000');
+        putenv('GIT_COMMITTER_DATE=@1700000030 +0000');
+        $stash->push('untracked stash', true);
+        putenv('GIT_AUTHOR_DATE');
+        putenv('GIT_COMMITTER_DATE');
+
+        $this->gitWithEnv($gitDir, [
+            'GIT_AUTHOR_DATE' => '@1700000030 +0000',
+            'GIT_COMMITTER_DATE' => '@1700000030 +0000',
+        ], 'stash push -u -m ' . escapeshellarg('untracked stash'));
+
+        $this->assertFalse(file_exists($pitDir . '/notes.txt'));
+        $this->assertFalse(file_exists($gitDir . '/notes.txt'));
+
+        $stash->apply();
+        $this->gitIn($gitDir, 'stash apply');
+
+        $this->assertSame(file_get_contents($gitDir . '/notes.txt'), file_get_contents($pitDir . '/notes.txt'));
+        $this->assertSame(
+            $this->gitIn($gitDir, 'status --porcelain=v2'),
+            $this->gitIn($pitDir, 'status --porcelain=v2'),
+        );
+    }
+
     private function createBaseRepo(string $path): void
     {
         mkdir($path, 0777, true);

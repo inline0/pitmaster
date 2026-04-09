@@ -47,14 +47,15 @@ final class Rerere
      */
     public function record(string $conflicted, string $resolved): void
     {
-        $hash = $this->conflictHash($conflicted);
+        $normalized = $this->normalizeConflict($conflicted);
+        $hash = sha1($normalized);
         $cacheDir = $this->cacheDir($hash);
 
         if (!is_dir($cacheDir)) {
             mkdir($cacheDir, 0777, true);
         }
 
-        file_put_contents($cacheDir . '/preimage', $conflicted);
+        file_put_contents($cacheDir . '/preimage', $normalized);
         file_put_contents($cacheDir . '/postimage', $resolved);
     }
 
@@ -65,12 +66,13 @@ final class Rerere
      */
     public function resolve(string $conflicted): ?string
     {
-        $hash = $this->conflictHash($conflicted);
-        $postimage = $this->cacheDir($hash) . '/postimage';
+        $cacheDir = $this->findMatchingCacheDir($conflicted);
 
-        if (!is_file($postimage)) {
+        if ($cacheDir === null) {
             return null;
         }
+
+        $postimage = $cacheDir . '/postimage';
 
         $content = file_get_contents($postimage);
 
@@ -82,10 +84,9 @@ final class Rerere
      */
     public function forget(string $conflicted): void
     {
-        $hash = $this->conflictHash($conflicted);
-        $cacheDir = $this->cacheDir($hash);
+        $cacheDir = $this->findMatchingCacheDir($conflicted);
 
-        if (is_dir($cacheDir)) {
+        if ($cacheDir !== null && is_dir($cacheDir)) {
             foreach (scandir($cacheDir) as $file) {
                 if ($file !== '.' && $file !== '..') {
                     unlink($cacheDir . '/' . $file);
@@ -130,15 +131,102 @@ final class Rerere
      */
     private function conflictHash(string $content): string
     {
-        // Normalize: strip branch labels from conflict markers
-        $normalized = preg_replace('/^<<<<<<< .+$/m', '<<<<<<<', $content);
-        $normalized = preg_replace('/^>>>>>>> .+$/m', '>>>>>>>', $normalized);
-
-        return sha1($normalized ?? $content);
+        return sha1($this->normalizeConflict($content));
     }
 
     private function cacheDir(string $hash): string
     {
         return $this->gitDir . '/rr-cache/' . $hash;
+    }
+
+    private function findMatchingCacheDir(string $conflicted): ?string
+    {
+        $direct = $this->cacheDir($this->conflictHash($conflicted));
+
+        if (is_file($direct . '/postimage') || is_file($direct . '/preimage')) {
+            return $direct;
+        }
+
+        $rrCache = $this->gitDir . '/rr-cache';
+        $normalized = $this->normalizeConflict($conflicted);
+
+        if (!is_dir($rrCache)) {
+            return null;
+        }
+
+        foreach (scandir($rrCache) as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $candidate = $rrCache . '/' . $entry;
+            $preimage = $candidate . '/preimage';
+
+            if (!is_file($preimage)) {
+                continue;
+            }
+
+            if (file_get_contents($preimage) === $normalized) {
+                return $candidate;
+            }
+        }
+
+        return null;
+    }
+
+    private function normalizeConflict(string $content): string
+    {
+        $lines = preg_split("/\r\n|\n|\r/", $content) ?: [];
+
+        if ($lines !== [] && end($lines) === '') {
+            array_pop($lines);
+        }
+
+        $normalized = [];
+        $count = count($lines);
+        $i = 0;
+
+        while ($i < $count) {
+            $line = $lines[$i];
+
+            if (!str_starts_with($line, '<<<<<<<')) {
+                $normalized[] = $line;
+                $i++;
+                continue;
+            }
+
+            $i++;
+            $ours = [];
+            $theirs = [];
+
+            while ($i < $count && $lines[$i] !== '=======') {
+                $ours[] = $lines[$i];
+                $i++;
+            }
+
+            if ($i >= $count) {
+                return $content;
+            }
+
+            $i++;
+
+            while ($i < $count && !str_starts_with($lines[$i], '>>>>>>>')) {
+                $theirs[] = $lines[$i];
+                $i++;
+            }
+
+            if ($i >= $count) {
+                return $content;
+            }
+
+            $normalized[] = '<<<<<<<';
+            array_push($normalized, ...$theirs);
+            $normalized[] = '=======';
+            array_push($normalized, ...$ours);
+            $normalized[] = '>>>>>>>';
+            $i++;
+        }
+
+        return implode("\n", $normalized) . "\n";
     }
 }

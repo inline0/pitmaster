@@ -16,6 +16,8 @@ final readonly class StatusEntry
         public string $path,
         public FileStatus $index,
         public FileStatus $worktree,
+        public ?string $origPath = null,
+        public ?int $renameScore = null,
     ) {
     }
 
@@ -33,6 +35,10 @@ final readonly class StatusEntry
 
         if ($this->index === FileStatus::Ignored) {
             return "!! {$this->path}";
+        }
+
+        if ($this->index === FileStatus::Renamed && $this->origPath !== null) {
+            return "{$x}{$y} {$this->origPath} -> {$this->path}";
         }
 
         return "{$x}{$y} {$this->path}";
