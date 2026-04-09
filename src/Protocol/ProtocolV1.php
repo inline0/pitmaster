@@ -92,8 +92,9 @@ final class ProtocolV1
             $request .= PktLine::encode("have {$have->hex}\n");
         }
 
+        // Fetch negotiation ends with "done"; unlike the want/have separator,
+        // Git does not send an extra flush after the terminating done packet.
         $request .= PktLine::encode("done\n");
-        $request .= PktLine::flush();
 
         return $request;
     }

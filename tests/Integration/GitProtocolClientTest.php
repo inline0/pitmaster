@@ -117,14 +117,14 @@ final class GitProtocolClientTest extends TestCase
         $request = ProtocolV1::buildFetchRequest([$mainRef]);
         $response = '';
 
-        for ($attempt = 0; $attempt < 3; $attempt++) {
+        for ($attempt = 0; $attempt < 10; $attempt++) {
             $response = $client->uploadPack($url, $request);
 
             if (str_contains($response, 'PACK')) {
                 break;
             }
 
-            usleep(100000);
+            usleep(250000);
         }
 
         $this->assertStringContainsString('PACK', $response);

@@ -80,18 +80,17 @@ final class ProtocolV1ParityTest extends TestCase
         $this->clearCaptures();
         Pitmaster::clone($remoteUrl, $pitClone);
 
-        $gitLines = array_slice($this->extractTracePayloads($gitTrace, 'fetch-pack>'), 0, 4);
+        $gitLines = array_slice($this->extractTracePayloads($gitTrace, 'fetch-pack>'), 0, 3);
         $pitLines = $this->decodeRequestLines(file_get_contents($this->capturePath('remote.git_git-upload-pack.body')) ?: '');
 
-        $this->assertSame(['want', '0000', 'done', '0000'], $this->lineKinds($pitLines));
-        $this->assertSame(['want', '0000', 'done', '0000'], $this->lineKinds($gitLines));
+        $this->assertSame(['want', '0000', 'done'], $this->lineKinds($pitLines));
+        $this->assertSame(['want', '0000', 'done'], $this->lineKinds($gitLines));
         $this->assertSame(
             $this->normalizeAgentLine($gitLines[0]),
             $this->normalizeAgentLine($pitLines[0]),
         );
         $this->assertSame('0000', $pitLines[1]);
         $this->assertSame('done', $pitLines[2]);
-        $this->assertSame('0000', $pitLines[3]);
     }
 
     #[Test]

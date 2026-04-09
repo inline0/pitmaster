@@ -19,6 +19,8 @@ use Pitmaster\Exceptions\ProtocolException;
 final class GitProtocolClient
 {
     private const DEFAULT_PORT = 9418;
+    private const NEGOTIATION_RETRY_DELAY_US = 250000;
+    private const NEGOTIATION_RETRY_LIMIT = 8;
 
     private int $timeout;
 
@@ -75,23 +77,25 @@ final class GitProtocolClient
      */
     public function uploadPack(string $url, string $request): string
     {
-        $response = $this->uploadPackOnce($url, $request);
+        $lastResponse = '';
 
-        if (str_contains($response, 'PACK') || trim($response) === '') {
-            return $response;
-        }
+        for ($attempt = 0; $attempt < self::NEGOTIATION_RETRY_LIMIT; $attempt++) {
+            $response = $this->uploadPackOnce($url, $request);
 
-        // Some git-daemon builds can yield only the initial negotiation pkt-line
-        // on the first attempt; retry the full exchange once before surfacing it.
-        if (str_starts_with($response, "0008NAK\n")) {
-            $retry = $this->uploadPackOnce($url, $request);
-
-            if ($retry !== '') {
-                return $retry;
+            if (str_contains($response, 'PACK') || trim($response) === '') {
+                return $response;
             }
+
+            $lastResponse = $response;
+
+            if (!$this->isNegotiationOnlyResponse($response)) {
+                return $response;
+            }
+
+            usleep(self::NEGOTIATION_RETRY_DELAY_US);
         }
 
-        return $response;
+        return $lastResponse;
     }
 
     private function uploadPackOnce(string $url, string $request): string
@@ -232,5 +236,16 @@ final class GitProtocolClient
         }
 
         return $data;
+    }
+
+    private function isNegotiationOnlyResponse(string $response): bool
+    {
+        $trimmed = trim($response);
+
+        if ($trimmed === '') {
+            return false;
+        }
+
+        return preg_match('/^(?:0008NAK\\n|0008ACK\\b.*\\n)+$/', $trimmed . "\n") === 1;
     }
 }

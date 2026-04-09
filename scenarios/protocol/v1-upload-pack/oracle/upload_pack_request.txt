@@ -1,4 +1,3 @@
 want 5325a18064e3eb0811cebe49686c026301d8e442 multi_ack_detailed no-done side-band-64k thin-pack no-progress ofs-delta deepen-since deepen-not agent=<normalized>
 0000
 done
-0000

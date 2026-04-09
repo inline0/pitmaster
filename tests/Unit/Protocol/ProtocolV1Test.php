@@ -41,6 +41,7 @@ final class ProtocolV1Test extends TestCase
         }
 
         $this->assertTrue($doneFound, 'Expected "done" in fetch request');
+        $this->assertStringEndsWith(PktLine::encode("done\n"), $request);
     }
 
     #[Test]
