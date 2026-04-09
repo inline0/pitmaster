@@ -33,6 +33,7 @@ final class MultiPackIndex
     private array $offsets = [];
 
     private int $objectCount = 0;
+    private int $hashBytes = 20;
 
     public static function open(string $path): ?self
     {
@@ -57,6 +58,7 @@ final class MultiPackIndex
 
         $version = $reader->readByte();
         $hashVersion = $reader->readByte(); // 1 = SHA-1, 2 = SHA-256
+        $midx->hashBytes = $hashVersion === 2 ? 32 : 20;
         $chunkCount = $reader->readByte();
         $_ = $reader->readByte(); // base MIDX count
         $packCount = $reader->readUint32();
@@ -64,16 +66,16 @@ final class MultiPackIndex
         // Read chunk lookup table
         $chunks = [];
 
-        for ($i = 0; $i < $chunkCount; $i++) {
+        for ($i = 0; $i <= $chunkCount; $i++) {
             $chunkId = $reader->readUint32();
-            $chunkOffset = $reader->readUint32();
-            // Upper 4 bytes of offset (for large files)
+            $chunkOffset = $reader->readUint64();
+
+            if ($chunkId === 0) {
+                break;
+            }
+
             $chunks[] = ['id' => $chunkId, 'offset' => $chunkOffset];
         }
-
-        // Trailing entry for end-of-chunks
-        $reader->readUint32();
-        $reader->readUint32();
 
         // Parse each chunk based on ID
         foreach ($chunks as $chunk) {
@@ -93,7 +95,9 @@ final class MultiPackIndex
 
                 case 0x4F49444C: // OIDL - OID lookup
                     for ($i = 0; $i < $midx->objectCount; $i++) {
-                        $midx->oids[$i] = $reader->readHash20();
+                        $midx->oids[$i] = $midx->hashBytes === 32
+                            ? $reader->readHash32()
+                            : $reader->readHash20();
                     }
                     break;
 
@@ -103,6 +107,29 @@ final class MultiPackIndex
                         $offset = $reader->readUint32();
                         $midx->offsets[$i] = ['pack' => $packIdx, 'offset' => $offset];
                     }
+                    break;
+
+                case 0x4C4F4646: // LOFF - Object large offsets
+                    $chunkEnd = $midx->chunkEndOffset($chunks, $chunk['id'], $reader->length());
+                    $entries = (int) (($chunkEnd - $reader->position()) / 8);
+                    $largeOffsets = [];
+
+                    for ($i = 0; $i < $entries; $i++) {
+                        $largeOffsets[$i] = $reader->readUint64();
+                    }
+
+                    foreach ($midx->offsets as $index => $offsetInfo) {
+                        if (($offsetInfo['offset'] & 0x80000000) === 0) {
+                            continue;
+                        }
+
+                        $largeIndex = $offsetInfo['offset'] & 0x7FFFFFFF;
+
+                        if (isset($largeOffsets[$largeIndex])) {
+                            $midx->offsets[$index]['offset'] = $largeOffsets[$largeIndex];
+                        }
+                    }
+
                     break;
             }
         }
@@ -164,5 +191,21 @@ final class MultiPackIndex
         }
 
         return $names;
+    }
+
+    /**
+     * @param array<int, array{id: int, offset: int}> $chunks
+     */
+    private function chunkEndOffset(array $chunks, int $chunkId, int $fileLength): int
+    {
+        foreach ($chunks as $index => $chunk) {
+            if ($chunk['id'] !== $chunkId) {
+                continue;
+            }
+
+            return $chunks[$index + 1]['offset'] ?? ($fileLength - ($this->hashBytes * 2));
+        }
+
+        return $fileLength - ($this->hashBytes * 2);
     }
 }

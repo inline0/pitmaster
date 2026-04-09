@@ -1,0 +1,21 @@
+{
+    "name": "reftable-read",
+    "category": "formats",
+    "description": "Compare Pitmaster reftable reads against Git-generated reftable refs and symrefs",
+    "operations": [
+        "reftable"
+    ],
+    "oracle_commands": {
+        "reftable": "cat .reftable.json"
+    },
+    "actual_commands": {
+        "reftable": "cat .reftable.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "reftable"
+        ],
+        "fsck_clean": true
+    }
+}

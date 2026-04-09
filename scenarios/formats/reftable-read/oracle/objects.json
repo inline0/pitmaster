@@ -1,0 +1,30 @@
+[
+    {
+        "hash": "62a557d61e8f4436cde2486b261ce45d5803fffd",
+        "type": "commit",
+        "size": 168,
+        "content": "tree ee2b05fae45d889061de2909c925f87dc8f57d80\nauthor Test User <test@pitmaster.dev> 1700300000 +0000\ncommitter Test User <test@pitmaster.dev> 1700300000 +0000\n\ninitial\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "93a9e06d23ffb27541048940052c7a076c7a195a",
+        "type": "blob",
+        "size": 8,
+        "content": "tracked\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b5b5a0dc6ef7034b2f72ea9abb28904d7b57d9da",
+        "type": "tag",
+        "size": 133,
+        "content": "object 62a557d61e8f4436cde2486b261ce45d5803fffd\ntype commit\ntag v1\ntagger Test User <test@pitmaster.dev> 1700300001 +0000\n\nRelease 1\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ee2b05fae45d889061de2909c925f87dc8f57d80",
+        "type": "tree",
+        "size": 39,
+        "content": "100644 blob 93a9e06d23ffb27541048940052c7a076c7a195a\ttracked.txt\n",
+        "encoding": "utf-8"
+    }
+]

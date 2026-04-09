@@ -1,0 +1,8 @@
+{
+    "symref": "refs/heads/main",
+    "refs": {
+        "refs/heads/feature": "62a557d61e8f4436cde2486b261ce45d5803fffd",
+        "refs/heads/main": "62a557d61e8f4436cde2486b261ce45d5803fffd",
+        "refs/tags/v1": "b5b5a0dc6ef7034b2f72ea9abb28904d7b57d9da"
+    }
+}

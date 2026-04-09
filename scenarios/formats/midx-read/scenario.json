@@ -1,0 +1,23 @@
+{
+    "name": "midx-read",
+    "category": "formats",
+    "description": "Compare Pitmaster multi-pack-index reads against a Git-generated MIDX",
+    "operations": [
+        "midx"
+    ],
+    "oracle_commands": {
+        "midx": "cat .midx.json"
+    },
+    "actual_commands": {
+        "midx": "cat .midx.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "midx"
+        ],
+        "fsck_clean": true
+    }
+}

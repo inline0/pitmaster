@@ -13,7 +13,7 @@ final class ColorDiff
     private const GREEN = "\033[32m";
     private const CYAN = "\033[36m";
     private const BOLD = "\033[1m";
-    private const RESET = "\033[0m";
+    private const RESET = "\033[m";
 
     /**
      * Colorize a unified diff output string.
@@ -24,12 +24,12 @@ final class ColorDiff
         $result = [];
 
         foreach ($lines as $line) {
-            if (str_starts_with($line, '+++') || str_starts_with($line, '---')) {
+            if (str_starts_with($line, 'index ') || str_starts_with($line, '+++') || str_starts_with($line, '---')) {
                 $result[] = self::BOLD . $line . self::RESET;
             } elseif (str_starts_with($line, '@@')) {
                 $result[] = self::CYAN . $line . self::RESET;
             } elseif (str_starts_with($line, '+')) {
-                $result[] = self::GREEN . $line . self::RESET;
+                $result[] = self::GREEN . '+' . self::RESET . self::GREEN . substr($line, 1) . self::RESET;
             } elseif (str_starts_with($line, '-')) {
                 $result[] = self::RED . $line . self::RESET;
             } elseif (str_starts_with($line, 'diff --git')) {

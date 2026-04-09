@@ -21,6 +21,7 @@ use Pitmaster\Encoding\BinaryReader;
 final class CommitGraph
 {
     private const MAGIC = "CGPH";
+    private const NO_PARENT = 0x70000000;
 
     /** @var array<int, int> */
     private array $fanout = [];
@@ -32,6 +33,7 @@ final class CommitGraph
     private array $commitData = [];
 
     private int $objectCount = 0;
+    private int $hashBytes = 20;
 
     public static function open(string $path): ?self
     {
@@ -56,16 +58,22 @@ final class CommitGraph
 
         $version = $reader->readByte();
         $hashVersion = $reader->readByte();
+        $graph->hashBytes = $hashVersion === 2 ? 32 : 20;
         $chunkCount = $reader->readByte();
         $_ = $reader->readByte(); // base graph count
 
         // Chunk lookup
         $chunks = [];
 
-        for ($i = 0; $i < $chunkCount; $i++) {
+        for ($i = 0; $i <= $chunkCount; $i++) {
             $chunkId = $reader->readUint32();
-            $chunkOffset = $reader->readUint32();
-            $reader->readUint32(); // upper offset
+
+            if ($chunkId === 0) {
+                $reader->readUint64();
+                break;
+            }
+
+            $chunkOffset = $reader->readUint64();
             $chunks[] = ['id' => $chunkId, 'offset' => $chunkOffset];
         }
 
@@ -83,24 +91,28 @@ final class CommitGraph
 
                 case 0x4F49444C: // OIDL - OID lookup
                     for ($i = 0; $i < $graph->objectCount; $i++) {
-                        $graph->oids[$i] = $reader->readHash20();
+                        $graph->oids[$i] = $graph->hashBytes === 32
+                            ? $reader->readHash32()
+                            : $reader->readHash20();
                     }
                     break;
 
                 case 0x43444154: // CDAT - Commit data
                     for ($i = 0; $i < $graph->objectCount; $i++) {
-                        $treeHash = $reader->readHash20();
+                        $treeHash = $graph->hashBytes === 32
+                            ? $reader->readHash32()
+                            : $reader->readHash20();
                         $parent1 = $reader->readUint32();
                         $parent2 = $reader->readUint32();
-                        $genAndTs = $reader->readUint32();
-                        $timestamp = $reader->readUint32();
-
-                        $generation = ($genAndTs >> 2) & 0x3FFFFFFF;
+                        $generationAndTimestamp = $reader->readUint32();
+                        $timestampLow = $reader->readUint32();
+                        $generation = $generationAndTimestamp >> 2;
+                        $timestamp = (($generationAndTimestamp & 0x3) << 32) | $timestampLow;
 
                         $graph->commitData[$i] = [
                             'tree' => $treeHash,
-                            'parent1' => $parent1,
-                            'parent2' => $parent2,
+                            'parent1' => $parent1 === self::NO_PARENT ? -1 : $parent1,
+                            'parent2' => $parent2 === self::NO_PARENT ? -1 : $parent2,
                             'generation' => $generation,
                             'timestamp' => $timestamp,
                         ];

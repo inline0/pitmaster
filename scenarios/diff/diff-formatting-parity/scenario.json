@@ -1,0 +1,23 @@
+{
+    "name": "diff-formatting-parity",
+    "category": "diff",
+    "description": "Compare Pitmaster word-diff and colorized unified diff output against git",
+    "operations": [
+        "diff_format"
+    ],
+    "oracle_commands": {
+        "diff_format": "cat .diff-format.json"
+    },
+    "actual_commands": {
+        "diff_format": "cat .diff-format.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "diff_format"
+        ],
+        "fsck_clean": true
+    }
+}

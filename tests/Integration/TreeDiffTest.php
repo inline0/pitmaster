@@ -135,4 +135,29 @@ final class TreeDiffTest extends TestCase
 
         $this->assertSame(['x.txt', 'y.txt'], $paths);
     }
+
+    #[Test]
+    public function renameDetectionMatchesGitDiffTreeSummary(): void
+    {
+        $this->writeFile('old.txt', "one\ntwo\nthree\n");
+        $this->git('add old.txt');
+        $this->git('commit -m "base"');
+        $tree1 = trim($this->git('rev-parse HEAD^{tree}'));
+
+        $this->git('mv old.txt new.txt');
+        $this->git('commit -m "rename"');
+        $tree2 = trim($this->git('rev-parse HEAD^{tree}'));
+
+        $gitSummary = trim($this->git("diff-tree -M --summary {$tree1} {$tree2}"));
+
+        $objects = new ObjectDatabase($this->tmpDir . '/.git/objects');
+        $treeDiff = new TreeDiff($objects);
+        $results = $treeDiff->diff(ObjectId::fromHex($tree1), ObjectId::fromHex($tree2));
+
+        $this->assertCount(1, $results);
+        $this->assertSame('old.txt', $results[0]->oldPath);
+        $this->assertSame('new.txt', $results[0]->newPath);
+        $this->assertSame('', trim($results[0]->format()));
+        $this->assertStringContainsString('rename old.txt => new.txt', $gitSummary);
+    }
 }

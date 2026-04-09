@@ -1,0 +1,9 @@
+{
+    "objectCount": 4,
+    "head": {
+        "hash": "6280f4b998ed8bf397a6e31a3507f165940f3d20",
+        "tree": "f2bbca27a17add453a28b9c1608bca90a2196a9d",
+        "timestamp": 1700100004,
+        "parentCount": 1
+    }
+}

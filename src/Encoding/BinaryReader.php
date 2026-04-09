@@ -102,6 +102,27 @@ final class BinaryReader
     }
 
     /**
+     * Read a 3-byte big-endian unsigned integer.
+     */
+    public function readUint24(): int
+    {
+        $data = $this->read(3);
+
+        return (ord($data[0]) << 16) | (ord($data[1]) << 8) | ord($data[2]);
+    }
+
+    /**
+     * Read an 8-byte big-endian unsigned integer.
+     */
+    public function readUint64(): int
+    {
+        $data = $this->read(8);
+        $parts = unpack('Nhigh/Nlow', $data);
+
+        return ((int) $parts['high'] << 32) | (int) $parts['low'];
+    }
+
+    /**
      * Read a 2-byte big-endian unsigned integer.
      */
     public function readUint16(): int

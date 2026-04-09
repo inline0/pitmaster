@@ -63,7 +63,7 @@ final class WordDiff
             }
         }
 
-        return $result;
+        return rtrim($result, "\n");
     }
 
     /**

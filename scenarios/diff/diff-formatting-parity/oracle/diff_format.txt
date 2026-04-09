@@ -1,0 +1,5 @@
+{
+    "word": "hello [-world-]{+planet+}",
+    "plain": "diff --git a/article.txt b/article.txt\nindex 3b18e51..9a4db2b 100644\n--- a/article.txt\n+++ b/article.txt\n@@ -1 +1 @@\n-hello world\n+hello planet\n",
+    "color": "G1sxbWRpZmYgLS1naXQgYS9hcnRpY2xlLnR4dCBiL2FydGljbGUudHh0G1ttChtbMW1pbmRleCAzYjE4ZTUxLi45YTRkYjJiIDEwMDY0NBtbbQobWzFtLS0tIGEvYXJ0aWNsZS50eHQbW20KG1sxbSsrKyBiL2FydGljbGUudHh0G1ttChtbMzZtQEAgLTEgKzEgQEAbW20KG1szMW0taGVsbG8gd29ybGQbW20KG1szMm0rG1ttG1szMm1oZWxsbyBwbGFuZXQbW20K"
+}

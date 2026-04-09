@@ -1,0 +1,23 @@
+{
+    "name": "pack-delta-codecs",
+    "category": "codecs",
+    "description": "Compare Pitmaster pack-header and delta codec reads against a Git-generated deltified pack",
+    "operations": [
+        "codec"
+    ],
+    "oracle_commands": {
+        "codec": "cat .codec.json"
+    },
+    "actual_commands": {
+        "codec": "cat .codec.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "codec"
+        ],
+        "fsck_clean": true
+    }
+}

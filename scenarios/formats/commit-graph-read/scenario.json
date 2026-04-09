@@ -1,0 +1,23 @@
+{
+    "name": "commit-graph-read",
+    "category": "formats",
+    "description": "Compare Pitmaster commit-graph metadata reads against a Git-generated commit-graph file",
+    "operations": [
+        "commit_graph"
+    ],
+    "oracle_commands": {
+        "commit_graph": "cat .commit-graph.json"
+    },
+    "actual_commands": {
+        "commit_graph": "cat .commit-graph.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "commit_graph"
+        ],
+        "fsck_clean": true
+    }
+}

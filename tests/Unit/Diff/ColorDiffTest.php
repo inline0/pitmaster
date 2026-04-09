@@ -16,8 +16,9 @@ final class ColorDiffTest extends TestCase
         $result = ColorDiff::colorize("+added line");
 
         self::assertStringContainsString("\033[32m", $result);
-        self::assertStringContainsString("+added line", $result);
-        self::assertStringContainsString("\033[0m", $result);
+        self::assertStringContainsString("+", $result);
+        self::assertStringContainsString("added line", $result);
+        self::assertStringContainsString("\033[m", $result);
     }
 
     #[Test]
@@ -27,7 +28,7 @@ final class ColorDiffTest extends TestCase
 
         self::assertStringContainsString("\033[31m", $result);
         self::assertStringContainsString("-removed line", $result);
-        self::assertStringContainsString("\033[0m", $result);
+        self::assertStringContainsString("\033[m", $result);
     }
 
     #[Test]
@@ -37,7 +38,7 @@ final class ColorDiffTest extends TestCase
 
         self::assertStringContainsString("\033[36m", $result);
         self::assertStringContainsString("@@ -1,3 +1,4 @@", $result);
-        self::assertStringContainsString("\033[0m", $result);
+        self::assertStringContainsString("\033[m", $result);
     }
 
     #[Test]

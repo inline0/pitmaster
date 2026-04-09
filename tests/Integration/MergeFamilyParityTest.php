@@ -41,6 +41,27 @@ final class MergeFamilyParityTest extends TestCase
     }
 
     #[Test]
+    public function cleanMergeCommitMatchesGit(): void
+    {
+        ['git' => $gitDir, 'pit' => $pitDir] = $this->createCleanMergePair();
+
+        $this->withDeterministicCommitDates(function () use ($gitDir, $pitDir): void {
+            $this->gitWithExit($gitDir, 'merge feature');
+            $repo = Pitmaster::open($pitDir);
+            $repo->merge('feature');
+        });
+
+        $this->assertSame($this->git($gitDir, 'status --porcelain=v2'), $this->git($pitDir, 'status --porcelain=v2'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%T HEAD'), $this->git($pitDir, 'show -s --format=%T HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%P HEAD'), $this->git($pitDir, 'show -s --format=%P HEAD'));
+        $this->assertSame($this->git($gitDir, 'show -s --format=%s HEAD'), $this->git($pitDir, 'show -s --format=%s HEAD'));
+        $this->assertSame($this->git($gitDir, 'ls-tree -r --name-only HEAD'), $this->git($pitDir, 'ls-tree -r --name-only HEAD'));
+        $this->assertSame($this->readGitFile($gitDir, 'ORIG_HEAD'), $this->readGitFile($pitDir, 'ORIG_HEAD'));
+        $this->assertSame($this->reflogMessage($gitDir), $this->reflogMessage($pitDir));
+        $this->assertSame($this->reflogMessage($gitDir, 'refs/heads/main'), $this->reflogMessage($pitDir, 'refs/heads/main'));
+    }
+
+    #[Test]
     public function mergeConflictContinuationMatchesGit(): void
     {
         ['git' => $gitDir, 'pit' => $pitDir] = $this->createMergeConflictPair();
@@ -313,6 +334,26 @@ final class MergeFamilyParityTest extends TestCase
             $this->git($dir, 'checkout main');
             $this->writeFile($dir, 'a.txt', "line 1\nmain change\nline 3\n");
             $this->git($dir, 'add a.txt');
+            $this->git($dir, 'commit -m main');
+        });
+    }
+
+    /**
+     * @return array{git: string, pit: string}
+     */
+    private function createCleanMergePair(): array
+    {
+        return $this->createRepoPair(function (string $dir): void {
+            $this->writeFile($dir, 'shared.txt', "base\n");
+            $this->git($dir, 'add shared.txt');
+            $this->git($dir, 'commit -m base');
+            $this->git($dir, 'checkout -b feature');
+            $this->writeFile($dir, 'feature.txt', "feature\n");
+            $this->git($dir, 'add feature.txt');
+            $this->git($dir, 'commit -m feature');
+            $this->git($dir, 'checkout main');
+            $this->writeFile($dir, 'main.txt', "main\n");
+            $this->git($dir, 'add main.txt');
             $this->git($dir, 'commit -m main');
         });
     }

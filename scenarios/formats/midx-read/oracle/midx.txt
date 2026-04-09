@@ -1,0 +1,11 @@
+{
+    "objectCount": 7,
+    "packNames": [
+        "pack-one-614e0827719a28cb7bc363ba3e50062a34e7a62e.idx",
+        "pack-two-8fe9c3782e20f256f995fe8143f871969ce37428.idx"
+    ],
+    "lookup": {
+        "pack": 1,
+        "offset": 371
+    }
+}

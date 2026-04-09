@@ -48,8 +48,10 @@ foreach ($categories as $category) {
 }
 
 $implemented = $totals['full'] + $totals['partial'];
+$fullyDone = $totals['full'];
 $inScope = $totalFeatures - $totals['out-of-scope'];
-$percent = $inScope > 0 ? round(($implemented / $inScope) * 100, 1) : 0;
+$fullPercent = $inScope > 0 ? round(($fullyDone / $inScope) * 100, 1) : 0;
+$supportedPercent = $inScope > 0 ? round(($implemented / $inScope) * 100, 1) : 0;
 
 // Status icons
 $icons = [
@@ -65,10 +67,16 @@ $lines = [];
 $lines[] = '# Pitmaster Support Matrix';
 $lines[] = '';
 $lines[] = sprintf(
-    'Git feature coverage for Pitmaster. **%d/%d in-scope features implemented (%s%%).**',
-    $implemented,
+    'Git feature coverage for Pitmaster. **%d/%d in-scope features fully implemented and oracle-verified (%s%%).**',
+    $fullyDone,
     $inScope,
-    $percent,
+    $fullPercent,
+);
+$lines[] = sprintf(
+    'Partial support exists for **%d/%d** additional in-scope features (%s%% supported to some degree).',
+    $totals['partial'],
+    $inScope,
+    $supportedPercent,
 );
 $lines[] = '';
 $lines[] = sprintf('Generated: %s', date('Y-m-d H:i'));
@@ -122,14 +130,19 @@ $lines[] = '';
 
 foreach ($categories as $category) {
     $stats = $categoryStats[$category['name']];
-    $catImpl = $stats['full'] + $stats['partial'];
     $catScope = $stats['total'] - $stats['out-of-scope'];
 
     $lines[] = sprintf('### %s', $category['name']);
 
     if ($catScope > 0) {
-        $catPercent = round(($catImpl / $catScope) * 100, 1);
-        $lines[] = sprintf('*%d/%d implemented (%s%%)*', $catImpl, $catScope, $catPercent);
+        $catFullPercent = round(($stats['full'] / $catScope) * 100, 1);
+        $lines[] = sprintf(
+            '*%d/%d fully done (%s%%), %d partial*',
+            $stats['full'],
+            $catScope,
+            $catFullPercent,
+            $stats['partial'],
+        );
     }
 
     $lines[] = '';
@@ -150,12 +163,12 @@ foreach ($categories as $category) {
 $lines[] = '## Progress';
 $lines[] = '';
 $barWidth = 40;
-$filledWidth = (int) round(($percent / 100) * $barWidth);
+$filledWidth = (int) round(($fullPercent / 100) * $barWidth);
 $emptyWidth = $barWidth - $filledWidth;
 $bar = str_repeat('#', $filledWidth) . str_repeat('-', $emptyWidth);
-$lines[] = sprintf('```', );
-$lines[] = sprintf('[%s] %s%%', $bar, $percent);
-$lines[] = sprintf('');
+$lines[] = '```';
+$lines[] = sprintf('[%s] %s%% fully done', $bar, $fullPercent);
+$lines[] = '';
 $lines[] = sprintf('Full:     %d features', $totals['full']);
 $lines[] = sprintf('Partial:  %d features', $totals['partial']);
 $lines[] = sprintf('Todo:     %d features', $totals['planned']);
@@ -168,20 +181,21 @@ $content = implode("\n", $lines);
 file_put_contents($outputPath, $content);
 
 fwrite(STDOUT, sprintf(
-    "Generated SUPPORT_MATRIX.md: %d/%d in-scope features implemented (%s%%)\n",
-    $implemented,
+    "Generated SUPPORT_MATRIX.md: %d/%d in-scope features fully done (%s%%), %d partial (%s%% supported)\n",
+    $fullyDone,
     $inScope,
-    $percent,
+    $fullPercent,
+    $totals['partial'],
+    $supportedPercent,
 ));
 
 // Also print summary to stdout
 fwrite(STDOUT, "\n");
 
 foreach ($categoryStats as $name => $stats) {
-    $catImpl = $stats['full'] + $stats['partial'];
     $catScope = $stats['total'] - $stats['out-of-scope'];
-    $catPercent = $catScope > 0 ? round(($catImpl / $catScope) * 100, 1) : 0;
+    $catPercent = $catScope > 0 ? round(($stats['full'] / $catScope) * 100, 1) : 0;
 
-    $marker = $catPercent >= 100 ? 'DONE' : ($catPercent > 0 ? 'WIP ' : '    ');
-    fwrite(STDOUT, sprintf("  %s  %-25s %d/%d (%s%%)\n", $marker, $name, $catImpl, $catScope, $catPercent));
+    $marker = ($stats['full'] === $catScope && $stats['partial'] === 0) ? 'DONE' : (($stats['full'] > 0 || $stats['partial'] > 0) ? 'WIP ' : '    ');
+    fwrite(STDOUT, sprintf("  %s  %-25s %d/%d full, %d partial (%s%% full)\n", $marker, $name, $stats['full'], $catScope, $stats['partial'], $catPercent));
 }
