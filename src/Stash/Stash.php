@@ -18,7 +18,9 @@ use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\Reflog;
+use Pitmaster\Status\FileStatus;
 use Pitmaster\Status\GitIgnore;
+use Pitmaster\Status\WorkingTreeStatus;
 use Pitmaster\Storage\ObjectDatabase;
 
 /**
@@ -85,7 +87,8 @@ final class Stash
         $this->objects->write($indexCommit);
 
         // Build tree from worktree (including unstaged changes)
-        $worktreeTreeId = $this->buildTreeFromWorktree($index, $includeUntracked);
+        $dirtyPaths = [];
+        $worktreeTreeId = $this->buildTreeFromWorktree($index, $headId, $includeUntracked, $dirtyPaths);
 
         // Create stash commit (worktree state, parents = HEAD + index commit)
         $stashContent = Commit::buildContent(
@@ -112,7 +115,7 @@ final class Stash
         );
 
         // Reset worktree to HEAD
-        $this->resetToHead($headId);
+        $this->resetToHead($headId, $dirtyPaths);
 
         return $stashId;
     }
@@ -271,37 +274,75 @@ final class Stash
         return $this->writeTreeNode($root);
     }
 
-    private function buildTreeFromWorktree(Index $index, bool $includeUntracked): ObjectId
+    /**
+     * @param array<string, true> $dirtyPaths
+     */
+    private function buildTreeFromWorktree(Index $index, ObjectId $headId, bool $includeUntracked, array &$dirtyPaths = []): ObjectId
     {
         $root = [];
-        $tracked = [];
+        $modified = [];
+        $deleted = [];
+        $untracked = [];
+        $status = new WorkingTreeStatus($this->objects, $this->workDir, $this->gitDir);
 
-        foreach ($index->entries() as $entry) {
-            $fullPath = $this->workDir . '/' . $entry->path;
-            $tracked[$entry->path] = true;
-
-            if (is_file($fullPath)) {
-                $content = file_get_contents($fullPath);
-                $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
-                $this->objects->write($blob);
-                $worktreeEntry = IndexEntry::create($entry->path, $blob->id, $entry->mode);
-            } else {
-                $worktreeEntry = $entry;
+        foreach ($status->compute($index, $headId) as $entry) {
+            if ($entry->index === FileStatus::Ignored) {
+                continue;
             }
 
+            if ($entry->index === FileStatus::Untracked) {
+                if ($includeUntracked) {
+                    $untracked[] = $entry->path;
+                }
+
+                continue;
+            }
+
+            if ($entry->worktree === FileStatus::Deleted) {
+                $deleted[$entry->path] = true;
+                continue;
+            }
+
+            if ($entry->worktree !== FileStatus::Unmodified || $entry->index !== FileStatus::Unmodified) {
+                $modified[$entry->path] = true;
+                $dirtyPaths[$entry->path] = true;
+            }
+        }
+
+        foreach ($index->entries() as $entry) {
+            if (isset($deleted[$entry->path])) {
+                continue;
+            }
+
+            if (!isset($modified[$entry->path])) {
+                $parts = explode('/', $entry->path);
+                $this->insertIntoTreeNode($root, $parts, $entry);
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $entry->path;
+
+            if (!is_file($fullPath)) {
+                continue;
+            }
+
+            $content = file_get_contents($fullPath);
+            $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
+            $this->objects->write($blob);
             $parts = explode('/', $entry->path);
-            $this->insertIntoTreeNode($root, $parts, $worktreeEntry);
+            $this->insertIntoTreeNode($root, $parts, IndexEntry::create($entry->path, $blob->id, $entry->mode));
         }
 
         if ($includeUntracked) {
             $ignore = GitIgnore::forRepo($this->workDir);
 
-            foreach ($this->scanWorktree($this->workDir, '', $ignore) as $path) {
-                if (isset($tracked[$path])) {
+            foreach ($untracked as $path) {
+                $fullPath = $this->workDir . '/' . $path;
+
+                if ($ignore->isIgnored($path, false) || !is_file($fullPath)) {
                     continue;
                 }
 
-                $fullPath = $this->workDir . '/' . $path;
                 $content = file_get_contents($fullPath);
                 $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
                 $this->objects->write($blob);
@@ -356,7 +397,10 @@ final class Stash
         return $tree->id;
     }
 
-    private function resetToHead(ObjectId $headId): void
+    /**
+     * @param array<string, true> $dirtyPaths
+     */
+    private function resetToHead(ObjectId $headId, array $dirtyPaths = []): void
     {
         $commit = $this->objects->read($headId);
 
@@ -364,27 +408,47 @@ final class Stash
             return;
         }
 
-        $treeMap = $this->flattenTree($commit->tree);
-        $index = new Index($this->hashBytes());
+        $treeEntries = $this->flattenTreeEntries($commit->tree);
+        $currentIndex = Index::open($this->gitDir . '/index', $this->hashBytes());
+        $currentEntries = $currentIndex->entries();
 
-        foreach ($treeMap as $path => $hash) {
-            $blob = $this->objects->read(ObjectId::fromHex($hash));
-
-            if ($blob instanceof Blob) {
-                $fullPath = $this->workDir . '/' . $path;
-                $dir = dirname($fullPath);
-
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-
-                file_put_contents($fullPath, $blob->content);
-                $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
-                $index->addEntry($entry);
-            }
+        if ($dirtyPaths === []) {
+            $dirtyPaths = $this->dirtyPathSet($currentIndex, $headId);
         }
 
-        $this->pruneWorktreeToTrackedPaths(array_keys($treeMap));
+        $index = new Index($this->hashBytes());
+
+        foreach ($treeEntries as $path => $entryInfo) {
+            $currentEntry = $currentEntries[$path] ?? null;
+
+            if (
+                $currentEntry !== null
+                && !isset($dirtyPaths[$path])
+                && $currentEntry->hash->hex === $entryInfo['hash']
+                && $currentEntry->mode === $entryInfo['mode']
+            ) {
+                $index->addEntry($currentEntry);
+                continue;
+            }
+
+            $blob = $this->objects->read(ObjectId::fromHex($entryInfo['hash']));
+
+            if (!$blob instanceof Blob) {
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $blob->content);
+            $index->addEntry(IndexEntry::fromStat($path, $blob->id, $fullPath));
+        }
+
+        $this->pruneWorktreeToTrackedPaths(array_keys($treeEntries));
 
         IndexWriter::write($index, $this->gitDir . '/index');
     }
@@ -495,23 +559,69 @@ final class Stash
     private function flattenTree(ObjectId $treeId, string $prefix = ''): array
     {
         $result = [];
+        $this->flattenTreeInto($treeId, $prefix, $result);
+
+        return $result;
+    }
+
+    /**
+     * @param array<string, string> $result
+     */
+    private function flattenTreeInto(ObjectId $treeId, string $prefix, array &$result): void
+    {
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return $result;
+            return;
         }
 
         foreach ($tree->entries as $entry) {
             $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
             if ($entry->isTree()) {
-                $result = array_merge($result, $this->flattenTree($entry->hash, $fullPath));
-            } else {
-                $result[$fullPath] = $entry->hash->hex;
+                $this->flattenTreeInto($entry->hash, $fullPath, $result);
+                continue;
             }
+
+            $result[$fullPath] = $entry->hash->hex;
         }
+    }
+
+    /**
+     * @return array<string, array{hash: string, mode: int}>
+     */
+    private function flattenTreeEntries(ObjectId $treeId, string $prefix = ''): array
+    {
+        $result = [];
+        $this->flattenTreeEntriesInto($treeId, $prefix, $result);
 
         return $result;
+    }
+
+    /**
+     * @param array<string, array{hash: string, mode: int}> $result
+     */
+    private function flattenTreeEntriesInto(ObjectId $treeId, string $prefix, array &$result): void
+    {
+        $tree = $this->objects->read($treeId);
+
+        if (!$tree instanceof Tree) {
+            return;
+        }
+
+        foreach ($tree->entries as $entry) {
+            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
+
+            if ($entry->isTree()) {
+                $this->flattenTreeEntriesInto($entry->hash, $fullPath, $result);
+                continue;
+            }
+
+            $result[$fullPath] = [
+                'hash' => $entry->hash->hex,
+                'mode' => (int) octdec($entry->mode),
+            ];
+        }
     }
 
     private function readBlobContent(ObjectId $id): string
@@ -597,6 +707,27 @@ final class Stash
                 $this->removeEmptyParentDirectories(dirname($fullPath));
             }
         }
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    private function dirtyPathSet(Index $index, ObjectId $headId): array
+    {
+        $dirty = [];
+        $status = new WorkingTreeStatus($this->objects, $this->workDir, $this->gitDir);
+
+        foreach ($status->compute($index, $headId) as $entry) {
+            if ($entry->index === FileStatus::Ignored) {
+                continue;
+            }
+
+            if ($entry->index !== FileStatus::Unmodified || $entry->worktree !== FileStatus::Unmodified) {
+                $dirty[$entry->path] = true;
+            }
+        }
+
+        return $dirty;
     }
 
     private function hashAlgo(): string

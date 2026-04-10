@@ -15,6 +15,15 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class Blame
 {
+    /** @var array<string, string|null> */
+    private array $fileContentCache = [];
+
+    /** @var array<string, array<int, string>> */
+    private array $lineCache = [];
+
+    /** @var array<string, array<int, int>> */
+    private array $introducedCache = [];
+
     public function __construct(private readonly ObjectDatabase $objects)
     {
     }
@@ -47,14 +56,16 @@ final class Blame
         // Start with the current version (strip trailing empty line from \n)
         $currentLines = $this->lines($versions[0]['content']);
         $blame = array_fill(0, count($currentLines), null);
+        $remaining = count($currentLines);
 
         // Walk backwards assigning blame
-        for ($i = 0; $i < count($versions); $i++) {
+        for ($i = 0; $i < count($versions) && $remaining > 0; $i++) {
             $newerLines = $this->lines($versions[$i]['content']);
 
             foreach ($this->introducedLineIndexesForCommit($versions[$i]['commit'], $path, $newerLines) as $lineIndex) {
                 if ($blame[$lineIndex] === null) {
                     $blame[$lineIndex] = $versions[$i]['commit'];
+                    $remaining--;
                 }
             }
         }
@@ -89,8 +100,14 @@ final class Blame
      */
     private function introducedLineIndexesForCommit(Commit $commit, string $path, array $newerLines): array
     {
+        $cacheKey = $commit->id->hex . "\0" . $path;
+
+        if (isset($this->introducedCache[$cacheKey])) {
+            return $this->introducedCache[$cacheKey];
+        }
+
         if ($commit->parents === []) {
-            return array_keys($newerLines);
+            return $this->introducedCache[$cacheKey] = array_keys($newerLines);
         }
 
         $matchedNewIndexes = [];
@@ -121,7 +138,7 @@ final class Blame
             }
         }
 
-        return $introduced;
+        return $this->introducedCache[$cacheKey] = $introduced;
     }
 
     /**
@@ -133,6 +150,23 @@ final class Blame
     {
         $oldCount = count($olderLines);
         $newCount = count($newerLines);
+
+        if ($oldCount === 0 || $newCount === 0) {
+            return [];
+        }
+
+        if ($olderLines === $newerLines) {
+            return array_keys($newerLines);
+        }
+
+        if ($oldCount <= $newCount && $this->isPrefixMatch($olderLines, $newerLines, $oldCount)) {
+            return range(0, $oldCount - 1);
+        }
+
+        if ($oldCount <= $newCount && $this->isSuffixMatch($olderLines, $newerLines, $oldCount, $newCount)) {
+            return range($newCount - $oldCount, $newCount - 1);
+        }
+
         $lcs = array_fill(0, $oldCount + 1, array_fill(0, $newCount + 1, 0));
 
         for ($oldIndex = $oldCount - 1; $oldIndex >= 0; $oldIndex--) {
@@ -172,22 +206,56 @@ final class Blame
         return array_keys($matchedNewIndexes);
     }
 
+    private function isPrefixMatch(array $olderLines, array $newerLines, int $length): bool
+    {
+        for ($index = 0; $index < $length; $index++) {
+            if ($olderLines[$index] !== $newerLines[$index]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function isSuffixMatch(array $olderLines, array $newerLines, int $oldCount, int $newCount): bool
+    {
+        $offset = $newCount - $oldCount;
+
+        for ($index = 0; $index < $oldCount; $index++) {
+            if ($olderLines[$index] !== $newerLines[$offset + $index]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @return array<int, string>
      */
     private function lines(string $content): array
     {
+        if (isset($this->lineCache[$content])) {
+            return $this->lineCache[$content];
+        }
+
         $lines = explode("\n", $content);
 
         if ($lines !== [] && end($lines) === '') {
             array_pop($lines);
         }
 
-        return $lines;
+        return $this->lineCache[$content] = $lines;
     }
 
     private function getFileContent(ObjectId $treeId, string $path): ?string
     {
+        $cacheKey = $treeId->hex . "\0" . $path;
+
+        if (array_key_exists($cacheKey, $this->fileContentCache)) {
+            return $this->fileContentCache[$cacheKey];
+        }
+
         $parts = explode('/', $path);
         $current = $treeId;
 
@@ -207,12 +275,12 @@ final class Blame
             if ($i === count($parts) - 1) {
                 $blob = $this->objects->read($entry->hash);
 
-                return $blob instanceof Blob ? $blob->content : null;
+                return $this->fileContentCache[$cacheKey] = $blob instanceof Blob ? $blob->content : null;
             }
 
             $current = $entry->hash;
         }
 
-        return null;
+        return $this->fileContentCache[$cacheKey] = null;
     }
 }

@@ -2565,28 +2565,36 @@ final class Repository
     private function flattenTree(?ObjectId $treeId, string $prefix = ''): array
     {
         $result = [];
+        $this->flattenTreeInto($treeId, $prefix, $result);
 
+        return $result;
+    }
+
+    /**
+     * @param array<string, string> $result
+     */
+    private function flattenTreeInto(?ObjectId $treeId, string $prefix, array &$result): void
+    {
         if ($treeId === null) {
-            return $result;
+            return;
         }
 
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return $result;
+            return;
         }
 
         foreach ($tree->entries as $entry) {
             $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
             if ($entry->isTree()) {
-                $result = array_merge($result, $this->flattenTree($entry->hash, $fullPath));
-            } else {
-                $result[$fullPath] = $entry->hash->hex;
+                $this->flattenTreeInto($entry->hash, $fullPath, $result);
+                continue;
             }
-        }
 
-        return $result;
+            $result[$fullPath] = $entry->hash->hex;
+        }
     }
 
     /**
@@ -2597,31 +2605,39 @@ final class Repository
     private function flattenTreeEntries(?ObjectId $treeId, string $prefix = ''): array
     {
         $result = [];
+        $this->flattenTreeEntriesInto($treeId, $prefix, $result);
 
+        return $result;
+    }
+
+    /**
+     * @param array<string, array{hash: string, mode: int}> $result
+     */
+    private function flattenTreeEntriesInto(?ObjectId $treeId, string $prefix, array &$result): void
+    {
         if ($treeId === null) {
-            return $result;
+            return;
         }
 
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return $result;
+            return;
         }
 
         foreach ($tree->entries as $entry) {
             $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
             if ($entry->isTree()) {
-                $result = array_merge($result, $this->flattenTreeEntries($entry->hash, $fullPath));
-            } else {
-                $result[$fullPath] = [
-                    'hash' => $entry->hash->hex,
-                    'mode' => octdec($entry->mode),
-                ];
+                $this->flattenTreeEntriesInto($entry->hash, $fullPath, $result);
+                continue;
             }
-        }
 
-        return $result;
+            $result[$fullPath] = [
+                'hash' => $entry->hash->hex,
+                'mode' => (int) octdec($entry->mode),
+            ];
+        }
     }
 
     /**
@@ -2639,35 +2655,61 @@ final class Repository
         }
 
         $this->clearOperationState($preserveRefs);
-        $treeMap = $this->flattenTree($commit->tree);
         $treeEntries = $this->flattenTreeEntries($commit->tree);
-        $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
+        $materializedEntries = $this->materializedTreeEntries($treeEntries, $this->workDir);
+        $this->pruneMissingPaths(
+            array_map(
+                static fn (array $entry): string => $entry['hash'],
+                $materializedEntries,
+            ),
+            $this->workDir,
+            $pathsToPrune,
+        );
+        $currentEntries = $this->index()->entries();
+        $dirtyPaths = $this->currentDirtyPathSet();
         $index = new Index($this->objectHashBytes());
         $sparse = new SparseCheckout($this->gitDir);
         $sparseEnabled = $sparse->isEnabled();
 
-        foreach ($treeMap as $path => $hash) {
-            $blob = $this->objects->read(ObjectId::fromHex($hash));
+        foreach ($treeEntries as $path => $treeEntry) {
+            $extendedFlags = $sparseEnabled && !$sparse->includes($path)
+                ? IndexEntry::EXTENDED_SKIP_WORKTREE
+                : 0;
+            $currentEntry = $currentEntries[$path] ?? null;
+
+            if ($this->canReuseResetEntry($currentEntry, $treeEntry, $extendedFlags, isset($dirtyPaths[$path]))) {
+                $index->addEntry($this->copyIndexEntryWithExtendedFlags($currentEntry, $extendedFlags));
+                continue;
+            }
+
+            $blob = $this->objects->read(ObjectId::fromHex($treeEntry['hash']));
 
             if (!$blob instanceof Blob) {
                 continue;
             }
 
-            $fullPath = $this->workDir . '/' . $path;
-            $extendedFlags = $sparseEnabled && !$sparse->includes($path)
-                ? IndexEntry::EXTENDED_SKIP_WORKTREE
-                : 0;
-            $entry = is_file($fullPath)
-                ? IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags)
-                : IndexEntry::create(
+            if (!isset($materializedEntries[$path])) {
+                $index->addEntry(IndexEntry::create(
                     $path,
                     $blob->id,
-                    $treeEntries[$path]['mode'] ?? 0100644,
+                    $treeEntry['mode'],
                     strlen($blob->content),
                     0,
                     $extendedFlags,
-                );
-            $index->addEntry($entry);
+                ));
+
+                continue;
+            }
+
+            $fullPath = $this->workDir . '/' . $path;
+            $dir = dirname($fullPath);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            file_put_contents($fullPath, $blob->content);
+            $index->addEntry(IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags));
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
@@ -2728,6 +2770,97 @@ final class Repository
             $treeMap,
             static fn (string $path): bool => $sparse->includes($path),
             ARRAY_FILTER_USE_KEY,
+        );
+    }
+
+    /**
+     * @param array<string, array{hash: string, mode: int}> $treeEntries
+     * @return array<string, array{hash: string, mode: int}>
+     */
+    private function materializedTreeEntries(array $treeEntries, string $targetDir): array
+    {
+        if ($targetDir !== $this->workDir) {
+            return $treeEntries;
+        }
+
+        $sparse = new SparseCheckout($this->gitDir);
+
+        if (!$sparse->isEnabled()) {
+            return $treeEntries;
+        }
+
+        return array_filter(
+            $treeEntries,
+            static fn (array $entry, string $path): bool => $sparse->includes($path),
+            ARRAY_FILTER_USE_BOTH,
+        );
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    private function currentDirtyPathSet(): array
+    {
+        if ($this->isBare) {
+            return [];
+        }
+
+        $dirty = [];
+
+        foreach ($this->status() as $entry) {
+            if ($entry->index === FileStatus::Ignored) {
+                continue;
+            }
+
+            if ($entry->index !== FileStatus::Unmodified || $entry->worktree !== FileStatus::Unmodified) {
+                $dirty[$entry->path] = true;
+            }
+        }
+
+        return $dirty;
+    }
+
+    /**
+     * @param array{hash: string, mode: int} $treeEntry
+     */
+    private function canReuseResetEntry(?IndexEntry $entry, array $treeEntry, int $extendedFlags, bool $isDirty): bool
+    {
+        if ($entry === null || $isDirty) {
+            return false;
+        }
+
+        return $entry->hash->hex === $treeEntry['hash']
+            && $entry->mode === $treeEntry['mode']
+            && $entry->extendedFlags === $extendedFlags;
+    }
+
+    private function copyIndexEntryWithExtendedFlags(IndexEntry $entry, int $extendedFlags): IndexEntry
+    {
+        if ($entry->extendedFlags === $extendedFlags) {
+            return $entry;
+        }
+
+        $flags = $entry->flags & ~0x4000;
+
+        if ($extendedFlags !== 0) {
+            $flags |= 0x4000;
+        }
+
+        return new IndexEntry(
+            ctimeSec: $entry->ctimeSec,
+            ctimeNsec: $entry->ctimeNsec,
+            mtimeSec: $entry->mtimeSec,
+            mtimeNsec: $entry->mtimeNsec,
+            dev: $entry->dev,
+            ino: $entry->ino,
+            mode: $entry->mode,
+            uid: $entry->uid,
+            gid: $entry->gid,
+            fileSize: $entry->fileSize,
+            hash: $entry->hash,
+            flags: $flags,
+            path: $entry->path,
+            extendedFlags: $extendedFlags,
         );
     }
 

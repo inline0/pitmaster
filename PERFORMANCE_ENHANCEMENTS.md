@@ -52,6 +52,22 @@ Measured wins against the original pre-optimization report:
 - `transport.smart-http.push`: improved by roughly 3%
 - `transport.git.discovery`: fixed from a timeout-bound 30-second path to an actual transport baseline of roughly 11 ms median in the committed baseline
 
+Measured wins in the follow-up pass against the committed `baseline.json`:
+
+- `graph.blame.medium`: improved by roughly 92%
+- `graph.bisect.long-history`: improved by roughly 97%
+- `workflow.checkout.large`: improved by roughly 9%
+- `workflow.reset.hard.large`: improved by roughly 9%
+- `workflow.stash.tracked`: improved by roughly 29%
+- `workflow.stash.untracked`: improved by roughly 43%
+
+Follow-up pass notes:
+
+- the graph wins came from caching file-content/line reuse in `Blame` and replacing repeated ancestry checks in `Bisect` with a single known-good reachability pass
+- the checkout/reset wins came from reusing matching index entries and avoiding full-tree rewrites when only a subset of paths actually changed
+- the stash wins came from carrying dirtiness information through a single stash push cycle instead of rescanning the working tree for both stash-tree creation and reset cleanup
+- `transport.ssh.discovery` was remeasured in this pass but did not show a stable improvement, so no benchmark-only SSH tweak was shipped
+
 Implementation changes that produced the current wins:
 
 - `WorkingTreeStatus` now avoids the worst path-membership overhead and recursive worktree/tree churn

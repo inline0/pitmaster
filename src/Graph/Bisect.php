@@ -151,15 +151,21 @@ final class Bisect
     private function nextCandidate(ObjectId $bad, array $goods): ?ObjectId
     {
         $walker = new CommitWalker($this->objects);
-        $checker = new AncestryChecker($this->objects);
         $suspects = [];
+        $interesting = [];
+        $commitsByHex = [];
 
         foreach ($walker->walk($bad, 10000) as $commit) {
-            if ($this->isKnownGood($commit->id, $goods, $checker)) {
-                continue;
-            }
+            $interesting[$commit->id->hex] = true;
+            $commitsByHex[$commit->id->hex] = $commit;
+        }
 
-            $suspects[] = $commit;
+        $knownGood = $this->reachableInterestingFromGoods($goods, $interesting, $commitsByHex);
+
+        foreach ($commitsByHex as $hex => $commit) {
+            if (!isset($knownGood[$hex])) {
+                $suspects[] = $commit;
+            }
         }
 
         if ($suspects === []) {
@@ -235,6 +241,47 @@ final class Bisect
         }
 
         return $this->bestBisection($commits, $weights)?->id;
+    }
+
+    /**
+     * @param array<int, ObjectId> $goods
+     * @param array<string, true> $interesting
+     * @param array<string, Commit> $commitsByHex
+     * @return array<string, true>
+     */
+    private function reachableInterestingFromGoods(array $goods, array $interesting, array $commitsByHex): array
+    {
+        $reachable = [];
+        $stack = [];
+
+        foreach ($goods as $good) {
+            if (isset($interesting[$good->hex])) {
+                $stack[] = $good->hex;
+            }
+        }
+
+        while ($stack !== []) {
+            $hex = array_pop($stack);
+
+            if ($hex === null || isset($reachable[$hex])) {
+                continue;
+            }
+
+            $reachable[$hex] = true;
+            $commit = $commitsByHex[$hex] ?? null;
+
+            if (!$commit instanceof Commit) {
+                continue;
+            }
+
+            foreach ($commit->parents as $parentId) {
+                if (isset($interesting[$parentId->hex]) && !isset($reachable[$parentId->hex])) {
+                    $stack[] = $parentId->hex;
+                }
+            }
+        }
+
+        return $reachable;
     }
 
     /**
@@ -385,20 +432,6 @@ final class Bisect
         }
 
         return $goods;
-    }
-
-    /**
-     * @param array<int, ObjectId> $goods
-     */
-    private function isKnownGood(ObjectId $commitId, array $goods, AncestryChecker $checker): bool
-    {
-        foreach ($goods as $good) {
-            if ($commitId->equals($good) || $checker->isAncestor($commitId, $good)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private function appendCommandLog(string $command, ObjectId $commitId, ?callable $subjectResolver): void
