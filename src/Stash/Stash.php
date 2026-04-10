@@ -417,6 +417,7 @@ final class Stash
         }
 
         $index = new Index($this->hashBytes());
+        $nextEntries = [];
 
         foreach ($treeEntries as $path => $entryInfo) {
             $currentEntry = $currentEntries[$path] ?? null;
@@ -427,7 +428,7 @@ final class Stash
                 && $currentEntry->hash->hex === $entryInfo['hash']
                 && $currentEntry->mode === $entryInfo['mode']
             ) {
-                $index->addEntry($currentEntry);
+                $nextEntries[] = $currentEntry;
                 continue;
             }
 
@@ -445,11 +446,12 @@ final class Stash
             }
 
             file_put_contents($fullPath, $blob->content);
-            $index->addEntry(IndexEntry::fromStat($path, $blob->id, $fullPath));
+            $nextEntries[] = IndexEntry::fromStat($path, $blob->id, $fullPath);
         }
 
         $this->pruneWorktreeToTrackedPaths(array_keys($treeEntries));
 
+        $index->addEntries($nextEntries);
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 

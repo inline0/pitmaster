@@ -2674,10 +2674,11 @@ final class Repository
             $pathsToPrune,
         );
         $currentEntries = $this->index()->entries();
-        $dirtyPaths = $this->currentDirtyPathSet();
+        $dirtyPaths = $this->currentDirtyPathSet($currentEntries);
         $index = new Index($this->objectHashBytes());
         $sparse = new SparseCheckout($this->gitDir);
         $sparseEnabled = $sparse->isEnabled();
+        $nextEntries = [];
 
         foreach ($treeEntries as $path => $treeEntry) {
             $extendedFlags = $sparseEnabled && !$sparse->includes($path)
@@ -2686,7 +2687,7 @@ final class Repository
             $currentEntry = $currentEntries[$path] ?? null;
 
             if ($this->canReuseResetEntry($currentEntry, $treeEntry, $extendedFlags, isset($dirtyPaths[$path]))) {
-                $index->addEntry($this->copyIndexEntryWithExtendedFlags($currentEntry, $extendedFlags));
+                $nextEntries[] = $this->copyIndexEntryWithExtendedFlags($currentEntry, $extendedFlags);
                 continue;
             }
 
@@ -2697,14 +2698,14 @@ final class Repository
             }
 
             if (!isset($materializedEntries[$path])) {
-                $index->addEntry(IndexEntry::create(
+                $nextEntries[] = IndexEntry::create(
                     $path,
                     $blob->id,
                     $treeEntry['mode'],
                     strlen($blob->content),
                     0,
                     $extendedFlags,
-                ));
+                );
 
                 continue;
             }
@@ -2717,9 +2718,10 @@ final class Repository
             }
 
             file_put_contents($fullPath, $blob->content);
-            $index->addEntry(IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags));
+            $nextEntries[] = IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags);
         }
 
+        $index->addEntries($nextEntries);
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 
@@ -2805,9 +2807,10 @@ final class Repository
     }
 
     /**
+     * @param array<string, IndexEntry> $currentEntries
      * @return array<string, true>
      */
-    private function currentDirtyPathSet(): array
+    private function currentDirtyPathSet(array $currentEntries): array
     {
         if ($this->isBare) {
             return [];
@@ -2815,13 +2818,36 @@ final class Repository
 
         $dirty = [];
 
-        foreach ($this->status() as $entry) {
-            if ($entry->index === FileStatus::Ignored) {
+        foreach ($currentEntries as $path => $entry) {
+            if (($entry->extendedFlags & IndexEntry::EXTENDED_SKIP_WORKTREE) !== 0) {
                 continue;
             }
 
-            if ($entry->index !== FileStatus::Unmodified || $entry->worktree !== FileStatus::Unmodified) {
-                $dirty[$entry->path] = true;
+            $fullPath = $this->workDir . '/' . $path;
+
+            if (!is_file($fullPath)) {
+                $dirty[$path] = true;
+                continue;
+            }
+
+            $size = filesize($fullPath);
+
+            if ($size === false || $size !== $entry->fileSize) {
+                $dirty[$path] = true;
+                continue;
+            }
+
+            $content = file_get_contents($fullPath);
+
+            if ($content === false) {
+                $dirty[$path] = true;
+                continue;
+            }
+
+            $contentHash = ObjectId::compute(ObjectType::Blob, $content, $entry->hash->algo);
+
+            if (!$contentHash->equals($entry->hash)) {
+                $dirty[$path] = true;
             }
         }
 
@@ -4434,6 +4460,13 @@ final class Repository
     private function buildPushPackDataForUpdates(array $updates, array $remoteRefs): string
     {
         $objects = [];
+        $excluded = [];
+
+        foreach ($remoteRefs as $remoteId) {
+            if ($this->objects->exists($remoteId)) {
+                $this->collectReachableObjects($remoteId, $excluded);
+            }
+        }
 
         foreach ($updates as $update) {
             if ($update['new']->equals($this->zeroObjectId())) {
@@ -4441,14 +4474,6 @@ final class Repository
             }
 
             $this->collectReachableObjects($update['new'], $objects);
-        }
-
-        $excluded = [];
-
-        foreach ($remoteRefs as $remoteId) {
-            if ($this->objects->exists($remoteId)) {
-                $this->collectReachableObjects($remoteId, $excluded);
-            }
         }
 
         foreach (array_keys($excluded) as $hex) {

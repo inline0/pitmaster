@@ -770,6 +770,7 @@ final class BenchmarkRegistry
                 BenchmarkShell::git('clone --bare ' . escapeshellarg($suiteContext['source']) . ' ' . escapeshellarg($remoteDir), $suiteContext['workspace']);
 
                 return [
+                    'remote_dir' => $remoteDir,
                     'remote_url' => $suiteContext['server']->baseUrl() . '/remote-' . $iteration . '.git',
                     'dest_dir' => $destDir,
                 ];
@@ -779,6 +780,7 @@ final class BenchmarkRegistry
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
                 BenchmarkFilesystem::removeDirectory($iterationContext['dest_dir']);
+                BenchmarkFilesystem::removeDirectory($iterationContext['remote_dir']);
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext): void {
                 $suiteContext['server']->stop();
@@ -838,6 +840,7 @@ final class BenchmarkRegistry
                 return [
                     'iteration_root' => $iterationRoot,
                     'clone_dir' => $cloneDir,
+                    'remote_dir' => $remoteDir,
                 ];
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
@@ -846,6 +849,7 @@ final class BenchmarkRegistry
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
                 BenchmarkFilesystem::removeDirectory($iterationContext['iteration_root']);
+                BenchmarkFilesystem::removeDirectory($iterationContext['remote_dir']);
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext): void {
                 $suiteContext['server']->stop();
@@ -893,6 +897,7 @@ final class BenchmarkRegistry
                 return [
                     'iteration_root' => $iterationRoot,
                     'clone_dir' => $cloneDir,
+                    'remote_dir' => $remoteDir,
                 ];
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
@@ -901,6 +906,7 @@ final class BenchmarkRegistry
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
                 BenchmarkFilesystem::removeDirectory($iterationContext['iteration_root']);
+                BenchmarkFilesystem::removeDirectory($iterationContext['remote_dir']);
             },
             static function (BenchmarkRuntime $runtime, array $suiteContext): void {
                 $suiteContext['server']->stop();

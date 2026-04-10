@@ -23,11 +23,13 @@ final class BenchmarkRuntime
     {
         BenchmarkFilesystem::ensureDirectory($this->workspaceRoot());
         $path = sprintf(
-            '%s/%s-%d-%d',
+            '%s/%s-%d-%d-%s-%s',
             $this->workspaceRoot(),
             preg_replace('/[^A-Za-z0-9._-]+/', '-', $label) ?: 'run',
             time(),
+            hrtime(true),
             ++$this->workspaceCounter,
+            bin2hex(random_bytes(3)),
         );
 
         BenchmarkFilesystem::removeDirectory($path);

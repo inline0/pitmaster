@@ -82,6 +82,37 @@ Latest follow-up pass notes:
 - `bin/bench-baseline` now emits live case progress and a final slowest-case summary, which makes the full baseline refresh observable instead of looking hung on long runs
 - the canonical `bench/reports/baseline.json` has been refreshed in this pass; isolated before/after reruns should still be treated as the cleaner proof for individual optimization claims because the full-suite baseline remains noisier on a live workstation
 
+Measured wins in the newest follow-up pass against isolated before/after reruns:
+
+- `workflow.checkout.large`: `675.613ms -> 376.342ms` (`-44.30%`)
+- `workflow.reset.hard.large`: `626.010ms -> 123.331ms` (`-80.30%`)
+- `workflow.stash.tracked`: `101.952ms -> 49.638ms` (`-51.31%`)
+- `workflow.stash.untracked`: `53.174ms -> 49.682ms` (`-6.57%`) on the rerun taken after fixing benchmark workspace collisions
+
+Secondary transport movement measured against the current canonical baseline:
+
+- `transport.smart-http.clone`: `188.212ms -> 76.914ms` (`-59.13%`)
+- `transport.smart-http.fetch`: `85.617ms -> 48.138ms` (`-43.78%`)
+- `transport.smart-http.push`: `136.432ms -> 121.900ms` (`-10.65%`)
+
+Newest follow-up pass notes:
+
+- `resetWorktree()` now builds replacement indexes in memory and writes them once, instead of repeatedly re-sorting a growing index during large checkout/reset operations
+- `Stash::resetToHead()` now uses the same bulk index assembly pattern, which is where the tracked stash win came from
+- the smart HTTP improvements in this pass were indirect: clone/fetch/push benefit from the faster checkout/reset machinery used at the end of transport workflows
+- `BenchmarkRuntime::freshWorkspace()` now uses a high-entropy suffix instead of `time()` plus a per-process counter, which fixed workspace collisions when rerunning the same benchmark case quickly
+
+Measured wins in the current pass against recent isolated reruns:
+
+- `workflow.checkout.large`: `230.691ms -> 159.053ms` (`-31.05%`)
+
+Current pass notes:
+
+- `resetWorktree()` no longer asks the full `status()` pipeline for dirty paths just to decide index-entry reuse; it now checks only the current indexed paths directly against the worktree, which is where the new checkout win came from
+- `workflow.reset.hard.large` stayed effectively flat in this pass (`78.122ms -> 78.472ms`), so the retained value is the checkout win rather than a broad "reset got faster again" claim
+- the transport benchmark cases now clean up their per-iteration bare remotes correctly, which means warmups no longer poison `transport.smart-http.clone`, `fetch`, or `push`
+- an attempted smart HTTP code-path optimization batch was measured and reverted because isolated transport reruns regressed; the benchmark harness fixes were kept, the transport code changes were not
+
 Implementation changes that produced the current wins:
 
 - `WorkingTreeStatus` now avoids the worst path-membership overhead and recursive worktree/tree churn
