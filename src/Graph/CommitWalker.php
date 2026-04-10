@@ -35,12 +35,7 @@ final class CommitWalker
         $this->enqueue($queue, $from, $visited);
 
         while (!$queue->isEmpty() && count($commits) < $limit) {
-            $id = $queue->extract();
-            $object = $this->objects->read($id);
-
-            if (!$object instanceof Commit) {
-                continue;
-            }
+            ['id' => $id, 'commit' => $object] = $queue->extract();
 
             $commits[] = $object;
 
@@ -69,12 +64,7 @@ final class CommitWalker
         }
 
         while (!$queue->isEmpty() && count($commits) < $limit) {
-            $id = $queue->extract();
-            $object = $this->objects->read($id);
-
-            if (!$object instanceof Commit) {
-                continue;
-            }
+            ['id' => $id, 'commit' => $object] = $queue->extract();
 
             $commits[] = $object;
 
@@ -97,14 +87,11 @@ final class CommitWalker
 
         $visited[$id->hex] = true;
 
-        // Use the commit to get its timestamp for priority ordering.
-        // We read the object to get the timestamp, using it as priority
-        // so newer commits come first.
         $object = $this->objects->read($id);
 
         if ($object instanceof Commit) {
             $timestamp = $object->committerTimestamp() ?? 0;
-            $queue->insert($id, $timestamp);
+            $queue->insert(['id' => $id, 'commit' => $object], $timestamp);
         }
     }
 }

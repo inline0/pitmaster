@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Pitmaster\Bench\BenchmarkThresholds;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+if ($argc < 3) {
+    fwrite(STDERR, "Usage: ./bin/bench-verify <report.json> <thresholds.json>\n");
+    exit(1);
+}
+
+$report = json_decode((string) file_get_contents($argv[1]), true);
+
+if (!is_array($report)) {
+    fwrite(STDERR, "Invalid benchmark report JSON.\n");
+    exit(1);
+}
+
+$thresholds = BenchmarkThresholds::load($argv[2]);
+$violations = BenchmarkThresholds::violations($report, $thresholds);
+
+if ($violations === []) {
+    fwrite(STDOUT, "Benchmark thresholds satisfied.\n");
+    exit(0);
+}
+
+foreach ($violations as $violation) {
+    fwrite(STDERR, $violation . "\n");
+}
+
+exit(1);

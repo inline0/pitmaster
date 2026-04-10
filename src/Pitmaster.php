@@ -452,7 +452,7 @@ final class Pitmaster
                 self::writePackFile($repo->gitDir(), $client->fetchPack($url, $idxName), $idxName);
             }
 
-            $repo->objectDatabase()->packStore()->refresh();
+            $repo->objectDatabase()->refresh();
 
             return;
         }

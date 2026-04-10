@@ -157,4 +157,34 @@ final class CommitGraph
 
         return null;
     }
+
+    /**
+     * @return list<string>|null
+     */
+    public function parentHashes(string $hex): ?array
+    {
+        $data = $this->lookup($hex);
+
+        if ($data === null) {
+            return null;
+        }
+
+        $parents = [];
+
+        foreach (['parent1', 'parent2'] as $field) {
+            $index = $data[$field];
+
+            if ($index === -1) {
+                continue;
+            }
+
+            if ($index < 0 || $index >= $this->objectCount) {
+                return null;
+            }
+
+            $parents[] = $this->oids[$index];
+        }
+
+        return $parents;
+    }
 }

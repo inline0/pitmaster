@@ -3,6 +3,8 @@
 /.phpunit.result.cache
 /.phpstan/
 /.pitmaster/
+/bench/workspaces/
+/bench/reports/*.local.json
 composer.phar
 
 # Generated scenario outputs (oracle is committed, actual and reports are not)

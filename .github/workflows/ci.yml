@@ -93,6 +93,24 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: PITMASTER_TEST_JOBS=4 composer test:oracle
 
+  benchmark-smoke:
+    name: Benchmark Smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring
+          ini-values: memory_limit=512M
+      - run: composer install --no-interaction --prefer-dist
+      - run: git config --global user.email "ci@pitmaster.dev"
+      - run: git config --global user.name "CI"
+      - run: git config --global init.defaultBranch main
+      - run: composer bench -- --suite=smoke --runs=1 --warmups=0 --format=json --output=bench/reports/ci-smoke.local.json
+      - run: composer bench:verify -- bench/reports/ci-smoke.local.json bench/reports/smoke-thresholds.json
+
   oracle-smoke:
     name: Oracle Smoke (${{ matrix.scenario }})
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

@@ -6,6 +6,7 @@ namespace Pitmaster\Merge;
 
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
+use Pitmaster\Pack\CommitGraph;
 use Pitmaster\Storage\ObjectDatabase;
 
 /**
@@ -16,8 +17,10 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class MergeBase
 {
-    public function __construct(private readonly ObjectDatabase $objects)
-    {
+    public function __construct(
+        private readonly ObjectDatabase $objects,
+        private readonly ?CommitGraph $commitGraph = null,
+    ) {
     }
 
     /**
@@ -44,13 +47,9 @@ final class MergeBase
                 }
 
                 $ancestorsA[$hex] = true;
-                $commit = $this->objects->read(ObjectId::fromHex($hex));
-
-                if ($commit instanceof Commit) {
-                    foreach ($commit->parents as $parent) {
-                        if (!isset($ancestorsA[$parent->hex])) {
-                            $queueA[] = $parent->hex;
-                        }
+                foreach ($this->parentsOf($hex) as $parentHex) {
+                    if (!isset($ancestorsA[$parentHex])) {
+                        $queueA[] = $parentHex;
                     }
                 }
             }
@@ -64,13 +63,9 @@ final class MergeBase
                 }
 
                 $ancestorsB[$hex] = true;
-                $commit = $this->objects->read(ObjectId::fromHex($hex));
-
-                if ($commit instanceof Commit) {
-                    foreach ($commit->parents as $parent) {
-                        if (!isset($ancestorsB[$parent->hex])) {
-                            $queueB[] = $parent->hex;
-                        }
+                foreach ($this->parentsOf($hex) as $parentHex) {
+                    if (!isset($ancestorsB[$parentHex])) {
+                        $queueB[] = $parentHex;
                     }
                 }
             }
@@ -144,13 +139,9 @@ final class MergeBase
             }
 
             $visited[$hex] = true;
-            $commit = $this->objects->read(ObjectId::fromHex($hex));
-
-            if ($commit instanceof Commit) {
-                foreach ($commit->parents as $parent) {
-                    if (!isset($visited[$parent->hex])) {
-                        $queue[] = $parent->hex;
-                    }
+            foreach ($this->parentsOf($hex) as $parentHex) {
+                if (!isset($visited[$parentHex])) {
+                    $queue[] = $parentHex;
                 }
             }
         }
@@ -174,19 +165,36 @@ final class MergeBase
             }
 
             $ancestors[$hex] = true;
-            $commit = $this->objects->read(ObjectId::fromHex($hex));
-
-            if (!$commit instanceof Commit) {
-                continue;
-            }
-
-            foreach ($commit->parents as $parent) {
-                if (!isset($ancestors[$parent->hex])) {
-                    $queue[] = $parent->hex;
+            foreach ($this->parentsOf($hex) as $parentHex) {
+                if (!isset($ancestors[$parentHex])) {
+                    $queue[] = $parentHex;
                 }
             }
         }
 
         return $ancestors;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function parentsOf(string $hex): array
+    {
+        $graphParents = $this->commitGraph?->parentHashes($hex);
+
+        if ($graphParents !== null) {
+            return $graphParents;
+        }
+
+        $commit = $this->objects->read(ObjectId::fromHex($hex));
+
+        if (!$commit instanceof Commit) {
+            return [];
+        }
+
+        return array_map(
+            static fn (ObjectId $parent): string => $parent->hex,
+            $commit->parents,
+        );
     }
 }

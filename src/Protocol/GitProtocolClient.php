@@ -62,8 +62,9 @@ final class GitProtocolClient
             $request = "git-upload-pack {$parsed['path']}\0host={$parsed['host']}\0";
             fwrite($socket, PktLine::encode($request));
 
-            // Read ref advertisement
-            $response = $this->readAll($socket);
+            // The ref advertisement is a pkt-line stream terminated by flush.
+            // Reading until EOF turns discovery into a socket-timeout benchmark.
+            $response = $this->readUntilFlush($socket);
             $lines = PktLine::decode($response);
 
             return RefDiscovery::parse($lines);

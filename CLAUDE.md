@@ -48,12 +48,15 @@ After every meaningful work pass, run the full matrix from the repo root before 
 No partial sign-off. `composer test` is the full test matrix, not just PHPUnit. Upstream scenario fixtures must stay vendored under `fixtures/upstream`; scenario setup scripts and acquisition scripts must never depend on `/tmp` or `/private/tmp`.
 If multiple git binaries are available, run the representative smoke matrix with `PITMASTER_TEST_GIT_BINARIES=/path/git-a:/path/git-b phpunit --filter MultiGitVersionSmokeTest`.
 
+For performance work, add a benchmark or update an existing one before claiming a win. Use `composer bench -- --suite=smoke --runs=1 --warmups=0` for a quick harness check, `composer bench:baseline` for the full report, `composer bench:compare -- <before> <after>` for proof, `composer bench:summary -- <report>` for a readable roll-up, and `composer bench:verify -- <report> bench/reports/smoke-thresholds.json` when touching the smoke suite or CI thresholds.
+
 ## Autonomous Batch Protocol
 
 1. Default behavior is to keep working through related backlog items instead of stopping after a single fix. Target a substantial batch per autonomous pass unless a shared blocker or a red `./bin/verify-all` gate stops further work.
 2. A feature is not done until code, Git-backed integration coverage, scenario coverage, and support-matrix updates all land together.
 3. Run targeted checks while iterating, then run `./bin/verify-all` after each completed wave and again at the end of the pass if anything changed after the last wave gate.
 4. If a feature cannot honestly remain `DONE`, correct the claim immediately instead of leaving the overstatement in place.
+5. If a change is meant to improve performance, it is not done until the relevant benchmark report shows the delta and `./bin/verify-all` stays green.
 
 ## What This Is
 

@@ -121,6 +121,21 @@ composer test
 # Full verification: analysis + standards + full test matrix
 ./bin/verify-all
 
+# Benchmark smoke
+composer bench -- --suite=smoke --runs=1 --warmups=0
+
+# Full benchmark baseline
+composer bench:baseline
+
+# Compare two reports
+composer bench:compare -- bench/reports/baseline.json bench/reports/candidate.local.json
+
+# Print a sorted human summary
+composer bench:summary -- bench/reports/baseline.json
+
+# Verify the smoke report against committed thresholds
+composer bench:verify -- bench/reports/ci-smoke.local.json bench/reports/smoke-thresholds.json
+
 # Optional multi-git smoke matrix when multiple git binaries are installed
 PITMASTER_TEST_GIT_BINARIES=/path/to/git-2.45:/path/to/git-2.46 \
   phpunit --filter MultiGitVersionSmokeTest
@@ -135,6 +150,29 @@ composer cs
 The upstream oracle fixtures are vendored under [`fixtures/upstream`](fixtures/upstream), so the full regression corpus is runnable from a fresh checkout without machine-local `/tmp` dependencies. Use `composer test` for the full matrix and `./bin/verify-all` for release-grade verification.
 
 Feature work and fixture changes use the same bar: keep scenarios self-contained inside the repo, avoid absolute-path and machine-local-port snapshots, and do not treat a change as done until `./bin/verify-all` is green.
+
+## Performance
+
+Pitmaster now has a repo-local benchmark harness under [`bench/`](bench). Performance claims should be backed by measured before/after reports, not intuition.
+
+```bash
+# Run the fast benchmark subset
+composer bench -- --suite=smoke --runs=1 --warmups=0
+
+# Capture the full baseline report
+composer bench:baseline
+
+# Compare two benchmark reports
+composer bench:compare -- bench/reports/baseline.json bench/reports/post-opt.local.json
+
+# Print a sorted summary for a single report
+composer bench:summary -- bench/reports/baseline.json
+
+# Verify a report against the committed smoke thresholds
+composer bench:verify -- bench/reports/ci-smoke.local.json bench/reports/smoke-thresholds.json
+```
+
+Benchmark fixtures are deterministic and repo-local. They are generated under `bench/fixtures/repos` from committed definitions, not from `/tmp` or public network dependencies. The committed smoke thresholds live in [`bench/reports/smoke-thresholds.json`](bench/reports/smoke-thresholds.json), and CI verifies the smoke report against them. For optimization work, do not treat a change as done until the relevant benchmark moves in the right direction and `./bin/verify-all` still passes.
 
 ## Requirements
 

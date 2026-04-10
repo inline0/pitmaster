@@ -67,4 +67,9 @@ final class ObjectDatabase implements ObjectStore
     {
         return $this->packs;
     }
+
+    public function refresh(): void
+    {
+        $this->packs->refresh();
+    }
 }

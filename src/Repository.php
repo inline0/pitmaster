@@ -32,6 +32,7 @@ use Pitmaster\Object\ObjectType;
 use Pitmaster\Object\Tag;
 use Pitmaster\Object\Tree;
 use Pitmaster\Object\TreeEntry;
+use Pitmaster\Pack\CommitGraph;
 use Pitmaster\Pack\PackIndexer;
 use Pitmaster\Pack\PackWriter;
 use Pitmaster\Protocol\DumbHttpClient;
@@ -226,7 +227,7 @@ final class Repository
         }
 
         // Branch is merged if it's an ancestor of target
-        $mergeBase = new MergeBase($this->objects);
+        $mergeBase = $this->mergeBaseFinder();
 
         return $mergeBase->isAncestor($branchId, $targetId);
     }
@@ -1292,7 +1293,7 @@ final class Repository
         $this->runPreRebaseHook($onto, $head);
 
         $ontoId = $this->resolve($onto);
-        $mergeBase = new MergeBase($this->objects);
+        $mergeBase = $this->mergeBaseFinder();
         $baseId = $mergeBase->find($headId, $ontoId);
 
         if ($baseId === null) {
@@ -1554,7 +1555,7 @@ final class Repository
                 $packPath = $packDir . "/pack-{$hash}.pack";
                 file_put_contents($packPath, $packData);
                 PackIndexer::writeIndex($packPath);
-                $this->objects->packStore()->refresh();
+                $this->objects->refresh();
             }
 
             $this->applyShallowUpdates(
@@ -1953,7 +1954,7 @@ final class Repository
                 }
             }
 
-            $this->objects->packStore()->refresh();
+            $this->objects->refresh();
 
             return;
         }
@@ -2184,7 +2185,7 @@ final class Repository
             throw new \RuntimeException('Cannot merge: HEAD is not set');
         }
 
-        $mergeBaseFinder = new MergeBase($this->objects);
+        $mergeBaseFinder = $this->mergeBaseFinder();
         $baseIds = $mergeBaseFinder->findAll($oursId, $theirsId);
         $baseId = $baseIds[0] ?? null;
 
@@ -2280,7 +2281,7 @@ final class Repository
                 throw new \RuntimeException("Cannot merge: invalid commit object for {$branch}");
             }
 
-            $baseId = (new MergeBase($this->objects))->find($oursId, $theirsId);
+            $baseId = $this->mergeBaseFinder()->find($oursId, $theirsId);
             $merge = $this->mergeTreeEntries(
                 $baseId !== null ? $this->getCommitTree($baseId) : null,
                 $currentTreeId,
@@ -2343,7 +2344,7 @@ final class Repository
      */
     public function mergeBase(ObjectId $a, ObjectId $b): ?ObjectId
     {
-        return (new MergeBase($this->objects))->find($a, $b);
+        return $this->mergeBaseFinder()->find($a, $b);
     }
 
     /**
@@ -2451,6 +2452,14 @@ final class Repository
     public function refDatabase(): RefDatabase
     {
         return $this->refs;
+    }
+
+    private function mergeBaseFinder(): MergeBase
+    {
+        return new MergeBase(
+            $this->objects,
+            CommitGraph::open($this->commonDir . '/objects/info/commit-graph'),
+        );
     }
 
     /**
@@ -4407,7 +4416,7 @@ final class Repository
             return;
         }
 
-        $mergeBase = new MergeBase($this->objects);
+        $mergeBase = $this->mergeBaseFinder();
 
         if (!$mergeBase->isAncestor($remoteId, $localId)) {
             throw new \RuntimeException("Push rejected: non-fast-forward update to {$branch}");

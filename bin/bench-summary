@@ -1,0 +1,42 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if ($argc < 2) {
+    fwrite(STDERR, "Usage: ./bin/bench-summary <report.json>\n");
+    exit(1);
+}
+
+$report = json_decode((string) file_get_contents($argv[1]), true);
+
+if (!is_array($report)) {
+    fwrite(STDERR, "Invalid benchmark report JSON.\n");
+    exit(1);
+}
+
+$results = array_values(array_filter(
+    $report['results'] ?? [],
+    static fn (mixed $item): bool => is_array($item) && isset($item['name'], $item['duration_ms']['median']),
+));
+
+usort($results, static function (array $left, array $right): int {
+    return ((float) $right['duration_ms']['median']) <=> ((float) $left['duration_ms']['median']);
+});
+
+fwrite(STDOUT, sprintf(
+    "Benchmark summary: %d cases, total %.3f ms\n",
+    (int) (($report['summary']['cases'] ?? count($results))),
+    (float) ($report['summary']['total_duration_ms'] ?? 0.0),
+));
+
+foreach ($results as $result) {
+    fwrite(STDOUT, sprintf(
+        "%-32s median=%8.3fms min=%8.3fms max=%8.3fms peak=%8d bytes\n",
+        $result['name'],
+        (float) $result['duration_ms']['median'],
+        (float) $result['duration_ms']['min'],
+        (float) $result['duration_ms']['max'],
+        (int) $result['peak_memory_bytes']['median'],
+    ));
+}

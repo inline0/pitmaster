@@ -14,6 +14,9 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class Grep
 {
+    /** @var array<string, Blob|null> */
+    private array $blobCache = [];
+
     public function __construct(private readonly ObjectDatabase $objects)
     {
     }
@@ -26,28 +29,51 @@ final class Grep
     public function grep(ObjectId $treeId, string $pattern, string $prefix = '', array $options = []): array
     {
         $results = [];
-        $tree = $this->objects->read($treeId);
         $matcher = $this->compilePattern(
             $pattern,
             (bool) ($options['regex'] ?? false),
             (bool) ($options['ignore_case'] ?? false),
         );
+        $this->grepTree($treeId, $matcher, $prefix, $results);
+
+        return $results;
+    }
+
+    private function compilePattern(string $pattern, bool $regex, bool $ignoreCase): string
+    {
+        $delimiter = '~';
+        $body = $regex ? str_replace($delimiter, '\\' . $delimiter, $pattern) : preg_quote($pattern, $delimiter);
+        $compiled = $delimiter . $body . $delimiter . ($ignoreCase ? 'i' : '');
+
+        if (@preg_match($compiled, '') === false) {
+            throw new \InvalidArgumentException('Invalid grep pattern');
+        }
+
+        return $compiled;
+    }
+
+    /**
+     * @param array<int, array{path: string, line: int, content: string}> $results
+     */
+    private function grepTree(ObjectId $treeId, string $matcher, string $prefix, array &$results): void
+    {
+        $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return $results;
+            return;
         }
 
         foreach ($tree->entries as $entry) {
             $path = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
             if ($entry->isTree()) {
-                $results = array_merge($results, $this->grep($entry->hash, $pattern, $path, $options));
+                $this->grepTree($entry->hash, $matcher, $path, $results);
                 continue;
             }
 
-            $blob = $this->objects->read($entry->hash);
+            $blob = $this->readBlob($entry->hash);
 
-            if (!$blob instanceof Blob) {
+            if ($blob === null) {
                 continue;
             }
 
@@ -73,20 +99,17 @@ final class Grep
                 }
             }
         }
-
-        return $results;
     }
 
-    private function compilePattern(string $pattern, bool $regex, bool $ignoreCase): string
+    private function readBlob(ObjectId $id): ?Blob
     {
-        $delimiter = '~';
-        $body = $regex ? str_replace($delimiter, '\\' . $delimiter, $pattern) : preg_quote($pattern, $delimiter);
-        $compiled = $delimiter . $body . $delimiter . ($ignoreCase ? 'i' : '');
-
-        if (@preg_match($compiled, '') === false) {
-            throw new \InvalidArgumentException('Invalid grep pattern');
+        if (array_key_exists($id->hex, $this->blobCache)) {
+            return $this->blobCache[$id->hex];
         }
 
-        return $compiled;
+        $blob = $this->objects->read($id);
+        $this->blobCache[$id->hex] = $blob instanceof Blob ? $blob : null;
+
+        return $this->blobCache[$id->hex];
     }
 }

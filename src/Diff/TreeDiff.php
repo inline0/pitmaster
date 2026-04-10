@@ -16,6 +16,12 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class TreeDiff
 {
+    /** @var array<string, string> */
+    private array $blobCache = [];
+
+    /** @var array<string, array<string, array{hash: string, mode: string, isTree: bool}>> */
+    private array $treeEntriesCache = [];
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly string $algorithm = 'myers',
@@ -29,76 +35,8 @@ final class TreeDiff
      */
     public function diff(?ObjectId $oldTree, ?ObjectId $newTree, string $prefix = ''): array
     {
-        $oldEntries = $this->readTreeEntries($oldTree);
-        $newEntries = $this->readTreeEntries($newTree);
-
-        $allNames = array_unique(array_merge(array_keys($oldEntries), array_keys($newEntries)));
-        sort($allNames);
-
         $results = [];
-
-        foreach ($allNames as $name) {
-            $oldEntry = $oldEntries[$name] ?? null;
-            $newEntry = $newEntries[$name] ?? null;
-            $path = $prefix !== '' ? $prefix . '/' . $name : $name;
-
-            if ($oldEntry === null && $newEntry !== null) {
-                // Added
-                if ($newEntry['isTree']) {
-                    $results = array_merge($results, $this->diff(null, ObjectId::fromHex($newEntry['hash']), $path));
-                } else {
-                    $newContent = $this->readBlobContent($newEntry['hash']);
-                    $results[] = $this->makeDiffResult($path, '', $newContent, null, $newEntry['hash']);
-                }
-            } elseif ($oldEntry !== null && $newEntry === null) {
-                // Deleted
-                if ($oldEntry['isTree']) {
-                    $results = array_merge($results, $this->diff(ObjectId::fromHex($oldEntry['hash']), null, $path));
-                } else {
-                    $oldContent = $this->readBlobContent($oldEntry['hash']);
-                    $results[] = $this->makeDiffResult($path, $oldContent, '', $oldEntry['hash'], null);
-                }
-            } elseif ($oldEntry['hash'] !== $newEntry['hash']) {
-                // Modified
-                if ($oldEntry['isTree'] && $newEntry['isTree']) {
-                    $results = array_merge(
-                        $results,
-                        $this->diff(ObjectId::fromHex($oldEntry['hash']), ObjectId::fromHex($newEntry['hash']), $path)
-                    );
-                } elseif (!$oldEntry['isTree'] && !$newEntry['isTree']) {
-                    $oldContent = $this->readBlobContent($oldEntry['hash']);
-                    $newContent = $this->readBlobContent($newEntry['hash']);
-                    $results[] = $this->makeDiffResult(
-                        $path,
-                        $oldContent,
-                        $newContent,
-                        $oldEntry['hash'],
-                        $newEntry['hash']
-                    );
-                } else {
-                    // Type change (file -> dir or dir -> file)
-                    if ($oldEntry['isTree']) {
-                        $results = array_merge(
-                            $results,
-                            $this->diff(ObjectId::fromHex($oldEntry['hash']), null, $path)
-                        );
-                    } else {
-                        $oldContent = $this->readBlobContent($oldEntry['hash']);
-                        $results[] = $this->makeDiffResult($path, $oldContent, '', $oldEntry['hash'], null);
-                    }
-
-                    if ($newEntry['isTree']) {
-                        $results = array_merge(
-                            $results,
-                            $this->diff(null, ObjectId::fromHex($newEntry['hash']), $path)
-                        );
-                    } else {
-                        $newContent = $this->readBlobContent($newEntry['hash']);
-                        $results[] = $this->makeDiffResult($path, '', $newContent, null, $newEntry['hash']);
-                    }
-                }
-            }
-        }
+        $this->diffInto($oldTree, $newTree, $prefix, $results);
 
         return $this->detectRenames($results);
     }
@@ -207,6 +145,10 @@ final class TreeDiff
             return [];
         }
 
+        if (isset($this->treeEntriesCache[$treeId->hex])) {
+            return $this->treeEntriesCache[$treeId->hex];
+        }
+
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
@@ -223,18 +165,93 @@ final class TreeDiff
             ];
         }
 
+        $this->treeEntriesCache[$treeId->hex] = $entries;
+
         return $entries;
     }
 
     private function readBlobContent(string $hash): string
     {
+        if (isset($this->blobCache[$hash])) {
+            return $this->blobCache[$hash];
+        }
+
         $object = $this->objects->read(ObjectId::fromHex($hash));
 
         if ($object instanceof Blob) {
-            return $object->content;
+            return $this->blobCache[$hash] = $object->content;
         }
 
         return '';
+    }
+
+    /**
+     * @param array<int, DiffResult> $results
+     */
+    private function diffInto(?ObjectId $oldTree, ?ObjectId $newTree, string $prefix, array &$results): void
+    {
+        $oldEntries = $this->readTreeEntries($oldTree);
+        $newEntries = $this->readTreeEntries($newTree);
+        $allNames = array_unique(array_merge(array_keys($oldEntries), array_keys($newEntries)));
+        sort($allNames);
+
+        foreach ($allNames as $name) {
+            $oldEntry = $oldEntries[$name] ?? null;
+            $newEntry = $newEntries[$name] ?? null;
+            $path = $prefix !== '' ? $prefix . '/' . $name : $name;
+
+            if ($oldEntry === null && $newEntry !== null) {
+                if ($newEntry['isTree']) {
+                    $this->diffInto(null, ObjectId::fromHex($newEntry['hash']), $path, $results);
+                } else {
+                    $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash']);
+                }
+
+                continue;
+            }
+
+            if ($oldEntry !== null && $newEntry === null) {
+                if ($oldEntry['isTree']) {
+                    $this->diffInto(ObjectId::fromHex($oldEntry['hash']), null, $path, $results);
+                } else {
+                    $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null);
+                }
+
+                continue;
+            }
+
+            if ($oldEntry['hash'] === $newEntry['hash']) {
+                continue;
+            }
+
+            if ($oldEntry['isTree'] && $newEntry['isTree']) {
+                $this->diffInto(ObjectId::fromHex($oldEntry['hash']), ObjectId::fromHex($newEntry['hash']), $path, $results);
+                continue;
+            }
+
+            if (!$oldEntry['isTree'] && !$newEntry['isTree']) {
+                $results[] = $this->makeDiffResult(
+                    $path,
+                    $this->readBlobContent($oldEntry['hash']),
+                    $this->readBlobContent($newEntry['hash']),
+                    $oldEntry['hash'],
+                    $newEntry['hash'],
+                );
+                continue;
+            }
+
+            if ($oldEntry['isTree']) {
+                $this->diffInto(ObjectId::fromHex($oldEntry['hash']), null, $path, $results);
+            } else {
+                $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null);
+            }
+
+            if ($newEntry['isTree']) {
+                $this->diffInto(null, ObjectId::fromHex($newEntry['hash']), $path, $results);
+            } else {
+                $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash']);
+            }
+        }
     }
 
     private function makeDiffResult(

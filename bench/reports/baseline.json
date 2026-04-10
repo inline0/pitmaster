@@ -1,0 +1,1369 @@
+{
+    "environment": {
+        "php_binary": "/opt/homebrew/Cellar/php/8.4.5_1/bin/php",
+        "php_version": "8.4.5",
+        "git_version": "git version 2.50.1 (Apple Git-155)",
+        "os": "Darwin 25.2.0",
+        "machine": "arm64",
+        "hostname": "Dennis-Mac-Yo.local",
+        "cpu": "Apple M1 Pro",
+        "timestamp_utc": "2026-04-09T23:52:55+00:00",
+        "xdebug": "disabled"
+    },
+    "summary": {
+        "cases": 36,
+        "total_duration_ms": 56404.986
+    },
+    "results": [
+        {
+            "name": "open.small",
+            "description": "Open a small repository",
+            "groups": [
+                "smoke",
+                "core",
+                "open"
+            ],
+            "metadata": {
+                "fixture": "repo-small"
+            },
+            "runs": 10,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.029,
+                "min": 0.027,
+                "max": 0.045,
+                "raw": [
+                    0.027,
+                    0.027,
+                    0.028,
+                    0.028,
+                    0.029,
+                    0.029,
+                    0.031,
+                    0.032,
+                    0.033,
+                    0.045
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "open.medium",
+            "description": "Open a medium repository",
+            "groups": [
+                "core",
+                "open"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-clean"
+            },
+            "runs": 8,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.027,
+                "min": 0.026,
+                "max": 0.03,
+                "raw": [
+                    0.026,
+                    0.026,
+                    0.027,
+                    0.027,
+                    0.027,
+                    0.027,
+                    0.03,
+                    0.03
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "open.large",
+            "description": "Open a large repository",
+            "groups": [
+                "smoke",
+                "core",
+                "open"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 6,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.026,
+                "min": 0.026,
+                "max": 0.029,
+                "raw": [
+                    0.026,
+                    0.026,
+                    0.026,
+                    0.026,
+                    0.026,
+                    0.029
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "status.clean",
+            "description": "Compute status() on a clean medium tree",
+            "groups": [
+                "core",
+                "status"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-clean"
+            },
+            "runs": 6,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 7.482,
+                "min": 6.948,
+                "max": 7.973,
+                "raw": [
+                    6.948,
+                    7.156,
+                    7.436,
+                    7.528,
+                    7.701,
+                    7.973
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "status.dirty",
+            "description": "Compute status() on a dirty medium tree",
+            "groups": [
+                "smoke",
+                "core",
+                "status"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-dirty"
+            },
+            "runs": 6,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 6.348,
+                "min": 6.219,
+                "max": 6.419,
+                "raw": [
+                    6.219,
+                    6.254,
+                    6.307,
+                    6.389,
+                    6.41,
+                    6.419
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "objects.loose.read",
+            "description": "Read a sample of loose objects",
+            "groups": [
+                "core",
+                "objects"
+            ],
+            "metadata": {
+                "fixture": "objects-loose",
+                "sample_objects": 100
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 3.232,
+                "min": 3.226,
+                "max": 3.568,
+                "raw": [
+                    3.226,
+                    3.227,
+                    3.232,
+                    3.378,
+                    3.568
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "objects.packed.read",
+            "description": "Read a sample of packed objects",
+            "groups": [
+                "smoke",
+                "core",
+                "objects"
+            ],
+            "metadata": {
+                "fixture": "objects-packed",
+                "sample_objects": 100
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 1.787,
+                "min": 1.769,
+                "max": 1.854,
+                "raw": [
+                    1.769,
+                    1.78,
+                    1.787,
+                    1.801,
+                    1.854
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "objects.mixed.read",
+            "description": "Read a sample of mixed-store objects",
+            "groups": [
+                "core",
+                "objects"
+            ],
+            "metadata": {
+                "fixture": "objects-mixed",
+                "sample_objects": 100
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 2.168,
+                "min": 2.074,
+                "max": 2.328,
+                "raw": [
+                    2.074,
+                    2.078,
+                    2.168,
+                    2.268,
+                    2.328
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "log.long-history",
+            "description": "Walk log() through a long history fixture",
+            "groups": [
+                "smoke",
+                "core",
+                "graph"
+            ],
+            "metadata": {
+                "fixture": "history-long",
+                "limit": 300
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 7.805,
+                "min": 7.711,
+                "max": 8.454,
+                "raw": [
+                    7.711,
+                    7.756,
+                    7.805,
+                    8.171,
+                    8.454
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "graph.merge-base",
+            "description": "Compute merge-base() across diverged long-history tips",
+            "groups": [
+                "core",
+                "graph"
+            ],
+            "metadata": {
+                "fixture": "history-long"
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.789,
+                "min": 0.786,
+                "max": 0.835,
+                "raw": [
+                    0.786,
+                    0.787,
+                    0.789,
+                    0.802,
+                    0.835
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "refs.list-many",
+            "description": "List refs in a repo with many branches and tags",
+            "groups": [
+                "core",
+                "refs"
+            ],
+            "metadata": {
+                "fixture": "refs-many"
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.276,
+                "min": 0.274,
+                "max": 0.291,
+                "raw": [
+                    0.274,
+                    0.274,
+                    0.276,
+                    0.279,
+                    0.291
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "diff.rename-heavy",
+            "description": "Run diffTree() across a rename-heavy history pair",
+            "groups": [
+                "smoke",
+                "core",
+                "diff"
+            ],
+            "metadata": {
+                "fixture": "rename-heavy",
+                "algorithm": "myers"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 4.938,
+                "min": 4.405,
+                "max": 5.343,
+                "raw": [
+                    4.405,
+                    4.901,
+                    4.974,
+                    5.343
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "status.sparse.large",
+            "description": "Compute status() on a sparse large tree",
+            "groups": [
+                "core",
+                "status",
+                "workflow"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 11.356,
+                "min": 10.233,
+                "max": 14.153,
+                "raw": [
+                    10.233,
+                    11.056,
+                    11.655,
+                    14.153
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "index.read.large",
+            "description": "Open and parse a large working-tree index",
+            "groups": [
+                "core",
+                "workflow",
+                "index"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 6,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 3.111,
+                "min": 3.021,
+                "max": 3.22,
+                "raw": [
+                    3.021,
+                    3.052,
+                    3.071,
+                    3.15,
+                    3.185,
+                    3.22
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "index.write.large",
+            "description": "Serialize a large index to disk",
+            "groups": [
+                "core",
+                "workflow",
+                "index"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 1.276,
+                "min": 1.214,
+                "max": 2.216,
+                "raw": [
+                    1.214,
+                    1.249,
+                    1.276,
+                    1.318,
+                    2.216
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "graph.blame.medium",
+            "description": "Run blame() across a long-history file",
+            "groups": [
+                "core",
+                "graph",
+                "search"
+            ],
+            "metadata": {
+                "fixture": "history-long",
+                "path": "history.txt"
+            },
+            "runs": 3,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 569.586,
+                "min": 568.273,
+                "max": 570.591,
+                "raw": [
+                    568.273,
+                    569.586,
+                    570.591
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 2097152,
+                "raw": [
+                    0,
+                    0,
+                    2097152
+                ]
+            }
+        },
+        {
+            "name": "graph.grep.large",
+            "description": "Run grep() across a large tree",
+            "groups": [
+                "core",
+                "graph",
+                "search"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree",
+                "pattern": "a"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 36.741,
+                "min": 36.549,
+                "max": 38.177,
+                "raw": [
+                    36.549,
+                    36.593,
+                    36.889,
+                    38.177
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "graph.bisect.long-history",
+            "description": "Start bisect across a long diverged history",
+            "groups": [
+                "core",
+                "graph",
+                "workflow"
+            ],
+            "metadata": {
+                "fixture": "history-long"
+            },
+            "runs": 3,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 414.209,
+                "min": 412.799,
+                "max": 426.204,
+                "raw": [
+                    412.799,
+                    414.209,
+                    426.204
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.checkout.large",
+            "description": "Checkout a side branch in a large tree",
+            "groups": [
+                "workflow",
+                "core"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 410.772,
+                "min": 371.789,
+                "max": 478.572,
+                "raw": [
+                    371.789,
+                    402.098,
+                    419.446,
+                    478.572
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 1048576,
+                "min": 0,
+                "max": 2097152,
+                "raw": [
+                    0,
+                    0,
+                    2097152,
+                    2097152
+                ]
+            }
+        },
+        {
+            "name": "workflow.reset.hard.large",
+            "description": "Reset a changed large tree back to HEAD",
+            "groups": [
+                "workflow",
+                "core"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 355.017,
+                "min": 351.129,
+                "max": 405.657,
+                "raw": [
+                    351.129,
+                    351.35,
+                    358.683,
+                    405.657
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.restore.path.large",
+            "description": "Restore a modified path in a large tree",
+            "groups": [
+                "workflow",
+                "core"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 5,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 3.679,
+                "min": 3.522,
+                "max": 4.536,
+                "raw": [
+                    3.522,
+                    3.548,
+                    3.679,
+                    3.725,
+                    4.536
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.rm.directory.large",
+            "description": "Remove a full directory worth of tracked files",
+            "groups": [
+                "workflow",
+                "core"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 16.576,
+                "min": 11.543,
+                "max": 25.185,
+                "raw": [
+                    11.543,
+                    15.56,
+                    17.591,
+                    25.185
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.mv.directory.large",
+            "description": "Move a full directory in a large tree",
+            "groups": [
+                "workflow",
+                "core"
+            ],
+            "metadata": {
+                "fixture": "repo-large-tree"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 29.431,
+                "min": 26.027,
+                "max": 33.9,
+                "raw": [
+                    26.027,
+                    26.615,
+                    32.247,
+                    33.9
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.stash.tracked",
+            "description": "Push a tracked-file stash",
+            "groups": [
+                "workflow",
+                "advanced"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-dirty",
+                "include_untracked": false
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 68.13,
+                "min": 63.171,
+                "max": 84.686,
+                "raw": [
+                    63.171,
+                    66.953,
+                    69.307,
+                    84.686
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.stash.untracked",
+            "description": "Push a stash including untracked files",
+            "groups": [
+                "workflow",
+                "advanced"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-dirty",
+                "include_untracked": true
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 113.53,
+                "min": 80.071,
+                "max": 266.16,
+                "raw": [
+                    80.071,
+                    82.981,
+                    144.079,
+                    266.16
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.notes.list-heavy",
+            "description": "List a heavy notes tree",
+            "groups": [
+                "workflow",
+                "advanced",
+                "refs"
+            ],
+            "metadata": {
+                "fixture": "history-long"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 2.681,
+                "min": 2.272,
+                "max": 4.523,
+                "raw": [
+                    2.272,
+                    2.295,
+                    3.067,
+                    4.523
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.worktree.list-many",
+            "description": "List many linked worktrees from the main repository",
+            "groups": [
+                "workflow",
+                "advanced"
+            ],
+            "metadata": {
+                "fixture": "repo-medium-clean"
+            },
+            "runs": 4,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 1.068,
+                "min": 0.797,
+                "max": 1.298,
+                "raw": [
+                    0.797,
+                    0.965,
+                    1.171,
+                    1.298
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "workflow.submodule.status",
+            "description": "Compute submodule status in a nested topology",
+            "groups": [
+                "workflow",
+                "advanced"
+            ],
+            "metadata": {
+                "topology": "nested-submodules"
+            },
+            "runs": 3,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.389,
+                "min": 0.375,
+                "max": 0.392,
+                "raw": [
+                    0.375,
+                    0.389,
+                    0.392
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "protocol.pkt-line.encode",
+            "description": "Encode a medium pkt-line frame corpus",
+            "groups": [
+                "all",
+                "micro",
+                "protocol"
+            ],
+            "metadata": {
+                "packets": 512
+            },
+            "runs": 10,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.076,
+                "min": 0.076,
+                "max": 0.078,
+                "raw": [
+                    0.076,
+                    0.076,
+                    0.076,
+                    0.076,
+                    0.076,
+                    0.076,
+                    0.077,
+                    0.077,
+                    0.077,
+                    0.078
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "protocol.pkt-line.decode",
+            "description": "Decode a medium pkt-line frame corpus",
+            "groups": [
+                "all",
+                "micro",
+                "protocol"
+            ],
+            "metadata": {
+                "packets": 512
+            },
+            "runs": 10,
+            "warmups": 1,
+            "duration_ms": {
+                "median": 0.111,
+                "min": 0.11,
+                "max": 0.122,
+                "raw": [
+                    0.11,
+                    0.111,
+                    0.111,
+                    0.111,
+                    0.111,
+                    0.111,
+                    0.112,
+                    0.112,
+                    0.114,
+                    0.122
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.smart-http.clone",
+            "description": "Clone a local smart HTTP remote over loopback",
+            "groups": [
+                "all",
+                "transport"
+            ],
+            "metadata": {
+                "fixture": "repo-small"
+            },
+            "runs": 3,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 70.999,
+                "min": 68.921,
+                "max": 84.735,
+                "raw": [
+                    68.921,
+                    70.999,
+                    84.735
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.smart-http.fetch",
+            "description": "Fetch a small remote update over loopback smart HTTP",
+            "groups": [
+                "all",
+                "transport"
+            ],
+            "metadata": {
+                "fixture": "repo-small"
+            },
+            "runs": 3,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 41.498,
+                "min": 39.606,
+                "max": 50.049,
+                "raw": [
+                    39.606,
+                    41.498,
+                    50.049
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.smart-http.push",
+            "description": "Push a local commit over loopback smart HTTP",
+            "groups": [
+                "all",
+                "transport"
+            ],
+            "metadata": {
+                "fixture": "repo-small"
+            },
+            "runs": 3,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 68.184,
+                "min": 63.972,
+                "max": 100.935,
+                "raw": [
+                    63.972,
+                    68.184,
+                    100.935
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.git.discovery",
+            "description": "Discover refs over loopback git:// against a ref-heavy remote",
+            "groups": [
+                "transport",
+                "protocol"
+            ],
+            "metadata": {
+                "fixture": "refs-many"
+            },
+            "runs": 4,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 10.988,
+                "min": 10.781,
+                "max": 12.019,
+                "raw": [
+                    10.781,
+                    10.883,
+                    11.092,
+                    12.019
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.ssh.discovery",
+            "description": "Discover refs through the SSH transport using a repo-local mock command",
+            "groups": [
+                "transport",
+                "protocol"
+            ],
+            "metadata": {
+                "fixture": "refs-many"
+            },
+            "runs": 4,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 253.858,
+                "min": 245.849,
+                "max": 595.19,
+                "raw": [
+                    245.849,
+                    252.404,
+                    255.312,
+                    595.19
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "name": "transport.lfs.batch",
+            "description": "Request a download batch from the repo-local LFS mock",
+            "groups": [
+                "transport",
+                "advanced"
+            ],
+            "metadata": {
+                "objects": 48
+            },
+            "runs": 5,
+            "warmups": 0,
+            "duration_ms": {
+                "median": 0.697,
+                "min": 0.575,
+                "max": 1.665,
+                "raw": [
+                    0.575,
+                    0.581,
+                    0.697,
+                    0.715,
+                    1.665
+                ]
+            },
+            "peak_memory_bytes": {
+                "median": 0,
+                "min": 0,
+                "max": 0,
+                "raw": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        }
+    ]
+}

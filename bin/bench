@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Pitmaster\Bench\BenchmarkRegistry;
+use Pitmaster\Bench\BenchmarkRunner;
+use Pitmaster\Bench\BenchmarkRuntime;
+use Pitmaster\Bench\FixtureBuilder;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$root = dirname(__DIR__);
+$options = getopt('', ['suite::', 'case::', 'runs::', 'warmups::', 'output::', 'format::']);
+$suite = is_string($options['suite'] ?? null) ? $options['suite'] : 'core';
+$caseName = is_string($options['case'] ?? null) ? $options['case'] : null;
+$runs = isset($options['runs']) ? (int) $options['runs'] : null;
+$warmups = isset($options['warmups']) ? (int) $options['warmups'] : null;
+$output = is_string($options['output'] ?? null) ? $options['output'] : null;
+$format = is_string($options['format'] ?? null) ? $options['format'] : 'table';
+
+$fixtures = new FixtureBuilder($root);
+$runtime = new BenchmarkRuntime($root, $fixtures);
+$cases = BenchmarkRegistry::forSuite($suite);
+
+if ($caseName !== null) {
+    $cases = array_values(array_filter(
+        $cases,
+        static fn (\Pitmaster\Bench\BenchmarkCase $case): bool => $case->name === $caseName,
+    ));
+}
+
+if ($cases === []) {
+    fwrite(STDERR, "No benchmark cases matched suite/case selection.\n");
+    exit(1);
+}
+
+$runner = new BenchmarkRunner();
+$report = $runner->run($runtime, $cases, $runs, $warmups);
+$json = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n";
+
+if ($output !== null) {
+    file_put_contents($output, $json);
+}
+
+if ($format === 'json') {
+    fwrite(STDOUT, $json);
+    exit(0);
+}
+
+fwrite(STDOUT, sprintf(
+    "Benchmarked %d cases in %.3f ms\n\n",
+    $report['summary']['cases'],
+    $report['summary']['total_duration_ms'],
+));
+
+foreach ($report['results'] as $result) {
+    fwrite(STDOUT, sprintf(
+        "%-28s median=%8.3fms min=%8.3fms max=%8.3fms peak=%8d bytes\n",
+        $result['name'],
+        $result['duration_ms']['median'],
+        $result['duration_ms']['min'],
+        $result['duration_ms']['max'],
+        (int) $result['peak_memory_bytes']['median'],
+    ));
+}

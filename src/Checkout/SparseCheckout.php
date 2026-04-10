@@ -20,6 +20,11 @@ final class SparseCheckout
     /** @var array<int, string> */
     private array $excludes = [];
 
+    private bool $enabled = false;
+
+    /** @var array<int, string> */
+    private array $includedDirectories = [];
+
     public function __construct(private readonly string $gitDir)
     {
         $this->load();
@@ -30,7 +35,7 @@ final class SparseCheckout
      */
     public function isEnabled(): bool
     {
-        return $this->configWorktree()->getBool('core.sparsecheckout', false);
+        return $this->enabled;
     }
 
     /**
@@ -98,7 +103,7 @@ final class SparseCheckout
      */
     public function includes(string $path): bool
     {
-        if (!$this->isEnabled()) {
+        if (!$this->enabled) {
             return true;
         }
 
@@ -107,10 +112,7 @@ final class SparseCheckout
             return in_array('/*', $this->includes, true);
         }
 
-        // For paths with directories, check if any include directory matches
-        $dirs = $this->includedDirectories();
-
-        foreach ($dirs as $dir) {
+        foreach ($this->includedDirectories as $dir) {
             if (str_starts_with($path, $dir . '/') || $path === $dir) {
                 return true;
             }
@@ -126,15 +128,7 @@ final class SparseCheckout
      */
     public function includedDirectories(): array
     {
-        $dirs = [];
-
-        foreach ($this->includes as $pattern) {
-            if ($pattern !== '/*' && str_ends_with($pattern, '/')) {
-                $dirs[] = trim($pattern, '/');
-            }
-        }
-
-        return $dirs;
+        return $this->includedDirectories;
     }
 
     /**
@@ -148,14 +142,18 @@ final class SparseCheckout
         $worktreeConfig->set('index.sparse', 'false');
         $worktreeConfig->writeToFile($this->configWorktreePath());
 
+        $this->enabled = false;
         $this->includes = [];
         $this->excludes = [];
+        $this->includedDirectories = [];
     }
 
     private function load(): void
     {
+        $this->enabled = GitConfig::fromFile($this->configWorktreePath())->getBool('core.sparsecheckout', false);
         $this->includes = [];
         $this->excludes = [];
+        $this->includedDirectories = [];
 
         $path = $this->gitDir . '/info/sparse-checkout';
 
@@ -182,6 +180,12 @@ final class SparseCheckout
                 $this->includes[] = $line;
             }
         }
+
+        foreach ($this->includes as $pattern) {
+            if ($pattern !== '/*' && str_ends_with($pattern, '/')) {
+                $this->includedDirectories[] = trim($pattern, '/');
+            }
+        }
     }
 
     /**
@@ -194,13 +198,13 @@ final class SparseCheckout
         return $this->excludes;
     }
 
-    private function configWorktree(): GitConfig
-    {
-        return GitConfig::fromFile($this->configWorktreePath());
-    }
-
     private function configWorktreePath(): string
     {
         return $this->gitDir . '/config.worktree';
+    }
+
+    private function configWorktree(): GitConfig
+    {
+        return GitConfig::fromFile($this->configWorktreePath());
     }
 }

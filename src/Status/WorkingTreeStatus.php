@@ -21,6 +21,9 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class WorkingTreeStatus
 {
+    /** @var array<string, array<string, string>> */
+    private array $treeCache = [];
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly string $workDir,
@@ -37,6 +40,7 @@ final class WorkingTreeStatus
     {
         $entries = [];
         $sparse = $this->gitDir !== null ? new SparseCheckout($this->gitDir) : null;
+        $sparseEnabled = $sparse !== null && $sparse->isEnabled();
 
         // Build HEAD tree map: path => hash
         $headTree = [];
@@ -56,6 +60,7 @@ final class WorkingTreeStatus
         // Build worktree file list
         $ignore = GitIgnore::forRepo($this->workDir);
         $worktreeFiles = $this->scanWorktree($this->workDir, '', $ignore);
+        $worktreeFileSet = array_fill_keys($worktreeFiles, true);
 
         // All known paths
         $allPaths = array_unique(array_merge(
@@ -73,8 +78,8 @@ final class WorkingTreeStatus
 
             $inHead = isset($headTree[$path]);
             $inIndex = isset($indexEntries[$path]);
-            $inWorktree = in_array($path, $worktreeFiles, true);
-            $sparseExcluded = $sparse !== null && $sparse->isEnabled() && !$sparse->includes($path);
+            $inWorktree = isset($worktreeFileSet[$path]);
+            $sparseExcluded = $sparseEnabled && !$sparse->includes($path);
 
             // Determine index status (HEAD vs index)
             $indexStatus = FileStatus::Unmodified;
@@ -123,21 +128,7 @@ final class WorkingTreeStatus
     private function flattenTree(ObjectId $treeId, string $prefix = ''): array
     {
         $result = [];
-        $tree = $this->objects->read($treeId);
-
-        if (!$tree instanceof Tree) {
-            return $result;
-        }
-
-        foreach ($tree->entries as $entry) {
-            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
-
-            if ($entry->isTree()) {
-                $result = array_merge($result, $this->flattenTree($entry->hash, $fullPath));
-            } else {
-                $result[$fullPath] = $entry->hash->hex;
-            }
-        }
+        $this->flattenTreeInto($treeId, $prefix, $result);
 
         return $result;
     }
@@ -182,10 +173,55 @@ final class WorkingTreeStatus
     private function scanWorktree(string $dir, string $prefix, GitIgnore $ignore): array
     {
         $files = [];
+        $this->scanWorktreeInto($dir, $prefix, $ignore, $files);
+
+        return $files;
+    }
+
+    /**
+     * @param array<string, string> $result
+     */
+    private function flattenTreeInto(ObjectId $treeId, string $prefix, array &$result): void
+    {
+        $cacheKey = $prefix . "\0" . $treeId->hex;
+
+        if (isset($this->treeCache[$cacheKey])) {
+            $result += $this->treeCache[$cacheKey];
+
+            return;
+        }
+
+        $tree = $this->objects->read($treeId);
+
+        if (!$tree instanceof Tree) {
+            return;
+        }
+
+        $local = [];
+
+        foreach ($tree->entries as $entry) {
+            $fullPath = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
+
+            if ($entry->isTree()) {
+                $this->flattenTreeInto($entry->hash, $fullPath, $local);
+            } else {
+                $local[$fullPath] = $entry->hash->hex;
+            }
+        }
+
+        $this->treeCache[$cacheKey] = $local;
+        $result += $local;
+    }
+
+    /**
+     * @param list<string> $files
+     */
+    private function scanWorktreeInto(string $dir, string $prefix, GitIgnore $ignore, array &$files): void
+    {
         $entries = scandir($dir);
 
         if ($entries === false) {
-            return $files;
+            return;
         }
 
         foreach ($entries as $name) {
@@ -194,20 +230,19 @@ final class WorkingTreeStatus
             }
 
             $fullPath = $dir . '/' . $name;
+            $isDirectory = is_dir($fullPath);
             $relPath = $prefix !== '' ? $prefix . '/' . $name : $name;
 
-            if ($ignore->isIgnored($relPath, is_dir($fullPath))) {
+            if ($ignore->isIgnored($relPath, $isDirectory)) {
                 continue;
             }
 
-            if (is_dir($fullPath)) {
-                $files = array_merge($files, $this->scanWorktree($fullPath, $relPath, $ignore));
+            if ($isDirectory) {
+                $this->scanWorktreeInto($fullPath, $relPath, $ignore, $files);
             } elseif (is_file($fullPath)) {
                 $files[] = $relPath;
             }
         }
-
-        return $files;
     }
 
     /**

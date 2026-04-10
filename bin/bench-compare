@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Pitmaster\Bench\BenchmarkComparison;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$options = getopt('', ['format::', 'output::', 'only-regressions']);
+$args = array_values(array_filter($argv, static fn (string $arg): bool => !str_starts_with($arg, '--')));
+
+if (count($args) < 3) {
+    fwrite(STDERR, "Usage: ./bin/bench-compare [--format=text|json] [--output=path] [--only-regressions] <baseline.json> <candidate.json>\n");
+    exit(1);
+}
+
+$baselinePath = $args[1];
+$candidatePath = $args[2];
+$format = is_string($options['format'] ?? null) ? $options['format'] : 'text';
+$output = is_string($options['output'] ?? null) ? $options['output'] : null;
+$onlyRegressions = array_key_exists('only-regressions', $options);
+
+$baseline = json_decode((string) file_get_contents($baselinePath), true);
+$candidate = json_decode((string) file_get_contents($candidatePath), true);
+
+if (!is_array($baseline) || !is_array($candidate)) {
+    fwrite(STDERR, "Invalid benchmark report JSON.\n");
+    exit(1);
+}
+
+$comparison = BenchmarkComparison::compare($baseline, $candidate);
+$payload = $format === 'json'
+    ? json_encode($comparison, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
+    : BenchmarkComparison::toText($comparison, $onlyRegressions);
+
+if ($output !== null) {
+    file_put_contents($output, $payload);
+}
+
+fwrite(STDOUT, $payload);

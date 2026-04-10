@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$output = $root . '/bench/reports/baseline.json';
+
+if (!is_dir(dirname($output))) {
+    mkdir(dirname($output), 0777, true);
+}
+
+$command = sprintf(
+    '%s %s --suite=%s --format=json --output=%s',
+    escapeshellarg(PHP_BINARY),
+    escapeshellarg($root . '/bin/bench'),
+    escapeshellarg('all'),
+    escapeshellarg($output),
+);
+
+passthru($command, $exitCode);
+exit($exitCode);
