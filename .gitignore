@@ -4,6 +4,7 @@
 /.phpstan/
 /.pitmaster/
 /bench/workspaces/
+/bench/fixtures/repos/
 /bench/reports/*.local.json
 composer.phar
 
