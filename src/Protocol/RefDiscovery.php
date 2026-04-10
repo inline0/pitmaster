@@ -67,7 +67,11 @@ final class RefDiscovery
             if (strlen($line) >= 41) {
                 $parts = explode(' ', $line, 2);
 
-                if (count($parts) === 2 && strlen($parts[0]) === 40 && ctype_xdigit($parts[0])) {
+                if (
+                    count($parts) === 2
+                    && in_array(strlen($parts[0]), [40, 64], true)
+                    && ctype_xdigit($parts[0])
+                ) {
                     $discovery->refs[$parts[1]] = ObjectId::fromHex($parts[0]);
                 }
             }

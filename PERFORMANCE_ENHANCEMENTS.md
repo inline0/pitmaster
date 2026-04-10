@@ -25,7 +25,37 @@ Performance work must stay honest. We do not trade away correctness, determinism
 
 ## Current Completion
 
-This file is complete. The queue is burned down for this 24-hour pass.
+Phase 1 and Phase 2 are complete.
+
+The original 24-hour queue was burned down and the first performance program delivered its baseline, harness, CI smoke, and the first large wave of real wins.
+
+This file remains as the execution log and measurement record for both passes.
+
+Current top baseline hotspots on `main`:
+
+- `transport.ssh.discovery`: `284.503ms`
+- `transport.smart-http.clone`: `79.889ms`
+- `transport.smart-http.push`: `65.805ms`
+- `workflow.checkout.large`: `52.768ms`
+- `workflow.reset.hard.large`: `44.033ms`
+- `transport.smart-http.fetch`: `40.629ms`
+- `workflow.stash.untracked`: `37.573ms`
+- `graph.blame.medium`: `35.563ms`
+- `graph.grep.large`: `31.463ms`
+- `workflow.stash.tracked`: `30.620ms`
+- `workflow.submodule.update`: `21.551ms`
+- `status.sparse.large`: `16.622ms`
+
+Phase 2 closeout:
+
+- the full `P1` to `P36` queue was worked through as a measurement-first pass
+- candidate optimizations for checkout/reset tree flattening caches, sparse include caching, smart HTTP advertisement parsing, transport push selection, stash shortcutting, notes/reflog caching, submodule shortcutting, blame trimming, and grep shortcutting were benchmarked and discarded when they did not beat `HEAD` cleanly enough to justify complexity
+- the final direct A/B check against a detached `HEAD` worktree on the same machine showed the last retained checkout/sparse candidates were not real wins:
+  `workflow.checkout.large 49.952ms -> 49.755ms`, `workflow.reset.hard.large 48.088ms -> 49.609ms`, `status.sparse.large 12.090ms -> 12.893ms`
+- the only retained performance-process change from the closeout pass is workflow guidance:
+  `README.md` now documents focused hotspot reruns as the default optimization workflow before refreshing the canonical baseline
+- while profiling transport parsing, the pass also fixed SHA-256 ref advertisement parsing in `RefDiscovery`; that is a correctness compatibility fix, not a claimed performance win
+- `P36` is now satisfied honestly: the remaining top costs are dominated by transport process startup, protocol round trips, filesystem work, or ordinary workstation benchmark noise rather than obvious low-risk local hot spots
 
 What is complete in the final pass:
 
@@ -140,6 +170,80 @@ Current canonical pass notes:
 - `Notes` now flattens note trees into a single accumulator and caches note maps per notes ref; `Reflog` now uses line-based reads instead of full-file splitting
 - `SshClient` now uses direct argv-based `proc_open()` when the configured SSH command is simple, which removed an avoidable shell hop from the common benchmark path
 - the benchmark suite now has first-class proof cases for reflog reads, linked-worktree removal, and submodule update, so those follow-up optimizations are no longer inferred from adjacent workflows
+
+## Phase 2 Mission
+
+Phase 2 is complete.
+
+The objective was to squeeze the remaining meaningful latency out of transport, checkout/reset, stash, sparse status, graph/search, and the auxiliary workflows without sacrificing proof discipline. The queue below is kept as the record of that pass, but it is no longer active.
+
+## Phase 2 Queue
+
+This queue is complete. It remains here as the historical checklist for the pass that closed the second optimization wave. Tasks were either implemented in earlier Phase 2 slices or explicitly closed as measured no-ships in the final pass.
+
+### Wave A: Transport Hotspots
+
+- `P1` Split `transport.ssh.discovery` into process-launch, handshake, and parse costs so the remaining latency is attributable instead of guessed.
+- `P2` Reduce SSH command construction overhead further, including escaping/argv decisions and repeated environment setup.
+- `P3` Reduce repeated SSH process startup work across discovery-style operations if it can be done without changing protocol truthfulness.
+- `P4` Reprofile smart HTTP clone/fetch/push separately after the current baseline refresh so transport fixes are proven against current code, not stale measurements.
+- `P5` Cut repeated smart HTTP advertisement parsing, capability scanning, and packet decoding work across clone/fetch/push.
+- `P6` Reduce fetch negotiation bookkeeping overhead in small-update and large-update cases without regressing correctness.
+- `P7` Reduce push object-selection cost further by tightening reachability exclusion and duplicate object filtering.
+- `P8` Reduce push pack construction buffering and copy overhead in the hot path.
+- `P9` Revisit `transport.git.discovery` even though it is no longer dominant, to make sure no easy low-risk win is left behind.
+
+### Wave B: Checkout, Reset, and Worktree Paths
+
+- `P10` Reprofile `workflow.checkout.large` and `workflow.reset.hard.large` independently so remaining cost splits cleanly between safety checks, tree flattening, blob reads, file writes, and index writes.
+- `P11` Reduce `assertSafeCheckout()` further if it still touches unchanged paths or repeated tree/index state.
+- `P12` Reduce reset/checkout tree flattening and path-map construction overhead for large repos.
+- `P13` Reduce blob materialization during checkout/reset when file bytes are not needed to decide reuse or skip.
+- `P14` Reduce file-write churn for unchanged outputs during large checkout/reset runs.
+- `P15` Revisit sparse checkout pattern matching and traversal on large trees and large pattern sets.
+- `P16` Revisit linked-worktree enumeration/open/remove under many worktrees and many refs.
+
+### Wave C: Stash, Notes, Reflog, and Submodule Throughput
+
+- `P17` Reprofile `workflow.stash.tracked` and `workflow.stash.untracked` separately so the remaining cost is clearly split across status, tree build, ignore handling, and reset cleanup.
+- `P18` Reduce stash untracked snapshot cost further, especially directory scanning and blob creation overhead.
+- `P19` Reduce stash tracked snapshot cost further where staged-only paths can be reused more aggressively.
+- `P20` Reduce `workflow.submodule.update` overhead by avoiding redundant child repo opens, config reads, and ref resolution.
+- `P21` Revisit submodule status/update path normalization and gitdir resolution for repeated operations.
+- `P22` Reduce notes listing overhead further on large note sets.
+- `P23` Reduce reflog read and append overhead further on large histories and heavy ref churn.
+
+### Wave D: Status, Sparse, Graph, and Search
+
+- `P24` Reprofile `status.clean`, `status.dirty`, and `status.sparse.large` after the current stat-based fast path so the remaining cost is attributed honestly.
+- `P25` Reduce repeated ignore and attribute checks during large worktree scans.
+- `P26` Reduce sparse-status traversal cost when directories are wholly excluded.
+- `P27` Revisit index lookup structures for repeated path queries in status, checkout, reset, and stash.
+- `P28` Reprofile `graph.blame.medium` and push it lower only if the remaining cost is stable across reruns.
+- `P29` Revisit `graph.grep.large` for any remaining literal-search or blob-read overhead.
+- `P30` Revisit `graph.bisect.long-history` and `log.long-history` only if the refreshed baseline still shows worthwhile headroom.
+
+### Wave E: Baseline, Thresholds, and Public Benchmarking
+
+- `P31` Refresh the canonical baseline after every wave that keeps more than one benchmark-affecting optimization.
+- `P32` Compare the new baseline against the last committed baseline and record only medians that hold up across reruns.
+- `P33` Refresh benchmark smoke thresholds conservatively so CI catches regressions without turning noisy workloads into false positives.
+- `P34` Add or refine public benchmark docs so contributors know how to run focused cases, compare reports, and interpret smoke failures.
+- `P35` Tighten the internal performance notes in this file so Phase 2 remains an execution log rather than turning into stale prose.
+- `P36` End Phase 2 only when the remaining top costs are either protocol-startup dominated, filesystem dominated, or too small/noisy to justify more complexity.
+
+## Phase 2 Execution Rules
+
+Phase 2 kept the original discipline:
+
+1. work in waves, not isolated micro-tweaks
+2. keep only measured wins
+3. refresh the canonical baseline after meaningful retained changes
+4. rerun focused PHPUnit for touched surfaces before the full gate
+5. rerun `./bin/verify-all` before ending a wave
+6. record failed optimization attempts here if they were measured and reverted
+
+The final closeout pass followed the same rule set and ended by reverting any candidate optimization that failed a same-machine A/B check against `HEAD`.
 
 Implementation changes that produced the current wins:
 

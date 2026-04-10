@@ -55,6 +55,20 @@ final class RefDiscoveryTest extends TestCase
     }
 
     #[Test]
+    public function parseSupportsSha256Hashes(): void
+    {
+        $hash = str_repeat('ab', 32);
+        $lines = [
+            "{$hash} refs/heads/main",
+        ];
+
+        $discovery = RefDiscovery::parse($lines);
+
+        self::assertArrayHasKey('refs/heads/main', $discovery->refs());
+        self::assertSame($hash, $discovery->refs()['refs/heads/main']->hex);
+    }
+
+    #[Test]
     public function headSymrefExtractionFromCapability(): void
     {
         $hash = str_repeat('ab', 20);
