@@ -68,6 +68,20 @@ Follow-up pass notes:
 - the stash wins came from carrying dirtiness information through a single stash push cycle instead of rescanning the working tree for both stash-tree creation and reset cleanup
 - `transport.ssh.discovery` was remeasured in this pass but did not show a stable improvement, so no benchmark-only SSH tweak was shipped
 
+Measured wins in the latest follow-up pass against isolated before/after reruns:
+
+- `graph.grep.large`: `102.877ms -> 36.907ms` (`-64.13%`)
+- `workflow.rm.directory.large`: `38.210ms -> 11.678ms` (`-69.44%`)
+- `workflow.mv.directory.large`: `39.807ms -> 12.210ms` (`-69.33%`)
+
+Latest follow-up pass notes:
+
+- `Grep` now has a literal-search fast path, uses a full-blob prefilter before line scanning, and avoids regex-per-line work for the common plain-text case
+- directory-heavy `rm` and `mv` now batch index mutations instead of repeatedly filtering and sorting the full index for every file in the subtree
+- `Index` now exposes bulk add/remove operations so higher-level workflows can amortize index churn into a single pass
+- `bin/bench-baseline` now emits live case progress and a final slowest-case summary, which makes the full baseline refresh observable instead of looking hung on long runs
+- the canonical `bench/reports/baseline.json` has been refreshed in this pass; isolated before/after reruns should still be treated as the cleaner proof for individual optimization claims because the full-suite baseline remains noisier on a live workstation
+
 Implementation changes that produced the current wins:
 
 - `WorkingTreeStatus` now avoids the worst path-membership overhead and recursive worktree/tree churn

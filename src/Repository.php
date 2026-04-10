@@ -896,15 +896,17 @@ final class Repository
             throw new \RuntimeException("Failed to move {$source} to {$destination}");
         }
 
-        foreach ($entries as $entry) {
-            $index->removeEntry($entry->path, $entry->stage());
-        }
+        $pathsToRemove = [];
+        $relocatedEntries = [];
 
         foreach ($entries as $entry) {
+            $pathsToRemove[$entry->path] = true;
             $newPath = $this->movedPath($source, $destination, $entry->path);
-            $index->addEntry($this->relocateIndexEntry($entry, $newPath));
+            $relocatedEntries[] = $this->relocateIndexEntry($entry, $newPath);
         }
 
+        $index->removeEntries(array_keys($pathsToRemove));
+        $index->addEntries($relocatedEntries);
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 
@@ -930,9 +932,11 @@ final class Repository
         $index = $this->index();
         $headId = $this->refs->resolveHead();
         $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
+        $trackedEntries = $this->trackedEntriesForPaths($index, $paths);
+        $pathsToRemove = [];
 
         foreach ($paths as $path) {
-            $entries = $this->trackedEntriesForPath($index, $path);
+            $entries = $trackedEntries[$path] ?? [];
 
             if ($entries === []) {
                 throw new \RuntimeException("pathspec '{$path}' did not match any tracked files");
@@ -949,11 +953,12 @@ final class Repository
             }
 
             foreach ($entries as $entry) {
-                $index->removeEntry($entry->path);
+                $pathsToRemove[$entry->path] = true;
                 $this->removeWorktreePath($entry->path);
             }
         }
 
+        $index->removeEntries(array_keys($pathsToRemove));
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 
@@ -969,9 +974,11 @@ final class Repository
         $index = $this->index();
         $headId = $this->refs->resolveHead();
         $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
+        $trackedEntries = $this->trackedEntriesForPaths($index, $paths);
+        $pathsToRemove = [];
 
         foreach ($paths as $path) {
-            $entries = $this->trackedEntriesForPath($index, $path);
+            $entries = $trackedEntries[$path] ?? [];
 
             if ($entries === []) {
                 throw new \RuntimeException("pathspec '{$path}' did not match any tracked files");
@@ -979,10 +986,11 @@ final class Repository
 
             foreach ($entries as $entry) {
                 $this->assertRemoveEntryIsSafe($entry, $headEntries[$entry->path] ?? null, true);
-                $index->removeEntry($entry->path);
+                $pathsToRemove[$entry->path] = true;
             }
         }
 
+        $index->removeEntries(array_keys($pathsToRemove));
         IndexWriter::write($index, $this->gitDir . '/index');
     }
 
@@ -2919,12 +2927,39 @@ final class Repository
      */
     private function trackedEntriesForPath(Index $index, string $path): array
     {
-        $entries = [];
-        $prefix = $path . '/';
+        return $this->trackedEntriesForPaths($index, [$path])[$path] ?? [];
+    }
 
-        foreach ($index->allEntries() as $entry) {
-            if ($entry->path === $path || str_starts_with($entry->path, $prefix)) {
-                $entries[] = $entry;
+    /**
+     * @param list<string> $paths
+     * @return array<string, list<IndexEntry>>
+     */
+    private function trackedEntriesForPaths(Index $index, array $paths): array
+    {
+        $allEntries = $index->allEntries();
+        $directEntries = [];
+
+        foreach ($allEntries as $entry) {
+            $directEntries[$entry->path][] = $entry;
+        }
+
+        $entries = [];
+
+        foreach ($paths as $path) {
+            $direct = $directEntries[$path] ?? null;
+
+            if ($direct !== null) {
+                $entries[$path] = $direct;
+                continue;
+            }
+
+            $prefix = $path . '/';
+            $entries[$path] = [];
+
+            foreach ($allEntries as $entry) {
+                if (str_starts_with($entry->path, $prefix)) {
+                    $entries[$path][] = $entry;
+                }
             }
         }
 

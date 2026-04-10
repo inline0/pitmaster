@@ -168,4 +168,56 @@ final class IndexEntryAndWriterTest extends TestCase
             trim($this->git('ls-files --stage'))
         );
     }
+
+    #[Test]
+    public function bulkAddAndRemovePreserveSequentialSemantics(): void
+    {
+        $index = new Index();
+        $base = ObjectId::fromHex(str_repeat('11', 20));
+        $ours = ObjectId::fromHex(str_repeat('22', 20));
+        $theirs = ObjectId::fromHex(str_repeat('33', 20));
+        $resolved = ObjectId::fromHex(str_repeat('44', 20));
+
+        $index->addEntry(IndexEntry::create('conflict.txt', $base, 0100644, 0));
+        $index->addEntries([
+            IndexEntry::create('conflict.txt', $ours, 0100644, 0, 2),
+            IndexEntry::create('conflict.txt', $theirs, 0100644, 0, 3),
+        ]);
+
+        $this->assertNull($index->entry('conflict.txt'));
+        $this->assertCount(2, $index->stageEntries('conflict.txt'));
+
+        $index->addEntries([
+            IndexEntry::create('conflict.txt', $resolved, 0100644, 0),
+            IndexEntry::create('other.txt', $base, 0100644, 0),
+        ]);
+
+        $this->assertSame($resolved->hex, $index->entry('conflict.txt')?->hash->hex);
+        $this->assertSame(['conflict.txt', 'other.txt'], $index->paths());
+
+        $index->removeEntries(['conflict.txt']);
+        $this->assertNull($index->entry('conflict.txt'));
+        $this->assertSame(['other.txt'], $index->paths());
+    }
+
+    #[Test]
+    public function bulkStageRemovalCanTargetSpecificStages(): void
+    {
+        $index = new Index();
+        $base = ObjectId::fromHex(str_repeat('11', 20));
+        $ours = ObjectId::fromHex(str_repeat('22', 20));
+        $theirs = ObjectId::fromHex(str_repeat('33', 20));
+
+        $index->addEntries([
+            IndexEntry::create('conflict.txt', $base, 0100644, 0, 1),
+            IndexEntry::create('conflict.txt', $ours, 0100644, 0, 2),
+            IndexEntry::create('conflict.txt', $theirs, 0100644, 0, 3),
+        ]);
+
+        $index->removeEntries(['conflict.txt'], 2);
+
+        $this->assertArrayHasKey(1, $index->stageEntries('conflict.txt'));
+        $this->assertArrayNotHasKey(2, $index->stageEntries('conflict.txt'));
+        $this->assertArrayHasKey(3, $index->stageEntries('conflict.txt'));
+    }
 }

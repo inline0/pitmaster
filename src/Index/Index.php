@@ -247,26 +247,86 @@ final class Index
      */
     public function addEntry(IndexEntry $entry): void
     {
-        $this->dropExtensions();
-        if ($entry->extendedFlags !== 0 && $this->version < 3) {
-            $this->version = 3;
+        $this->addEntries([$entry]);
+    }
+
+    /**
+     * Add or update multiple entries in one pass.
+     *
+     * @param list<IndexEntry> $entries
+     */
+    public function addEntries(array $entries): void
+    {
+        if ($entries === []) {
+            return;
         }
-        $stage = $entry->stage();
+
+        $this->dropExtensions();
+
+        foreach ($entries as $entry) {
+            if ($entry->extendedFlags !== 0 && $this->version < 3) {
+                $this->version = 3;
+            }
+        }
+
+        $pendingByPath = [];
+
+        foreach ($entries as $entry) {
+            $pathEntries = $pendingByPath[$entry->path] ?? [];
+            $stage = $entry->stage();
+
+            $pathEntries = array_values(array_filter(
+                $pathEntries,
+                static function (IndexEntry $existing) use ($stage): bool {
+                    if ($stage === 0 || $existing->stage() === 0) {
+                        return false;
+                    }
+
+                    return $existing->stage() !== $stage;
+                },
+            ));
+            $pathEntries[] = $entry;
+            $pendingByPath[$entry->path] = $pathEntries;
+        }
+
+        $pathsWithStageZero = [];
+        $stagesByPath = [];
+        $pendingEntries = [];
+
+        foreach ($pendingByPath as $path => $pathEntries) {
+            foreach ($pathEntries as $entry) {
+                $stage = $entry->stage();
+
+                if ($stage === 0) {
+                    $pathsWithStageZero[$path] = true;
+                } else {
+                    $stagesByPath[$path][$stage] = true;
+                }
+
+                $pendingEntries[] = $entry;
+            }
+        }
+
         $this->entries = array_values(array_filter(
             $this->entries,
-            static function (IndexEntry $existing) use ($entry, $stage): bool {
-                if ($existing->path !== $entry->path) {
+            static function (IndexEntry $existing) use ($pendingByPath, $pathsWithStageZero, $stagesByPath): bool {
+                if (!isset($pendingByPath[$existing->path])) {
                     return true;
                 }
 
-                if ($stage === 0 || $existing->stage() === 0) {
+                if (isset($pathsWithStageZero[$existing->path])) {
                     return false;
                 }
 
-                return $existing->stage() !== $stage;
+                if ($existing->stage() === 0) {
+                    return false;
+                }
+
+                return !isset($stagesByPath[$existing->path][$existing->stage()]);
             },
         ));
-        $this->entries[] = $entry;
+
+        array_push($this->entries, ...$pendingEntries);
         $this->sortEntries();
     }
 
@@ -275,10 +335,26 @@ final class Index
      */
     public function removeEntry(string $path, ?int $stage = null): void
     {
+        $this->removeEntries([$path], $stage);
+    }
+
+    /**
+     * Remove multiple entries in one pass.
+     *
+     * @param list<string> $paths
+     */
+    public function removeEntries(array $paths, ?int $stage = null): void
+    {
+        if ($paths === []) {
+            return;
+        }
+
         $this->dropExtensions();
+        $pathSet = array_fill_keys($paths, true);
+
         $this->entries = array_values(array_filter(
             $this->entries,
-            static fn (IndexEntry $entry): bool => $entry->path !== $path
+            static fn (IndexEntry $entry): bool => !isset($pathSet[$entry->path])
                 || ($stage !== null && $entry->stage() !== $stage),
         ));
     }

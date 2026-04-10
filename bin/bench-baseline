@@ -10,13 +10,32 @@ if (!is_dir(dirname($output))) {
     mkdir(dirname($output), 0777, true);
 }
 
+fwrite(STDOUT, "Capturing canonical benchmark baseline to {$output}\n\n");
+putenv('PITMASTER_BENCH_PROGRESS=1');
+
 $command = sprintf(
-    '%s %s --suite=%s --format=json --output=%s',
+    '%s %s --suite=%s --format=%s --output=%s',
     escapeshellarg(PHP_BINARY),
     escapeshellarg($root . '/bin/bench'),
     escapeshellarg('all'),
+    escapeshellarg('table'),
     escapeshellarg($output),
 );
 
 passthru($command, $exitCode);
-exit($exitCode);
+
+if ($exitCode !== 0) {
+    exit($exitCode);
+}
+
+fwrite(STDOUT, "\nBaseline written. Slowest cases:\n\n");
+
+$summaryCommand = sprintf(
+    '%s %s %s',
+    escapeshellarg(PHP_BINARY),
+    escapeshellarg($root . '/bin/bench-summary'),
+    escapeshellarg($output),
+);
+
+passthru($summaryCommand, $summaryExitCode);
+exit($summaryExitCode);

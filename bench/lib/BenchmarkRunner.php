@@ -14,10 +14,19 @@ final class BenchmarkRunner
     {
         $results = [];
         $suiteStart = hrtime(true);
+        $caseCount = count($cases);
 
-        foreach ($cases as $case) {
+        foreach ($cases as $index => $case) {
             $runs = $runsOverride ?? $case->defaultRuns;
             $warmups = $warmupsOverride ?? $case->defaultWarmups;
+            $this->writeProgress(sprintf(
+                "[%d/%d] %s (warmups=%d runs=%d)\n",
+                $index + 1,
+                $caseCount,
+                $case->name,
+                $warmups,
+                $runs,
+            ));
             $suiteContext = $case->setUp($runtime);
 
             try {
@@ -66,6 +75,12 @@ final class BenchmarkRunner
                     'duration_ms' => BenchmarkStats::summarize($durations),
                     'peak_memory_bytes' => BenchmarkStats::summarize($memoryPeaks),
                 ];
+                $this->writeProgress(sprintf(
+                    "  done %s median=%.3fms peak=%d bytes\n",
+                    $case->name,
+                    (float) $results[array_key_last($results)]['duration_ms']['median'],
+                    (int) $results[array_key_last($results)]['peak_memory_bytes']['median'],
+                ));
             } finally {
                 $case->tearDown($runtime, $suiteContext);
             }
@@ -79,5 +94,16 @@ final class BenchmarkRunner
             ],
             'results' => $results,
         ];
+    }
+
+    private function writeProgress(string $message): void
+    {
+        $enabled = getenv('PITMASTER_BENCH_PROGRESS');
+
+        if ($enabled === false || $enabled === '' || $enabled === '0') {
+            return;
+        }
+
+        fwrite(STDERR, $message);
     }
 }
