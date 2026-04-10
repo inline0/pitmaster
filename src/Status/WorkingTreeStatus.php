@@ -23,6 +23,7 @@ final class WorkingTreeStatus
 {
     /** @var array<string, array<string, string>> */
     private array $treeCache = [];
+    private int $scanTimeSec = 0;
 
     public function __construct(
         private readonly ObjectDatabase $objects,
@@ -39,6 +40,7 @@ final class WorkingTreeStatus
     public function compute(Index $index, ?ObjectId $headCommitId): array
     {
         $entries = [];
+        $this->scanTimeSec = time();
         $sparse = $this->gitDir !== null ? new SparseCheckout($this->gitDir) : null;
         $sparseEnabled = $sparse !== null && $sparse->isEnabled();
 
@@ -144,16 +146,25 @@ final class WorkingTreeStatus
             return true;
         }
 
-        // Quick check: size mismatch means definitely changed
-        $size = filesize($fullPath);
+        $stat = stat($fullPath);
 
-        if ($size !== false && $size !== $entry->fileSize) {
+        if ($stat === false) {
             return true;
         }
 
-        // Always verify by hashing content. The mtime-based shortcut is unreliable
-        // when writes happen in the same second (racily clean entries). Git handles
-        // this with smudge/clean filters and nanosecond timestamps; we just hash.
+        if ($stat['size'] !== $entry->fileSize) {
+            return true;
+        }
+
+        $mode = is_executable($fullPath) ? 0100755 : 0100644;
+
+        if (
+            $this->scanTimeSec > max($entry->mtimeSec, $entry->ctimeSec)
+            && $this->statMatchesIndexEntry($entry, $stat, $mode)
+        ) {
+            return false;
+        }
+
         $content = file_get_contents($fullPath);
 
         if ($content === false) {
@@ -163,6 +174,21 @@ final class WorkingTreeStatus
         $contentHash = ObjectId::compute(ObjectType::Blob, $content, $entry->hash->algo);
 
         return !$contentHash->equals($entry->hash);
+    }
+
+    /**
+     * @param array<int|string, mixed> $stat
+     */
+    private function statMatchesIndexEntry(IndexEntry $entry, array $stat, int $mode): bool
+    {
+        return $entry->ctimeSec === (int) $stat['ctime']
+            && $entry->mtimeSec === (int) $stat['mtime']
+            && $entry->dev === (int) $stat['dev']
+            && $entry->ino === (int) $stat['ino']
+            && $entry->mode === $mode
+            && $entry->uid === (int) $stat['uid']
+            && $entry->gid === (int) $stat['gid']
+            && $entry->fileSize === (int) $stat['size'];
     }
 
     /**

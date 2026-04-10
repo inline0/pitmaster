@@ -215,30 +215,12 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         $identityFile = getenv('PITMASTER_SSH_IDENTITY_FILE');
         $knownHosts = getenv('PITMASTER_SSH_KNOWN_HOSTS');
         $strict = getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
-        $parts = [
-            escapeshellarg($ssh),
-            '-o BatchMode=yes',
-            '-o ' . escapeshellarg('ConnectTimeout=' . $this->timeout),
-            '-p ' . (int) $port,
-        ];
-
-        if (is_string($identityFile) && $identityFile !== '') {
-            $parts[] = '-i ' . escapeshellarg($identityFile);
-        }
-
-        if (is_string($knownHosts) && $knownHosts !== '') {
-            $parts[] = '-o ' . escapeshellarg('UserKnownHostsFile=' . $knownHosts);
-        }
-
-        if (is_string($strict) && $strict !== '') {
-            $parts[] = '-o ' . escapeshellarg('StrictHostKeyChecking=' . $strict);
-        }
-
-        $parts[] = escapeshellarg($user . '@' . $host);
-        $parts[] = escapeshellarg($command);
+        $processCommand = $this->canUseDirectProcessCommand($ssh)
+            ? $this->buildDirectProcessCommand($ssh, $host, $port, $user, $command, $identityFile, $knownHosts, $strict)
+            : $this->buildShellProcessCommand($ssh, $host, $port, $user, $command, $identityFile, $knownHosts, $strict);
 
         $process = proc_open(
-            implode(' ', $parts),
+            $processCommand,
             [
                 0 => ['pipe', 'r'],
                 1 => ['pipe', 'w'],
@@ -274,6 +256,90 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         }
 
         return $stdout !== false ? $stdout : '';
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function buildDirectProcessCommand(
+        string $ssh,
+        string $host,
+        int $port,
+        string $user,
+        string $command,
+        string|false $identityFile,
+        string|false $knownHosts,
+        string|false $strict,
+    ): array {
+        $parts = [
+            $ssh,
+            '-o',
+            'BatchMode=yes',
+            '-o',
+            'ConnectTimeout=' . $this->timeout,
+            '-p',
+            (string) $port,
+        ];
+
+        if (is_string($identityFile) && $identityFile !== '') {
+            $parts[] = '-i';
+            $parts[] = $identityFile;
+        }
+
+        if (is_string($knownHosts) && $knownHosts !== '') {
+            $parts[] = '-o';
+            $parts[] = 'UserKnownHostsFile=' . $knownHosts;
+        }
+
+        if (is_string($strict) && $strict !== '') {
+            $parts[] = '-o';
+            $parts[] = 'StrictHostKeyChecking=' . $strict;
+        }
+
+        $parts[] = $user . '@' . $host;
+        $parts[] = $command;
+
+        return $parts;
+    }
+
+    private function buildShellProcessCommand(
+        string $ssh,
+        string $host,
+        int $port,
+        string $user,
+        string $command,
+        string|false $identityFile,
+        string|false $knownHosts,
+        string|false $strict,
+    ): string {
+        $parts = [
+            escapeshellarg($ssh),
+            '-o BatchMode=yes',
+            '-o ' . escapeshellarg('ConnectTimeout=' . $this->timeout),
+            '-p ' . (int) $port,
+        ];
+
+        if (is_string($identityFile) && $identityFile !== '') {
+            $parts[] = '-i ' . escapeshellarg($identityFile);
+        }
+
+        if (is_string($knownHosts) && $knownHosts !== '') {
+            $parts[] = '-o ' . escapeshellarg('UserKnownHostsFile=' . $knownHosts);
+        }
+
+        if (is_string($strict) && $strict !== '') {
+            $parts[] = '-o ' . escapeshellarg('StrictHostKeyChecking=' . $strict);
+        }
+
+        $parts[] = escapeshellarg($user . '@' . $host);
+        $parts[] = escapeshellarg($command);
+
+        return implode(' ', $parts);
+    }
+
+    private function canUseDirectProcessCommand(string $ssh): bool
+    {
+        return preg_match('/^[A-Za-z0-9._\\/-]+$/', $ssh) === 1;
     }
 
     /**

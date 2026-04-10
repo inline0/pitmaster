@@ -283,12 +283,15 @@ final class Stash
         $modified = [];
         $deleted = [];
         $untracked = [];
+        $statusByPath = [];
         $status = new WorkingTreeStatus($this->objects, $this->workDir, $this->gitDir);
 
         foreach ($status->compute($index, $headId) as $entry) {
             if ($entry->index === FileStatus::Ignored) {
                 continue;
             }
+
+            $statusByPath[$entry->path] = $entry;
 
             if ($entry->index === FileStatus::Untracked) {
                 if ($includeUntracked) {
@@ -320,6 +323,18 @@ final class Stash
                 continue;
             }
 
+            $pathStatus = $statusByPath[$entry->path] ?? null;
+
+            if (
+                $pathStatus !== null
+                && $pathStatus->worktree === FileStatus::Unmodified
+                && $pathStatus->index !== FileStatus::Deleted
+            ) {
+                $parts = explode('/', $entry->path);
+                $this->insertIntoTreeNode($root, $parts, $entry);
+                continue;
+            }
+
             $fullPath = $this->workDir . '/' . $entry->path;
 
             if (!is_file($fullPath)) {
@@ -334,12 +349,10 @@ final class Stash
         }
 
         if ($includeUntracked) {
-            $ignore = GitIgnore::forRepo($this->workDir);
-
             foreach ($untracked as $path) {
                 $fullPath = $this->workDir . '/' . $path;
 
-                if ($ignore->isIgnored($path, false) || !is_file($fullPath)) {
+                if (!is_file($fullPath)) {
                     continue;
                 }
 
@@ -658,10 +671,20 @@ final class Stash
     private function scanWorktree(string $dir, string $prefix, GitIgnore $ignore): array
     {
         $files = [];
+        $this->scanWorktreeInto($dir, $prefix, $ignore, $files);
+
+        return $files;
+    }
+
+    /**
+     * @param list<string> $files
+     */
+    private function scanWorktreeInto(string $dir, string $prefix, GitIgnore $ignore, array &$files): void
+    {
         $entries = scandir($dir);
 
         if ($entries === false) {
-            return $files;
+            return;
         }
 
         foreach ($entries as $name) {
@@ -677,7 +700,7 @@ final class Stash
             }
 
             if (is_dir($fullPath)) {
-                $files = array_merge($files, $this->scanWorktree($fullPath, $relPath, $ignore));
+                $this->scanWorktreeInto($fullPath, $relPath, $ignore, $files);
                 continue;
             }
 
@@ -685,8 +708,6 @@ final class Stash
                 $files[] = $relPath;
             }
         }
-
-        return $files;
     }
 
     /**

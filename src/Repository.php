@@ -1532,15 +1532,26 @@ final class Repository
 
             $wants = [];
             $haves = [];
+            $seenWants = [];
+            $seenHaves = [];
 
             foreach ($trackedRefs as $trackedRef) {
-                if ($depth !== null || !$this->objects->exists($trackedRef['id'])) {
+                if (
+                    ($depth !== null || !$this->objects->exists($trackedRef['id']))
+                    && !isset($seenWants[$trackedRef['id']->hex])
+                ) {
+                    $seenWants[$trackedRef['id']->hex] = true;
                     $wants[] = $trackedRef['id'];
                 }
             }
 
             if ($depth === null) {
                 foreach ($this->refs->list() as $refId) {
+                    if (isset($seenHaves[$refId->hex])) {
+                        continue;
+                    }
+
+                    $seenHaves[$refId->hex] = true;
                     $haves[] = $refId;
                 }
             }
@@ -2817,36 +2828,14 @@ final class Repository
         }
 
         $dirty = [];
+        $scanTimeSec = time();
 
         foreach ($currentEntries as $path => $entry) {
             if (($entry->extendedFlags & IndexEntry::EXTENDED_SKIP_WORKTREE) !== 0) {
                 continue;
             }
 
-            $fullPath = $this->workDir . '/' . $path;
-
-            if (!is_file($fullPath)) {
-                $dirty[$path] = true;
-                continue;
-            }
-
-            $size = filesize($fullPath);
-
-            if ($size === false || $size !== $entry->fileSize) {
-                $dirty[$path] = true;
-                continue;
-            }
-
-            $content = file_get_contents($fullPath);
-
-            if ($content === false) {
-                $dirty[$path] = true;
-                continue;
-            }
-
-            $contentHash = ObjectId::compute(ObjectType::Blob, $content, $entry->hash->algo);
-
-            if (!$contentHash->equals($entry->hash)) {
+            if ($this->worktreeDiffersFromIndex($entry, $scanTimeSec)) {
                 $dirty[$path] = true;
             }
         }
@@ -2896,6 +2885,73 @@ final class Repository
             path: $entry->path,
             extendedFlags: $extendedFlags,
         );
+    }
+
+    /**
+     * @param array{hash: string, mode: int}|null $treeEntry
+     */
+    private function entryDiffersFromTree(IndexEntry $entry, ?array $treeEntry): bool
+    {
+        if ($treeEntry === null) {
+            return true;
+        }
+
+        return $entry->hash->hex !== $treeEntry['hash']
+            || $entry->mode !== $treeEntry['mode'];
+    }
+
+    private function worktreeDiffersFromIndex(IndexEntry $entry, ?int $scanTimeSec = null): bool
+    {
+        $fullPath = $this->workDir . '/' . $entry->path;
+
+        if (!is_file($fullPath)) {
+            return true;
+        }
+
+        $stat = stat($fullPath);
+
+        if ($stat === false) {
+            return true;
+        }
+
+        if ((int) $stat['size'] !== $entry->fileSize) {
+            return true;
+        }
+
+        $mode = is_executable($fullPath) ? 0100755 : 0100644;
+        $scanTimeSec ??= time();
+
+        if (
+            $scanTimeSec > max($entry->mtimeSec, $entry->ctimeSec)
+            && $this->statMatchesIndexEntry($entry, $stat, $mode)
+        ) {
+            return false;
+        }
+
+        $content = file_get_contents($fullPath);
+
+        if ($content === false) {
+            return true;
+        }
+
+        $contentHash = ObjectId::compute(ObjectType::Blob, $content, $entry->hash->algo);
+
+        return !$contentHash->equals($entry->hash);
+    }
+
+    /**
+     * @param array<int|string, mixed> $stat
+     */
+    private function statMatchesIndexEntry(IndexEntry $entry, array $stat, int $mode): bool
+    {
+        return $entry->ctimeSec === (int) $stat['ctime']
+            && $entry->mtimeSec === (int) $stat['mtime']
+            && $entry->dev === (int) $stat['dev']
+            && $entry->ino === (int) $stat['ino']
+            && $entry->mode === $mode
+            && $entry->uid === (int) $stat['uid']
+            && $entry->gid === (int) $stat['gid']
+            && $entry->fileSize === (int) $stat['size'];
     }
 
     /**
@@ -4461,8 +4517,25 @@ final class Repository
     {
         $objects = [];
         $excluded = [];
+        $excludeRoots = [];
+        $canUseUpdateTipsOnly = true;
 
-        foreach ($remoteRefs as $remoteId) {
+        foreach ($updates as $update) {
+            if ($update['old']->equals($this->zeroObjectId())) {
+                $canUseUpdateTipsOnly = false;
+                break;
+            }
+
+            $excludeRoots[$update['old']->hex] = $update['old'];
+        }
+
+        if (!$canUseUpdateTipsOnly) {
+            foreach ($remoteRefs as $remoteId) {
+                $excludeRoots[$remoteId->hex] = $remoteId;
+            }
+        }
+
+        foreach ($excludeRoots as $remoteId) {
             if ($this->objects->exists($remoteId)) {
                 $this->collectReachableObjects($remoteId, $excluded);
             }
@@ -4684,8 +4757,9 @@ final class Repository
         }
 
         $headId = $this->refs->resolveHead();
-        $currentTree = $headId !== null ? $this->flattenTree($this->getCommitTree($headId)) : [];
-        $targetTree = $this->flattenTree($this->getCommitTree($targetId));
+        $currentTree = $headId !== null ? $this->flattenTreeEntries($this->getCommitTree($headId)) : [];
+        $targetTree = $this->flattenTreeEntries($this->getCommitTree($targetId));
+        $currentEntries = $this->index()->entries();
         $pathsChanging = [];
 
         foreach (array_keys(array_merge($currentTree, $targetTree)) as $path) {
@@ -4700,26 +4774,31 @@ final class Repository
 
         $modified = [];
         $untracked = [];
+        $scanTimeSec = time();
 
-        foreach ($this->status() as $entry) {
-            if ($entry->index === FileStatus::Ignored) {
-                continue;
-            }
+        foreach (array_keys($pathsChanging) as $path) {
+            $currentEntry = $currentEntries[$path] ?? null;
+            $currentTreeEntry = $currentTree[$path] ?? null;
+            $targetTreeEntry = $targetTree[$path] ?? null;
 
-            if ($entry->index === FileStatus::Untracked) {
-                if (isset($targetTree[$entry->path])) {
-                    $untracked[] = $entry->path;
+            if ($currentEntry !== null) {
+                if (
+                    $this->entryDiffersFromTree($currentEntry, $currentTreeEntry)
+                    || $this->worktreeDiffersFromIndex($currentEntry, $scanTimeSec)
+                ) {
+                    $modified[] = $path;
                 }
 
                 continue;
             }
 
-            if (!isset($pathsChanging[$entry->path])) {
+            if ($currentTreeEntry !== null) {
+                $modified[] = $path;
                 continue;
             }
 
-            if ($entry->index !== FileStatus::Unmodified || $entry->worktree !== FileStatus::Unmodified) {
-                $modified[] = $entry->path;
+            if ($targetTreeEntry !== null && file_exists($this->workDir . '/' . $path)) {
+                $untracked[] = $path;
             }
         }
 

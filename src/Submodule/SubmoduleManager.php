@@ -18,6 +18,9 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class SubmoduleManager
 {
+    /** @var array<int, Submodule>|null */
+    private ?array $submodulesCache = null;
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly string $workDir,
@@ -32,19 +35,23 @@ final class SubmoduleManager
      */
     public function list(): array
     {
+        if ($this->submodulesCache !== null) {
+            return $this->submodulesCache;
+        }
+
         $path = $this->workDir . '/.gitmodules';
 
         if (!is_file($path)) {
-            return [];
+            return $this->submodulesCache = [];
         }
 
         $content = file_get_contents($path);
 
         if ($content === false) {
-            return [];
+            return $this->submodulesCache = [];
         }
 
-        return self::parseGitmodules($content);
+        return $this->submodulesCache = self::parseGitmodules($content);
     }
 
     /**
@@ -185,9 +192,7 @@ final class SubmoduleManager
 
             if (is_dir($submodulePath . '/.git') || is_file($submodulePath . '/.git')) {
                 try {
-                    $subRepo = Pitmaster::open($submodulePath);
-                    $headId = $subRepo->refDatabase()->resolveHead();
-                    $actual = $headId?->hex;
+                    $actual = $this->resolveSubmoduleHead($submodulePath)?->hex;
                 } catch (\Throwable) {
                     // Submodule not initialized
                 }
@@ -203,6 +208,41 @@ final class SubmoduleManager
         }
 
         return $result;
+    }
+
+    private function resolveSubmoduleHead(string $submodulePath): ?ObjectId
+    {
+        $gitDir = $this->resolveLinkedGitDir($submodulePath);
+
+        if ($gitDir === null) {
+            return null;
+        }
+
+        $headPath = $gitDir . '/HEAD';
+
+        if (!is_file($headPath)) {
+            return null;
+        }
+
+        $head = trim((string) file_get_contents($headPath));
+
+        if (\Pitmaster\Object\ObjectId::looksLikeHex($head)) {
+            return ObjectId::fromHex($head);
+        }
+
+        if (str_starts_with($head, 'ref: ')) {
+            $refPath = $gitDir . '/' . substr($head, 5);
+
+            if (is_file($refPath)) {
+                $ref = trim((string) file_get_contents($refPath));
+
+                if (ObjectId::looksLikeHex($ref)) {
+                    return ObjectId::fromHex($ref);
+                }
+            }
+        }
+
+        return (new \Pitmaster\Ref\RefDatabase($gitDir))->resolveHead();
     }
 
     private function relativePath(string $from, string $to): string
@@ -331,7 +371,7 @@ final class SubmoduleManager
                 $gitDir = $path . '/' . $gitDir;
             }
 
-            return realpath($gitDir) ?: $gitDir;
+            return $gitDir;
         }
 
         if (is_file($path . '/HEAD')) {
@@ -339,6 +379,31 @@ final class SubmoduleManager
         }
 
         throw new \RuntimeException("Not a repository: {$path}");
+    }
+
+    private function resolveLinkedGitDir(string $path): ?string
+    {
+        if (is_dir($path . '/.git')) {
+            return $path . '/.git';
+        }
+
+        if (!is_file($path . '/.git')) {
+            return null;
+        }
+
+        $content = trim((string) file_get_contents($path . '/.git'));
+
+        if (!str_starts_with($content, 'gitdir: ')) {
+            return null;
+        }
+
+        $gitDir = substr($content, 8);
+
+        if (!str_starts_with($gitDir, '/')) {
+            $gitDir = $path . '/' . $gitDir;
+        }
+
+        return $gitDir;
     }
 
     private function copyTree(string $source, string $target): void

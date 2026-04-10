@@ -25,6 +25,12 @@ final class SparseCheckout
     /** @var array<int, string> */
     private array $includedDirectories = [];
 
+    /** @var array<string, true> */
+    private array $includedDirectorySet = [];
+
+    /** @var array<string, bool> */
+    private array $includeCache = [];
+
     public function __construct(private readonly string $gitDir)
     {
         $this->load();
@@ -107,18 +113,32 @@ final class SparseCheckout
             return true;
         }
 
+        if (isset($this->includeCache[$path])) {
+            return $this->includeCache[$path];
+        }
+
         // Root files (no /) are included if /* is in the include list
         if (!str_contains($path, '/')) {
-            return in_array('/*', $this->includes, true);
+            return $this->includeCache[$path] = in_array('/*', $this->includes, true);
         }
 
-        foreach ($this->includedDirectories as $dir) {
-            if (str_starts_with($path, $dir . '/') || $path === $dir) {
-                return true;
+        $candidate = $path;
+
+        while (true) {
+            if (isset($this->includedDirectorySet[$candidate])) {
+                return $this->includeCache[$path] = true;
             }
+
+            $slash = strrpos($candidate, '/');
+
+            if ($slash === false) {
+                break;
+            }
+
+            $candidate = substr($candidate, 0, $slash);
         }
 
-        return false;
+        return $this->includeCache[$path] = false;
     }
 
     /**
@@ -146,6 +166,8 @@ final class SparseCheckout
         $this->includes = [];
         $this->excludes = [];
         $this->includedDirectories = [];
+        $this->includedDirectorySet = [];
+        $this->includeCache = [];
     }
 
     private function load(): void
@@ -154,6 +176,8 @@ final class SparseCheckout
         $this->includes = [];
         $this->excludes = [];
         $this->includedDirectories = [];
+        $this->includedDirectorySet = [];
+        $this->includeCache = [];
 
         $path = $this->gitDir . '/info/sparse-checkout';
 
@@ -183,7 +207,9 @@ final class SparseCheckout
 
         foreach ($this->includes as $pattern) {
             if ($pattern !== '/*' && str_ends_with($pattern, '/')) {
-                $this->includedDirectories[] = trim($pattern, '/');
+                $directory = trim($pattern, '/');
+                $this->includedDirectories[] = $directory;
+                $this->includedDirectorySet[$directory] = true;
             }
         }
     }

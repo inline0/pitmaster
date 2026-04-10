@@ -33,21 +33,15 @@ final class Reflog
             return new self($path);
         }
 
-        $content = file_get_contents($path);
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-        if ($content === false) {
+        if ($lines === false) {
             return new self($path);
         }
 
         $entries = [];
 
-        foreach (explode("\n", $content) as $line) {
-            $line = trim($line);
-
-            if ($line === '') {
-                continue;
-            }
-
+        foreach ($lines as $line) {
             // Format: <old> <new> <identity> <timestamp> <tz>\t<message>
             $tabPos = strpos($line, "\t");
             $message = $tabPos !== false ? substr($line, $tabPos + 1) : '';

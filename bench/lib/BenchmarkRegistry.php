@@ -18,6 +18,7 @@ use Pitmaster\Protocol\GitProtocolClient;
 use Pitmaster\Protocol\PktLine;
 use Pitmaster\Protocol\SshClient;
 use Pitmaster\Ref\Notes;
+use Pitmaster\Ref\Reflog;
 use Pitmaster\Stash\Stash;
 use Pitmaster\Submodule\SubmoduleManager;
 
@@ -55,8 +56,11 @@ final class BenchmarkRegistry
             self::stashCase('workflow.stash.tracked', false),
             self::stashCase('workflow.stash.untracked', true),
             self::notesListCase(),
+            self::reflogReadCase(),
             self::worktreeListCase(),
+            self::worktreeRemoveCase(),
             self::submoduleStatusCase(),
+            self::submoduleUpdateCase(),
             self::pktLineEncodeCase(),
             self::pktLineDecodeCase(),
             self::smartHttpCloneCase(),
@@ -740,6 +744,29 @@ final class BenchmarkRegistry
         );
     }
 
+    private static function reflogReadCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'workflow.reflog.read-heavy',
+            'Read a long HEAD reflog from a long-history repository',
+            ['workflow', 'advanced', 'refs'],
+            4,
+            1,
+            ['fixture' => 'history-long'],
+            static function (BenchmarkRuntime $runtime): array {
+                $runtime->fixtures->ensure('history-long');
+
+                return [
+                    'path' => $runtime->fixtures->repoPath('history-long'),
+                ];
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                Reflog::open($suiteContext['path'] . '/.git', 'HEAD')->entries();
+            },
+        );
+    }
+
     private static function smartHttpCloneCase(): BenchmarkCase
     {
         return BenchmarkCase::define(
@@ -958,6 +985,50 @@ final class BenchmarkRegistry
         );
     }
 
+    private static function worktreeRemoveCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'workflow.worktree.remove-one',
+            'Remove one linked worktree from a repository with many linked worktrees',
+            ['workflow', 'advanced'],
+            4,
+            1,
+            ['fixture' => 'repo-medium-clean'],
+            static function (BenchmarkRuntime $runtime): array {
+                $runtime->fixtures->ensure('repo-medium-clean');
+
+                return ['source' => $runtime->fixtures->repoPath('repo-medium-clean')];
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, int $iteration): array {
+                $iterationRoot = $runtime->freshWorkspace("bench-worktree-remove-{$iteration}");
+                $repoPath = $iterationRoot . '/repo';
+                BenchmarkFilesystem::copyDirectory($suiteContext['source'], $repoPath);
+                $repo = Pitmaster::open($repoPath);
+
+                for ($i = 0; $i < 8; $i++) {
+                    $repo->addWorktree(
+                        $iterationRoot . "/wt-remove-{$i}",
+                        "bench-worktree-remove-{$i}",
+                        null,
+                        "bench-worktree-remove-{$i}",
+                    );
+                }
+
+                return [
+                    'workspace' => $iterationRoot,
+                    'repo_path' => $repoPath,
+                    'remove_name' => 'bench-worktree-remove-7',
+                ];
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                Pitmaster::open($iterationContext['repo_path'])->removeWorktree($iterationContext['remove_name']);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                BenchmarkFilesystem::removeDirectory($iterationContext['workspace']);
+            },
+        );
+    }
+
     private static function submoduleStatusCase(): BenchmarkCase
     {
         return BenchmarkCase::define(
@@ -1001,6 +1072,55 @@ final class BenchmarkRegistry
                 $repo = Pitmaster::open($suiteContext['repo_path']);
                 $manager = new SubmoduleManager($repo->objectDatabase(), $repo->workDir(), $repo->gitDir());
                 $manager->status($repo->head()->tree);
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                BenchmarkFilesystem::removeDirectory($suiteContext['workspace']);
+            },
+        );
+    }
+
+    private static function submoduleUpdateCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'workflow.submodule.update',
+            'Update submodules in a nested topology',
+            ['workflow', 'advanced'],
+            3,
+            1,
+            ['topology' => 'nested-submodules'],
+            static function (BenchmarkRuntime $runtime): array {
+                $workspace = $runtime->freshWorkspace('bench-submodule-update');
+                $dep2 = $workspace . '/dep2';
+                $dep1 = $workspace . '/dep1';
+                $super = $workspace . '/super';
+                self::initializeBenchmarkRepo($dep2);
+                BenchmarkFilesystem::writeFile($dep2 . '/dep2.txt', "dep2\n");
+                self::commitAll($dep2, 'dep2 root');
+                self::initializeBenchmarkRepo($dep1);
+                BenchmarkFilesystem::writeFile($dep1 . '/dep1.txt', "dep1\n");
+                self::commitAll($dep1, 'dep1 root');
+                BenchmarkShell::git('-c protocol.file.allow=always submodule add ' . escapeshellarg($dep2) . ' nested/dep2', $dep1);
+                self::commitAll($dep1, 'Add nested dep2');
+                self::initializeBenchmarkRepo($super);
+                BenchmarkFilesystem::writeFile($super . '/app.txt', "super\n");
+                self::commitAll($super, 'super root');
+                BenchmarkShell::git('-c protocol.file.allow=always submodule add ' . escapeshellarg($dep1) . ' vendor/dep1', $super);
+                self::commitAll($super, 'Add dep1');
+                $pitClone = $workspace . '/pit-clone';
+                BenchmarkShell::git('clone ' . escapeshellarg($super) . ' ' . escapeshellarg($pitClone), $workspace);
+
+                return [
+                    'workspace' => $workspace,
+                    'repo_path' => $pitClone,
+                ];
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                $repo = Pitmaster::open($suiteContext['repo_path']);
+                $manager = new SubmoduleManager($repo->objectDatabase(), $repo->workDir(), $repo->gitDir());
+                $manager->init();
+                $manager->update($repo->head()->tree);
             },
             null,
             static function (BenchmarkRuntime $runtime, array $suiteContext): void {

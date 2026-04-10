@@ -38,9 +38,10 @@ final class WorktreeManager
     public function list(): array
     {
         $worktrees = [];
+        $refs = new RefDatabase($this->gitDir);
 
         // Main worktree
-        $worktrees[] = $this->mainWorktree();
+        $worktrees[] = $this->mainWorktree($refs);
 
         // Linked worktrees
         $worktreesDir = $this->gitDir . '/worktrees';
@@ -60,7 +61,7 @@ final class WorktreeManager
                 continue;
             }
 
-            $worktrees[] = $this->readLinkedWorktree($name, $wtDir);
+            $worktrees[] = $this->readLinkedWorktree($name, $wtDir, $refs);
         }
 
         return $worktrees;
@@ -215,9 +216,9 @@ final class WorktreeManager
         return realpath($gitdir) ?: $gitdir;
     }
 
-    private function mainWorktree(): Worktree
+    private function mainWorktree(?RefDatabase $refs = null): Worktree
     {
-        $refs = new RefDatabase($this->gitDir);
+        $refs ??= new RefDatabase($this->gitDir);
         $head = $refs->readHead();
         $headId = $refs->resolveHead();
 
@@ -242,7 +243,7 @@ final class WorktreeManager
         );
     }
 
-    private function readLinkedWorktree(string $name, string $wtDir): Worktree
+    private function readLinkedWorktree(string $name, string $wtDir, ?RefDatabase $refs = null): Worktree
     {
         // Read HEAD
         $headContent = is_file($wtDir . '/HEAD') ? trim((string) file_get_contents($wtDir . '/HEAD')) : '';
@@ -257,19 +258,14 @@ final class WorktreeManager
             $isDetached = false;
 
             // Resolve the branch from the shared refs
-            $refs = new RefDatabase($this->gitDir);
+            $refs ??= new RefDatabase($this->gitDir);
             $headId = $refs->resolve($symref->target);
         } elseif (ObjectId::looksLikeHex($headContent)) {
             $headId = ObjectId::fromHex($headContent);
         }
 
         // Read gitdir to find worktree path
-        $path = '';
-
-        if (is_file($wtDir . '/gitdir')) {
-            $gitdirContent = trim((string) file_get_contents($wtDir . '/gitdir'));
-            $path = dirname($gitdirContent);
-        }
+        $path = $this->linkedWorktreePath($wtDir);
 
         // Check lock
         $isLocked = is_file($wtDir . '/locked');
@@ -353,14 +349,30 @@ final class WorktreeManager
                 continue;
             }
 
-            $worktree = $this->readLinkedWorktree($name, $wtDir);
-
-            if ($this->samePath($worktree->path, $path)) {
+            if ($this->samePath($this->linkedWorktreePath($wtDir), $path)) {
                 return $name;
             }
         }
 
         return null;
+    }
+
+    private function linkedWorktreePath(string $wtDir): string
+    {
+        $gitFile = $this->linkedWorktreeGitFile($wtDir);
+
+        return $gitFile === '' ? '' : dirname($gitFile);
+    }
+
+    private function linkedWorktreeGitFile(string $wtDir): string
+    {
+        $gitdirFile = $wtDir . '/gitdir';
+
+        if (!is_file($gitdirFile)) {
+            return '';
+        }
+
+        return trim((string) file_get_contents($gitdirFile));
     }
 
     private function samePath(string $left, string $right): bool

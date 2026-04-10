@@ -23,6 +23,9 @@ final class Notes
 {
     private const DEFAULT_REF = 'refs/notes/commits';
 
+    /** @var array<string, array<string, ObjectId>> */
+    private array $noteMapCache = [];
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly RefDatabase $refs,
@@ -153,13 +156,20 @@ final class Notes
      */
     private function readNoteMap(string $notesRef): array
     {
+        if (isset($this->noteMapCache[$notesRef])) {
+            return $this->noteMapCache[$notesRef];
+        }
+
         $treeId = $this->notesTreeId($notesRef);
 
         if ($treeId === null) {
-            return [];
+            return $this->noteMapCache[$notesRef] = [];
         }
 
-        return $this->flattenNotesTree($treeId);
+        $result = [];
+        $this->flattenNotesTreeInto($treeId, '', $result);
+
+        return $this->noteMapCache[$notesRef] = $result;
     }
 
     private function notesTreeId(string $notesRef): ?ObjectId
@@ -222,6 +232,7 @@ final class Notes
         $commit = Commit::parse($content, $commitId);
         $this->objects->write($commit);
         $this->refs->update($notesRef, $commitId);
+        unset($this->noteMapCache[$notesRef]);
     }
 
     private function findNoteBlobId(ObjectId $treeId, ObjectId $commitId): ?ObjectId
@@ -261,21 +272,22 @@ final class Notes
     /**
      * @return array<string, ObjectId>
      */
-    private function flattenNotesTree(ObjectId $treeId, string $prefix = ''): array
+    /**
+     * @param array<string, ObjectId> $result
+     */
+    private function flattenNotesTreeInto(ObjectId $treeId, string $prefix, array &$result): void
     {
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return [];
+            return;
         }
-
-        $result = [];
 
         foreach ($tree->entries as $entry) {
             $path = $prefix !== '' ? $prefix . '/' . $entry->name : $entry->name;
 
             if ($entry->isTree()) {
-                $result += $this->flattenNotesTree($entry->hash, $path);
+                $this->flattenNotesTreeInto($entry->hash, $path, $result);
                 continue;
             }
 
@@ -283,8 +295,6 @@ final class Notes
                 $result[$path] = $entry->hash;
             }
         }
-
-        return $result;
     }
 
     /**

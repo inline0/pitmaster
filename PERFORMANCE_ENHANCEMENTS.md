@@ -37,7 +37,7 @@ What is complete in the final pass:
 - benchmark commands are wired into `composer.json`
 - benchmark usage is documented in `README.md` and `CLAUDE.md`
 - a canonical benchmark report now lives at `bench/reports/baseline.json`
-- the benchmark suite now covers 36 cases across open, status, sparse status, index read/write, object reads, log, merge-base, blame, grep, bisect, diff, checkout/reset/restore/rm/mv, stash, notes, worktrees, submodules, pkt-line encode/decode, smart HTTP clone/fetch/push, git:// discovery, SSH discovery, and LFS batch orchestration
+- the benchmark suite now covers 39 cases across open, status, sparse status, index read/write, object reads, log, merge-base, blame, grep, bisect, diff, checkout/reset/restore/rm/mv, stash, notes, reflog reads, worktree list/remove, submodule status/update, pkt-line encode/decode, smart HTTP clone/fetch/push, git:// discovery, SSH discovery, and LFS batch orchestration
 
 Measured wins against the original pre-optimization report:
 
@@ -112,6 +112,34 @@ Current pass notes:
 - `workflow.reset.hard.large` stayed effectively flat in this pass (`78.122ms -> 78.472ms`), so the retained value is the checkout win rather than a broad "reset got faster again" claim
 - the transport benchmark cases now clean up their per-iteration bare remotes correctly, which means warmups no longer poison `transport.smart-http.clone`, `fetch`, or `push`
 - an attempted smart HTTP code-path optimization batch was measured and reverted because isolated transport reruns regressed; the benchmark harness fixes were kept, the transport code changes were not
+
+Measured wins in the current canonical-baseline refresh against the previous committed baseline:
+
+- `status.clean`: `16.416ms -> 4.576ms` (`-72.12%`)
+- `status.dirty`: `12.382ms -> 4.127ms` (`-66.67%`)
+- `status.sparse.large`: `19.997ms -> 16.622ms` (`-16.88%`)
+- `workflow.checkout.large`: `171.266ms -> 52.768ms` (`-69.19%`)
+- `workflow.reset.hard.large`: `115.475ms -> 44.033ms` (`-61.87%`)
+- `workflow.stash.tracked`: `81.849ms -> 30.620ms` (`-62.59%`)
+- `workflow.stash.untracked`: `64.004ms -> 37.573ms` (`-41.30%`)
+- `workflow.notes.list-heavy`: `3.657ms -> 2.343ms` (`-35.93%`)
+- `workflow.worktree.list-many`: `2.902ms -> 1.426ms` (`-50.86%`)
+- `transport.smart-http.clone`: `97.764ms -> 79.889ms` (`-18.28%`)
+- `transport.smart-http.fetch`: `72.647ms -> 40.629ms` (`-44.07%`)
+- `transport.smart-http.push`: `140.466ms -> 65.805ms` (`-53.15%`)
+- `transport.ssh.discovery`: `458.025ms -> 284.503ms` (`-37.88%`)
+
+Current canonical pass notes:
+
+- `WorkingTreeStatus` now uses a stat-validated fast path before falling back to blob hashing, which is the main reason the clean/dirty status benchmarks collapsed into single-digit millisecond territory
+- `assertSafeCheckout()` now checks only the paths that would actually change and compares those directly against index/worktree state instead of routing through the full status pipeline
+- `SparseCheckout` now caches include decisions and walks ancestor segments instead of scanning every configured include directory for every path lookup
+- `Stash` now reuses clean index entries for staged-only paths, skips the second ignore pass for already-classified untracked files, and uses in-place worktree scanning
+- `WorktreeManager` now reuses shared ref state while listing linked worktrees and resolves worktree paths directly from metadata files instead of rebuilding worktree objects just to match paths
+- `SubmoduleManager` now caches `.gitmodules`, resolves submodule HEADs directly, and avoids repository opens in the status path
+- `Notes` now flattens note trees into a single accumulator and caches note maps per notes ref; `Reflog` now uses line-based reads instead of full-file splitting
+- `SshClient` now uses direct argv-based `proc_open()` when the configured SSH command is simple, which removed an avoidable shell hop from the common benchmark path
+- the benchmark suite now has first-class proof cases for reflog reads, linked-worktree removal, and submodule update, so those follow-up optimizations are no longer inferred from adjacent workflows
 
 Implementation changes that produced the current wins:
 

@@ -1,20 +1,20 @@
 {
   "open.small": {
-    "max_median_ms": 20
+    "max_median_ms": 15
   },
   "open.large": {
-    "max_median_ms": 10
+    "max_median_ms": 2
   },
   "status.dirty": {
-    "max_median_ms": 40
+    "max_median_ms": 25
   },
   "objects.packed.read": {
-    "max_median_ms": 10
+    "max_median_ms": 6
   },
   "log.long-history": {
-    "max_median_ms": 80
+    "max_median_ms": 70
   },
   "diff.rename-heavy": {
-    "max_median_ms": 40
+    "max_median_ms": 20
   }
 }
