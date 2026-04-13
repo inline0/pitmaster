@@ -117,9 +117,7 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
             true,
         );
 
-        $lines = PktLine::decode($response);
-
-        return RefDiscovery::parse($lines);
+        return RefDiscovery::parse(PktLine::decode($response));
     }
 
     public function discoverReceivePackRefs(string $url): RefDiscovery

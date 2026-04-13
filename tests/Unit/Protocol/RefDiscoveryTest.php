@@ -80,4 +80,39 @@ final class RefDiscoveryTest extends TestCase
 
         self::assertSame('refs/heads/main', $discovery->headSymref());
     }
+
+    #[Test]
+    public function parseAdvertisementSkipsServiceBannerAndPreservesCapabilities(): void
+    {
+        $head = str_repeat('ab', 20);
+        $feature = str_repeat('cd', 20);
+        $advertisement = ''
+            . "001e# service=git-upload-pack\n"
+            . "0000"
+            . sprintf('%04x', strlen("{$head} HEAD\0symref=HEAD:refs/heads/main multi_ack\n") + 4)
+            . "{$head} HEAD\0symref=HEAD:refs/heads/main multi_ack\n"
+            . sprintf('%04x', strlen("{$feature} refs/heads/feature\n") + 4)
+            . "{$feature} refs/heads/feature\n"
+            . "0000";
+
+        $discovery = RefDiscovery::parseAdvertisement($advertisement);
+
+        self::assertSame('refs/heads/main', $discovery->headSymref());
+        self::assertSame($head, $discovery->ref('HEAD')?->hex);
+        self::assertSame($feature, $discovery->ref('refs/heads/feature')?->hex);
+        self::assertTrue($discovery->capabilities()?->has('multi_ack') ?? false);
+    }
+
+    #[Test]
+    public function parseAdvertisementSupportsSha256Hashes(): void
+    {
+        $hash = str_repeat('ab', 32);
+        $advertisement = sprintf('%04x', strlen("{$hash} refs/heads/main\n") + 4)
+            . "{$hash} refs/heads/main\n"
+            . "0000";
+
+        $discovery = RefDiscovery::parseAdvertisement($advertisement);
+
+        self::assertSame($hash, $discovery->ref('refs/heads/main')?->hex);
+    }
 }

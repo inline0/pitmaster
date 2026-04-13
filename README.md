@@ -162,6 +162,9 @@ composer bench -- --suite=smoke --runs=1 --warmups=0
 # Run one focused case when iterating on a hotspot
 composer bench -- --suite=all --case=workflow.reset.hard.large --runs=5 --warmups=1
 
+# Run the instrumentation-only suite to split a hotspot into sub-costs
+composer bench -- --suite=instrumentation --runs=3 --warmups=0
+
 # Capture the full baseline report
 composer bench:baseline
 
@@ -176,6 +179,8 @@ composer bench:verify -- bench/reports/ci-smoke.local.json bench/reports/smoke-t
 ```
 
 Benchmark fixtures are deterministic and repo-local. They are generated under `bench/fixtures/repos` from committed definitions, not from `/tmp` or public network dependencies. The committed smoke thresholds live in [`bench/reports/smoke-thresholds.json`](bench/reports/smoke-thresholds.json), and CI verifies the smoke report against them. For optimization work, measure the focused case first, keep only wins that hold up across reruns, then refresh the canonical baseline. Do not treat a change as done until the relevant benchmark moves in the right direction and `./bin/verify-all` still passes.
+
+The instrumentation suite is intentionally separate from the canonical baseline and smoke thresholds. Use it when a remaining hotspot needs attribution first, for example splitting smart HTTP fetch into discovery and upload-pack costs or separating SSH command startup from PHP-side parsing.
 
 ## Requirements
 

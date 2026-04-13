@@ -16,7 +16,10 @@ use Pitmaster\Object\ObjectId;
 use Pitmaster\Pitmaster;
 use Pitmaster\Protocol\GitProtocolClient;
 use Pitmaster\Protocol\PktLine;
+use Pitmaster\Protocol\RefDiscovery;
+use Pitmaster\Protocol\SmartHttpClient;
 use Pitmaster\Protocol\SshClient;
+use Pitmaster\Protocol\UploadPackClient;
 use Pitmaster\Ref\Notes;
 use Pitmaster\Ref\Reflog;
 use Pitmaster\Stash\Stash;
@@ -77,10 +80,34 @@ final class BenchmarkRegistry
      */
     public static function forSuite(string $suite): array
     {
+        if ($suite === 'all') {
+            return self::all();
+        }
+
+        if ($suite === 'instrumentation') {
+            return self::instrumentation();
+        }
+
         return array_values(array_filter(
             self::all(),
             static fn (BenchmarkCase $case): bool => $case->belongsTo($suite),
         ));
+    }
+
+    /**
+     * @return list<BenchmarkCase>
+     */
+    public static function instrumentation(): array
+    {
+        return [
+            self::smartHttpFetchInstrumentationFullCase(),
+            self::smartHttpFetchInstrumentationDiscoverCase(),
+            self::smartHttpFetchInstrumentationUploadPackCase(),
+            self::refDiscoveryParseInstrumentationCase(),
+            self::refDiscoveryDecodeThenParseInstrumentationCase(),
+            self::sshDiscoveryInstrumentationFullCase(),
+            self::sshDiscoveryInstrumentationCommandCase(),
+        ];
     }
 
     private static function openCase(
@@ -942,6 +969,110 @@ final class BenchmarkRegistry
         );
     }
 
+    private static function smartHttpFetchInstrumentationFullCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.smart-http.fetch.full',
+            'Measure the full smart HTTP fetch path against the transport attribution fixture',
+            ['instrumentation'],
+            4,
+            0,
+            ['fixture' => 'repo-small', 'component' => 'full-fetch'],
+            static function (BenchmarkRuntime $runtime): array {
+                return self::setUpSmartHttpTransportWorkspace($runtime, 'repo-small', 'bench-fetch-instrument');
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, int $iteration): array {
+                return self::prepareSmartHttpFetchIteration($runtime, $suiteContext, $iteration);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                $repo = Pitmaster::open($iterationContext['clone_dir']);
+                $repo->fetch();
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                self::cleanupSmartHttpFetchIteration($iterationContext);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                self::tearDownSmartHttpTransportWorkspace($suiteContext);
+            },
+        );
+    }
+
+    private static function smartHttpFetchInstrumentationDiscoverCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.smart-http.fetch.discover',
+            'Measure only smart HTTP ref discovery for the fetch benchmark topology',
+            ['instrumentation'],
+            4,
+            0,
+            ['fixture' => 'repo-small', 'component' => 'discover-refs'],
+            static function (BenchmarkRuntime $runtime): array {
+                return self::setUpSmartHttpTransportWorkspace($runtime, 'repo-small', 'bench-fetch-discover');
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, int $iteration): array {
+                return self::prepareSmartHttpFetchIteration($runtime, $suiteContext, $iteration);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                $client = new SmartHttpClient();
+                $client->discoverRefs($iterationContext['remote_url']);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                self::cleanupSmartHttpFetchIteration($iterationContext);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                self::tearDownSmartHttpTransportWorkspace($suiteContext);
+            },
+        );
+    }
+
+    private static function smartHttpFetchInstrumentationUploadPackCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.smart-http.fetch.upload-pack',
+            'Measure upload-pack negotiation and response parsing for a small smart HTTP fetch',
+            ['instrumentation'],
+            4,
+            0,
+            ['fixture' => 'repo-small', 'component' => 'upload-pack'],
+            static function (BenchmarkRuntime $runtime): array {
+                return self::setUpSmartHttpTransportWorkspace($runtime, 'repo-small', 'bench-fetch-upload-pack');
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, int $iteration): array {
+                $iterationContext = self::prepareSmartHttpFetchIteration($runtime, $suiteContext, $iteration);
+                $transport = new SmartHttpClient();
+                $discovery = $transport->discoverRefs($iterationContext['remote_url']);
+                $want = $discovery->ref('refs/heads/main');
+
+                if ($want === null) {
+                    throw new \RuntimeException('smart HTTP fetch instrumentation failed to resolve refs/heads/main');
+                }
+
+                $repo = Pitmaster::open($iterationContext['clone_dir']);
+                $iterationContext['want'] = $want->hex;
+                $iterationContext['haves'] = array_values($repo->allRefs());
+
+                return $iterationContext;
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                $client = new UploadPackClient(new SmartHttpClient());
+                $client->fetchResult(
+                    $iterationContext['remote_url'],
+                    [ObjectId::fromHex($iterationContext['want'])],
+                    array_values(array_map(
+                        static fn (string $hex): ObjectId => ObjectId::fromHex($hex),
+                        $iterationContext['haves'],
+                    )),
+                );
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext, array $iterationContext): void {
+                self::cleanupSmartHttpFetchIteration($iterationContext);
+            },
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                self::tearDownSmartHttpTransportWorkspace($suiteContext);
+            },
+        );
+    }
+
     private static function worktreeListCase(): BenchmarkCase
     {
         return BenchmarkCase::define(
@@ -1221,6 +1352,133 @@ final class BenchmarkRegistry
         );
     }
 
+    private static function refDiscoveryParseInstrumentationCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.ref-discovery.parse',
+            'Measure parsing a ref-heavy upload-pack advertisement from raw pkt-lines',
+            ['instrumentation'],
+            8,
+            0,
+            ['fixture' => 'refs-many', 'component' => 'parse-advertisement'],
+            static function (BenchmarkRuntime $runtime): array {
+                $runtime->fixtures->ensure('refs-many');
+                $workspace = $runtime->freshWorkspace('bench-ref-discovery-parse');
+                $bareRepo = $workspace . '/remote.git';
+                BenchmarkShell::git(
+                    'clone --bare ' . escapeshellarg($runtime->fixtures->repoPath('refs-many')) . ' ' . escapeshellarg($bareRepo),
+                    $workspace,
+                );
+
+                return [
+                    'workspace' => $workspace,
+                    'payload' => self::captureUploadPackAdvertisement($bareRepo),
+                ];
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                $discovery = RefDiscovery::parseAdvertisement($suiteContext['payload']);
+
+                if ($discovery->refs() === []) {
+                    throw new \RuntimeException('ref discovery parser produced no refs');
+                }
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                BenchmarkFilesystem::removeDirectory($suiteContext['workspace']);
+            },
+        );
+    }
+
+    private static function refDiscoveryDecodeThenParseInstrumentationCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.ref-discovery.decode-then-parse',
+            'Measure pkt-line decode plus ref discovery parsing for the same ref-heavy advertisement',
+            ['instrumentation'],
+            8,
+            0,
+            ['fixture' => 'refs-many', 'component' => 'decode-then-parse'],
+            static function (BenchmarkRuntime $runtime): array {
+                $runtime->fixtures->ensure('refs-many');
+                $workspace = $runtime->freshWorkspace('bench-ref-discovery-decode');
+                $bareRepo = $workspace . '/remote.git';
+                BenchmarkShell::git(
+                    'clone --bare ' . escapeshellarg($runtime->fixtures->repoPath('refs-many')) . ' ' . escapeshellarg($bareRepo),
+                    $workspace,
+                );
+
+                return [
+                    'workspace' => $workspace,
+                    'payload' => self::captureUploadPackAdvertisement($bareRepo),
+                ];
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                $discovery = RefDiscovery::parse(PktLine::decode($suiteContext['payload']));
+
+                if ($discovery->refs() === []) {
+                    throw new \RuntimeException('decode-then-parse produced no refs');
+                }
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                BenchmarkFilesystem::removeDirectory($suiteContext['workspace']);
+            },
+        );
+    }
+
+    private static function sshDiscoveryInstrumentationFullCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.ssh.discovery.full',
+            'Measure the full SSH discovery path against the repo-local mock command',
+            ['instrumentation'],
+            4,
+            0,
+            ['fixture' => 'refs-many', 'component' => 'full-discovery'],
+            static function (BenchmarkRuntime $runtime): array {
+                return self::setUpSshTransportWorkspace($runtime, 'refs-many', 'bench-ssh-instrument');
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                $client = new SshClient();
+                $client->discoverRefs($suiteContext['url']);
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                self::tearDownSshTransportWorkspace($suiteContext);
+            },
+        );
+    }
+
+    private static function sshDiscoveryInstrumentationCommandCase(): BenchmarkCase
+    {
+        return BenchmarkCase::define(
+            'instrumentation.transport.ssh.discovery.command',
+            'Measure SSH process startup and remote advertisement generation without PHP-side parsing',
+            ['instrumentation'],
+            4,
+            0,
+            ['fixture' => 'refs-many', 'component' => 'command-startup'],
+            static function (BenchmarkRuntime $runtime): array {
+                return self::setUpSshTransportWorkspace($runtime, 'refs-many', 'bench-ssh-command');
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                $output = self::runMockSshAdvertisement($suiteContext['ssh_command'], $suiteContext['ssh_root']);
+
+                if ($output === '') {
+                    throw new \RuntimeException('mock ssh advertisement command produced no output');
+                }
+            },
+            null,
+            static function (BenchmarkRuntime $runtime, array $suiteContext): void {
+                self::tearDownSshTransportWorkspace($suiteContext);
+            },
+        );
+    }
+
     private static function lfsBatchCase(): BenchmarkCase
     {
         return BenchmarkCase::define(
@@ -1345,6 +1603,227 @@ final class BenchmarkRegistry
                 }
             },
         );
+    }
+
+    /**
+     * @return array{workspace: string, project_root: string, server: GitHttpServer, source: string}
+     */
+    private static function setUpSmartHttpTransportWorkspace(
+        BenchmarkRuntime $runtime,
+        string $fixture,
+        string $label,
+    ): array {
+        $runtime->fixtures->ensure($fixture);
+        $workspace = $runtime->freshWorkspace($label);
+        $projectRoot = $workspace . '/projects';
+        BenchmarkFilesystem::ensureDirectory($projectRoot);
+        $server = new GitHttpServer($projectRoot, $runtime->root . '/tests/Fixtures/git_http_backend_router.php');
+        $server->start();
+
+        return [
+            'workspace' => $workspace,
+            'project_root' => $projectRoot,
+            'server' => $server,
+            'source' => $runtime->fixtures->repoPath($fixture),
+        ];
+    }
+
+    /**
+     * @param array{workspace: string, project_root: string, server: GitHttpServer, source: string} $suiteContext
+     * @return array{iteration_root: string, clone_dir: string, remote_dir: string, remote_url: string}
+     */
+    private static function prepareSmartHttpFetchIteration(
+        BenchmarkRuntime $runtime,
+        array $suiteContext,
+        int $iteration,
+    ): array {
+        $iterationRoot = $suiteContext['workspace'] . "/iteration-{$iteration}";
+        BenchmarkFilesystem::ensureDirectory($iterationRoot);
+        $remoteDir = $suiteContext['project_root'] . "/fetch-remote-{$iteration}.git";
+        $sourceDir = $iterationRoot . '/source';
+        $cloneDir = $iterationRoot . '/clone';
+        $remoteUrl = $suiteContext['server']->baseUrl() . '/fetch-remote-' . $iteration . '.git';
+        BenchmarkFilesystem::copyDirectory($suiteContext['source'], $sourceDir);
+        BenchmarkShell::git('clone --bare ' . escapeshellarg($sourceDir) . ' ' . escapeshellarg($remoteDir), $iterationRoot);
+        BenchmarkShell::git('config http.receivepack true', $remoteDir);
+        Pitmaster::clone($remoteUrl, $cloneDir);
+
+        BenchmarkFilesystem::writeFile($sourceDir . '/bench-fetch.txt', "fetch {$iteration}\n");
+        BenchmarkShell::git('add bench-fetch.txt', $sourceDir);
+        BenchmarkShell::git('commit -m ' . escapeshellarg("bench fetch {$iteration}"), $sourceDir, [
+            'GIT_AUTHOR_NAME' => 'Pitmaster Bench',
+            'GIT_AUTHOR_EMAIL' => 'bench@pitmaster.dev',
+            'GIT_COMMITTER_NAME' => 'Pitmaster Bench',
+            'GIT_COMMITTER_EMAIL' => 'bench@pitmaster.dev',
+            'GIT_AUTHOR_DATE' => '2024-01-01T00:00:00 +0000',
+            'GIT_COMMITTER_DATE' => '2024-01-01T00:00:00 +0000',
+        ]);
+        BenchmarkShell::git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
+        BenchmarkShell::git('push origin main', $sourceDir);
+
+        return [
+            'iteration_root' => $iterationRoot,
+            'clone_dir' => $cloneDir,
+            'remote_dir' => $remoteDir,
+            'remote_url' => $remoteUrl,
+        ];
+    }
+
+    /**
+     * @param array{iteration_root: string, remote_dir: string} $iterationContext
+     */
+    private static function cleanupSmartHttpFetchIteration(array $iterationContext): void
+    {
+        BenchmarkFilesystem::removeDirectory($iterationContext['iteration_root']);
+        BenchmarkFilesystem::removeDirectory($iterationContext['remote_dir']);
+    }
+
+    /**
+     * @param array{workspace: string, server: GitHttpServer} $suiteContext
+     */
+    private static function tearDownSmartHttpTransportWorkspace(array $suiteContext): void
+    {
+        $suiteContext['server']->stop();
+        BenchmarkFilesystem::removeDirectory($suiteContext['workspace']);
+    }
+
+    /**
+     * @return array{
+     *   workspace: string,
+     *   ssh_root: string,
+     *   ssh_command: string,
+     *   previous_command: ?string,
+     *   previous_root: ?string,
+     *   previous_strict: ?string,
+     *   url: string
+     * }
+     */
+    private static function setUpSshTransportWorkspace(
+        BenchmarkRuntime $runtime,
+        string $fixture,
+        string $label,
+    ): array {
+        $runtime->fixtures->ensure($fixture);
+        $workspace = $runtime->freshWorkspace($label);
+        $sshRoot = $workspace . '/ssh-root';
+        BenchmarkFilesystem::ensureDirectory($sshRoot);
+        BenchmarkShell::git(
+            'clone --bare ' . escapeshellarg($runtime->fixtures->repoPath($fixture)) . ' ' . escapeshellarg($sshRoot . '/ssh-remote.git'),
+            $workspace,
+        );
+        $sshCommand = $workspace . '/mock-ssh.sh';
+        BenchmarkFilesystem::writeFile($sshCommand, implode("\n", [
+            '#!/usr/bin/env bash',
+            'set -euo pipefail',
+            'remote_cmd="${@: -1}"',
+            'cd "${PITMASTER_BENCH_SSH_ROOT:?}"',
+            'exec bash -lc "$remote_cmd"',
+            '',
+        ]));
+        chmod($sshCommand, 0755);
+
+        $previousCommand = getenv('PITMASTER_SSH_COMMAND');
+        $previousRoot = getenv('PITMASTER_BENCH_SSH_ROOT');
+        $previousStrict = getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
+        putenv('PITMASTER_SSH_COMMAND=' . $sshCommand);
+        putenv('PITMASTER_BENCH_SSH_ROOT=' . $sshRoot);
+        putenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING=no');
+
+        return [
+            'workspace' => $workspace,
+            'ssh_root' => $sshRoot,
+            'ssh_command' => $sshCommand,
+            'previous_command' => $previousCommand === false ? null : $previousCommand,
+            'previous_root' => $previousRoot === false ? null : $previousRoot,
+            'previous_strict' => $previousStrict === false ? null : $previousStrict,
+            'url' => 'git@pitmaster-bench:ssh-remote.git',
+        ];
+    }
+
+    /**
+     * @param array{
+     *   workspace: string,
+     *   previous_command: ?string,
+     *   previous_root: ?string,
+     *   previous_strict: ?string
+     * } $suiteContext
+     */
+    private static function tearDownSshTransportWorkspace(array $suiteContext): void
+    {
+        putenv($suiteContext['previous_command'] !== null ? 'PITMASTER_SSH_COMMAND=' . $suiteContext['previous_command'] : 'PITMASTER_SSH_COMMAND');
+        putenv($suiteContext['previous_root'] !== null ? 'PITMASTER_BENCH_SSH_ROOT=' . $suiteContext['previous_root'] : 'PITMASTER_BENCH_SSH_ROOT');
+        putenv($suiteContext['previous_strict'] !== null ? 'PITMASTER_SSH_STRICT_HOST_KEY_CHECKING=' . $suiteContext['previous_strict'] : 'PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
+        BenchmarkFilesystem::removeDirectory($suiteContext['workspace']);
+    }
+
+    private static function captureUploadPackAdvertisement(string $repoPath): string
+    {
+        return BenchmarkShell::run(sprintf(
+            '%s --stateless-rpc --advertise-refs %s',
+            escapeshellarg(BenchmarkShell::gitExecPath() . '/git-upload-pack'),
+            escapeshellarg($repoPath),
+        ));
+    }
+
+    private static function runMockSshAdvertisement(string $sshCommand, string $sshRoot): string
+    {
+        $process = proc_open(
+            [$sshCommand, '-p', '22', 'git@pitmaster-bench', "git-upload-pack 'ssh-remote.git'"],
+            [
+                0 => ['pipe', 'r'],
+                1 => ['pipe', 'w'],
+                2 => ['pipe', 'w'],
+            ],
+            $pipes,
+            null,
+            self::benchmarkEnv(['PITMASTER_BENCH_SSH_ROOT' => $sshRoot]),
+        );
+
+        if (!is_resource($process)) {
+            throw new \RuntimeException('Failed to start mock ssh advertisement command');
+        }
+
+        fclose($pipes[0]);
+        $stdout = stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        $exitCode = proc_close($process);
+
+        if ($exitCode !== 0 && ($stdout === false || $stdout === '')) {
+            throw new \RuntimeException(sprintf(
+                "Mock ssh advertisement command failed (%d): %s",
+                $exitCode,
+                trim((string) $stderr),
+            ));
+        }
+
+        return (string) $stdout;
+    }
+
+    /**
+     * @param array<string, scalar|null> $overrides
+     * @return array<string, string>
+     */
+    private static function benchmarkEnv(array $overrides): array
+    {
+        $base = [];
+
+        foreach ([...$_SERVER, ...$_ENV] as $key => $value) {
+            if (!is_string($key) || $key === '') {
+                continue;
+            }
+
+            if (is_scalar($value)) {
+                $base[$key] = (string) $value;
+            }
+        }
+
+        foreach ($overrides as $key => $value) {
+            $base[$key] = $value === null ? '' : (string) $value;
+        }
+
+        return $base;
     }
 
     private static function initializeBenchmarkRepo(string $path): void

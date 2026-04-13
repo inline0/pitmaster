@@ -205,6 +205,24 @@ Current phase-6 follow-up notes:
 - `SubmoduleManager::update()` now skips opening and checking out a copied submodule when the source submodule repository is already at the exact pinned commit; in that case it only detaches the copied module `HEAD` after syncing metadata
 - the notes and reflog heavy-read workflows were reprofiled in the same pass and intentionally left untouched because they are already too small to justify extra complexity
 
+Measured results in the transport attribution pass:
+
+- `instrumentation.transport.smart-http.fetch.full`: `42.946ms`
+- `instrumentation.transport.smart-http.fetch.discover`: `19.180ms`
+- `instrumentation.transport.smart-http.fetch.upload-pack`: `25.529ms`
+- `instrumentation.transport.ref-discovery.parse`: `0.269ms`
+- `instrumentation.transport.ref-discovery.decode-then-parse`: `0.256ms`
+- `instrumentation.transport.ssh.discovery.full`: `295.783ms`
+- `instrumentation.transport.ssh.discovery.command`: `415.883ms`
+
+Transport attribution pass notes:
+
+- the benchmark harness now has a dedicated `instrumentation` suite so transport hotspots can be split into sub-costs without polluting the canonical baseline or smoke thresholds
+- loopback smart HTTP fetch is now explicitly attributable: on the current fixture it is almost entirely `discoverRefs()` plus upload-pack negotiation/response handling, with no hidden third Pitmaster-side cost center large enough to justify another blind optimization pass
+- ref advertisement parsing is sub-millisecond on the ref-heavy benchmark corpus, so it is not the limiting factor in either smart HTTP fetch or SSH discovery
+- the direct raw-advertisement parser was benchmarked against the existing decode-then-parse path and did not beat it cleanly enough to justify routing the production transport hot paths through different code, so the production discovery paths stay on the previously proven implementation
+- SSH discovery remains dominated by process startup, shelling inside the repo-local mock command, and remote advertisement generation rather than PHP-side parsing; the instrumentation suite is the retained result from this pass, not another speculative SSH transport rewrite
+
 ## Phase 2 Mission
 
 Phase 2 is complete.
