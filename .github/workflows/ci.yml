@@ -29,7 +29,7 @@ jobs:
       - run: php ./bin/verify-support-evidence --json > .pitmaster/proof/support-evidence-summary.json
       - run: php ./bin/support-matrix >/dev/null
       - run: git diff --exit-code -- SUPPORT_MATRIX.md
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: support-evidence
           path: |
@@ -139,7 +139,7 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: PITMASTER_TEST_JOBS=4 composer test:oracle
       - run: composer verify:proof
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: proof-artifact
           path: .pitmaster/proof/proof-artifact.json
