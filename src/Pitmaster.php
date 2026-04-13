@@ -133,7 +133,6 @@ final class Pitmaster
 
                 return self::finalizeCloneCheckout(
                     $repo,
-                    $path,
                     $gitDir,
                     $discovery->headSymref() ?? 'refs/heads/main',
                     $discovery->ref($discovery->headSymref() ?? 'refs/heads/main') ?? $discovery->ref('HEAD'),
@@ -158,7 +157,7 @@ final class Pitmaster
                     $headRef = str_starts_with($headRef, 'ref: ') ? substr($headRef, 5) : 'refs/heads/main';
                     $headId = $refs[$headRef] ?? null;
 
-                    return self::finalizeCloneCheckout($repo, $path, $gitDir, $headRef, $headId);
+                    return self::finalizeCloneCheckout($repo, $gitDir, $headRef, $headId);
                 } catch (ProtocolException) {
                     throw $smartError;
                 }
@@ -398,7 +397,6 @@ final class Pitmaster
 
     private static function finalizeCloneCheckout(
         Repository $repo,
-        string $path,
         string $gitDir,
         string $headRef,
         ?ObjectId $headId,
@@ -417,7 +415,7 @@ final class Pitmaster
             }
         }
 
-        $repo = self::open($path);
+        $repo->objectDatabase()->refresh();
 
         try {
             if ($headId !== null) {

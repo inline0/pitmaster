@@ -183,6 +183,19 @@ Current phase-3 follow-up notes:
 - `Repository::buildPushPackDataForUpdates()` now has a guarded fast path for ordinary fast-forward-style updates; it walks from the new tips and stops at the old advertised tips instead of first traversing the old graph just to subtract it again
 - smart HTTP clone/fetch and SSH discovery were remeasured in this pass but did not justify additional retained code changes beyond the push fast path, so they stay as-is until a cleaner proof shows up
 
+Measured wins in the current phase-4 follow-up pass against same-session isolated reruns:
+
+- `transport.smart-http.clone`: `108.560ms -> 79.883ms` (`-26.42%`)
+- `workflow.checkout.large`: `106.713ms -> 58.953ms` (`-44.76%`)
+- `workflow.reset.hard.large`: `78.638ms -> 51.783ms` (`-34.15%`)
+
+Current phase-4 follow-up notes:
+
+- `Pitmaster::clone()` now refreshes the existing repository object database in place after importing pack data instead of reopening the repository just to see the pack it just wrote
+- `resetWorktree()` no longer pays a full pre-pass to build a dirty-path set before doing the actual reset; it now checks worktree dirtiness only for entries that already match the target tree and are therefore candidates for reuse
+- the reset-loop change helps both direct hard resets and branch checkout workflows because they share the same reset/materialization path
+- `transport.smart-http.fetch` was reprofiled again in this pass but was left unchanged because the remaining cost did not have a cleaner retained win than the reset/clone improvements above
+
 ## Phase 2 Mission
 
 Phase 2 is complete.

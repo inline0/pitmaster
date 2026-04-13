@@ -2685,10 +2685,10 @@ final class Repository
             $pathsToPrune,
         );
         $currentEntries = $this->index()->entries();
-        $dirtyPaths = $this->currentDirtyPathSet($currentEntries);
         $index = new Index($this->objectHashBytes());
         $sparse = new SparseCheckout($this->gitDir);
         $sparseEnabled = $sparse->isEnabled();
+        $scanTimeSec = $this->isBare ? null : time();
         $nextEntries = [];
 
         foreach ($treeEntries as $path => $treeEntry) {
@@ -2697,7 +2697,7 @@ final class Repository
                 : 0;
             $currentEntry = $currentEntries[$path] ?? null;
 
-            if ($this->canReuseResetEntry($currentEntry, $treeEntry, $extendedFlags, isset($dirtyPaths[$path]))) {
+            if ($this->canReuseResetEntry($currentEntry, $treeEntry, $extendedFlags, $scanTimeSec)) {
                 $nextEntries[] = $this->copyIndexEntryWithExtendedFlags($currentEntry, $extendedFlags);
                 continue;
             }
@@ -2818,43 +2818,30 @@ final class Repository
     }
 
     /**
-     * @param array<string, IndexEntry> $currentEntries
-     * @return array<string, true>
-     */
-    private function currentDirtyPathSet(array $currentEntries): array
-    {
-        if ($this->isBare) {
-            return [];
-        }
-
-        $dirty = [];
-        $scanTimeSec = time();
-
-        foreach ($currentEntries as $path => $entry) {
-            if (($entry->extendedFlags & IndexEntry::EXTENDED_SKIP_WORKTREE) !== 0) {
-                continue;
-            }
-
-            if ($this->worktreeDiffersFromIndex($entry, $scanTimeSec)) {
-                $dirty[$path] = true;
-            }
-        }
-
-        return $dirty;
-    }
-
-    /**
      * @param array{hash: string, mode: int} $treeEntry
      */
-    private function canReuseResetEntry(?IndexEntry $entry, array $treeEntry, int $extendedFlags, bool $isDirty): bool
+    private function canReuseResetEntry(?IndexEntry $entry, array $treeEntry, int $extendedFlags, ?int $scanTimeSec): bool
     {
-        if ($entry === null || $isDirty) {
+        if ($entry === null) {
             return false;
         }
 
-        return $entry->hash->hex === $treeEntry['hash']
-            && $entry->mode === $treeEntry['mode']
-            && $entry->extendedFlags === $extendedFlags;
+        if (
+            $entry->hash->hex !== $treeEntry['hash']
+            || $entry->mode !== $treeEntry['mode']
+        ) {
+            return false;
+        }
+
+        if (
+            $scanTimeSec !== null
+            && ($entry->extendedFlags & IndexEntry::EXTENDED_SKIP_WORKTREE) === 0
+            && $this->worktreeDiffersFromIndex($entry, $scanTimeSec)
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     private function copyIndexEntryWithExtendedFlags(IndexEntry $entry, int $extendedFlags): IndexEntry
