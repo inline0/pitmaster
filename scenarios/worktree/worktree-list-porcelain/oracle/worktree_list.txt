@@ -1,0 +1,8 @@
+worktree REPO
+HEAD 3370c238bfb2fe32a4c069c9b304f61811d7fd85
+branch refs/heads/main
+
+worktree REPO/linked-feature
+HEAD 3370c238bfb2fe32a4c069c9b304f61811d7fd85
+branch refs/heads/linked-feature
+

@@ -1,1 +1,1 @@
- M file.txt
+1 .M N... 100644 100644 100644 2fd01525c9757f2e4cebdbef4f0ec8ec28669ee4 2fd01525c9757f2e4cebdbef4f0ec8ec28669ee4 file.txt

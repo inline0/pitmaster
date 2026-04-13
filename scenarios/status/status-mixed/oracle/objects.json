@@ -21,17 +21,17 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "464a79140fa2376f0f69d7894ed7430c3395dd21",
-        "type": "commit",
-        "size": 190,
-        "content": "tree 255d53d8048ad2a042f09e657f2cffbf85298977\nauthor Test User <test@pitmaster.dev> 1775564851 +0200\ncommitter Test User <test@pitmaster.dev> 1775564851 +0200\n\nInitial commit with two files\n",
-        "encoding": "utf-8"
-    },
-    {
         "hash": "8f2383152420af92751729e1c7c01ac5a62788b8",
         "type": "blob",
         "size": 17,
         "content": "modified content\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "f8b745b6da745699e28962833442371983a1e294",
+        "type": "commit",
+        "size": 190,
+        "content": "tree 255d53d8048ad2a042f09e657f2cffbf85298977\nauthor Test User <test@pitmaster.dev> 1704758401 +0000\ncommitter Test User <test@pitmaster.dev> 1704758401 +0000\n\nInitial commit with two files\n",
         "encoding": "utf-8"
     }
 ]

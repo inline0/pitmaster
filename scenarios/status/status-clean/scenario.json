@@ -4,10 +4,13 @@
     "description": "Clean working tree with no changes",
     "operations": ["status"],
     "oracle_commands": {
-        "status": "git status --porcelain"
+        "status": "git status --porcelain=v2"
+    },
+    "actual_commands": {
+        "status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2"
     },
     "expectations": {
-        "exact_match": [],
+        "exact_match": ["status"],
         "fsck_clean": true
     }
 }

@@ -67,7 +67,7 @@ $lines = [];
 $lines[] = '# Pitmaster Support Matrix';
 $lines[] = '';
 $lines[] = sprintf(
-    'Git feature coverage for Pitmaster. **%d/%d in-scope features fully implemented and oracle-verified (%s%%).**',
+    'Git feature coverage for Pitmaster. **%d/%d in-scope features fully implemented and oracle-verified within the declared parity scope (%s%%).**',
     $fullyDone,
     $inScope,
     $fullPercent,
@@ -79,7 +79,9 @@ $lines[] = sprintf(
     $supportedPercent,
 );
 $lines[] = '';
-$lines[] = sprintf('Generated: %s', date('Y-m-d H:i'));
+$lines[] = 'Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.';
+$lines[] = '';
+$lines[] = 'Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.';
 $lines[] = '';
 
 // Legend
@@ -87,11 +89,13 @@ $lines[] = '## Legend';
 $lines[] = '';
 $lines[] = '| Status | Meaning |';
 $lines[] = '|--------|---------|';
-$lines[] = '| `DONE` | Fully implemented and oracle-verified |';
+$lines[] = '| `DONE` | Fully implemented and oracle-verified within the declared parity scope |';
 $lines[] = '| `PART` | Partially implemented |';
 $lines[] = '| `TODO` | In scope, not yet implemented |';
 $lines[] = '| `DEFER` | Post-v1, not yet planned |';
 $lines[] = '| `N/A` | Out of scope (violates pure-PHP or outside agent-IDE scope) |';
+$lines[] = '| Scope `native` | Pitmaster directly authors or owns the behavior/format |';
+$lines[] = '| Scope `interop` | Pitmaster interoperates with Git-authored state or equivalent compatibility paths |';
 $lines[] = '';
 
 // Summary table
@@ -146,14 +150,15 @@ foreach ($categories as $category) {
     }
 
     $lines[] = '';
-    $lines[] = '| Feature | Status | Class | Notes |';
-    $lines[] = '|---------|--------|-------|-------|';
+    $lines[] = '| Feature | Status | Scope | Class | Notes |';
+    $lines[] = '|---------|--------|-------|-------|-------|';
 
     foreach ($category['features'] as $feature) {
         $statusIcon = $icons[$feature['status']] ?? $feature['status'];
+        $scope = $feature['scope'] ?? 'native';
         $class = $feature['class'] !== '' ? '`' . $feature['class'] . '`' : '';
         $notes = $feature['notes'];
-        $lines[] = sprintf('| %s | %s | %s | %s |', $feature['feature'], $statusIcon, $class, $notes);
+        $lines[] = sprintf('| %s | %s | `%s` | %s | %s |', $feature['feature'], $statusIcon, $scope, $class, $notes);
     }
 
     $lines[] = '';

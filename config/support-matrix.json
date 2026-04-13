@@ -1,12 +1,16 @@
 {
     "meta": {
-        "description": "Git feature support matrix for Pitmaster. Generated into SUPPORT_MATRIX.md by bin/support-matrix.",
+        "description": "Git feature support matrix for Pitmaster. Generated into SUPPORT_MATRIX.md by bin/support-matrix and backed by config/support-evidence.json.",
         "statuses": {
-            "full": "Fully implemented and oracle-verified",
+            "full": "Fully implemented and oracle-verified within the declared parity scope",
             "partial": "Partially implemented",
             "planned": "In scope, not yet implemented",
             "deferred": "Post-v1, not yet planned",
             "out-of-scope": "Not yet implemented"
+        },
+        "scopes": {
+            "native": "Pitmaster directly authors or owns the behavior/format",
+            "interop": "Pitmaster interoperates with Git-authored state or equivalent compatibility paths"
         }
     },
     "categories": [
@@ -39,7 +43,7 @@
             "name": "Pack Files",
             "features": [
                 {"feature": "Pack file read", "status": "full", "class": "Pack\\PackFile", "notes": "PACK v2 format"},
-                {"feature": "Pack file write", "status": "full", "class": "", "notes": "Let git gc repack; write loose instead"},
+                {"feature": "Pack file write", "status": "full", "scope": "native", "class": "Pack\\PackWriter", "notes": "Native .pack/.idx writing for transport/import paths; Git-managed gc/repack remains interoperable"},
                 {"feature": "Pack index v2 read", "status": "full", "class": "Pack\\PackIndex", "notes": "Fanout + binary search"},
                 {"feature": "Pack index v1 read", "status": "full", "class": "", "notes": "v2 covers all modern repos"},
                 {"feature": "OFS_DELTA resolution", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Offset-based delta chains"},
@@ -47,8 +51,8 @@
                 {"feature": "Delta chain following", "status": "full", "class": "Pack\\PackFile", "notes": "Up to PITMASTER_MAX_DELTA_CHAIN depth"},
                 {"feature": "Copy/insert instructions", "status": "full", "class": "Pack\\DeltaApplier", "notes": "Full delta instruction set"},
                 {"feature": "Pack enumeration", "status": "full", "class": "Pack\\PackEnumerator", "notes": "Iterate all objects in pack"},
-                {"feature": "Multi-pack-index (MIDX)", "status": "full", "class": "", "notes": "Reads Git-generated MIDX files"},
-                {"feature": "Commit-graph file", "status": "full", "class": "", "notes": "Reads Git-generated commit-graph files"}
+                {"feature": "Multi-pack-index (MIDX)", "status": "full", "scope": "interop", "class": "Pack\\MultiPackIndex", "notes": "Interop scope: reads Git-generated MIDX metadata"},
+                {"feature": "Commit-graph file", "status": "full", "scope": "interop", "class": "Pack\\CommitGraph", "notes": "Interop scope: reads Git-generated commit-graph metadata"}
             ]
         },
         {
@@ -69,12 +73,12 @@
                 {"feature": "Loose ref read", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
                 {"feature": "Loose ref write", "status": "full", "class": "Ref\\LooseRefStore", "notes": ""},
                 {"feature": "Packed refs read", "status": "full", "class": "Ref\\PackedRefStore", "notes": "With peeled values"},
-                {"feature": "Packed refs write", "status": "full", "class": "", "notes": "Let git pack-refs handle this"},
+                {"feature": "Packed refs write", "status": "full", "scope": "native", "class": "Ref\\PackedRefStore", "notes": "Native packed-refs write parity via Repository::packRefs and PackedRefStore"},
                 {"feature": "Symbolic ref (HEAD)", "status": "full", "class": "Ref\\SymbolicRef", "notes": "ref: refs/heads/main"},
                 {"feature": "Ref database (composite)", "status": "full", "class": "Ref\\RefDatabase", "notes": "Loose priority over packed"},
                 {"feature": "Reflog read", "status": "full", "class": "Ref\\Reflog", "notes": ""},
                 {"feature": "Reflog write", "status": "full", "class": "Ref\\Reflog", "notes": "Required for proper ref updates"},
-                {"feature": "Reftable format", "status": "full", "class": "Ref\\Reftable", "notes": "Git-generated reftable read/open parity through RefDatabase and Repository"}
+                {"feature": "Reftable format", "status": "full", "scope": "interop", "class": "Ref\\Reftable", "notes": "Interop scope: Git-generated reftable read/open parity through RefDatabase and Repository"}
             ]
         },
         {

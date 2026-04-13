@@ -4,10 +4,13 @@
     "description": "Diff of staged changes against HEAD after modifying and adding a file",
     "operations": ["diff-staged"],
     "oracle_commands": {
-        "diff-staged": "git diff --cached"
+        "diff-staged": "git -c color.ui=never diff --cached"
+    },
+    "actual_commands": {
+        "diff-staged": "php \"{{ROOT}}/bin/pitmaster\" diff --cached | perl -pe 's/\\e\\[[0-9;]*m//g'"
     },
     "expectations": {
-        "exact_match": [],
+        "exact_match": ["diff-staged"],
         "fsck_clean": true
     }
 }

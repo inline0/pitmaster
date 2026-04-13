@@ -33,6 +33,8 @@ final class MultiGitVersionSmokeTest extends TestCase
             'repository/init-basic',
             'refs/lightweight-tag-create',
             'status/status-porcelain-v2',
+            'diff/diff-add-lines',
+            'merge/merge-conflict-continue',
         ];
 
         foreach ($binaries as $binary) {

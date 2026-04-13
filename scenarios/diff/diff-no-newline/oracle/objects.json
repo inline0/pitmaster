@@ -7,10 +7,10 @@
         "encoding": "utf-8"
     },
     {
-        "hash": "ef83f5435cb4be5a8c7c6501a57679d069a38eb9",
+        "hash": "cce09db2f4cda86fbdfc841c74d1eba137d67728",
         "type": "commit",
         "size": 200,
-        "content": "tree fa00b3976b474afb639a7cc333df6414e0a86003\nauthor Test User <test@pitmaster.dev> 1775568389 +0200\ncommitter Test User <test@pitmaster.dev> 1775568389 +0200\n\nInitial commit without trailing newline\n",
+        "content": "tree fa00b3976b474afb639a7cc333df6414e0a86003\nauthor Test User <test@pitmaster.dev> 1705017604 +0000\ncommitter Test User <test@pitmaster.dev> 1705017604 +0000\n\nInitial commit without trailing newline\n",
         "encoding": "utf-8"
     },
     {

@@ -1,0 +1,20 @@
+{
+    "name": "rerere-normalized-hash",
+    "category": "rerere",
+    "description": "Compare the rr-cache key produced for a recorded conflict against git rerere",
+    "operations": [
+        "hash"
+    ],
+    "oracle_commands": {
+        "hash": "cat .hash.txt"
+    },
+    "actual_commands": {
+        "hash": "cat .hash.txt"
+    },
+    "expectations": {
+        "exact_match": [
+            "hash"
+        ],
+        "fsck_clean": false
+    }
+}

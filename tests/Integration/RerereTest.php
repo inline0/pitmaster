@@ -196,6 +196,7 @@ final class RerereTest extends TestCase
         $gitHash = basename((string) current(glob($gitRepo . '/.git/rr-cache/*', GLOB_ONLYDIR)));
         $pitHash = basename((string) current(glob($pitRepo . '/.git/rr-cache/*', GLOB_ONLYDIR)));
         $this->assertNotSame('', $pitHash);
+        $this->assertSame($gitHash, $pitHash);
         $this->assertFileExists($pitRepo . '/.git/rr-cache/' . $pitHash . '/preimage');
         $this->assertFileExists($pitRepo . '/.git/rr-cache/' . $pitHash . '/postimage');
         $this->assertSame(

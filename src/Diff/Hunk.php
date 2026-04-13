@@ -15,6 +15,7 @@ final readonly class Hunk
      * @param int $newStart Starting line in the new file (1-based)
      * @param int $newCount Number of lines from new file
      * @param array<int, string> $lines Lines with +/- / prefix
+     * @param string|null $section Optional trailing section label for the hunk header
      */
     public function __construct(
         public int $oldStart,
@@ -22,6 +23,7 @@ final readonly class Hunk
         public int $newStart,
         public int $newCount,
         public array $lines,
+        public ?string $section = null,
     ) {
     }
 
@@ -36,7 +38,8 @@ final readonly class Hunk
     {
         $old = $this->oldCount === 1 ? "-{$this->oldStart}" : "-{$this->oldStart},{$this->oldCount}";
         $new = $this->newCount === 1 ? "+{$this->newStart}" : "+{$this->newStart},{$this->newCount}";
+        $section = $this->section !== null && $this->section !== '' ? ' ' . $this->section : '';
 
-        return "@@ {$old} {$new} @@";
+        return "@@ {$old} {$new} @@{$section}";
     }
 }

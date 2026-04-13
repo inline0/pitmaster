@@ -1,0 +1,10 @@
+[
+    {
+        "hash": "3370c238bfb2fe32a4c069c9b304f61811d7fd85",
+        "name": "refs/heads/linked-feature"
+    },
+    {
+        "hash": "3370c238bfb2fe32a4c069c9b304f61811d7fd85",
+        "name": "refs/heads/main"
+    }
+]

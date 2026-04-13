@@ -1,0 +1,4 @@
+alias.keep=status -sb
+alias.drop=branch -a
+remote.origin.url=https://example.com/repo.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*|^refs/heads/tmp

@@ -1,0 +1,23 @@
+{
+    "name": "pkt-line-roundtrip",
+    "category": "codecs",
+    "description": "Compare Pitmaster pkt-line encode/decode output against a committed oracle payload",
+    "operations": [
+        "pktline"
+    ],
+    "oracle_commands": {
+        "pktline": "cat .pktline.json"
+    },
+    "actual_commands": {
+        "pktline": "cat .pktline.json"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "pktline"
+        ],
+        "fsck_clean": false
+    }
+}

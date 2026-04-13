@@ -322,7 +322,14 @@ final class MyersDiff
             }
 
             if ($hunkLines !== []) {
-                $hunks[] = new Hunk($oldStart, $oldCount, $newStart, $newCount, $hunkLines);
+                $section = null;
+
+                if ($start > 0 && isset($ops[$start - 1]) && $ops[$start - 1]['type'] === 'equal') {
+                    $candidate = $ops[$start - 1]['line'];
+                    $section = $candidate !== '' ? $candidate : null;
+                }
+
+                $hunks[] = new Hunk($oldStart, $oldCount, $newStart, $newCount, $hunkLines, $section);
             }
         }
 

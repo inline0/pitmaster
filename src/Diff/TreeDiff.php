@@ -267,6 +267,20 @@ final class TreeDiff
 
         $hunks = DiffAlgorithm::diff($oldContent, $newContent, $this->algorithm);
 
-        return new DiffResult($path, $path, $hunks, false, $oldHash, $newHash);
+        return new DiffResult(
+            $path,
+            $path,
+            $hunks,
+            false,
+            $oldHash,
+            $newHash,
+            $this->contentLacksTrailingNewline($oldContent),
+            $this->contentLacksTrailingNewline($newContent),
+        );
+    }
+
+    private function contentLacksTrailingNewline(string $content): bool
+    {
+        return $content !== '' && !str_ends_with($content, "\n");
     }
 }

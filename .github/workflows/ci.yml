@@ -14,6 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  support-evidence:
+    name: Support Evidence
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer verify:evidence
+      - run: php ./bin/support-matrix >/dev/null
+      - run: git diff --exit-code -- SUPPORT_MATRIX.md
+
   lint:
     name: Coding Standards
     runs-on: ubuntu-latest
@@ -93,6 +107,30 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: PITMASTER_TEST_JOBS=4 composer test:oracle
 
+  test-multi-git:
+    name: Multi-Git Smoke (${{ matrix.legacy-git }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        legacy-git: ['2.44.4', '2.46.2']
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring
+      - run: composer install --no-interaction --prefer-dist
+      - run: git config --global user.email "ci@pitmaster.dev"
+      - run: git config --global user.name "CI"
+      - run: git config --global init.defaultBranch main
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext zlib1g-dev curl
+      - run: curl -fsSL https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.legacy-git }}.tar.xz | tar -xJ
+      - run: make -C git-${{ matrix.legacy-git }} prefix=$HOME/git-${{ matrix.legacy-git }} NO_GETTEXT=YesPlease NO_TCLTK=YesPlease -j2 all install
+      - run: PITMASTER_TEST_GIT_BINARIES="$(command -v git):$HOME/git-${{ matrix.legacy-git }}/bin/git" vendor/bin/phpunit --filter MultiGitVersionSmokeTest
+
   benchmark-smoke:
     name: Benchmark Smoke
     runs-on: ubuntu-latest
@@ -138,12 +176,33 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: ./bin/test-scenario ${{ matrix.scenario }}
 
+  oracle-smoke-macos:
+    name: Oracle Smoke (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring
+          ini-values: memory_limit=512M
+      - run: composer install --no-interaction --prefer-dist
+      - run: git config --global user.email "ci@pitmaster.dev"
+      - run: git config --global user.name "CI"
+      - run: git config --global init.defaultBranch main
+      - run: ./bin/test-scenario repository/init-basic
+      - run: ./bin/test-scenario status/status-porcelain-v2
+      - run: ./bin/test-scenario diff/diff-add-lines
+      - run: ./bin/test-scenario config/config-roundtrip
+      - run: ./bin/test-scenario merge/merge-conflict-continue
+
   docs:
     name: Docs Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'

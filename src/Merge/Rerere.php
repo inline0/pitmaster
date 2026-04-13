@@ -48,7 +48,7 @@ final class Rerere
     public function record(string $conflicted, string $resolved): void
     {
         $normalized = $this->normalizeConflict($conflicted);
-        $hash = sha1($normalized);
+        $hash = $this->conflictHash($conflicted);
         $cacheDir = $this->cacheDir($hash);
 
         if (!is_dir($cacheDir)) {
@@ -131,7 +131,48 @@ final class Rerere
      */
     private function conflictHash(string $content): string
     {
-        return sha1($this->normalizeConflict($content));
+        $normalized = $this->normalizeConflict($content);
+        $lines = preg_split("/\r\n|\n|\r/", $normalized) ?: [];
+        $payload = '';
+        $count = count($lines);
+        $i = 0;
+
+        while ($i < $count) {
+            if ($lines[$i] !== '<<<<<<<') {
+                $i++;
+                continue;
+            }
+
+            $i++;
+            $first = [];
+            $second = [];
+
+            while ($i < $count && $lines[$i] !== '=======') {
+                $first[] = $lines[$i];
+                $i++;
+            }
+
+            if ($i >= $count) {
+                return sha1($normalized);
+            }
+
+            $i++;
+
+            while ($i < $count && $lines[$i] !== '>>>>>>>') {
+                $second[] = $lines[$i];
+                $i++;
+            }
+
+            if ($i >= $count) {
+                return sha1($normalized);
+            }
+
+            $payload .= implode("\n", $first) . "\n\0";
+            $payload .= implode("\n", $second) . "\n\0";
+            $i++;
+        }
+
+        return sha1($payload !== '' ? $payload : $normalized);
     }
 
     private function cacheDir(string $hash): string

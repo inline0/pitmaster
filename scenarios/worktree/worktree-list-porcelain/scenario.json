@@ -1,0 +1,31 @@
+{
+    "name": "worktree-list-porcelain",
+    "category": "worktree",
+    "description": "Compare linked worktree listing metadata against git after creating a branch worktree",
+    "operations": [
+        "worktree_list",
+        "linked_head_ref",
+        "commondir"
+    ],
+    "oracle_commands": {
+        "worktree_list": "git worktree list --porcelain | sed \"s#$(pwd)#REPO#g\"",
+        "linked_head_ref": "cat .git/worktrees/linked-feature/HEAD",
+        "commondir": "cat .git/worktrees/linked-feature/commondir"
+    },
+    "actual_commands": {
+        "worktree_list": "git worktree list --porcelain | sed \"s#$(pwd)#REPO#g\"",
+        "linked_head_ref": "cat .git/worktrees/linked-feature/HEAD",
+        "commondir": "cat .git/worktrees/linked-feature/commondir"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "worktree_list",
+            "linked_head_ref",
+            "commondir"
+        ],
+        "fsck_clean": false
+    }
+}

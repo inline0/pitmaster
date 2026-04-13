@@ -71,6 +71,35 @@ final class DiffFormattingParityTest extends TestCase
         );
     }
 
+    #[Test]
+    public function multiHunkUnifiedDiffHeadersMatchGit(): void
+    {
+        $lines = [];
+
+        for ($i = 1; $i <= 20; $i++) {
+            $lines[] = "line {$i}";
+        }
+
+        file_put_contents($this->tmpDir . '/article.txt', implode("\n", $lines) . "\n");
+        $this->git('add article.txt');
+        $this->git('commit -m base');
+
+        $lines[2] = 'changed line 3';
+        $lines[17] = 'changed line 18';
+        file_put_contents($this->tmpDir . '/article.txt', implode("\n", $lines) . "\n");
+
+        $repo = Pitmaster::open($this->tmpDir);
+        $diff = implode('', array_map(
+            static fn ($entry) => $entry->format(),
+            $repo->diff(),
+        ));
+
+        $this->assertSame(
+            $this->git('diff --no-color'),
+            $diff,
+        );
+    }
+
     private function git(string $command): string
     {
         exec(

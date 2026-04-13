@@ -193,7 +193,7 @@ Core repository operations do not require the `git` binary or FFI. Optional feat
 
 ## Features
 
-See [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md) for the full feature list. Highlights:
+See [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md) for the full feature list. The rendered matrix is generated from [`config/support-matrix.json`](config/support-matrix.json) and backed by [`config/support-evidence.json`](config/support-evidence.json), which CI validates so every `DONE` row resolves to concrete tests and oracle scenarios. Highlights:
 
 | Category | Features |
 |----------|----------|

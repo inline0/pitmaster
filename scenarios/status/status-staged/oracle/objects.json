@@ -7,17 +7,17 @@
         "encoding": "utf-8"
     },
     {
+        "hash": "7446c58277ecb22c496603981a4f116466ff7216",
+        "type": "commit",
+        "size": 175,
+        "content": "tree fc3df3988a58950b8c3362345ee8cba15cbe54dd\nauthor Test User <test@pitmaster.dev> 1704758403 +0000\ncommitter Test User <test@pitmaster.dev> 1704758403 +0000\n\nInitial commit\n",
+        "encoding": "utf-8"
+    },
+    {
         "hash": "8f2383152420af92751729e1c7c01ac5a62788b8",
         "type": "blob",
         "size": 17,
         "content": "modified content\n",
-        "encoding": "utf-8"
-    },
-    {
-        "hash": "a5f5ab37c8888bdca83dd4d0cf8a14aa22f41ea7",
-        "type": "commit",
-        "size": 175,
-        "content": "tree fc3df3988a58950b8c3362345ee8cba15cbe54dd\nauthor Test User <test@pitmaster.dev> 1775564850 +0200\ncommitter Test User <test@pitmaster.dev> 1775564850 +0200\n\nInitial commit\n",
         "encoding": "utf-8"
     },
     {

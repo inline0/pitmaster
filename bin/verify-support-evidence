@@ -1,0 +1,169 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$matrixPath = $root . '/config/support-matrix.json';
+$evidencePath = $root . '/config/support-evidence.json';
+
+if (!is_file($matrixPath) || !is_file($evidencePath)) {
+    fwrite(STDERR, "Missing support matrix or evidence config.\n");
+    exit(1);
+}
+
+try {
+    $matrix = json_decode((string) file_get_contents($matrixPath), true, flags: JSON_THROW_ON_ERROR);
+    $evidence = json_decode((string) file_get_contents($evidencePath), true, flags: JSON_THROW_ON_ERROR);
+} catch (Throwable $e) {
+    fwrite(STDERR, "Invalid support config: {$e->getMessage()}\n");
+    exit(1);
+}
+
+$matrixCategories = [];
+
+foreach (($matrix['categories'] ?? []) as $category) {
+    $matrixCategories[$category['name']] = $category;
+}
+
+$evidenceCategories = [];
+
+foreach (($evidence['categories'] ?? []) as $category) {
+    $evidenceCategories[$category['name']] = $category;
+}
+
+$failures = [];
+$resolvedRows = 0;
+$scenariosBackedRows = 0;
+$testsBackedRows = 0;
+
+foreach ($evidenceCategories as $name => $category) {
+    if (!isset($matrixCategories[$name])) {
+        $failures[] = "Unknown evidence category: {$name}";
+    }
+}
+
+foreach ($matrixCategories as $categoryName => $category) {
+    $categoryEvidence = $evidenceCategories[$categoryName] ?? null;
+
+    if ($categoryEvidence === null) {
+        $failures[] = "Missing evidence category: {$categoryName}";
+        continue;
+    }
+
+    $featureNames = array_map(
+        static fn (array $feature): string => (string) $feature['feature'],
+        $category['features'] ?? [],
+    );
+
+    foreach (array_keys((array) ($categoryEvidence['features'] ?? [])) as $featureName) {
+        if (!in_array($featureName, $featureNames, true)) {
+            $failures[] = "Unknown feature override in {$categoryName}: {$featureName}";
+        }
+    }
+
+    foreach (($category['features'] ?? []) as $feature) {
+        $featureName = (string) $feature['feature'];
+        $status = (string) $feature['status'];
+        $resolved = resolveEvidence(
+            (array) ($categoryEvidence['defaults'] ?? []),
+            (array) (($categoryEvidence['features'] ?? [])[$featureName] ?? []),
+        );
+
+        validateEvidencePaths($root, $categoryName, $featureName, $resolved, $failures);
+
+        if (in_array($status, ['full', 'partial'], true)) {
+            $resolvedRows++;
+
+            $hasScenario = $resolved['scenarios'] !== [];
+            $hasTest = $resolved['integration_tests'] !== [] || $resolved['unit_tests'] !== [];
+
+            if (!$hasScenario && !$hasTest) {
+                $failures[] = "{$categoryName} / {$featureName}: no concrete evidence";
+            }
+
+            if ($status === 'full' && !$hasScenario) {
+                $failures[] = "{$categoryName} / {$featureName}: full rows require at least one oracle scenario";
+            }
+
+            if ($hasScenario) {
+                $scenariosBackedRows++;
+            }
+
+            if ($hasTest) {
+                $testsBackedRows++;
+            }
+        }
+    }
+}
+
+if ($failures !== []) {
+    fwrite(STDERR, "Support evidence validation failed:\n");
+
+    foreach ($failures as $failure) {
+        fwrite(STDERR, " - {$failure}\n");
+    }
+
+    exit(1);
+}
+
+fwrite(
+    STDOUT,
+    sprintf(
+        "Validated support evidence for %d rows (%d with scenarios, %d with tests)\n",
+        $resolvedRows,
+        $scenariosBackedRows,
+        $testsBackedRows,
+    ),
+);
+
+/**
+ * @param array<string, mixed> $defaults
+ * @param array<string, mixed> $feature
+ * @return array{integration_tests: list<string>, unit_tests: list<string>, scenarios: list<string>}
+ */
+function resolveEvidence(array $defaults, array $feature): array
+{
+    $resolved = [
+        'integration_tests' => [],
+        'unit_tests' => [],
+        'scenarios' => [],
+    ];
+
+    foreach (array_keys($resolved) as $key) {
+        $resolved[$key] = array_values(array_unique(array_merge(
+            array_values(array_filter((array) ($defaults[$key] ?? []), 'is_string')),
+            array_values(array_filter((array) ($feature[$key] ?? []), 'is_string')),
+        )));
+        sort($resolved[$key]);
+    }
+
+    return $resolved;
+}
+
+/**
+ * @param array{integration_tests: list<string>, unit_tests: list<string>, scenarios: list<string>} $resolved
+ * @param list<string> $failures
+ */
+function validateEvidencePaths(string $root, string $categoryName, string $featureName, array $resolved, array &$failures): void
+{
+    foreach ($resolved['integration_tests'] as $path) {
+        if (!str_starts_with($path, 'tests/Integration/') || !is_file($root . '/' . $path)) {
+            $failures[] = "{$categoryName} / {$featureName}: missing integration test {$path}";
+        }
+    }
+
+    foreach ($resolved['unit_tests'] as $path) {
+        if (!str_starts_with($path, 'tests/Unit/') || !is_file($root . '/' . $path)) {
+            $failures[] = "{$categoryName} / {$featureName}: missing unit test {$path}";
+        }
+    }
+
+    foreach ($resolved['scenarios'] as $scenario) {
+        $path = $root . '/scenarios/' . $scenario . '/scenario.json';
+
+        if (!is_file($path)) {
+            $failures[] = "{$categoryName} / {$featureName}: missing scenario {$scenario}";
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "config-multivar-unset",
+    "category": "config",
+    "description": "Compare multi-value append and unset config behavior against git's config file semantics",
+    "operations": [
+        "config_read",
+        "config_write"
+    ],
+    "oracle_commands": {
+        "config_read": "bash \"{{SCENARIO_DIR}}/config-read.sh\" .git/config",
+        "config_write": "bash \"{{SCENARIO_DIR}}/config-write-oracle.sh\""
+    },
+    "actual_commands": {
+        "config_read": "php \"{{SCENARIO_DIR}}/config-read.php\" .git/config",
+        "config_write": "bash \"{{SCENARIO_DIR}}/config-write-actual.sh\""
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "config_read",
+            "config_write"
+        ],
+        "fsck_clean": true
+    }
+}

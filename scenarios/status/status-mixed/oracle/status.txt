@@ -1,3 +1,3 @@
- D delete-me.txt
-M  modify-me.txt
-?? untracked.txt
+1 .D N... 100644 100644 000000 233f5c66952af061a3fbe0370a1c794815722a07 233f5c66952af061a3fbe0370a1c794815722a07 delete-me.txt
+1 M. N... 100644 100644 100644 2fd01525c9757f2e4cebdbef4f0ec8ec28669ee4 8f2383152420af92751729e1c7c01ac5a62788b8 modify-me.txt
+? untracked.txt

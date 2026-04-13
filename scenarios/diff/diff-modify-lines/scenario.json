@@ -4,10 +4,13 @@
     "description": "Diff after modifying lines in an existing file",
     "operations": ["diff"],
     "oracle_commands": {
-        "diff": "git diff"
+        "diff": "git -c color.ui=never diff"
+    },
+    "actual_commands": {
+        "diff": "php \"{{ROOT}}/bin/pitmaster\" diff | perl -pe 's/\\e\\[[0-9;]*m//g'"
     },
     "expectations": {
-        "exact_match": [],
+        "exact_match": ["diff"],
         "fsck_clean": true
     }
 }

@@ -56,7 +56,9 @@
         "bench:compare": "./bin/bench-compare",
         "bench:summary": "./bin/bench-summary",
         "bench:verify": "./bin/bench-verify",
+        "verify:evidence": "php ./bin/verify-support-evidence",
         "verify": [
+            "@verify:evidence",
             "@analyse",
             "@cs",
             "@test"

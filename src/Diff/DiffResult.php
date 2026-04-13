@@ -22,6 +22,8 @@ final readonly class DiffResult
         public bool $binary = false,
         public ?string $oldHash = null,
         public ?string $newHash = null,
+        public bool $oldNoNewline = false,
+        public bool $newNoNewline = false,
     ) {
     }
 
@@ -49,11 +51,35 @@ final readonly class DiffResult
         $lines[] = "--- a/{$this->oldPath}";
         $lines[] = "+++ b/{$this->newPath}";
 
-        foreach ($this->hunks as $hunk) {
-            $lines[] = $hunk->header();
+        $lastHunkIndex = count($this->hunks) - 1;
 
-            foreach ($hunk->lines as $line) {
+        foreach ($this->hunks as $hunkIndex => $hunk) {
+            $lines[] = $hunk->header();
+            $lastDeleted = null;
+            $lastInserted = null;
+
+            foreach ($hunk->lines as $lineIndex => $line) {
+                if ($line !== '' && $line[0] === '-') {
+                    $lastDeleted = $lineIndex;
+                } elseif ($line !== '' && $line[0] === '+') {
+                    $lastInserted = $lineIndex;
+                }
+            }
+
+            foreach ($hunk->lines as $lineIndex => $line) {
                 $lines[] = $line;
+
+                if ($hunkIndex !== $lastHunkIndex) {
+                    continue;
+                }
+
+                if ($this->oldNoNewline && $lastDeleted !== null && $lineIndex === $lastDeleted) {
+                    $lines[] = '\ No newline at end of file';
+                }
+
+                if ($this->newNoNewline && $lastInserted !== null && $lineIndex === $lastInserted) {
+                    $lines[] = '\ No newline at end of file';
+                }
             }
         }
 

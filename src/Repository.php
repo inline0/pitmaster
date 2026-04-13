@@ -2104,7 +2104,16 @@ final class Repository
                 $hunks = DiffAlgorithm::diff($oldContent, '', $algorithm);
 
                 if ($hunks !== []) {
-                    $results[] = new DiffResult($entry->path, $entry->path, $hunks, false, $entry->hash->hex, null);
+                    $results[] = new DiffResult(
+                        $entry->path,
+                        $entry->path,
+                        $hunks,
+                        false,
+                        $entry->hash->hex,
+                        null,
+                        $this->contentLacksTrailingNewline($oldContent),
+                        false,
+                    );
                 }
 
                 continue;
@@ -2138,7 +2147,9 @@ final class Repository
                         $hunks,
                         false,
                         $entry->hash->hex,
-                        $newHash->hex
+                        $newHash->hex,
+                        $this->contentLacksTrailingNewline($indexContent),
+                        $this->contentLacksTrailingNewline($worktreeContent),
                     );
                 }
             }
@@ -2185,6 +2196,11 @@ final class Repository
         $treeDiff = new TreeDiff($this->objects, DiffAlgorithmName::normalize($algorithm));
 
         return $treeDiff->diff($a, $b);
+    }
+
+    private function contentLacksTrailingNewline(string $content): bool
+    {
+        return $content !== '' && !str_ends_with($content, "\n");
     }
 
     /**

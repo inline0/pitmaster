@@ -1,0 +1,10 @@
+{
+    "encoded": "000ahello\n",
+    "flush": "0000",
+    "delimiter": "0001",
+    "decoded": [
+        "hello",
+        false,
+        null
+    ]
+}
