@@ -104,6 +104,10 @@ final class Repository
                 $gitdir = $path . '/' . $gitdir;
             }
 
+            if (!is_dir($gitdir) && !is_dir(realpath($gitdir) ?: '')) {
+                throw new \InvalidArgumentException("Invalid gitdir in {$path}/.git");
+            }
+
             $this->workDir = $path;
             $this->gitDir = realpath($gitdir) ?: $gitdir;
             $this->isLinkedWorktree = true;
@@ -847,14 +851,13 @@ final class Repository
         foreach ($paths as $path) {
             $fullPath = $this->workDir . '/' . $path;
 
-            if (!is_file($fullPath)) {
+            if (!is_file($fullPath) && !is_link($fullPath)) {
                 throw new \RuntimeException("File not found: {$path}");
             }
 
-            $content = file_get_contents($fullPath);
+            $content = $this->worktreeBlobContent($fullPath);
             $blob = Blob::fromContent($content, $this->objectHashAlgo());
             $this->objects->write($blob);
-
             $entry = IndexEntry::fromStat($path, $blob->id, $fullPath);
             $index->resolveConflict($path, $entry);
         }
@@ -3114,15 +3117,11 @@ final class Repository
     {
         $fullPath = $this->workDir . '/' . $path;
 
-        if (!is_file($fullPath)) {
+        if (!is_file($fullPath) && !is_link($fullPath)) {
             return null;
         }
 
-        $content = file_get_contents($fullPath);
-
-        if ($content === false) {
-            return null;
-        }
+        $content = $this->worktreeBlobContent($fullPath);
 
         return Blob::fromContent($content, $this->objectHashAlgo())->id->hex;
     }
@@ -3154,7 +3153,7 @@ final class Repository
             throw new \RuntimeException("Index entry for {$path} is not a blob");
         }
 
-        $this->writeRestoredBlob($path, $blob);
+        $this->writeRestoredBlob($path, $blob, $entry->mode);
     }
 
     private function restoreWorktreePathFromTree(string $path, string $source): void
@@ -3173,7 +3172,7 @@ final class Repository
             throw new \RuntimeException("Source entry for {$path} is not a blob");
         }
 
-        $this->writeRestoredBlob($path, $blob);
+        $this->writeRestoredBlob($path, $blob, $entry['mode']);
     }
 
     private function restoreIndexPath(string $path, ?string $source): void
@@ -3223,7 +3222,7 @@ final class Repository
         return $this->flattenTreeEntries($object->tree);
     }
 
-    private function writeRestoredBlob(string $path, Blob $blob): void
+    private function writeRestoredBlob(string $path, Blob $blob, int $mode = 0100644): void
     {
         $fullPath = $this->workDir . '/' . $path;
         $parent = dirname($fullPath);
@@ -3232,7 +3231,37 @@ final class Repository
             mkdir($parent, 0777, true);
         }
 
+        if (file_exists($fullPath) || is_link($fullPath)) {
+            unlink($fullPath);
+        }
+
+        if ($mode === 0120000) {
+            symlink($blob->content, $fullPath);
+            return;
+        }
+
         file_put_contents($fullPath, $blob->content);
+    }
+
+    private function worktreeBlobContent(string $fullPath): string
+    {
+        if (is_link($fullPath)) {
+            $target = readlink($fullPath);
+
+            if ($target === false) {
+                throw new \RuntimeException("Failed to read symlink target: {$fullPath}");
+            }
+
+            return $target;
+        }
+
+        $content = file_get_contents($fullPath);
+
+        if ($content === false) {
+            throw new \RuntimeException("Failed to read file: {$fullPath}");
+        }
+
+        return $content;
     }
 
     private function movedPath(string $source, string $destination, string $path): string

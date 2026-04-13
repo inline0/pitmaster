@@ -1,0 +1,24 @@
+{
+    "name": "config-include-local",
+    "category": "config",
+    "description": "Compare Git include.path config parsing against Pitmaster",
+    "operations": [
+        "config_include_read"
+    ],
+    "oracle_commands": {
+        "config_include_read": "bash \"{{SCENARIO_DIR}}/config-include-read.sh\""
+    },
+    "actual_commands": {
+        "config_include_read": "php \"{{SCENARIO_DIR}}/config-include-read.php\""
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "config_include_read"
+        ],
+        "fsck_clean": true
+    }
+}

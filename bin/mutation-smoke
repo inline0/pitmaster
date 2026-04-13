@@ -1,0 +1,99 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$mutants = [
+    [
+        'file' => 'src/Protocol/PktLine.php',
+        'search' => "if (\$lineLen < 4 || \$lineLen > 65520) {",
+        'replace' => "if (false && (\$lineLen < 4 || \$lineLen > 65520)) {",
+        'command' => 'vendor/bin/phpunit tests/Unit/Protocol/PktLineTest.php',
+        'label' => 'pkt-line numeric length guard',
+    ],
+    [
+        'file' => 'src/Ref/Reflog.php',
+        'search' => "if (\$this->entries === []) {",
+        'replace' => "if (false && \$this->entries === []) {",
+        'command' => 'vendor/bin/phpunit tests/Integration/ReflogTest.php --filter emptyReflogForNonexistentRef',
+        'label' => 'reflog empty guard',
+    ],
+    [
+        'file' => 'src/Merge/Rerere.php',
+        'search' => "if (!str_starts_with(\$line, '<<<<<<<')) {",
+        'replace' => "if (false && !str_starts_with(\$line, '<<<<<<<')) {",
+        'command' => 'vendor/bin/phpunit tests/Integration/RerereTest.php',
+        'label' => 'rerere conflict marker detection',
+    ],
+    [
+        'file' => 'src/Config/GitConfig.php',
+        'search' => "if (\$key === 'include.path') {",
+        'replace' => "if (false && \$key === 'include.path') {",
+        'command' => 'vendor/bin/phpunit tests/Integration/ConfigParityTest.php --filter pitmasterParsesIncludedConfigLikeGit',
+        'label' => 'config include resolution',
+    ],
+];
+
+$failures = [];
+$snapshots = [];
+
+foreach ($mutants as $mutant) {
+    $path = $root . '/' . $mutant['file'];
+    $original = file_get_contents($path);
+
+    if ($original === false) {
+        $failures[] = "Cannot read {$mutant['file']}";
+        continue;
+    }
+
+    $snapshots[$mutant['file']] = $original;
+
+    if (!str_contains($original, $mutant['search'])) {
+        $failures[] = "Search string not found for {$mutant['label']}";
+        continue;
+    }
+
+    $mutated = preg_replace('/' . preg_quote($mutant['search'], '/') . '/', $mutant['replace'], $original, 1);
+
+    if (!is_string($mutated) || $mutated === $original) {
+        $failures[] = "Failed to mutate {$mutant['label']}";
+        continue;
+    }
+
+    file_put_contents($path, $mutated);
+
+    try {
+        exec(
+            sprintf('cd %s && %s 2>&1', escapeshellarg($root), $mutant['command']),
+            $output,
+            $exitCode,
+        );
+    } finally {
+        file_put_contents($path, $original);
+    }
+
+    if ($exitCode === 0) {
+        $failures[] = "Mutant survived: {$mutant['label']}";
+        continue;
+    }
+
+    fwrite(STDOUT, "Killed mutant: {$mutant['label']}\n");
+    $restored = file_get_contents($path);
+
+    if ($restored !== $snapshots[$mutant['file']]) {
+        $failures[] = "Mutation smoke left file modifications behind: {$mutant['file']}";
+    }
+}
+
+if ($failures !== []) {
+    fwrite(STDERR, "Mutation smoke failed:\n");
+
+    foreach ($failures as $failure) {
+        fwrite(STDERR, " - {$failure}\n");
+    }
+
+    exit(1);
+}
+
+fwrite(STDOUT, sprintf("Killed %d targeted mutants.\n", count($mutants)));

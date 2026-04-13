@@ -1,0 +1,5 @@
+{
+    "exit_code": 128,
+    "stdout": "",
+    "stderr": "fatal: There is no merge in progress (MERGE_HEAD missing).\n"
+}

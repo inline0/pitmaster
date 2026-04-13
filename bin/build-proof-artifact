@@ -1,0 +1,115 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Pitmaster\Support\Json;
+use Pitmaster\Tests\Oracle\ScenarioRepository;
+
+$root = dirname(__DIR__);
+$outputPath = $argv[1] ?? ($root . '/.pitmaster/proof/proof-artifact.json');
+$matrix = Json::decodeFile($root . '/config/support-matrix.json');
+$evidence = Json::decodeFile($root . '/config/support-evidence.json');
+$scenarioRepo = new ScenarioRepository($root);
+
+$scenarios = [];
+
+foreach ($scenarioRepo->all() as $scenario) {
+    $definition = $scenario->definition;
+    $report = is_file($scenario->reportPath()) ? Json::decodeFile($scenario->reportPath()) : null;
+    $scenarios[$scenario->name] = [
+        'category' => $scenario->category(),
+        'description' => $scenario->description(),
+        'operations' => $scenario->operations(),
+        'exact_match' => $scenario->exactMatch(),
+        'exact_meta_match' => $scenario->exactMetaMatch(),
+        'runtime_exact_match' => $scenario->runtimeExactMatch(),
+        'runtime_exact_meta_match' => $scenario->runtimeExactMetaMatch(),
+        'fsck_clean' => $scenario->fsckClean(),
+        'report' => $report === null ? null : [
+            'pass' => (bool) (($report['expectation']['pass'] ?? false) === true),
+            'failures' => array_values((array) ($report['expectation']['failures'] ?? [])),
+        ],
+    ];
+}
+
+$evidenceCategories = [];
+
+foreach (($evidence['categories'] ?? []) as $category) {
+    $evidenceCategories[(string) $category['name']] = (array) ($category['features'] ?? []);
+}
+
+$rows = [];
+$summary = [
+    'rows' => 0,
+    'scenarios' => count($scenarios),
+    'rows_with_exact_scenarios' => 0,
+    'rows_with_meta_exact_scenarios' => 0,
+    'rows_with_runtime_reports' => 0,
+];
+
+foreach (($matrix['categories'] ?? []) as $category) {
+    $categoryName = (string) $category['name'];
+    $featureEvidence = $evidenceCategories[$categoryName] ?? [];
+
+    foreach (($category['features'] ?? []) as $feature) {
+        $featureName = (string) $feature['feature'];
+        $rowEvidence = (array) ($featureEvidence[$featureName] ?? []);
+        $rowScenarios = [];
+        $hasExact = false;
+        $hasMetaExact = false;
+        $allReported = true;
+
+        foreach ((array) ($rowEvidence['scenarios'] ?? []) as $scenarioName) {
+            $scenario = $scenarios[$scenarioName] ?? null;
+
+            if ($scenario === null) {
+                $allReported = false;
+                continue;
+            }
+
+            $hasExact = $hasExact || $scenario['exact_match'] !== [];
+            $hasMetaExact = $hasMetaExact || $scenario['exact_meta_match'] !== [];
+            $allReported = $allReported && $scenario['report'] !== null;
+
+            $rowScenarios[] = [
+                'name' => $scenarioName,
+                'category' => $scenario['category'],
+                'exact_match' => $scenario['exact_match'],
+                'exact_meta_match' => $scenario['exact_meta_match'],
+                'report' => $scenario['report'],
+            ];
+        }
+
+        $rows[] = [
+            'category' => $categoryName,
+            'feature' => $featureName,
+            'status' => (string) $feature['status'],
+            'scope' => (string) ($feature['scope'] ?? 'native'),
+            'class' => (string) ($feature['class'] ?? ''),
+            'notes' => (string) ($feature['notes'] ?? ''),
+            'integration_tests' => array_values((array) ($rowEvidence['integration_tests'] ?? [])),
+            'unit_tests' => array_values((array) ($rowEvidence['unit_tests'] ?? [])),
+            'scenarios' => $rowScenarios,
+        ];
+
+        $summary['rows']++;
+        $summary['rows_with_exact_scenarios'] += $hasExact ? 1 : 0;
+        $summary['rows_with_meta_exact_scenarios'] += $hasMetaExact ? 1 : 0;
+        $summary['rows_with_runtime_reports'] += $allReported && $rowScenarios !== [] ? 1 : 0;
+    }
+}
+
+Json::encodeFile($outputPath, [
+    'generated_from' => [
+        'support_matrix' => 'config/support-matrix.json',
+        'support_evidence' => 'config/support-evidence.json',
+        'scenario_reports_root' => 'scenarios/**/reports/comparison.json',
+    ],
+    'summary' => $summary,
+    'rows' => $rows,
+]);
+
+fwrite(STDOUT, "Wrote proof artifact to {$outputPath}\n");

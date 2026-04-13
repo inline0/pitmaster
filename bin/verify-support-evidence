@@ -6,6 +6,7 @@ declare(strict_types=1);
 $root = dirname(__DIR__);
 $matrixPath = $root . '/config/support-matrix.json';
 $evidencePath = $root . '/config/support-evidence.json';
+$jsonOutput = in_array('--json', $argv, true);
 
 if (!is_file($matrixPath) || !is_file($evidencePath)) {
     fwrite(STDERR, "Missing support matrix or evidence config.\n");
@@ -51,6 +52,10 @@ foreach ($matrixCategories as $categoryName => $category) {
         continue;
     }
 
+    if (isset($categoryEvidence['defaults'])) {
+        $failures[] = "Category {$categoryName} still uses defaults; evidence must be row-exact";
+    }
+
     $featureNames = array_map(
         static fn (array $feature): string => (string) $feature['feature'],
         $category['features'] ?? [],
@@ -65,10 +70,13 @@ foreach ($matrixCategories as $categoryName => $category) {
     foreach (($category['features'] ?? []) as $feature) {
         $featureName = (string) $feature['feature'];
         $status = (string) $feature['status'];
-        $resolved = resolveEvidence(
-            (array) ($categoryEvidence['defaults'] ?? []),
-            (array) (($categoryEvidence['features'] ?? [])[$featureName] ?? []),
-        );
+        $featureEvidence = (array) (($categoryEvidence['features'] ?? [])[$featureName] ?? []);
+
+        if ($status !== 'none' && $featureEvidence === []) {
+            $failures[] = "Missing explicit evidence row: {$categoryName} / {$featureName}";
+        }
+
+        $resolved = resolveEvidence($featureEvidence);
 
         validateEvidencePaths($root, $categoryName, $featureName, $resolved, $failures);
 
@@ -98,6 +106,14 @@ foreach ($matrixCategories as $categoryName => $category) {
 }
 
 if ($failures !== []) {
+    if ($jsonOutput) {
+        fwrite(STDOUT, json_encode([
+            'ok' => false,
+            'failures' => array_values($failures),
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+        exit(1);
+    }
+
     fwrite(STDERR, "Support evidence validation failed:\n");
 
     foreach ($failures as $failure) {
@@ -107,22 +123,30 @@ if ($failures !== []) {
     exit(1);
 }
 
-fwrite(
-    STDOUT,
-    sprintf(
-        "Validated support evidence for %d rows (%d with scenarios, %d with tests)\n",
-        $resolvedRows,
-        $scenariosBackedRows,
-        $testsBackedRows,
-    ),
-);
+$summary = [
+    'ok' => true,
+    'rows' => $resolvedRows,
+    'rows_with_scenarios' => $scenariosBackedRows,
+    'rows_with_tests' => $testsBackedRows,
+];
+
+if ($jsonOutput) {
+    fwrite(STDOUT, json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+    exit(0);
+}
+
+fwrite(STDOUT, sprintf(
+    "Validated support evidence for %d rows (%d with scenarios, %d with tests)\n",
+    $resolvedRows,
+    $scenariosBackedRows,
+    $testsBackedRows,
+));
 
 /**
- * @param array<string, mixed> $defaults
  * @param array<string, mixed> $feature
  * @return array{integration_tests: list<string>, unit_tests: list<string>, scenarios: list<string>}
  */
-function resolveEvidence(array $defaults, array $feature): array
+function resolveEvidence(array $feature): array
 {
     $resolved = [
         'integration_tests' => [],
@@ -131,10 +155,9 @@ function resolveEvidence(array $defaults, array $feature): array
     ];
 
     foreach (array_keys($resolved) as $key) {
-        $resolved[$key] = array_values(array_unique(array_merge(
-            array_values(array_filter((array) ($defaults[$key] ?? []), 'is_string')),
-            array_values(array_filter((array) ($feature[$key] ?? []), 'is_string')),
-        )));
+        $resolved[$key] = array_values(array_unique(
+            array_values(array_filter((array) ($feature[$key] ?? []), 'is_string'))
+        ));
         sort($resolved[$key]);
     }
 

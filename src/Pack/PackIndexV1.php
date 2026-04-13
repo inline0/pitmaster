@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Pack;
 
 use Pitmaster\Encoding\BinaryReader;
+use RuntimeException;
 
 /**
  * Pack index v1 reader.
@@ -58,12 +59,22 @@ final class PackIndexV1
     public function findOffset(string $hex): ?int
     {
         $firstByte = (int) hexdec(substr($hex, 0, 2));
+        $nameCount = count($this->names);
 
         $lo = $firstByte > 0 ? $this->fanout[$firstByte - 1] : 0;
         $hi = $this->fanout[$firstByte] - 1;
 
+        if ($lo < 0 || $hi < -1 || $lo > $nameCount || $hi >= $nameCount) {
+            throw new RuntimeException('Corrupt pack index v1 fanout table');
+        }
+
         while ($lo <= $hi) {
             $mid = (int) (($lo + $hi) / 2);
+
+            if (!isset($this->names[$mid], $this->offsets[$mid])) {
+                throw new RuntimeException('Corrupt pack index v1 entry table');
+            }
+
             $cmp = strcmp($hex, $this->names[$mid]);
 
             if ($cmp === 0) {

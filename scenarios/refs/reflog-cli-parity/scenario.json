@@ -1,0 +1,28 @@
+{
+    "name": "reflog-cli-parity",
+    "category": "refs",
+    "description": "Compare pitmaster reflog CLI output against git reflog",
+    "operations": [
+        "head_reflog",
+        "branch_reflog"
+    ],
+    "oracle_commands": {
+        "head_reflog": "git reflog --format=%gs -n 3",
+        "branch_reflog": "git reflog show refs/heads/main --format=%gs -n 2"
+    },
+    "actual_commands": {
+        "head_reflog": "php \"{{ROOT}}/bin/pitmaster\" reflog --format=%gs -n 3",
+        "branch_reflog": "php \"{{ROOT}}/bin/pitmaster\" reflog show refs/heads/main --format=%gs -n 2"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "head_reflog",
+            "branch_reflog"
+        ],
+        "fsck_clean": true
+    }
+}

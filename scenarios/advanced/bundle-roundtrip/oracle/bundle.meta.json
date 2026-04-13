@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "The bundle contains these 3 refs:\n05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a refs/heads/feature\n05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a refs/heads/main\n05a9f31d4beed61922d5517e8f7ce0e1b4d99a9a HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+    "stderr": "source.bundle is okay\n"
+}

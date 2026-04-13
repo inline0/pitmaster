@@ -99,8 +99,11 @@ final readonly class IndexEntry
      */
     public static function fromStat(string $path, ObjectId $hash, string $fullPath, int $extendedFlags = 0): self
     {
-        $stat = stat($fullPath);
-        $mode = is_executable($fullPath) ? 0100755 : 0100644;
+        $isSymlink = is_link($fullPath);
+        $stat = $isSymlink ? lstat($fullPath) : stat($fullPath);
+        $mode = $isSymlink
+            ? 0120000
+            : (is_executable($fullPath) ? 0100755 : 0100644);
         $flags = min(strlen($path), 0xFFF);
 
         if ($extendedFlags !== 0) {
@@ -121,7 +124,7 @@ final readonly class IndexEntry
             mode: $mode,
             uid: $stat['uid'],
             gid: $stat['gid'],
-            fileSize: $stat['size'],
+            fileSize: $isSymlink ? strlen((string) readlink($fullPath)) : $stat['size'],
             hash: $hash,
             flags: $flags,
             path: $path,

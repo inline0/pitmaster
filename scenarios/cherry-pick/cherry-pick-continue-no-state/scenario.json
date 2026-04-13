@@ -1,0 +1,23 @@
+{
+    "name": "cherry-pick-continue-no-state",
+    "category": "cherry-pick",
+    "description": "Compare cherry-pick --continue failure output and exit code when no cherry-pick is in progress",
+    "operations": [
+        "cherry_pick_continue"
+    ],
+    "oracle_commands": {
+        "cherry_pick_continue": "git cherry-pick --continue"
+    },
+    "actual_commands": {
+        "cherry_pick_continue": "php \"{{ROOT}}/bin/pitmaster\" cherry-pick --continue"
+    },
+    "expectations": {
+        "exact_match": [
+            "cherry_pick_continue"
+        ],
+        "exact_meta_match": [
+            "cherry_pick_continue"
+        ],
+        "fsck_clean": true
+    }
+}

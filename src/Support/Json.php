@@ -29,7 +29,7 @@ final class Json
     {
         $directory = dirname($path);
 
-        if (!is_dir($directory) && !mkdir($directory, 0777, true) && !is_dir($directory)) {
+        if (!is_dir($directory) && !@mkdir($directory, 0777, true) && !is_dir($directory)) {
             throw new RuntimeException("Unable to create directory: {$directory}");
         }
 

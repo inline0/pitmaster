@@ -9,6 +9,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 use Pitmaster\Diff\ColorDiff;
 use Pitmaster\Pitmaster;
+use Pitmaster\Ref\Reflog;
 use Pitmaster\Repository;
 
 $arguments = array_slice($argv, 1);
@@ -47,6 +48,7 @@ if ($arguments === []) {
     fwrite(STDERR, "  stash [pop|list]    Stash working directory changes\n");
     fwrite(STDERR, "  blame <file>        Show line-by-line authorship\n");
     fwrite(STDERR, "  grep [-i] [-E] <pattern>  Search file contents\n");
+    fwrite(STDERR, "  reflog [show <ref>] [--format=<fmt>] [-n <N>]  Show reflog entries\n");
     fwrite(STDERR, "  refs                List all refs\n");
     fwrite(STDERR, "  init [path] [--object-format=<sha1|sha256>]  Initialize a new repository\n");
     exit(1);
@@ -102,6 +104,7 @@ try {
         'stash' => commandStash($repo, $arguments),
         'blame' => commandBlame($repo, $arguments),
         'grep' => commandGrep($repo, $arguments),
+        'reflog' => commandReflog($repo, $arguments),
         'refs' => commandRefs($repo),
         'reset' => commandReset($repo, $arguments),
         default => (function () use ($command) {
@@ -501,7 +504,16 @@ function commandMerge(Repository $repo, array $args): void
     }
 
     if ($args[0] === '--continue') {
-        $repo->mergeContinue();
+        try {
+            $repo->mergeContinue();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot continue: no merge in progress') {
+                fwrite(STDERR, "fatal: There is no merge in progress (MERGE_HEAD missing).\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
@@ -580,12 +592,32 @@ function commandCherryPick(Repository $repo, array $args): void
     }
 
     if ($args[0] === '--continue') {
-        $repo->cherryPickContinue();
+        try {
+            $repo->cherryPickContinue();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot continue: no cherry-pick in progress') {
+                fwrite(STDERR, "error: no cherry-pick or revert in progress\n");
+                fwrite(STDERR, "fatal: cherry-pick failed\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
     if ($args[0] === '--abort') {
-        $repo->cherryPickAbort();
+        try {
+            $repo->cherryPickAbort();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot abort: no cherry-pick in progress') {
+                fwrite(STDERR, "error: no cherry-pick or revert in progress\n");
+                fwrite(STDERR, "fatal: cherry-pick failed\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
@@ -600,12 +632,32 @@ function commandRevert(Repository $repo, array $args): void
     }
 
     if ($args[0] === '--continue') {
-        $repo->revertContinue();
+        try {
+            $repo->revertContinue();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot continue: no revert in progress') {
+                fwrite(STDERR, "error: no cherry-pick or revert in progress\n");
+                fwrite(STDERR, "fatal: revert failed\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
     if ($args[0] === '--abort') {
-        $repo->revertAbort();
+        try {
+            $repo->revertAbort();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot abort: no revert in progress') {
+                fwrite(STDERR, "error: no cherry-pick or revert in progress\n");
+                fwrite(STDERR, "fatal: revert failed\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
@@ -620,17 +672,44 @@ function commandRebase(Repository $repo, array $args): void
     }
 
     if ($args[0] === '--continue') {
-        $repo->rebaseContinue();
+        try {
+            $repo->rebaseContinue();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot continue: no rebase in progress') {
+                fwrite(STDERR, "fatal: no rebase in progress\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
     if ($args[0] === '--abort') {
-        $repo->rebaseAbort();
+        try {
+            $repo->rebaseAbort();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot abort: no rebase in progress') {
+                fwrite(STDERR, "fatal: no rebase in progress\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
     if ($args[0] === '--skip') {
-        $repo->rebaseSkip();
+        try {
+            $repo->rebaseSkip();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'Cannot skip: no rebase in progress') {
+                fwrite(STDERR, "fatal: no rebase in progress\n");
+                exit(128);
+            }
+
+            throw $e;
+        }
         return;
     }
 
@@ -733,8 +812,72 @@ function commandGrep(Repository $repo, array $args): void
     ]);
 
     foreach ($results as $match) {
-        fwrite(STDOUT, "\033[35m{$match['path']}\033[0m:\033[32m{$match['line']}\033[0m:{$match['content']}\n");
+        fwrite(STDOUT, "{$match['path']}:{$match['line']}:{$match['content']}\n");
     }
+}
+
+function commandReflog(Repository $repo, array $args): void
+{
+    $ref = 'HEAD';
+    $limit = 10;
+    $format = '%gd: %gs';
+
+    if (($args[0] ?? null) === 'show') {
+        if (isset($args[1]) && !str_starts_with($args[1], '-')) {
+            $ref = $args[1];
+            array_splice($args, 0, 2);
+        } else {
+            array_shift($args);
+        }
+    }
+
+    for ($i = 0; $i < count($args); $i++) {
+        $arg = $args[$i];
+
+        if (str_starts_with($arg, '--format=')) {
+            $format = substr($arg, 9);
+            continue;
+        }
+
+        if (($arg === '-n' || $arg === '--max-count') && isset($args[$i + 1])) {
+            $limit = max(0, (int) $args[$i + 1]);
+            $i++;
+            continue;
+        }
+
+        if (preg_match('/^-n(\d+)$/', $arg, $matches)) {
+            $limit = max(0, (int) $matches[1]);
+        }
+    }
+
+    $logBase = $ref === 'HEAD' ? $repo->gitDir() : $repo->commonGitDir();
+    $reflog = Reflog::open($logBase, $ref);
+    $entries = array_reverse($reflog->entries());
+
+    if ($limit > 0) {
+        $entries = array_slice($entries, 0, $limit);
+    }
+
+    foreach ($entries as $index => $entry) {
+        fwrite(STDOUT, formatReflogEntry($format, $ref, $entry, $index) . "\n");
+    }
+}
+
+/**
+ * @param array{old: string, new: string, identity: string, message: string} $entry
+ */
+function formatReflogEntry(string $format, string $ref, array $entry, int $index): string
+{
+    $headRef = $ref === 'HEAD' ? 'HEAD' : $ref;
+    $shortNew = substr($entry['new'], 0, 7);
+
+    return strtr($format, [
+        '%gD' => $headRef . '@{' . $index . '}',
+        '%gd' => $headRef . '@{' . $index . '}',
+        '%gs' => $entry['message'],
+        '%H' => $entry['new'],
+        '%h' => $shortNew,
+    ]);
 }
 
 function commandRefs(Repository $repo): void

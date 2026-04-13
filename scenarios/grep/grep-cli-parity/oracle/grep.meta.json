@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "README.md:1:needle in root\ndocs/guide.txt:2:needle in docs\nsrc/feature.txt:2:needle in src\n",
+    "stderr": ""
+}

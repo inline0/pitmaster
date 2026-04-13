@@ -1,454 +1,3438 @@
 {
     "meta": {
-        "description": "Resolved evidence for support-matrix rows. Category defaults apply to every feature in that category; feature overrides add sharper row-specific proof."
+        "description": "Explicit per-row evidence for support-matrix features. Every non-none row must list its exact backing tests and scenarios."
     },
     "categories": [
         {
             "name": "Object Model",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/CommitWriteParityTest.php",
-                    "tests/Integration/AnnotatedTagParityTest.php",
-                    "tests/Integration/Sha256RepositoryParityTest.php"
-                ],
-                "unit_tests": [
-                    "tests/Unit/Object/TagTest.php"
-                ],
-                "scenarios": [
-                    "objects/blob-simple",
-                    "objects/tree-nested",
-                    "objects/commit-single-parent",
-                    "objects/tag-annotated",
-                    "repository/sha256-roundtrip",
-                    "tags/tag-annotated-write"
-                ]
-            },
             "features": {
-                "Lightweight tag": {
+                "Blob read": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
                     "scenarios": [
-                        "refs/lightweight-tag-create"
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Blob write": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Tree read": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Tree write": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Commit read": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Commit write": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Annotated tag read": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Annotated tag write": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "Lightweight tag": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "refs/lightweight-tag-create",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
+                    ]
+                },
+                "ObjectId SHA-1": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
+                    "scenarios": [
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
                     ]
                 },
                 "ObjectId SHA-256": {
                     "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CommitWriteParityTest.php",
                         "tests/Integration/Sha256RepositoryParityTest.php"
                     ],
+                    "unit_tests": [
+                        "tests/Unit/Object/TagTest.php"
+                    ],
                     "scenarios": [
-                        "repository/sha256-roundtrip"
+                        "objects/blob-simple",
+                        "objects/commit-single-parent",
+                        "objects/tag-annotated",
+                        "objects/tree-nested",
+                        "repository/sha256-roundtrip",
+                        "tags/tag-annotated-write"
                     ]
                 }
             }
         },
         {
             "name": "Object Storage",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/LooseObjectStoreTest.php",
-                    "tests/Integration/ObjectSerializerTest.php",
-                    "tests/Integration/ObjectDatabaseTest.php"
-                ],
-                "scenarios": [
-                    "objects/blob-empty",
-                    "objects/blob-simple",
-                    "errors/missing-object"
-                ]
+            "features": {
+                "Loose object read": {
+                    "integration_tests": [
+                        "tests/Integration/LooseObjectStoreTest.php",
+                        "tests/Integration/ObjectDatabaseTest.php",
+                        "tests/Integration/ObjectSerializerTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/missing-object",
+                        "objects/blob-empty",
+                        "objects/blob-simple"
+                    ]
+                },
+                "Loose object write": {
+                    "integration_tests": [
+                        "tests/Integration/LooseObjectStoreTest.php",
+                        "tests/Integration/ObjectDatabaseTest.php",
+                        "tests/Integration/ObjectSerializerTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/missing-object",
+                        "objects/blob-empty",
+                        "objects/blob-simple"
+                    ]
+                },
+                "Object serialization": {
+                    "integration_tests": [
+                        "tests/Integration/LooseObjectStoreTest.php",
+                        "tests/Integration/ObjectDatabaseTest.php",
+                        "tests/Integration/ObjectSerializerTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/missing-object",
+                        "objects/blob-empty",
+                        "objects/blob-simple"
+                    ]
+                },
+                "Object database (composite)": {
+                    "integration_tests": [
+                        "tests/Integration/LooseObjectStoreTest.php",
+                        "tests/Integration/ObjectDatabaseTest.php",
+                        "tests/Integration/ObjectSerializerTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/missing-object",
+                        "objects/blob-empty",
+                        "objects/blob-simple"
+                    ]
+                }
             }
         },
         {
             "name": "Pack Files",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/PackFileAndIndexTest.php",
-                    "tests/Integration/PackEnumerationParityTest.php",
-                    "tests/Integration/CommitGraphAndMidxTest.php",
-                    "tests/Integration/PackIndexV1Test.php",
-                    "tests/Integration/PackWriterTest.php"
-                ],
-                "scenarios": [
-                    "packs/pack-enumeration",
-                    "packs/pack-index-v1",
-                    "codecs/pack-delta-codecs",
-                    "formats/midx-read",
-                    "formats/commit-graph-read",
-                    "protocol/v1-upload-pack"
-                ]
-            },
             "features": {
+                "Pack file read": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
                 "Pack file write": {
                     "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
                         "tests/Integration/PackWriterTest.php",
                         "tests/Integration/PushParityTest.php"
                     ],
+                    "unit_tests": [],
                     "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
                         "network/push-atomic",
-                        "protocol/v1-receive-pack"
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Pack index v2 read": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Pack index v1 read": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "OFS_DELTA resolution": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "REF_DELTA resolution": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Delta chain following": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Copy/insert instructions": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Pack enumeration": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
                     ]
                 },
                 "Multi-pack-index (MIDX)": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
                     "scenarios": [
-                        "formats/midx-read"
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
                     ]
                 },
                 "Commit-graph file": {
+                    "integration_tests": [
+                        "tests/Integration/CommitGraphAndMidxTest.php",
+                        "tests/Integration/PackEnumerationParityTest.php",
+                        "tests/Integration/PackFileAndIndexTest.php",
+                        "tests/Integration/PackIndexV1Test.php",
+                        "tests/Integration/PackWriterTest.php"
+                    ],
+                    "unit_tests": [],
                     "scenarios": [
-                        "formats/commit-graph-read"
+                        "codecs/pack-delta-codecs",
+                        "formats/commit-graph-read",
+                        "formats/midx-read",
+                        "packs/pack-enumeration",
+                        "packs/pack-index-v1",
+                        "protocol/v1-upload-pack"
                     ]
                 }
             }
         },
         {
             "name": "Index (Staging Area)",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/IndexEntryAndWriterTest.php",
-                    "tests/Integration/IndexDiffTest.php",
-                    "tests/Integration/IndexExtensionParityTest.php",
-                    "tests/Integration/IndexFormatParityTest.php"
-                ],
-                "scenarios": [
-                    "index/index-v3-read",
-                    "index/index-v4-read",
-                    "index/index-tree-extension",
-                    "index/index-reuc-extension",
-                    "status/status-porcelain-v2"
-                ]
+            "features": {
+                "Index v2 read": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Index v2 write": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Index v3 read (extended flags)": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Index v4 read (path prefix compression)": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Conflict stages (1/2/3)": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Index extensions (TREE, REUC)": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                },
+                "Index diff (vs tree/worktree)": {
+                    "integration_tests": [
+                        "tests/Integration/IndexDiffTest.php",
+                        "tests/Integration/IndexEntryAndWriterTest.php",
+                        "tests/Integration/IndexExtensionParityTest.php",
+                        "tests/Integration/IndexFormatParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "index/index-reuc-extension",
+                        "index/index-tree-extension",
+                        "index/index-v3-read",
+                        "index/index-v4-read",
+                        "status/status-porcelain-v2"
+                    ]
+                }
             }
         },
         {
             "name": "References",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/RefStoresTest.php",
-                    "tests/Integration/PackedRefsParityTest.php",
-                    "tests/Integration/ReflogTest.php",
-                    "tests/Integration/ReftableTest.php"
-                ],
-                "scenarios": [
-                    "refs/refs-loose",
-                    "refs/refs-packed",
-                    "refs/packed-refs-write",
-                    "refs/packed-refs-delete",
-                    "worktree/worktree-add-reflog",
-                    "formats/reftable-read"
-                ]
-            },
             "features": {
-                "Reftable format": {
+                "Loose ref read": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
                     "scenarios": [
-                        "formats/reftable-read"
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Loose ref write": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Packed refs read": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Packed refs write": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Symbolic ref (HEAD)": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Ref database (composite)": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Reflog read": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/reflog-cli-parity",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Reflog write": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
+                    ]
+                },
+                "Reftable format": {
+                    "integration_tests": [
+                        "tests/Integration/PackedRefsParityTest.php",
+                        "tests/Integration/RefStoresTest.php",
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/ReftableTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "formats/reftable-read",
+                        "refs/packed-refs-delete",
+                        "refs/packed-refs-write",
+                        "refs/refs-loose",
+                        "refs/refs-packed",
+                        "worktree/worktree-add-reflog"
                     ]
                 }
             }
         },
         {
             "name": "Repository Operations",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/InitParityTest.php",
-                    "tests/Integration/BareRepositoryParityTest.php",
-                    "tests/Integration/ConfigParityTest.php",
-                    "tests/Integration/Sha256RepositoryParityTest.php",
-                    "tests/Integration/HttpCloneParityTest.php"
-                ],
-                "scenarios": [
-                    "repository/init-basic",
-                    "repository/bare-open",
-                    "repository/sha256-roundtrip",
-                    "config/config-roundtrip",
-                    "config/config-multivar-unset",
-                    "network/http-clone-refspec"
-                ]
+            "features": {
+                "Open existing repo": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                },
+                "Init new repo": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                },
+                "Clone (remote)": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                },
+                "Read .git/config": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-include-local",
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                },
+                "Write .git/config": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                },
+                "Bare repositories": {
+                    "integration_tests": [
+                        "tests/Integration/BareRepositoryParityTest.php",
+                        "tests/Integration/ConfigParityTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/InitParityTest.php",
+                        "tests/Integration/Sha256RepositoryParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "config/config-multivar-unset",
+                        "config/config-roundtrip",
+                        "network/http-clone-refspec",
+                        "repository/bare-open",
+                        "repository/init-basic",
+                        "repository/sha256-roundtrip"
+                    ]
+                }
             }
         },
         {
             "name": "Staging and Commits",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/OperationsTest.php",
-                    "tests/Integration/MoveAndRemoveParityTest.php",
-                    "tests/Integration/ResetParityTest.php",
-                    "tests/Integration/RestoreParityTest.php",
-                    "tests/Integration/StashParityTest.php",
-                    "tests/Integration/RebaseParityTest.php",
-                    "tests/Integration/CommitWriteParityTest.php"
-                ],
-                "scenarios": [
-                    "staging/remove-tracked",
-                    "staging/remove-cached",
-                    "staging/mv-directory",
-                    "restore/restore-worktree",
-                    "restore/restore-staged",
-                    "restore/restore-source-both",
-                    "reset/reset-hard-conflict",
-                    "reset/reset-mixed-conflict",
-                    "reset/reset-soft-conflict",
-                    "stash/stash-basic",
-                    "stash/stash-apply",
-                    "stash/stash-pop-conflict",
-                    "cherry-pick/cherry-pick-conflict-continue",
-                    "revert/revert-conflict-continue",
-                    "rebase/rebase-clean"
-                ]
-            },
             "features": {
-                "git commit": {
+                "git add (stage files)": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
                     "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git rm (unstage/remove)": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git mv (rename)": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git commit": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
                         "commit/commit-author-env",
-                        "commit/commit-hook-interaction"
+                        "commit/commit-hook-interaction",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git reset --soft": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git reset --mixed": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git reset --hard": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git restore": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git stash": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git cherry-pick": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "cherry-pick/cherry-pick-continue-no-state",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git revert": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "revert/revert-continue-no-state",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
+                    ]
+                },
+                "git rebase": {
+                    "integration_tests": [
+                        "tests/Integration/CommitWriteParityTest.php",
+                        "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OperationsTest.php",
+                        "tests/Integration/RebaseParityTest.php",
+                        "tests/Integration/ResetParityTest.php",
+                        "tests/Integration/RestoreParityTest.php",
+                        "tests/Integration/StashParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "cherry-pick/cherry-pick-conflict-continue",
+                        "rebase/rebase-clean",
+                        "rebase/rebase-continue-no-state",
+                        "reset/reset-hard-conflict",
+                        "reset/reset-mixed-conflict",
+                        "reset/reset-soft-conflict",
+                        "restore/restore-source-both",
+                        "restore/restore-staged",
+                        "restore/restore-worktree",
+                        "revert/revert-conflict-continue",
+                        "staging/mv-directory",
+                        "staging/remove-cached",
+                        "staging/remove-tracked",
+                        "stash/stash-apply",
+                        "stash/stash-basic",
+                        "stash/stash-pop-conflict"
                     ]
                 }
             }
         },
         {
             "name": "Working Tree Status",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/WorkingTreeStatusTest.php",
-                    "tests/Integration/FsmonitorTest.php",
-                    "tests/Integration/SparseCheckoutParityTest.php",
-                    "tests/Integration/PathFingerprintTest.php"
-                ],
-                "scenarios": [
-                    "status/status-clean",
-                    "status/status-mixed",
-                    "status/status-modified",
-                    "status/status-staged",
-                    "status/status-untracked",
-                    "status/status-porcelain-v2",
-                    "advanced/git-attributes",
-                    "advanced/fsmonitor-hook-query"
-                ]
+            "features": {
+                "HEAD vs index diff": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                },
+                "Index vs worktree diff": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                },
+                "Untracked file detection": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                },
+                "Porcelain v2 output": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                },
+                ".gitignore parsing": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                },
+                "Rename detection": {
+                    "integration_tests": [
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/PathFingerprintTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/WorkingTreeStatusTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "status/status-clean",
+                        "status/status-mixed",
+                        "status/status-modified",
+                        "status/status-porcelain-v2",
+                        "status/status-staged",
+                        "status/status-untracked"
+                    ]
+                }
             }
         },
         {
             "name": "Diff",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/DiffAlgorithmParityTest.php",
-                    "tests/Integration/DiffFormattingParityTest.php",
-                    "tests/Integration/TreeDiffTest.php"
-                ],
-                "scenarios": [
-                    "diff/diff-add-lines",
-                    "diff/diff-delete-lines",
-                    "diff/diff-modify-lines",
-                    "diff/diff-multiple-hunks",
-                    "diff/diff-no-newline",
-                    "diff/diff-staged",
-                    "diff/diff-formatting-parity",
-                    "diff/diff-algorithm-parity"
-                ]
+            "features": {
+                "Myers diff algorithm": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Patience diff algorithm": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Histogram diff algorithm": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Minimal diff": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Tree-to-tree diff": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Unified diff output": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Hunk generation": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Binary file detection": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Rename detection (diff)": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Word diff": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                },
+                "Color diff output": {
+                    "integration_tests": [
+                        "tests/Integration/DiffAlgorithmParityTest.php",
+                        "tests/Integration/DiffFormattingParityTest.php",
+                        "tests/Integration/TreeDiffTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "diff/diff-add-lines",
+                        "diff/diff-algorithm-parity",
+                        "diff/diff-delete-lines",
+                        "diff/diff-formatting-parity",
+                        "diff/diff-modify-lines",
+                        "diff/diff-multiple-hunks",
+                        "diff/diff-no-newline",
+                        "diff/diff-staged"
+                    ]
+                }
             }
         },
         {
             "name": "Merge",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/MergeBaseTest.php",
-                    "tests/Integration/MergeFamilyParityTest.php",
-                    "tests/Integration/MergeStrategyParityTest.php",
-                    "tests/Integration/RerereTest.php"
-                ],
-                "scenarios": [
-                    "merge/merge-clean",
-                    "merge/merge-fast-forward",
-                    "merge/merge-conflict",
-                    "merge/merge-conflict-state",
-                    "merge/merge-conflict-continue",
-                    "merge/merge-conflict-abort",
-                    "merge/merge-recursive-crisscross",
-                    "merge/merge-ort-strategy",
-                    "merge/merge-octopus-clean",
-                    "merge/merge-ours-strategy",
-                    "merge/merge-rename-delete-conflict",
-                    "rerere/rerere-cache-parity"
-                ]
+            "features": {
+                "Merge base (LCA)": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Three-way merge (content)": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Conflict markers": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "File-level merge (tree)": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Recursive strategy": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "ORT strategy": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Octopus merge": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Ours strategy": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Fast-forward merge": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                },
+                "Merge commit creation": {
+                    "integration_tests": [
+                        "tests/Integration/MergeBaseTest.php",
+                        "tests/Integration/MergeFamilyParityTest.php",
+                        "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/RerereTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "merge/merge-clean",
+                        "merge/merge-conflict",
+                        "merge/merge-conflict-abort",
+                        "merge/merge-conflict-continue",
+                        "merge/merge-conflict-state",
+                        "merge/merge-fast-forward",
+                        "merge/merge-octopus-clean",
+                        "merge/merge-ort-strategy",
+                        "merge/merge-ours-strategy",
+                        "merge/merge-recursive-crisscross",
+                        "merge/merge-rename-delete-conflict",
+                        "rerere/rerere-cache-parity"
+                    ]
+                }
             }
         },
         {
             "name": "Commit Graph",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/AncestryCheckerTest.php",
-                    "tests/Integration/RevisionParserTest.php",
-                    "tests/Integration/LogShowParityTest.php",
-                    "tests/Integration/BlameParityTest.php",
-                    "tests/Integration/BisectParityTest.php"
-                ],
-                "scenarios": [
-                    "log/log-linear",
-                    "log/log-branched",
-                    "log/log-public-parity",
-                    "log/show-cli-parity",
-                    "blame/blame-basic",
-                    "blame/blame-moved-lines",
-                    "advanced/bisect-linear"
-                ]
+            "features": {
+                "Commit walk (log)": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "Ancestry check": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "Revision expressions": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "Log --all (all branches)": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "Log with path filter": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "Log --oneline format": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                },
+                "git show": {
+                    "integration_tests": [
+                        "tests/Integration/AncestryCheckerTest.php",
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/RevisionParserTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "blame/blame-basic",
+                        "blame/blame-moved-lines",
+                        "log/log-branched",
+                        "log/log-linear",
+                        "log/log-public-parity",
+                        "log/show-cli-parity"
+                    ]
+                }
             }
         },
         {
             "name": "Branch and Tag Operations",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/CheckoutParityTest.php",
-                    "tests/Integration/AnnotatedTagParityTest.php",
-                    "tests/Integration/ReflogTest.php"
-                ],
-                "scenarios": [
-                    "refs/branch-delete",
-                    "refs/lightweight-tag-create",
-                    "refs/tag-delete",
-                    "tags/tag-annotated-write",
-                    "tags/tag-verify",
-                    "checkout/checkout-return-to-branch",
-                    "checkout/detached-head-commit"
-                ]
+            "features": {
+                "List branches": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "branch/branch-list-cli-parity",
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Create branch": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Delete branch": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "List tags": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Create lightweight tag": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Create annotated tag": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Delete tag": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Checkout / switch branch": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                },
+                "Detached HEAD": {
+                    "integration_tests": [
+                        "tests/Integration/AnnotatedTagParityTest.php",
+                        "tests/Integration/CheckoutParityTest.php",
+                        "tests/Integration/ReflogTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "checkout/checkout-return-to-branch",
+                        "checkout/detached-head-commit",
+                        "refs/branch-delete",
+                        "refs/lightweight-tag-create",
+                        "refs/tag-delete",
+                        "tags/tag-annotated-write",
+                        "tags/tag-verify"
+                    ]
+                }
             }
         },
         {
             "name": "Network Protocol",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/ProtocolV1ParityTest.php",
-                    "tests/Integration/ProtocolV2ParityTest.php",
-                    "tests/Integration/RefDiscoveryParityTest.php",
-                    "tests/Integration/GitProtocolClientTest.php",
-                    "tests/Integration/SmartHttpRemoteParityTest.php",
-                    "tests/Integration/HttpCloneParityTest.php",
-                    "tests/Integration/IncrementalFetchParityTest.php",
-                    "tests/Integration/PushParityTest.php",
-                    "tests/Integration/DumbHttpClientTest.php",
-                    "tests/Integration/SshTransportParityTest.php"
-                ],
-                "scenarios": [
-                    "protocol/v1-upload-pack",
-                    "protocol/v1-receive-pack",
-                    "protocol/v2-ls-refs",
-                    "protocol/v2-fetch",
-                    "protocol/ref-discovery-smart-http",
-                    "protocol/ref-discovery-git",
-                    "network/dumb-http-clone",
-                    "network/dumb-http-fetch",
-                    "network/git-protocol-fetch",
-                    "network/fetch-incremental",
-                    "network/push-atomic",
-                    "network/push-cas",
-                    "network/push-mirror",
-                    "network/ssh-transport-roundtrip",
-                    "network/shallow-http-clone",
-                    "network/shallow-http-fetch"
-                ]
-            },
             "features": {
-                "SSH transport": {
+                "Pkt-line encoding/decoding": {
                     "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
                         "tests/Integration/SshTransportParityTest.php"
                     ],
+                    "unit_tests": [],
                     "scenarios": [
-                        "network/ssh-transport-roundtrip"
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Smart HTTP transport": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Protocol v2": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Protocol v1": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Ref discovery": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Capability negotiation": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Upload-pack (fetch)": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Receive-pack (push)": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Clone via HTTP": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Incremental fetch": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Push": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "SSH transport": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "git:// transport": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
+                    ]
+                },
+                "Dumb HTTP": {
+                    "integration_tests": [
+                        "tests/Integration/DumbHttpClientTest.php",
+                        "tests/Integration/GitProtocolClientTest.php",
+                        "tests/Integration/HttpCloneParityTest.php",
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/ProtocolV2ParityTest.php",
+                        "tests/Integration/PushParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php",
+                        "tests/Integration/SmartHttpRemoteParityTest.php",
+                        "tests/Integration/SshTransportParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/dumb-http-clone",
+                        "network/dumb-http-fetch",
+                        "network/fetch-incremental",
+                        "network/git-protocol-fetch",
+                        "network/push-atomic",
+                        "network/push-cas",
+                        "network/push-mirror",
+                        "network/shallow-http-clone",
+                        "network/shallow-http-fetch",
+                        "network/ssh-transport-roundtrip",
+                        "protocol/ref-discovery-git",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-receive-pack",
+                        "protocol/v1-upload-pack",
+                        "protocol/v2-fetch",
+                        "protocol/v2-ls-refs"
                     ]
                 }
             }
         },
         {
             "name": "Encoding",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/CodecParityTest.php",
-                    "tests/Integration/ProtocolV1ParityTest.php",
-                    "tests/Integration/RefDiscoveryParityTest.php"
-                ],
-                "unit_tests": [
-                    "tests/Unit/Protocol/PktLineTest.php",
-                    "tests/Unit/Protocol/ProtocolV1Test.php"
-                ],
-                "scenarios": [
-                    "codecs/pack-delta-codecs",
-                    "codecs/pkt-line-roundtrip",
-                    "protocol/v1-upload-pack",
-                    "protocol/ref-discovery-smart-http"
-                ]
+            "features": {
+                "LEB128 unsigned": {
+                    "integration_tests": [
+                        "tests/Integration/CodecParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/PktLineTest.php",
+                        "tests/Unit/Protocol/ProtocolV1Test.php"
+                    ],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "codecs/pkt-line-roundtrip",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Git varint (MSB-continue)": {
+                    "integration_tests": [
+                        "tests/Integration/CodecParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/PktLineTest.php",
+                        "tests/Unit/Protocol/ProtocolV1Test.php"
+                    ],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "codecs/pkt-line-roundtrip",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "OFS_DELTA offset encoding": {
+                    "integration_tests": [
+                        "tests/Integration/CodecParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/PktLineTest.php",
+                        "tests/Unit/Protocol/ProtocolV1Test.php"
+                    ],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "codecs/pkt-line-roundtrip",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Binary reader": {
+                    "integration_tests": [
+                        "tests/Integration/CodecParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/PktLineTest.php",
+                        "tests/Unit/Protocol/ProtocolV1Test.php"
+                    ],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "codecs/pkt-line-roundtrip",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-upload-pack"
+                    ]
+                },
+                "Pkt-line format": {
+                    "integration_tests": [
+                        "tests/Integration/CodecParityTest.php",
+                        "tests/Integration/ProtocolV1ParityTest.php",
+                        "tests/Integration/RefDiscoveryParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/PktLineTest.php",
+                        "tests/Unit/Protocol/ProtocolV1Test.php"
+                    ],
+                    "scenarios": [
+                        "codecs/pack-delta-codecs",
+                        "codecs/pkt-line-roundtrip",
+                        "protocol/ref-discovery-smart-http",
+                        "protocol/v1-upload-pack"
+                    ]
+                }
             }
         },
         {
             "name": "Error Handling",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/ParserCorruptionTest.php",
-                    "tests/Integration/ProtocolFailureTest.php",
-                    "tests/Integration/RepositoryErrorParityTest.php",
-                    "tests/Integration/FormatHardeningTest.php",
-                    "tests/Integration/TransportAbuseTest.php"
-                ],
-                "scenarios": [
-                    "errors/index-corrupt",
-                    "errors/missing-object",
-                    "network/git-protocol-errors"
-                ]
+            "features": {
+                "ObjectNotFoundException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "CorruptObjectException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "PackParseException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "IndexParseException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "MergeConflictException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "ProtocolException": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "Malformed loose object handling": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "Truncated pack handling": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                },
+                "Circular delta detection": {
+                    "integration_tests": [
+                        "tests/Integration/FormatHardeningTest.php",
+                        "tests/Integration/ParserCorruptionTest.php",
+                        "tests/Integration/ProtocolFailureTest.php",
+                        "tests/Integration/RepositoryErrorParityTest.php",
+                        "tests/Integration/TransportAbuseTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "errors/index-corrupt",
+                        "errors/missing-object",
+                        "network/git-protocol-errors"
+                    ]
+                }
             }
         },
         {
             "name": "Advanced Features",
-            "defaults": {
-                "integration_tests": [
-                    "tests/Integration/SubmoduleParityTest.php",
-                    "tests/Integration/WorktreeTest.php",
-                    "tests/Integration/WorktreeTopologyTest.php",
-                    "tests/Integration/RerereTest.php",
-                    "tests/Integration/BisectParityTest.php",
-                    "tests/Integration/SparseCheckoutParityTest.php",
-                    "tests/Integration/FsmonitorTest.php",
-                    "tests/Integration/HookParityTest.php",
-                    "tests/Integration/LfsParityTest.php",
-                    "tests/Integration/NotesParityTest.php",
-                    "tests/Integration/BlameParityTest.php",
-                    "tests/Integration/GrepParityTest.php",
-                    "tests/Integration/ShallowCloneParityTest.php"
-                ],
-                "scenarios": [
-                    "submodules/submodule-init",
-                    "submodules/submodule-update",
-                    "submodules/submodule-status",
-                    "worktree/worktree-add-reflog",
-                    "worktree/worktree-list-porcelain",
-                    "rerere/rerere-cache-parity",
-                    "rerere/rerere-normalized-hash",
-                    "advanced/bisect-linear",
-                    "sparse/sparse-basic",
-                    "sparse/sparse-status",
-                    "sparse/sparse-reset",
-                    "sparse/sparse-merge",
-                    "advanced/fsmonitor-hook-query",
-                    "commit/commit-hook-interaction",
-                    "advanced/lfs-pointer-and-transfer",
-                    "advanced/git-attributes",
-                    "advanced/shallow-write",
-                    "advanced/bundle-roundtrip",
-                    "notes/notes-worktree",
-                    "notes/notes-merge",
-                    "notes/notes-namespace",
-                    "blame/blame-basic",
-                    "grep/grep-basic",
-                    "grep/grep-regex"
-                ]
-            },
             "features": {
+                "Submodules": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Worktrees": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Rerere": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Bisect": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Stash": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Sparse checkout": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Fsmonitor": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Hooks": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
                 "Git LFS": {
                     "integration_tests": [
-                        "tests/Integration/LfsParityTest.php"
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
                     ],
+                    "unit_tests": [],
                     "scenarios": [
-                        "advanced/lfs-pointer-and-transfer"
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Git attributes": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
                     ]
                 },
                 "Shallow clones": {
                     "integration_tests": [
-                        "tests/Integration/ShallowCloneParityTest.php"
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
                     ],
+                    "unit_tests": [],
                     "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
                         "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
                         "network/shallow-http-clone",
-                        "network/shallow-http-fetch"
+                        "network/shallow-http-fetch",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Git bundles": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Git notes": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Git blame": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
+                    ]
+                },
+                "Git grep": {
+                    "integration_tests": [
+                        "tests/Integration/BisectParityTest.php",
+                        "tests/Integration/BlameParityTest.php",
+                        "tests/Integration/FsmonitorTest.php",
+                        "tests/Integration/GrepParityTest.php",
+                        "tests/Integration/HookParityTest.php",
+                        "tests/Integration/LfsParityTest.php",
+                        "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/ShallowCloneParityTest.php",
+                        "tests/Integration/SparseCheckoutParityTest.php",
+                        "tests/Integration/SubmoduleParityTest.php",
+                        "tests/Integration/WorktreeTest.php",
+                        "tests/Integration/WorktreeTopologyTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "advanced/bisect-linear",
+                        "advanced/bundle-roundtrip",
+                        "advanced/fsmonitor-hook-query",
+                        "advanced/git-attributes",
+                        "advanced/lfs-pointer-and-transfer",
+                        "advanced/shallow-write",
+                        "blame/blame-basic",
+                        "commit/commit-hook-interaction",
+                        "grep/grep-basic",
+                        "grep/grep-cli-parity",
+                        "grep/grep-regex",
+                        "notes/notes-merge",
+                        "notes/notes-namespace",
+                        "notes/notes-worktree",
+                        "rerere/rerere-cache-parity",
+                        "rerere/rerere-normalized-hash",
+                        "sparse/sparse-basic",
+                        "sparse/sparse-merge",
+                        "sparse/sparse-reset",
+                        "sparse/sparse-status",
+                        "submodules/submodule-init",
+                        "submodules/submodule-status",
+                        "submodules/submodule-update",
+                        "worktree/worktree-add-reflog",
+                        "worktree/worktree-list-porcelain"
                     ]
                 }
             }

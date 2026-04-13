@@ -1,0 +1,3 @@
+README.md:1:needle in root
+docs/guide.txt:2:needle in docs
+src/feature.txt:2:needle in src

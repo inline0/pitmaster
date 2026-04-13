@@ -1,0 +1,23 @@
+{
+    "name": "revert-continue-no-state",
+    "category": "revert",
+    "description": "Compare revert --continue failure output and exit code when no revert is in progress",
+    "operations": [
+        "revert_continue"
+    ],
+    "oracle_commands": {
+        "revert_continue": "git revert --continue"
+    },
+    "actual_commands": {
+        "revert_continue": "php \"{{ROOT}}/bin/pitmaster\" revert --continue"
+    },
+    "expectations": {
+        "exact_match": [
+            "revert_continue"
+        ],
+        "exact_meta_match": [
+            "revert_continue"
+        ],
+        "fsck_clean": true
+    }
+}

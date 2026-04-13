@@ -18,22 +18,53 @@ jobs:
     name: Support Evidence
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
       - run: composer install --no-interaction --prefer-dist
       - run: composer verify:evidence
+      - run: php ./bin/verify-support-evidence --json > .pitmaster/proof/support-evidence-summary.json
       - run: php ./bin/support-matrix >/dev/null
       - run: git diff --exit-code -- SUPPORT_MATRIX.md
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: support-evidence
+          path: |
+            .pitmaster/proof/support-evidence-summary.json
+            SUPPORT_MATRIX.md
+
+  upstream-drift:
+    name: Upstream Drift Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+        with:
+          php-version: '8.4'
+          tools: composer
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer verify:drift
+
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+        with:
+          php-version: '8.4'
+          tools: composer
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer audit --locked --no-interaction
 
   lint:
     name: Coding Standards
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -44,8 +75,8 @@ jobs:
     name: Static Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -60,8 +91,8 @@ jobs:
       matrix:
         php-version: ['8.4']
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer
@@ -77,8 +108,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -94,8 +125,8 @@ jobs:
     name: Oracle Regression
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -106,6 +137,24 @@ jobs:
       - run: git config --global user.name "CI"
       - run: git config --global init.defaultBranch main
       - run: PITMASTER_TEST_JOBS=4 composer test:oracle
+      - run: composer verify:proof
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: proof-artifact
+          path: .pitmaster/proof/proof-artifact.json
+
+  mutation-smoke:
+    name: Mutation Smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer test:mutation
 
   test-multi-git:
     name: Multi-Git Smoke (${{ matrix.legacy-git }})
@@ -115,8 +164,8 @@ jobs:
       matrix:
         legacy-git: ['2.44.4', '2.46.2']
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -135,8 +184,8 @@ jobs:
     name: Benchmark Smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -160,11 +209,15 @@ jobs:
           - repository/init-basic
           - refs/lightweight-tag-create
           - status/status-porcelain-v2
+          - branch/branch-list-cli-parity
+          - refs/reflog-cli-parity
+          - grep/grep-cli-parity
           - protocol/v1-upload-pack
           - merge/merge-conflict-continue
+          - rebase/rebase-continue-no-state
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -180,8 +233,8 @@ jobs:
     name: Oracle Smoke (macOS)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
         with:
           php-version: '8.4'
           tools: composer
@@ -194,15 +247,19 @@ jobs:
       - run: ./bin/test-scenario repository/init-basic
       - run: ./bin/test-scenario status/status-porcelain-v2
       - run: ./bin/test-scenario diff/diff-add-lines
+      - run: ./bin/test-scenario branch/branch-list-cli-parity
+      - run: ./bin/test-scenario refs/reflog-cli-parity
+      - run: ./bin/test-scenario grep/grep-cli-parity
       - run: ./bin/test-scenario config/config-roundtrip
+      - run: ./bin/test-scenario config/config-include-local
       - run: ./bin/test-scenario merge/merge-conflict-continue
 
   docs:
     name: Docs Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '22'
           cache: 'npm'

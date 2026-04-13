@@ -1,0 +1,23 @@
+{
+    "name": "merge-continue-no-state",
+    "category": "merge",
+    "description": "Compare merge --continue failure output and exit code when no merge is in progress",
+    "operations": [
+        "merge_continue"
+    ],
+    "oracle_commands": {
+        "merge_continue": "git merge --continue"
+    },
+    "actual_commands": {
+        "merge_continue": "php \"{{ROOT}}/bin/pitmaster\" merge --continue"
+    },
+    "expectations": {
+        "exact_match": [
+            "merge_continue"
+        ],
+        "exact_meta_match": [
+            "merge_continue"
+        ],
+        "fsck_clean": true
+    }
+}

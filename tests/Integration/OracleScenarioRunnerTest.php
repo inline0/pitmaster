@@ -178,6 +178,52 @@ SH);
         $this->assertSame("stale-head\n", file_get_contents($scenarioDir . '/oracle/head.txt'));
     }
 
+    #[Test]
+    public function exactMetaMatchComparesExitCodeStdoutAndStderr(): void
+    {
+        $scenarioDir = $this->tmpRoot . '/scenarios/errors/meta-parity';
+        mkdir($scenarioDir, 0777, true);
+
+        file_put_contents($scenarioDir . '/scenario.json', json_encode([
+            'name' => 'meta-parity',
+            'category' => 'errors',
+            'description' => 'Compare command metadata exactly',
+            'operations' => ['failure'],
+            'oracle_commands' => [
+                'failure' => 'bash -lc "printf \'out\\n\'; printf \'err\\n\' >&2; exit 7"',
+            ],
+            'actual_commands' => [
+                'failure' => 'bash -lc "printf \'out\\n\'; printf \'err\\n\' >&2; exit 7"',
+            ],
+            'expectations' => [
+                'exact_match' => ['failure'],
+                'exact_meta_match' => ['failure'],
+                'fsck_clean' => true,
+            ],
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+
+        file_put_contents($scenarioDir . '/setup.sh', <<<'SH'
+#!/bin/bash
+set -e
+git init -b main .
+git config user.email "test@pitmaster.dev"
+git config user.name "Test User"
+echo "hello" > app.txt
+git add app.txt
+git commit -m "Initial commit" >/dev/null
+SH);
+
+        $scenario = (new ScenarioRepository($this->tmpRoot))->get('errors/meta-parity');
+        $result = (new ScenarioRunner())->run($scenario, true);
+
+        $this->assertTrue(
+            $result['pass'],
+            json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?: 'meta-parity',
+        );
+        $this->assertTrue($result['comparison']['failure_match']);
+        $this->assertTrue($result['comparison']['failure_meta_match']);
+    }
+
     /**
      * @return array<int, array{0: string}>
      */

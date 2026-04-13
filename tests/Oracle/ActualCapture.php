@@ -97,9 +97,15 @@ final class ActualCapture
                     continue;
                 }
 
-                $output = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
-                $outputs[$operation] = $output;
-                file_put_contents($actualDir . '/' . $operation . '.txt', $output);
+                $capture = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
+                $outputs[$operation] = $capture['combined'];
+                $outputs[$operation . '_meta'] = [
+                    'exit_code' => $capture['exitCode'],
+                    'stdout' => $capture['stdout'],
+                    'stderr' => $capture['stderr'],
+                ];
+                file_put_contents($actualDir . '/' . $operation . '.txt', $capture['combined']);
+                Json::encodeFile($actualDir . '/' . $operation . '.meta.json', $outputs[$operation . '_meta']);
             }
         } catch (\Throwable $e) {
             $errors[] = $e->getMessage();
@@ -268,17 +274,19 @@ final class ActualCapture
         return shell_exec($command) ?? '';
     }
 
-    private function runCommand(Scenario $scenario, string $repoDir, string $command): string
+    /**
+     * @return array{stdout: string, stderr: string, exitCode: int, combined: string}
+     */
+    private function runCommand(Scenario $scenario, string $repoDir, string $command): array
     {
-        $fullCommand = sprintf(
-            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s %s 2>&1',
-            escapeshellarg($repoDir),
-            escapeshellarg($scenario->rootPath),
-            escapeshellarg($repoDir),
+        return CommandCapture::run(
             $command,
+            $repoDir,
+            [
+                'PITMASTER_ROOT' => $scenario->rootPath,
+                'GIT_CEILING_DIRECTORIES' => $repoDir,
+            ],
         );
-
-        return shell_exec($fullCommand) ?? '';
     }
 
     private function expandCommand(Scenario $scenario, string $command): string

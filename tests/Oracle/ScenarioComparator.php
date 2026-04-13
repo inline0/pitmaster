@@ -24,6 +24,7 @@ final class ScenarioComparator
         $oracleDir = $scenario->oracleDir();
         $actualDir = $scenario->actualDir();
         $runtimeExact = array_fill_keys($scenario->runtimeExactMatch(), true);
+        $runtimeExactMeta = array_fill_keys($scenario->runtimeExactMetaMatch(), true);
 
         if (isset($runtimeExact['objects'], $oracleOutputs['objects'], $actualOutputs['objects'])) {
             $oracleObjects = $oracleOutputs['objects'];
@@ -64,16 +65,28 @@ final class ScenarioComparator
         foreach ($scenario->operations() as $operation) {
             if (isset($runtimeExact[$operation], $oracleOutputs[$operation], $actualOutputs[$operation])) {
                 $report[$operation . '_match'] = $oracleOutputs[$operation] === $actualOutputs[$operation];
-                continue;
+            } else {
+                $oraclePath = $oracleDir . '/' . $operation . '.txt';
+                $actualPath = $actualDir . '/' . $operation . '.txt';
+
+                if (is_file($oraclePath) && is_file($actualPath)) {
+                    $oracleContent = file_get_contents($oraclePath);
+                    $actualContent = file_get_contents($actualPath);
+                    $report[$operation . '_match'] = $oracleContent === $actualContent;
+                }
             }
 
-            $oraclePath = $oracleDir . '/' . $operation . '.txt';
-            $actualPath = $actualDir . '/' . $operation . '.txt';
+            if (isset($runtimeExactMeta[$operation], $oracleOutputs[$operation . '_meta'], $actualOutputs[$operation . '_meta'])) {
+                $report[$operation . '_meta_match'] = $oracleOutputs[$operation . '_meta'] === $actualOutputs[$operation . '_meta'];
+            } else {
+                $oracleMetaPath = $oracleDir . '/' . $operation . '.meta.json';
+                $actualMetaPath = $actualDir . '/' . $operation . '.meta.json';
 
-            if (is_file($oraclePath) && is_file($actualPath)) {
-                $oracleContent = file_get_contents($oraclePath);
-                $actualContent = file_get_contents($actualPath);
-                $report[$operation . '_match'] = $oracleContent === $actualContent;
+                if (is_file($oracleMetaPath) && is_file($actualMetaPath)) {
+                    $oracleMeta = Json::decodeFile($oracleMetaPath);
+                    $actualMeta = Json::decodeFile($actualMetaPath);
+                    $report[$operation . '_meta_match'] = $oracleMeta === $actualMeta;
+                }
             }
         }
 

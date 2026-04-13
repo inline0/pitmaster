@@ -76,6 +76,59 @@ final class ConfigParityTest extends TestCase
         $this->assertSame('refs/heads/main', trim($this->gitFileConfig($path, 'branch.main.merge')));
     }
 
+    #[Test]
+    public function pitmasterParsesIncludedConfigLikeGit(): void
+    {
+        file_put_contents($this->tmpDir . '/.git/extra.config', <<<'CFG'
+[core]
+    editor = vim
+[alias]
+    lg = log --oneline
+CFG);
+        file_put_contents($this->tmpDir . '/.git/config', <<<'CFG'
+[include]
+    path = extra.config
+CFG);
+
+        $config = GitConfig::fromFile($this->tmpDir . '/.git/config');
+
+        $this->assertSame(trim($this->git('config --includes --file .git/config --get core.editor')), $config->get('core.editor'));
+        $this->assertSame(trim($this->git('config --includes --file .git/config --get alias.lg')), $config->get('alias.lg'));
+    }
+
+    #[Test]
+    public function includeCyclesFailClosedLikeGit(): void
+    {
+        file_put_contents($this->tmpDir . '/.git/a.conf', <<<'CFG'
+[include]
+    path = b.conf
+[core]
+    editor = vim
+CFG);
+        file_put_contents($this->tmpDir . '/.git/b.conf', <<<'CFG'
+[include]
+    path = a.conf
+[alias]
+    lg = log --oneline
+CFG);
+        file_put_contents($this->tmpDir . '/.git/config', <<<'CFG'
+[include]
+    path = a.conf
+CFG);
+
+        exec(
+            sprintf('cd %s && git config --includes --file .git/config --list 2>&1', escapeshellarg($this->tmpDir)),
+            $gitOutput,
+            $gitExitCode,
+        );
+
+        $this->assertSame(128, $gitExitCode);
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('exceeded maximum include depth (10)');
+
+        GitConfig::fromFile($this->tmpDir . '/.git/config');
+    }
+
     private function git(string $command): string
     {
         exec(

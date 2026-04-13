@@ -13,11 +13,13 @@
     },
     "expectations": {
         "exact_match": [
-            "bundle",
             "objects",
             "refs",
             "log",
             "fsck"
+        ],
+        "exact_meta_match": [
+            "bundle"
         ],
         "fsck_clean": true
     }

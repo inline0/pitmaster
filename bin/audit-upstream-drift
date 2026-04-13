@@ -1,0 +1,225 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$root = dirname(__DIR__);
+$strictUnimported = in_array('--strict-unimported', $argv, true) || in_array('--strict', $argv, true);
+$expected = [];
+
+$expected = array_merge(
+    $expected,
+    mapDulwich($root),
+    mapGitTestSuite($root),
+    mapGitSuite($root),
+    mapIsomorphicGit($root),
+    mapGoGit($root),
+    mapJGit($root),
+    mapLibgit2($root),
+);
+
+sort($expected);
+$expected = array_values(array_unique($expected));
+$actual = actualUpstreamScenarios($root);
+
+$missingSources = array_values(array_diff($actual, $expected));
+$unimported = array_values(array_diff($expected, $actual));
+
+if ($missingSources !== [] || ($strictUnimported && $unimported !== [])) {
+    fwrite(STDERR, "Upstream drift detected.\n");
+
+    foreach ($missingSources as $scenario) {
+        fwrite(STDERR, " - imported scenario has no vendored upstream source: {$scenario}\n");
+    }
+
+    if ($strictUnimported) {
+        foreach ($unimported as $scenario) {
+            fwrite(STDERR, " - vendored upstream case not yet imported: {$scenario}\n");
+        }
+    }
+
+    exit(1);
+}
+
+fwrite(STDOUT, sprintf(
+    "Upstream drift audit passed for %d imported upstream scenarios; %d vendored upstream cases remain unimported.\n",
+    count($actual),
+    count($unimported),
+));
+
+/**
+ * @return list<string>
+ */
+function actualUpstreamScenarios(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/scenarios/upstream/*/*/scenario.json') ?: [] as $path) {
+        $scenarios[] = substr($path, strlen($root . '/scenarios/') , -strlen('/scenario.json'));
+    }
+
+    sort($scenarios);
+
+    return array_values(array_unique($scenarios));
+}
+
+/**
+ * @return list<string>
+ */
+function mapDulwich(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/dulwich/testdata/repos/*.git') ?: [] as $path) {
+        if (is_dir($path) && is_file($path . '/HEAD')) {
+            $scenarios[] = 'upstream/dulwich/' . basename($path, '.git');
+        }
+    }
+
+    foreach (glob($root . '/fixtures/upstream/dulwich/testdata/packs/*.pack') ?: [] as $path) {
+        $idx = substr($path, 0, -5) . '.idx';
+
+        if (!is_file($idx)) {
+            continue;
+        }
+
+        $scenarios[] = 'upstream/dulwich/' . substr(basename($path, '.pack'), 0, strlen('pack-bc63ddad'));
+    }
+
+    return $scenarios;
+}
+
+/**
+ * @return list<string>
+ */
+function mapGitTestSuite(string $root): array
+{
+    $skipWords = ['lib-httpd', 'start_httpd', 'git-svn', 'git-p4', 'lib-cvs', 'lib-gitweb', 'GIT_VALGRIND', 'test_external', 'lib-git-daemon'];
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/git/t/t[0-9]*.sh') ?: [] as $path) {
+        $content = @file_get_contents($path);
+
+        if ($content === false) {
+            continue;
+        }
+
+        $skip = false;
+
+        foreach ($skipWords as $word) {
+            if (stripos($content, $word) !== false) {
+                $skip = true;
+                break;
+            }
+        }
+
+        if ($skip) {
+            continue;
+        }
+
+        $scenarios[] = 'upstream/git-test-suite/' . basename($path, '.sh');
+    }
+
+    return $scenarios;
+}
+
+/**
+ * @return list<string>
+ */
+function mapGitSuite(string $root): array
+{
+    $script = $root . '/bin/acquire-git-suite-fixtures';
+    $content = (string) file_get_contents($script);
+    preg_match_all("/'([a-z0-9-]+)'\\s*=>\\s*\\[/", $content, $matches);
+
+    return array_map(static fn (string $name): string => 'upstream/git-suite/' . $name, $matches[1] ?? []);
+}
+
+/**
+ * @return list<string>
+ */
+function mapIsomorphicGit(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/isomorphic-git/__tests__/__fixtures__/*.git') ?: [] as $path) {
+        if (is_dir($path) && is_file($path . '/HEAD')) {
+            $scenarios[] = 'upstream/isomorphic-git/' . basename($path, '.git');
+        }
+    }
+
+    return $scenarios;
+}
+
+/**
+ * @return list<string>
+ */
+function mapGoGit(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/go-git/data/git-*.tgz') ?: [] as $path) {
+        $hash = substr(basename($path, '.tgz'), 4);
+        $scenarios[] = 'upstream/go-git/repo-' . substr($hash, 0, 12);
+    }
+
+    foreach (glob($root . '/fixtures/upstream/go-git/data/pack-*.pack') ?: [] as $path) {
+        $idx = substr($path, 0, -5) . '.idx';
+
+        if (!is_file($idx)) {
+            continue;
+        }
+
+        $hash = substr(basename($path, '.pack'), 5);
+        $scenarios[] = 'upstream/go-git/pack-' . substr($hash, 0, 12);
+    }
+
+    return $scenarios;
+}
+
+/**
+ * @return list<string>
+ */
+function mapJGit(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/jgit/org.eclipse.jgit.test/tst-rsrc/org/eclipse/jgit/test/resources/pack-*.pack') ?: [] as $path) {
+        $basename = basename($path, '.pack');
+
+        if (str_contains($basename, 'bad') || !is_file(substr($path, 0, -5) . '.idx')) {
+            continue;
+        }
+
+        $hash = substr($basename, 5);
+        $scenarios[] = 'upstream/jgit/pack-' . substr($hash, 0, 12);
+    }
+
+    return $scenarios;
+}
+
+/**
+ * @return list<string>
+ */
+function mapLibgit2(string $root): array
+{
+    $scenarios = [];
+
+    foreach (glob($root . '/fixtures/upstream/libgit2/tests/resources/*') ?: [] as $path) {
+        if (!is_dir($path)) {
+            continue;
+        }
+
+        if (!is_dir($path . '/.gitted') && !is_file($path . '/HEAD')) {
+            continue;
+        }
+
+        $name = basename($path);
+        $safeName = str_replace('.git', '', str_replace('.', '-', $name));
+        $scenarios[] = 'upstream/libgit2/' . $safeName;
+    }
+
+    return $scenarios;
+}

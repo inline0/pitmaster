@@ -1,0 +1,24 @@
+{
+    "name": "grep-cli-parity",
+    "category": "grep",
+    "description": "Compare pitmaster grep CLI output against git grep",
+    "operations": [
+        "grep"
+    ],
+    "oracle_commands": {
+        "grep": "git grep -n --no-color --fixed-strings needle"
+    },
+    "actual_commands": {
+        "grep": "php \"{{ROOT}}/bin/pitmaster\" grep needle"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "grep"
+        ],
+        "fsck_clean": true
+    }
+}

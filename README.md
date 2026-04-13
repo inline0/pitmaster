@@ -121,6 +121,13 @@ composer test
 # Full verification: analysis + standards + full test matrix
 ./bin/verify-all
 
+# Evidence / proof / drift checks
+composer verify:evidence
+composer verify:drift
+composer verify:proof
+composer test:mutation
+composer audit:composer
+
 # Benchmark smoke
 composer bench -- --suite=smoke --runs=1 --warmups=0
 
@@ -147,7 +154,7 @@ composer analyse
 composer cs
 ```
 
-The upstream oracle fixtures are vendored under [`fixtures/upstream`](fixtures/upstream), so the full regression corpus is runnable from a fresh checkout without machine-local `/tmp` dependencies. Use `composer test` for the full matrix and `./bin/verify-all` for release-grade verification.
+The upstream oracle fixtures are vendored under [`fixtures/upstream`](fixtures/upstream), so the full regression corpus is runnable from a fresh checkout without machine-local `/tmp` dependencies. Use `composer test` for the full matrix and `./bin/verify-all` for release-grade verification. CI also validates upstream drift and publishes a machine-readable proof artifact from [`bin/build-proof-artifact`](bin/build-proof-artifact).
 
 Feature work and fixture changes use the same bar: keep scenarios self-contained inside the repo, avoid absolute-path and machine-local-port snapshots, and do not treat a change as done until `./bin/verify-all` is green.
 

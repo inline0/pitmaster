@@ -95,6 +95,30 @@ final readonly class Scenario
     }
 
     /**
+     * Outputs whose stdout/stderr/exit-code metadata must match exactly.
+     *
+     * @return array<int, string>
+     */
+    public function exactMetaMatch(): array
+    {
+        return array_values(array_unique(array_merge(
+            (array) ($this->expectations()['exact_meta_match'] ?? []),
+            $this->runtimeExactMetaMatch(),
+        )));
+    }
+
+    /**
+     * Outputs whose metadata should be compared against a fresh oracle capture
+     * on each run instead of the committed oracle snapshot.
+     *
+     * @return array<int, string>
+     */
+    public function runtimeExactMetaMatch(): array
+    {
+        return (array) ($this->expectations()['runtime_exact_meta_match'] ?? []);
+    }
+
+    /**
      * Whether fsck must be clean.
      */
     public function fsckClean(): bool
@@ -162,6 +186,14 @@ final readonly class Scenario
 
             if (!isset($report[$key]) || $report[$key] !== true) {
                 $failures[] = "exact-match-failed:{$output}";
+            }
+        }
+
+        foreach ($this->exactMetaMatch() as $output) {
+            $key = $output . '_meta_match';
+
+            if (!isset($report[$key]) || $report[$key] !== true) {
+                $failures[] = "exact-meta-match-failed:{$output}";
             }
         }
 

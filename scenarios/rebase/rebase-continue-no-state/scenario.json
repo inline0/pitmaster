@@ -1,0 +1,23 @@
+{
+    "name": "rebase-continue-no-state",
+    "category": "rebase",
+    "description": "Compare rebase --continue failure output and exit code when no rebase is in progress",
+    "operations": [
+        "rebase_continue"
+    ],
+    "oracle_commands": {
+        "rebase_continue": "git rebase --continue"
+    },
+    "actual_commands": {
+        "rebase_continue": "php \"{{ROOT}}/bin/pitmaster\" rebase --continue"
+    },
+    "expectations": {
+        "exact_match": [
+            "rebase_continue"
+        ],
+        "exact_meta_match": [
+            "rebase_continue"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -63,7 +63,13 @@ final class OracleCapture
                 $command = $scenario->oracleCommands()[$operation] ?? null;
 
                 if ($command !== null) {
-                    $outputs[$operation] = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
+                    $capture = $this->runCommand($scenario, $repoDir, $this->expandCommand($scenario, $command));
+                    $outputs[$operation] = $capture['combined'];
+                    $outputs[$operation . '_meta'] = [
+                        'exit_code' => $capture['exitCode'],
+                        'stdout' => $capture['stdout'],
+                        'stderr' => $capture['stderr'],
+                    ];
                 }
             }
 
@@ -96,6 +102,13 @@ final class OracleCapture
                         file_put_contents(
                             $oracleDir . '/' . $operation . '.txt',
                             $outputs[$operation]
+                        );
+                    }
+
+                    if (isset($outputs[$operation . '_meta']) && is_array($outputs[$operation . '_meta'])) {
+                        Json::encodeFile(
+                            $oracleDir . '/' . $operation . '.meta.json',
+                            $outputs[$operation . '_meta'],
                         );
                     }
                 }
@@ -312,17 +325,19 @@ final class OracleCapture
         return shell_exec($command) ?? '';
     }
 
-    private function runCommand(Scenario $scenario, string $repoDir, string $command): string
+    /**
+     * @return array{stdout: string, stderr: string, exitCode: int, combined: string}
+     */
+    private function runCommand(Scenario $scenario, string $repoDir, string $command): array
     {
-        $fullCommand = sprintf(
-            'cd %s && PITMASTER_ROOT=%s GIT_CEILING_DIRECTORIES=%s %s 2>&1',
-            escapeshellarg($repoDir),
-            escapeshellarg($scenario->rootPath),
-            escapeshellarg($repoDir),
+        return CommandCapture::run(
             $command,
+            $repoDir,
+            [
+                'PITMASTER_ROOT' => $scenario->rootPath,
+                'GIT_CEILING_DIRECTORIES' => $repoDir,
+            ],
         );
-
-        return shell_exec($fullCommand) ?? '';
     }
 
     private function expandCommand(Scenario $scenario, string $command): string

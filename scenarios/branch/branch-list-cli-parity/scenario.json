@@ -1,0 +1,24 @@
+{
+    "name": "branch-list-cli-parity",
+    "category": "branch",
+    "description": "Compare pitmaster branch listing output against git branch --list",
+    "operations": [
+        "branch_list"
+    ],
+    "oracle_commands": {
+        "branch_list": "git branch --list"
+    },
+    "actual_commands": {
+        "branch_list": "php \"{{ROOT}}/bin/pitmaster\" branch"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "branch_list"
+        ],
+        "fsck_clean": true
+    }
+}

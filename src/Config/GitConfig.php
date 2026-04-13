@@ -73,17 +73,10 @@ final class GitConfig
 
     public static function fromFile(string $path): self
     {
-        if (!is_file($path)) {
-            return new self();
-        }
+        $config = new self();
+        self::loadFile($config, $path, [], 0);
 
-        $content = file_get_contents($path);
-
-        if ($content === false) {
-            return new self();
-        }
-
-        return self::parse($content);
+        return $config;
     }
 
     public function get(string $key, ?string $default = null): ?string
@@ -224,5 +217,95 @@ final class GitConfig
         }
 
         file_put_contents($path, implode("\n", $lines) . "\n");
+    }
+
+    /**
+     * @param list<string> $stack
+     */
+    private static function loadFile(self $config, string $path, array $stack, int $depth): void
+    {
+        if (!is_file($path)) {
+            return;
+        }
+
+        $realPath = realpath($path) ?: $path;
+
+        if ($depth >= 10 || in_array($realPath, $stack, true)) {
+            throw new \RuntimeException(
+                "exceeded maximum include depth (10) while including {$realPath}"
+            );
+        }
+
+        $stack[] = $realPath;
+        $content = file_get_contents($realPath);
+
+        if ($content === false) {
+            return;
+        }
+
+        $currentSection = '';
+
+        foreach (explode("\n", $content) as $line) {
+            $line = trim($line);
+
+            if ($line === '' || $line[0] === '#' || $line[0] === ';') {
+                continue;
+            }
+
+            if (preg_match('/^\[([A-Za-z0-9][A-Za-z0-9.-]*)(?:\s+"((?:[^"\\\\]|\\\\.)*)")?\]$/', $line, $matches)) {
+                $section = strtolower($matches[1]);
+
+                if (isset($matches[2]) && $matches[2] !== '') {
+                    $currentSection = $section . '.' . stripcslashes($matches[2]);
+                } else {
+                    $currentSection = $section;
+                }
+
+                continue;
+            }
+
+            if (!preg_match('/^([A-Za-z][A-Za-z0-9-]*)\s*(?:=\s*(.*))?$/', $line, $matches)) {
+                continue;
+            }
+
+            $key = $currentSection . '.' . strtolower($matches[1]);
+            $value = isset($matches[2]) ? trim($matches[2]) : 'true';
+
+            if (preg_match('/^"([^"]*)"/', $value, $quoted)) {
+                $value = stripcslashes($quoted[1]);
+            } elseif (($commentPos = strpos($value, ' #')) !== false) {
+                $value = trim(substr($value, 0, $commentPos));
+            }
+
+            if ($key === 'include.path') {
+                self::loadFile($config, self::resolveIncludePath($realPath, $value), $stack, $depth + 1);
+                continue;
+            }
+
+            $config->multiValues[$key] ??= [];
+            $config->multiValues[$key][] = $value;
+            $config->values[$key] = $value;
+        }
+    }
+
+    private static function resolveIncludePath(string $configPath, string $value): string
+    {
+        if ($value === '') {
+            return $value;
+        }
+
+        if (str_starts_with($value, '~/')) {
+            $home = getenv('HOME');
+
+            if (is_string($home) && $home !== '') {
+                return $home . substr($value, 1);
+            }
+        }
+
+        if (str_starts_with($value, '/')) {
+            return $value;
+        }
+
+        return dirname($configPath) . '/' . $value;
     }
 }

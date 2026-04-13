@@ -14,7 +14,7 @@ final class ScenarioCoverageAuditTest extends TestCase
     {
         $root = dirname(__DIR__, 2);
 
-        foreach (['status', 'diff'] as $category) {
+        foreach (['status', 'diff', 'branch', 'grep'] as $category) {
             foreach (glob($root . "/scenarios/{$category}/*/scenario.json") ?: [] as $path) {
                 $definition = json_decode((string) file_get_contents($path), true, flags: JSON_THROW_ON_ERROR);
                 $exact = (array) ($definition['expectations']['exact_match'] ?? []);
@@ -32,6 +32,49 @@ final class ScenarioCoverageAuditTest extends TestCase
                         "{$path} does not exact-match {$operation}",
                     );
                 }
+            }
+        }
+    }
+
+    #[Test]
+    public function reflogAndNegativeCliScenariosExposeExactMetadata(): void
+    {
+        $root = dirname(__DIR__, 2);
+        $exactScenarios = [
+            ['refs/reflog-cli-parity', ['head_reflog', 'branch_reflog']],
+        ];
+        $metaScenarios = [
+            ['merge/merge-continue-no-state', ['merge_continue']],
+            ['rebase/rebase-continue-no-state', ['rebase_continue']],
+            ['cherry-pick/cherry-pick-continue-no-state', ['cherry_pick_continue']],
+            ['revert/revert-continue-no-state', ['revert_continue']],
+        ];
+
+        foreach ($exactScenarios as [$scenarioName, $operations]) {
+            $path = $root . '/scenarios/' . $scenarioName . '/scenario.json';
+            $definition = json_decode((string) file_get_contents($path), true, flags: JSON_THROW_ON_ERROR);
+            $exact = (array) ($definition['expectations']['exact_match'] ?? []);
+
+            foreach ($operations as $operation) {
+                self::assertContains(
+                    $operation,
+                    $exact,
+                    "{$path} does not exact-match {$operation}",
+                );
+            }
+        }
+
+        foreach ($metaScenarios as [$scenarioName, $metaOperations]) {
+            $path = $root . '/scenarios/' . $scenarioName . '/scenario.json';
+            $definition = json_decode((string) file_get_contents($path), true, flags: JSON_THROW_ON_ERROR);
+            $exactMeta = (array) ($definition['expectations']['exact_meta_match'] ?? []);
+
+            foreach ($metaOperations as $operation) {
+                self::assertContains(
+                    $operation,
+                    $exactMeta,
+                    "{$path} does not exact-meta-match {$operation}",
+                );
             }
         }
     }

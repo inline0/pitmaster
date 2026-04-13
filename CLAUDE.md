@@ -13,6 +13,10 @@ Pure PHP Git implementation. Reads and writes Git repositories without shelling 
 ./bin/test-regression --category diff    # By category
 ./bin/test-regression --fast             # Pass/fail only, no reports
 ./bin/verify-compliance                  # Full compliance report
+php ./bin/verify-support-evidence        # Validate row-exact support evidence
+php ./bin/audit-upstream-drift           # Ensure vendored upstream corpora are fully mapped
+php ./bin/build-proof-artifact .pitmaster/proof/proof-artifact.json  # Machine-readable proof report
+php ./bin/mutation-smoke                 # Targeted mutation-kill smoke on critical logic
 
 # Oracle management
 ./bin/oracle <name>                      # Capture git output for scenario

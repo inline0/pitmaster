@@ -107,4 +107,22 @@ final class PktLineTest extends TestCase
 
         $this->assertSame('some data', $decoded[0]);
     }
+
+    #[Test]
+    public function testDecodeRejectsInvalidHexLength(): void
+    {
+        $this->expectException(ProtocolException::class);
+        $this->expectExceptionMessage('Invalid pkt-line length');
+
+        PktLine::decode("zzzzhello\n");
+    }
+
+    #[Test]
+    public function testDecodeRejectsNumericLengthBelowHeaderSize(): void
+    {
+        $this->expectException(ProtocolException::class);
+        $this->expectExceptionMessage('Invalid pkt-line length');
+
+        PktLine::decode('0002');
+    }
 }
