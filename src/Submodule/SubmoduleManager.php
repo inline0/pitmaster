@@ -133,10 +133,16 @@ final class SubmoduleManager
             $moduleDir = $this->initSubmodule($submodule, true);
             $submodulePath = $this->workDir . '/' . $submodule->path;
             $sourcePath = $this->resolveSubmoduleUrl($submodule);
+            $sourceHead = $this->resolveSubmoduleHead($sourcePath);
 
             $this->syncModuleRepository($sourcePath, $moduleDir);
             $this->syncWorktreeFiles($sourcePath, $submodulePath);
             $this->writeModuleMetadata($moduleDir, $submodulePath, $submodule->url);
+
+            if ($sourceHead !== null && $sourceHead->hex === $expected->hex) {
+                $this->detachModuleHead($moduleDir, $expected);
+                continue;
+            }
 
             $repo = Pitmaster::open($submodulePath);
             $repo->checkout($expected->hex);
@@ -350,6 +356,11 @@ final class SubmoduleManager
         $config->set('core.worktree', $submodulePath);
         $config->set('remote.origin.url', $url);
         $config->writeToFile($moduleDir . '/config');
+    }
+
+    private function detachModuleHead(string $moduleDir, ObjectId $expected): void
+    {
+        file_put_contents($moduleDir . '/HEAD', $expected->hex . "\n");
     }
 
     private function resolveGitDir(string $path): string

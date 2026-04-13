@@ -196,6 +196,15 @@ Current phase-4 follow-up notes:
 - the reset-loop change helps both direct hard resets and branch checkout workflows because they share the same reset/materialization path
 - `transport.smart-http.fetch` was reprofiled again in this pass but was left unchanged because the remaining cost did not have a cleaner retained win than the reset/clone improvements above
 
+Measured wins in the current phase-6 follow-up pass against same-session isolated reruns:
+
+- `workflow.submodule.update`: `25.994ms -> 23.952ms` (`-7.86%`)
+
+Current phase-6 follow-up notes:
+
+- `SubmoduleManager::update()` now skips opening and checking out a copied submodule when the source submodule repository is already at the exact pinned commit; in that case it only detaches the copied module `HEAD` after syncing metadata
+- the notes and reflog heavy-read workflows were reprofiled in the same pass and intentionally left untouched because they are already too small to justify extra complexity
+
 ## Phase 2 Mission
 
 Phase 2 is complete.
