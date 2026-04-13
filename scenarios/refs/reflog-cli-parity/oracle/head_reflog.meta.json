@@ -1,5 +1,5 @@
 {
     "exit_code": 0,
-    "stdout": "",
+    "stdout": "checkout: moving from topic to main\ncheckout: moving from main to topic\ncommit: two\n",
     "stderr": ""
 }

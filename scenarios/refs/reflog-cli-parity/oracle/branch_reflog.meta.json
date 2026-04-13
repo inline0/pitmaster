@@ -1,5 +1,5 @@
 {
     "exit_code": 0,
-    "stdout": "",
+    "stdout": "commit: two\ncommit (initial): one\n",
     "stderr": ""
 }

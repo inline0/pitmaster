@@ -4,6 +4,7 @@ set -euo pipefail
 git init -b main >/dev/null
 git config user.email test@pitmaster.dev
 git config user.name "Test User"
+git config core.logAllRefUpdates true
 
 echo one > app.txt
 git add app.txt

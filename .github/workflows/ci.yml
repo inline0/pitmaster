@@ -25,6 +25,7 @@ jobs:
           tools: composer
       - run: composer install --no-interaction --prefer-dist
       - run: composer verify:evidence
+      - run: mkdir -p .pitmaster/proof
       - run: php ./bin/verify-support-evidence --json > .pitmaster/proof/support-evidence-summary.json
       - run: php ./bin/support-matrix >/dev/null
       - run: git diff --exit-code -- SUPPORT_MATRIX.md
