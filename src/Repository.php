@@ -4515,6 +4515,25 @@ final class Repository
      */
     private function buildPushPackDataForUpdates(array $updates, array $remoteRefs): string
     {
+        if ($this->canUseFastForwardPushPackFastPath($updates)) {
+            $objects = [];
+            $stopIds = [];
+
+            foreach ($updates as $update) {
+                $stopIds[$update['old']->hex] = true;
+            }
+
+            foreach ($updates as $update) {
+                if ($update['new']->equals($this->zeroObjectId())) {
+                    continue;
+                }
+
+                $this->collectReachableObjectsUntilStops($update['new'], $objects, $stopIds);
+            }
+
+            return PackWriter::encode(array_values($objects));
+        }
+
         $objects = [];
         $excluded = [];
         $excludeRoots = [];
@@ -4559,6 +4578,33 @@ final class Repository
     /**
      * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
      */
+    private function canUseFastForwardPushPackFastPath(array $updates): bool
+    {
+        $mergeBase = $this->mergeBaseFinder();
+
+        foreach ($updates as $update) {
+            if (
+                $update['old']->equals($this->zeroObjectId())
+                || $update['new']->equals($this->zeroObjectId())
+            ) {
+                return false;
+            }
+
+            if ($update['old']->hex === $update['new']->hex) {
+                continue;
+            }
+
+            if (!$mergeBase->isAncestor($update['old'], $update['new'])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     */
     private function updateRemoteTrackingRefsAfterPush(string $remote, array $updates): void
     {
         foreach ($updates as $update) {
@@ -4589,6 +4635,57 @@ final class Repository
             $id = array_pop($stack);
 
             if (!$id instanceof ObjectId || isset($objects[$id->hex])) {
+                continue;
+            }
+
+            $object = $this->objects->read($id);
+
+            if ($object === null) {
+                throw new \RuntimeException("Missing object required for push: {$id->hex}");
+            }
+
+            $objects[$id->hex] = $object;
+
+            if ($object instanceof Commit) {
+                $stack[] = $object->tree;
+
+                foreach ($object->parents as $parent) {
+                    $stack[] = $parent;
+                }
+
+                continue;
+            }
+
+            if ($object instanceof Tree) {
+                foreach ($object->entries as $entry) {
+                    $stack[] = $entry->hash;
+                }
+
+                continue;
+            }
+
+            if ($object instanceof Tag) {
+                $stack[] = $object->object;
+            }
+        }
+    }
+
+    /**
+     * @param array<string, GitObject> $objects
+     * @param array<string, true> $stopIds
+     */
+    private function collectReachableObjectsUntilStops(ObjectId $start, array &$objects, array $stopIds): void
+    {
+        $stack = [$start];
+
+        while ($stack !== []) {
+            $id = array_pop($stack);
+
+            if (
+                !$id instanceof ObjectId
+                || isset($objects[$id->hex])
+                || isset($stopIds[$id->hex])
+            ) {
                 continue;
             }
 

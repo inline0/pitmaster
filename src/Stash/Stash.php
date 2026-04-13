@@ -19,7 +19,6 @@ use Pitmaster\Object\TreeEntry;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\Reflog;
 use Pitmaster\Status\FileStatus;
-use Pitmaster\Status\GitIgnore;
 use Pitmaster\Status\WorkingTreeStatus;
 use Pitmaster\Storage\ObjectDatabase;
 
@@ -88,7 +87,14 @@ final class Stash
 
         // Build tree from worktree (including unstaged changes)
         $dirtyPaths = [];
-        $worktreeTreeId = $this->buildTreeFromWorktree($index, $headId, $includeUntracked, $dirtyPaths);
+        $includedUntrackedPaths = [];
+        $worktreeTreeId = $this->buildTreeFromWorktree(
+            $index,
+            $headId,
+            $includeUntracked,
+            $dirtyPaths,
+            $includedUntrackedPaths,
+        );
 
         // Create stash commit (worktree state, parents = HEAD + index commit)
         $stashContent = Commit::buildContent(
@@ -115,7 +121,7 @@ final class Stash
         );
 
         // Reset worktree to HEAD
-        $this->resetToHead($headId, $dirtyPaths);
+        $this->resetToHead($headId, $dirtyPaths, $includedUntrackedPaths);
 
         return $stashId;
     }
@@ -276,9 +282,15 @@ final class Stash
 
     /**
      * @param array<string, true> $dirtyPaths
+     * @param array<string, true> $includedUntrackedPaths
      */
-    private function buildTreeFromWorktree(Index $index, ObjectId $headId, bool $includeUntracked, array &$dirtyPaths = []): ObjectId
-    {
+    private function buildTreeFromWorktree(
+        Index $index,
+        ObjectId $headId,
+        bool $includeUntracked,
+        array &$dirtyPaths = [],
+        array &$includedUntrackedPaths = [],
+    ): ObjectId {
         $root = [];
         $modified = [];
         $deleted = [];
@@ -296,6 +308,7 @@ final class Stash
             if ($entry->index === FileStatus::Untracked) {
                 if ($includeUntracked) {
                     $untracked[] = $entry->path;
+                    $includedUntrackedPaths[$entry->path] = true;
                 }
 
                 continue;
@@ -412,8 +425,9 @@ final class Stash
 
     /**
      * @param array<string, true> $dirtyPaths
+     * @param array<string, true> $prunePaths
      */
-    private function resetToHead(ObjectId $headId, array $dirtyPaths = []): void
+    private function resetToHead(ObjectId $headId, array $dirtyPaths = [], array $prunePaths = []): void
     {
         $commit = $this->objects->read($headId);
 
@@ -462,7 +476,9 @@ final class Stash
             $nextEntries[] = IndexEntry::fromStat($path, $blob->id, $fullPath);
         }
 
-        $this->pruneWorktreeToTrackedPaths(array_keys($treeEntries));
+        if ($prunePaths !== []) {
+            $this->pruneWorktreePaths(array_keys($prunePaths));
+        }
 
         $index->addEntries($nextEntries);
         IndexWriter::write($index, $this->gitDir . '/index');
@@ -666,63 +682,11 @@ final class Stash
     }
 
     /**
-     * @return list<string>
+     * @param array<int, string> $paths
      */
-    private function scanWorktree(string $dir, string $prefix, GitIgnore $ignore): array
+    private function pruneWorktreePaths(array $paths): void
     {
-        $files = [];
-        $this->scanWorktreeInto($dir, $prefix, $ignore, $files);
-
-        return $files;
-    }
-
-    /**
-     * @param list<string> $files
-     */
-    private function scanWorktreeInto(string $dir, string $prefix, GitIgnore $ignore, array &$files): void
-    {
-        $entries = scandir($dir);
-
-        if ($entries === false) {
-            return;
-        }
-
-        foreach ($entries as $name) {
-            if ($name === '.' || $name === '..' || $name === '.git') {
-                continue;
-            }
-
-            $fullPath = $dir . '/' . $name;
-            $relPath = $prefix !== '' ? $prefix . '/' . $name : $name;
-
-            if ($ignore->isIgnored($relPath, is_dir($fullPath))) {
-                continue;
-            }
-
-            if (is_dir($fullPath)) {
-                $this->scanWorktreeInto($fullPath, $relPath, $ignore, $files);
-                continue;
-            }
-
-            if (is_file($fullPath)) {
-                $files[] = $relPath;
-            }
-        }
-    }
-
-    /**
-     * @param array<int, string> $trackedPaths
-     */
-    private function pruneWorktreeToTrackedPaths(array $trackedPaths): void
-    {
-        $tracked = array_fill_keys($trackedPaths, true);
-        $ignore = GitIgnore::forRepo($this->workDir);
-
-        foreach ($this->scanWorktree($this->workDir, '', $ignore) as $path) {
-            if (isset($tracked[$path])) {
-                continue;
-            }
-
+        foreach (array_keys(array_fill_keys($paths, true)) as $path) {
             $fullPath = $this->workDir . '/' . $path;
 
             if (is_file($fullPath) || is_link($fullPath)) {

@@ -171,6 +171,18 @@ Current canonical pass notes:
 - `SshClient` now uses direct argv-based `proc_open()` when the configured SSH command is simple, which removed an avoidable shell hop from the common benchmark path
 - the benchmark suite now has first-class proof cases for reflog reads, linked-worktree removal, and submodule update, so those follow-up optimizations are no longer inferred from adjacent workflows
 
+Measured wins in the current phase-3 follow-up pass against isolated before/after reruns:
+
+- `workflow.stash.tracked`: `42.638ms -> 40.205ms` (`-5.70%`)
+- `transport.smart-http.push`: `77.283ms -> 70.213ms` (`-9.15%`)
+
+Current phase-3 follow-up notes:
+
+- `Stash::push()` now carries the exact set of included untracked paths into `resetToHead()` instead of rescanning the whole worktree to prune everything not tracked by `HEAD`
+- that stash change is kept primarily because it fixes an actual semantics bug as well as reducing tracked-stash cleanup work: tracked-only stashes no longer delete unrelated untracked files
+- `Repository::buildPushPackDataForUpdates()` now has a guarded fast path for ordinary fast-forward-style updates; it walks from the new tips and stops at the old advertised tips instead of first traversing the old graph just to subtract it again
+- smart HTTP clone/fetch and SSH discovery were remeasured in this pass but did not justify additional retained code changes beyond the push fast path, so they stay as-is until a cleaner proof shows up
+
 ## Phase 2 Mission
 
 Phase 2 is complete.
