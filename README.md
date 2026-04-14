@@ -46,6 +46,9 @@ use Pitmaster\Pitmaster;
 // Open an existing repository
 $repo = Pitmaster::open('/path/to/project');
 
+// Disable Git hook execution for this repository handle
+$repo = Pitmaster::open('/path/to/project', ['hooks' => false]);
+
 // Read
 $head = $repo->head();                    // Current HEAD commit
 $log  = $repo->log(10);                   // Last 10 commits
@@ -77,6 +80,8 @@ $repo->push('origin', 'main');            // Push to remote
 $repo = Pitmaster::init('/path/to/new');
 $repo = Pitmaster::clone('https://github.com/user/repo.git', '/path');
 ```
+
+Hooks stay enabled by default. Pass `['hooks' => false]` to `Pitmaster::open()`, `Pitmaster::init()`, or `Pitmaster::clone()` when the caller must avoid executing `.git/hooks/*` scripts for that repository handle.
 
 ## CLI
 

@@ -80,8 +80,16 @@ final class Repository
     /** Whether this repository has no working tree */
     private readonly bool $isBare;
 
-    public function __construct(string $path)
+    /** Whether repository hook execution is enabled for this handle */
+    private readonly bool $hooksEnabled;
+
+    /**
+     * @param array{hooks?: bool} $options
+     */
+    public function __construct(string $path, array $options = [])
     {
+        $this->hooksEnabled = $options['hooks'] ?? true;
+
         if (is_dir($path . '/.git')) {
             // Regular repo: .git is a directory
             $this->workDir = $path;
@@ -171,6 +179,11 @@ final class Repository
     public function isBare(): bool
     {
         return $this->isBare;
+    }
+
+    public function hooksEnabled(): bool
+    {
+        return $this->hooksEnabled;
     }
 
     /**
@@ -5165,9 +5178,7 @@ final class Repository
      */
     private function prepareCommitMessage(string $message, ?array $state): string
     {
-        $hooks = new HookRunner($this->gitDir);
-
-        if (!$hooks->runAndCheck('pre-commit')) {
+        if (!$this->runHookAndCheck('pre-commit')) {
             throw new \RuntimeException('pre-commit hook failed');
         }
 
@@ -5185,13 +5196,13 @@ final class Repository
             $prepareArgs[] = $sourceArg;
         }
 
-        if (!$hooks->runAndCheck('prepare-commit-msg', $prepareArgs)) {
+        if (!$this->runHookAndCheck('prepare-commit-msg', $prepareArgs)) {
             throw new \RuntimeException('prepare-commit-msg hook failed');
         }
 
         $preparedMessage = (string) file_get_contents($messageFile);
 
-        if (!$hooks->runAndCheck('commit-msg', [$messageFile])) {
+        if (!$this->runHookAndCheck('commit-msg', [$messageFile])) {
             throw new \RuntimeException('commit-msg hook failed');
         }
 
@@ -5218,12 +5229,12 @@ final class Repository
 
     private function runPostCommitHook(): void
     {
-        (new HookRunner($this->gitDir))->run('post-commit');
+        $this->runHook('post-commit');
     }
 
     private function runPostCheckoutHook(?ObjectId $oldHeadId, ObjectId $newHeadId): void
     {
-        (new HookRunner($this->gitDir))->run('post-checkout', [
+        $this->runHook('post-checkout', [
             ($oldHeadId ?? $this->zeroObjectId())->hex,
             $newHeadId->hex,
             '1',
@@ -5232,12 +5243,12 @@ final class Repository
 
     private function runPostMergeHook(): void
     {
-        (new HookRunner($this->gitDir))->run('post-merge', ['0']);
+        $this->runHook('post-merge', ['0']);
     }
 
     private function runPreRebaseHook(string $onto, SymbolicRef $head): void
     {
-        if (!(new HookRunner($this->gitDir))->runAndCheck('pre-rebase', [$onto])) {
+        if (!$this->runHookAndCheck('pre-rebase', [$onto])) {
             throw new \RuntimeException('pre-rebase hook failed');
         }
     }
@@ -5261,9 +5272,34 @@ final class Repository
 
         $input = $stdin === [] ? null : implode("\n", $stdin) . "\n";
 
-        if (!(new HookRunner($this->gitDir))->runAndCheck('pre-push', [$remote, $url], $input)) {
+        if (!$this->runHookAndCheck('pre-push', [$remote, $url], $input)) {
             throw new \RuntimeException('pre-push hook failed');
         }
+    }
+
+    /**
+     * @param array<int, string> $args
+     * @return array{exitCode: int, stdout: string, stderr: string}
+     */
+    private function runHook(string $hookName, array $args = [], ?string $stdin = null): array
+    {
+        if (!$this->hooksEnabled) {
+            return ['exitCode' => 0, 'stdout' => '', 'stderr' => ''];
+        }
+
+        return (new HookRunner($this->gitDir))->run($hookName, $args, $stdin);
+    }
+
+    /**
+     * @param array<int, string> $args
+     */
+    private function runHookAndCheck(string $hookName, array $args = [], ?string $stdin = null): bool
+    {
+        if (!$this->hooksEnabled) {
+            return true;
+        }
+
+        return (new HookRunner($this->gitDir))->runAndCheck($hookName, $args, $stdin);
     }
 
     /**

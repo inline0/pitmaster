@@ -377,6 +377,39 @@ final class PushParityTest extends TestCase
         }
     }
 
+    #[Test]
+    public function prePushHookCanBeDisabled(): void
+    {
+        [, $remoteDir] = $this->initSingleRemoteProject();
+        $pitCloneDir = $this->tmpDir . '/pit-clone-hookless-push';
+        $this->startGitHttpBackendServer($this->tmpDir . '/projects');
+        $remoteUrl = $this->baseUrl . '/hook-remote.git';
+
+        $pitRepo = Pitmaster::clone($remoteUrl, $pitCloneDir, null, ['hooks' => false]);
+
+        $hook = "#!/bin/sh\n"
+            . "echo \"$1|$2\" >> .hook-log\n"
+            . "cat >> .hook-log\n"
+            . "exit 1\n";
+        (new HookRunner($pitCloneDir . '/.git'))->install('pre-push', $hook);
+
+        file_put_contents($pitCloneDir . '/hookless-push.txt', "hookless push\n");
+        $pitRepo->add('hookless-push.txt');
+        putenv('GIT_AUTHOR_DATE=@1700000100 +0000');
+        putenv('GIT_COMMITTER_DATE=@1700000100 +0000');
+        $pitRepo->commit("Hookless push\n");
+        putenv('GIT_AUTHOR_DATE');
+        putenv('GIT_COMMITTER_DATE');
+
+        $pitRepo->push();
+
+        $this->assertFalse(file_exists($pitCloneDir . '/.hook-log'));
+        $this->assertSame(
+            "hookless push\n",
+            trim($this->git('show refs/heads/main:hookless-push.txt', $remoteDir)) . "\n",
+        );
+    }
+
     /**
      * @return array{string, string}
      */

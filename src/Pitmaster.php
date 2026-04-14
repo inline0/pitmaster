@@ -24,16 +24,20 @@ final class Pitmaster
 {
     /**
      * Open an existing repository.
+     *
+     * @param array{hooks?: bool} $options
      */
-    public static function open(string $path): Repository
+    public static function open(string $path, array $options = []): Repository
     {
-        return new Repository($path);
+        return new Repository($path, $options);
     }
 
     /**
      * Initialize a new repository.
+     *
+     * @param array{hooks?: bool} $options
      */
-    public static function init(string $path, string $objectFormat = 'sha1'): Repository
+    public static function init(string $path, string $objectFormat = 'sha1', array $options = []): Repository
     {
         $gitDir = $path . '/.git';
 
@@ -72,18 +76,20 @@ final class Pitmaster
         ]));
         file_put_contents($gitDir . '/config', self::initialConfig($path, $objectFormat));
 
-        return new Repository($path);
+        return new Repository($path, $options);
     }
 
     /**
      * Clone a remote repository via smart HTTP.
+     *
+     * @param array{hooks?: bool} $options
      */
-    public static function clone(string $url, string $path, ?int $depth = null): Repository
+    public static function clone(string $url, string $path, ?int $depth = null, array $options = []): Repository
     {
         $pathExisted = file_exists($path);
 
         try {
-            $repo = self::init($path);
+            $repo = self::init($path, 'sha1', $options);
             $gitDir = $path . '/.git';
             $transport = self::uploadPackTransport($url);
 

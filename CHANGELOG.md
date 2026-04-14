@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.5] - 2026-04-14
+
+### Added
+- Explicit per-repository hookless mode via `['hooks' => false]` on `Pitmaster::open()`, `Pitmaster::init()`, and `Pitmaster::clone()`
+
+### Fixed
+- Hook-triggering repository operations can now be used safely in callers that must avoid executing `.git/hooks/*` scripts for a specific repository handle
+- Added integration coverage proving hookless commit, checkout, merge, rebase, and push flows skip installed hooks while normal handles keep hook parity with `git`
+
 ## [0.2.4] - 2026-04-08
 
 ### Fixed

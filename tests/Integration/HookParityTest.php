@@ -90,6 +90,49 @@ final class HookParityTest extends TestCase
         );
     }
 
+    #[Test]
+    public function hooksCanBeDisabledForCommitAndCheckout(): void
+    {
+        $dir = $this->tmpDir . '/hookless-commit-checkout';
+        $this->createBranchingRepo($dir);
+
+        $commitHook = "#!/bin/sh\necho \"commit\" >> .hook-log\n";
+        $checkoutHook = "#!/bin/sh\necho \"$1|$2|$3\" >> .hook-log\n";
+        $this->installHook($dir, 'pre-commit', $commitHook);
+        $this->installHook($dir, 'prepare-commit-msg', $commitHook);
+        $this->installHook($dir, 'commit-msg', $commitHook);
+        $this->installHook($dir, 'post-commit', $commitHook);
+        $this->installHook($dir, 'post-checkout', $checkoutHook);
+
+        $repo = Pitmaster::open($dir, ['hooks' => false]);
+        file_put_contents($dir . '/extra.txt', "extra\n");
+        $repo->add('extra.txt');
+        $repo->commit('extra');
+        $repo->checkout('feature');
+
+        $this->assertFalse(file_exists($dir . '/.hook-log'));
+    }
+
+    #[Test]
+    public function hooksCanBeDisabledForMergeAndRebase(): void
+    {
+        $mergeDir = $this->tmpDir . '/hookless-merge';
+        $this->createMergeRepo($mergeDir);
+        $this->installHook($mergeDir, 'post-merge', "#!/bin/sh\necho \"merge\" >> .hook-log\n");
+
+        Pitmaster::open($mergeDir, ['hooks' => false])->merge('feature');
+
+        $this->assertFalse(file_exists($mergeDir . '/.hook-log'));
+
+        $rebaseDir = $this->tmpDir . '/hookless-rebase';
+        $this->createRebaseRepo($rebaseDir);
+        $this->installHook($rebaseDir, 'pre-rebase', "#!/bin/sh\necho \"$1|$2\" >> .hook-log\n");
+
+        Pitmaster::open($rebaseDir, ['hooks' => false])->rebase('main');
+
+        $this->assertFalse(file_exists($rebaseDir . '/.hook-log'));
+    }
+
     private function createBranchingRepo(string $path): void
     {
         mkdir($path, 0777, true);
