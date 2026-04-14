@@ -18,8 +18,8 @@ jobs:
     name: Support Evidence
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -40,8 +40,8 @@ jobs:
     name: Upstream Drift Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -52,8 +52,8 @@ jobs:
     name: Dependency Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -64,8 +64,8 @@ jobs:
     name: Coding Standards
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -76,8 +76,8 @@ jobs:
     name: Static Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -92,8 +92,8 @@ jobs:
       matrix:
         php-version: ['8.4']
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer
@@ -109,8 +109,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -126,8 +126,8 @@ jobs:
     name: Oracle Regression
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -148,8 +148,8 @@ jobs:
     name: Mutation Smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -165,8 +165,8 @@ jobs:
       matrix:
         legacy-git: ['2.44.4', '2.46.2']
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -185,8 +185,8 @@ jobs:
     name: Benchmark Smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -217,8 +217,8 @@ jobs:
           - merge/merge-conflict-continue
           - rebase/rebase-continue-no-state
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -234,8 +234,8 @@ jobs:
     name: Oracle Smoke (macOS)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
-      - uses: shivammathur/setup-php@728c6c6b8cf02c2e48117716a91ee48313958a19
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -259,7 +259,7 @@ jobs:
     name: Docs Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '22'
