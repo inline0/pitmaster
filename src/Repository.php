@@ -83,12 +83,16 @@ final class Repository
     /** Whether repository hook execution is enabled for this handle */
     private readonly bool $hooksEnabled;
 
+    /** Whether this handle may execute host processes or network transport helpers */
+    private readonly bool $processesEnabled;
+
     /**
-     * @param array{hooks?: bool} $options
+     * @param array{hooks?: bool, processes?: bool} $options
      */
     public function __construct(string $path, array $options = [])
     {
-        $this->hooksEnabled = $options['hooks'] ?? true;
+        $this->processesEnabled = $options['processes'] ?? true;
+        $this->hooksEnabled = ($options['hooks'] ?? true) && $this->processesEnabled;
 
         if (is_dir($path . '/.git')) {
             // Regular repo: .git is a directory
@@ -186,6 +190,11 @@ final class Repository
         return $this->hooksEnabled;
     }
 
+    public function processesEnabled(): bool
+    {
+        return $this->processesEnabled;
+    }
+
     /**
      * Resolve the repository's default/stable branch.
      *
@@ -196,7 +205,7 @@ final class Repository
         // Check remote HEAD if we have an origin
         $remoteUrl = $this->config->get('remote.origin.url');
 
-        if ($remoteUrl !== null) {
+        if ($remoteUrl !== null && $this->processesEnabled) {
             try {
                 $http = new SmartHttpClient();
                 $discovery = $http->discoverRefs($remoteUrl);
@@ -1540,6 +1549,8 @@ final class Repository
             throw new \RuntimeException("Remote not found: {$remote}");
         }
 
+        $this->assertNetworkOperationAllowed('fetch');
+
         try {
             $transport = $this->uploadPackTransport($url);
             $discovery = $transport->discoverRefs($url);
@@ -1617,6 +1628,7 @@ final class Repository
     {
         $branch = $branch ?? $this->currentPushBranch();
         $url = $this->remoteUrl($remote);
+        $this->assertNetworkOperationAllowed('push');
         $localRef = "refs/heads/{$branch}";
         $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
         $transport = $this->receivePackTransport($url);
@@ -1640,6 +1652,7 @@ final class Repository
     {
         $branch = $branch ?? $this->currentPushBranch();
         $url = $this->remoteUrl($remote);
+        $this->assertNetworkOperationAllowed('push');
         $localRef = "refs/heads/{$branch}";
         $localId = $this->requireLocalRef($localRef, "Branch not found: {$branch}");
         $transport = $this->receivePackTransport($url);
@@ -1670,6 +1683,7 @@ final class Repository
         }
 
         $url = $this->remoteUrl($remote);
+        $this->assertNetworkOperationAllowed('push');
         $transport = $this->receivePackTransport($url);
         $discovery = $transport->discoverReceivePackRefs($url);
         $capabilities = $discovery->capabilities();
@@ -1705,6 +1719,9 @@ final class Repository
         if ($url === null) {
             throw new \RuntimeException("Remote not found: {$remote}");
         }
+
+        $this->assertNetworkOperationAllowed('push');
+
         $transport = $this->receivePackTransport($url);
         $discovery = $transport->discoverReceivePackRefs($url);
         $capabilities = $discovery->capabilities();
@@ -4788,8 +4805,21 @@ final class Repository
         return $url;
     }
 
+    private function assertNetworkOperationAllowed(string $operation): void
+    {
+        if ($this->processesEnabled) {
+            return;
+        }
+
+        throw new \RuntimeException(
+            sprintf('Cannot %s: process-free repositories disable network operations.', $operation),
+        );
+    }
+
     private function uploadPackTransport(string $url): UploadPackTransport
     {
+        $this->assertNetworkOperationAllowed('fetch');
+
         return SshClient::isSshUrl($url)
             ? new SshClient()
             : new SmartHttpClient();
@@ -4797,6 +4827,8 @@ final class Repository
 
     private function receivePackTransport(string $url): ReceivePackTransport
     {
+        $this->assertNetworkOperationAllowed('push');
+
         return SshClient::isSshUrl($url)
             ? new SshClient()
             : new SmartHttpClient();

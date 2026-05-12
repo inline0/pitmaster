@@ -25,7 +25,7 @@ final class Pitmaster
     /**
      * Open an existing repository.
      *
-     * @param array{hooks?: bool} $options
+     * @param array{hooks?: bool, processes?: bool} $options
      */
     public static function open(string $path, array $options = []): Repository
     {
@@ -35,7 +35,7 @@ final class Pitmaster
     /**
      * Initialize a new repository.
      *
-     * @param array{hooks?: bool} $options
+     * @param array{hooks?: bool, processes?: bool} $options
      */
     public static function init(string $path, string $objectFormat = 'sha1', array $options = []): Repository
     {
@@ -82,10 +82,14 @@ final class Pitmaster
     /**
      * Clone a remote repository via smart HTTP.
      *
-     * @param array{hooks?: bool} $options
+     * @param array{hooks?: bool, processes?: bool} $options
      */
     public static function clone(string $url, string $path, ?int $depth = null, array $options = []): Repository
     {
+        if (($options['processes'] ?? true) === false) {
+            throw new \RuntimeException('Cannot clone: process-free repositories disable network operations.');
+        }
+
         $pathExisted = file_exists($path);
 
         try {
@@ -170,11 +174,21 @@ final class Pitmaster
             }
         } catch (\Throwable $e) {
             if (!$pathExisted && file_exists($path)) {
-                exec('rm -rf ' . escapeshellarg($path));
+                self::removeDirectory($path);
             }
 
             throw $e;
         }
+    }
+
+    /**
+     * Return options for callers that need Pitmaster to avoid host process execution.
+     *
+     * @return array{processes: false, hooks: false}
+     */
+    public static function processFreeOptions(): array
+    {
+        return ['processes' => false, 'hooks' => false];
     }
 
     /**
@@ -264,6 +278,34 @@ final class Pitmaster
         } finally {
             @unlink($probe);
         }
+    }
+
+    private static function removeDirectory(string $path): void
+    {
+        if (is_file($path) || is_link($path)) {
+            @unlink($path);
+            return;
+        }
+
+        if (!is_dir($path)) {
+            return;
+        }
+
+        $entries = scandir($path);
+
+        if ($entries === false) {
+            return;
+        }
+
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            self::removeDirectory($path . '/' . $entry);
+        }
+
+        @rmdir($path);
     }
 
     private static function writePackFile(string $gitDir, string $packData, ?string $packName = null): void

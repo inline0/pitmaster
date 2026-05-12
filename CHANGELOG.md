@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.6] - 2026-05-12
+
+### Added
+- Process-free repository mode via `['processes' => false]` and `Pitmaster::processFreeOptions()`
+
+### Fixed
+- Process-free repository handles now disable hooks, fsmonitor hook execution, clone/fetch/push network operations, and SSH process transport paths
+- Clone failure cleanup now uses PHP filesystem traversal instead of shelling out to `rm -rf`
+
 ## [0.2.5] - 2026-04-14
 
 ### Added

@@ -49,6 +49,9 @@ $repo = Pitmaster::open('/path/to/project');
 // Disable Git hook execution for this repository handle
 $repo = Pitmaster::open('/path/to/project', ['hooks' => false]);
 
+// Disable host-process and network write paths for restricted runtimes
+$repo = Pitmaster::open('/path/to/project', Pitmaster::processFreeOptions());
+
 // Read
 $head = $repo->head();                    // Current HEAD commit
 $log  = $repo->log(10);                   // Last 10 commits
@@ -82,6 +85,8 @@ $repo = Pitmaster::clone('https://github.com/user/repo.git', '/path');
 ```
 
 Hooks stay enabled by default. Pass `['hooks' => false]` to `Pitmaster::open()`, `Pitmaster::init()`, or `Pitmaster::clone()` when the caller must avoid executing `.git/hooks/*` scripts for that repository handle.
+
+For hosted runtimes that must not execute host processes, pass `['processes' => false]` or `Pitmaster::processFreeOptions()`. Process-free handles disable hook execution, fsmonitor hook execution, clone/fetch/push network operations, and SSH process transport paths while keeping local repository reads and writes in PHP.
 
 ## CLI
 

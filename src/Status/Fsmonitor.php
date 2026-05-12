@@ -25,6 +25,7 @@ final class Fsmonitor
     public function __construct(
         private readonly string $gitDir,
         private readonly string $workDir,
+        private readonly bool $processesEnabled = true,
     ) {
     }
 
@@ -33,6 +34,10 @@ final class Fsmonitor
      */
     public function isEnabled(): bool
     {
+        if (!$this->processesEnabled) {
+            return false;
+        }
+
         $value = GitConfig::fromFile($this->gitDir . '/config')->get('core.fsmonitor');
 
         return $value !== null && !$this->isFalseLike($value);
@@ -132,6 +137,10 @@ final class Fsmonitor
      */
     private function queryHook(?string $lastToken): ?array
     {
+        if (!$this->processesEnabled) {
+            return null;
+        }
+
         $command = $this->resolveHookCommand();
 
         if ($command === null) {
