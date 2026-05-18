@@ -191,9 +191,7 @@ final class PackIndexer
         array &$hashToOffset,
         int $depth = 0,
     ): array {
-        $maxDepth = defined('PITMASTER_MAX_DELTA_CHAIN')
-            ? (int) constant('PITMASTER_MAX_DELTA_CHAIN')
-            : 50;
+        $maxDepth = DeltaResolver::maxChainDepth();
 
         if ($depth > $maxDepth) {
             throw PackParseException::deltaChainTooDeep($depth, $maxDepth);

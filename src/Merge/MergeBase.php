@@ -192,9 +192,9 @@ final class MergeBase
             return [];
         }
 
-        return array_map(
+        return array_values(array_map(
             static fn (ObjectId $parent): string => $parent->hex,
             $commit->parents,
-        );
+        ));
     }
 }

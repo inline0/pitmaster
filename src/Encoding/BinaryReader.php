@@ -96,9 +96,8 @@ final class BinaryReader
     public function readUint32(): int
     {
         $data = $this->read(4);
-        $unpacked = unpack('N', $data);
 
-        return (int) $unpacked[1];
+        return $this->unpackOne('N', $data);
     }
 
     /**
@@ -117,9 +116,9 @@ final class BinaryReader
     public function readUint64(): int
     {
         $data = $this->read(8);
-        $parts = unpack('Nhigh/Nlow', $data);
+        $parts = $this->unpackPair('Nhigh/Nlow', $data);
 
-        return ((int) $parts['high'] << 32) | (int) $parts['low'];
+        return ($parts['high'] << 32) | $parts['low'];
     }
 
     /**
@@ -128,9 +127,38 @@ final class BinaryReader
     public function readUint16(): int
     {
         $data = $this->read(2);
-        $unpacked = unpack('n', $data);
 
-        return (int) $unpacked[1];
+        return $this->unpackOne('n', $data);
+    }
+
+    private function unpackOne(string $format, string $data): int
+    {
+        $unpacked = unpack($format, $data);
+
+        if ($unpacked === false || !isset($unpacked[1]) || !is_int($unpacked[1])) {
+            throw new RuntimeException("Failed to unpack {$format}");
+        }
+
+        return $unpacked[1];
+    }
+
+    /**
+     * @return array{high: int, low: int}
+     */
+    private function unpackPair(string $format, string $data): array
+    {
+        $unpacked = unpack($format, $data);
+
+        if (
+            $unpacked === false
+            || !isset($unpacked['high'], $unpacked['low'])
+            || !is_int($unpacked['high'])
+            || !is_int($unpacked['low'])
+        ) {
+            throw new RuntimeException("Failed to unpack {$format}");
+        }
+
+        return ['high' => $unpacked['high'], 'low' => $unpacked['low']];
     }
 
     /**

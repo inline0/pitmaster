@@ -388,7 +388,13 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         $buffer = '';
 
         while (strlen($buffer) < $bytes) {
-            $chunk = fread($stream, $bytes - strlen($buffer));
+            $toRead = $bytes - strlen($buffer);
+
+            if ($toRead < 1) {
+                break;
+            }
+
+            $chunk = fread($stream, $toRead);
 
             if ($chunk === false || $chunk === '') {
                 return null;

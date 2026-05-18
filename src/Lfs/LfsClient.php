@@ -122,24 +122,41 @@ final class LfsClient
 
         $data = json_decode($response, true);
 
-        if (!is_array($data) || !isset($data['objects'])) {
+        if (!is_array($data) || !isset($data['objects']) || !is_array($data['objects'])) {
             throw new ProtocolException('Invalid LFS batch response');
         }
 
         $results = [];
 
         foreach ($data['objects'] as $obj) {
-            $href = null;
-
-            if (isset($obj['actions'][$operation]['href'])) {
-                $href = $obj['actions'][$operation]['href'];
+            if (!is_array($obj)) {
+                continue;
             }
 
-            $error = $obj['error']['message'] ?? null;
+            $href = null;
+            $actions = $obj['actions'] ?? null;
+
+            if (is_array($actions) && isset($actions[$operation]) && is_array($actions[$operation])) {
+                $candidate = $actions[$operation]['href'] ?? null;
+
+                if (is_string($candidate)) {
+                    $href = $candidate;
+                }
+            }
+
+            $errorBag = $obj['error'] ?? null;
+            $error = null;
+
+            if (is_array($errorBag) && isset($errorBag['message']) && is_string($errorBag['message'])) {
+                $error = $errorBag['message'];
+            }
+
+            $oid = $obj['oid'] ?? '';
+            $size = $obj['size'] ?? 0;
 
             $results[] = [
-                'oid' => $obj['oid'] ?? '',
-                'size' => $obj['size'] ?? 0,
+                'oid' => is_string($oid) ? $oid : '',
+                'size' => is_int($size) ? $size : 0,
                 'href' => $href,
                 'error' => $error,
             ];

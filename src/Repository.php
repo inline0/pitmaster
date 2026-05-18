@@ -779,10 +779,10 @@ final class Repository
             ? $this->logPath($path, $limit)
             : ($all ? $this->logAll($limit) : $this->log($limit));
 
-        return array_map(
+        return array_values(array_map(
             fn (Commit $commit): string => substr($commit->id->hex, 0, 7) . ' ' . $this->subjectLine($commit->message),
             $commits,
-        );
+        ));
     }
 
     /**
@@ -943,7 +943,7 @@ final class Repository
      */
     public function remove(string ...$paths): void
     {
-        ['cached' => $cached, 'recursive' => $recursive, 'paths' => $paths] = $this->parseRemoveArguments($paths);
+        ['cached' => $cached, 'recursive' => $recursive, 'paths' => $paths] = $this->parseRemoveArguments(array_values($paths));
 
         if ($paths === []) {
             throw new \RuntimeException('No pathspec given for remove');
@@ -957,7 +957,7 @@ final class Repository
         $index = $this->index();
         $headId = $this->refs->resolveHead();
         $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
-        $trackedEntries = $this->trackedEntriesForPaths($index, $paths);
+        $trackedEntries = $this->trackedEntriesForPaths($index, array_values($paths));
         $pathsToRemove = [];
 
         foreach ($paths as $path) {
@@ -999,7 +999,7 @@ final class Repository
         $index = $this->index();
         $headId = $this->refs->resolveHead();
         $headEntries = $this->flattenTreeEntries($headId !== null ? $this->getCommitTree($headId) : null);
-        $trackedEntries = $this->trackedEntriesForPaths($index, $paths);
+        $trackedEntries = $this->trackedEntriesForPaths($index, array_values($paths));
         $pathsToRemove = [];
 
         foreach ($paths as $path) {
@@ -1149,7 +1149,12 @@ final class Repository
         $id = $this->resolve($revision);
         $commit = $this->objects->read($id);
         $headId = $this->refs->resolveHead();
-        $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot cherry-pick: HEAD is not set');
+        }
+
+        $headCommit = $this->objects->read($headId);
 
         if (!$commit instanceof Commit || !$headCommit instanceof Commit) {
             throw new \RuntimeException("Not a commit: {$revision}");
@@ -1227,7 +1232,12 @@ final class Repository
         $id = $this->resolve($revision);
         $commit = $this->objects->read($id);
         $headId = $this->refs->resolveHead();
-        $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+
+        if ($headId === null) {
+            throw new \RuntimeException('Cannot revert: HEAD is not set');
+        }
+
+        $headCommit = $this->objects->read($headId);
 
         if (!$commit instanceof Commit || !$headCommit instanceof Commit) {
             throw new \RuntimeException("Not a commit: {$revision}");
@@ -1238,6 +1248,11 @@ final class Repository
         }
 
         $parentTree = $this->getCommitTree($commit->parents[0]);
+
+        if ($parentTree === null) {
+            throw new \RuntimeException("Cannot revert: parent tree of {$commit->parents[0]->hex} not found");
+        }
+
         $message = "Revert \"{$this->subjectLine($commit->message)}\"\n\nThis reverts commit {$commit->id->hex}.\n";
         $trackedPaths = $this->index()->paths();
         $merge = $this->mergeTreeEntries(
@@ -2535,69 +2550,62 @@ final class Repository
      */
     private function buildTreeFromIndex(Index $index): ObjectId
     {
-        // Group entries by directory
-        $root = [];
-
-        foreach ($index->entries() as $entry) {
-            $parts = explode('/', $entry->path);
-            $this->insertIntoTree($root, $parts, $entry);
-        }
-
-        return $this->writeTreeRecursive($root);
-    }
-
-    /**
-     * @param array<string, mixed> $node
-     * @param array<int, string> $parts
-     */
-    private function insertIntoTree(array &$node, array $parts, IndexEntry $entry): void
-    {
-        if (count($parts) === 1) {
-            $node[$parts[0]] = $entry;
-
-            return;
-        }
-
-        $dir = array_shift($parts);
-
-        if (!isset($node[$dir]) || !is_array($node[$dir])) {
-            $node[$dir] = [];
-        }
-
-        $this->insertIntoTree($node[$dir], $parts, $entry);
-    }
-
-    /**
-     * @param array<string, mixed> $node
-     */
-    private function writeTreeRecursive(array $node): ObjectId
-    {
         $entries = [];
 
-        foreach ($node as $name => $value) {
-            if ($value instanceof IndexEntry) {
-                $mode = match ($value->mode) {
-                    0100755 => '100755',
-                    0120000 => '120000',
-                    0160000 => '160000',
-                    default => '100644',
-                };
-                $entries[] = new TreeEntry($mode, (string) $name, $value->hash);
-            } elseif (is_array($value)) {
-                $subtreeId = $this->writeTreeRecursive($value);
-                $entries[] = new TreeEntry('40000', (string) $name, $subtreeId);
-            }
+        foreach ($index->entries() as $entry) {
+            $entries[$entry->path] = $entry;
         }
 
-        // Sort entries (git sorts trees with trailing / for directories)
-        usort($entries, function (TreeEntry $a, TreeEntry $b): int {
+        return $this->writeTreeFromIndexEntries($entries);
+    }
+
+    /**
+     * @param array<string, IndexEntry> $entries Path -> IndexEntry
+     */
+    private function writeTreeFromIndexEntries(array $entries): ObjectId
+    {
+        $direct = [];
+        $subDirs = [];
+
+        foreach ($entries as $path => $entry) {
+            $slashPos = strpos($path, '/');
+
+            if ($slashPos === false) {
+                $direct[$path] = $entry;
+                continue;
+            }
+
+            $dirName = substr($path, 0, $slashPos);
+            $rest = substr($path, $slashPos + 1);
+            $subDirs[$dirName] ??= [];
+            $subDirs[$dirName][$rest] = $entry;
+        }
+
+        $treeEntries = [];
+
+        foreach ($direct as $name => $entry) {
+            $mode = match ($entry->mode) {
+                0100755 => '100755',
+                0120000 => '120000',
+                0160000 => '160000',
+                default => '100644',
+            };
+            $treeEntries[] = new TreeEntry($mode, $name, $entry->hash);
+        }
+
+        foreach ($subDirs as $dirName => $subEntries) {
+            $subtreeId = $this->writeTreeFromIndexEntries($subEntries);
+            $treeEntries[] = new TreeEntry('40000', $dirName, $subtreeId);
+        }
+
+        usort($treeEntries, function (TreeEntry $a, TreeEntry $b): int {
             $nameA = $a->isTree() ? $a->name . '/' : $a->name;
             $nameB = $b->isTree() ? $b->name . '/' : $b->name;
 
             return strcmp($nameA, $nameB);
         });
 
-        $tree = Tree::fromEntries($entries, $this->objectHashAlgo());
+        $tree = Tree::fromEntries($treeEntries, $this->objectHashAlgo());
         $this->objects->write($tree);
 
         return $tree->id;
@@ -2710,8 +2718,8 @@ final class Repository
 
     /**
      * Reset worktree and index to match a commit.
-     */
-    /**
+     *
+     * @param array<int, string> $pathsToPrune
      * @param array<int, string> $preserveRefs
      */
     private function resetWorktree(ObjectId $commitId, array $pathsToPrune = [], array $preserveRefs = []): void
@@ -2868,6 +2876,8 @@ final class Repository
 
     /**
      * @param array{hash: string, mode: int} $treeEntry
+     *
+     * @phpstan-assert-if-true !null $entry
      */
     private function canReuseResetEntry(?IndexEntry $entry, array $treeEntry, int $extendedFlags, ?int $scanTimeSec): bool
     {
@@ -2976,18 +2986,18 @@ final class Repository
     }
 
     /**
-     * @param array<int|string, mixed> $stat
+     * @param array{ctime: int, mtime: int, dev: int, ino: int, uid: int, gid: int, size: int} $stat
      */
     private function statMatchesIndexEntry(IndexEntry $entry, array $stat, int $mode): bool
     {
-        return $entry->ctimeSec === (int) $stat['ctime']
-            && $entry->mtimeSec === (int) $stat['mtime']
-            && $entry->dev === (int) $stat['dev']
-            && $entry->ino === (int) $stat['ino']
+        return $entry->ctimeSec === $stat['ctime']
+            && $entry->mtimeSec === $stat['mtime']
+            && $entry->dev === $stat['dev']
+            && $entry->ino === $stat['ino']
             && $entry->mode === $mode
-            && $entry->uid === (int) $stat['uid']
-            && $entry->gid === (int) $stat['gid']
-            && $entry->fileSize === (int) $stat['size'];
+            && $entry->uid === $stat['uid']
+            && $entry->gid === $stat['gid']
+            && $entry->fileSize === $stat['size'];
     }
 
     /**
@@ -3373,6 +3383,9 @@ final class Repository
         return is_executable($fullPath) ? 0100755 : 0100644;
     }
 
+    /**
+     * @param array<string, array{hash: string, mode: int}> $entries
+     */
     private function buildTreeFromEntries(array $entries): ObjectId
     {
         $index = new Index($this->objectHashBytes());
@@ -3441,7 +3454,13 @@ final class Repository
         }
 
         if ($baseIds === []) {
-            return $this->getCommitTree($current);
+            $tree = $this->getCommitTree($current);
+
+            if ($tree === null) {
+                throw new \RuntimeException("Cannot resolve commit tree for {$current->hex}");
+            }
+
+            return $tree;
         }
 
         $next = array_shift($baseIds);
@@ -3480,7 +3499,13 @@ final class Repository
         ObjectId $theirsId,
     ): ObjectId {
         if ($oursId->equals($theirsId)) {
-            return $this->getCommitTree($oursId);
+            $tree = $this->getCommitTree($oursId);
+
+            if ($tree === null) {
+                throw new \RuntimeException("Cannot resolve commit tree for {$oursId->hex}");
+            }
+
+            return $tree;
         }
 
         $nestedBaseIds = $mergeBaseFinder->findAll($oursId, $theirsId);
@@ -3528,7 +3553,12 @@ final class Repository
             $blob = Blob::fromContent($content, $this->objectHashAlgo());
             $this->objects->write($blob);
             $stages = $merge['conflictEntries'][$path] ?? [];
-            $mode = $stages[2]['mode'] ?? $stages[3]['mode'] ?? $stages[1]['mode'] ?? 0100644;
+            $mode = match (true) {
+                isset($stages[2]) => $stages[2]['mode'],
+                isset($stages[3]) => $stages[3]['mode'],
+                isset($stages[1]) => $stages[1]['mode'],
+                default => 0100644,
+            };
             $entries[$path] = [
                 'hash' => $blob->id->hex,
                 'mode' => $mode,
@@ -3551,7 +3581,7 @@ final class Repository
     }
 
     /**
-     * @return array{parents: array<int, ObjectId>, author?: string, message?: string, type?: string}|null
+     * @return array{parents: array<int, ObjectId>, author?: string|null, message?: string|null, type?: string}|null
      */
     private function pendingOperationState(?ObjectId $headId): ?array
     {
@@ -3609,7 +3639,7 @@ final class Repository
     }
 
     /**
-     * @param array{message?: string}|null $state
+     * @param array{message?: string|null}|null $state
      */
     private function resolveCommitMessage(?string $message, ?array $state): string
     {
@@ -3761,9 +3791,13 @@ final class Repository
             if ($isRenameDestination && $base !== null && ($ours === null || $theirs === null)) {
                 $conflictPaths[] = $path;
                 $conflictEntries[$path] = $this->conflictStageEntries($base, $ours, $theirs);
-                $conflictContents[$path] = $ours !== null
-                    ? $this->readBlobContent(ObjectId::fromHex($ours['hash']))
-                    : $this->readBlobContent(ObjectId::fromHex($theirs['hash']));
+                $survivor = $ours ?? $theirs;
+
+                if ($survivor === null) {
+                    continue;
+                }
+
+                $conflictContents[$path] = $this->readBlobContent(ObjectId::fromHex($survivor['hash']));
                 continue;
             }
 
@@ -3794,15 +3828,19 @@ final class Repository
             if ($ours === null || $theirs === null) {
                 $conflictPaths[] = $path;
                 $conflictEntries[$path] = $this->conflictStageEntries($base, $ours, $theirs);
-                $conflictContents[$path] = $ours !== null
-                    ? $this->readBlobContent(ObjectId::fromHex($ours['hash']))
-                    : $this->readBlobContent(ObjectId::fromHex($theirs['hash']));
+                $survivor = $ours ?? $theirs;
+
+                if ($survivor === null) {
+                    continue;
+                }
+
+                $conflictContents[$path] = $this->readBlobContent(ObjectId::fromHex($survivor['hash']));
                 continue;
             }
 
             $baseContent = $baseHash !== null ? $this->readBlobContent(ObjectId::fromHex($baseHash)) : '';
-            $oursContent = $this->readBlobContent(ObjectId::fromHex($oursHash));
-            $theirsContent = $this->readBlobContent(ObjectId::fromHex($theirsHash));
+            $oursContent = $this->readBlobContent(ObjectId::fromHex($ours['hash']));
+            $theirsContent = $this->readBlobContent(ObjectId::fromHex($theirs['hash']));
 
             if (
                 MyersDiff::isBinary($baseContent)
@@ -4252,7 +4290,12 @@ final class Repository
 
         while ($state['current'] < count($state['commits'])) {
             $headId = $this->refs->resolveHead();
-            $headCommit = $headId !== null ? $this->objects->read($headId) : null;
+
+            if ($headId === null) {
+                throw new \RuntimeException('Cannot continue rebase: HEAD is not set');
+            }
+
+            $headCommit = $this->objects->read($headId);
             $replayId = $state['commits'][$state['current']];
             $commit = $this->objects->read($replayId);
 
@@ -4413,8 +4456,13 @@ final class Repository
         }
 
         $commits = [];
+        $rawCommits = $state['commits'] ?? [];
 
-        foreach (($state['commits'] ?? []) as $hex) {
+        if (!is_array($rawCommits)) {
+            return null;
+        }
+
+        foreach ($rawCommits as $hex) {
             if (!is_string($hex)) {
                 return null;
             }
@@ -4422,15 +4470,20 @@ final class Repository
             $commits[] = ObjectId::fromHex($hex);
         }
 
-        if (!is_string($state['headName'] ?? null) || !is_string($state['origHead'] ?? null) || !is_string($state['onto'] ?? null)) {
+        $headName = $state['headName'] ?? null;
+        $origHead = $state['origHead'] ?? null;
+        $onto = $state['onto'] ?? null;
+        $current = $state['current'] ?? 0;
+
+        if (!is_string($headName) || !is_string($origHead) || !is_string($onto)) {
             return null;
         }
 
         return [
-            'headName' => $state['headName'],
-            'origHead' => ObjectId::fromHex($state['origHead']),
-            'onto' => ObjectId::fromHex($state['onto']),
-            'current' => (int) ($state['current'] ?? 0),
+            'headName' => $headName,
+            'origHead' => ObjectId::fromHex($origHead),
+            'onto' => ObjectId::fromHex($onto),
+            'current' => is_int($current) ? $current : 0,
             'commits' => $commits,
         ];
     }
@@ -4497,6 +4550,10 @@ final class Repository
         );
 
         foreach ($iterator as $path) {
+            if (!$path instanceof \SplFileInfo) {
+                continue;
+            }
+
             if ($path->isDir()) {
                 rmdir($path->getPathname());
                 continue;
@@ -5128,8 +5185,14 @@ final class Repository
         }
 
         foreach ($this->identityNameConstants($role) as $constant) {
-            if (defined($constant) && trim((string) constant($constant)) !== '') {
-                return trim((string) constant($constant));
+            if (!defined($constant)) {
+                continue;
+            }
+
+            $value = constant($constant);
+
+            if (is_string($value) && trim($value) !== '') {
+                return trim($value);
             }
         }
 
@@ -5147,8 +5210,14 @@ final class Repository
         }
 
         foreach ($this->identityEmailConstants($role) as $constant) {
-            if (defined($constant) && trim((string) constant($constant)) !== '') {
-                return trim((string) constant($constant));
+            if (!defined($constant)) {
+                continue;
+            }
+
+            $value = constant($constant);
+
+            if (is_string($value) && trim($value) !== '') {
+                return trim($value);
             }
         }
 
@@ -5206,7 +5275,7 @@ final class Repository
     }
 
     /**
-     * @param array{message?: string, type?: string}|null $state
+     * @param array{message?: string|null, type?: string}|null $state
      */
     private function prepareCommitMessage(string $message, ?array $state): string
     {

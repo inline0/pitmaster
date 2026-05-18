@@ -62,7 +62,7 @@ final class PathFingerprint
         );
 
         foreach ($iterator as $fileInfo) {
-            if (!$fileInfo->isFile()) {
+            if (!$fileInfo instanceof \SplFileInfo || !$fileInfo->isFile()) {
                 continue;
             }
 

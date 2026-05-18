@@ -107,9 +107,7 @@ final class PackFile
      */
     private function resolveAtOffset(int $offset, int $depth): array
     {
-        $maxDepth = defined('PITMASTER_MAX_DELTA_CHAIN')
-            ? (int) constant('PITMASTER_MAX_DELTA_CHAIN')
-            : 50;
+        $maxDepth = DeltaResolver::maxChainDepth();
 
         if ($depth > $maxDepth) {
             throw PackParseException::deltaChainTooDeep($depth, $maxDepth);
@@ -119,16 +117,28 @@ final class PackFile
 
         if (!$entry->isDelta()) {
             $type = $entry->objectType();
+
+            if ($type === null) {
+                throw PackParseException::invalidDeltaBase("invalid base type at offset {$offset}");
+            }
+
             $content = $this->readCompressedData($entry->dataOffset, $entry->uncompressedSize);
 
             return ['type' => $type, 'content' => $content];
         }
 
         if ($entry->isOfsDelta()) {
+            if ($entry->baseOffset === null) {
+                throw PackParseException::invalidDeltaBase("ofs-delta missing baseOffset at {$offset}");
+            }
+
             $baseOffset = $entry->entryOffset - $entry->baseOffset;
             $base = $this->resolveAtOffset($baseOffset, $depth + 1);
         } else {
-            // REF_DELTA: look up the base by hash
+            if ($entry->baseHash === null) {
+                throw PackParseException::invalidDeltaBase("ref-delta missing baseHash at {$offset}");
+            }
+
             $basePackOffset = $this->index->findOffset($entry->baseHash);
 
             if ($basePackOffset === null) {

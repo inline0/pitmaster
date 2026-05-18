@@ -26,6 +26,7 @@ final class Grep
     /**
      * Search for a pattern in all files in a tree.
      *
+     * @param array{regex?: bool, ignore_case?: bool} $options
      * @return array<int, array{path: string, line: int, content: string}>
      */
     public function grep(ObjectId $treeId, string $pattern, string $prefix = '', array $options = []): array

@@ -86,7 +86,7 @@ final class UploadPackClient
             ];
         }
 
-        $request = ProtocolV2::buildFetchRequest($wants, $haves, ProtocolV2::DEFAULT_FETCH_FEATURES, true, [], $depth);
+        $request = ProtocolV2::buildFetchRequest(array_values($wants), array_values($haves), ProtocolV2::DEFAULT_FETCH_FEATURES, true, [], $depth);
         if (!$this->transport instanceof SmartHttpClient) {
             throw new ProtocolException('Protocol v2 fetch requires smart HTTP transport');
         }

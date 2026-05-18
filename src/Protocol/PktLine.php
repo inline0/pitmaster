@@ -143,7 +143,13 @@ final class PktLine
             $payload = '';
 
             while (strlen($payload) < $payloadLen) {
-                $chunk = fread($stream, $payloadLen - strlen($payload));
+                $remaining = $payloadLen - strlen($payload);
+
+                if ($remaining < 1) {
+                    break;
+                }
+
+                $chunk = fread($stream, $remaining);
 
                 if ($chunk === false || $chunk === '') {
                     throw new ProtocolException('Truncated pkt-line stream');

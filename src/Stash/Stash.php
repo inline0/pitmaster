@@ -62,7 +62,8 @@ final class Stash
         }
 
         $branch = $this->currentBranch();
-        $headSummary = substr($headId->hex, 0, 7) . ' ' . trim(strtok($headCommit->message, "\n"));
+        $firstLine = strtok($headCommit->message, "\n");
+        $headSummary = substr($headId->hex, 0, 7) . ' ' . trim($firstLine === false ? '' : $firstLine);
         $stashMessage = $message !== ''
             ? "On {$branch}: {$message}"
             : "WIP on {$branch}: {$headSummary}";
@@ -270,14 +271,13 @@ final class Stash
 
     private function buildTreeFromIndex(Index $index): ObjectId
     {
-        $root = [];
+        $entries = [];
 
         foreach ($index->entries() as $entry) {
-            $parts = explode('/', $entry->path);
-            $this->insertIntoTreeNode($root, $parts, $entry);
+            $entries[$entry->path] = $entry;
         }
 
-        return $this->writeTreeNode($root);
+        return $this->writeTreeFromPaths($entries);
     }
 
     /**
@@ -291,7 +291,7 @@ final class Stash
         array &$dirtyPaths = [],
         array &$includedUntrackedPaths = [],
     ): ObjectId {
-        $root = [];
+        $entries = [];
         $modified = [];
         $deleted = [];
         $untracked = [];
@@ -331,8 +331,7 @@ final class Stash
             }
 
             if (!isset($modified[$entry->path])) {
-                $parts = explode('/', $entry->path);
-                $this->insertIntoTreeNode($root, $parts, $entry);
+                $entries[$entry->path] = $entry;
                 continue;
             }
 
@@ -343,8 +342,7 @@ final class Stash
                 && $pathStatus->worktree === FileStatus::Unmodified
                 && $pathStatus->index !== FileStatus::Deleted
             ) {
-                $parts = explode('/', $entry->path);
-                $this->insertIntoTreeNode($root, $parts, $entry);
+                $entries[$entry->path] = $entry;
                 continue;
             }
 
@@ -357,8 +355,7 @@ final class Stash
             $content = file_get_contents($fullPath);
             $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
             $this->objects->write($blob);
-            $parts = explode('/', $entry->path);
-            $this->insertIntoTreeNode($root, $parts, IndexEntry::create($entry->path, $blob->id, $entry->mode));
+            $entries[$entry->path] = IndexEntry::create($entry->path, $blob->id, $entry->mode);
         }
 
         if ($includeUntracked) {
@@ -372,52 +369,53 @@ final class Stash
                 $content = file_get_contents($fullPath);
                 $blob = Blob::fromContent($content !== false ? $content : '', $this->hashAlgo());
                 $this->objects->write($blob);
-                $worktreeEntry = IndexEntry::fromStat($path, $blob->id, $fullPath);
-                $parts = explode('/', $path);
-                $this->insertIntoTreeNode($root, $parts, $worktreeEntry);
+                $entries[$path] = IndexEntry::fromStat($path, $blob->id, $fullPath);
             }
         }
 
-        return $this->writeTreeNode($root);
+        return $this->writeTreeFromPaths($entries);
     }
 
-    private function insertIntoTreeNode(array &$node, array $parts, IndexEntry $entry): void
+    /**
+     * @param array<string, IndexEntry> $entries Path -> IndexEntry
+     */
+    private function writeTreeFromPaths(array $entries): ObjectId
     {
-        if (count($parts) === 1) {
-            $node[$parts[0]] = $entry;
+        $direct = [];
+        $subDirs = [];
 
-            return;
-        }
+        foreach ($entries as $path => $entry) {
+            $slashPos = strpos($path, '/');
 
-        $dir = array_shift($parts);
-
-        if (!isset($node[$dir]) || !is_array($node[$dir])) {
-            $node[$dir] = [];
-        }
-
-        $this->insertIntoTreeNode($node[$dir], $parts, $entry);
-    }
-
-    private function writeTreeNode(array $node): ObjectId
-    {
-        $entries = [];
-
-        foreach ($node as $name => $value) {
-            if ($value instanceof IndexEntry) {
-                $mode = $value->mode === 0100755 ? '100755' : '100644';
-                $entries[] = new TreeEntry($mode, (string) $name, $value->hash);
-            } elseif (is_array($value)) {
-                $subtreeId = $this->writeTreeNode($value);
-                $entries[] = new TreeEntry('40000', (string) $name, $subtreeId);
+            if ($slashPos === false) {
+                $direct[$path] = $entry;
+                continue;
             }
+
+            $dirName = substr($path, 0, $slashPos);
+            $rest = substr($path, $slashPos + 1);
+            $subDirs[$dirName] ??= [];
+            $subDirs[$dirName][$rest] = $entry;
         }
 
-        usort($entries, fn (TreeEntry $a, TreeEntry $b) => strcmp(
+        $treeEntries = [];
+
+        foreach ($direct as $name => $entry) {
+            $mode = $entry->mode === 0100755 ? '100755' : '100644';
+            $treeEntries[] = new TreeEntry($mode, $name, $entry->hash);
+        }
+
+        foreach ($subDirs as $dirName => $subEntries) {
+            $subtreeId = $this->writeTreeFromPaths($subEntries);
+            $treeEntries[] = new TreeEntry('40000', $dirName, $subtreeId);
+        }
+
+        usort($treeEntries, fn (TreeEntry $a, TreeEntry $b) => strcmp(
             $a->isTree() ? $a->name . '/' : $a->name,
             $b->isTree() ? $b->name . '/' : $b->name,
         ));
 
-        $tree = Tree::fromEntries($entries, $this->hashAlgo());
+        $tree = Tree::fromEntries($treeEntries, $this->hashAlgo());
         $this->objects->write($tree);
 
         return $tree->id;

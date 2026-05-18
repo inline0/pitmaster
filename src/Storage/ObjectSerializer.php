@@ -28,8 +28,13 @@ final class ObjectSerializer
     public static function encode(GitObject $object): string
     {
         $raw = self::encodeRaw($object);
+        $compressed = zlib_encode($raw, ZLIB_ENCODING_DEFLATE);
 
-        return zlib_encode($raw, ZLIB_ENCODING_DEFLATE);
+        if ($compressed === false) {
+            throw new \RuntimeException("Failed to zlib-encode object {$object->id->hex}");
+        }
+
+        return $compressed;
     }
 
     /**

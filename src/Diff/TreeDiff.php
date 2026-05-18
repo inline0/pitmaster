@@ -66,11 +66,15 @@ final class TreeDiff
         $matched = [];
 
         foreach ($deleted as $di => $del) {
+            if ($del->oldHash === null) {
+                continue;
+            }
+
             $bestScore = 0;
             $bestIdx = null;
 
             foreach ($added as $ai => $add) {
-                if (isset($matched[$ai])) {
+                if (isset($matched[$ai]) || $add->newHash === null) {
                     continue;
                 }
 
@@ -101,6 +105,11 @@ final class TreeDiff
 
             if ($bestIdx !== null) {
                 $add = $added[$bestIdx];
+
+                if ($add->newHash === null) {
+                    continue;
+                }
+
                 $oldContent = $this->readBlobContent($del->oldHash);
                 $newContent = $this->readBlobContent($add->newHash);
                 $hunks = DiffAlgorithm::diff($oldContent, $newContent, $this->algorithm);
@@ -217,6 +226,10 @@ final class TreeDiff
                     $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null);
                 }
 
+                continue;
+            }
+
+            if ($oldEntry === null || $newEntry === null) {
                 continue;
             }
 

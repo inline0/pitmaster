@@ -16,11 +16,13 @@ use Pitmaster\Object\ObjectId;
  */
 final class PackedRefStore implements RefStore
 {
-    /** @var array<string, ObjectId>|null */
-    private ?array $refs = null;
+    /** @var array<string, ObjectId> */
+    private array $refs = [];
 
     /** @var array<string, ObjectId> Peeled values for tag refs */
     private array $peeled = [];
+
+    private bool $loaded = false;
 
     public function __construct(private readonly string $gitDir)
     {
@@ -119,15 +121,16 @@ final class PackedRefStore implements RefStore
     {
         $this->refs = $refs;
         $this->peeled = $peeled;
+        $this->loaded = true;
     }
 
     private function ensureLoaded(): void
     {
-        if ($this->refs !== null) {
+        if ($this->loaded) {
             return;
         }
 
-        $this->refs = [];
+        $this->loaded = true;
         $path = $this->gitDir . '/packed-refs';
 
         if (!is_file($path)) {

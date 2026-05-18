@@ -28,23 +28,7 @@ final class CommitWalker
      */
     public function walk(ObjectId $from, int $limit = 50): array
     {
-        $commits = [];
-        $visited = [];
-        $queue = new \SplPriorityQueue();
-
-        $this->enqueue($queue, $from, $visited);
-
-        while (!$queue->isEmpty() && count($commits) < $limit) {
-            ['id' => $id, 'commit' => $object] = $queue->extract();
-
-            $commits[] = $object;
-
-            foreach ($object->parents as $parentId) {
-                $this->enqueue($queue, $parentId, $visited);
-            }
-        }
-
-        return $commits;
+        return $this->walkAll([$from], $limit);
     }
 
     /**
@@ -57,15 +41,15 @@ final class CommitWalker
     {
         $commits = [];
         $visited = [];
-        $queue = new \SplPriorityQueue();
+        $queue = [];
 
         foreach ($from as $id) {
             $this->enqueue($queue, $id, $visited);
         }
 
-        while (!$queue->isEmpty() && count($commits) < $limit) {
-            ['id' => $id, 'commit' => $object] = $queue->extract();
-
+        while ($queue !== [] && count($commits) < $limit) {
+            $entry = array_shift($queue);
+            $object = $entry['commit'];
             $commits[] = $object;
 
             foreach ($object->parents as $parentId) {
@@ -77,9 +61,13 @@ final class CommitWalker
     }
 
     /**
+     * Insert by descending timestamp (newest first).
+     *
+     * @param array<int, array{timestamp: int, commit: Commit}> $queue
      * @param array<string, true> $visited
+     * @param-out array<int, array{timestamp: int, commit: Commit}> $queue
      */
-    private function enqueue(\SplPriorityQueue $queue, ObjectId $id, array &$visited): void
+    private function enqueue(array &$queue, ObjectId $id, array &$visited): void
     {
         if (isset($visited[$id->hex])) {
             return;
@@ -89,9 +77,23 @@ final class CommitWalker
 
         $object = $this->objects->read($id);
 
-        if ($object instanceof Commit) {
-            $timestamp = $object->committerTimestamp() ?? 0;
-            $queue->insert(['id' => $id, 'commit' => $object], $timestamp);
+        if (!$object instanceof Commit) {
+            return;
         }
+
+        $timestamp = $object->committerTimestamp() ?? 0;
+        $entry = ['timestamp' => $timestamp, 'commit' => $object];
+
+        $count = count($queue);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($queue[$i]['timestamp'] < $timestamp) {
+                array_splice($queue, $i, 0, [$entry]);
+
+                return;
+            }
+        }
+
+        $queue[] = $entry;
     }
 }
