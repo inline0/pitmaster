@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.7] - 2026-05-18
+
+### Changed
+- Raised PHPStan static analysis from level 5 to level 10 (strictest) across the codebase
+- Stdlib failure modes (`unpack`, `zlib_encode`, `hex2bin`) now surface as typed exceptions instead of silently producing wrong data
+- Rewrote nested-array tree builders in `Notes`, `Stash`, and `Repository` as flat path-grouping passes
+- Replaced `SplPriorityQueue` in `CommitWalker` with a typed array-based heap (preserves newest-first ordering with FIFO tiebreak)
+
 ## [0.2.6] - 2026-05-12
 
 ### Added
