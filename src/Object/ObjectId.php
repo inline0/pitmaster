@@ -83,8 +83,13 @@ final readonly class ObjectId
     {
         $header = $type->value . ' ' . strlen($content) . "\0";
         $hex = hash($algo, $header . $content);
+        $binary = hex2bin($hex);
 
-        return new self($hex, hex2bin($hex), $algo);
+        if ($binary === false) {
+            throw new \RuntimeException("hash({$algo}) produced invalid hex: {$hex}");
+        }
+
+        return new self($hex, $binary, $algo);
     }
 
     /**

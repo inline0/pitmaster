@@ -17,8 +17,12 @@ final class DeltaResolver
 {
     public static function maxChainDepth(): int
     {
-        return defined('PITMASTER_MAX_DELTA_CHAIN')
-            ? (int) constant('PITMASTER_MAX_DELTA_CHAIN')
-            : 50;
+        if (!defined('PITMASTER_MAX_DELTA_CHAIN')) {
+            return 50;
+        }
+
+        $value = constant('PITMASTER_MAX_DELTA_CHAIN');
+
+        return is_int($value) ? $value : 50;
     }
 }

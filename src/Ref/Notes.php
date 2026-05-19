@@ -248,6 +248,9 @@ final class Notes
         return null;
     }
 
+    /**
+     * @param array<int, string> $parts
+     */
     private function findBlobAtPath(ObjectId $treeId, array $parts): ?ObjectId
     {
         $tree = $this->objects->read($treeId);
@@ -256,7 +259,13 @@ final class Notes
             return null;
         }
 
-        $entry = $tree->entry(array_shift($parts));
+        $name = array_shift($parts);
+
+        if ($name === null) {
+            return null;
+        }
+
+        $entry = $tree->entry($name);
 
         if ($entry === null) {
             return null;
@@ -302,59 +311,48 @@ final class Notes
      */
     private function buildNotesTree(array $entries): Tree
     {
-        $tree = [];
         ksort($entries);
 
+        return $this->writeTreeFromPaths($entries);
+    }
+
+    /**
+     * @param array<string, ObjectId> $entries Path -> blob ID
+     */
+    private function writeTreeFromPaths(array $entries): Tree
+    {
+        $direct = [];
+        $subDirs = [];
+
         foreach ($entries as $path => $blobId) {
-            $this->insertTreeEntry($tree, explode('/', $path), $blobId);
-        }
+            $slashPos = strpos($path, '/');
 
-        return $this->writeTreeNode($tree);
-    }
-
-    /**
-     * @param array<string, mixed> $node
-     * @param array<int, string> $parts
-     */
-    private function insertTreeEntry(array &$node, array $parts, ObjectId $blobId): void
-    {
-        $name = array_shift($parts);
-
-        if ($name === null) {
-            return;
-        }
-
-        if ($parts === []) {
-            $node[$name] = $blobId;
-            return;
-        }
-
-        $node[$name] ??= [];
-        $this->insertTreeEntry($node[$name], $parts, $blobId);
-    }
-
-    /**
-     * @param array<string, mixed> $node
-     */
-    private function writeTreeNode(array $node): Tree
-    {
-        ksort($node);
-        $entries = [];
-
-        foreach ($node as $name => $value) {
-            $name = (string) $name;
-
-            if ($value instanceof ObjectId) {
-                $entries[] = new TreeEntry('100644', $name, $value);
+            if ($slashPos === false) {
+                $direct[$path] = $blobId;
                 continue;
             }
 
-            $tree = $this->writeTreeNode($value);
-            $this->objects->write($tree);
-            $entries[] = new TreeEntry('40000', $name, $tree->id);
+            $dirName = substr($path, 0, $slashPos);
+            $rest = substr($path, $slashPos + 1);
+            $subDirs[$dirName] ??= [];
+            $subDirs[$dirName][$rest] = $blobId;
         }
 
-        return Tree::fromEntries($entries);
+        $treeEntries = [];
+
+        foreach ($direct as $name => $blobId) {
+            $treeEntries[$name] = new TreeEntry('100644', $name, $blobId);
+        }
+
+        foreach ($subDirs as $dirName => $subEntries) {
+            $subTree = $this->writeTreeFromPaths($subEntries);
+            $this->objects->write($subTree);
+            $treeEntries[$dirName] = new TreeEntry('40000', $dirName, $subTree->id);
+        }
+
+        ksort($treeEntries);
+
+        return Tree::fromEntries(array_values($treeEntries));
     }
 
     private function currentIdentity(): string

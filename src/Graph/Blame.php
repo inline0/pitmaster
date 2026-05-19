@@ -206,6 +206,10 @@ final class Blame
         return array_keys($matchedNewIndexes);
     }
 
+    /**
+     * @param array<int, string> $olderLines
+     * @param array<int, string> $newerLines
+     */
     private function isPrefixMatch(array $olderLines, array $newerLines, int $length): bool
     {
         for ($index = 0; $index < $length; $index++) {
@@ -217,6 +221,10 @@ final class Blame
         return true;
     }
 
+    /**
+     * @param array<int, string> $olderLines
+     * @param array<int, string> $newerLines
+     */
     private function isSuffixMatch(array $olderLines, array $newerLines, int $oldCount, int $newCount): bool
     {
         $offset = $newCount - $oldCount;

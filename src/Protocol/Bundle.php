@@ -102,6 +102,9 @@ final class Bundle
 
     /**
      * Create a bundle from refs and pack data.
+     *
+     * @param array<string, ObjectId> $refs
+     * @param array<int, ObjectId> $prerequisites
      */
     public static function create(array $refs, string $packData, array $prerequisites = []): self
     {

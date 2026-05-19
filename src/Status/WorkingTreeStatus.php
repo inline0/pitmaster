@@ -177,18 +177,18 @@ final class WorkingTreeStatus
     }
 
     /**
-     * @param array<int|string, mixed> $stat
+     * @param array{ctime: int, mtime: int, dev: int, ino: int, uid: int, gid: int, size: int} $stat
      */
     private function statMatchesIndexEntry(IndexEntry $entry, array $stat, int $mode): bool
     {
-        return $entry->ctimeSec === (int) $stat['ctime']
-            && $entry->mtimeSec === (int) $stat['mtime']
-            && $entry->dev === (int) $stat['dev']
-            && $entry->ino === (int) $stat['ino']
+        return $entry->ctimeSec === $stat['ctime']
+            && $entry->mtimeSec === $stat['mtime']
+            && $entry->dev === $stat['dev']
+            && $entry->ino === $stat['ino']
             && $entry->mode === $mode
-            && $entry->uid === (int) $stat['uid']
-            && $entry->gid === (int) $stat['gid']
-            && $entry->fileSize === (int) $stat['size'];
+            && $entry->uid === $stat['uid']
+            && $entry->gid === $stat['gid']
+            && $entry->fileSize === $stat['size'];
     }
 
     /**

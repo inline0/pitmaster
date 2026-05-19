@@ -8,6 +8,9 @@ use RuntimeException;
 
 final class Json
 {
+    /**
+     * @return array<mixed>
+     */
     public static function decodeFile(string $path): array
     {
         $content = @file_get_contents($path);
@@ -25,6 +28,9 @@ final class Json
         return $decoded;
     }
 
+    /**
+     * @param array<mixed> $payload
+     */
     public static function encodeFile(string $path, array $payload): void
     {
         $directory = dirname($path);

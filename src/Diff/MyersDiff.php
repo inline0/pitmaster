@@ -142,6 +142,9 @@ final class MyersDiff
      * rounds 0..d-1 finished. For backtrace at step s, we need V after
      * round s-1 finished = trace[s] (NOT trace[s-1]).
      *
+     * @param array<int, array<int, int>> $trace
+     * @param array<int, string> $a
+     * @param array<int, string> $b
      * @return array<int, array{type: string, line: string}>
      */
     private static function backtrace(

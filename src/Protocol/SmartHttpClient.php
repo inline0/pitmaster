@@ -18,9 +18,14 @@ final class SmartHttpClient implements UploadPackTransport, ReceivePackTransport
 
     public function __construct(?int $timeout = null)
     {
-        $this->timeout = $timeout ?? (defined('PITMASTER_HTTP_TIMEOUT')
-            ? (int) constant('PITMASTER_HTTP_TIMEOUT')
-            : 30);
+        if ($timeout !== null) {
+            $this->timeout = $timeout;
+        } elseif (defined('PITMASTER_HTTP_TIMEOUT')) {
+            $value = constant('PITMASTER_HTTP_TIMEOUT');
+            $this->timeout = is_int($value) ? $value : 30;
+        } else {
+            $this->timeout = 30;
+        }
     }
 
     /**
@@ -130,6 +135,9 @@ final class SmartHttpClient implements UploadPackTransport, ReceivePackTransport
         return RefDiscovery::parse($filtered);
     }
 
+    /**
+     * @param array<int, string> $extraHeaders
+     */
     private function get(string $url, string $expectedContentType, array $extraHeaders = []): string
     {
         $headers = array_merge(['User-Agent: Pitmaster/1.0'], $extraHeaders);
@@ -164,6 +172,9 @@ final class SmartHttpClient implements UploadPackTransport, ReceivePackTransport
         return $response;
     }
 
+    /**
+     * @param array<int, string> $extraHeaders
+     */
     private function post(
         string $url,
         string $body,

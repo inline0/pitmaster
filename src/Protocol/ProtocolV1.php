@@ -103,6 +103,7 @@ final class ProtocolV1
      * Build a v1 push request for receive-pack.
      *
      * @param array<int, array{old: ObjectId, new: ObjectId, ref: string}> $updates
+     * @param array<int, string> $capabilities
      */
     public static function buildPushRequest(array $updates, array $capabilities = self::DEFAULT_PUSH_CAPABILITIES): string
     {

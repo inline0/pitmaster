@@ -6,6 +6,7 @@ namespace Pitmaster\Pack;
 
 use Pitmaster\Object\GitObject;
 use Pitmaster\Storage\ObjectSerializer;
+use RuntimeException;
 
 /**
  * Pack file writer. Creates .pack and .idx files from a set of objects.
@@ -72,13 +73,18 @@ final class PackWriter
             $entryHeader = '';
 
             while ($size > 0) {
-                $entryHeader .= chr($byte | 0x80);
+                $entryHeader .= chr(($byte | 0x80) & 0xFF);
                 $byte = $size & 0x7F;
                 $size >>= 7;
             }
 
-            $entryHeader .= chr($byte);
+            $entryHeader .= chr($byte & 0xFF);
             $compressed = zlib_encode($raw, ZLIB_ENCODING_DEFLATE);
+
+            if ($compressed === false) {
+                throw new RuntimeException("Failed to zlib-encode pack entry for {$object->id->hex}");
+            }
+
             $entryData = $entryHeader . $compressed;
 
             $crc = crc32($entryData);

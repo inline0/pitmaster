@@ -73,12 +73,12 @@ final class VarInt
         $result = '';
 
         while ($size > 0) {
-            $result .= chr($byte | 0x80);
+            $result .= chr(($byte | 0x80) & 0xFF);
             $byte = $size & 0x7F;
             $size >>= 7;
         }
 
-        $result .= chr($byte);
+        $result .= chr($byte & 0xFF);
 
         return $result;
     }

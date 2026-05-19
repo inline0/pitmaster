@@ -224,7 +224,13 @@ final class GitProtocolClient
             $remaining = $lineLen - 4;
 
             while (strlen($payload) < $remaining) {
-                $chunk = fread($socket, $remaining - strlen($payload));
+                $toRead = $remaining - strlen($payload);
+
+                if ($toRead < 1) {
+                    break;
+                }
+
+                $chunk = fread($socket, $toRead);
 
                 if ($chunk === false) {
                     break 2;

@@ -104,6 +104,8 @@ final class Reflog
 
     /**
      * Get the most recent entry.
+     *
+     * @return array{old: string, new: string, identity: string, message: string}|null
      */
     public function latest(): ?array
     {
