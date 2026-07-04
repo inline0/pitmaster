@@ -31,7 +31,10 @@ final class BenchmarkShell
 
     public static function git(string $arguments, string $cwd, array $env = []): string
     {
-        return self::run(escapeshellarg(self::gitBinary()) . ' ' . $arguments, $cwd, $env);
+        return self::run(escapeshellarg(self::gitBinary()) . ' ' . $arguments, $cwd, array_replace(
+            self::gitRepositoryIsolationEnv(),
+            $env,
+        ));
     }
 
     public static function run(string $command, ?string $cwd = null, array $env = []): string
@@ -72,7 +75,24 @@ final class BenchmarkShell
     }
 
     /**
-     * @param array<string, scalar|null> $env
+     * @return array<string, null>
+     */
+    private static function gitRepositoryIsolationEnv(): array
+    {
+        return [
+            'GIT_ALTERNATE_OBJECT_DIRECTORIES' => null,
+            'GIT_COMMON_DIR' => null,
+            'GIT_DIR' => null,
+            'GIT_INDEX_FILE' => null,
+            'GIT_NAMESPACE' => null,
+            'GIT_OBJECT_DIRECTORY' => null,
+            'GIT_QUARANTINE_PATH' => null,
+            'GIT_WORK_TREE' => null,
+        ];
+    }
+
+    /**
+     * @param array<string, scalar|null> $env Null values remove inherited environment variables.
      * @return array<string, string>
      */
     private static function normalizedEnv(array $env): array
@@ -90,7 +110,12 @@ final class BenchmarkShell
         }
 
         foreach ($env as $key => $value) {
-            $base[$key] = $value === null ? '' : (string) $value;
+            if ($value === null) {
+                unset($base[$key]);
+                continue;
+            }
+
+            $base[$key] = (string) $value;
         }
 
         return $base;
