@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.9] - 2026-07-04
+
+### Fixed
+- Benchmark fixture Git commands now ignore inherited repository-scoping `GIT_*` variables so release verification rebuilds fixtures in isolated repositories
+- Includes the packed-object bounded inflate and object-cache performance fixes from `0.2.8` on a CI-green release head
+
 ## [0.2.8] - 2026-07-04
 
 ### Fixed
