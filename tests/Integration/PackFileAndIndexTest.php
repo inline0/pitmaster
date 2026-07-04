@@ -7,6 +7,8 @@ namespace Pitmaster\Tests\Integration;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Pitmaster\Object\Blob;
+use Pitmaster\Object\ObjectId;
+use Pitmaster\Object\ObjectType;
 use Pitmaster\Pack\PackEnumerator;
 use Pitmaster\Pack\PackFile;
 use Pitmaster\Pack\PackIndexer;
@@ -71,6 +73,120 @@ final class PackFileAndIndexTest extends TestCase
             }
         }
         return $packs;
+    }
+
+    private function encodePackEntryHeader(int $type, int $size): string
+    {
+        $byte = ($type << 4) | ($size & 0x0F);
+        $size >>= 4;
+        $header = '';
+
+        while ($size > 0) {
+            $header .= chr(($byte | 0x80) & 0xFF);
+            $byte = $size & 0x7F;
+            $size >>= 7;
+        }
+
+        return $header . chr($byte & 0xFF);
+    }
+
+    private function encodeDeltaSize(int $size): string
+    {
+        $encoded = '';
+
+        do {
+            $byte = $size & 0x7F;
+            $size >>= 7;
+
+            if ($size > 0) {
+                $byte |= 0x80;
+            }
+
+            $encoded .= chr($byte);
+        } while ($size > 0);
+
+        return $encoded;
+    }
+
+    private function deltaAppend(string $base, string $suffix): string
+    {
+        $baseSize = strlen($base);
+        $targetSize = $baseSize + strlen($suffix);
+        $delta = $this->encodeDeltaSize($baseSize) . $this->encodeDeltaSize($targetSize);
+        $copy = 0x80;
+        $copyArgs = '';
+        $size = $baseSize;
+
+        for ($i = 0; $i < 3; $i++) {
+            $byte = ($size >> ($i * 8)) & 0xFF;
+
+            if ($byte !== 0) {
+                $copy |= 0x10 << $i;
+                $copyArgs .= chr($byte);
+            }
+        }
+
+        $delta .= chr($copy) . $copyArgs;
+
+        if ($suffix !== '') {
+            $this->assertLessThanOrEqual(127, strlen($suffix));
+            $delta .= chr(strlen($suffix)) . $suffix;
+        }
+
+        return $delta;
+    }
+
+    /**
+     * @return array{packPath: string, idxPath: string, baseHash: string, baseDataOffset: int, targetHashes: list<string>}
+     */
+    private function writeSharedBaseDeltaPack(int $dependents): array
+    {
+        $packDir = $this->tmpDir . '/.git/objects/pack';
+        if (!is_dir($packDir)) {
+            mkdir($packDir, 0777, true);
+        }
+
+        $baseContent = str_repeat("shared base line\n", 128);
+        $baseId = ObjectId::compute(ObjectType::Blob, $baseContent);
+        $baseHeader = $this->encodePackEntryHeader(ObjectType::Blob->toPackType(), strlen($baseContent));
+        $baseCompressed = zlib_encode($baseContent, ZLIB_ENCODING_DEFLATE);
+        $this->assertIsString($baseCompressed);
+
+        $body = $baseHeader . $baseCompressed;
+        $baseDataOffset = 12 + strlen($baseHeader);
+        $targetHashes = [];
+
+        for ($i = 0; $i < $dependents; $i++) {
+            $suffix = sprintf("dependent-%02d\n", $i);
+            $targetContent = $baseContent . $suffix;
+            $targetHashes[] = ObjectId::compute(ObjectType::Blob, $targetContent)->hex;
+            $delta = $this->deltaAppend($baseContent, $suffix);
+            $deltaHeader = $this->encodePackEntryHeader(7, strlen($delta)) . $baseId->binary;
+            $deltaCompressed = zlib_encode($delta, ZLIB_ENCODING_DEFLATE);
+            $this->assertIsString($deltaCompressed);
+            $body .= $deltaHeader . $deltaCompressed;
+        }
+
+        $packData = 'PACK' . pack('N', 2) . pack('N', $dependents + 1) . $body;
+        $packData .= sha1($packData, true);
+        $packPath = $packDir . '/pack-shared-base.pack';
+        file_put_contents($packPath, $packData);
+        $idxPath = PackIndexer::writeIndex($packPath);
+
+        return [
+            'packPath' => $packPath,
+            'idxPath' => $idxPath,
+            'baseHash' => $baseId->hex,
+            'baseDataOffset' => $baseDataOffset,
+            'targetHashes' => $targetHashes,
+        ];
+    }
+
+    private function privateProperty(object $object, string $property): mixed
+    {
+        $reflection = new \ReflectionProperty($object, $property);
+
+        return $reflection->getValue($object);
     }
 
     #[Test]
@@ -266,5 +382,45 @@ final class PackFileAndIndexTest extends TestCase
 
         // At least one blob should exist in a repo with files
         $this->fail('No blob objects found in pack');
+    }
+
+    #[Test]
+    public function packedObjectInflateReadsBoundedChunksInsteadOfWholePackTail(): void
+    {
+        $packDir = $this->tmpDir . '/.git/objects/pack';
+        $small = Blob::fromContent("small object\n");
+        $objects = [$small];
+
+        for ($i = 0; $i < 8; $i++) {
+            $objects[] = Blob::fromContent(random_bytes(256 * 1024));
+        }
+
+        $paths = PackWriter::write($packDir, $objects);
+        $this->assertGreaterThan(1024 * 1024, filesize($paths['packPath']));
+
+        $pack = PackFile::open($paths['packPath'], $paths['idxPath']);
+        $object = $pack->read($small->id->hex);
+
+        $this->assertInstanceOf(Blob::class, $object);
+        $this->assertSame($small->content, $object->content);
+        $this->assertLessThanOrEqual(65536, $this->privateProperty($pack, 'maxCompressedChunkReadBytes'));
+    }
+
+    #[Test]
+    public function sharedDeltaBaseIsInflatedOnceAcrossDependentObjects(): void
+    {
+        $fixture = $this->writeSharedBaseDeltaPack(12);
+        $pack = PackFile::open($fixture['packPath'], $fixture['idxPath']);
+
+        foreach ($fixture['targetHashes'] as $i => $hash) {
+            $object = $pack->read($hash);
+
+            $this->assertInstanceOf(Blob::class, $object);
+            $this->assertStringEndsWith(sprintf("dependent-%02d\n", $i), $object->content);
+        }
+
+        $inflateCounts = $this->privateProperty($pack, 'inflateCountsByOffset');
+
+        $this->assertSame(1, $inflateCounts[$fixture['baseDataOffset']] ?? 0);
     }
 }

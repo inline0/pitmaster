@@ -131,4 +131,62 @@ final class ObjectDatabaseTest extends TestCase
         $this->assertInstanceOf(\Pitmaster\Storage\LooseObjectStore::class, $db->looseStore());
         $this->assertInstanceOf(\Pitmaster\Storage\PackFileStore::class, $db->packStore());
     }
+
+    #[Test]
+    public function readReturnsCachedObjectInstanceForRepeatedHits(): void
+    {
+        $db = new ObjectDatabase($this->tmpDir . '/.git/objects');
+        $blob = Blob::fromContent("cached object\n");
+        $db->write($blob);
+
+        $first = $db->read($blob->id);
+        $second = $db->read($blob->id);
+
+        $this->assertNotNull($first);
+        $this->assertSame($first, $second);
+    }
+
+    #[Test]
+    public function objectCacheIsBoundedDuringLongReadSequences(): void
+    {
+        $db = new ObjectDatabase($this->tmpDir . '/.git/objects');
+        $ids = [];
+
+        for ($i = 0; $i < 1100; $i++) {
+            $blob = Blob::fromContent("cache-bound-{$i}\n");
+            $ids[] = $blob->id;
+            $db->write($blob);
+        }
+
+        foreach ($ids as $id) {
+            $this->assertNotNull($db->read($id));
+        }
+
+        $reflection = new \ReflectionProperty($db, 'objectCache');
+        $cache = $reflection->getValue($db);
+
+        $this->assertIsArray($cache);
+        $this->assertLessThanOrEqual(1024, count($cache));
+    }
+
+    #[Test]
+    public function objectCachesDoNotLeakAcrossRepositories(): void
+    {
+        $otherDir = sys_get_temp_dir() . '/pitmaster-test-' . bin2hex(random_bytes(4));
+        mkdir($otherDir . '/objects', 0777, true);
+
+        try {
+            $firstDb = new ObjectDatabase($this->tmpDir . '/.git/objects');
+            $secondDb = new ObjectDatabase($otherDir . '/objects');
+            $firstBlob = Blob::fromContent("same content\n");
+            $secondBlob = Blob::fromContent("same content\n");
+
+            $firstDb->write($firstBlob);
+            $secondDb->write($secondBlob);
+
+            $this->assertNotSame($firstDb->read($firstBlob->id), $secondDb->read($secondBlob->id));
+        } finally {
+            exec('rm -rf ' . escapeshellarg($otherDir));
+        }
+    }
 }

@@ -111,16 +111,24 @@ final class DumbHttpClient
             ],
         ]);
 
-        $response = @file_get_contents($url, false, $context);
-        $headers = $http_response_header;
+        $stream = @fopen($url, 'rb', false, $context);
 
-        if ($response === false) {
+        if ($stream === false) {
+            $headers = $this->lastResponseHeaders();
             $status = $this->statusCode($headers);
 
             if ($status !== null) {
                 throw new ProtocolException("Unexpected HTTP status {$status} from {$url}");
             }
 
+            throw new ProtocolException("Dumb HTTP GET failed: {$url}");
+        }
+
+        $headers = $this->streamHeaders($stream);
+        $response = stream_get_contents($stream);
+        fclose($stream);
+
+        if ($response === false) {
             throw new ProtocolException("Dumb HTTP GET failed: {$url}");
         }
 
@@ -145,5 +153,39 @@ final class DumbHttpClient
         }
 
         return null;
+    }
+
+    /**
+     * @param resource $stream
+     * @return array<int, string>
+     */
+    private function streamHeaders(mixed $stream): array
+    {
+        $metadata = stream_get_meta_data($stream);
+        $headers = $metadata['wrapper_data'] ?? [];
+
+        if (is_string($headers)) {
+            return [$headers];
+        }
+
+        if (!is_array($headers)) {
+            return [];
+        }
+
+        return array_values(array_filter($headers, 'is_string'));
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function lastResponseHeaders(): array
+    {
+        if (!function_exists('http_get_last_response_headers')) {
+            return [];
+        }
+
+        $headers = http_get_last_response_headers();
+
+        return is_array($headers) ? $headers : [];
     }
 }

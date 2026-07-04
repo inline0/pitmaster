@@ -158,7 +158,6 @@ final class TransportAbuseTest extends TestCase
     {
         $client = new GitProtocolClient(2);
         $isNegotiationOnly = new \ReflectionMethod(GitProtocolClient::class, 'isNegotiationOnlyResponse');
-        $isNegotiationOnly->setAccessible(true);
 
         self::assertTrue($isNegotiationOnly->invoke($client, "0008NAK\n"));
         self::assertTrue($isNegotiationOnly->invoke($client, "0008ACK ready\n0008NAK\n"));
@@ -175,7 +174,6 @@ final class TransportAbuseTest extends TestCase
         fclose($writer);
 
         $readAll = new \ReflectionMethod(GitProtocolClient::class, 'readAll');
-        $readAll->setAccessible(true);
         $response = $readAll->invoke($client, $reader);
         fclose($reader);
 

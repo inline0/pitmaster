@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.8] - 2026-07-04
+
+### Fixed
+- Packed object reads now inflate from bounded windows instead of copying the full pack tail for every object
+- Resolved packed objects are cached by pack offset so shared delta bases are not re-inflated for each dependent object
+- `ObjectDatabase::read()` now uses a bounded per-repository object cache for repeated history/tree/object reads
+
+### Added
+- Regression coverage for bounded packed-object reads, shared delta-base caching, and bounded object database caching
+
 ## [0.2.7] - 2026-05-18
 
 ### Changed

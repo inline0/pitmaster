@@ -29,11 +29,24 @@ final class PackFile
 {
     private const MAGIC = 'PACK';
     private const SUPPORTED_VERSION = 2;
+    private const FAST_INFLATE_WINDOW_BYTES = 8192;
+    private const INITIAL_INFLATE_CHUNK_BYTES = 4096;
+    private const MAX_INFLATE_CHUNK_BYTES = 65536;
+    private const DEFAULT_RESOLVED_CACHE_ENTRIES = 4096;
+    private const DEFAULT_RESOLVED_CACHE_BYTES = 33554432;
 
     private BinaryReader $reader;
     private int $objectCount;
     private PackIndex $index;
     private int $hashBytes = 20;
+    /** @var array<int, array{type: ObjectType, content: string, bytes: int}> */
+    private array $resolvedCache = [];
+    /** @var list<int> */
+    private array $resolvedCacheOrder = [];
+    private int $resolvedCacheBytes = 0;
+    /** @var array<int, int> */
+    private array $inflateCountsByOffset = [];
+    private int $maxCompressedChunkReadBytes = 0;
 
     private function __construct(
         private readonly string $path,
@@ -113,6 +126,12 @@ final class PackFile
             throw PackParseException::deltaChainTooDeep($depth, $maxDepth);
         }
 
+        if (isset($this->resolvedCache[$offset])) {
+            $cached = $this->resolvedCache[$offset];
+
+            return ['type' => $cached['type'], 'content' => $cached['content']];
+        }
+
         $entry = $this->readEntryHeader($offset);
 
         if (!$entry->isDelta()) {
@@ -124,7 +143,7 @@ final class PackFile
 
             $content = $this->readCompressedData($entry->dataOffset, $entry->uncompressedSize);
 
-            return ['type' => $type, 'content' => $content];
+            return $this->cacheResolvedObject($offset, $type, $content);
         }
 
         if ($entry->isOfsDelta()) {
@@ -153,7 +172,7 @@ final class PackFile
         $delta = $this->readCompressedData($entry->dataOffset, $entry->uncompressedSize);
         $content = DeltaApplier::apply($base['content'], $delta);
 
-        return ['type' => $base['type'], 'content' => $content];
+        return $this->cacheResolvedObject($offset, $base['type'], $content);
     }
 
     /**
@@ -206,41 +225,229 @@ final class PackFile
      */
     private function readCompressedData(int $offset, int $uncompressedSize): string
     {
-        $this->reader->seek($offset);
-        $remaining = $this->reader->remainingData();
+        $decompressed = $this->decodeBoundedWindow($offset, $uncompressedSize);
 
-        // Try raw deflate first (most common in pack files)
-        $context = @inflate_init(ZLIB_ENCODING_RAW);
+        if ($decompressed !== null) {
+            $this->inflateCountsByOffset[$offset] = ($this->inflateCountsByOffset[$offset] ?? 0) + 1;
 
-        if ($context === false) {
-            throw PackParseException::truncated($this->path, "inflate_init failed at offset {$offset}");
-        }
-
-        $decompressed = @inflate_add($context, $remaining, ZLIB_FINISH);
-
-        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
             return $decompressed;
         }
 
-        // Fall back to zlib_decode with various strategies
-        $decompressed = @zlib_decode($remaining, $uncompressedSize);
+        foreach ([ZLIB_ENCODING_DEFLATE, ZLIB_ENCODING_RAW] as $encoding) {
+            $decompressed = $this->inflateFromOffset($offset, $uncompressedSize, $encoding);
 
-        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
-            return $decompressed;
-        }
+            if ($decompressed !== null) {
+                $this->inflateCountsByOffset[$offset] = ($this->inflateCountsByOffset[$offset] ?? 0) + 1;
 
-        // Try without size limit
-        $decompressed = @zlib_decode($remaining);
-
-        if ($decompressed !== false) {
-            if (strlen($decompressed) >= $uncompressedSize) {
-                return substr($decompressed, 0, $uncompressedSize);
+                return $decompressed;
             }
-
-            return $decompressed;
         }
 
         throw PackParseException::truncated($this->path, "zlib decompression failed at offset {$offset}");
+    }
+
+    private function decodeBoundedWindow(int $offset, int $uncompressedSize): ?string
+    {
+        $this->reader->seek($offset);
+        $windowBytes = min(self::FAST_INFLATE_WINDOW_BYTES, $this->reader->remaining());
+        $window = $this->reader->read($windowBytes);
+        $this->maxCompressedChunkReadBytes = max($this->maxCompressedChunkReadBytes, strlen($window));
+        $decompressed = @zlib_decode($window, $uncompressedSize);
+
+        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
+            return $decompressed;
+        }
+
+        $decompressed = @zlib_decode($window);
+
+        if ($decompressed !== false && strlen($decompressed) === $uncompressedSize) {
+            return $decompressed;
+        }
+
+        return null;
+    }
+
+    private function inflateFromOffset(int $offset, int $uncompressedSize, int $encoding): ?string
+    {
+        $context = @inflate_init($encoding);
+
+        if ($context === false) {
+            return null;
+        }
+
+        $this->reader->seek($offset);
+        $decompressed = '';
+        $chunkBytes = self::INITIAL_INFLATE_CHUNK_BYTES;
+
+        while (!$this->reader->isEof()) {
+            $readBytes = min($chunkBytes, $this->reader->remaining());
+            $chunk = $this->reader->read($readBytes);
+            $this->maxCompressedChunkReadBytes = max($this->maxCompressedChunkReadBytes, strlen($chunk));
+
+            $decoded = @inflate_add($context, $chunk, ZLIB_NO_FLUSH);
+
+            if ($decoded === false) {
+                return null;
+            }
+
+            $decompressed .= $decoded;
+
+            if (strlen($decompressed) > $uncompressedSize) {
+                return null;
+            }
+
+            if (inflate_get_status($context) === ZLIB_STREAM_END) {
+                return strlen($decompressed) === $uncompressedSize ? $decompressed : null;
+            }
+
+            if ($chunkBytes < self::MAX_INFLATE_CHUNK_BYTES) {
+                $chunkBytes = min($chunkBytes * 2, self::MAX_INFLATE_CHUNK_BYTES);
+            }
+        }
+
+        $decoded = @inflate_add($context, '', ZLIB_FINISH);
+
+        if ($decoded === false) {
+            return null;
+        }
+
+        $decompressed .= $decoded;
+
+        return strlen($decompressed) === $uncompressedSize ? $decompressed : null;
+    }
+
+    /**
+     * @return array{type: ObjectType, content: string}
+     */
+    private function cacheResolvedObject(int $offset, ObjectType $type, string $content): array
+    {
+        $result = ['type' => $type, 'content' => $content];
+        $bytes = strlen($content);
+        $maxBytes = $this->maxResolvedCacheBytes();
+
+        if ($bytes > $maxBytes) {
+            return $result;
+        }
+
+        if (isset($this->resolvedCache[$offset])) {
+            $this->resolvedCacheBytes -= $this->resolvedCache[$offset]['bytes'];
+            $this->removeResolvedCacheOrder($offset);
+        }
+
+        $this->resolvedCache[$offset] = ['type' => $type, 'content' => $content, 'bytes' => $bytes];
+        $this->resolvedCacheOrder[] = $offset;
+        $this->resolvedCacheBytes += $bytes;
+        $this->pruneResolvedCache();
+
+        return $result;
+    }
+
+    private function pruneResolvedCache(): void
+    {
+        $maxEntries = $this->maxResolvedCacheEntries();
+        $maxBytes = $this->maxResolvedCacheBytes();
+
+        while (
+            ($maxEntries > 0 && count($this->resolvedCacheOrder) > $maxEntries)
+            || ($maxBytes > 0 && $this->resolvedCacheBytes > $maxBytes)
+        ) {
+            $oldest = array_shift($this->resolvedCacheOrder);
+
+            if ($oldest === null || !isset($this->resolvedCache[$oldest])) {
+                continue;
+            }
+
+            $this->resolvedCacheBytes -= $this->resolvedCache[$oldest]['bytes'];
+            unset($this->resolvedCache[$oldest]);
+        }
+    }
+
+    private function removeResolvedCacheOrder(int $offset): void
+    {
+        $this->resolvedCacheOrder = array_values(array_filter(
+            $this->resolvedCacheOrder,
+            static fn (int $cachedOffset): bool => $cachedOffset !== $offset,
+        ));
+    }
+
+    private function maxResolvedCacheEntries(): int
+    {
+        return $this->configuredPositiveInt('PITMASTER_PACK_RESOLVED_CACHE_ENTRIES', self::DEFAULT_RESOLVED_CACHE_ENTRIES);
+    }
+
+    private function maxResolvedCacheBytes(): int
+    {
+        if (defined('PITMASTER_PACK_RESOLVED_CACHE_BYTES')) {
+            return $this->configuredBytes('PITMASTER_PACK_RESOLVED_CACHE_BYTES', self::DEFAULT_RESOLVED_CACHE_BYTES);
+        }
+
+        if (defined('PITMASTER_MAX_PACK_MEMORY')) {
+            return $this->configuredBytes('PITMASTER_MAX_PACK_MEMORY', self::DEFAULT_RESOLVED_CACHE_BYTES);
+        }
+
+        return self::DEFAULT_RESOLVED_CACHE_BYTES;
+    }
+
+    private function configuredPositiveInt(string $constant, int $default): int
+    {
+        if (!defined($constant)) {
+            return $default;
+        }
+
+        $value = constant($constant);
+
+        if (is_int($value) && $value > 0) {
+            return $value;
+        }
+
+        if (is_string($value) && ctype_digit($value) && (int) $value > 0) {
+            return (int) $value;
+        }
+
+        return $default;
+    }
+
+    private function configuredBytes(string $constant, int $default): int
+    {
+        $value = constant($constant);
+
+        return is_int($value) || is_string($value)
+            ? $this->parseBytes((string) $value, $default)
+            : $default;
+    }
+
+    private function parseBytes(string $value, int $default): int
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return $default;
+        }
+
+        if (ctype_digit($value)) {
+            return max(1, (int) $value);
+        }
+
+        if (!preg_match('/^(\d+)([kmg])$/i', $value, $matches)) {
+            return $default;
+        }
+
+        $bytes = (int) $matches[1];
+        $unit = strtolower($matches[2]);
+
+        if ($unit === 'k') {
+            return $bytes * 1024;
+        }
+
+        if ($unit === 'm') {
+            return $bytes * 1024 * 1024;
+        }
+
+        if ($unit === 'g') {
+            return $bytes * 1024 * 1024 * 1024;
+        }
+
+        return $default;
     }
 
     private function parseHeader(): void
