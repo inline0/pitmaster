@@ -1,6 +1,11 @@
 ---
-title: Writing to Repositories
-description: Initialize repos, stage files, create commits, manage branches and tags.
+title: "Writing to Repositories"
+description: "Initialize repos, stage files, create commits, manage branches and tags."
+path: "operations/write"
+order: 5
+section: "Operations"
+meta_title: "Writing to Repositories"
+meta_description: "Initialize repos, stage files, create commits, manage branches and tags."
 ---
 
 # Writing to Repositories

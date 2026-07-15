@@ -1,6 +1,11 @@
 ---
-title: Git LFS
-description: Git Large File Storage pointer parsing, batch API client, and file transfer.
+title: "Git LFS"
+description: "Git Large File Storage pointer parsing, batch API client, and file transfer."
+path: "advanced/lfs"
+order: 20
+section: "Advanced"
+meta_title: "Git LFS"
+meta_description: "Git Large File Storage pointer parsing, batch API client, and file transfer."
 ---
 
 # Git LFS

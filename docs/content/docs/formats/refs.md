@@ -1,6 +1,11 @@
 ---
-title: Refs
-description: Loose refs, packed-refs, RefDatabase, symbolic refs, reflog, and reftable.
+title: "Refs"
+description: "Loose refs, packed-refs, RefDatabase, symbolic refs, reflog, and reftable."
+path: "formats/refs"
+order: 12
+section: "Binary Formats"
+meta_title: "Refs"
+meta_description: "Loose refs, packed-refs, RefDatabase, symbolic refs, reflog, and reftable."
 ---
 
 # Refs

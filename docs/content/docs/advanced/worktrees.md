@@ -1,6 +1,11 @@
 ---
-title: Worktrees
-description: Linked worktrees for multiple checkouts from a single repository.
+title: "Worktrees"
+description: "Linked worktrees for multiple checkouts from a single repository."
+path: "advanced/worktrees"
+order: 16
+section: "Advanced"
+meta_title: "Worktrees"
+meta_description: "Linked worktrees for multiple checkouts from a single repository."
 ---
 
 # Worktrees

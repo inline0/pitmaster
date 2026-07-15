@@ -1,6 +1,11 @@
 ---
-title: API
-description: The Pitmaster\Pitmaster facade and Repository class provide the public PHP API.
+title: "API"
+description: "The Pitmaster\\Pitmaster facade and Repository class provide the public PHP API."
+path: "api"
+order: 2
+section: "Documentation"
+meta_title: "API"
+meta_description: "The Pitmaster\\Pitmaster facade and Repository class provide the public PHP API."
 ---
 
 # PHP API

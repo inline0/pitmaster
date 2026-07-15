@@ -1,6 +1,11 @@
 ---
-title: Pitmaster
-description: Pure PHP Git implementation. Read and write Git repositories without shelling out to git.
+title: "Pitmaster"
+description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
+path: "."
+order: 0
+section: "Documentation"
+meta_title: "Pitmaster"
+meta_description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
 ---
 
 # Pitmaster

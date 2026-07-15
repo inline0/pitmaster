@@ -1,6 +1,11 @@
 ---
-title: Git Objects
-description: Blob, Tree, Commit, Tag objects, ObjectId, loose object format, and serialization.
+title: "Git Objects"
+description: "Blob, Tree, Commit, Tag objects, ObjectId, loose object format, and serialization."
+path: "formats/objects"
+order: 9
+section: "Binary Formats"
+meta_title: "Git Objects"
+meta_description: "Blob, Tree, Commit, Tag objects, ObjectId, loose object format, and serialization."
 ---
 
 # Git Objects

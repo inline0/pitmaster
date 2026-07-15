@@ -1,6 +1,11 @@
 ---
-title: Stash
-description: Save and restore working directory changes using the stash stack.
+title: "Stash"
+description: "Save and restore working directory changes using the stash stack."
+path: "advanced/stash"
+order: 18
+section: "Advanced"
+meta_title: "Stash"
+meta_description: "Save and restore working directory changes using the stash stack."
 ---
 
 # Stash

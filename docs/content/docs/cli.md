@@ -1,6 +1,11 @@
 ---
-title: CLI
-description: Complete command reference for the Pitmaster CLI.
+title: "CLI"
+description: "Complete command reference for the Pitmaster CLI."
+path: "cli"
+order: 3
+section: "Documentation"
+meta_title: "CLI"
+meta_description: "Complete command reference for the Pitmaster CLI."
 ---
 
 # CLI Reference

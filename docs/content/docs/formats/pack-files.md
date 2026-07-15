@@ -1,6 +1,11 @@
 ---
-title: Pack Files
-description: Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph.
+title: "Pack Files"
+description: "Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph."
+path: "formats/pack-files"
+order: 10
+section: "Binary Formats"
+meta_title: "Pack Files"
+meta_description: "Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph."
 ---
 
 # Pack Files

@@ -1,6 +1,11 @@
 ---
-title: Submodules
-description: Git submodule support with gitlink entries, .gitmodules parsing, and status tracking.
+title: "Submodules"
+description: "Git submodule support with gitlink entries, .gitmodules parsing, and status tracking."
+path: "advanced/submodules"
+order: 17
+section: "Advanced"
+meta_title: "Submodules"
+meta_description: "Git submodule support with gitlink entries, .gitmodules parsing, and status tracking."
 ---
 
 # Submodules

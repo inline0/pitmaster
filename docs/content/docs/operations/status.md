@@ -1,6 +1,11 @@
 ---
-title: Status
-description: Compare HEAD, index, and working tree to determine file status.
+title: "Status"
+description: "Compare HEAD, index, and working tree to determine file status."
+path: "operations/status"
+order: 8
+section: "Operations"
+meta_title: "Status"
+meta_description: "Compare HEAD, index, and working tree to determine file status."
 ---
 
 # Status

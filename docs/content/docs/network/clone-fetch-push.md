@@ -1,6 +1,11 @@
 ---
-title: Clone, Fetch, Push
-description: Network operations for cloning, fetching, and pushing repositories.
+title: "Clone, Fetch, Push"
+description: "Network operations for cloning, fetching, and pushing repositories."
+path: "network/clone-fetch-push"
+order: 15
+section: "Network"
+meta_title: "Clone, Fetch, Push"
+meta_description: "Network operations for cloning, fetching, and pushing repositories."
 ---
 
 # Clone, Fetch, Push

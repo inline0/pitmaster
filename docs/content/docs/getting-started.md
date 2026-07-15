@@ -1,6 +1,11 @@
 ---
-title: Getting Started
-description: Install Pitmaster and perform basic Git operations in PHP.
+title: "Getting Started"
+description: "Install Pitmaster and perform basic Git operations in PHP."
+path: "getting-started"
+order: 1
+section: "Documentation"
+meta_title: "Getting Started"
+meta_description: "Install Pitmaster and perform basic Git operations in PHP."
 ---
 
 # Getting Started

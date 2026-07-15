@@ -1,6 +1,11 @@
 ---
-title: Merge
-description: Three-way merge with fast-forward detection, conflict markers, and merge base computation.
+title: "Merge"
+description: "Three-way merge with fast-forward detection, conflict markers, and merge base computation."
+path: "operations/merge"
+order: 7
+section: "Operations"
+meta_title: "Merge"
+meta_description: "Three-way merge with fast-forward detection, conflict markers, and merge base computation."
 ---
 
 # Merge
