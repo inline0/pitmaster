@@ -52,6 +52,15 @@ final class BenchmarkShellTest extends TestCase
         self::assertSame([], array_values(array_diff(scandir($ambientObjectDirectory) ?: [], ['.', '..'])));
     }
 
+    public function testGitCommandsDisableBackgroundMaintenance(): void
+    {
+        $repo = $this->tmpDir . '/maintenance-repo';
+        BenchmarkShell::git('init --initial-branch=main ' . escapeshellarg($repo), $this->tmpDir);
+
+        self::assertSame("false\n", BenchmarkShell::git('config maintenance.auto', $repo));
+        self::assertSame("false\n", BenchmarkShell::git('config gc.autoDetach', $repo));
+    }
+
     private function restoreEnvironmentValue(string $name, ?string $serverValue, ?string $envValue): void
     {
         if ($serverValue === null) {

@@ -33,6 +33,7 @@ final class BenchmarkShell
     {
         return self::run(escapeshellarg(self::gitBinary()) . ' ' . $arguments, $cwd, array_replace(
             self::gitRepositoryIsolationEnv(),
+            self::gitBackgroundMaintenanceSuppressionEnv(),
             $env,
         ));
     }
@@ -88,6 +89,20 @@ final class BenchmarkShell
             'GIT_OBJECT_DIRECTORY' => null,
             'GIT_QUARANTINE_PATH' => null,
             'GIT_WORK_TREE' => null,
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private static function gitBackgroundMaintenanceSuppressionEnv(): array
+    {
+        return [
+            'GIT_CONFIG_COUNT' => '2',
+            'GIT_CONFIG_KEY_0' => 'maintenance.auto',
+            'GIT_CONFIG_VALUE_0' => 'false',
+            'GIT_CONFIG_KEY_1' => 'gc.autoDetach',
+            'GIT_CONFIG_VALUE_1' => 'false',
         ];
     }
 
