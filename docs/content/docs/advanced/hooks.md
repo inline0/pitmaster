@@ -2,7 +2,7 @@
 title: "Hooks"
 description: "Git hook detection, execution, installation, and supported hook types."
 path: "advanced/hooks"
-order: 19
+order: 170
 section: "Advanced"
 meta_title: "Hooks"
 meta_description: "Git hook detection, execution, installation, and supported hook types."

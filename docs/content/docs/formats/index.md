@@ -2,7 +2,7 @@
 title: "Index Format"
 description: "Git index (staging area) format, versions 2/3/4, extensions, conflict stages, and IndexWriter."
 path: "formats"
-order: 11
+order: 90
 section: "Binary Formats"
 meta_title: "Index Format"
 meta_description: "Git index (staging area) format, versions 2/3/4, extensions, conflict stages, and IndexWriter."

@@ -2,7 +2,7 @@
 title: "Reading Repositories"
 description: "Open repositories and read objects, refs, commits, and history."
 path: "operations/read"
-order: 4
+order: 20
 section: "Operations"
 meta_title: "Reading Repositories"
 meta_description: "Open repositories and read objects, refs, commits, and history."

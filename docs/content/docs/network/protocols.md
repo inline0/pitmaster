@@ -2,7 +2,7 @@
 title: "Protocols"
 description: "All supported network protocols for git communication."
 path: "network/protocols"
-order: 14
+order: 120
 section: "Network"
 meta_title: "Protocols"
 meta_description: "All supported network protocols for git communication."

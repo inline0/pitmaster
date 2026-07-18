@@ -3,7 +3,7 @@ title: "Pitmaster"
 description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
 path: "."
 order: 0
-section: "Documentation"
+section: "Getting Started"
 meta_title: "Pitmaster"
 meta_description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
 ---

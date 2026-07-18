@@ -2,7 +2,7 @@
 title: "Diff"
 description: "Compute diffs between trees, index, and working tree using Myers O(ND) algorithm."
 path: "operations/diff"
-order: 6
+order: 40
 section: "Operations"
 meta_title: "Diff"
 meta_description: "Compute diffs between trees, index, and working tree using Myers O(ND) algorithm."

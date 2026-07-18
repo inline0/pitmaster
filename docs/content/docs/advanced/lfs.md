@@ -2,7 +2,7 @@
 title: "Git LFS"
 description: "Git Large File Storage pointer parsing, batch API client, and file transfer."
 path: "advanced/lfs"
-order: 20
+order: 180
 section: "Advanced"
 meta_title: "Git LFS"
 meta_description: "Git Large File Storage pointer parsing, batch API client, and file transfer."

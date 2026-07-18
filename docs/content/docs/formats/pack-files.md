@@ -2,7 +2,7 @@
 title: "Pack Files"
 description: "Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph."
 path: "formats/pack-files"
-order: 10
+order: 80
 section: "Binary Formats"
 meta_title: "Pack Files"
 meta_description: "Pack file format, index files, delta resolution, PackWriter, MultiPackIndex, and CommitGraph."

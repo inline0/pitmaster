@@ -2,7 +2,7 @@
 title: "Smart HTTP"
 description: "Git smart HTTP transport, PktLine encoding, ref discovery, capabilities, and side-band."
 path: "network/smart-http"
-order: 13
+order: 110
 section: "Network"
 meta_title: "Smart HTTP"
 meta_description: "Git smart HTTP transport, PktLine encoding, ref discovery, capabilities, and side-band."

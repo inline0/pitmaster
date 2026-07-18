@@ -2,8 +2,8 @@
 title: "CLI"
 description: "Complete command reference for the Pitmaster CLI."
 path: "cli"
-order: 3
-section: "Documentation"
+order: 190
+section: "Reference"
 meta_title: "CLI"
 meta_description: "Complete command reference for the Pitmaster CLI."
 ---

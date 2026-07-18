@@ -2,7 +2,7 @@
 title: "Git Objects"
 description: "Blob, Tree, Commit, Tag objects, ObjectId, loose object format, and serialization."
 path: "formats/objects"
-order: 9
+order: 70
 section: "Binary Formats"
 meta_title: "Git Objects"
 meta_description: "Blob, Tree, Commit, Tag objects, ObjectId, loose object format, and serialization."

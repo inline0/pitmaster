@@ -2,7 +2,7 @@
 title: "Stash"
 description: "Save and restore working directory changes using the stash stack."
 path: "advanced/stash"
-order: 18
+order: 160
 section: "Advanced"
 meta_title: "Stash"
 meta_description: "Save and restore working directory changes using the stash stack."
