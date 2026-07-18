@@ -1,15 +1,13 @@
 ---
-title: "Pitmaster"
+title: "Introduction"
 description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
 path: "."
 order: 0
-section: "Getting Started"
-meta_title: "Pitmaster"
+meta_title: "Introduction"
 meta_description: "Pure PHP Git implementation. Read and write Git repositories without shelling out to git."
 ---
 
-# Pitmaster
-
+# Introduction
 Pitmaster is a pure PHP library that reads and writes Git repositories natively. Core repository operations do not shell out to the `git` binary or use FFI. The Git object model, pack file format, index format, and smart HTTP transport are implemented in PHP.
 
 ## Why Pitmaster exists

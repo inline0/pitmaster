@@ -3,7 +3,6 @@ title: "Getting Started"
 description: "Install Pitmaster and perform basic Git operations in PHP."
 path: "getting-started"
 order: 10
-section: "Getting Started"
 meta_title: "Getting Started"
 meta_description: "Install Pitmaster and perform basic Git operations in PHP."
 ---
