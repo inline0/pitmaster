@@ -92,6 +92,21 @@ final class LogShowParityTest extends TestCase
     }
 
     #[Test]
+    public function pitmasterCliLogAcceptsGitLimitSpellings(): void
+    {
+        $expected = $this->gitLines('log --oneline --abbrev=7 -n 3');
+
+        foreach (['-n 3', '-n3', '--max-count 3', '--max-count=3', '-3'] as $limit) {
+            $this->assertSame($expected, $this->pitmasterLines('log --oneline ' . $limit), $limit);
+        }
+
+        $this->assertSame(
+            $this->gitLines('log --oneline --abbrev=7 -n 20 -- docs/guide.txt'),
+            $this->pitmasterLines('log --oneline -n 20 -- docs/guide.txt'),
+        );
+    }
+
+    #[Test]
     public function pitmasterCliShowMatchesGitForSingleParentCommit(): void
     {
         $this->assertSame(

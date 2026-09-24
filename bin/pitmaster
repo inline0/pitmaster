@@ -136,7 +136,9 @@ function commandLog(Repository $repo, array $args): void
     $oneline = false;
     $path = null;
 
-    foreach ($args as $arg) {
+    for ($i = 0; $i < count($args); $i++) {
+        $arg = $args[$i];
+
         if ($arg === '--all') {
             $all = true;
             continue;
@@ -147,9 +149,32 @@ function commandLog(Repository $repo, array $args): void
             continue;
         }
 
-        if (is_numeric($arg)) {
+        // Git's limit spellings. `-n` used to fall through to the path filter,
+        // so `log -n 3` searched for a file named "-n" and printed nothing.
+        if (($arg === '-n' || $arg === '--max-count') && isset($args[$i + 1])) {
+            $limit = max(0, (int) $args[++$i]);
+            continue;
+        }
+
+        if (preg_match('/^(?:-n|--max-count=|-)(\d+)$/', $arg, $matches) === 1) {
+            $limit = (int) $matches[1];
+            continue;
+        }
+
+        if ($arg === '--') {
+            $path = $args[$i + 1] ?? $path;
+            break;
+        }
+
+        // A bare number is pitmaster's own shorthand for the limit.
+        if (ctype_digit($arg)) {
             $limit = (int) $arg;
             continue;
+        }
+
+        if (str_starts_with($arg, '-')) {
+            fwrite(STDERR, "fatal: unrecognized argument: {$arg}\n");
+            exit(128);
         }
 
         if ($path === null) {

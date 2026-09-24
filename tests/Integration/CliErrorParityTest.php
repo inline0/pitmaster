@@ -53,6 +53,12 @@ final class CliErrorParityTest extends TestCase
     }
 
     #[Test]
+    public function logUnknownOptionMatchesGitCli(): void
+    {
+        $this->assertCliFailureMatchesGit('log --bogus');
+    }
+
+    #[Test]
     public function checkoutOverwriteFailureMatchesGitExitCodeAndSignal(): void
     {
         $this->git('checkout -b topic');
