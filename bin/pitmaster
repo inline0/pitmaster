@@ -5,7 +5,19 @@ declare(strict_types=1);
 
 ini_set('memory_limit', '512M');
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+(static function (): void {
+    foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoload) {
+        if (is_file($autoload)) {
+            require_once $autoload;
+
+            return;
+        }
+    }
+
+    fwrite(STDERR, "Could not locate the Composer autoloader. Run `composer install`.
+");
+    exit(1);
+})();
 
 use Pitmaster\Diff\ColorDiff;
 use Pitmaster\Pitmaster;
