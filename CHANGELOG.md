@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.10] - 2026-09-24
+
+### Fixed
+- The Composer package no longer ships the scenario corpora, fixtures, tests, benchmarks or docs. Installing pitmaster previously added roughly 236 MB to every consumer's `vendor/` directory, and to anything that bundles `vendor/`
+
+### Changed
+- Documentation rewritten as portable Markdown in `docs/`
+- Development dependencies raised to the inline0 canonical minimums, including `squizlabs/php_codesniffer` `^3.13.6` for CVE-2026-67434. Dev only, no effect on consumers
+
 ## [0.2.9] - 2026-07-04
 
 ### Fixed
