@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.11] - 2026-09-24
+
+### Fixed
+- `log` accepts git's limit spellings, `-n 3`, `-n3`, `--max-count 3`, `--max-count=3` and `-3`, plus `--` before a path. `-n` used to be read as a path filter, so `log -n 3` printed nothing
+- `log` rejects unknown options with git's `fatal: unrecognized argument` message and exit code 128 instead of quietly filtering by them
+- `vendor/bin/pitmaster` works when pitmaster is installed as a dependency. The binary only looked for the autoloader in its own `vendor/`
+
 ## [0.2.10] - 2026-09-24
 
 ### Fixed
