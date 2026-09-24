@@ -1,0 +1,27 @@
+# Composer installs pitmaster from the tag's GitHub archive, which is built
+# with `git archive` and honours `export-ignore`. Without these rules every
+# consumer received the full upstream scenario corpora and fixtures, roughly
+# 236 MB, in its vendor directory. Only src/ and the pitmaster binary are
+# needed at runtime.
+
+/.github              export-ignore
+/.gitattributes       export-ignore
+/.gitignore           export-ignore
+/CLAUDE.md            export-ignore
+/SUPPORT_MATRIX.md    export-ignore
+/bench                export-ignore
+/composer.lock        export-ignore
+/config               export-ignore
+/docs                 export-ignore
+/fixtures             export-ignore
+/phpcs.xml            export-ignore
+/phpstan.neon.dist    export-ignore
+/phpunit.xml.dist     export-ignore
+/scenarios            export-ignore
+/scripts              export-ignore
+/tests                export-ignore
+
+# Development scripts in bin/ stay out. bin/pitmaster is the binary declared
+# in composer.json, so it ships.
+/bin/*                export-ignore
+/bin/pitmaster        -export-ignore
