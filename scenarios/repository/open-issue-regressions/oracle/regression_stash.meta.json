@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "[\"On main: three\\nOn main: one\\n\",\"On main: one\\n\",\"three\\n\"]\n",
+    "stderr": ""
+}

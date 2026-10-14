@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "[\"100644 726b5981dc7d34dfb395beb571631f52e86b7a84 0\\ta.txt\\n100644 587be6b4c3f93f93c489c0111bba5596147a26cb 0\\tdocs/x.txt\\n100644 45a4fb75db864000d01701c0f7a51864bd4daabf 0\\ty.txt\\n\",\"M  a.txt\\n\"]\n",
+    "stderr": ""
+}
