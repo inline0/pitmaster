@@ -1,0 +1,110 @@
+---
+title: "Testing and the git Oracle"
+description: "How Pitmaster is tested against the canonical git binary: unit and integration suites, oracle scenarios, upstream corpora, and the support matrix."
+path: "testing"
+order: 210
+section: "Reference"
+meta_title: "Testing and the git Oracle"
+meta_description: "How Pitmaster is tested against the canonical git binary: unit and integration suites, oracle scenarios, upstream corpora, and the support matrix."
+---
+
+# Testing and the git Oracle
+
+Pitmaster treats the canonical `git` binary as its oracle: if `git` accepts what Pitmaster writes, and Pitmaster reads what `git` writes, the behaviour is correct. The test infrastructure lives in the Pitmaster repository. The Composer package ships only `src/` and `bin/pitmaster`, so run everything below from a clone after `composer install`.
+
+## Test suites
+
+| Command | What it runs | Needs `git` |
+|---------|--------------|-------------|
+| `composer test:unit` | PHPUnit `unit` suite: isolated component tests | No |
+| `composer test:integration` | PHPUnit `integration` suite: Pitmaster and `git` working on the same repositories | Yes |
+| `composer test:oracle` | `bin/test-regression`: every oracle scenario | Yes |
+| `composer test` | PHPUnit (both suites) plus the oracle regression | Yes |
+| `./bin/verify-all` | `composer verify`: support evidence, upstream drift, proof artifact, mutation smoke, `composer audit`, PHPStan, coding standards, and `composer test` | Yes |
+
+CI runs the unit suite on several PHP versions, the integration suite, the oracle regression (`PITMASTER_TEST_JOBS=4`), and the support-evidence and upstream-drift checks.
+
+## Oracle scenarios
+
+Each scenario is a directory under `scenarios/<category>/` (761 in total, 156 written for Pitmaster and 605 imported from other Git implementations):
+
+```
+scenarios/diff/diff-add-lines/
+  scenario.json   # commands and expectations
+  setup.sh        # builds the starting repository
+  oracle/         # outputs captured from git
+```
+
+`scenario.json` names the command to run with `git` and the equivalent Pitmaster command, and what must match:
+
+```json
+{
+    "name": "diff-add-lines",
+    "category": "diff",
+    "operations": ["diff"],
+    "oracle_commands": { "diff": "git -c color.ui=never diff" },
+    "actual_commands": { "diff": "php \"{{ROOT}}/bin/pitmaster\" diff | perl -pe 's/\\e\\[[0-9;]*m//g'" },
+    "expectations": { "exact_match": ["diff"], "fsck_clean": true }
+}
+```
+
+A run copies the repository built by `setup.sh`, runs the oracle and the Pitmaster commands on separate copies, and compares outputs, objects, refs, and log. `fsck_clean` also requires `git fsck` to accept the repository Pitmaster wrote. The oracle output is captured from `git` when it is missing or refreshed; otherwise the committed `oracle/` files are used.
+
+A scenario covers exactly the cases its setup builds. The diff scenarios, for example, compare modified files, which is why the diff output differences for new, deleted, and binary files listed in [Diff](/docs/operations/diff) are not caught by them.
+
+### Working with scenarios
+
+```bash
+./bin/test-scenario <name>                 # oracle, actual, compare for one scenario
+./bin/test-regression                      # all scenarios
+./bin/test-regression --jobs 4             # in parallel (or PITMASTER_TEST_JOBS=4)
+./bin/test-regression --category diff      # one category
+./bin/test-regression --fast               # pass/fail only, no reports
+
+./bin/oracle <name>                        # capture git output for a scenario
+./bin/oracle --refresh <name>              # re-capture, for example after a git upgrade
+./bin/actual <name>                        # run Pitmaster and capture its output
+./bin/compare <name>                       # compare oracle and actual output
+```
+
+To check several git versions, list them in `PITMASTER_TEST_GIT_BINARIES` and run the smoke test:
+
+```bash
+PITMASTER_TEST_GIT_BINARIES=/path/to/git-2.45:/path/to/git-2.46 \
+  vendor/bin/phpunit --filter MultiGitVersionSmokeTest
+```
+
+## Upstream corpora
+
+Scenarios under `scenarios/upstream/` are imported from the test suites of other implementations: git's own test suite (412), isomorphic-git (71), libgit2 (63), go-git (46), JGit (7), and dulwich (6). The fixture trees they need are vendored under `fixtures/upstream/`, so the full corpus runs from a fresh checkout without network access or machine-local paths. Setup scripts find them through the `PITMASTER_ROOT` environment variable.
+
+`composer verify:drift` (`bin/audit-upstream-drift`) checks that every vendored upstream case is mapped to a scenario.
+
+## Support matrix
+
+`SUPPORT_MATRIX.md` in the repository lists every in-scope git feature with a status:
+
+| Status | Meaning |
+|--------|---------|
+| `DONE` | Implemented and oracle-verified within the declared parity scope |
+| `PART` | Partially implemented |
+| `TODO` | In scope, not yet implemented |
+| `DEFER` | Not planned yet |
+| `N/A` | Out of scope |
+
+The file is generated by `bin/support-matrix` from `config/support-matrix.json`. `config/support-evidence.json` links every `DONE` and `PART` row to concrete tests and oracle scenarios, and `composer verify:evidence` fails when a row has no evidence. CI regenerates the matrix and fails if the committed file differs.
+
+A `DONE` row means the scenarios recorded for it match git. Behaviour outside those scenarios can still differ; known differences are tracked in the [issue tracker](https://github.com/inline0/pitmaster/issues).
+
+## Benchmarks
+
+Performance work uses the harness under `bench/`:
+
+```bash
+composer bench -- --suite=smoke --runs=1 --warmups=0   # quick check
+composer bench:baseline                                # full report
+composer bench:compare -- <before.json> <after.json>   # compare two reports
+composer bench:verify -- <report.json> bench/reports/smoke-thresholds.json
+```
+
+CI verifies the smoke report against the committed thresholds.
