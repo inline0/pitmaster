@@ -3,6 +3,7 @@
 ## [0.2.12] - 2026-10-14
 
 ### Fixed
+- SSH2 verifies known host keys before authentication, honours the configured identity, and handles discovery and receive-pack advertisements; OpenSSH applies command overrides and key-learning modes
 - Diffs include new/deleted file modes, object IDs, binary paths, rename headers and mode-only changes; empty hunk ranges match Git, and redirected CLI output has no ANSI colour
 - Rename similarity counts copied bytes with bounded span occurrences, avoiding false matches between unrelated one-line files and repeated lines
 - Staged diffs honour an exact old or new path and show staged additions before the first commit

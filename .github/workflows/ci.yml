@@ -120,6 +120,20 @@ jobs:
       - run: git config --global init.defaultBranch main
       - run: composer test:integration
 
+  test-ssh2:
+    name: SSH2 Host Keys and Transport
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+          extensions: zlib, mbstring, ssh2
+      - run: composer install --no-interaction --prefer-dist
+      - run: php -r 'exit(extension_loaded("ssh2") ? 0 : 1);'
+      - run: vendor/bin/phpunit tests/Integration/SshTransportParityTest.php tests/Unit/Protocol/KnownHostsTest.php
+
   test-oracle:
     name: Oracle Regression
     runs-on: ubuntu-latest

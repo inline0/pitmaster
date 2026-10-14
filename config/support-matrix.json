@@ -191,7 +191,7 @@
                 {"feature": "Clone via HTTP", "status": "full", "class": "", "notes": "Ref discovery + full fetch"},
                 {"feature": "Incremental fetch", "status": "full", "class": "", "notes": "Only new objects"},
                 {"feature": "Push", "status": "full", "class": "", "notes": "Send objects + update remote refs"},
-                {"feature": "SSH transport", "status": "partial", "class": "Protocol\\SshClient", "notes": "Host verification for ext-ssh2 is being corrected (#22)."},
+                {"feature": "SSH transport", "status": "full", "class": "Protocol\\SshClient", "notes": "SSH2 pins known host keys before authentication; configured identities and OpenSSH overrides; Git-backed clone/fetch/push"},
                 {"feature": "git:// transport", "status": "full", "class": "Protocol\\GitProtocolClient", "notes": "Raw TCP socket, pkt-line framing"},
                 {"feature": "Dumb HTTP", "status": "full", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
             ]

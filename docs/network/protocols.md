@@ -82,7 +82,7 @@ ssh://git@github.com/user/repo.git
 
 No extension is required. The two paths behave differently:
 
-**System `ssh` client** (used when `ssh2` is not loaded). Pitmaster runs `ssh -o BatchMode=yes -o ConnectTimeout=30 -p <port> <user>@<host> <command>`, so authentication and host key checking follow your SSH configuration and agent. These environment variables adjust the command:
+**System `ssh` client** (used when `ssh2` is not loaded, or when the selected settings require OpenSSH). Pitmaster runs `ssh -o BatchMode=yes -o ConnectTimeout=30 -p <port> <user>@<host> <command>`, so authentication and host key checking follow your SSH configuration and agent. These environment variables adjust the command:
 
 | Variable | Effect |
 |----------|--------|
@@ -93,7 +93,9 @@ No extension is required. The two paths behave differently:
 
 This path starts a process, so it is not available on handles opened with `['processes' => false]`.
 
-**`ssh2` extension** (always preferred when loaded). Pitmaster authenticates with `~/.ssh/id_rsa`, then `~/.ssh/id_ed25519` if the RSA key is present but rejected, and otherwise with the SSH agent. The `PITMASTER_SSH_*` variables are ignored, and the server's host key is not verified on this path ([#22](https://github.com/inline0/pitmaster/issues/22)).
+**`ssh2` extension**. Before authentication, Pitmaster verifies the negotiated host-key fingerprint against `PITMASTER_SSH_KNOWN_HOSTS` (or `~/.ssh/known_hosts`) and `/etc/ssh/ssh_known_hosts`. Hashed hosts, non-default ports, wildcard/negated host lists, and revoked keys are checked. An unknown or changed key fails. The extension exposes SHA-1 fingerprints, which are compared with the known public-key bytes.
+
+Authentication first tries `PITMASTER_SSH_IDENTITY_FILE` with its `.pub` file, or both default RSA and Ed25519 key pairs, then the agent. An explicit SSH command, an identity without a companion `.pub`, or strict-checking modes such as `accept-new` and `no` select the system client so OpenSSH applies that setting. Paths with spaces are supported.
 
 The SSH transport runs `git-upload-pack` or `git-receive-pack` as a remote command and communicates over the SSH channel using the same pkt-line protocol as smart HTTP.
 

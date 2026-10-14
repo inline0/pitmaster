@@ -2485,7 +2485,9 @@
                         "tests/Integration/SmartHttpRemoteParityTest.php",
                         "tests/Integration/SshTransportParityTest.php"
                     ],
-                    "unit_tests": [],
+                    "unit_tests": [
+                        "tests/Unit/Protocol/KnownHostsTest.php"
+                    ],
                     "scenarios": [
                         "network/dumb-http-clone",
                         "network/dumb-http-fetch",

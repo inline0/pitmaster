@@ -7,6 +7,9 @@ namespace Pitmaster\Tests\Integration;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Pitmaster\Pitmaster;
+use Pitmaster\Protocol\SshClient;
+use Pitmaster\Exceptions\ProtocolException;
+use Pitmaster\Tests\Support\Workspace;
 
 final class SshTransportParityTest extends TestCase
 {
@@ -25,8 +28,7 @@ final class SshTransportParityTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->tmpDir = sys_get_temp_dir() . '/pitmaster-ssh-' . bin2hex(random_bytes(4));
-        mkdir($this->tmpDir, 0777, true);
+        $this->tmpDir = Workspace::createDirectory('ssh-transport-');
     }
 
     protected function tearDown(): void
@@ -38,7 +40,7 @@ final class SshTransportParityTest extends TestCase
             proc_close($this->sshd);
         }
 
-        exec('rm -rf ' . escapeshellarg($this->tmpDir));
+        Workspace::remove($this->tmpDir);
     }
 
     #[Test]
@@ -107,6 +109,43 @@ final class SshTransportParityTest extends TestCase
         $this->assertSame("ssh push\n", file_get_contents($gitClone . '/pit.txt'));
     }
 
+    #[Test]
+    public function ssh2PinsHostKeysAndUsesTheConfiguredIdentity(): void
+    {
+        if (!function_exists('ssh2_connect')) {
+            $this->markTestSkipped('ssh2 extension is required for its host-key verification test');
+        }
+        $this->seedRemote();
+        $this->startSshServer();
+        $url = $this->remoteUrl();
+        $this->withPitmasterSshEnv(function () use ($url): void {
+            $client = new SshClient(5);
+            self::assertNotEmpty($client->discoverRefs($url)->refs());
+            $clone = $this->tmpDir . '/ssh2-clone';
+            Pitmaster::clone($url, $clone);
+            self::assertSame($this->git('rev-parse HEAD', $this->sourceDir), $this->git('rev-parse HEAD', $clone));
+            $this->advanceRemote('ssh2-fetch', "extension fetch\n");
+            Pitmaster::open($clone)->fetch();
+            self::assertSame($this->git('rev-parse HEAD', $this->sourceDir), $this->git('rev-parse refs/remotes/origin/main', $clone));
+            $handle = Pitmaster::open($clone);
+            $handle->reset('refs/remotes/origin/main', 'hard');
+            $handle->config()->set('user.name', 'SSH Test');
+            $handle->config()->set('user.email', 'ssh@example.test');
+            file_put_contents($clone . '/push.txt', "extension push\n");
+            $handle->add('push.txt');
+            $head = $handle->commit('ssh2 push');
+            $handle->push();
+            self::assertSame($head->hex . "\n", $this->git('rev-parse refs/heads/main', $this->remoteDir));
+            $this->runCommand('ssh-keygen -H -f ' . escapeshellarg($this->knownHosts), $this->tmpDir);
+            self::assertNotEmpty($client->discoverRefs($url)->refs());
+            $wrongKey = trim((string) file_get_contents($this->privateKey . '.pub'));
+            file_put_contents($this->knownHosts, '[127.0.0.1]:' . $this->port . ' ' . $wrongKey . "\n");
+            $this->expectException(ProtocolException::class);
+            $this->expectExceptionMessage('host key verification failed');
+            $client->discoverRefs($url);
+        }, true);
+    }
+
     private function seedRemote(): void
     {
         $this->sourceDir = $this->tmpDir . '/source';
@@ -150,9 +189,9 @@ final class SshTransportParityTest extends TestCase
         file_put_contents($this->sshdConfig, implode("\n", [
             'Port ' . $this->port,
             'ListenAddress 127.0.0.1',
-            'HostKey ' . $hostKey,
-            'PidFile ' . $this->tmpDir . '/sshd.pid',
-            'AuthorizedKeysFile ' . $authorizedKeys,
+            'HostKey "' . $hostKey . '"',
+            'PidFile "' . $this->tmpDir . '/sshd.pid"',
+            'AuthorizedKeysFile "' . $authorizedKeys . '"',
             'PasswordAuthentication no',
             'KbdInteractiveAuthentication no',
             'ChallengeResponseAuthentication no',
@@ -220,7 +259,7 @@ final class SshTransportParityTest extends TestCase
         );
     }
 
-    private function withPitmasterSshEnv(callable $callback): mixed
+    private function withPitmasterSshEnv(callable $callback, bool $extension = false): mixed
     {
         $previous = [
             'PITMASTER_SSH_COMMAND' => getenv('PITMASTER_SSH_COMMAND'),
@@ -229,7 +268,7 @@ final class SshTransportParityTest extends TestCase
             'PITMASTER_SSH_STRICT_HOST_KEY_CHECKING' => getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING'),
         ];
 
-        putenv('PITMASTER_SSH_COMMAND=ssh');
+        putenv($extension ? 'PITMASTER_SSH_COMMAND' : 'PITMASTER_SSH_COMMAND=ssh');
         putenv('PITMASTER_SSH_IDENTITY_FILE=' . $this->privateKey);
         putenv('PITMASTER_SSH_KNOWN_HOSTS=' . $this->knownHosts);
         putenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING=yes');
@@ -273,7 +312,7 @@ final class SshTransportParityTest extends TestCase
         $sshCommand = sprintf(
             'ssh -i %s -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=%s -p %d',
             escapeshellarg($this->privateKey),
-            escapeshellarg($this->knownHosts),
+            escapeshellarg('"' . $this->knownHosts . '"'),
             $this->port,
         );
 

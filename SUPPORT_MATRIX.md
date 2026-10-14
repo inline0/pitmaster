@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **134/146 in-scope features fully implemented and oracle-verified within the declared parity scope (91.8%).**
-Partial support exists for **12/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **135/146 in-scope features fully implemented and oracle-verified within the declared parity scope (92.5%).**
+Partial support exists for **11/146** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -35,11 +35,11 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Merge | 4 | 6 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 13 | 1 | 0 | 0 | 0 | 14 |
+| Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 14 | 1 | 0 | 0 | 0 | 15 |
-| **Total** | **134** | **12** | **0** | **0** | **0** | **146** |
+| **Total** | **135** | **11** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -219,7 +219,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Detached HEAD | `DONE` | `native` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*13/14 fully done (92.9%), 1 partial*
+*14/14 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -234,7 +234,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Clone via HTTP | `DONE` | `native` |  | Ref discovery + full fetch |
 | Incremental fetch | `DONE` | `native` |  | Only new objects |
 | Push | `DONE` | `native` |  | Send objects + update remote refs |
-| SSH transport | `PART` | `native` | `Protocol\SshClient` | Host verification for ext-ssh2 is being corrected (#22). |
+| SSH transport | `DONE` | `native` | `Protocol\SshClient` | SSH2 pins known host keys before authentication; configured identities and OpenSSH overrides; Git-backed clone/fetch/push |
 | git:// transport | `DONE` | `native` | `Protocol\GitProtocolClient` | Raw TCP socket, pkt-line framing |
 | Dumb HTTP | `DONE` | `native` |  | Rare, smart HTTP covers all major hosts |
 
@@ -288,10 +288,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ## Progress
 
 ```
-[#####################################---] 91.8% fully done
+[#####################################---] 92.5% fully done
 
-Full:     134 features
-Partial:  12 features
+Full:     135 features
+Partial:  11 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

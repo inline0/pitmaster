@@ -144,11 +144,22 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
     private function execute(string $host, int $port, string $user, string $command, string $input, bool $allowExitWithOutput = false): string
     {
         // Try ssh2 extension first
-        if (function_exists('ssh2_connect')) {
+        if (function_exists('ssh2_connect') && !$this->requiresProcess()) {
             return $this->executeSsh2($host, $port, $user, $command, $input, $allowExitWithOutput);
         }
 
         return $this->executeProcess($host, $port, $user, $command, $input, $allowExitWithOutput);
+    }
+
+    private function requiresProcess(): bool
+    {
+        $command = getenv('PITMASTER_SSH_COMMAND');
+        $strict = getenv('PITMASTER_SSH_STRICT_HOST_KEY_CHECKING');
+        $identity = getenv('PITMASTER_SSH_IDENTITY_FILE');
+
+        return (is_string($command) && $command !== '')
+            || (is_string($strict) && $strict !== '' && !in_array(strtolower($strict), ['yes', 'ask'], true))
+            || (is_string($identity) && $identity !== '' && !is_file($identity . '.pub'));
     }
 
     private function executeSsh2(string $host, int $port, string $user, string $command, string $input, bool $allowExitWithOutput): string
@@ -159,32 +170,36 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
             throw new ProtocolException("SSH connection failed: {$host}:{$port}");
         }
 
-        // Try key-based auth from default locations
+        $fingerprint = @ssh2_fingerprint($connection, SSH2_FINGERPRINT_SHA1 | SSH2_FINGERPRINT_HEX);
+
+        if (!is_string($fingerprint)) {
+            throw new ProtocolException('Cannot read SSH host key: ' . $host);
+        }
+
         $homeDir = getenv('HOME') ?: (getenv('USERPROFILE') ?: '/root');
-        $keyFile = $homeDir . '/.ssh/id_rsa';
-        $pubKeyFile = $homeDir . '/.ssh/id_rsa.pub';
+        $knownHosts = getenv('PITMASTER_SSH_KNOWN_HOSTS');
+        KnownHosts::verify($host, $port, $fingerprint, [
+            is_string($knownHosts) && $knownHosts !== '' ? $knownHosts : $homeDir . '/.ssh/known_hosts',
+            '/etc/ssh/ssh_known_hosts',
+        ]);
+        $identityFile = getenv('PITMASTER_SSH_IDENTITY_FILE');
+        $keys = is_string($identityFile) && $identityFile !== ''
+            ? [$identityFile]
+            : [$homeDir . '/.ssh/id_rsa', $homeDir . '/.ssh/id_ed25519'];
+        $authenticated = false;
 
-        if (is_file($keyFile) && is_file($pubKeyFile)) {
-            if (!@ssh2_auth_pubkey_file($connection, $user, $pubKeyFile, $keyFile)) {
-                // Try ed25519
-                $keyFile = $homeDir . '/.ssh/id_ed25519';
-                $pubKeyFile = $homeDir . '/.ssh/id_ed25519.pub';
+        foreach ($keys as $keyFile) {
+            if (
+                is_file($keyFile) && is_file($keyFile . '.pub')
+                && @ssh2_auth_pubkey_file($connection, $user, $keyFile . '.pub', $keyFile)
+            ) {
+                $authenticated = true;
+                break;
+            }
+        }
 
-                if (is_file($keyFile) && is_file($pubKeyFile)) {
-                    if (!@ssh2_auth_pubkey_file($connection, $user, $pubKeyFile, $keyFile)) {
-                        throw new ProtocolException("SSH authentication failed for {$user}@{$host}");
-                    }
-                } else {
-                    // Try ssh-agent
-                    if (!@ssh2_auth_agent($connection, $user)) {
-                        throw new ProtocolException("SSH authentication failed for {$user}@{$host}");
-                    }
-                }
-            }
-        } else {
-            if (!@ssh2_auth_agent($connection, $user)) {
-                throw new ProtocolException("SSH authentication failed for {$user}@{$host}");
-            }
+        if (!$authenticated && !@ssh2_auth_agent($connection, $user)) {
+            throw new ProtocolException("SSH authentication failed for {$user}@{$host}");
         }
 
         $stream = ssh2_exec($connection, $command);
@@ -194,6 +209,17 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         }
 
         stream_set_blocking($stream, true);
+        stream_set_timeout($stream, $this->timeout);
+
+        if ($allowExitWithOutput && $input === '') {
+            $output = $this->readAdvertisement($stream);
+            fclose($stream);
+            return $output;
+        }
+
+        if ($input !== '' && str_starts_with($command, 'git-receive-pack ')) {
+            $this->readAdvertisement($stream);
+        }
 
         if ($input !== '') {
             fwrite($stream, $input);
@@ -289,7 +315,7 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
 
         if (is_string($knownHosts) && $knownHosts !== '') {
             $parts[] = '-o';
-            $parts[] = 'UserKnownHostsFile=' . $knownHosts;
+            $parts[] = 'UserKnownHostsFile="' . str_replace(['\\', '"'], ['\\\\', '\"'], $knownHosts) . '"';
         }
 
         if (is_string($strict) && $strict !== '') {
@@ -325,7 +351,7 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
         }
 
         if (is_string($knownHosts) && $knownHosts !== '') {
-            $parts[] = '-o ' . escapeshellarg('UserKnownHostsFile=' . $knownHosts);
+            $parts[] = '-o ' . escapeshellarg('UserKnownHostsFile="' . str_replace(['\\', '"'], ['\\\\', '\"'], $knownHosts) . '"');
         }
 
         if (is_string($strict) && $strict !== '') {
@@ -348,8 +374,10 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
      *
      * @param resource $stream
      */
-    private function readAdvertisement($stream): void
+    private function readAdvertisement($stream): string
     {
+        $advertisement = '';
+
         while (true) {
             $hexLen = $this->readExact($stream, 4);
 
@@ -358,7 +386,7 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
             }
 
             if ($hexLen === PktLine::FLUSH) {
-                return;
+                return $advertisement . $hexLen;
             }
 
             if (!ctype_xdigit($hexLen)) {
@@ -373,13 +401,13 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
 
             $payloadLen = $lineLen - 4;
 
-            if ($payloadLen === 0) {
-                continue;
-            }
+            $payload = $this->readExact($stream, $payloadLen);
 
-            if ($this->readExact($stream, $payloadLen) === null) {
+            if ($payload === null) {
                 throw new ProtocolException('Truncated SSH receive-pack advertisement');
             }
+
+            $advertisement .= $hexLen . $payload;
         }
     }
 
