@@ -22,6 +22,9 @@ final class TreeDiff
     /** @var array<string, array<string, array{hash: string, mode: string, isTree: bool}>> */
     private array $treeEntriesCache = [];
 
+    /** @var array<string, array<string, int>> */
+    private array $spanCache = [];
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly string $algorithm = 'myers',
@@ -93,8 +96,8 @@ final class TreeDiff
                 }
 
                 $score = $this->similarity(
-                    $this->readBlobContent($del->oldHash),
-                    $this->readBlobContent($add->newHash),
+                    $del->oldHash,
+                    $add->newHash,
                 );
 
                 if ($score > $bestScore && $score >= 50) {
@@ -303,16 +306,18 @@ final class TreeDiff
         );
     }
 
-    private function similarity(string $oldContent, string $newContent): int
+    private function similarity(string $oldHash, string $newHash): int
     {
+        $oldContent = $this->readBlobContent($oldHash);
+        $newContent = $this->readBlobContent($newHash);
         $size = max(strlen($oldContent), strlen($newContent));
 
-        if ($size === 0) {
+        if ($size === 0 || min(strlen($oldContent), strlen($newContent)) * 2 < $size) {
             return 0;
         }
 
-        $oldSpans = $this->contentSpans($oldContent);
-        $newSpans = $this->contentSpans($newContent);
+        $oldSpans = $this->spanCache[$oldHash] ??= $this->contentSpans($oldContent);
+        $newSpans = $this->spanCache[$newHash] ??= $this->contentSpans($newContent);
         $copied = 0;
 
         foreach ($oldSpans as $span => $bytes) {
