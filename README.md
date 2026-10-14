@@ -29,7 +29,7 @@ Pitmaster reads and writes Git repositories in pure PHP. Core repository operati
 - Read and write loose objects (blob, tree, commit, tag)
 - Read and write pack files with full delta chain resolution
 - Read and write the index (staging area)
-- Compute diffs (Myers O(ND) algorithm, byte-exact with `git diff`)
+- Compute diffs (Myers O(ND), patience, histogram, minimal) in git's unified format; modified text files match `git diff` byte for byte, while new, deleted, binary, renamed and mode-changed files are formatted differently ([#3](https://github.com/inline0/pitmaster/issues/3))
 - Three-way merge with conflict markers
 - Walk commit graphs, compute merge bases
 - Speak the Git smart HTTP protocol (clone, fetch, push)
@@ -70,7 +70,7 @@ $diffs = $repo->diffStaged();             // Staged changes
 $diffs = $repo->diffTree($treeA, $treeB); // Tree-to-tree
 
 // Status
-$status = $repo->status();                // WorkingTreeStatus
+$status = $repo->status();                // array of StatusEntry
 foreach ($status as $entry) {
     echo $entry->shortFormat() . "\n";    // "M  src/main.php"
 }
@@ -203,10 +203,11 @@ The instrumentation suite is intentionally separate from the canonical baseline 
 
 - PHP 8.2+
 - `ext-zlib` (built-in)
-- `ext-mbstring` (built-in)
 - `ext-json` (built-in)
+- `ext-mbstring` (declared in `composer.json`)
+- `ext-ctype` (used for hash validation; enabled in most PHP builds but not yet declared in `composer.json`, see [#9](https://github.com/inline0/pitmaster/issues/9))
 
-Core repository operations do not require the `git` binary or FFI. Optional features have extra runtime expectations: hook execution uses `proc_open()`, and SSH transport requires `ext-ssh2`.
+Core repository operations do not require the `git` binary or FFI. Optional features have extra runtime expectations: hook execution uses `proc_open()`, and SSH transport uses `ext-ssh2` when it is loaded and otherwise runs the system `ssh` client through `proc_open()`.
 
 ## Features
 
@@ -216,7 +217,7 @@ See [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md) for the full feature list. The render
 |----------|----------|
 | Objects | Blob, tree, commit, tag (SHA-1 + SHA-256) |
 | Storage | Loose objects, pack files (v1/v2 index, OFS/REF delta), MIDX, commit-graph |
-| Index | v2/v3/v4 with extensions (TREE, REUC, FSMN) |
+| Index | Read v2/v3/v4, write v2/v3 ([#15](https://github.com/inline0/pitmaster/issues/15)); extensions kept as raw data |
 | Refs | Loose, packed, symbolic, reftable, reflog |
 | Diff | Myers O(ND), patience, histogram, word diff, rename detection |
 | Merge | Three-way, recursive, ours, octopus, fast-forward, conflict markers |

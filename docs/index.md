@@ -14,7 +14,7 @@ Pitmaster is a pure PHP library that reads and writes Git repositories natively.
 
 PHP applications that interact with Git repositories typically shell out to the `git` binary. This works, but it creates a hard dependency on `git` being installed, introduces security concerns around `exec()` and `proc_open()`, and makes the application harder to deploy in restricted environments (containers without git, shared hosting, serverless functions).
 
-Pitmaster eliminates the `git` dependency entirely. Your PHP application can read commit history, create commits, compute diffs, check status, and push to remotes using only PHP's built-in functions.
+Pitmaster removes the `git` dependency for core repository work. Your PHP application can read commit history, create commits, compute diffs, check status, and push to remotes over smart HTTP using only PHP's built-in functions. Hooks and SSH transport are the exceptions: both start processes, and both can be switched off per repository handle (see [Hooks](/docs/advanced/hooks)).
 
 ## What it does
 
@@ -23,7 +23,7 @@ Pitmaster eliminates the `git` dependency entirely. Your PHP application can rea
 - Writes pack files for network operations
 - Reads and writes the index/staging area (v2, v3, v4 formats)
 - Reads and writes refs (branches, tags, HEAD, packed-refs, reftable)
-- Computes diffs (Myers, Patience, Histogram, and Minimal algorithms)
+- Computes diffs (Myers, Patience, Histogram, and Minimal algorithms) in git's unified format
 - Performs three-way merges with conflict detection
 - Walks commit graphs (log, ancestry, merge base)
 - Speaks the Git smart HTTP protocol (clone, fetch, push)
@@ -33,10 +33,11 @@ Pitmaster eliminates the `git` dependency entirely. Your PHP application can rea
 
 - PHP 8.2 or later
 - `zlib` extension (built-in on virtually all PHP installs)
-- `mbstring` extension (for UTF-8 path handling)
 - `json` extension
+- `mbstring` extension (declared in `composer.json`, so Composer requires it at install time)
+- `ctype` extension (used to validate object hashes; enabled in most PHP builds, but not declared in `composer.json`)
 
-Core repository operations do not require the `git` binary. Optional features may need extra runtime capabilities: hook execution uses `proc_open()`, and SSH transport requires `ext-ssh2`.
+Core repository operations do not require the `git` binary. Optional features may need extra runtime capabilities: hook execution uses `proc_open()`, and SSH transport uses `ext-ssh2` when it is loaded and otherwise starts the system `ssh` binary through `proc_open()`.
 
 ## Quick example
 
@@ -64,4 +65,4 @@ $repo->add('src/Feature.php');
 $commitId = $repo->commit('Add new feature');
 ```
 
-Start with [Getting Started](/docs/getting-started), then use [API](/docs/api), [CLI](/docs/cli), and [Operations](/docs/operations/read) for the rest of the surface area.
+Start with [Getting Started](/docs/getting-started), then use [API](/docs/api), [CLI](/docs/cli), and [Operations](/docs/operations/read) for the rest of the surface area. [Testing](/docs/testing) explains how Pitmaster is checked against `git`.

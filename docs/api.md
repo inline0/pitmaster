@@ -21,42 +21,64 @@ use Pitmaster\Pitmaster;
 ### `open`
 
 ```php
-public static function open(string $path): Repository
+public static function open(string $path, array $options = []): Repository
 ```
 
 Open an existing repository at `$path`. The path should be the working tree root (containing `.git/`). Also supports linked worktrees (where `.git` is a file containing `gitdir: <path>`), and bare repositories (where `$path` is the `.git` directory itself).
+
+`$options` accepts two booleans, both `true` by default:
+
+- `hooks`: run `.git/hooks` scripts. Pass `false` to skip them for this handle.
+- `processes`: allow anything that starts a process or opens a network transport. Pass `false` to disable hooks, the fsmonitor hook, clone, fetch, push, and SSH process transport. Local reads and writes keep working.
 
 Throws `InvalidArgumentException` if the path is not a git repository.
 
 ```php
 $repo = Pitmaster::open('/home/user/project');
+$repo = Pitmaster::open('/home/user/project', ['hooks' => false]);
+$repo = Pitmaster::open('/home/user/project', Pitmaster::processFreeOptions());
 ```
 
 ### `init`
 
 ```php
-public static function init(string $path): Repository
+public static function init(string $path, string $objectFormat = 'sha1', array $options = []): Repository
 ```
 
-Initialize a new repository at `$path`. Creates the `.git` directory structure with `objects/`, `refs/heads/`, `refs/tags/`, `HEAD` (pointing to `refs/heads/main`), and a default `config`.
+Initialize a new repository at `$path`. Creates the `.git` directory structure with `objects/`, `refs/heads/`, `refs/tags/`, `hooks/`, `info/`, `HEAD` (pointing to `refs/heads/main`), and a default `config`.
+
+`$objectFormat` is `'sha1'` or `'sha256'`. A SHA-256 repository gets `repositoryformatversion = 1` and `extensions.objectformat = sha256` in its config. Any other value throws `InvalidArgumentException`. `$options` takes the same keys as `open()`.
 
 Throws `RuntimeException` if a repository already exists at the path.
 
 ```php
 $repo = Pitmaster::init('/home/user/new-project');
+$repo = Pitmaster::init('/home/user/sha256-project', 'sha256');
 ```
 
 ### `clone`
 
 ```php
-public static function clone(string $url, string $path): Repository
+public static function clone(string $url, string $path, ?int $depth = null, array $options = []): Repository
 ```
 
-Clone a remote repository via smart HTTP. Initializes a new repo, discovers remote refs, fetches the pack file, sets up remote tracking branches, and materializes the working tree.
+Clone a remote repository. Initializes a new repo, discovers remote refs, fetches the pack file, sets up remote tracking branches, and materializes the working tree. SSH URLs (`ssh://...` or `user@host:path`) use the SSH transport; other URLs use smart HTTP and fall back to dumb HTTP when the smart exchange fails. Pass `$depth` for a shallow clone.
+
+Throws `RuntimeException` when `$options['processes']` is `false`. If the clone fails and `$path` did not exist before, the partially created directory is removed.
 
 ```php
 $repo = Pitmaster::clone('https://github.com/user/repo.git', '/tmp/repo');
+$repo = Pitmaster::clone('https://github.com/user/repo.git', '/tmp/shallow', 1);
+$repo = Pitmaster::clone('https://github.com/user/repo.git', '/tmp/repo', null, ['hooks' => false]);
 ```
+
+### `processFreeOptions`
+
+```php
+public static function processFreeOptions(): array
+```
+
+Returns `['processes' => false, 'hooks' => false]`, for runtimes that must not start host processes. Pass it to `open()` or `init()`.
 
 ### `isRepository`
 
@@ -143,6 +165,16 @@ public function isLinkedWorktree(): bool
 
 Returns `true` if this repository handle is a linked worktree.
 
+#### `isBare`, `hooksEnabled`, `processesEnabled`
+
+```php
+public function isBare(): bool
+public function hooksEnabled(): bool
+public function processesEnabled(): bool
+```
+
+Report whether the repository has no working tree, and which of the `hooks` / `processes` options are in effect for this handle. `hooksEnabled()` is `false` whenever processes are disabled.
+
 ---
 
 ### Objects
@@ -153,7 +185,7 @@ Returns `true` if this repository handle is a linked worktree.
 public function readObject(string $hash): GitObject
 ```
 
-Read any object by its full 40-character hex hash. Returns a `Blob`, `Tree`, `Commit`, or `Tag` instance. Searches loose objects first, then pack files.
+Read any object by its full hex hash (40 characters, or 64 in a SHA-256 repository). Abbreviated hashes are not accepted. Returns a `Blob`, `Tree`, `Commit`, or `Tag` instance. Searches loose objects first, then pack files.
 
 Throws `ObjectNotFoundException` if the hash is not found.
 
@@ -261,7 +293,7 @@ public function resolve(string $revision): ObjectId
 ```
 
 Resolve a revision expression to an `ObjectId`. Supports:
-- Full 40-character hex hashes
+- Full hex hashes (40 characters, or 64 for SHA-256). Abbreviated hashes such as `abc1234` are not resolved.
 - `HEAD`
 - Branch names (`main`, `feature/login`)
 - Tag names (`v1.0.0`)
@@ -320,7 +352,7 @@ $repo->createBranch('hotfix', $repo->resolve('v1.0.0'));
 public function deleteBranch(string $name): void
 ```
 
-Delete a branch by name.
+Delete a branch by name. Throws `RuntimeException` if the branch is checked out or does not exist. Unlike `git branch -d`, it does not check whether the branch is merged.
 
 ```php
 $repo->deleteBranch('feature/old');
@@ -403,11 +435,15 @@ if ($repo->isBranchMerged('feature/done')) {
 public function checkout(string $target): void
 ```
 
-Switch branches or detach HEAD. Updates HEAD, the index, and the working tree.
+Switch branches or detach HEAD. Updates HEAD, the index, and the working tree. `$target` is a branch name, a tag, a full hash, or a revision expression; anything that is not a branch detaches HEAD.
+
+Throws `RuntimeException` when a local change (staged or not) or an untracked file sits in a path that differs between the current and the target tree.
+
+Uncommitted changes in other tracked files are not carried over: the index and working tree are rebuilt from the target tree, so edits to files that are identical on both sides are lost, where git would keep them ([#2](https://github.com/inline0/pitmaster/issues/2)). Commit or stash them first. `merge()`, `cherryPick()`, `revert()`, `rebase()` and the bisect methods rebuild the working tree the same way.
 
 ```php
 $repo->checkout('feature/login');
-$repo->checkout('abc123def456...');  // Detached HEAD
+$repo->checkout($repo->resolve('v1.0.0')->hex);  // Detached HEAD
 ```
 
 ---
@@ -428,7 +464,7 @@ Read and return the current index (staging area) from `.git/index`.
 public function add(string ...$paths): void
 ```
 
-Stage files. Reads each file from the working tree, creates a blob object, and updates the index.
+Stage files. Reads each file from the working tree, creates a blob object, and updates the index. Each argument must be a file (or symlink) path relative to the working tree root; directories and globs are not expanded, and a missing file throws `RuntimeException`.
 
 ```php
 $repo->add('src/Feature.php', 'tests/FeatureTest.php');
@@ -469,12 +505,14 @@ $repo->mv('old-name.php', 'new-name.php');
 #### `commit`
 
 ```php
-public function commit(string $message, ?string $author = null): ObjectId
+public function commit(?string $message = null, ?string $author = null): ObjectId
 ```
 
 Create a commit from the current index. Builds a tree hierarchy from the index entries, creates the commit object with the HEAD as parent (if any), and updates HEAD. Returns the new commit's `ObjectId`.
 
-The `$author` parameter is a full git author string (`Name <email> timestamp timezone`). If null, it is derived from `.git/config` or the `PITMASTER_AUTHOR_NAME`/`PITMASTER_AUTHOR_EMAIL` constants.
+`$message` may be `null` only while a merge, cherry-pick, revert, or rebase is stopped on a conflict; the prepared message is used then. Otherwise a `null` message throws `RuntimeException('Commit message required')`. A commit also throws when the index has unmerged paths, when the index is empty in a repository without commits, and when the tree is unchanged from HEAD.
+
+The `$author` parameter is a full git author string (`Name <email> timestamp timezone`). If null, it is resolved from environment variables, constants, and `.git/config`, in the order described in [Getting Started](/docs/getting-started).
 
 ```php
 $id = $repo->commit('Fix null pointer bug');
@@ -516,10 +554,10 @@ $repo->reset('main', 'hard');
 #### `restore`
 
 ```php
-public function restore(string $path, ?string $source = null): void
+public function restore(string $path, ?string $source = null, bool $staged = false, bool $worktree = false): void
 ```
 
-Restore a path from the index or a specific source tree. By default Pitmaster restores the worktree from the index. Pass `staged: true` to restore the index, and `worktree: true` to restore both.
+Restore a path from the index or a specific source revision. With neither flag set, Pitmaster restores the worktree from the index (or from `$source` when given). `staged: true` restores the index from HEAD (or `$source`) and leaves the worktree alone; pass `staged: true, worktree: true` to restore both.
 
 ```php
 $repo->restore('src/File.php');                                        // Worktree from index
@@ -539,7 +577,7 @@ public function cherryPickAbort(): void
 Apply a commit as a new commit on the current branch, preserving the original author. If conflicts stop the operation, resolve them, stage the paths, then call `cherryPickContinue()` or `cherryPickAbort()`.
 
 ```php
-$newId = $repo->cherryPick('abc123');
+$newId = $repo->cherryPick('feature~2');
 
 // After resolving conflicts:
 $repo->add('src/File.php');
@@ -557,7 +595,7 @@ public function revertAbort(): void
 Create a commit that undoes another commit. If conflicts stop the revert, resolve them, stage the paths, then call `revertContinue()` or `revertAbort()`.
 
 ```php
-$revertId = $repo->revert('abc123');
+$revertId = $repo->revert('HEAD~1');
 
 // After resolving conflicts:
 $repo->add('src/File.php');
@@ -573,7 +611,9 @@ public function rebaseAbort(): void
 public function rebaseSkip(): array
 ```
 
-Rebase the current branch onto another revision. Pitmaster currently covers linear rebases with Git-shaped stop state for conflicts, plus `--continue`, `--abort`, and `--skip`.
+Rebase the current branch onto another revision. Pitmaster currently covers linear rebases with Git-shaped stop state for conflicts, plus continue, abort, and skip. HEAD must point to a branch.
+
+`rebase()`, `rebaseContinue()`, and `rebaseSkip()` return `['success' => bool, 'commits' => int, 'conflicts' => list<string>]`: whether the rebase finished, how many commits were applied, and the conflicting paths when it stopped.
 
 ```php
 $result = $repo->rebase('main');
@@ -599,10 +639,13 @@ Compute working tree status. Returns an array of `StatusEntry` objects, each con
 - `path`: the file path
 - `index`: `FileStatus` enum for HEAD-to-index changes
 - `worktree`: `FileStatus` enum for index-to-worktree changes
+- `origPath`, `renameScore`: set for renamed entries, otherwise `null`
+
+Untracked files have `FileStatus::Untracked` in both columns. Ignored files are not reported.
 
 ```php
 foreach ($repo->status() as $entry) {
-    echo "{$entry->index->value}{$entry->worktree->value} {$entry->path}\n";
+    echo $entry->shortFormat() . "\n"; // "M  src/File.php", "?? notes.txt"
 }
 ```
 
@@ -627,10 +670,10 @@ echo $repo->statusPorcelainV2();
 #### `diff`
 
 ```php
-public function diff(?string $pathspec = null): array
+public function diff(?string $pathspec = null, string $algorithm = 'myers'): array
 ```
 
-Diff working tree against the index (unstaged changes). Returns an array of `DiffResult` objects. Optionally filter by a single path.
+Diff working tree against the index (unstaged changes). Returns an array of `DiffResult` objects. `$pathspec` filters by one exact file path. `$algorithm` is `'myers'` (default), `'patience'`, `'histogram'`, or `'minimal'`; any other value throws `InvalidArgumentException`.
 
 ```php
 $diffs = $repo->diff();
@@ -643,10 +686,12 @@ foreach ($diffs as $diff) {
 #### `diffStaged`
 
 ```php
-public function diffStaged(?string $pathspec = null): array
+public function diffStaged(?string $pathspec = null, string $algorithm = 'myers'): array
 ```
 
-Diff index against HEAD (staged changes). Returns `DiffResult[]`.
+Diff index against HEAD (staged changes). Returns `DiffResult[]`, with rename detection between deleted and added files.
+
+The `$pathspec` argument is currently ignored, so every staged file is returned, and the method returns an empty array before the first commit ([#5](https://github.com/inline0/pitmaster/issues/5)).
 
 ```php
 $staged = $repo->diffStaged();
@@ -655,15 +700,15 @@ $staged = $repo->diffStaged();
 #### `diffTree`
 
 ```php
-public function diffTree(ObjectId $a, ObjectId $b): array
+public function diffTree(ObjectId $a, ObjectId $b, string $algorithm = 'myers'): array
 ```
 
-Diff two trees by their `ObjectId`. Returns `DiffResult[]`.
+Diff two trees by their `ObjectId`. Returns `DiffResult[]`. Pass tree IDs, not commit IDs: a commit ID is not read as a tree and produces an empty result.
 
 ```php
-$commit1 = $repo->resolve('HEAD~1');
-$commit2 = $repo->resolve('HEAD');
-$diffs = $repo->diffTree($commit1, $commit2);
+$old = $repo->readObject($repo->resolve('HEAD~1')->hex);
+$new = $repo->head();
+$diffs = $repo->diffTree($old->tree, $new->tree);
 ```
 
 ---
@@ -676,11 +721,27 @@ $diffs = $repo->diffTree($commit1, $commit2);
 public function log(int $limit = 50, ?ObjectId $from = null): array
 ```
 
-Walk commit history in topological order. Returns `Commit[]`. If `$from` is null, starts from HEAD.
+Walk commit history, newest first by committer timestamp. Returns `Commit[]`. If `$from` is null, starts from HEAD. Returns an empty array when HEAD has no commit yet.
 
 ```php
 $commits = $repo->log(10);
 ```
+
+#### `logAll`
+
+```php
+public function logAll(int $limit = 50): array
+```
+
+Walk commits reachable from every ref and HEAD, newest first. Returns `Commit[]`.
+
+#### `logOneline`
+
+```php
+public function logOneline(int $limit = 50, bool $all = false, ?string $path = null): array
+```
+
+Return log lines in `git log --oneline` form (`abc1234 Subject`), from HEAD, from all refs (`$all`), or filtered by path.
 
 #### `logPath`
 
@@ -688,7 +749,9 @@ $commits = $repo->log(10);
 public function logPath(string $path, int $limit = 50): array
 ```
 
-Log filtered by a file path. Returns only commits that touch the given file.
+Log filtered by a file path. Returns only commits whose diff against their first parent adds, modifies, deletes, or renames that exact file. Directory paths do not match.
+
+Only the newest `5 * $limit` commits are examined, so older commits that touch the file can be missing from the result ([#7](https://github.com/inline0/pitmaster/issues/7)).
 
 ```php
 $commits = $repo->logPath('src/Repository.php', 20);
@@ -701,17 +764,23 @@ $commits = $repo->logPath('src/Repository.php', 20);
 #### `merge`
 
 ```php
-public function merge(string $branch): MergeResult
+public function merge(string $branch, string $strategy = 'recursive'): MergeResult
+public function mergeOctopus(array $branches): MergeResult
 public function mergeContinue(): ObjectId
 public function mergeAbort(): void
 ```
 
-Merge a branch into HEAD. Detects fast-forward merges automatically. For non-fast-forward merges, performs tree-level conflict detection and creates a merge commit if clean. Conflict stops write Git-shaped merge state to the index and worktree; resolve the paths, stage them, then call `mergeContinue()` or `mergeAbort()`.
+Merge a branch (or any revision) into HEAD. Detects fast-forward merges automatically. For non-fast-forward merges, performs tree-level conflict detection and creates a merge commit if clean. Conflict stops write Git-shaped merge state to the index and worktree; resolve the paths, stage them, then call `mergeContinue()` or `mergeAbort()`.
+
+`$strategy` `'ours'` records a merge commit that keeps HEAD's tree; any other value uses the default recursive merge. `mergeOctopus()` merges two or more branches into one commit. If any branch conflicts, it returns an unclean result without writing merge state or creating a commit.
+
+Merging a branch that is already contained in HEAD creates another merge commit instead of reporting "Already up to date" ([#6](https://github.com/inline0/pitmaster/issues/6)). Uncommitted changes in tracked files are overwritten as described under `checkout()`.
 
 Returns a `MergeResult` with:
 - `clean`: whether the merge succeeded without conflicts
 - `commitId`: the merge commit ID (if clean)
 - `conflictPaths`: array of conflicting file paths (if not clean)
+- `mergedContents`: conflicting path to file content with conflict markers (if not clean)
 
 ```php
 $result = $repo->merge('feature/login');
@@ -740,6 +809,25 @@ $base = $repo->mergeBase(
 );
 ```
 
+### Bisect
+
+```php
+public function bisectStart(string $bad, string $good): ObjectId
+public function bisectGood(?string $revision = null): ?ObjectId
+public function bisectBad(?string $revision = null): ?ObjectId
+public function bisectReset(): void
+```
+
+Binary search for the commit that introduced a change. `bisectStart()` records the bad and good revisions, checks out the first candidate, and returns it. `bisectGood()` and `bisectBad()` mark the current HEAD (or `$revision`) and check out and return the next candidate. When a single suspect is left, that commit is returned and stays the candidate: it is the first bad commit. `bisectReset()` ends the session and returns to the branch or commit where it started.
+
+```php
+$candidate = $repo->bisectStart('HEAD', 'v1.0.0');
+// test $candidate ...
+$candidate = $repo->bisectBad();
+$candidate = $repo->bisectGood();
+$repo->bisectReset();
+```
+
 ---
 
 ### Network
@@ -747,10 +835,12 @@ $base = $repo->mergeBase(
 #### `fetch`
 
 ```php
-public function fetch(string $remote = 'origin'): void
+public function fetch(string $remote = 'origin', ?int $depth = null): void
 ```
 
-Fetch from a remote. Downloads new objects and updates remote tracking refs.
+Fetch from a remote. Downloads new objects and updates remote tracking refs. Pass `$depth` to deepen or limit a shallow history.
+
+`fetch()` and the `push*()` methods throw `RuntimeException` on a handle opened with `['processes' => false]`.
 
 ```php
 $repo->fetch();
@@ -790,7 +880,7 @@ Add a linked worktree. Creates the branch if it does not exist, sets up the work
 
 ```php
 $wt = $repo->addWorktree('/tmp/review', 'feature/review');
-$wt = $repo->addWorktree('/tmp/a/divine-child', 'feature/review', name: 'app-theme');
+$wt = $repo->addWorktree('/tmp/checkouts/review', 'feature/review', name: 'review-wt');
 ```
 
 #### `removeWorktree`
@@ -854,3 +944,62 @@ public function refDatabase(): RefDatabase
 ```
 
 Access the raw ref database (loose + packed refs).
+
+---
+
+## Lower-level classes
+
+These classes are not wrapped by `Repository` and are constructed from its internal components.
+
+### `Pitmaster\Graph\Blame`
+
+```php
+public function blame(ObjectId $headId, string $path): array
+```
+
+Returns one entry per line of `$path` at `$headId`: `['line' => int, 'hash' => string, 'author' => string, 'content' => string]`. `author` is the full identity string (`Name <email> timestamp timezone`).
+
+```php
+use Pitmaster\Graph\Blame;
+
+$blame = new Blame($repo->objectDatabase());
+
+foreach ($blame->blame($repo->resolve('HEAD'), 'src/File.php') as $line) {
+    echo substr($line['hash'], 0, 8) . " {$line['content']}\n";
+}
+```
+
+### `Pitmaster\Graph\Grep`
+
+```php
+public function grep(ObjectId $treeId, string $pattern, string $prefix = '', array $options = []): array
+```
+
+Searches the blobs of a tree. Returns `['path' => string, 'line' => int, 'content' => string]` per matching line. Options: `regex` (treat the pattern as a PCRE pattern) and `ignore_case`. An invalid regex throws `InvalidArgumentException`.
+
+```php
+use Pitmaster\Graph\Grep;
+
+$grep = new Grep($repo->objectDatabase());
+$matches = $grep->grep($repo->head()->tree, 'TODO', '', ['ignore_case' => true]);
+```
+
+### `Pitmaster\Ref\Notes`
+
+```php
+public function get(ObjectId $commitId, string $notesRef = 'refs/notes/commits'): ?string
+public function set(ObjectId $commitId, string $noteContent, string $notesRef = 'refs/notes/commits'): void
+public function remove(ObjectId $commitId, string $notesRef = 'refs/notes/commits'): void
+public function listAll(string $notesRef = 'refs/notes/commits'): array
+public function merge(string $sourceRef, string $targetRef = 'refs/notes/commits'): void
+```
+
+Reads and writes git notes stored under a notes ref. `listAll()` returns commit hash to note content.
+
+```php
+use Pitmaster\Ref\Notes;
+
+$notes = new Notes($repo->objectDatabase(), $repo->refDatabase());
+$notes->set($repo->resolve('HEAD'), "Reviewed\n");
+echo $notes->get($repo->resolve('HEAD'));
+```
