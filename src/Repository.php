@@ -5106,7 +5106,9 @@ final class Repository
             if (isset($forced[$path]) || ($currentTree[$path] ?? null) !== ($targetTree[$path] ?? null)) {
                 $pathsChanging[$path] = true;
             } else {
-                $preserved[$path] = $currentEntries[$path] ?? null;
+                $entry = $currentEntries[$path] ?? null;
+                $preserved[$path] = $entry !== null && $this->worktreeDiffersFromIndex($entry, time())
+                    ? $this->invalidateIndexStat($entry) : $entry;
             }
         }
 
@@ -5156,6 +5158,26 @@ final class Repository
             );
         }
         return $preserved;
+    }
+
+    private function invalidateIndexStat(IndexEntry $entry): IndexEntry
+    {
+        return new IndexEntry(
+            ctimeSec: 0,
+            ctimeNsec: 0,
+            mtimeSec: 0,
+            mtimeNsec: 0,
+            dev: $entry->dev,
+            ino: $entry->ino,
+            mode: $entry->mode,
+            uid: $entry->uid,
+            gid: $entry->gid,
+            fileSize: $entry->fileSize,
+            hash: $entry->hash,
+            flags: $entry->flags,
+            path: $entry->path,
+            extendedFlags: $entry->extendedFlags,
+        );
     }
 
     private function assertCleanIndex(string $operation): void
