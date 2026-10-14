@@ -14,7 +14,7 @@ Pitmaster supports multiple network transport protocols for communicating with g
 
 ## Smart HTTP (primary)
 
-The recommended transport. Works over HTTPS, supports authentication via HTTP headers, and is the most widely deployed protocol.
+The recommended transport. Works over HTTPS and is the most widely deployed protocol. There is no API for custom headers or credentials; credentials can only be passed in the URL (`https://user:token@host/repo.git`), which PHP sends as Basic authentication. `clone()` stores the URL, credentials included, as `remote.origin.url` in `.git/config`. Requests use PHP's stream wrappers, so `allow_url_fopen` must be enabled.
 
 ```php
 use Pitmaster\Protocol\SmartHttpClient;
@@ -37,7 +37,7 @@ use Pitmaster\Protocol\ProtocolV1;
 
 The newer protocol with structured commands (`ls-refs`, `fetch`). More efficient for repositories with many refs because the client can filter the ref list.
 
-Protocol v2 is negotiated automatically when the server advertises it via the `version 2` capability.
+`clone()` and `fetch()` always use protocol v1. Protocol v2 is available explicitly over smart HTTP through `SmartHttpClient::discoverRefsV2()` and `UploadPackClient::fetchV2()`.
 
 ## Dumb HTTP
 
@@ -57,13 +57,16 @@ Dumb HTTP limitations:
 
 The dumb protocol fetches:
 1. `GET /info/refs` (plain text, no pkt-line)
-2. `GET /objects/info/packs` (list of available packs)
-3. `GET /objects/pack/pack-<hash>.pack` (individual pack files)
-4. `GET /objects/<xx>/<rest>` (individual loose objects)
+2. `GET /HEAD` (default branch)
+3. `GET /objects/info/packs` (list of available packs)
+4. `GET /objects/pack/pack-<hash>.pack` and `.idx` (each listed pack and its index)
+5. `GET /objects/<xx>/<rest>` (individual loose objects, walked from the ref tips)
+
+Step 5 runs only when the server lists no packs. When it lists packs, objects that exist only as loose files on the server are not downloaded ([#18](https://github.com/inline0/pitmaster/issues/18)). The dumb client accepts 40-character (SHA-1) object IDs only. `clone()` and `fetch()` fall back to dumb HTTP when the smart HTTP exchange fails.
 
 ## SSH
 
-SSH transport uses the `ssh2` PHP extension to establish a connection, then runs `git-upload-pack` or `git-receive-pack` on the remote.
+SSH transport uses the `ssh2` PHP extension when it is loaded. Otherwise it starts the system `ssh` client through `proc_open()`. Either way it runs `git-upload-pack` or `git-receive-pack` on the remote.
 
 ```php
 use Pitmaster\Protocol\SshClient;
@@ -77,17 +80,26 @@ git@github.com:user/repo.git
 ssh://git@github.com/user/repo.git
 ```
 
-Requirements:
-- PHP `ssh2` extension (`pecl install ssh2`)
-- SSH key-based authentication
+No extension is required. The two paths behave differently:
+
+**System `ssh` client** (used when `ssh2` is not loaded). Pitmaster runs `ssh -o BatchMode=yes -o ConnectTimeout=30 -p <port> <user>@<host> <command>`, so authentication and host key checking follow your SSH configuration and agent. These environment variables adjust the command:
+
+| Variable | Effect |
+|----------|--------|
+| `PITMASTER_SSH_COMMAND` | Executable to run instead of `ssh` |
+| `PITMASTER_SSH_IDENTITY_FILE` | Passed as `-i <file>` |
+| `PITMASTER_SSH_KNOWN_HOSTS` | Passed as `-o UserKnownHostsFile=<file>` |
+| `PITMASTER_SSH_STRICT_HOST_KEY_CHECKING` | Passed as `-o StrictHostKeyChecking=<value>` |
+
+This path starts a process, so it is not available on handles opened with `['processes' => false]`.
+
+**`ssh2` extension** (always preferred when loaded). Pitmaster authenticates with `~/.ssh/id_rsa`, then `~/.ssh/id_ed25519` if the RSA key is present but rejected, and otherwise with the SSH agent. The `PITMASTER_SSH_*` variables are ignored, and the server's host key is not verified on this path ([#22](https://github.com/inline0/pitmaster/issues/22)).
 
 The SSH transport runs `git-upload-pack` or `git-receive-pack` as a remote command and communicates over the SSH channel using the same pkt-line protocol as smart HTTP.
 
-Note: SSH requires the `ssh2` extension which is not part of a standard PHP installation. Smart HTTP is preferred when the `ssh2` extension is not available.
-
 ## Git protocol (TCP)
 
-The native git protocol communicates over TCP port 9418 using PHP sockets.
+The native git protocol communicates over TCP port 9418 using PHP sockets. `GitProtocolClient` implements ref discovery and `upload-pack` (fetching); it cannot push. `clone()` and `fetch()` do not route `git://` URLs to it, so use the client directly.
 
 ```php
 use Pitmaster\Protocol\GitProtocolClient;
@@ -119,12 +131,19 @@ use Pitmaster\Protocol\Bundle;
 $bundle = Bundle::open('/path/to/repo.bundle');
 $refs = $bundle->refs();
 $packData = $bundle->packData();
+$prerequisites = $bundle->prerequisites();
+
+// Create one
+$bundle = Bundle::create(['refs/heads/main' => $commitId], $packData);
+$bundle->writeTo('/path/to/out.bundle');
 ```
+
+Pitmaster reads v2 and v3 bundle headers. There is no `Repository` method to import a bundle: write `packData()` to `.git/objects/pack/`, build its index with `PackIndexer::writeIndex()`, and update the refs yourself.
 
 Bundle format:
 ```
 # v2 git bundle\n
--<prerequisite hash>\n   (zero or more)
+-<prerequisite hash>\n    (zero or more)
 <hash> <refname>\n        (one or more)
 \n
 <pack data>               (standard pack file format)
@@ -143,35 +162,32 @@ Pitmaster supports shallow clones, where only a limited depth of commit history 
 use Pitmaster\Protocol\ShallowClone;
 ```
 
-Shallow clone communicates depth limits using the `deepen` capability:
+Pass a depth to `Pitmaster::clone($url, $path, $depth)` or `$repo->fetch($remote, $depth)`. The request adds the `shallow` capability and a `deepen` line:
 ```
 want <hash>
 deepen <depth>
 ```
 
-The server responds with `shallow <hash>` lines indicating where the history was truncated. These are stored in `.git/shallow`.
+The server responds with `shallow <hash>` lines indicating where the history was truncated. Pitmaster computes the shallow boundary from the depth itself and uses the server's `shallow` lines when that computation finds nothing; the result is stored in `.git/shallow`. `ShallowClone::readShallow()`, `writeShallow()`, and `isShallow()` work with that file directly.
 
 ## Protocol comparison
 
 | Protocol | Auth | Encryption | Push | Typical use |
 |----------|------|-----------|------|-------------|
-| Smart HTTP | HTTP auth / tokens | HTTPS | Yes | Primary transport |
-| Dumb HTTP | HTTP auth | HTTPS | No | Legacy fallback |
-| SSH | SSH keys | SSH | Yes | Private repos, CI |
-| Git (TCP) | None | None | Rarely | Read-only mirrors |
+| Smart HTTP | Credentials in the URL | HTTPS | Yes | Primary transport |
+| Dumb HTTP | Credentials in the URL | HTTPS | No | Legacy fallback |
+| SSH | SSH keys or agent | SSH | Yes | Private repos, CI |
+| Git (TCP) | None | None | No | Read-only mirrors |
 | Bundle | N/A | N/A | N/A | Offline transfer |
 
 ## Transport selection
 
-Pitmaster selects the transport based on the URL scheme:
+`Pitmaster::clone()`, `$repo->fetch()`, and `$repo->push()` select the transport from the URL:
 
 | URL pattern | Transport |
 |------------|-----------|
-| `https://...` | Smart HTTP (falls back to dumb) |
-| `http://...` | Smart HTTP (falls back to dumb) |
-| `git@...:...` | SSH |
 | `ssh://...` | SSH |
-| `git://...` | Git protocol |
-| File path | Direct file access |
+| `user@host:path` | SSH |
+| Anything else (`https://...`, `http://...`) | Smart HTTP; clone and fetch fall back to dumb HTTP |
 
-The high-level `Pitmaster::clone()`, `$repo->fetch()`, and `$repo->push()` methods use smart HTTP. For other protocols, use the specific client classes directly.
+`git://` URLs and local paths are not supported by these methods: they are sent to the smart HTTP client and fail. Use `GitProtocolClient` directly for `git://`. An HTTPS URL that contains both a user and a port (`https://user@host:8443/repo.git`) is currently mistaken for an SSH URL ([#17](https://github.com/inline0/pitmaster/issues/17)).

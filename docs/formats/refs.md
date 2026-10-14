@@ -10,11 +10,11 @@ meta_description: "Loose refs, packed-refs, RefDatabase, symbolic refs, reflog, 
 
 # Refs
 
-Refs (references) are named pointers to commits. Branches, tags, HEAD, and remote tracking refs are all refs. Pitmaster reads and writes refs in multiple formats: loose files, packed-refs, and reftable.
+Refs (references) are named pointers to commits. Branches, tags, HEAD, and remote tracking refs are all refs. Pitmaster reads refs from loose files, packed-refs, and reftable, and writes loose files and packed-refs.
 
 ## RefDatabase
 
-The `RefDatabase` is the composite layer that searches loose refs first, then packed-refs.
+The `RefDatabase` is the composite layer that searches loose refs first, then reftable (when the repository has one), then packed-refs.
 
 ```php
 use Pitmaster\Ref\RefDatabase;
@@ -27,9 +27,9 @@ $id = $refs->resolve('refs/heads/main');
 // Resolve HEAD (follows symbolic refs)
 $headId = $refs->resolveHead();
 
-// Read HEAD as a symbolic ref
+// Read HEAD as a symbolic ref (null when HEAD is detached)
 $symref = $refs->readHead();
-echo $symref->target;  // 'refs/heads/main'
+echo $symref?->target;  // 'refs/heads/main'
 
 // List all refs
 foreach ($refs->list() as $name => $id) {
@@ -43,11 +43,11 @@ $refs->update('refs/heads/main', $newCommitId);
 $refs->delete('refs/heads/old-branch');
 ```
 
-For linked worktrees, the `RefDatabase` uses the per-worktree git dir for HEAD and loose refs, but the common dir for packed-refs.
+For linked worktrees, the `RefDatabase` keeps HEAD and the other per-worktree pseudo-refs (`ORIG_HEAD`, `MERGE_HEAD`, `CHERRY_PICK_HEAD`, `REVERT_HEAD`, `REBASE_HEAD`, `BISECT_HEAD`) in the per-worktree git dir. Branches, tags, and other `refs/` entries are written to the common dir, and `packed-refs` is always read from the common dir.
 
 ## Loose refs
 
-Loose refs are individual files in `.git/refs/`. Each file contains the 40-character hex hash of the target object, followed by a newline.
+Loose refs are individual files in `.git/refs/`. Each file contains the hex hash of the target object (40 characters, or 64 for SHA-256), followed by a newline.
 
 ```
 .git/refs/heads/main           -> abc123def456...\n
@@ -58,7 +58,7 @@ Loose refs are individual files in `.git/refs/`. Each file contains the 40-chara
 ```php
 use Pitmaster\Ref\LooseRefStore;
 
-$store = new LooseRefStore($gitDir);
+$store = new LooseRefStore($gitDir, $commonDir); // $commonDir defaults to $gitDir
 
 $id = $store->resolve('refs/heads/main');
 $store->update('refs/heads/main', $commitId);
@@ -122,7 +122,7 @@ foreach ($store->list() as $name => $id) {
 For annotated tags, the packed-refs file may include the peeled (dereferenced) value on the line after the tag ref. The peeled value is the commit that the tag object ultimately points to (through possibly multiple tag objects).
 
 ```php
-$peeled = $store->peeledValue('refs/tags/v1.0.0');
+$peeled = $store->peeled('refs/tags/v1.0.0');
 // Returns the commit ObjectId, or null if not peeled
 ```
 
@@ -131,9 +131,10 @@ $peeled = $store->peeledValue('refs/tags/v1.0.0');
 When resolving a ref, Pitmaster checks in this order:
 
 1. Loose ref (file in `.git/refs/`)
-2. Packed ref (entry in `.git/packed-refs`)
+2. Reftable, when `.git/reftable/tables.list` exists
+3. Packed ref (entry in `.git/packed-refs`)
 
-Loose refs take priority. When a packed ref is updated, the new value is written as a loose ref (the packed-refs file is not rewritten).
+Loose refs take priority. When a packed ref is updated, the new value is written as a loose ref (the packed-refs file is not rewritten). Deleting a ref removes both the loose file and the packed entry. `$repo->packRefs()` rewrites `packed-refs` from the current refs and removes the loose files.
 
 ## SymbolicRef
 
@@ -198,7 +199,7 @@ Reftable files are stored in `.git/reftable/` and contain:
 - Log records (reflog entries)
 - Block-level indexing for fast lookups
 
-Pitmaster reads reftable files when present but falls back to the traditional loose + packed ref storage.
+Pitmaster reads the ref records of reftable files when present; log records are not read. When a reftable exists, it replaces `packed-refs` for listing. Ref updates are always written as loose files, which git does not read in a reftable repository, so treat reftable repositories as read-only.
 
 ## Ref naming conventions
 
@@ -210,7 +211,7 @@ Pitmaster reads reftable files when present but falls back to the traditional lo
 | `refs/stash` | Stash stack |
 | `refs/notes/<namespace>` | Git notes |
 | `HEAD` | Current checkout (symbolic or detached) |
-| `FETCH_HEAD` | Last fetch result |
+| `FETCH_HEAD` | Last fetch result (written by git; Pitmaster's `fetch()` does not write it) |
 | `MERGE_HEAD` | Branch being merged (during merge) |
 | `ORIG_HEAD` | Previous HEAD (before dangerous operations) |
 
@@ -227,6 +228,7 @@ $refs = $repo->allRefs();           // All refs as name => hash
 $repo->createBranch('feature');     // Create refs/heads/feature
 $repo->deleteBranch('feature');     // Delete refs/heads/feature
 $repo->createTag('v1.0', 'Release');// Create annotated tag
+$repo->createLightweightTag('v1.0-lite'); // Create lightweight tag
 $repo->updateRef('refs/heads/main', $id); // Direct ref update
 
 // Resolve

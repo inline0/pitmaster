@@ -19,7 +19,7 @@ A pack file (`.git/objects/pack/pack-{hash}.pack`) contains:
 ```
 Header:   PACK (4 bytes) + version (4 bytes, big-endian) + count (4 bytes, big-endian)
 Entries:  [type+size varint] [delta-base] [zlib-compressed data] ...
-Trailer:  20-byte SHA-1 checksum
+Trailer:  checksum of the pack (20 bytes SHA-1, 32 bytes SHA-256)
 ```
 
 ### Object type encoding
@@ -48,20 +48,23 @@ Type values:
 ```php
 use Pitmaster\Pack\PackFile;
 
-$pack = new PackFile('/path/to/.git/objects/pack/pack-abc123.pack');
+$pack = PackFile::open(
+    '/path/to/.git/objects/pack/pack-abc123.pack',
+    '/path/to/.git/objects/pack/pack-abc123.idx',
+);
 
-// Read a specific object by offset
-$entry = $pack->readEntry($offset);
-
-// The entry includes type, size, and raw (possibly deltified) data
+$pack->has($hex);               // Is the object in this pack?
+$object = $pack->read($hex);    // Resolved GitObject, or null
+$object = $pack->readAtOffset($offset);
+$hashes = $pack->allHashes();
 ```
 
 The `PackFile` class:
 1. Validates the `PACK` header and version number
-2. Parses the type/size varint for each entry
+2. Finds the offset through the `.idx` file and parses the type/size varint of the entry
 3. Decompresses the zlib-compressed data
 4. For base objects: returns the content directly
-5. For delta objects: passes to the `DeltaResolver`
+5. For delta objects: resolves the base (following chains) and applies the delta, caching resolved objects
 
 ## Pack index files
 
@@ -73,36 +76,31 @@ Every `.pack` file has a corresponding `.idx` file for fast lookups. Without the
 Magic:    FF 74 4F 63 (identifies v2)
 Version:  00 00 00 02
 Fanout:   256 x 4-byte big-endian counts (cumulative)
-Names:    N x 20-byte SHA-1 hashes (sorted)
+Names:    N x 20-byte SHA-1 hashes, sorted (32 bytes for SHA-256)
 CRC32s:   N x 4-byte CRC32 checksums
 Offsets:  N x 4-byte pack offsets (MSB=1 means large offset table)
 Large:    M x 8-byte offsets (for packs > 2GB)
-Checksums: 20-byte pack checksum + 20-byte index checksum
+Checksums: pack checksum + index checksum (20 bytes each for SHA-1)
 ```
 
 ```php
 use Pitmaster\Pack\PackIndex;
 
-$index = new PackIndex('/path/to/pack-abc123.idx');
+$index = PackIndex::open('/path/to/pack-abc123.idx');
 
 // Look up an object
-$offset = $index->offsetFor($objectId);  // Returns pack file offset, or null
+$offset = $index->findOffset($hex);  // Pack file offset, or null
 
 // List all objects in the pack
-$hashes = $index->listObjects();
+$hashes = $index->allHashes();
+$count = $index->objectCount();
 ```
 
 The fanout table enables O(log n) binary search: the 256 entries indicate how many hashes start with each possible first byte.
 
 ### v1 index format
 
-Older format without CRC32 checksums. Pitmaster supports both.
-
-```php
-use Pitmaster\Pack\PackIndexV1;
-
-$index = new PackIndexV1('/path/to/pack-old.idx');
-```
+Older format without CRC32 checksums. Pitmaster supports both: `PackIndex::open()` reads a v1 file when the v2 magic is missing, so the same code works for either.
 
 ## Delta resolution
 
@@ -112,7 +110,7 @@ Deltified objects store instructions for reconstructing content from a base obje
 
 **OFS_DELTA** (type 6): the base object is identified by a negative offset within the same pack file. More common because it does not require knowing the base object's hash.
 
-**REF_DELTA** (type 7): the base object is identified by its 20-byte SHA-1 hash. The base might be in a different pack or in loose storage.
+**REF_DELTA** (type 7): the base object is identified by its hash. In git the base can live outside the pack (thin packs). Pitmaster looks for REF_DELTA bases only inside the same pack, so thin packs are not supported ([#16](https://github.com/inline0/pitmaster/issues/16)).
 
 ### Delta instructions
 
@@ -142,27 +140,22 @@ The `DeltaApplier`:
    - Insert: extracts length, copies literal bytes from the delta data
 3. Verifies the result size matches the expected size
 
-### DeltaResolver
+### Delta chains
 
-The `DeltaResolver` handles chains: a deltified object's base may itself be deltified.
+A deltified object's base may itself be deltified. `PackFile::read()` and `readAtOffset()` follow the chain:
 
-```php
-use Pitmaster\Pack\DeltaResolver;
-
-$resolver = new DeltaResolver($packFile);
-$content = $resolver->resolve($entry);
-```
-
-Chain resolution:
 1. Read the entry. If it is a base type (commit, tree, blob, tag), return it.
 2. If OFS_DELTA: compute the base offset (current offset minus the encoded negative offset), read the base entry, recurse.
-3. If REF_DELTA: look up the base by hash (may be in a different pack or in loose storage), recurse.
+3. If REF_DELTA: look up the base by hash in the same pack's index, recurse.
 4. Apply delta instructions on the resolved base.
 5. Enforce `PITMASTER_MAX_DELTA_CHAIN` (default 50) to prevent runaway chains.
 
 ```php
-// Configure max chain depth
+// Configure max chain depth (integer)
 define('PITMASTER_MAX_DELTA_CHAIN', 50);
+
+// Read the effective limit
+$max = \Pitmaster\Pack\DeltaResolver::maxChainDepth();
 ```
 
 ## PackWriter
@@ -171,6 +164,12 @@ Pitmaster can write pack files for network operations (push).
 
 ```php
 use Pitmaster\Pack\PackWriter;
+use Pitmaster\Pack\PackIndexer;
+
+$packData = PackWriter::encode($objects);           // GitObject[] to pack bytes
+$paths = PackWriter::write($packDir, $objects);     // ['packPath' => ..., 'idxPath' => ..., 'hash' => ...]
+
+$idxPath = PackIndexer::writeIndex($packPath);      // Build the .idx for a received pack
 ```
 
 The `PackWriter`:
@@ -183,17 +182,19 @@ Currently writes only base objects (no delta compression). Delta compression is 
 
 ## PackEnumerator
 
-Iterate all objects in a pack file without an index:
+Iterate all objects in a pack, in index order:
 
 ```php
 use Pitmaster\Pack\PackEnumerator;
 
-$enumerator = new PackEnumerator($packFile);
+$enumerator = new PackEnumerator($packFile); // a PackFile opened with its .idx
 
-foreach ($enumerator->entries() as $entry) {
-    echo "{$entry->type} at offset {$entry->offset}, size {$entry->size}\n";
+foreach ($enumerator->enumerate() as $object) {
+    echo "{$object->type->value} {$object->id->hex} {$object->size()}\n";
 }
 ```
+
+Each item is a resolved `GitObject`.
 
 ## MultiPackIndex
 
@@ -209,7 +210,7 @@ The MIDX file (`.git/objects/pack/multi-pack-index`) contains:
 - Pack file names and per-object pack assignments
 - Offsets into the individual pack files
 
-Pitmaster reads MIDX files but falls back to scanning individual `.idx` files if no MIDX exists.
+`MultiPackIndex::open($path)` parses a MIDX file and offers `findObject($hex)` and `packNames()`. Object lookups in the repository do not use it: the object database always reads the individual `.idx` files.
 
 ## CommitGraph
 
@@ -225,7 +226,7 @@ Located at `.git/objects/info/commit-graph`, it contains:
 - Generation numbers (for faster reachability queries)
 - Commit timestamps
 
-When present, `CommitWalker` and `MergeBase` use the commit-graph instead of reading individual commit objects, significantly improving performance for large repositories.
+When present, the merge-base computation behind `Repository::merge()`, `mergeBase()`, `isBranchMerged()`, and the push fast-forward check reads parent links from the commit-graph instead of reading individual commit objects. `CommitWalker` (log) does not use it.
 
 ## Variable-length integers
 
@@ -238,8 +239,9 @@ MSB-continue encoding where the most significant bit indicates more bytes follow
 ```php
 use Pitmaster\Encoding\VarInt;
 
-$value = VarInt::decode($data, $offset);
-$encoded = VarInt::encode($value);
+$size = VarInt::decodePackSize($reader, $initialBits);  // continues the size from the first header byte
+$offset = VarInt::decodeOfsOffset($reader);             // OFS_DELTA base distance
+$header = VarInt::encodePackSize($type, $size);
 ```
 
 ### LEB128 (delta headers)
@@ -249,8 +251,8 @@ Used in delta instruction headers for base size and result size:
 ```php
 use Pitmaster\Encoding\Leb128;
 
-$value = Leb128::decodeUnsigned($data, $offset);
-$value = Leb128::decodeSigned($data, $offset);
+$value = Leb128::decodeUnsigned($reader);   // a BinaryReader
+$bytes = Leb128::encodeUnsigned($value);
 ```
 
 ### BinaryReader
@@ -261,8 +263,10 @@ Low-level byte stream with position tracking:
 use Pitmaster\Encoding\BinaryReader;
 
 $reader = new BinaryReader($data);
-$byte = $reader->readUint8();
-$int = $reader->readUint32BE();
+$byte = $reader->readByte();
+$int = $reader->readUint32();   // big-endian
 $bytes = $reader->read(20);
+$hash = $reader->readHash(20);
 $reader->position();  // Current offset
+$reader->seek(0);
 ```

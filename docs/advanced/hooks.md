@@ -12,6 +12,29 @@ meta_description: "Git hook detection, execution, installation, and supported ho
 
 Git hooks are executable scripts in `.git/hooks/` that run at specific points in git operations. Pitmaster detects and invokes hooks using PHP's process control (`proc_open`).
 
+## Hooks run by default
+
+Repository operations run the hooks listed under [Hooks Pitmaster runs](#hooks-pitmaster-runs) automatically. To turn them off for a repository handle, pass options when opening it:
+
+```php
+use Pitmaster\Pitmaster;
+
+// Skip .git/hooks scripts for this handle
+$repo = Pitmaster::open('/path/to/project', ['hooks' => false]);
+
+// Start no processes at all: hooks, the fsmonitor hook, clone/fetch/push, and SSH are disabled
+$repo = Pitmaster::open('/path/to/project', Pitmaster::processFreeOptions());
+
+$repo->hooksEnabled();      // false
+$repo->processesEnabled();  // false for the second handle
+```
+
+`Pitmaster::init()` and `Pitmaster::clone()` accept the same options. Running a hook needs `proc_open()`; on hosts that disable it, open repositories with `['hooks' => false]`. The CLI always opens the repository with hooks enabled.
+
+Pitmaster looks for hooks only in `<gitDir>/hooks`. It ignores `core.hooksPath`, and in a linked worktree it looks in `.git/worktrees/<name>/hooks`, so the shared `.git/hooks` scripts do not run there ([#12](https://github.com/inline0/pitmaster/issues/12)).
+
+`HookRunner`, described below, ignores these options: calling it directly always runs the hook.
+
 ## HookRunner
 
 ```php
@@ -75,6 +98,8 @@ $installed = $hooks->listHooks();
 
 Lists all files in `.git/hooks/` that are executable (excludes `.sample` files).
 
+`run()` on a missing or non-executable hook returns exit code 0 with empty output. If the process cannot be started, it returns exit code 1 with `Failed to start hook` on stderr.
+
 ## Install a hook
 
 ```php
@@ -101,52 +126,28 @@ if ($returnCode !== 0) {
 HOOK);
 ```
 
-## Supported hooks
+## Hooks Pitmaster runs
 
-Pitmaster recognizes and can invoke the following hooks:
+`HookRunner` can run any hook by name. `Repository` runs these automatically:
 
-### Commit workflow
+| Hook | Run by | Arguments | Can abort? |
+|------|--------|-----------|-----------|
+| `pre-commit` | `commit()` | none | Yes (non-zero exit) |
+| `prepare-commit-msg` | `commit()` | message file, then `message` (or `merge` when completing a merge) | Yes |
+| `commit-msg` | `commit()` | message file (`.git/COMMIT_EDITMSG`); edits to the file are used | Yes (non-zero exit) |
+| `post-commit` | `commit()` | none | No (informational) |
+| `pre-rebase` | `rebase()` | the upstream revision | Yes |
+| `post-checkout` | `checkout()` | old HEAD, new HEAD, `1` | No (informational) |
+| `post-merge` | `merge()`, `mergeOctopus()`, `mergeContinue()` | `0` | No (informational) |
+| `pre-push` | `push()` and its variants | remote name, URL; ref lines on stdin | Yes (non-zero exit) |
 
-| Hook | When | Can abort? |
-|------|------|-----------|
-| `pre-commit` | Before commit is created | Yes (non-zero exit) |
-| `prepare-commit-msg` | After default message is created, before editor | Yes |
-| `commit-msg` | After message is entered | Yes (non-zero exit) |
-| `post-commit` | After commit is created | No (informational) |
+A failing hook makes the operation throw `RuntimeException('<name> hook failed')`; the hook's output is not included. The commit hooks run only from `commit()`: merge commits created by `merge()` do not run them. `post-checkout` does not run for `addWorktree()`, `reset()`, or `restore()`.
 
-### Branch/checkout
-
-| Hook | When | Can abort? |
-|------|------|-----------|
-| `pre-rebase` | Before rebase starts | Yes |
-| `post-checkout` | After checkout/switch completes | No (informational) |
-| `post-merge` | After merge completes | No (informational) |
-
-### Push
-
-| Hook | When | Can abort? |
-|------|------|-----------|
-| `pre-push` | Before push sends data | Yes (non-zero exit) |
-
-### Server-side
-
-| Hook | When | Can abort? |
-|------|------|-----------|
-| `pre-receive` | Before refs are updated on server | Yes |
-| `update` | Per-ref, before each ref is updated | Yes |
-| `post-receive` | After all refs are updated | No (informational) |
-| `post-update` | After refs are updated (legacy) | No (informational) |
-
-### Other
-
-| Hook | When | Can abort? |
-|------|------|-----------|
-| `pre-auto-gc` | Before automatic garbage collection | Yes |
-| `post-rewrite` | After commits are rewritten (rebase, amend) | No (informational) |
+Server-side hooks (`pre-receive`, `update`, `post-receive`, `post-update`), `pre-auto-gc`, and `post-rewrite` are never run automatically.
 
 ## Hook environment
 
-When Pitmaster runs a hook, it sets environment variables:
+When Pitmaster runs a hook, it passes this environment:
 
 ```php
 $env = [
@@ -155,7 +156,9 @@ $env = [
 ];
 ```
 
-The hook runs in the working tree directory (`dirname($gitDir)`).
+These are the only variables the hook gets: `PATH`, `HOME`, and every other variable of the PHP process are not passed through ([#13](https://github.com/inline0/pitmaster/issues/13)). Use absolute paths in hook scripts, or set `PATH` inside the script; a `#!/usr/bin/env php` shebang only finds interpreters in the system default path.
+
+The hook runs in `dirname($gitDir)`, which is the working tree for a normal `.git` directory.
 
 ## Hook script format
 
@@ -179,23 +182,21 @@ Hooks can be written in any language. The first line must be a shebang:
 
 ## Example: pre-commit with Pitmaster
 
+`commit()` already runs `pre-commit`, `prepare-commit-msg`, `commit-msg`, and `post-commit`, so application code only needs to handle the failure:
+
 ```php
-// In your application code
-$hooks = new HookRunner($repo->gitDir());
-
-if (!$hooks->runAndCheck('pre-commit')) {
-    echo "pre-commit hook failed, aborting commit\n";
-    return;
+try {
+    $commitId = $repo->commit('Add feature');
+} catch (\RuntimeException $e) {
+    echo $e->getMessage(); // "pre-commit hook failed"
 }
-
-$commitId = $repo->commit('Add feature');
-
-$hooks->run('post-commit');
 ```
+
+Call `HookRunner` yourself only on a handle opened with `['hooks' => false]`, or for hooks Pitmaster does not run.
 
 ## Sample hooks
 
-Git initializes repositories with `.sample` hook files. Pitmaster's `listHooks()` excludes these (files ending in `.sample`):
+Git initializes repositories with `.sample` hook files; `Pitmaster::init()` creates an empty `hooks/` directory. Pitmaster's `listHooks()` excludes `.sample` files:
 
 ```
 .git/hooks/

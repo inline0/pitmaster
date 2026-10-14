@@ -10,7 +10,7 @@ meta_description: "Git Large File Storage pointer parsing, batch API client, and
 
 # Git LFS
 
-Git Large File Storage (LFS) replaces large files in your repository with small pointer files. The actual file content is stored on a separate LFS server. Pitmaster can parse LFS pointers, detect LFS-tracked files, and communicate with LFS servers via the batch API.
+Git Large File Storage (LFS) replaces large files in your repository with small pointer files. The actual file content is stored on a separate LFS server. Pitmaster can parse and create LFS pointers and communicate with LFS servers via the batch API. It does not read `.gitattributes` or run the LFS clean and smudge filters: `add()` stores files as they are, and `checkout()` writes pointer files. Fetching the real content is up to your code, as shown below.
 
 ## LFS Pointer Files
 
@@ -42,7 +42,7 @@ if ($pointer !== null) {
 }
 ```
 
-`parse()` returns `null` if the content is not a valid LFS pointer.
+`parse()` returns `null` when the `version`, `oid sha256:`, or `size` line is missing. It does not validate the values (a non-hex OID or non-numeric size is accepted).
 
 ### Detecting pointers
 
@@ -95,7 +95,9 @@ $client = LfsClient::fromRemoteUrl('https://github.com/user/repo.git');
 $client = new LfsClient('https://lfs.example.com/repo', timeout: 60);
 ```
 
-The `fromRemoteUrl()` method follows the standard convention: append `/info/lfs` to the git URL (adding `.git` if not present).
+The `fromRemoteUrl()` method follows the standard convention: append `/info/lfs` to the git URL (adding `.git` if not present). Only HTTP(S) remote URLs give a usable LFS URL; SCP-style SSH remotes (`git@host:repo.git`) do not.
+
+`LfsClient` uses PHP's HTTP stream wrapper (`allow_url_fopen` must be enabled). It sends no credentials and ignores the `header` map returned with each action, so it works only with LFS servers and storage URLs that need no authentication. It is not tied to a repository handle, so it makes network requests even when you work with a repository opened with `Pitmaster::processFreeOptions()`.
 
 ### Downloading files
 
@@ -109,6 +111,8 @@ Under the hood, `download()`:
 1. Sends a batch request for the `download` operation
 2. Receives a download URL from the server
 3. Fetches the file content from that URL
+
+The downloaded bytes are not checked against the OID or size.
 
 ### Batch download
 
@@ -136,7 +140,7 @@ foreach ($results as $result) {
 $client->upload($pointer->oid, $pointer->size, $fileContent);
 ```
 
-Upload sends a batch request for the `upload` operation. If the server already has the object, it returns no upload URL and the operation is a no-op.
+Upload sends a batch request for the `upload` operation. If the server already has the object, it returns no upload URL and the operation is a no-op. The result of the upload request itself is not checked, so a failed upload is not reported, and the `verify` action is not called.
 
 ### Batch upload
 
@@ -213,7 +217,7 @@ if (LfsPointer::isPointer($blob->content)) {
 
 ## Error handling
 
-LFS errors throw `ProtocolException`:
+A failed or invalid batch request, and a failed download request, throw `ProtocolException`. `download()` also throws when the server returns no download URL for the object, without the server's error message. `batchDownload()` and `batchUpload()` do not throw for per-object errors; they return them in the `error` field.
 
 ```php
 use Pitmaster\Exceptions\ProtocolException;
@@ -221,7 +225,7 @@ use Pitmaster\Exceptions\ProtocolException;
 try {
     $content = $client->download($oid, $size);
 } catch (ProtocolException $e) {
-    // Server unreachable, object not found, auth failed
+    // Server unreachable, invalid response, no download URL
     echo "LFS error: {$e->getMessage()}\n";
 }
 ```

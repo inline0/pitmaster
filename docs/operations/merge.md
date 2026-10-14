@@ -10,7 +10,7 @@ meta_description: "Three-way merge with fast-forward detection, conflict markers
 
 # Merge
 
-Pitmaster performs branch merges using the same three-way merge strategy as `git merge`. It detects fast-forward opportunities, computes merge bases, performs tree-level and content-level merges, and generates standard conflict markers when files conflict.
+Pitmaster performs branch merges with a three-way merge, like `git merge`. It detects fast-forward opportunities, computes merge bases, performs tree-level and content-level merges, and generates standard conflict markers when files conflict.
 
 ## Basic merge
 
@@ -37,7 +37,12 @@ use Pitmaster\Merge\MergeResult;
 $result->clean;           // bool: true if merge completed without conflicts
 $result->commitId;        // ?ObjectId: the merge commit (null if conflicts)
 $result->conflictPaths;   // array: list of file paths with conflicts
+$result->mergedContents;  // array: path => content with conflict markers (if conflicts)
 ```
+
+When the merge stops on conflicts, the conflict state is written to the index and working tree. Resolve the files, `add()` them, and call `$repo->mergeContinue()`, or call `$repo->mergeAbort()` to restore the pre-merge state.
+
+Before merging, commit or stash local changes: the merge rebuilds the working tree from the result and overwrites uncommitted changes in tracked files ([#2](https://github.com/inline0/pitmaster/issues/2)).
 
 ## Fast-forward merges
 
@@ -58,6 +63,8 @@ $result = $repo->merge('feature');
 // No merge commit created
 ```
 
+The reverse case is not detected yet: merging a branch that HEAD already contains creates a new merge commit with an unchanged tree instead of reporting "Already up to date" ([#6](https://github.com/inline0/pitmaster/issues/6)).
+
 ## Three-way merge
 
 When branches have diverged, Pitmaster performs a three-way merge:
@@ -77,7 +84,7 @@ A---B---E---F (main)   A---B---E---F---G (main)
 
 ## Merge base
 
-The merge base is the most recent common ancestor of two commits. Pitmaster finds it using a breadth-first traversal of the commit graph.
+The merge base is the most recent common ancestor of two commits. Pitmaster finds it by walking the commit graph. When there are several merge bases (criss-cross history), `merge()` merges them first and uses the result as the base.
 
 ```php
 $base = $repo->mergeBase(
@@ -97,6 +104,9 @@ use Pitmaster\Merge\MergeBase;
 
 $finder = new MergeBase($repo->objectDatabase());
 $base = $finder->find($commitA, $commitB);
+
+// All merge bases (criss-cross histories can have more than one)
+$bases = $finder->findAll($commitA, $commitB);
 
 // Check ancestry
 $isAncestor = $finder->isAncestor($oldCommit, $newCommit);
@@ -118,22 +128,25 @@ if ($repo->isBranchMerged('feature/done', 'develop')) {
 
 ## Conflict markers
 
-When a file is modified in both branches and the changes overlap, Pitmaster generates standard conflict markers:
+When a file is modified in both branches and the changes overlap, Pitmaster generates standard conflict markers. `merge()` labels the sides `HEAD` and the merged branch name:
 
 ```
-<<<<<<< ours
+<<<<<<< HEAD
     return $this->value + 1;
 =======
     return $this->value * 2;
->>>>>>> theirs
+>>>>>>> feature
 ```
 
-The `ConflictMarker` class handles marker generation:
+The `ConflictMarker` class wraps two versions in markers:
 
 ```php
 use Pitmaster\Merge\ConflictMarker;
 
-$marked = ConflictMarker::generate($oursContent, $theirsContent, 'main', 'feature');
+$marked = ConflictMarker::mark($oursContent, $theirsContent, 'HEAD', 'feature');
+
+// diff3 style, with the base section
+$marked = ConflictMarker::mark($oursContent, $theirsContent, 'HEAD', 'feature', $baseContent, 'base');
 ```
 
 ## Content-level three-way merge
@@ -143,56 +156,62 @@ The `ThreeWayMerge` class merges blob content (not files):
 ```php
 use Pitmaster\Merge\ThreeWayMerge;
 
-$merger = new ThreeWayMerge();
-$result = $merger->merge($baseContent, $oursContent, $theirsContent);
+$result = ThreeWayMerge::merge($baseContent, $oursContent, $theirsContent, 'HEAD', 'feature');
+
+$result['content'];   // merged text, with conflict markers if needed
+$result['clean'];     // true when nothing conflicted
+$result['conflicts']; // number of conflict regions
 ```
 
-It takes three strings (the base version, our version, and their version) and produces:
-- A merged string if changes do not overlap
-- A string with conflict markers if changes conflict
+It takes three strings (the base version, our version, and their version) plus optional labels, and a conflict style (`'merge'` by default, or `'diff3'` to include the base section).
 
 ## Merge strategies
 
 ### Recursive merge
 
-The default strategy, handles criss-cross merge histories with multiple merge bases.
-
-```php
-use Pitmaster\Merge\RecursiveMerge;
-```
+The default strategy (`$repo->merge($branch)`), handles criss-cross merge histories with multiple merge bases. The CLI also accepts `-s ort` and `-s recursive` for it.
 
 ### Ours merge
 
-Always takes "our" side. Useful for maintaining branch history without incorporating changes.
+Records a merge commit that keeps HEAD's tree unchanged. Useful for maintaining branch history without incorporating changes.
 
 ```php
-use Pitmaster\Merge\OursMerge;
+$result = $repo->merge('feature/old', 'ours');
 ```
 
 ### Octopus merge
 
-Merges more than two branches simultaneously. Used when multiple feature branches need to be combined.
+Merges two or more branches into a single merge commit. If any branch conflicts, it returns an unclean result without writing merge state or creating a commit.
 
 ```php
-use Pitmaster\Merge\OctopusMerge;
+$result = $repo->mergeOctopus(['feature/a', 'feature/b', 'feature/c']);
 ```
+
+The `RecursiveMerge`, `OursMerge`, and `OctopusMerge` classes in `Pitmaster\Merge` are content-level helpers; `Repository` implements the strategies above itself.
 
 ## Rerere (reuse recorded resolution)
 
-Pitmaster supports git's rerere mechanism for remembering conflict resolutions:
+Pitmaster includes a standalone `Rerere` class that stores resolutions in git's `rr-cache` layout:
 
 ```php
 use Pitmaster\Merge\Rerere;
+
+$rerere = new Rerere($repo->gitDir());
+
+if ($rerere->isEnabled()) {                     // rerere.enabled = true in .git/config
+    $rerere->record($conflicted, $resolved);    // remember a resolution
+    $resolved = $rerere->resolve($conflicted);  // replay it, or null
+}
 ```
 
-When enabled, conflict resolutions are recorded and automatically applied if the same conflict is encountered again.
+`merge()` does not call it: resolutions are recorded and replayed only when your code does so. `isEnabled()` looks for the literal text `rerere.enabled = true` in `.git/config` and does not recognise the `[rerere]` section that `git config rerere.enabled true` writes ([#20](https://github.com/inline0/pitmaster/issues/20)).
 
 ## Tree-level merge flow
 
 The full merge process:
 
-1. `MergeBase::find()` locates the common ancestor
-2. `TreeDiff::diff()` computes base-to-ours and base-to-theirs changes
+1. `MergeBase::findAll()` locates the common ancestors
+2. The base, ours, and theirs trees are compared path by path
 3. For files changed only in one branch: take that change
 4. For files changed in both branches:
    - If both changed the same way: take either (they agree)
@@ -203,7 +222,7 @@ The full merge process:
 ## CLI usage
 
 ```bash
-./bin/pitmaster merge feature/login
+./vendor/bin/pitmaster merge feature/login
 ```
 
 Output on success:

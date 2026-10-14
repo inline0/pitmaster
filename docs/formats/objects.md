@@ -24,9 +24,9 @@ use Pitmaster\Object\Blob;
 // Create from content
 $blob = Blob::fromContent('Hello, world!');
 echo $blob->content;    // 'Hello, world!'
-echo $blob->size;       // 13
+echo $blob->size();     // 13
 echo $blob->id->hex;    // SHA-1 hash
-echo $blob->type;       // ObjectType::Blob
+echo $blob->type->value; // 'blob' (the property is ObjectType::Blob)
 ```
 
 ### Tree
@@ -47,15 +47,17 @@ foreach ($tree->entries as $entry) {
 // Look up a specific entry
 $entry = $tree->entry('README.md');
 
-// Create a tree
+// Create a tree (entries already in git's sort order)
 $entries = [
     new TreeEntry('100644', 'README.md', $blobId),
     new TreeEntry('100755', 'deploy.sh', $execBlobId),
-    new TreeEntry('040000', 'src', $subtreeId),
+    new TreeEntry('40000', 'src', $subtreeId),
 ];
 
 $tree = Tree::fromEntries($entries);
 ```
+
+`Tree::fromEntries()` writes the entries in the order given and the mode strings exactly as given, so sort them first and write directory modes as `40000`. A tree written with `040000` or in another order gets a different hash from git's, and `git fsck --strict` reports the zero-padded mode.
 
 #### TreeEntry
 
@@ -64,14 +66,14 @@ $tree = Tree::fromEntries($entries);
 ```php
 use Pitmaster\Object\TreeEntry;
 
-$entry->mode;   // '100644', '100755', '040000', '120000', '160000'
+$entry->mode;   // '100644', '100755', '40000', '120000', '160000'
 $entry->name;   // Filename
 $entry->hash;   // ObjectId
 
 // Type checks
-$entry->isBlob();        // mode 100644
+$entry->isBlob();        // regular or executable file (mode 10xxxx)
 $entry->isExecutable();  // mode 100755
-$entry->isTree();        // mode 040000
+$entry->isTree();        // mode 40000 (also accepts 040000)
 $entry->isSymlink();     // mode 120000
 $entry->isGitlink();     // mode 160000 (submodule)
 ```
@@ -81,7 +83,7 @@ Mode values:
 |------|---------|
 | `100644` | Regular file |
 | `100755` | Executable file |
-| `040000` | Directory (tree) |
+| `40000` | Directory (tree); shown as `040000` by `git ls-tree` |
 | `120000` | Symbolic link |
 | `160000` | Gitlink (submodule) |
 
@@ -121,8 +123,8 @@ $content = Commit::buildContent(
 The raw commit format:
 
 ```
-tree <40-char hex>\n
-parent <40-char hex>\n     (zero or more)
+tree <hex hash>\n
+parent <hex hash>\n       (zero or more)
 author <name> <<email>> <timestamp> <tz>\n
 committer <name> <<email>> <timestamp> <tz>\n
 \n
@@ -138,8 +140,8 @@ use Pitmaster\Object\Tag;
 
 $tag = $repo->readObject($tagHash);
 
-$tag->objectId;      // Target object hash
-$tag->objectType;    // 'commit', 'tree', etc.
+$tag->object;        // ObjectId of the target
+$tag->objectType;    // ObjectType enum (ObjectType::Commit, ...)
 $tag->name;          // Tag name
 $tag->tagger;        // 'Name <email> timestamp timezone'
 $tag->message;       // Tag message
@@ -148,7 +150,7 @@ $tag->message;       // Tag message
 Raw tag format:
 
 ```
-object <40-char hex>\n
+object <hex hash>\n
 type commit\n
 tag <name>\n
 tagger <name> <<email>> <timestamp> <tz>\n
@@ -167,24 +169,29 @@ use Pitmaster\Object\ObjectType;
 // From hex string
 $id = ObjectId::fromHex('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2');
 
-// From binary (20 bytes for SHA-1)
+// From binary (20 bytes for SHA-1, 32 for SHA-256)
 $id = ObjectId::fromBinary($rawBytes);
 
 // Compute from content
 $id = ObjectId::compute(ObjectType::Blob, 'Hello, world!');
+$id = ObjectId::compute(ObjectType::Blob, 'Hello, world!', 'sha256');
 
 // Zero hash
 $id = ObjectId::zero();
+$id = ObjectId::zero('sha256');
 
 // Properties
-$id->hex;      // 40-character hex string
-$id->binary;   // 20-byte raw binary
+$id->hex;      // 40-character hex string (64 for SHA-256)
+$id->binary;   // 20-byte raw binary (32 for SHA-256)
+$id->algo;     // 'sha1' or 'sha256'
+$id->isSha256();
+$id->isZero();
 
 // Comparison
 $id->equals($otherId);
 ```
 
-The hash is computed over the uncompressed data: `sha1("{type} {size}\0{content}")`.
+The hash is computed over the uncompressed data: `sha1("{type} {size}\0{content}")`, or SHA-256 of the same bytes. `fromHex()` and `fromBinary()` pick the algorithm from the length.
 
 ## ObjectType enum
 
@@ -240,9 +247,9 @@ $store->write($object);
 
 The write process:
 1. Serialize: `"{type} {size}\0{content}"`
-2. Hash: `sha1(serialized)`
+2. Use the object's `id`, computed when the object was built (reads verify the hash)
 3. Compress: `zlib_encode(serialized)`
-4. Write to `.git/objects/{hash[0..1]}/{hash[2..39]}`
+4. Write to `.git/objects/{hash[0..1]}/{rest of hash}`
 5. Atomic write (write to temp file, then rename)
 
 ## ObjectSerializer
@@ -253,11 +260,14 @@ The `ObjectSerializer` handles encoding and decoding the object wire format.
 use Pitmaster\Storage\ObjectSerializer;
 
 // Encode
-$raw = ObjectSerializer::encode($object);
+$raw = ObjectSerializer::encodeRaw($object);
 // "blob 5\0Hello"
+$compressed = ObjectSerializer::encode($object);
+// zlib-compressed form, as stored in a loose object file
 
 // Decode
-$object = ObjectSerializer::decode($raw);
+$object = ObjectSerializer::decodeRaw($raw);
+$object = ObjectSerializer::decode($compressed, $expectedHex); // throws CorruptObjectException on a hash mismatch
 ```
 
 ## ObjectDatabase
@@ -279,22 +289,28 @@ Write-through to loose storage is intentional. Let `git gc` repack into pack fil
 
 ## SHA-256 support
 
-Pitmaster abstracts the hash algorithm through `ObjectId`. SHA-1 is the default (and what every existing repository uses). SHA-256 support is available but deferred for post-v1.
+Pitmaster abstracts the hash algorithm through `ObjectId`. SHA-1 is the default. SHA-256 is chosen per repository when it is created:
 
 ```php
-define('PITMASTER_HASH_ALGO', 'sha256');
+$repo = Pitmaster::init('/path/to/project', 'sha256');
 ```
 
-When SHA-256 is active, `ObjectId` uses 64-character hex strings and 32-byte binary hashes.
+```bash
+./vendor/bin/pitmaster init --object-format=sha256
+```
+
+This writes `extensions.objectformat = sha256` to the config. Repositories opened later read the format from that entry, and every object, tree, index, and ref operation then uses 64-character hex strings and 32-byte binary hashes. There is no global switch or constant for the algorithm.
+
+The object classes take the algorithm as an argument when you build objects yourself: `Blob::fromContent($content, 'sha256')`, `Tree::fromEntries($entries, 'sha256')`, `ObjectId::compute($type, $content, 'sha256')`. `Pitmaster::clone()` creates SHA-1 repositories.
 
 ## Tree entry binary format
 
 Inside a tree object's content, each entry is encoded as:
 
 ```
-<octal mode as ASCII> <space> <filename> \0 <20-byte binary hash>
+<octal mode as ASCII> <space> <filename> \0 <binary hash: 20 bytes SHA-1, 32 bytes SHA-256>
 ```
 
-Note: the hash is raw binary, not hex. This is the only place in the format where hashes are stored in binary rather than hex.
+Note: the hash is raw binary, not hex, unlike the hex hashes in commit and tag objects.
 
-Entries are sorted by comparing names as if directories have a trailing `/`. This sort order must be exact for the tree's SHA-1 to match git's computation.
+Entries are sorted by comparing names as if directories have a trailing `/`. This sort order must be exact for the tree's hash to match git's computation.

@@ -10,7 +10,7 @@ meta_description: "Git smart HTTP transport, PktLine encoding, ref discovery, ca
 
 # Smart HTTP
 
-Pitmaster communicates with git servers over HTTPS using the smart HTTP protocol. This is the primary network transport. It uses PHP's native stream functions (`file_get_contents` with stream context) for HTTP requests.
+Pitmaster communicates with git servers over HTTPS using the smart HTTP protocol. This is the primary network transport. It uses PHP's native stream functions (`fopen` with a stream context) for HTTP requests, so `allow_url_fopen` must be enabled.
 
 ## SmartHttpClient
 
@@ -22,7 +22,7 @@ $http = new SmartHttpClient();
 $http = new SmartHttpClient(timeout: 60);
 ```
 
-The timeout defaults to the `PITMASTER_HTTP_TIMEOUT` constant (default 30 seconds).
+The timeout defaults to the `PITMASTER_HTTP_TIMEOUT` constant (an integer), or 30 seconds when it is not defined.
 
 ### Discover refs
 
@@ -39,11 +39,11 @@ $defaultBranch = $discovery->headSymref();
 // Specific ref
 $mainId = $discovery->ref('refs/heads/main');
 
-// Server capabilities
+// Server capabilities (a Capability object, or null)
 $caps = $discovery->capabilities();
 ```
 
-The ref discovery request goes to:
+`discoverReceivePackRefs()` does the same for `git-receive-pack`. The ref discovery request goes to:
 ```
 GET <url>/info/refs?service=git-upload-pack
 ```
@@ -56,7 +56,14 @@ The response is a pkt-line encoded list of refs with capabilities on the first l
 $response = $http->uploadPack($url, $requestBody);
 ```
 
-Sends a POST to `<url>/git-upload-pack` with the want/have negotiation body. Returns the pack data.
+Sends a POST to `<url>/git-upload-pack` with the want/have negotiation body. Returns the raw response body (pkt-lines, `NAK`, and side-band data). `UploadPackClient` builds the request and extracts the pack:
+
+```php
+use Pitmaster\Protocol\UploadPackClient;
+
+$client = new UploadPackClient($http);
+$packData = $client->fetch($url, $wants, $haves);   // ObjectId[] wants and haves
+```
 
 ### Receive pack (push)
 
@@ -75,7 +82,7 @@ use Pitmaster\Protocol\PktLine;
 
 // Encode a single line
 $encoded = PktLine::encode("want abc123def456\n");
-// "002cwant abc123def456\n"
+// "0016want abc123def456\n"
 
 // Flush packet (end of section)
 $flush = PktLine::flush();
@@ -93,10 +100,10 @@ $lines = PktLine::decode($rawData);
 ### Length rules
 
 - Minimum data line: `0005` (1 byte payload)
-- Maximum data line: `FFFF` (65531 bytes payload)
+- Maximum data line: `fff0` (65516 bytes payload)
 - Flush packet: `0000`
 - Delimiter packet: `0001`
-- Response-end: `0002` (protocol v2)
+- Response-end: `0002` (protocol v2; handled by `ProtocolV2::decode()`, while `PktLine::decode()` rejects it)
 
 ```php
 PktLine::MAX_PAYLOAD;  // 65516 (65520 - 4)
@@ -124,7 +131,7 @@ $symref = $discovery->headSymref();
 
 // Server capabilities
 $caps = $discovery->capabilities();
-// ['thin-pack', 'side-band-64k', 'ofs-delta', ...]
+// Capability object (see below), or null
 ```
 
 ### Ref advertisement format
@@ -149,7 +156,7 @@ $caps = Capability::parse('thin-pack side-band-64k ofs-delta symref=HEAD:refs/he
 
 $caps->has('thin-pack');           // true
 $caps->get('symref');              // 'HEAD:refs/heads/main'
-$caps->all();                      // ['thin-pack', 'side-band-64k', ...]
+$caps->all();                      // ['thin-pack' => null, ..., 'symref' => 'HEAD:refs/heads/main']
 ```
 
 ### Common capabilities
@@ -157,7 +164,7 @@ $caps->all();                      // ['thin-pack', 'side-band-64k', ...]
 | Capability | Meaning |
 |-----------|---------|
 | `multi_ack` | Server supports multi-ack negotiation |
-| `thin-pack` | Server sends thin packs (base objects may be omitted) |
+| `thin-pack` | Server sends thin packs (base objects may be omitted). Pitmaster requests it but cannot index thin packs yet ([#16](https://github.com/inline0/pitmaster/issues/16)) |
 | `side-band` | Server uses side-band for pack data (limited to 1000 bytes) |
 | `side-band-64k` | Server uses 64K side-band for pack data |
 | `ofs-delta` | Pack may use OFS_DELTA objects |
@@ -182,21 +189,22 @@ Pitmaster's `UploadPackClient` strips the channel bytes and reassembles the pack
 
 ### v1 (default)
 
-The traditional protocol. Ref discovery sends all refs at once, and negotiation uses want/have lines with multi_ack.
+The traditional protocol. Ref discovery sends all refs at once. Pitmaster negotiates in a single round: it sends its wants, every local ref tip as a `have`, and `done`.
 
 ### v2
 
-A simpler protocol with better performance. Enabled by the `version 2` capability.
+A simpler protocol with better performance.
 
 Key differences from v1:
 - Ref discovery is a separate `ls-refs` command (can filter refs)
 - Fetch is a single `fetch` command with structured parameters
 - Uses delimiter packets (`0001`) to separate sections
 
-Pitmaster supports both v1 and v2. The version is negotiated during ref discovery.
+`clone()` and `fetch()` always use v1. v2 is available when you call it explicitly:
 
 ```php
-use Pitmaster\Protocol\ProtocolV1;
+$discovery = $http->discoverRefsV2($url);       // ls-refs
+$packData = (new UploadPackClient($http))->fetchV2($url, $wants, $haves);
 ```
 
 ## HTTP request flow
@@ -227,7 +235,7 @@ use Pitmaster\Protocol\ProtocolV1;
 
 ## Error handling
 
-Network errors throw `ProtocolException`:
+Network errors throw `ProtocolException`. When the smart HTTP exchange of `clone()` or `fetch()` fails, Pitmaster retries over dumb HTTP and rethrows the original error if that fails too. Other failures (an unknown remote, a process-free handle, a pack that cannot be indexed) throw other exception types:
 
 ```php
 use Pitmaster\Exceptions\ProtocolException;
@@ -241,7 +249,7 @@ try {
 
 Common errors:
 - Server unreachable (timeout)
-- Authentication required (401/403)
-- Repository not found (404)
+- Authentication required or repository not found (reported as `Unexpected HTTP status 401`, `403`, or `404`)
+- Unexpected `Content-Type` in the response
 - Invalid pkt-line data
 - Side-band error channel message

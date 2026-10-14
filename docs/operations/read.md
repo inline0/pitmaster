@@ -34,7 +34,9 @@ Pitmaster::isWorktree('/path');    // true only for linked worktrees
 
 ## Reading objects
 
-Every piece of data in a git repository is stored as an object with a SHA-1 hash. There are four object types: blob, tree, commit, and tag.
+Every piece of data in a git repository is stored as an object identified by its hash: SHA-1 (40 hex characters) by default, or SHA-256 (64 hex characters) in repositories created with `Pitmaster::init($path, 'sha256')`. There are four object types: blob, tree, commit, and tag.
+
+The hash-based methods below take the full hex hash; abbreviated hashes are not accepted.
 
 ### readObject
 
@@ -89,8 +91,8 @@ A blob holds raw file content.
 ```php
 $blob = $repo->readObject($hash);
 echo $blob->content;     // Raw file bytes
-echo $blob->size;        // Content length
-echo $blob->id->hex;     // SHA-1 hash
+echo $blob->size();      // Content length
+echo $blob->id->hex;     // Object hash
 ```
 
 ## Working with trees
@@ -103,17 +105,17 @@ $tree = $repo->readObject($hash);
 foreach ($tree->entries as $entry) {
     echo "{$entry->mode} {$entry->name} {$entry->hash->hex}\n";
     // 100644 README.md abc123...
-    // 040000 src       def456...
+    // 40000 src def456...
     // 100755 deploy.sh 789012...
 
     if ($entry->isTree()) {
-        // Recurse into subdirectory
-    } elseif ($entry->isBlob()) {
-        // Read file content
+        // Recurse into subdirectory (mode 40000)
     } elseif ($entry->isExecutable()) {
-        // Executable file
+        // Executable file (mode 100755)
+    } elseif ($entry->isBlob()) {
+        // Regular file (any 10xxxx mode, so executables match too)
     } elseif ($entry->isSymlink()) {
-        // Symbolic link
+        // Symbolic link (mode 120000)
     } elseif ($entry->isGitlink()) {
         // Submodule (mode 160000)
     }
@@ -127,7 +129,7 @@ A commit links a tree snapshot to its parents and metadata.
 ```php
 $commit = $repo->head();
 
-echo $commit->id->hex;      // Full SHA-1 hash
+echo $commit->id->hex;      // Full object hash
 echo $commit->tree->hex;    // Tree object hash
 echo $commit->author;       // "Name <email> timestamp tz"
 echo $commit->committer;    // "Name <email> timestamp tz"
@@ -151,8 +153,8 @@ Annotated tags are objects with a target, type, name, tagger, and message.
 ```php
 $tag = $repo->readObject($hash);
 
-echo $tag->objectId->hex;   // Target object hash
-echo $tag->objectType;      // 'commit', 'tree', 'blob', or 'tag'
+echo $tag->object->hex;           // Target object hash
+echo $tag->objectType->value;     // 'commit', 'tree', 'blob', or 'tag'
 echo $tag->name;            // Tag name
 echo $tag->tagger;          // "Name <email> timestamp tz"
 echo $tag->message;         // Tag message
@@ -201,14 +203,16 @@ $id = $repo->resolve('main');
 $id = $repo->resolve('v1.0.0');
 $id = $repo->resolve('HEAD~3');
 $id = $repo->resolve('main^2');
-$id = $repo->resolve('abc123def456...');
+$id = $repo->resolve('3f2c1e0b9d6a4f8e7c5b2a1d0e9f8c7b6a5d4e3f');
 ```
 
-The revision parser supports `~N` (ancestor) and `^N` (parent) operators, chained arbitrarily.
+The revision parser supports `~N` (ancestor) and `^N` (parent) operators, chained arbitrarily. Hashes must be given in full.
 
 ## Walking commit history
 
 ### log
+
+Commits are returned newest first, ordered by committer timestamp.
 
 ```php
 // Last 20 commits from HEAD
@@ -233,7 +237,7 @@ $commits = $repo->log(10, $from);
 $commits = $repo->logPath('src/Repository.php', 20);
 ```
 
-Returns only commits where the specified file was changed (added, modified, or deleted).
+Returns only commits where the specified file was changed (added, modified, deleted, or renamed) compared with the first parent. The path must be an exact file path; directories do not match. Only the newest `5 * $limit` commits are examined, so older matches can be missing ([#7](https://github.com/inline0/pitmaster/issues/7)).
 
 ### show
 
@@ -256,6 +260,8 @@ foreach ($diffs as $diff) {
 $default = $repo->defaultBranch();
 // Checks: remote HEAD symref -> local HEAD -> main/master fallback
 ```
+
+When `remote.origin.url` is set and processes are enabled, the first check makes a smart HTTP request to the remote. Network errors are ignored and the local checks follow.
 
 ## Merge ancestry
 

@@ -10,7 +10,7 @@ meta_description: "Linked worktrees for multiple checkouts from a single reposit
 
 # Worktrees
 
-Git worktrees allow multiple working directories to share a single repository. Each worktree has its own checkout (HEAD, index, working files) but shares the object store, config, and packed-refs with the main repository. Pitmaster fully supports creating, managing, and operating on linked worktrees.
+Git worktrees allow multiple working directories to share a single repository. Each worktree has its own checkout (HEAD, index, working files) but shares the object store, config, and packed-refs with the main repository. Pitmaster can create, list, lock, and remove linked worktrees, and open them as repositories. Pruning, moving, and repairing worktrees are not implemented.
 
 ## Concepts
 
@@ -40,9 +40,9 @@ project/                          (main worktree)
   README.md
 ```
 
-The linked worktree's `.git` is a file (not a directory) containing:
+The linked worktree's `.git` is a file (not a directory) containing a path relative to the worktree:
 ```
-gitdir: /path/to/project/.git/worktrees/review
+gitdir: ../../path/to/project/.git/worktrees/review
 ```
 
 ## Creating a worktree
@@ -56,8 +56,8 @@ $wt = $repo->addWorktree('/tmp/review', 'feature/review');
 echo $wt->path;        // '/tmp/review'
 echo $wt->branch;      // 'feature/review'
 echo $wt->gitDir;      // '/path/to/project/.git/worktrees/review'
-echo $wt->isMain;      // false
-echo $wt->isDetached;  // false
+var_dump($wt->isMain);      // bool(false)
+var_dump($wt->isDetached);  // bool(false)
 ```
 
 `addWorktree()` does the following:
@@ -68,15 +68,17 @@ echo $wt->isDetached;  // false
 5. Checks out the branch's tree into the worktree directory
 6. Writes the index for the worktree
 
+If the branch already exists, `$from` is ignored. Unlike git, `addWorktree()` does not refuse a branch that is already checked out in another worktree, and it does not run the `post-checkout` hook.
+
 ### With an explicit metadata name
 
 Use the optional `name` argument when multiple linked worktrees can share the same checkout basename.
 
 ```php
 $wt = $repo->addWorktree(
-    '/tmp/sandboxes/divine-child',
+    '/tmp/sandboxes/app',
     'feature/review',
-    name: 'sandbox-divine-child',
+    name: 'sandbox-app',
 );
 ```
 
@@ -102,12 +104,13 @@ foreach ($worktrees as $wt) {
 }
 ```
 
-The list always includes the main worktree first, followed by linked worktrees.
+The list always includes the main worktree first, followed by linked worktrees. Call `worktrees()` on a handle for the main repository: on a linked worktree handle, the main entry currently reports the linked worktree's own path ([#14](https://github.com/inline0/pitmaster/issues/14)).
 
 ## Removing a worktree
 
 ```php
-$repo->removeWorktree('review');
+$repo->removeWorktree('review');          // by metadata name
+$repo->removeWorktree('/tmp/review');     // or by worktree path
 
 // Force remove (even if locked)
 $repo->removeWorktree('review', force: true);
@@ -134,13 +137,16 @@ echo $repo->commonGitDir();      // '/path/to/project/.git'
 echo $repo->workDir();           // '/tmp/review'
 ```
 
-All operations work transparently:
+Repository operations resolve paths like this:
 - **Objects**: read from and written to the common git dir (`project/.git/objects/`)
 - **Config**: read from the common git dir (`project/.git/config`)
 - **Packed-refs**: read from the common git dir
-- **HEAD**: per-worktree (each worktree tracks its own branch)
+- **HEAD**: per-worktree (each worktree tracks its own branch), together with `ORIG_HEAD`, `MERGE_HEAD`, and the other operation refs
 - **Index**: per-worktree (each worktree has its own staging area)
-- **Loose refs**: per-worktree git dir
+- **Loose refs**: branches and tags are shared in the common dir (`project/.git/refs/`)
+- **Hooks**: read from the per-worktree git dir, so the shared hooks do not run ([#12](https://github.com/inline0/pitmaster/issues/12))
+
+Stash does not handle linked worktrees yet: it reads the identity from the per-worktree directory, which has no config, and writes its reflog there ([#14](https://github.com/inline0/pitmaster/issues/14)).
 
 ## Worktree value object
 
@@ -155,17 +161,17 @@ $wt->head;          // ObjectId of HEAD commit
 $wt->isMain;        // true for the main worktree
 $wt->isDetached;    // true if HEAD is detached
 $wt->isLocked;      // true if worktree is locked
-$wt->lockReason;    // Lock reason string (nullable)
+$wt->lockReason;    // Lock reason, or null when there is none (an empty reason is also null)
 ```
 
 ## WorktreeManager
 
-For low-level worktree management:
+For low-level worktree management. `WorktreeManager::add()` only writes the metadata and the `.git` file: it does not create the branch, check out files, or write an index. Use `$repo->addWorktree()` for a usable checkout. The branch must already exist (or be a full ref name such as `refs/tags/v1.0.0`, which detaches HEAD).
 
 ```php
 use Pitmaster\Worktree\WorktreeManager;
 
-$manager = new WorktreeManager($gitDir, $workDir);
+$manager = new WorktreeManager($repo->commonGitDir(), $mainWorkDir);
 
 // List
 $worktrees = $manager->list();
@@ -178,7 +184,7 @@ $wt = $manager->add('/tmp/review', 'feature/review', 'review-app');
 $manager->remove('review');
 $manager->remove('review', force: true);
 
-// Lock/unlock
+// Lock/unlock (metadata name only)
 $manager->lock('review', 'Do not delete, code review in progress');
 $manager->unlock('review');
 ```
@@ -230,7 +236,7 @@ $gitDir = WorktreeManager::resolveGitFile('/tmp/review');
 .git/worktrees/<name>/
   HEAD         Per-worktree HEAD (symbolic ref or detached hash)
   commondir    Relative path to the shared git dir ("../..")
-  gitdir       Absolute path back to the worktree's .git file
+  gitdir       Path back to the worktree's .git file, as passed to addWorktree()
   locked       Present if locked (content = reason)
   index        Per-worktree index/staging area
 ```
@@ -238,7 +244,7 @@ $gitDir = WorktreeManager::resolveGitFile('/tmp/review');
 ### Linked worktree's .git file
 
 ```
-gitdir: /path/to/project/.git/worktrees/<name>
+gitdir: <relative path to>/project/.git/worktrees/<name>
 ```
 
 ### Resource sharing
@@ -248,7 +254,7 @@ gitdir: /path/to/project/.git/worktrees/<name>
 | Objects | `$commonDir/objects/` | Yes |
 | Config | `$commonDir/config` | Yes |
 | Packed-refs | `$commonDir/packed-refs` | Yes |
-| Hooks | `$commonDir/hooks/` | Yes |
+| Hooks | `$gitDir/hooks/` | No: Pitmaster does not run the shared hooks in linked worktrees |
 | HEAD | `$gitDir/HEAD` | No (per-worktree) |
 | Index | `$gitDir/index` | No (per-worktree) |
-| Loose refs | `$gitDir/refs/` | Partially (HEAD is local) |
+| Loose refs | `$commonDir/refs/` | Yes (HEAD and operation refs such as `MERGE_HEAD` are per-worktree) |

@@ -10,7 +10,9 @@ meta_description: "Save and restore working directory changes using the stash st
 
 # Stash
 
-Git stash saves working directory and index changes so you can switch to another task, then restore them later. Pitmaster implements the stash using `refs/stash` and the reflog, matching git's behavior.
+Git stash saves working directory and index changes so you can switch to another task, then restore them later. Pitmaster implements the stash using `refs/stash` and the reflog, in git's storage layout. There is no stash method on `Repository`; use the `Stash` class below.
+
+Two known problems: with more than one entry, `drop()` (and therefore `pop()`) leaves the entry in the list ([#10](https://github.com/inline0/pitmaster/issues/10)), and `apply()` overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)). Apply stashes on a clean working tree.
 
 ## How stash works
 
@@ -45,8 +47,12 @@ $stash = new Stash(
 ## Push (save changes)
 
 ```php
+// public function push(string $message = '', bool $includeUntracked = false): ObjectId
 $stashId = $stash->push('Work in progress on login');
 echo "Saved: {$stashId->hex}\n";
+
+// Also stash untracked files
+$stashId = $stash->push('With new files', includeUntracked: true);
 ```
 
 Push does the following:
@@ -59,14 +65,17 @@ Push does the following:
 7. Appends a reflog entry for the stack
 8. Resets the working tree and index to HEAD
 
-After push, the working directory is clean (matching HEAD).
+After push, tracked files match HEAD. Untracked files stay unless `includeUntracked` is set; then they are removed and stored in the stash commit's own tree (git stores them in a third parent instead, so git sees them as tracked changes). `push()` creates an entry even when nothing changed, where git reports "No local changes to save".
 
 ### With default message
 
 ```php
 $stashId = $stash->push();
-// Message defaults to "WIP on <branch>"
+// Message: "WIP on <branch>: <short hash> <HEAD subject>"
+// With a message: "On <branch>: <message>"
 ```
+
+On a detached HEAD, `<branch>` is `HEAD`.
 
 ## Pop (apply and remove)
 
@@ -89,7 +98,7 @@ $stash->apply();      // Apply stash@{0}
 $stash->apply(2);     // Apply stash@{2}
 ```
 
-Apply reads the stash commit's tree and writes all files to the working directory. The stash entry remains in the stack.
+Apply merges the stash into the current HEAD file by file (stash base, current HEAD, stash tree). The stash entry remains in the stack, and the index is not touched. Conflicts leave markers labelled `Updated upstream` and `Stashed changes` in the files and throw `Pitmaster\Exceptions\MergeConflictException`; `pop()` then keeps the entry. Apply does not check for local changes first (see the note at the top).
 
 ## List entries
 
@@ -98,8 +107,8 @@ $entries = $stash->listEntries();
 
 foreach ($entries as $entry) {
     echo "stash@{{$entry['index']}}: {$entry['message']}\n";
-    // stash@{0}: Work in progress on login
-    // stash@{1}: WIP on main
+    // stash@{0}: On main: Work in progress on login
+    // stash@{1}: WIP on main: f707601 Add login form
 }
 ```
 
@@ -115,7 +124,7 @@ $stash->drop();       // Drop stash@{0}
 $stash->drop(1);      // Drop stash@{1}
 ```
 
-If dropping the only entry, `refs/stash` and its reflog are removed. Otherwise, the reflog is rebuilt without the dropped entry and `refs/stash` is updated to point to the new top.
+If dropping the only entry, `refs/stash` and its reflog are removed. With more entries, `drop()` currently only moves `refs/stash` and leaves the reflog unchanged, so the entry stays in `listEntries()` ([#10](https://github.com/inline0/pitmaster/issues/10)).
 
 ## Storage details
 
@@ -126,8 +135,8 @@ commit <hash>
 tree <worktree-tree-hash>
 parent <HEAD-hash>
 parent <index-commit-hash>
-author <committer from HEAD>
-committer <committer from HEAD>
+author <current identity>
+committer <current identity>
 
 <stash message>
 ```
@@ -138,46 +147,52 @@ committer <committer from HEAD>
 commit <hash>
 tree <index-tree-hash>
 parent <HEAD-hash>
-author <committer from HEAD>
-committer <committer from HEAD>
+author <current identity>
+committer <current identity>
 
-index on <branch>: <message>
+index on <branch>: <short hash> <HEAD subject>
 ```
+
+The identity comes from `GIT_COMMITTER_NAME`, then `GIT_AUTHOR_NAME`, then `user.name` in the repository config, then `Pitmaster` (and the same order for the email, ending in `pitmaster@example.invalid`). The date comes from `GIT_COMMITTER_DATE`, then `GIT_AUTHOR_DATE`, then the current time. Unlike commits, stash does not read the `PITMASTER_*` constants.
 
 ### Reflog storage
 
 Stash entries are stored in `.git/logs/refs/stash`:
 
 ```
-0000000000000000000000000000000000000000 abc123... Name <email> 1700000000 +0000	WIP on main
-abc123... def456... Name <email> 1700000001 +0000	Work in progress on login
+0000000000000000000000000000000000000000 abc123... Name <email> 1700000000 +0000	WIP on main: f707601 Add login form
+abc123... def456... Name <email> 1700000001 +0000	On main: Work in progress on login
 ```
 
-The reflog is read in chronological order. The stash list reverses it (newest first).
+The reflog is read in chronological order. The stash list reverses it (newest first). The stash reflog is written regardless of `core.logallrefupdates`.
 
 ## CLI usage
 
 ```bash
 # Save current changes
-./bin/pitmaster stash
-./bin/pitmaster stash push
-./bin/pitmaster stash push "Work in progress on login"
+./vendor/bin/pitmaster stash
+./vendor/bin/pitmaster stash push
+./vendor/bin/pitmaster stash push "Work in progress on login"
 
 # Apply and remove top entry
-./bin/pitmaster stash pop
+./vendor/bin/pitmaster stash pop
 
 # Apply without removing
-./bin/pitmaster stash apply
+./vendor/bin/pitmaster stash apply
 
 # List all entries
-./bin/pitmaster stash list
+./vendor/bin/pitmaster stash list
 
 # Remove top entry without applying
-./bin/pitmaster stash drop
+./vendor/bin/pitmaster stash drop
 ```
+
+The message is the argument after `push` (or `save`); `-m` is not supported. `pop`, `apply`, and `drop` always work on `stash@{0}`; the CLI has no `--include-untracked`.
 
 ## Limitations
 
-- Only full working directory stash (no `--keep-index` or `--include-untracked`)
+- Only full working directory stash (no `--keep-index`); untracked files only through `push($message, includeUntracked: true)`
 - No `--patch` mode (interactive hunk selection)
-- Pop/apply restores the working tree state; it does not separately restore the index state (staged changes are merged into the working tree)
+- Pop/apply restores the working tree state; it does not restore the index. Staged edits come back as unstaged edits, and newly staged files come back as untracked files
+- `stash@{n}` is not accepted by `Repository::resolve()`
+- Stash in a linked worktree uses the wrong config and reflog location ([#14](https://github.com/inline0/pitmaster/issues/14))

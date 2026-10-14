@@ -10,7 +10,7 @@ meta_description: "Initialize repos, stage files, create commits, manage branche
 
 # Writing to Repositories
 
-Pitmaster writes git repositories using the same binary formats as the canonical `git` binary. Objects are written to the loose object store (zlib-compressed), the index is written in v2 format, and refs are written as loose files. Written data is verifiable with `git fsck --strict`.
+Pitmaster writes git repositories using the same binary formats as the canonical `git` binary. Objects are written to the loose object store (zlib-compressed), the index is written in v2 format (or v3 when entries need extended flags; an existing index keeps its version), and refs are written as loose files. Written data is verifiable with `git fsck --strict`.
 
 ## Initializing a repository
 
@@ -24,7 +24,12 @@ This creates:
 - `.git/objects/` (empty object store)
 - `.git/refs/heads/` and `.git/refs/tags/` (empty ref directories)
 - `.git/HEAD` containing `ref: refs/heads/main`
+- `.git/hooks/`, `.git/info/exclude`, and `.git/description`
 - `.git/config` with default settings
+
+Pass `'sha256'` as the second argument to create a SHA-256 repository: `Pitmaster::init($path, 'sha256')`.
+
+The default config does not set `core.logallrefupdates`, so Pitmaster records no reflog entries in a repository it created until you set that key to `true` ([#8](https://github.com/inline0/pitmaster/issues/8)). Repositories created by `git init` set it already.
 
 ## Staging files
 
@@ -35,9 +40,9 @@ $repo->add('src/Feature.php');
 $repo->add('src/Feature.php', 'tests/FeatureTest.php', 'README.md');
 ```
 
-For each file, Pitmaster:
+Each argument is a file path relative to the working tree root. Directories and globs are not expanded, and a missing file throws `RuntimeException`. For each file, Pitmaster:
 1. Reads the file content from the working tree
-2. Creates a `Blob` object and computes its SHA-1 hash
+2. Creates a `Blob` object and computes its hash
 3. Writes the blob to `.git/objects/` (zlib-compressed)
 4. Updates the index entry for that path with the new hash and file metadata
 
@@ -70,9 +75,11 @@ The commit process:
 
 1. **Build tree from index**: the flat list of index entries is organized into a tree hierarchy (directories become tree objects, files are blob references). Each tree is written to the object store.
 2. **Determine parent**: the current HEAD commit becomes the parent. Root commits (first commit in a repo) have no parents.
-3. **Determine author**: taken from `.git/config` (`user.name`/`user.email`), then `PITMASTER_AUTHOR_NAME`/`PITMASTER_AUTHOR_EMAIL` constants, then defaults.
+3. **Determine author**: taken from the `PITMASTER_AUTHOR_*` and `GIT_AUTHOR_*` environment variables, then the `PITMASTER_AUTHOR_NAME`/`PITMASTER_AUTHOR_EMAIL` constants, then `.git/config` (`user.name`/`user.email`), then `Pitmaster <pitmaster@localhost>`. The committer is resolved the same way.
 4. **Write commit object**: the commit content (`tree`, `parent`, `author`, `committer`, message) is serialized, hashed, and written.
 5. **Update HEAD**: the branch ref that HEAD points to is updated to the new commit hash.
+
+Hooks run around these steps (`pre-commit`, `prepare-commit-msg`, `commit-msg`, `post-commit`) unless the handle was opened with `['hooks' => false]`. `commit()` throws when the message is missing, when the tree is unchanged from HEAD, or when the index has unmerged paths.
 
 ### Custom author
 
@@ -120,6 +127,8 @@ $repo->checkout('feature/login');
 
 Updates HEAD to a symbolic ref pointing to the branch, resets the index to match the branch tip's tree, and updates the working tree.
 
+Local changes in paths that differ between the two trees stop the checkout with a `RuntimeException`. Uncommitted changes in all other tracked files are replaced by the branch's content, where git would keep them ([#2](https://github.com/inline0/pitmaster/issues/2)). Commit or stash them before switching.
+
 ### Check if merged
 
 ```php
@@ -133,8 +142,8 @@ if ($repo->isBranchMerged('feature/done')) {
 ### Lightweight tag
 
 ```php
-$headId = $repo->resolve('HEAD');
-$repo->updateRef('refs/tags/v1.0.0', $headId);
+$repo->createLightweightTag('v1.0.0');                          // At HEAD
+$repo->createLightweightTag('v0.9.0', $repo->resolve('HEAD~5'));
 ```
 
 A lightweight tag is just a ref pointing directly to a commit.
@@ -145,7 +154,7 @@ A lightweight tag is just a ref pointing directly to a commit.
 $tagId = $repo->createTag('v2.0.0', 'Release version 2.0.0');
 ```
 
-An annotated tag creates a tag object (with tagger, message, and target) and a ref pointing to it. The tagger is derived from the repo config.
+An annotated tag creates a tag object (with tagger, message, and target) and a ref pointing to it. The tagger is the current committer identity, resolved like the commit author.
 
 ### Custom tagger
 
@@ -179,6 +188,8 @@ $id = $repo->writeObject($blob);
 echo $id->hex;  // SHA-1 of "blob 13\0Hello, world!"
 ```
 
+In a SHA-256 repository pass the algorithm: `Blob::fromContent('Hello, world!', 'sha256')`.
+
 ### Write a tree
 
 ```php
@@ -188,12 +199,14 @@ use Pitmaster\Object\ObjectId;
 
 $entries = [
     new TreeEntry('100644', 'README.md', $blobId),
-    new TreeEntry('040000', 'src', $subtreeId),
+    new TreeEntry('40000', 'src', $subtreeId),
 ];
 
 $tree = Tree::fromEntries($entries);
 $id = $repo->writeObject($tree);
 ```
+
+`Tree::fromEntries()` writes the entries in the order given and the mode strings as given. Pass them in git's tree order (by name, with directories compared as if their name ended in `/`) and write directory modes as `40000`: git stores tree modes without the leading zero, and `git fsck --strict` rejects `040000`.
 
 ### Write a commit
 
@@ -234,7 +247,7 @@ $repo->reset('HEAD~3', 'hard');
 // Restore a file from the index into the worktree
 $repo->restore('src/File.php');
 
-// Restore the index version from HEAD
+// Restore the index version from HEAD (the worktree is left alone)
 $repo->restore('src/File.php', staged: true);
 
 // Restore from a specific commit
@@ -248,8 +261,10 @@ $repo->restore('src/File.php', 'HEAD~1', staged: true, worktree: true);
 
 ```php
 // Apply a commit on the current branch
-$newId = $repo->cherryPick('abc123');
+$newId = $repo->cherryPick('feature~1');
 
 // Undo a commit
-$revertId = $repo->revert('abc123');
+$revertId = $repo->revert('HEAD~2');
 ```
+
+Both take any revision `resolve()` accepts. Full hashes work; abbreviated hashes do not.

@@ -10,7 +10,7 @@ meta_description: "Compare HEAD, index, and working tree to determine file statu
 
 # Status
 
-Pitmaster computes working tree status by comparing three states: the HEAD commit's tree, the index (staging area), and the working tree (actual files on disk). This three-way comparison produces the same output as `git status`.
+Pitmaster computes working tree status by comparing three states: the HEAD commit's tree, the index (staging area), and the working tree (actual files on disk). The CLI prints a `git status`-style summary from it, and `statusPorcelainV2()` prints git's porcelain v2 format.
 
 ## Basic usage
 
@@ -18,11 +18,11 @@ Pitmaster computes working tree status by comparing three states: the HEAD commi
 $entries = $repo->status();
 
 foreach ($entries as $entry) {
-    echo "{$entry->index->value}{$entry->worktree->value} {$entry->path}\n";
+    echo $entry->shortFormat() . "\n";
 }
 ```
 
-Output matches git's short format:
+`shortFormat()` prints git's short format:
 
 ```
 M  src/Modified.php          (staged modification)
@@ -42,6 +42,9 @@ use Pitmaster\Status\StatusEntry;
 $entry->path;       // File path relative to repo root
 $entry->index;      // FileStatus: HEAD-to-index state
 $entry->worktree;   // FileStatus: index-to-worktree state
+$entry->origPath;   // Original path for renamed entries, otherwise null
+$entry->renameScore; // Similarity score for renamed entries, otherwise null
+$entry->shortFormat(); // "XY path", "?? path", or "R  old -> new"
 ```
 
 ## FileStatus enum
@@ -54,10 +57,13 @@ FileStatus::Modified;   // 'M' - content changed
 FileStatus::Deleted;    // 'D' - file removed
 FileStatus::Renamed;    // 'R' - file renamed
 FileStatus::Copied;     // 'C' - file copied
+FileStatus::Unmerged;   // 'U' - unresolved merge conflict
 FileStatus::Untracked;  // '?' - not in index
 FileStatus::Ignored;    // '!' - matched by .gitignore
 FileStatus::Unmodified; // ' ' - no change
 ```
+
+`status()` does not report ignored files, so `Ignored` does not appear in its result.
 
 ## Porcelain v2 output
 
@@ -70,10 +76,11 @@ echo $repo->statusPorcelainV2();
 Output:
 
 ```
-1 M. N... 000000 000000 000000 0000...0000 0000...0000 modified-file.txt
+1 .M N... 100644 100644 100644 ce013625030ba8dba906f756967f9e9ca394464a ce013625030ba8dba906f756967f9e9ca394464a modified-file.txt
 ? untracked-file.txt
-! ignored-file.log
 ```
+
+Tracked entries come first, then untracked ones. Renames use `2` lines and conflicts `u` lines. The `# branch` headers of `git status --porcelain=v2 --branch` are not printed, and ignored files are not listed.
 
 ## How status is computed
 
@@ -82,8 +89,8 @@ The `WorkingTreeStatus` class performs the three-way comparison:
 ```php
 use Pitmaster\Status\WorkingTreeStatus;
 
-$status = new WorkingTreeStatus($repo->objectDatabase(), $repo->workDir());
-$entries = $status->compute($repo->index(), $headCommitId);
+$status = new WorkingTreeStatus($repo->objectDatabase(), $repo->workDir(), $repo->gitDir());
+$entries = $status->compute($repo->index(), $repo->resolve('HEAD'));
 ```
 
 ### Step 1: Build HEAD tree map
@@ -102,13 +109,12 @@ For each file in the HEAD tree and the index:
 
 For each file in the index and the working tree:
 - In index but not on disk: `Deleted` in worktree column
-- On disk but not in index: `Untracked` in worktree column
 - In both but content differs: `Modified` in worktree column
 - In both with matching content: `Unmodified` in worktree column
 
 ### Step 4: Detect untracked files
 
-Walk the working tree directory, skip `.git/` and ignored paths, and report files not present in the index as `Untracked`.
+Walk the working tree directory, skip `.git/` and ignored paths, and report files not present in the index as `Untracked` in both columns.
 
 ## .gitignore support
 
@@ -157,7 +163,7 @@ foreach ($repo->status() as $entry) {
 ## CLI usage
 
 ```bash
-./bin/pitmaster status
+./vendor/bin/pitmaster status
 ```
 
 Output:
@@ -166,21 +172,21 @@ Output:
 On branch main
 
 Changes to be committed:
-    new file:   src/Feature.php
+	new file:   src/Feature.php
 
 Changes not staged for commit:
-    modified:   src/Existing.php
+	modified:   src/Existing.php
 
 Untracked files:
-    notes.txt
+	notes.txt
 ```
 
 ## Fsmonitor
 
-For large repositories, Pitmaster supports the fsmonitor extension to skip stat checks on files that have not changed:
+Pitmaster includes a helper for git's fsmonitor protocol:
 
 ```php
 use Pitmaster\Status\Fsmonitor;
 ```
 
-The fsmonitor integrates with the index extension to track which files were modified since the last status check, reducing the number of filesystem stat calls needed.
+The `Fsmonitor` class can query the `core.fsmonitor` hook (falling back to a modification-time scan) to learn which files changed since a token. It turns itself off on handles opened with `['processes' => false]`. `status()` does not call it at the moment; it compares stat data and content directly.

@@ -90,6 +90,8 @@ The parser handles:
 - Comments (lines starting with `#`)
 - Whitespace and indentation
 
+Entries without both `path` and `url` are skipped. Values are not unquoted.
+
 ## Gitlink entries
 
 Gitlink entries are tree entries with mode `160000`. They point to a commit (not a tree or blob) in the submodule repository.
@@ -118,11 +120,23 @@ $manager->init();
 ```
 
 For each submodule declared in `.gitmodules`, this:
-1. Creates `.git/modules/<name>/` directory
+1. Creates an empty `.git/modules/<name>/` directory
 2. Creates the submodule path directory if it does not exist
-3. Writes a `.git` file in the submodule path pointing to `.git/modules/<name>/`
+3. Records `submodule.<name>.active = true` and `submodule.<name>.url` in `.git/config`
 
-After initialization, you can open each submodule as a separate repository:
+It does not fetch or check out anything, and it does not write the submodule's `.git` file.
+
+## Updating submodules
+
+```php
+$manager->update($repo->head()->tree);
+```
+
+For each submodule pinned in the given tree, `update()` copies the source repository's git directory into `.git/modules/<name>/`, replaces the submodule's working files with the source's, writes the `.git` file pointing to the module directory, sets `core.worktree`, and detaches HEAD at the pinned commit.
+
+The submodule URL must be a local path: absolute, or relative to the parent's working tree (git resolves relative URLs against the parent's remote URL instead). A URL with a scheme (`https://...`) throws `RuntimeException('Submodule update currently supports only local paths: ...')`.
+
+After an update, you can open each submodule as a separate repository:
 
 ```php
 $subRepo = Pitmaster::open($repo->workDir() . '/lib/external');
@@ -161,7 +175,7 @@ Status fields:
 - `path`: path in the working tree
 - `expected`: commit hash pinned in the parent tree (null if not present)
 - `actual`: current HEAD of the submodule (null if not initialized)
-- `dirty`: true if expected and actual differ
+- `dirty`: true when both commits are known and differ. Changes inside the submodule's working tree are not checked.
 
 ## Directory structure
 
@@ -169,7 +183,8 @@ Status fields:
 project/
   .git/
     modules/
-      lib-external/        # Submodule's actual git directory
+      lib/
+        external/          # Submodule's actual git directory (.git/modules/<name>)
         HEAD
         objects/
         refs/
@@ -177,7 +192,7 @@ project/
   .gitmodules              # Submodule declarations
   lib/
     external/
-      .git                 # File: "gitdir: ../../.git/modules/lib-external"
+      .git                 # File: "gitdir: ../../.git/modules/lib/external"
       src/
       README.md
   src/
@@ -199,8 +214,8 @@ $manager = new SubmoduleManager(
 
 $submodules = $manager->list();
 
-// 3. Initialize if needed
-$manager->init();
+// 3. Populate the submodules pinned at HEAD (local source paths only)
+$manager->update($repo->head()->tree);
 
 // 4. Check status
 $statuses = $manager->status($repo->head()->tree);
