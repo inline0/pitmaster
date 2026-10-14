@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **146/146 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
-Partial support exists for **0/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **130/146 in-scope features fully implemented and oracle-verified within the declared parity scope (89%).**
+Partial support exists for **16/146** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -29,17 +29,17 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
 | References | 9 | 0 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 12 | 0 | 0 | 0 | 0 | 12 |
+| Staging and Commits | 8 | 4 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
-| Diff | 11 | 0 | 0 | 0 | 0 | 11 |
-| Merge | 10 | 0 | 0 | 0 | 0 | 10 |
+| Diff | 7 | 4 | 0 | 0 | 0 | 11 |
+| Merge | 4 | 6 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
+| Network Protocol | 13 | 1 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
-| **Total** | **146** | **0** | **0** | **0** | **0** | **146** |
+| Advanced Features | 14 | 1 | 0 | 0 | 0 | 15 |
+| **Total** | **130** | **16** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -112,7 +112,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Symbolic ref (HEAD) | `DONE` | `native` | `Ref\SymbolicRef` | ref: refs/heads/main |
 | Ref database (composite) | `DONE` | `native` | `Ref\RefDatabase` | Loose priority over packed |
 | Reflog read | `DONE` | `native` | `Ref\Reflog` |  |
-| Reflog write | `DONE` | `native` | `Ref\Reflog` | Required for proper ref updates |
+| Reflog write | `DONE` | `native` | `Ref\Reflog` | New repositories enable reflogs; numeric reflog recovery |
 | Reftable format | `DONE` | `interop` | `Ref\Reftable` | Interop scope: Git-generated reftable read/open parity through RefDatabase and Repository |
 
 ### Repository Operations
@@ -128,7 +128,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Bare repositories | `DONE` | `native` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*12/12 fully done (100%), 0 partial*
+*8/12 fully done (66.7%), 4 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -140,10 +140,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | git reset --mixed | `DONE` | `native` |  | Move HEAD + reset index |
 | git reset --hard | `DONE` | `native` |  | Move HEAD + reset index + worktree |
 | git restore | `DONE` | `native` |  | Restore files from tree/index |
-| git stash | `DONE` | `native` | `Stash\Stash` | Tracked and untracked stash push/apply/pop conflict parity |
-| git cherry-pick | `DONE` | `native` |  | Apply commit as new commit |
-| git revert | `DONE` | `native` |  | Inverse cherry-pick |
-| git rebase | `DONE` | `native` |  | Linear non-merge rebase lifecycle parity |
+| git stash | `PART` | `native` | `Stash\Stash` | Local-change preservation during apply is being corrected (#11). |
+| git cherry-pick | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| git revert | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| git rebase | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
 
 ### Working Tree Status
 *6/6 fully done (100%), 0 partial*
@@ -158,7 +158,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Rename detection | `DONE` | `native` |  | Status-side staged rename reporting in porcelain and human status output |
 
 ### Diff
-*11/11 fully done (100%), 0 partial*
+*7/11 fully done (63.6%), 4 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -166,29 +166,29 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Patience diff algorithm | `DONE` | `native` | `Diff\PatienceDiff` | Dedicated patience anchor selection with Git-backed unified diff parity |
 | Histogram diff algorithm | `DONE` | `native` | `Diff\HistogramDiff` | Dedicated histogram anchor selection with Git-backed unified diff parity |
 | Minimal diff | `DONE` | `native` | `Diff\MinimalDiff` | Minimal Myers search path with Git-backed unified diff parity |
-| Tree-to-tree diff | `DONE` | `native` | `Diff\TreeDiff` | Recursive tree comparison |
-| Unified diff output | `DONE` | `native` | `Diff\DiffResult` | Standard patch format |
-| Hunk generation | `DONE` | `native` | `Diff\Hunk` | Context lines + ranges |
+| Tree-to-tree diff | `PART` | `native` | `Diff\TreeDiff` | Mode-only changes and extended diff headers are being corrected (#3). |
+| Unified diff output | `PART` | `native` | `Diff\DiffResult` | New, deleted, binary, renamed and mode-change headers are being corrected (#3). |
+| Hunk generation | `PART` | `native` | `Diff\Hunk` | Empty-side range origins are being corrected (#3). |
 | Binary file detection | `DONE` | `native` |  | NUL byte detection |
-| Rename detection (diff) | `DONE` | `native` |  | TreeDiff content-similarity rename heuristic |
+| Rename detection (diff) | `PART` | `native` |  | Similarity scoring for unrelated short files is being corrected (#4). |
 | Word diff | `DONE` | `native` |  |  |
 | Color diff output | `DONE` | `native` |  | Terminal ANSI colors |
 
 ### Merge
-*10/10 fully done (100%), 0 partial*
+*4/10 fully done (40%), 6 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
 | Merge base (LCA) | `DONE` | `native` | `Merge\MergeBase` | Lowest common ancestor |
 | Three-way merge (content) | `DONE` | `native` | `Merge\ThreeWayMerge` | Git-backed clean, conflicted, disjoint-edit, and diff3 content merge parity |
 | Conflict markers | `DONE` | `native` | `Merge\ConflictMarker` | Default and diff3 marker styles match Git for merge-family conflicts |
-| File-level merge (tree) | `DONE` | `native` |  | Git-backed tree merge parity including rename/delete conflict handling |
-| Recursive strategy | `DONE` | `native` |  | Recursive virtual-base merge parity for multi-base criss-cross histories |
-| ORT strategy | `DONE` | `native` | `Merge\RecursiveMerge` | Explicit ort strategy selection matches Git on supported recursive merge cases |
-| Octopus merge | `DONE` | `native` | `Merge\OctopusMerge` | Repository-level clean octopus merge parity |
+| File-level merge (tree) | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| Recursive strategy | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| ORT strategy | `PART` | `native` | `Merge\RecursiveMerge` | Unrelated local-change preservation is being corrected (#2). |
+| Octopus merge | `PART` | `native` | `Merge\OctopusMerge` | Unrelated local-change preservation is being corrected (#2). |
 | Ours strategy | `DONE` | `native` | `Merge\OursMerge` | Repository-level ours-strategy merge parity |
-| Fast-forward merge | `DONE` | `native` |  | Just move the ref |
-| Merge commit creation | `DONE` | `native` |  | Two-parent commit |
+| Fast-forward merge | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| Merge commit creation | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
 
 ### Commit Graph
 *7/7 fully done (100%), 0 partial*
@@ -219,7 +219,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Detached HEAD | `DONE` | `native` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*14/14 fully done (100%), 0 partial*
+*13/14 fully done (92.9%), 1 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -234,7 +234,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Clone via HTTP | `DONE` | `native` |  | Ref discovery + full fetch |
 | Incremental fetch | `DONE` | `native` |  | Only new objects |
 | Push | `DONE` | `native` |  | Send objects + update remote refs |
-| SSH transport | `DONE` | `native` | `Protocol\SshClient` | Git-over-SSH clone/fetch/push parity with an in-repo sshd-backed oracle scenario |
+| SSH transport | `PART` | `native` | `Protocol\SshClient` | Host verification for ext-ssh2 is being corrected (#22). |
 | git:// transport | `DONE` | `native` | `Protocol\GitProtocolClient` | Raw TCP socket, pkt-line framing |
 | Dumb HTTP | `DONE` | `native` |  | Rare, smart HTTP covers all major hosts |
 
@@ -265,7 +265,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Circular delta detection | `DONE` | `native` |  | Max depth limit exists |
 
 ### Advanced Features
-*15/15 fully done (100%), 0 partial*
+*14/15 fully done (93.3%), 1 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -273,10 +273,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Worktrees | `DONE` | `native` | `Worktree\Worktree` | Multiple working trees, .git file indirection |
 | Rerere | `DONE` | `native` | `Merge\Rerere` | Git-compatible rr-cache preimage/postimage read and write parity |
 | Bisect | `DONE` | `native` | `Graph\Bisect` | Linear bisect start/good/bad/reset parity with Git-shaped BISECT state |
-| Stash | `DONE` | `native` | `Stash\Stash` | Tracked and untracked stash push/apply/pop conflict parity |
+| Stash | `PART` | `native` | `Stash\Stash` | Local-change preservation during apply is being corrected (#11). |
 | Sparse checkout | `DONE` | `native` | `Checkout\SparseCheckout` | Partial working tree via cone patterns |
 | Fsmonitor | `DONE` | `native` | `Status\Fsmonitor` | Canonical core.fsmonitor hook protocol parity with fallback scanning |
-| Hooks | `DONE` | `native` | `Hooks\HookRunner` | Commit, checkout, merge, rebase, and push hook parity |
+| Hooks | `DONE` | `native` | `Hooks\HookRunner` | Commit, checkout, merge, rebase, and push hooks; shared worktree hooks, core.hooksPath and inherited environment |
 | Git LFS | `DONE` | `native` | `Lfs\LfsClient` | Pointer parsing and batch upload/download parity against a repo-local git-lfs oracle |
 | Git attributes | `DONE` | `native` | `Config\GitAttributes` |  |
 | Shallow clones | `DONE` | `native` | `Protocol\ShallowClone` | Smart HTTP depth clone/fetch parity with Git-compatible shallow-file updates |
@@ -288,10 +288,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ## Progress
 
 ```
-[########################################] 100% fully done
+[####################################----] 89% fully done
 
-Full:     146 features
-Partial:  0 features
+Full:     130 features
+Partial:  16 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

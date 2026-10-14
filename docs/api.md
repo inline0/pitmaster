@@ -751,7 +751,7 @@ public function logPath(string $path, int $limit = 50): array
 
 Log filtered by a file path. Returns only commits whose diff against their first parent adds, modifies, deletes, or renames that exact file. Directory paths do not match.
 
-Only the newest `5 * $limit` commits are examined, so older commits that touch the file can be missing from the result ([#7](https://github.com/inline0/pitmaster/issues/7)).
+File and directory paths are supported. History is streamed until `$limit` matching commits are found or history ends.
 
 ```php
 $commits = $repo->logPath('src/Repository.php', 20);
@@ -774,7 +774,7 @@ Merge a branch (or any revision) into HEAD. Detects fast-forward merges automati
 
 `$strategy` `'ours'` records a merge commit that keeps HEAD's tree; any other value uses the default recursive merge. `mergeOctopus()` merges two or more branches into one commit. If any branch conflicts, it returns an unclean result without writing merge state or creating a commit.
 
-Merging a branch that is already contained in HEAD creates another merge commit instead of reporting "Already up to date" ([#6](https://github.com/inline0/pitmaster/issues/6)). Uncommitted changes in tracked files are overwritten as described under `checkout()`.
+Merging a branch already contained in HEAD returns `upToDate = true` without creating a commit or changing local files. Uncommitted changes in tracked files are overwritten as described under `checkout()`.
 
 Returns a `MergeResult` with:
 - `clean`: whether the merge succeeded without conflicts

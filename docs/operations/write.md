@@ -29,7 +29,7 @@ This creates:
 
 Pass `'sha256'` as the second argument to create a SHA-256 repository: `Pitmaster::init($path, 'sha256')`.
 
-The default config does not set `core.logallrefupdates`, so Pitmaster records no reflog entries in a repository it created until you set that key to `true` ([#8](https://github.com/inline0/pitmaster/issues/8)). Repositories created by `git init` set it already.
+The default config enables `core.logallrefupdates` for new repositories. Existing repositories keep their configured reflog behavior, including an explicit `false` setting.
 
 ## Staging files
 

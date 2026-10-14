@@ -27,6 +27,10 @@ foreach ($trace as $line) {
         $capturing = true;
     }
 
+    if ($payload === "thin-pack") {
+        continue;
+    }
+
     $lines[] = $payload;
 
     if ($payload === "0000") {

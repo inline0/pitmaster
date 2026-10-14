@@ -562,20 +562,16 @@ function commandMerge(Repository $repo, array $args): void
     if ($args[0] === '-s') {
         if (isset($args[1], $args[2]) && in_array($args[1], ['ours', 'ort', 'recursive'], true)) {
             $result = $repo->merge($args[2], $args[1]);
-
-            fwrite(STDOUT, "Merge successful.\n");
-
-            return;
+        } else {
+            fwrite(STDERR, "Unsupported merge strategy.\n");
+            exit(1);
         }
-
-        fwrite(STDERR, "Unsupported merge strategy.\n");
-        exit(1);
+    } else {
+        $result = count($args) > 1 ? $repo->mergeOctopus($args) : $repo->merge($args[0]);
     }
 
-    $result = count($args) > 1 ? $repo->mergeOctopus($args) : $repo->merge($args[0]);
-
     if ($result->clean) {
-        fwrite(STDOUT, "Merge successful.\n");
+        fwrite(STDOUT, $result->upToDate ? "Already up to date.\n" : "Merge successful.\n");
     } else {
         fwrite(STDERR, "CONFLICT in: " . implode(', ', $result->conflictPaths) . "\n");
         exit(1);

@@ -34,12 +34,18 @@ use Pitmaster\Storage\ObjectDatabase;
  */
 final class Stash
 {
+    private readonly string $commonDir;
+
     public function __construct(
         private readonly ObjectDatabase $objects,
         private readonly RefDatabase $refs,
         private readonly string $gitDir,
         private readonly string $workDir,
     ) {
+        $commonFile = $gitDir . '/commondir';
+        $this->commonDir = is_file($commonFile)
+            ? (realpath($gitDir . '/' . trim((string) file_get_contents($commonFile))) ?: $gitDir)
+            : $gitDir;
     }
 
     /**
@@ -113,7 +119,7 @@ final class Stash
         $oldStash = $this->refs->resolve('refs/stash');
         $this->refs->update('refs/stash', $stashId);
 
-        $reflog = Reflog::open($this->gitDir, 'refs/stash');
+        $reflog = Reflog::open($this->commonDir, 'refs/stash');
         $reflog->append(
             $oldStash ?? ObjectId::zero($this->hashAlgo()),
             $stashId,
@@ -156,17 +162,17 @@ final class Stash
      */
     public function drop(int $index = 0): void
     {
-        $reflog = Reflog::open($this->gitDir, 'refs/stash');
+        $reflog = Reflog::open($this->commonDir, 'refs/stash');
         $entries = $reflog->entries();
 
-        if ($index >= count($entries)) {
+        if ($index < 0 || $index >= count($entries)) {
             throw new \RuntimeException("No stash entry at index {$index}");
         }
 
         // For simplicity, if dropping the only entry, remove refs/stash
         if (count($entries) <= 1) {
             $this->refs->delete('refs/stash');
-            $logPath = $this->gitDir . '/logs/refs/stash';
+            $logPath = $this->commonDir . '/logs/refs/stash';
 
             if (is_file($logPath)) {
                 unlink($logPath);
@@ -178,6 +184,7 @@ final class Stash
         // Remove entry from reflog (rebuild without the dropped entry)
         $newEntries = $entries;
         array_splice($newEntries, count($newEntries) - 1 - $index, 1);
+        $reflog->replace(array_values($newEntries));
 
         // Update refs/stash to point to the new top
         $top = end($newEntries);
@@ -194,7 +201,7 @@ final class Stash
      */
     public function listEntries(): array
     {
-        $reflog = Reflog::open($this->gitDir, 'refs/stash');
+        $reflog = Reflog::open($this->commonDir, 'refs/stash');
         $entries = $reflog->entries();
         $result = [];
 
@@ -214,7 +221,7 @@ final class Stash
 
     private function getStashEntry(int $index): ObjectId
     {
-        $reflog = Reflog::open($this->gitDir, 'refs/stash');
+        $reflog = Reflog::open($this->commonDir, 'refs/stash');
         $entries = $reflog->entries();
         $reversed = array_reverse($entries);
 
@@ -238,7 +245,7 @@ final class Stash
 
     private function currentIdentity(): string
     {
-        $config = GitConfig::fromFile($this->gitDir . '/config');
+        $config = GitConfig::fromFile($this->commonDir . '/config');
         $name = getenv('GIT_COMMITTER_NAME')
             ?: getenv('GIT_AUTHOR_NAME')
             ?: $config->get('user.name')
@@ -717,7 +724,7 @@ final class Stash
 
     private function hashAlgo(): string
     {
-        return GitConfig::fromFile($this->gitDir . '/config')->get('extensions.objectformat') === 'sha256'
+        return GitConfig::fromFile($this->commonDir . '/config')->get('extensions.objectformat') === 'sha256'
             ? 'sha256'
             : 'sha1';
     }

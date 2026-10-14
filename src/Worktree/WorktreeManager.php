@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Worktree;
 
 use Pitmaster\Object\ObjectId;
+use Pitmaster\Config\GitConfig;
 use Pitmaster\Ref\RefDatabase;
 use Pitmaster\Ref\SymbolicRef;
 
@@ -232,7 +233,7 @@ final class WorktreeManager
 
         return new Worktree(
             name: null,
-            path: $this->workDir,
+            path: $this->mainWorktreePath(),
             gitDir: $this->gitDir,
             branch: $branch,
             head: $headId,
@@ -241,6 +242,20 @@ final class WorktreeManager
             isLocked: false,
             lockReason: null,
         );
+    }
+
+    private function mainWorktreePath(): string
+    {
+        $config = GitConfig::fromFile($this->gitDir . '/config');
+        if ($config->getBool('core.bare')) {
+            return $this->gitDir;
+        }
+        $configured = $config->get('core.worktree');
+        if ($configured !== null) {
+            $path = str_starts_with($configured, '/') ? $configured : $this->gitDir . '/' . $configured;
+            return realpath($path) ?: $path;
+        }
+        return basename($this->gitDir) === '.git' ? dirname($this->gitDir) : $this->workDir;
     }
 
     private function readLinkedWorktree(string $name, string $wtDir, ?RefDatabase $refs = null): Worktree

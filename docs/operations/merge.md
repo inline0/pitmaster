@@ -63,7 +63,7 @@ $result = $repo->merge('feature');
 // No merge commit created
 ```
 
-The reverse case is not detected yet: merging a branch that HEAD already contains creates a new merge commit with an unchanged tree instead of reporting "Already up to date" ([#6](https://github.com/inline0/pitmaster/issues/6)).
+When HEAD already contains the target commit, merge returns a clean result with `upToDate = true` and leaves the repository untouched.
 
 ## Three-way merge
 
@@ -204,7 +204,7 @@ if ($rerere->isEnabled()) {                     // rerere.enabled = true in .git
 }
 ```
 
-`merge()` does not call it: resolutions are recorded and replayed only when your code does so. `isEnabled()` looks for the literal text `rerere.enabled = true` in `.git/config` and does not recognise the `[rerere]` section that `git config rerere.enabled true` writes ([#20](https://github.com/inline0/pitmaster/issues/20)).
+`merge()` does not call it: resolutions are recorded and replayed only when your code does so. `isEnabled()` reads `rerere.enabled` through `GitConfig`, including Git boolean spellings and included configuration files.
 
 ## Tree-level merge flow
 

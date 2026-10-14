@@ -85,8 +85,10 @@ final class ProtocolV1ParityTest extends TestCase
 
         $this->assertSame(['want', '0000', 'done'], $this->lineKinds($pitLines));
         $this->assertSame(['want', '0000', 'done'], $this->lineKinds($gitLines));
+        // Git optionally requests thin packs; Pitmaster requires complete delta bases.
+        $this->assertStringNotContainsString(' thin-pack', $pitLines[0]);
         $this->assertSame(
-            $this->normalizeAgentLine($gitLines[0]),
+            $this->normalizeAgentLine(str_replace(' thin-pack', '', $gitLines[0])),
             $this->normalizeAgentLine($pitLines[0]),
         );
         $this->assertSame('0000', $pitLines[1]);

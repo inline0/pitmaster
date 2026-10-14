@@ -237,7 +237,7 @@ $commits = $repo->log(10, $from);
 $commits = $repo->logPath('src/Repository.php', 20);
 ```
 
-Returns only commits where the specified file was changed (added, modified, deleted, or renamed) compared with the first parent. The path must be an exact file path; directories do not match. Only the newest `5 * $limit` commits are examined, so older matches can be missing ([#7](https://github.com/inline0/pitmaster/issues/7)).
+Returns commits where the specified file or a file inside the specified directory changed compared with the first parent. History is streamed until `$limit` matching commits are found or history ends.
 
 ### show
 

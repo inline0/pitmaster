@@ -103,6 +103,29 @@ final class Reflog
     }
 
     /**
+     * Rewrite the log after removing entries, preserving chronological order.
+     *
+     * @param list<array{old: string, new: string, identity: string, message: string}> $entries
+     */
+    public function replace(array $entries): void
+    {
+        $content = '';
+        $previous = str_repeat('0', strlen($entries[0]['new'] ?? ''));
+        $rewritten = [];
+        foreach ($entries as $entry) {
+            $entry['old'] = $previous;
+            $content .= "{$previous} {$entry['new']} {$entry['identity']}\t{$entry['message']}\n";
+            $previous = $entry['new'];
+            $rewritten[] = $entry;
+        }
+        $lock = $this->path . '.lock';
+        if (file_put_contents($lock, $content) === false || !rename($lock, $this->path)) {
+            throw new \RuntimeException('Could not rewrite reflog: ' . $this->path);
+        }
+        $this->entries = $rewritten;
+    }
+
+    /**
      * Get the most recent entry.
      *
      * @return array{old: string, new: string, identity: string, message: string}|null

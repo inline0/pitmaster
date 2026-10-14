@@ -19,7 +19,6 @@ final class ProtocolV1
         'multi_ack_detailed',
         'no-done',
         'side-band-64k',
-        'thin-pack',
         'no-progress',
         'ofs-delta',
         'deepen-since',

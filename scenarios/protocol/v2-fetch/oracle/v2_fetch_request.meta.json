@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "command=fetch\nagent=<normalized>\nobject-format=sha1\n0001\nno-progress\nofs-delta\nwant b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4\nwant b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4\nwant b45fe6068dba0cd6b7d22ed74d884fe3f5efbaa4\ndone\n0000\n",
+    "stderr": ""
+}

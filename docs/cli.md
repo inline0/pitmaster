@@ -49,7 +49,7 @@ pitmaster log --oneline
 
 The git limit spellings (`-n N`, `-nN`, `--max-count N`, `--max-count=N`, `-N`) were added in 0.2.11. A bare number is Pitmaster's own shorthand for the limit. The first other argument is a path filter; everything after `--` is treated as the path. Any other argument starting with `-` prints `fatal: unrecognized argument: <arg>` and exits with 128.
 
-Output includes `commit <hash>` (yellow), a `Merge:` line for merge commits, `Author:` with the raw identity (name, email, timestamp and timezone), and the commit message indented. `--oneline` prints `abc1234 Subject`. The path filter matches one exact file path and examines only the newest five times the limit commits ([#7](https://github.com/inline0/pitmaster/issues/7)).
+Output includes `commit <hash>` (yellow), a `Merge:` line for merge commits, `Author:` with the raw identity (name, email, timestamp and timezone), and the commit message indented. `--oneline` prints `abc1234 Subject`. The path filter accepts a file or directory and walks history until it finds the requested number of matching commits or reaches the end.
 
 ### `show`
 
@@ -242,7 +242,7 @@ Output on conflict (on stderr, exit code 1):
 CONFLICT in: src/File.php, src/Other.php
 ```
 
-`-s` accepts `ours`, `ort`, and `recursive`; `ort` and `recursive` both use the default merge. With `-s`, the CLI prints `Merge successful.` and exits with 0 even when the merge stopped on conflicts ([#21](https://github.com/inline0/pitmaster/issues/21)), so check `status` afterwards. `merge --continue` without a merge in progress exits with 128. Merging a branch that is already merged creates another merge commit ([#6](https://github.com/inline0/pitmaster/issues/6)), and uncommitted changes in tracked files are overwritten as with `checkout`.
+`-s` accepts `ours`, `ort`, and `recursive`; `ort` and `recursive` both use the default merge. Every strategy reports conflicts and exits with 1 when the merge stops on conflicts. `merge --continue` without a merge in progress exits with 128. Merging a branch already contained in HEAD prints `Already up to date.` and leaves HEAD and local changes untouched. Other merges currently overwrite unrelated local changes as described under `checkout`.
 
 ### `cherry-pick`
 
@@ -352,7 +352,7 @@ stash@{0}: On main: Work in progress on login
 stash@{1}: WIP on main: abc1234 Add new feature
 ```
 
-With more than one entry, `drop` and `pop` currently leave the entry in the list ([#10](https://github.com/inline0/pitmaster/issues/10)), and `apply` overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)).
+`drop` removes the selected entry from the reflog and updates `refs/stash`; `pop` drops its entry after a successful apply. `apply` currently overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)).
 
 ### `blame`
 
@@ -411,7 +411,7 @@ pitmaster reflog --format="%h %gs"
 
 The default format is `%gd: %gs` (`HEAD@{0}: commit: Add feature`). Supported placeholders: `%gd` and `%gD` (selector), `%gs` (message), `%H` and `%h` (full and short new hash). Limits accept `-n N`, `-nN`, and `--max-count N`; `-n 0` prints all entries.
 
-Repositories created by `pitmaster init` do not record reflogs unless `core.logallrefupdates` is set to `true` in `.git/config` ([#8](https://github.com/inline0/pitmaster/issues/8)), so `reflog` prints nothing there until it is.
+Repositories created by `pitmaster init` enable reflogs by default. Numeric reflog revisions such as `HEAD@{1}` can be resolved for recovery.
 
 ### `refs`
 

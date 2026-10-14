@@ -10,7 +10,7 @@ meta_description: "Git index (staging area) format, versions 2/3/4, extensions, 
 
 # Index Format
 
-The index file (`.git/index`) is the staging area. It records the files that will be included in the next commit, along with metadata for efficient status computation. Pitmaster reads index versions 2, 3, and 4, and writes versions 2 and 3. Writing an index that was read as version 4 produces a file git cannot read ([#15](https://github.com/inline0/pitmaster/issues/15)), so convert such repositories with `git update-index --index-version 2` before writing through Pitmaster.
+The index file (`.git/index`) is the staging area. It records the files that will be included in the next commit, along with metadata for efficient status computation. Pitmaster reads index versions 2, 3, and 4, and writes versions 2 and 3. An index read as version 4 is safely rewritten in the uncompressed version 3 layout, preserving entries and extended flags.
 
 ## Reading the index
 

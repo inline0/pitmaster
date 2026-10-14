@@ -39,7 +39,7 @@ The new repository always uses SHA-1. If the clone fails and the destination did
 9. **Set HEAD**: point HEAD to the default branch (from the server's `symref=HEAD:...` capability, or `refs/heads/main` when the server sends none), and set `branch.<name>.remote` and `branch.<name>.merge`
 10. **Checkout**: check out that branch, which writes the working tree and the index
 
-Errors during the final checkout are caught and ignored, so a clone can return with an empty or partial working tree ([#19](https://github.com/inline0/pitmaster/issues/19)).
+Checkout errors propagate to the caller. If cloning created the target directory, a failure removes it; a pre-existing target remains available for inspection.
 
 ```php
 $repo = Pitmaster::clone($url, $path);
@@ -72,7 +72,7 @@ $repo->fetch('origin', 1);   // Shallow fetch
    - Have: every local ref tip
 4. **Receive pack**: download only the new objects
 5. **Write pack**: save to `.git/objects/pack/` and build its index
-6. **Update tracking refs**: update `refs/remotes/<remote>/<branch>` for each matched remote branch, and write every advertised tag ref. Tag objects are not requested separately, so a new annotated tag can be written as a ref to an object that was not downloaded ([#24](https://github.com/inline0/pitmaster/issues/24))
+6. **Update tracking refs**: update `refs/remotes/<remote>/<branch>` for each matched remote branch, and write advertised tag refs only when their objects exist locally. An explicit tag refspec downloads missing tag objects. Peeled tag advertisements are metadata and never become refs
 
 ```php
 // Fetch is incremental: only downloads what's new
@@ -84,11 +84,11 @@ $result = $repo->merge('refs/remotes/origin/main');
 
 `resolve()` looks names up as `refs/heads/<name>`, `refs/tags/<name>`, and the name itself, so the short form `origin/main` is not found.
 
-Pitmaster requests thin packs, which it cannot index yet ([#16](https://github.com/inline0/pitmaster/issues/16)). A server that answers an incremental fetch with a thin pack makes `fetch()` throw `PackParseException`.
+Pitmaster requests self-contained packs, so incremental fetches do not depend on omitted delta bases. Thin packs are not requested.
 
 ### Already up to date
 
-If every object the remote refs point to already exists locally, no pack is requested and `fetch()` returns after ref discovery. In that case the tracking refs are not updated either, even if the remote branches moved to commits you already have ([#23](https://github.com/inline0/pitmaster/issues/23)).
+If every requested object already exists locally, fetch skips the pack request and still updates tracking refs. This includes new branches and remote branches moved back to an older commit.
 
 ## Push
 

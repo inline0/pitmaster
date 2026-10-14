@@ -104,7 +104,7 @@ foreach ($worktrees as $wt) {
 }
 ```
 
-The list always includes the main worktree first, followed by linked worktrees. Call `worktrees()` on a handle for the main repository: on a linked worktree handle, the main entry currently reports the linked worktree's own path ([#14](https://github.com/inline0/pitmaster/issues/14)).
+The list always includes the main worktree first, followed by linked worktrees. Main and linked handles both report the main checkout path correctly.
 
 ## Removing a worktree
 
@@ -144,9 +144,9 @@ Repository operations resolve paths like this:
 - **HEAD**: per-worktree (each worktree tracks its own branch), together with `ORIG_HEAD`, `MERGE_HEAD`, and the other operation refs
 - **Index**: per-worktree (each worktree has its own staging area)
 - **Loose refs**: branches and tags are shared in the common dir (`project/.git/refs/`)
-- **Hooks**: read from the per-worktree git dir, so the shared hooks do not run ([#12](https://github.com/inline0/pitmaster/issues/12))
+- **Hooks**: read from the common hooks directory or `core.hooksPath`, and run in the selected working tree
 
-Stash does not handle linked worktrees yet: it reads the identity from the per-worktree directory, which has no config, and writes its reflog there ([#14](https://github.com/inline0/pitmaster/issues/14)).
+Stash keeps each worktree's index and working files separate while using the common configuration and shared stash reflog.
 
 ## Worktree value object
 

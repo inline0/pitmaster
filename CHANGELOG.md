@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.12] - 2026-10-14
+
+### Fixed
+- Merging a branch already contained in HEAD leaves the repository untouched and reports `Already up to date`; explicit merge strategies report conflicts with exit code 1
+- Path-filtered history walks until it finds the requested number of matches, including directory paths
+- New non-bare repositories record reflogs by default, and numeric reflog revisions can be resolved for recovery
+- Multiple stash entries are removed from both the reflog and ref by drop and successful pop
+- Hooks use the common worktree directory or `core.hooksPath`, run in the selected checkout, and inherit the PHP process environment
+- Linked worktree handles report the main checkout correctly and use shared stash identity and reflog metadata
+- Writing an index read as v4 produces a valid uncompressed v3 index with its entries and extended flags preserved
+- Fetch requests self-contained packs, updates tracking refs when objects already exist, and imports tag refs only when their objects are available; peeled tag advertisements remain metadata
+- HTTPS remotes with credentials and ports stay on the HTTP transport
+- Dumb HTTP clone and fetch import missing loose objects after loading the remote packs
+- Clone propagates checkout failures and rejects missing checkout objects instead of returning a partial working tree
+- Rerere reads Git configuration sections, includes, and boolean spellings
+
+### Changed
+- Composer requires `ext-ctype` and no longer requires the unused `ext-mbstring`
+
 ## [0.2.11] - 2026-09-24
 
 ### Fixed

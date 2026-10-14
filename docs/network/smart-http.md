@@ -164,7 +164,7 @@ $caps->all();                      // ['thin-pack' => null, ..., 'symref' => 'HE
 | Capability | Meaning |
 |-----------|---------|
 | `multi_ack` | Server supports multi-ack negotiation |
-| `thin-pack` | Server sends thin packs (base objects may be omitted). Pitmaster requests it but cannot index thin packs yet ([#16](https://github.com/inline0/pitmaster/issues/16)) |
+| `thin-pack` | Server can omit delta bases. Pitmaster does not request this capability; received packs remain self-contained |
 | `side-band` | Server uses side-band for pack data (limited to 1000 bytes) |
 | `side-band-64k` | Server uses 64K side-band for pack data |
 | `ofs-delta` | Pack may use OFS_DELTA objects |

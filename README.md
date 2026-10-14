@@ -204,8 +204,7 @@ The instrumentation suite is intentionally separate from the canonical baseline 
 - PHP 8.2+
 - `ext-zlib` (built-in)
 - `ext-json` (built-in)
-- `ext-mbstring` (declared in `composer.json`)
-- `ext-ctype` (used for hash validation; enabled in most PHP builds but not yet declared in `composer.json`, see [#9](https://github.com/inline0/pitmaster/issues/9))
+- `ext-ctype` (declared in `composer.json`; used for hash and numeric validation)
 
 Core repository operations do not require the `git` binary or FFI. Optional features have extra runtime expectations: hook execution uses `proc_open()`, and SSH transport uses `ext-ssh2` when it is loaded and otherwise runs the system `ssh` client through `proc_open()`.
 
@@ -217,7 +216,7 @@ See [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md) for the full feature list. The render
 |----------|----------|
 | Objects | Blob, tree, commit, tag (SHA-1 + SHA-256) |
 | Storage | Loose objects, pack files (v1/v2 index, OFS/REF delta), MIDX, commit-graph |
-| Index | Read v2/v3/v4, write v2/v3 ([#15](https://github.com/inline0/pitmaster/issues/15)); extensions kept as raw data |
+| Index | Read v2/v3/v4, write v2/v3; v4 indexes are safely rewritten as v3; extensions kept as raw data |
 | Refs | Loose, packed, symbolic, reftable, reflog |
 | Diff | Myers O(ND), patience, histogram, word diff, rename detection |
 | Merge | Three-way, recursive, ours, octopus, fast-forward, conflict markers |

@@ -12,6 +12,16 @@ use Pitmaster\Protocol\SshClient;
 final class SshClientTest extends TestCase
 {
     #[Test]
+    public function schemeUrlsAreNotMistakenForScpRemotes(): void
+    {
+        foreach (['https://user@example.com:8443/repo.git', 'http://user:password@example.com:8080/repo.git', 'git://user@example.com:9418/repo', 'file://user@example.com:1/repo'] as $url) {
+            self::assertFalse(SshClient::isSshUrl($url));
+        }
+        self::assertTrue(SshClient::isSshUrl('ssh://user@example.com:2222/repo.git'));
+        self::assertTrue(SshClient::isSshUrl('user@example.com:repo.git'));
+    }
+
+    #[Test]
     public function testParseScpStyleUrl(): void
     {
         $result = SshClient::parseUrl('git@github.com:user/repo.git');

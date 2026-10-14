@@ -12,7 +12,7 @@ meta_description: "Save and restore working directory changes using the stash st
 
 Git stash saves working directory and index changes so you can switch to another task, then restore them later. Pitmaster implements the stash using `refs/stash` and the reflog, in git's storage layout. There is no stash method on `Repository`; use the `Stash` class below.
 
-Two known problems: with more than one entry, `drop()` (and therefore `pop()`) leaves the entry in the list ([#10](https://github.com/inline0/pitmaster/issues/10)), and `apply()` overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)). Apply stashes on a clean working tree.
+`drop()` rewrites the reflog and updates `refs/stash`; `pop()` removes the applied entry after success. `apply()` currently overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)). Apply stashes on a clean working tree.
 
 ## How stash works
 
@@ -124,7 +124,7 @@ $stash->drop();       // Drop stash@{0}
 $stash->drop(1);      // Drop stash@{1}
 ```
 
-If dropping the only entry, `refs/stash` and its reflog are removed. With more entries, `drop()` currently only moves `refs/stash` and leaves the reflog unchanged, so the entry stays in `listEntries()` ([#10](https://github.com/inline0/pitmaster/issues/10)).
+If dropping the only entry, `refs/stash` and its reflog are removed. With more entries, `drop()` removes the selected reflog entry, rewrites the remaining chain, and points `refs/stash` to its newest entry.
 
 ## Storage details
 
@@ -195,4 +195,4 @@ The message is the argument after `push` (or `save`); `-m` is not supported. `po
 - No `--patch` mode (interactive hunk selection)
 - Pop/apply restores the working tree state; it does not restore the index. Staged edits come back as unstaged edits, and newly staged files come back as untracked files
 - `stash@{n}` is not accepted by `Repository::resolve()`
-- Stash in a linked worktree uses the wrong config and reflog location ([#14](https://github.com/inline0/pitmaster/issues/14))
+- Linked worktrees use their own index and working files, with identity and stash reflogs in the common directory

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pitmaster\Merge;
 
+use Pitmaster\Config\GitConfig;
+
 /**
  * Rerere: reuse recorded resolution of merge conflicts.
  *
@@ -25,18 +27,7 @@ final class Rerere
      */
     public function isEnabled(): bool
     {
-        $configPath = $this->gitDir . '/config';
-
-        if (!is_file($configPath)) {
-            return false;
-        }
-
-        $content = file_get_contents($configPath);
-
-        return $content !== false && (
-            str_contains($content, 'rerere.enabled = true') ||
-            str_contains($content, 'rerere.enabled=true')
-        );
+        return GitConfig::fromFile($this->gitDir . '/config')->getBool('rerere.enabled');
     }
 
     /**

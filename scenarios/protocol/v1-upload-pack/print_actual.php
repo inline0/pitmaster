@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-$files = glob(getcwd() . '/.captures/*git-upload-pack.body') ?: [];
+$captureDir = $argv[1] ?? getcwd() . '/.captures';
+$files = glob($captureDir . '/*git-upload-pack.body') ?: [];
 usort($files, static fn (string $a, string $b): int => filesize($b) <=> filesize($a));
 $body = $files !== [] ? file_get_contents($files[0]) : false;
 $lines = [];

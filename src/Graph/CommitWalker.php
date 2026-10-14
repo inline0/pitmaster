@@ -40,6 +40,27 @@ final class CommitWalker
     public function walkAll(array $from, int $limit = 50): array
     {
         $commits = [];
+        if ($limit <= 0) {
+            return [];
+        }
+
+        foreach ($this->iterate($from) as $commit) {
+            $commits[] = $commit;
+            if (count($commits) >= $limit) {
+                break;
+            }
+        }
+        return $commits;
+    }
+
+    /**
+     * Stream history until the caller has enough matching commits.
+     *
+     * @param array<int, ObjectId> $from
+     * @return \Generator<int, Commit>
+     */
+    public function iterate(array $from): \Generator
+    {
         $visited = [];
         $queue = [];
 
@@ -47,17 +68,15 @@ final class CommitWalker
             $this->enqueue($queue, $id, $visited);
         }
 
-        while ($queue !== [] && count($commits) < $limit) {
+        while ($queue !== []) {
             $entry = array_shift($queue);
             $object = $entry['commit'];
-            $commits[] = $object;
+            yield $object;
 
             foreach ($object->parents as $parentId) {
                 $this->enqueue($queue, $parentId, $visited);
             }
         }
-
-        return $commits;
     }
 
     /**

@@ -62,7 +62,7 @@ The dumb protocol fetches:
 4. `GET /objects/pack/pack-<hash>.pack` and `.idx` (each listed pack and its index)
 5. `GET /objects/<xx>/<rest>` (individual loose objects, walked from the ref tips)
 
-Step 5 runs only when the server lists no packs. When it lists packs, objects that exist only as loose files on the server are not downloaded ([#18](https://github.com/inline0/pitmaster/issues/18)). The dumb client accepts 40-character (SHA-1) object IDs only. `clone()` and `fetch()` fall back to dumb HTTP when the smart HTTP exchange fails.
+After importing listed packs, the walker visits ref tips and downloads any missing loose objects. Packed and newer loose commits can coexist on the remote. The dumb client accepts 40-character (SHA-1) object IDs only. `clone()` and `fetch()` fall back to dumb HTTP when the smart HTTP exchange fails.
 
 ## SSH
 
@@ -190,4 +190,4 @@ The server responds with `shallow <hash>` lines indicating where the history was
 | `user@host:path` | SSH |
 | Anything else (`https://...`, `http://...`) | Smart HTTP; clone and fetch fall back to dumb HTTP |
 
-`git://` URLs and local paths are not supported by these methods: they are sent to the smart HTTP client and fail. Use `GitProtocolClient` directly for `git://`. An HTTPS URL that contains both a user and a port (`https://user@host:8443/repo.git`) is currently mistaken for an SSH URL ([#17](https://github.com/inline0/pitmaster/issues/17)).
+`git://` URLs and local paths are not supported by these methods: they are sent to the smart HTTP client and fail. Use `GitProtocolClient` directly for `git://`. URLs with a scheme use that scheme to select the transport. HTTPS URLs with credentials and ports remain HTTP remotes.

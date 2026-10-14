@@ -486,6 +486,25 @@ final class Repository
      */
     public function resolve(string $revision): ObjectId
     {
+        if (preg_match('/^(.*?)@\{(\d+)\}([~^\d]*)$/', $revision, $matches) === 1) {
+            $headRef = $this->refs->readHead();
+            $base = $matches[1] !== '' ? $matches[1] : ($headRef !== null ? $headRef->target : 'HEAD');
+            $names = $base === 'HEAD' ? ['HEAD'] : ["refs/heads/{$base}", "refs/tags/{$base}", $base];
+            foreach ($names as $name) {
+                $directory = $name === 'HEAD' ? $this->gitDir : $this->commonDir;
+                $entries = Reflog::open($directory, $name)->entries();
+                $entry = $entries[count($entries) - 1 - (int) $matches[2]] ?? null;
+                if ($entry !== null) {
+                    $id = ObjectId::fromHex($entry['new']);
+                    if ($matches[3] !== '') {
+                        return $this->resolve($id->hex . $matches[3]);
+                    }
+                    return $id;
+                }
+            }
+            throw new \RuntimeException("Cannot resolve reflog revision: {$revision}");
+        }
+
         // Direct hash
         if (ObjectId::looksLikeHex($revision)) {
             return ObjectId::fromHex($revision);
@@ -792,7 +811,12 @@ final class Repository
      */
     public function logPath(string $path, int $limit = 50): array
     {
-        $allCommits = $this->log($limit * 5); // over-fetch to filter
+        $head = $this->refs->resolveHead();
+        if ($head === null || $limit <= 0) {
+            return [];
+        }
+        $path = rtrim($path, '/');
+        $allCommits = (new CommitWalker($this->objects))->iterate([$head]);
         $treeDiff = new TreeDiff($this->objects);
         $result = [];
 
@@ -804,7 +828,11 @@ final class Repository
             $diffs = $treeDiff->diff($parentTree, $commit->tree);
 
             foreach ($diffs as $diff) {
-                if ($diff->oldPath === $path || $diff->newPath === $path) {
+                if (
+                    $diff->oldPath === $path || $diff->newPath === $path
+                    || str_starts_with($diff->oldPath, $path . '/')
+                    || str_starts_with($diff->newPath, $path . '/')
+                ) {
                     $result[] = $commit;
                     break;
                 }
@@ -1599,6 +1627,7 @@ final class Repository
             }
 
             if ($wants === []) {
+                $this->updateFetchedRefs($trackedRefs, $discovery->refs());
                 return;
             }
 
@@ -1819,6 +1848,9 @@ final class Repository
             }
 
             foreach ($remoteRefs as $src => $id) {
+                if (str_ends_with($src, '^{}')) {
+                    continue;
+                }
                 if ($this->matchesRefspecPattern($negativePatterns, $src)) {
                     continue;
                 }
@@ -1881,7 +1913,7 @@ final class Repository
         }
 
         foreach ($remoteRefs as $refName => $refId) {
-            if (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}')) {
+            if (str_starts_with($refName, 'refs/tags/') && !str_ends_with($refName, '^{}') && $this->objects->exists($refId)) {
                 $this->refs->update($refName, $refId);
             }
         }
@@ -2022,8 +2054,6 @@ final class Repository
             }
 
             $this->objects->refresh();
-
-            return;
         }
 
         $seen = [];
@@ -2048,12 +2078,14 @@ final class Repository
         ObjectId $id,
         array &$seen,
     ): void {
-        if (isset($seen[$id->hex]) || $this->objects->exists($id)) {
+        if (isset($seen[$id->hex])) {
             return;
         }
 
         $seen[$id->hex] = true;
-        $this->objects->looseStore()->writeEncoded($id, $client->fetchObject($url, $id->hex));
+        if (!$this->objects->exists($id)) {
+            $this->objects->looseStore()->writeEncoded($id, $client->fetchObject($url, $id->hex));
+        }
         $object = $this->objects->read($id);
 
         if ($object instanceof Commit) {
@@ -2068,6 +2100,9 @@ final class Repository
 
         if ($object instanceof Tree) {
             foreach ($object->entries as $entry) {
+                if ($entry->mode === '160000') {
+                    continue;
+                }
                 $this->downloadDumbHttpObject($client, $url, $entry->hash, $seen);
             }
 
@@ -2256,10 +2291,6 @@ final class Repository
      */
     public function merge(string $branch, string $strategy = 'recursive'): MergeResult
     {
-        if ($strategy === 'ours') {
-            return $this->mergeWithOursStrategy($branch);
-        }
-
         $theirsId = $this->resolve($branch);
         $oursId = $this->refs->resolveHead();
         $trackedPaths = $this->index()->paths();
@@ -2269,6 +2300,12 @@ final class Repository
         }
 
         $mergeBaseFinder = $this->mergeBaseFinder();
+        if ($mergeBaseFinder->isAncestor($theirsId, $oursId)) {
+            return new MergeResult(clean: true, commitId: $oursId, upToDate: true);
+        }
+        if ($strategy === 'ours') {
+            return $this->mergeWithOursStrategy($branch);
+        }
         $baseIds = $mergeBaseFinder->findAll($oursId, $theirsId);
         $baseId = $baseIds[0] ?? null;
 
@@ -2658,7 +2695,7 @@ final class Repository
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return;
+            throw ObjectNotFoundException::forHash($treeId->hex);
         }
 
         foreach ($tree->entries as $entry) {
@@ -2698,7 +2735,7 @@ final class Repository
         $tree = $this->objects->read($treeId);
 
         if (!$tree instanceof Tree) {
-            return;
+            throw ObjectNotFoundException::forHash($treeId->hex);
         }
 
         foreach ($tree->entries as $entry) {
@@ -2727,7 +2764,7 @@ final class Repository
         $commit = $this->objects->read($commitId);
 
         if (!$commit instanceof Commit) {
-            return;
+            throw ObjectNotFoundException::forHash($commitId->hex);
         }
 
         $this->clearOperationState($preserveRefs);
@@ -2759,10 +2796,15 @@ final class Repository
                 continue;
             }
 
+            if ($treeEntry['mode'] === 0160000) {
+                $nextEntries[] = IndexEntry::create($path, ObjectId::fromHex($treeEntry['hash']), 0160000, 0, 0, $extendedFlags);
+                continue;
+            }
+
             $blob = $this->objects->read(ObjectId::fromHex($treeEntry['hash']));
 
             if (!$blob instanceof Blob) {
-                continue;
+                throw ObjectNotFoundException::forHash($treeEntry['hash']);
             }
 
             if (!isset($materializedEntries[$path])) {
@@ -2785,7 +2827,9 @@ final class Repository
                 mkdir($dir, 0777, true);
             }
 
-            file_put_contents($fullPath, $blob->content);
+            if (file_put_contents($fullPath, $blob->content) === false) {
+                throw new \RuntimeException('Cannot write checkout file: ' . $fullPath);
+            }
             $nextEntries[] = IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags);
         }
 
@@ -5057,7 +5101,7 @@ final class Repository
     {
         return match ($state['type'] ?? null) {
             'cherry-pick' => 'commit (cherry-pick): ' . $this->subjectLine($message),
-            default => 'commit: ' . $this->subjectLine($message),
+            default => ($this->refs->resolveHead() === null ? 'commit (initial): ' : 'commit: ') . $this->subjectLine($message),
         };
     }
 
@@ -5388,7 +5432,7 @@ final class Repository
             return ['exitCode' => 0, 'stdout' => '', 'stderr' => ''];
         }
 
-        return (new HookRunner($this->gitDir))->run($hookName, $args, $stdin);
+        return (new HookRunner($this->gitDir, $this->workDir, $this->commonDir, $this->config->get('core.hooksPath')))->run($hookName, $args, $stdin);
     }
 
     /**
@@ -5400,7 +5444,7 @@ final class Repository
             return true;
         }
 
-        return (new HookRunner($this->gitDir))->runAndCheck($hookName, $args, $stdin);
+        return (new HookRunner($this->gitDir, $this->workDir, $this->commonDir, $this->config->get('core.hooksPath')))->runAndCheck($hookName, $args, $stdin);
     }
 
     /**

@@ -240,6 +240,7 @@ final class Pitmaster
             "\trepositoryformatversion = " . ($objectFormat === 'sha256' ? '1' : '0'),
             "\tfilemode = true",
             "\tbare = false",
+            "\tlogallrefupdates = true",
         ];
 
         if (self::isCaseInsensitiveFilesystem($path)) {
@@ -465,16 +466,12 @@ final class Pitmaster
 
         $repo->objectDatabase()->refresh();
 
-        try {
-            if ($headId !== null) {
-                if (str_starts_with($headRef, 'refs/heads/')) {
-                    $repo->checkout(substr($headRef, 11));
-                } else {
-                    $repo->checkout($headId->hex);
-                }
+        if ($headId !== null) {
+            if (str_starts_with($headRef, 'refs/heads/')) {
+                $repo->checkout(substr($headRef, 11));
+            } else {
+                $repo->checkout($headId->hex);
             }
-        } catch (\Throwable) {
-            // Clone succeeded but checkout failed; repo is still valid
         }
 
         return $repo;
@@ -499,8 +496,6 @@ final class Pitmaster
             }
 
             $repo->objectDatabase()->refresh();
-
-            return;
         }
 
         $seen = [];
@@ -520,12 +515,14 @@ final class Pitmaster
         ObjectId $id,
         array &$seen,
     ): void {
-        if (isset($seen[$id->hex]) || $repo->objectDatabase()->exists($id)) {
+        if (isset($seen[$id->hex])) {
             return;
         }
 
         $seen[$id->hex] = true;
-        $repo->objectDatabase()->looseStore()->writeEncoded($id, $client->fetchObject($url, $id->hex));
+        if (!$repo->objectDatabase()->exists($id)) {
+            $repo->objectDatabase()->looseStore()->writeEncoded($id, $client->fetchObject($url, $id->hex));
+        }
         $object = $repo->objectDatabase()->read($id);
 
         if ($object instanceof Commit) {
@@ -540,6 +537,9 @@ final class Pitmaster
 
         if ($object instanceof Tree) {
             foreach ($object->entries as $entry) {
+                if ($entry->mode === '160000') {
+                    continue;
+                }
                 self::downloadReachableObject($repo, $client, $url, $entry->hash, $seen);
             }
 

@@ -110,7 +110,7 @@ Deltified objects store instructions for reconstructing content from a base obje
 
 **OFS_DELTA** (type 6): the base object is identified by a negative offset within the same pack file. More common because it does not require knowing the base object's hash.
 
-**REF_DELTA** (type 7): the base object is identified by its hash. In git the base can live outside the pack (thin packs). Pitmaster looks for REF_DELTA bases only inside the same pack, so thin packs are not supported ([#16](https://github.com/inline0/pitmaster/issues/16)).
+**REF_DELTA** (type 7): the base object is identified by its hash. In git the base can live outside the pack (thin packs). Pitmaster looks for REF_DELTA bases inside the same pack and therefore requests self-contained packs from servers.
 
 ### Delta instructions
 

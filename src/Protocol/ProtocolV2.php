@@ -25,7 +25,6 @@ final class ProtocolV2
      * @var list<string>
      */
     public const DEFAULT_FETCH_FEATURES = [
-        'thin-pack',
         'no-progress',
         'ofs-delta',
     ];

@@ -96,6 +96,9 @@ final class ProtocolV2ParityTest extends TestCase
         $pitLines = $this->normalizeRequestLines($this->requestBody('fetch'));
         $pitHeaders = $this->requestHeaders('fetch');
 
+        // Thin packs are an optional Git choice; Pitmaster requests self-contained packs.
+        $gitLines = array_values(array_filter($gitLines, static fn (string $line): bool => $line !== 'thin-pack'));
+        $this->assertNotContains('thin-pack', $pitLines);
         $this->assertSame($gitLines, $pitLines);
         $this->assertSame('version=2', $gitHeaders['Git-Protocol'] ?? null);
         $this->assertSame('version=2', $pitHeaders['Git-Protocol'] ?? null);

@@ -16,12 +16,14 @@ final readonly class MergeResult
      * @param ?ObjectId $commitId The merge commit ID (null if conflicts)
      * @param array<int, string> $conflictPaths Files with conflicts
      * @param array<string, string> $mergedContents Path => merged content (with markers if conflicted)
+     * @param bool $upToDate Whether the target was already contained in HEAD
      */
     public function __construct(
         public bool $clean,
         public ?ObjectId $commitId = null,
         public array $conflictPaths = [],
         public array $mergedContents = [],
+        public bool $upToDate = false,
     ) {
     }
 }

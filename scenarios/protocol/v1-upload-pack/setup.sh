@@ -6,6 +6,7 @@ git config user.email test@pitmaster.dev
 git config user.name "Test User"
 
 mkdir -p projects .captures
+printf '%s\n' "$(pwd)/.captures" > .scenario-capture-dir
 git init --bare --initial-branch=main projects/remote.git >/dev/null
 
 cat > README.md <<'EOF'

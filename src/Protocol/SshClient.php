@@ -28,8 +28,11 @@ final class SshClient implements UploadPackTransport, ReceivePackTransport
 
     public static function isSshUrl(string $url): bool
     {
-        return str_starts_with($url, 'ssh://')
-            || preg_match('/^[^@]+@[^:]+:.+$/', $url) === 1;
+        if (str_contains($url, '://')) {
+            return strtolower((string) parse_url($url, PHP_URL_SCHEME)) === 'ssh';
+        }
+
+        return preg_match('/^[^@]+@[^:]+:.+$/', $url) === 1;
     }
 
     /**

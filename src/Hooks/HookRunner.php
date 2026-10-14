@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pitmaster\Hooks;
 
+use Pitmaster\Config\GitConfig;
+
 /**
  * Git hook detection and invocation.
  *
@@ -18,8 +20,27 @@ namespace Pitmaster\Hooks;
  */
 final class HookRunner
 {
-    public function __construct(private readonly string $gitDir)
-    {
+    private readonly string $workDir;
+    private readonly string $hooksDir;
+
+    public function __construct(
+        private readonly string $gitDir,
+        ?string $workDir = null,
+        ?string $commonDir = null,
+        ?string $hooksPath = null,
+    ) {
+        $commonFile = $gitDir . '/commondir';
+        $commonDir ??= is_file($commonFile)
+            ? (realpath($gitDir . '/' . trim((string) file_get_contents($commonFile))) ?: $gitDir)
+            : $gitDir;
+        $backlink = $gitDir . '/gitdir';
+        $this->workDir = $workDir ?? (is_file($backlink)
+            ? dirname(trim((string) file_get_contents($backlink)))
+            : (GitConfig::fromFile($commonDir . '/config')->getBool('core.bare') ? $gitDir : dirname($gitDir)));
+        $hooksPath ??= GitConfig::fromFile($commonDir . '/config')->get('core.hooksPath');
+        $this->hooksDir = $hooksPath === null
+            ? $commonDir . '/hooks'
+            : (str_starts_with($hooksPath, '/') ? $hooksPath : $this->workDir . '/' . $hooksPath);
     }
 
     /**
@@ -59,12 +80,12 @@ final class HookRunner
             2 => ['pipe', 'w'],
         ];
 
-        $env = [
-            'GIT_DIR' => $this->gitDir,
-            'GIT_WORK_TREE' => dirname($this->gitDir),
-        ];
+        $inherited = getenv();
+        $env = is_array($inherited) ? $inherited : [];
+        $env['GIT_DIR'] = $this->gitDir;
+        $env['GIT_WORK_TREE'] = $this->workDir;
 
-        $process = proc_open($command, $descriptors, $pipes, dirname($this->gitDir), $env);
+        $process = proc_open($command, $descriptors, $pipes, $this->workDir, $env);
 
         if (!is_resource($process)) {
             return ['exitCode' => 1, 'stdout' => '', 'stderr' => 'Failed to start hook'];
@@ -104,7 +125,7 @@ final class HookRunner
      */
     public function listHooks(): array
     {
-        $hooksDir = $this->gitDir . '/hooks';
+        $hooksDir = $this->hooksDir;
 
         if (!is_dir($hooksDir)) {
             return [];
@@ -132,7 +153,7 @@ final class HookRunner
      */
     public function install(string $hookName, string $content): void
     {
-        $hooksDir = $this->gitDir . '/hooks';
+        $hooksDir = $this->hooksDir;
 
         if (!is_dir($hooksDir)) {
             mkdir($hooksDir, 0777, true);
@@ -145,6 +166,6 @@ final class HookRunner
 
     private function hookPath(string $hookName): string
     {
-        return $this->gitDir . '/hooks/' . $hookName;
+        return $this->hooksDir . '/' . $hookName;
     }
 }

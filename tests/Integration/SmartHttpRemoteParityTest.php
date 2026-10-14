@@ -119,6 +119,9 @@ final class SmartHttpRemoteParityTest extends TestCase
         $this->git('commit -m initial', $sourceDir);
         $this->git('tag v1.0', $sourceDir);
         $this->git('tag -a v1.1 -m "Release 1.1"', $sourceDir);
+        file_put_contents($sourceDir . '/README.md', "second commit\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m second', $sourceDir);
         $this->git('remote add origin ' . escapeshellarg($remoteDir), $sourceDir);
         $this->git('push origin main --tags', $sourceDir);
 
@@ -136,6 +139,26 @@ final class SmartHttpRemoteParityTest extends TestCase
         $repo->fetch();
 
         $this->assertSame($beforePacks, $this->packFiles($packDir));
+
+        $oldHead = trim($this->git('rev-parse v1.0', $remoteDir));
+        $this->git('update-ref refs/heads/main ' . $oldHead, $remoteDir);
+        $this->git('update-ref refs/heads/new-branch ' . $oldHead, $remoteDir);
+        $this->git('tag -a fresh-tag -m fresh-tag', $sourceDir);
+        $this->git('push origin refs/tags/fresh-tag', $sourceDir);
+        $repo->fetch();
+        $this->assertSame($this->git('rev-parse refs/heads/main', $remoteDir), $this->git('rev-parse refs/remotes/origin/main', $cloneDir));
+        $this->assertSame($this->git('rev-parse refs/heads/new-branch', $remoteDir), $this->git('rev-parse refs/remotes/origin/new-branch', $cloneDir));
+        $this->assertSame($beforePacks, $this->packFiles($packDir));
+        $this->assertNotContains('fresh-tag', $repo->tags());
+        $this->git('fsck --no-progress', $cloneDir);
+
+        $config = $repo->config();
+        $config->set('remote.origin.fetch', '+refs/tags/*:refs/tags/*');
+        $config->writeToFile($cloneDir . '/.git/config');
+        $repo->fetch();
+        $this->assertSame($this->git('rev-parse refs/tags/fresh-tag', $remoteDir), $repo->resolve('fresh-tag')->hex . "\n");
+        $this->assertInstanceOf(\Pitmaster\Object\Tag::class, $repo->readObject($repo->resolve('fresh-tag')->hex));
+        $this->git('fsck --no-progress', $cloneDir);
     }
 
     #[Test]

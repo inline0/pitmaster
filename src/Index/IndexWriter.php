@@ -21,8 +21,10 @@ final class IndexWriter
             $body .= self::serializeEntry($entry);
         }
 
+        // Entries use the uncompressed v2/v3 layout, including extended flags.
+        $version = $index->version() === 4 ? 3 : $index->version();
         $header = 'DIRC'
-            . pack('N', $index->version())
+            . pack('N', $version)
             . pack('N', count($entries));
 
         $extensions = '';

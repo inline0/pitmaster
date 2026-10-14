@@ -80,6 +80,10 @@ final class DumbHttpClientTest extends TestCase
         $this->assertSame(file_get_contents($loosePath), $client->fetchObject($remoteUrl, $head));
 
         $this->git('repack -ad', $remoteDir);
+        file_put_contents($sourceDir . '/README.md', "new loose commit after packing\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m loose-after-pack', $sourceDir);
+        $this->git('push origin main', $sourceDir);
         $this->git('update-server-info', $remoteDir);
 
         $packs = $client->fetchPackList($remoteUrl);
@@ -102,6 +106,10 @@ final class DumbHttpClientTest extends TestCase
         $this->git('tag -a v1.0 -m v1.0', $sourceDir);
         $this->git('push origin --tags', $sourceDir);
         $this->git('repack -ad', $remoteDir);
+        file_put_contents($sourceDir . '/README.md', "new loose commit after packing\n");
+        $this->git('add README.md', $sourceDir);
+        $this->git('commit -m loose-after-pack', $sourceDir);
+        $this->git('push origin main', $sourceDir);
         $this->git('update-server-info', $remoteDir);
         $this->startStaticServer(dirname($remoteDir));
         $remoteUrl = $this->baseUrl . '/remote.git';
@@ -137,7 +145,6 @@ final class DumbHttpClientTest extends TestCase
         $this->git('add README.md notes.txt', $sourceDir);
         $this->git('commit -m advance', $sourceDir);
         $this->git('push origin main', $sourceDir);
-        $this->git('repack -ad', $remoteDir);
         $this->git('update-server-info', $remoteDir);
 
         $repo->fetch();

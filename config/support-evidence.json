@@ -494,7 +494,8 @@
                         "tests/Integration/IndexDiffTest.php",
                         "tests/Integration/IndexEntryAndWriterTest.php",
                         "tests/Integration/IndexExtensionParityTest.php",
-                        "tests/Integration/IndexFormatParityTest.php"
+                        "tests/Integration/IndexFormatParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -502,6 +503,7 @@
                         "index/index-tree-extension",
                         "index/index-v3-read",
                         "index/index-v4-read",
+                        "repository/open-issue-regressions",
                         "status/status-porcelain-v2"
                     ]
                 },
@@ -526,7 +528,8 @@
                         "tests/Integration/IndexDiffTest.php",
                         "tests/Integration/IndexEntryAndWriterTest.php",
                         "tests/Integration/IndexExtensionParityTest.php",
-                        "tests/Integration/IndexFormatParityTest.php"
+                        "tests/Integration/IndexFormatParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -534,6 +537,7 @@
                         "index/index-tree-extension",
                         "index/index-v3-read",
                         "index/index-v4-read",
+                        "repository/open-issue-regressions",
                         "status/status-porcelain-v2"
                     ]
                 },
@@ -694,6 +698,7 @@
                 },
                 "Reflog read": {
                     "integration_tests": [
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/PackedRefsParityTest.php",
                         "tests/Integration/RefStoresTest.php",
                         "tests/Integration/ReflogTest.php",
@@ -707,11 +712,13 @@
                         "refs/reflog-cli-parity",
                         "refs/refs-loose",
                         "refs/refs-packed",
+                        "repository/open-issue-regressions",
                         "worktree/worktree-add-reflog"
                     ]
                 },
                 "Reflog write": {
                     "integration_tests": [
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/PackedRefsParityTest.php",
                         "tests/Integration/RefStoresTest.php",
                         "tests/Integration/ReflogTest.php",
@@ -724,6 +731,7 @@
                         "refs/packed-refs-write",
                         "refs/refs-loose",
                         "refs/refs-packed",
+                        "repository/open-issue-regressions",
                         "worktree/worktree-add-reflog"
                     ]
                 },
@@ -791,6 +799,7 @@
                         "tests/Integration/ConfigParityTest.php",
                         "tests/Integration/HttpCloneParityTest.php",
                         "tests/Integration/InitParityTest.php",
+                        "tests/Integration/OpenIssueCloneTest.php",
                         "tests/Integration/Sha256RepositoryParityTest.php"
                     ],
                     "unit_tests": [],
@@ -1101,6 +1110,7 @@
                     "integration_tests": [
                         "tests/Integration/CommitWriteParityTest.php",
                         "tests/Integration/MoveAndRemoveParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/OperationsTest.php",
                         "tests/Integration/RebaseParityTest.php",
                         "tests/Integration/ResetParityTest.php",
@@ -1111,6 +1121,7 @@
                     "scenarios": [
                         "cherry-pick/cherry-pick-conflict-continue",
                         "rebase/rebase-clean",
+                        "repository/open-issue-regressions",
                         "reset/reset-hard-conflict",
                         "reset/reset-mixed-conflict",
                         "reset/reset-soft-conflict",
@@ -1617,6 +1628,7 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php"
                     ],
                     "unit_tests": [],
@@ -1632,6 +1644,7 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity"
                     ]
                 },
@@ -1732,6 +1745,7 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php"
                     ],
                     "unit_tests": [],
@@ -1747,6 +1761,7 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity"
                     ]
                 },
@@ -1755,6 +1770,7 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php"
                     ],
                     "unit_tests": [],
@@ -1770,6 +1786,7 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity"
                     ]
                 }
@@ -1860,6 +1877,7 @@
                         "tests/Integration/BisectParityTest.php",
                         "tests/Integration/BlameParityTest.php",
                         "tests/Integration/LogShowParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RevisionParserTest.php"
                     ],
                     "unit_tests": [],
@@ -1870,7 +1888,8 @@
                         "log/log-branched",
                         "log/log-linear",
                         "log/log-public-parity",
-                        "log/show-cli-parity"
+                        "log/show-cli-parity",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Log --oneline format": {
@@ -2345,6 +2364,7 @@
                         "tests/Integration/GitProtocolClientTest.php",
                         "tests/Integration/HttpCloneParityTest.php",
                         "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/OpenIssueCloneTest.php",
                         "tests/Integration/ProtocolV1ParityTest.php",
                         "tests/Integration/ProtocolV2ParityTest.php",
                         "tests/Integration/PushParityTest.php",
@@ -2825,6 +2845,7 @@
                         "tests/Integration/HookParityTest.php",
                         "tests/Integration/LfsParityTest.php",
                         "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php",
                         "tests/Integration/ShallowCloneParityTest.php",
                         "tests/Integration/SparseCheckoutParityTest.php",
@@ -2847,6 +2868,7 @@
                         "notes/notes-merge",
                         "notes/notes-namespace",
                         "notes/notes-worktree",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity",
                         "rerere/rerere-normalized-hash",
                         "sparse/sparse-basic",
@@ -2869,6 +2891,7 @@
                         "tests/Integration/HookParityTest.php",
                         "tests/Integration/LfsParityTest.php",
                         "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php",
                         "tests/Integration/ShallowCloneParityTest.php",
                         "tests/Integration/SparseCheckoutParityTest.php",
@@ -2891,6 +2914,7 @@
                         "notes/notes-merge",
                         "notes/notes-namespace",
                         "notes/notes-worktree",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity",
                         "rerere/rerere-normalized-hash",
                         "sparse/sparse-basic",
@@ -2957,6 +2981,7 @@
                         "tests/Integration/HookParityTest.php",
                         "tests/Integration/LfsParityTest.php",
                         "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php",
                         "tests/Integration/ShallowCloneParityTest.php",
                         "tests/Integration/SparseCheckoutParityTest.php",
@@ -2979,6 +3004,7 @@
                         "notes/notes-merge",
                         "notes/notes-namespace",
                         "notes/notes-worktree",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity",
                         "rerere/rerere-normalized-hash",
                         "sparse/sparse-basic",
@@ -3089,6 +3115,7 @@
                         "tests/Integration/HookParityTest.php",
                         "tests/Integration/LfsParityTest.php",
                         "tests/Integration/NotesParityTest.php",
+                        "tests/Integration/OpenIssueRepositoryTest.php",
                         "tests/Integration/RerereTest.php",
                         "tests/Integration/ShallowCloneParityTest.php",
                         "tests/Integration/SparseCheckoutParityTest.php",
@@ -3111,6 +3138,7 @@
                         "notes/notes-merge",
                         "notes/notes-namespace",
                         "notes/notes-worktree",
+                        "repository/open-issue-regressions",
                         "rerere/rerere-cache-parity",
                         "rerere/rerere-normalized-hash",
                         "sparse/sparse-basic",

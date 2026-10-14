@@ -77,7 +77,7 @@
                 {"feature": "Symbolic ref (HEAD)", "status": "full", "class": "Ref\\SymbolicRef", "notes": "ref: refs/heads/main"},
                 {"feature": "Ref database (composite)", "status": "full", "class": "Ref\\RefDatabase", "notes": "Loose priority over packed"},
                 {"feature": "Reflog read", "status": "full", "class": "Ref\\Reflog", "notes": ""},
-                {"feature": "Reflog write", "status": "full", "class": "Ref\\Reflog", "notes": "Required for proper ref updates"},
+                {"feature": "Reflog write", "status": "full", "class": "Ref\\Reflog", "notes": "New repositories enable reflogs; numeric reflog recovery"},
                 {"feature": "Reftable format", "status": "full", "scope": "interop", "class": "Ref\\Reftable", "notes": "Interop scope: Git-generated reftable read/open parity through RefDatabase and Repository"}
             ]
         },
@@ -103,10 +103,10 @@
                 {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
                 {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
                 {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
-                {"feature": "git stash", "status": "full", "class": "Stash\\Stash", "notes": "Tracked and untracked stash push/apply/pop conflict parity"},
-                {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Apply commit as new commit"},
-                {"feature": "git revert", "status": "full", "class": "", "notes": "Inverse cherry-pick"},
-                {"feature": "git rebase", "status": "full", "class": "", "notes": "Linear non-merge rebase lifecycle parity"}
+                {"feature": "git stash", "status": "partial", "class": "Stash\\Stash", "notes": "Local-change preservation during apply is being corrected (#11)."},
+                {"feature": "git cherry-pick", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "git revert", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "git rebase", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."}
             ]
         },
         {
@@ -127,11 +127,11 @@
                 {"feature": "Patience diff algorithm", "status": "full", "class": "Diff\\PatienceDiff", "notes": "Dedicated patience anchor selection with Git-backed unified diff parity"},
                 {"feature": "Histogram diff algorithm", "status": "full", "class": "Diff\\HistogramDiff", "notes": "Dedicated histogram anchor selection with Git-backed unified diff parity"},
                 {"feature": "Minimal diff", "status": "full", "class": "Diff\\MinimalDiff", "notes": "Minimal Myers search path with Git-backed unified diff parity"},
-                {"feature": "Tree-to-tree diff", "status": "full", "class": "Diff\\TreeDiff", "notes": "Recursive tree comparison"},
-                {"feature": "Unified diff output", "status": "full", "class": "Diff\\DiffResult", "notes": "Standard patch format"},
-                {"feature": "Hunk generation", "status": "full", "class": "Diff\\Hunk", "notes": "Context lines + ranges"},
+                {"feature": "Tree-to-tree diff", "status": "partial", "class": "Diff\\TreeDiff", "notes": "Mode-only changes and extended diff headers are being corrected (#3)."},
+                {"feature": "Unified diff output", "status": "partial", "class": "Diff\\DiffResult", "notes": "New, deleted, binary, renamed and mode-change headers are being corrected (#3)."},
+                {"feature": "Hunk generation", "status": "partial", "class": "Diff\\Hunk", "notes": "Empty-side range origins are being corrected (#3)."},
                 {"feature": "Binary file detection", "status": "full", "class": "", "notes": "NUL byte detection"},
-                {"feature": "Rename detection (diff)", "status": "full", "class": "", "notes": "TreeDiff content-similarity rename heuristic"},
+                {"feature": "Rename detection (diff)", "status": "partial", "class": "", "notes": "Similarity scoring for unrelated short files is being corrected (#4)."},
                 {"feature": "Word diff", "status": "full", "class": "", "notes": ""},
                 {"feature": "Color diff output", "status": "full", "class": "", "notes": "Terminal ANSI colors"}
             ]
@@ -142,13 +142,13 @@
                 {"feature": "Merge base (LCA)", "status": "full", "class": "Merge\\MergeBase", "notes": "Lowest common ancestor"},
                 {"feature": "Three-way merge (content)", "status": "full", "class": "Merge\\ThreeWayMerge", "notes": "Git-backed clean, conflicted, disjoint-edit, and diff3 content merge parity"},
                 {"feature": "Conflict markers", "status": "full", "class": "Merge\\ConflictMarker", "notes": "Default and diff3 marker styles match Git for merge-family conflicts"},
-                {"feature": "File-level merge (tree)", "status": "full", "class": "", "notes": "Git-backed tree merge parity including rename/delete conflict handling"},
-                {"feature": "Recursive strategy", "status": "full", "class": "", "notes": "Recursive virtual-base merge parity for multi-base criss-cross histories"},
-                {"feature": "ORT strategy", "status": "full", "class": "Merge\\RecursiveMerge", "notes": "Explicit ort strategy selection matches Git on supported recursive merge cases"},
-                {"feature": "Octopus merge", "status": "full", "class": "Merge\\OctopusMerge", "notes": "Repository-level clean octopus merge parity"},
+                {"feature": "File-level merge (tree)", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "Recursive strategy", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "ORT strategy", "status": "partial", "class": "Merge\\RecursiveMerge", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "Octopus merge", "status": "partial", "class": "Merge\\OctopusMerge", "notes": "Unrelated local-change preservation is being corrected (#2)."},
                 {"feature": "Ours strategy", "status": "full", "class": "Merge\\OursMerge", "notes": "Repository-level ours-strategy merge parity"},
-                {"feature": "Fast-forward merge", "status": "full", "class": "", "notes": "Just move the ref"},
-                {"feature": "Merge commit creation", "status": "full", "class": "", "notes": "Two-parent commit"}
+                {"feature": "Fast-forward merge", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "Merge commit creation", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."}
             ]
         },
         {
@@ -191,7 +191,7 @@
                 {"feature": "Clone via HTTP", "status": "full", "class": "", "notes": "Ref discovery + full fetch"},
                 {"feature": "Incremental fetch", "status": "full", "class": "", "notes": "Only new objects"},
                 {"feature": "Push", "status": "full", "class": "", "notes": "Send objects + update remote refs"},
-                {"feature": "SSH transport", "status": "full", "class": "Protocol\\SshClient", "notes": "Git-over-SSH clone/fetch/push parity with an in-repo sshd-backed oracle scenario"},
+                {"feature": "SSH transport", "status": "partial", "class": "Protocol\\SshClient", "notes": "Host verification for ext-ssh2 is being corrected (#22)."},
                 {"feature": "git:// transport", "status": "full", "class": "Protocol\\GitProtocolClient", "notes": "Raw TCP socket, pkt-line framing"},
                 {"feature": "Dumb HTTP", "status": "full", "class": "", "notes": "Rare, smart HTTP covers all major hosts"}
             ]
@@ -227,10 +227,10 @@
                 {"feature": "Worktrees", "status": "full", "class": "Worktree\\Worktree", "notes": "Multiple working trees, .git file indirection"},
                 {"feature": "Rerere", "status": "full", "class": "Merge\\Rerere", "notes": "Git-compatible rr-cache preimage/postimage read and write parity"},
                 {"feature": "Bisect", "status": "full", "class": "Graph\\Bisect", "notes": "Linear bisect start/good/bad/reset parity with Git-shaped BISECT state"},
-                {"feature": "Stash", "status": "full", "class": "Stash\\Stash", "notes": "Tracked and untracked stash push/apply/pop conflict parity"},
+                {"feature": "Stash", "status": "partial", "class": "Stash\\Stash", "notes": "Local-change preservation during apply is being corrected (#11)."},
                 {"feature": "Sparse checkout", "status": "full", "class": "Checkout\\SparseCheckout", "notes": "Partial working tree via cone patterns"},
                 {"feature": "Fsmonitor", "status": "full", "class": "Status\\Fsmonitor", "notes": "Canonical core.fsmonitor hook protocol parity with fallback scanning"},
-                {"feature": "Hooks", "status": "full", "class": "Hooks\\HookRunner", "notes": "Commit, checkout, merge, rebase, and push hook parity"},
+                {"feature": "Hooks", "status": "full", "class": "Hooks\\HookRunner", "notes": "Commit, checkout, merge, rebase, and push hooks; shared worktree hooks, core.hooksPath and inherited environment"},
                 {"feature": "Git LFS", "status": "full", "class": "Lfs\\LfsClient", "notes": "Pointer parsing and batch upload/download parity against a repo-local git-lfs oracle"},
                 {"feature": "Git attributes", "status": "full", "class": "Config\\GitAttributes", "notes": ""},
                 {"feature": "Shallow clones", "status": "full", "class": "Protocol\\ShallowClone", "notes": "Smart HTTP depth clone/fetch parity with Git-compatible shallow-file updates"},

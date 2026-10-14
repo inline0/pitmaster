@@ -31,7 +31,7 @@ $repo->processesEnabled();  // false for the second handle
 
 `Pitmaster::init()` and `Pitmaster::clone()` accept the same options. Running a hook needs `proc_open()`; on hosts that disable it, open repositories with `['hooks' => false]`. The CLI always opens the repository with hooks enabled.
 
-Pitmaster looks for hooks only in `<gitDir>/hooks`. It ignores `core.hooksPath`, and in a linked worktree it looks in `.git/worktrees/<name>/hooks`, so the shared `.git/hooks` scripts do not run there ([#12](https://github.com/inline0/pitmaster/issues/12)).
+Pitmaster resolves `core.hooksPath` when configured; relative paths are resolved from the working tree. Otherwise it uses the common Git directory's hooks, including in linked worktrees.
 
 `HookRunner`, described below, ignores these options: calling it directly always runs the hook.
 
@@ -150,15 +150,14 @@ Server-side hooks (`pre-receive`, `update`, `post-receive`, `post-update`), `pre
 When Pitmaster runs a hook, it passes this environment:
 
 ```php
-$env = [
-    'GIT_DIR' => $this->gitDir,
-    'GIT_WORK_TREE' => dirname($this->gitDir),
-];
+$env = getenv();
+$env['GIT_DIR'] = $repo->gitDir();
+$env['GIT_WORK_TREE'] = $repo->workDir();
 ```
 
-These are the only variables the hook gets: `PATH`, `HOME`, and every other variable of the PHP process are not passed through ([#13](https://github.com/inline0/pitmaster/issues/13)). Use absolute paths in hook scripts, or set `PATH` inside the script; a `#!/usr/bin/env php` shebang only finds interpreters in the system default path.
+Hooks inherit the PHP process environment, including `PATH`, `HOME`, locale settings, and `SSH_AUTH_SOCK`. Pitmaster overrides `GIT_DIR` and `GIT_WORK_TREE` for the selected repository handle.
 
-The hook runs in `dirname($gitDir)`, which is the working tree for a normal `.git` directory.
+The hook runs in the selected working tree, or the repository directory for a bare repository.
 
 ## Hook script format
 
