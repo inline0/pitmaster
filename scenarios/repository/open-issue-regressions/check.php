@@ -39,6 +39,32 @@ try {
         return new Stash($handle->objectDatabase(), $handle->refDatabase(), $handle->gitDir(), $dir);
     };
     switch ($case) {
+        case 'dirty_checkout':
+            foreach ([false, true] as $staged) {
+                $git('reset --hard HEAD');
+                $git('checkout main');
+                file_put_contents($work . '/a.txt', "local changes\n");
+                if ($staged) {
+                    $git('add a.txt');
+                }
+                $native ? $repo->checkout('old') : $git('checkout old');
+                $out[] = [$git('status --porcelain'), $git('ls-files --stage'), file_get_contents($work . '/a.txt')];
+            }
+            break;
+        case 'stash_safety':
+            foreach ([false, true] as $staged) {
+                $git('reset --hard HEAD');
+                $git('stash clear');
+                file_put_contents($work . '/a.txt', "stashed changes\n");
+                $git('stash push -m saved');
+                file_put_contents($work . '/y.txt', "local changes\n");
+                if ($staged) {
+                    $git('add y.txt');
+                }
+                $native ? $stashFor($work)->apply() : $git('stash apply');
+                $out[] = [$git('status --porcelain'), $git('ls-files --stage'), file_get_contents($work . '/a.txt'), file_get_contents($work . '/y.txt')];
+            }
+            break;
         case 'diff':
             $fresh = $work . '/diff-fixture';
             $git('init --initial-branch=main ' . escapeshellarg($fresh));

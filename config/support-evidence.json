@@ -1115,7 +1115,8 @@
                         "tests/Integration/RebaseParityTest.php",
                         "tests/Integration/ResetParityTest.php",
                         "tests/Integration/RestoreParityTest.php",
-                        "tests/Integration/StashParityTest.php"
+                        "tests/Integration/StashParityTest.php",
+                        "tests/Integration/StashDataSafetyTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1145,7 +1146,8 @@
                         "tests/Integration/RebaseParityTest.php",
                         "tests/Integration/ResetParityTest.php",
                         "tests/Integration/RestoreParityTest.php",
-                        "tests/Integration/StashParityTest.php"
+                        "tests/Integration/StashParityTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1164,7 +1166,8 @@
                         "staging/remove-tracked",
                         "stash/stash-apply",
                         "stash/stash-basic",
-                        "stash/stash-pop-conflict"
+                        "stash/stash-pop-conflict",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "git revert": {
@@ -1175,7 +1178,8 @@
                         "tests/Integration/RebaseParityTest.php",
                         "tests/Integration/ResetParityTest.php",
                         "tests/Integration/RestoreParityTest.php",
-                        "tests/Integration/StashParityTest.php"
+                        "tests/Integration/StashParityTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1194,7 +1198,8 @@
                         "staging/remove-tracked",
                         "stash/stash-apply",
                         "stash/stash-basic",
-                        "stash/stash-pop-conflict"
+                        "stash/stash-pop-conflict",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "git rebase": {
@@ -1205,7 +1210,8 @@
                         "tests/Integration/RebaseParityTest.php",
                         "tests/Integration/ResetParityTest.php",
                         "tests/Integration/RestoreParityTest.php",
-                        "tests/Integration/StashParityTest.php"
+                        "tests/Integration/StashParityTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1224,7 +1230,8 @@
                         "staging/remove-tracked",
                         "stash/stash-apply",
                         "stash/stash-basic",
-                        "stash/stash-pop-conflict"
+                        "stash/stash-pop-conflict",
+                        "repository/open-issue-regressions"
                     ]
                 }
             }
@@ -1641,7 +1648,8 @@
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
                         "tests/Integration/OpenIssueRepositoryTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1665,7 +1673,8 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1680,7 +1689,8 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
-                        "rerere/rerere-cache-parity"
+                        "rerere/rerere-cache-parity",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "ORT strategy": {
@@ -1688,7 +1698,8 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1703,7 +1714,8 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
-                        "rerere/rerere-cache-parity"
+                        "rerere/rerere-cache-parity",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Octopus merge": {
@@ -1711,7 +1723,8 @@
                         "tests/Integration/MergeBaseTest.php",
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1726,7 +1739,8 @@
                         "merge/merge-ours-strategy",
                         "merge/merge-recursive-crisscross",
                         "merge/merge-rename-delete-conflict",
-                        "rerere/rerere-cache-parity"
+                        "rerere/rerere-cache-parity",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Ours strategy": {
@@ -1758,7 +1772,8 @@
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
                         "tests/Integration/OpenIssueRepositoryTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1783,7 +1798,8 @@
                         "tests/Integration/MergeFamilyParityTest.php",
                         "tests/Integration/MergeStrategyParityTest.php",
                         "tests/Integration/OpenIssueRepositoryTest.php",
-                        "tests/Integration/RerereTest.php"
+                        "tests/Integration/RerereTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -2958,7 +2974,8 @@
                         "tests/Integration/SparseCheckoutParityTest.php",
                         "tests/Integration/SubmoduleParityTest.php",
                         "tests/Integration/WorktreeTest.php",
-                        "tests/Integration/WorktreeTopologyTest.php"
+                        "tests/Integration/WorktreeTopologyTest.php",
+                        "tests/Integration/DirtyTreeTransitionTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -2985,7 +3002,8 @@
                         "submodules/submodule-status",
                         "submodules/submodule-update",
                         "worktree/worktree-add-reflog",
-                        "worktree/worktree-list-porcelain"
+                        "worktree/worktree-list-porcelain",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Stash": {
@@ -3003,7 +3021,8 @@
                         "tests/Integration/SparseCheckoutParityTest.php",
                         "tests/Integration/SubmoduleParityTest.php",
                         "tests/Integration/WorktreeTest.php",
-                        "tests/Integration/WorktreeTopologyTest.php"
+                        "tests/Integration/WorktreeTopologyTest.php",
+                        "tests/Integration/StashDataSafetyTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [

@@ -11,7 +11,9 @@
         "regression_hooks",
         "regression_rerere",
         "regression_init",
-        "regression_diff"
+        "regression_diff",
+        "regression_dirty_checkout",
+        "regression_stash_safety"
     ],
     "oracle_commands": {
         "regression_log": "php \"{{SCENARIO_DIR}}/check.php\" git log",
@@ -22,7 +24,9 @@
         "regression_hooks": "php \"{{SCENARIO_DIR}}/check.php\" git hooks",
         "regression_rerere": "php \"{{SCENARIO_DIR}}/check.php\" git rerere",
         "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" git init",
-        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" git diff"
+        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" git diff",
+        "regression_dirty_checkout": "php \"{{SCENARIO_DIR}}/check.php\" git dirty_checkout",
+        "regression_stash_safety": "php \"{{SCENARIO_DIR}}/check.php\" git stash_safety"
     },
     "actual_commands": {
         "regression_log": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster log",
@@ -33,7 +37,9 @@
         "regression_hooks": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster hooks",
         "regression_rerere": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster rerere",
         "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster init",
-        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster diff"
+        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster diff",
+        "regression_dirty_checkout": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster dirty_checkout",
+        "regression_stash_safety": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster stash_safety"
     },
     "expectations": {
         "runtime_exact_match": [
@@ -45,7 +51,9 @@
             "regression_hooks",
             "regression_rerere",
             "regression_init",
-            "regression_diff"
+            "regression_diff",
+            "regression_dirty_checkout",
+            "regression_stash_safety"
         ],
         "fsck_clean": false
     }

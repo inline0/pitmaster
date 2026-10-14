@@ -127,7 +127,7 @@ $repo->checkout('feature/login');
 
 Updates HEAD to a symbolic ref pointing to the branch, resets the index to match the branch tip's tree, and updates the working tree.
 
-Local changes in paths that differ between the two trees stop the checkout with a `RuntimeException`. Uncommitted changes in all other tracked files are replaced by the branch's content, where git would keep them ([#2](https://github.com/inline0/pitmaster/issues/2)). Commit or stash them before switching.
+Local changes in paths that differ between the two trees stop checkout before HEAD, the index or files are changed. Paths that are identical in both trees carry their staged and unstaged changes, including staged additions and deletions.
 
 ### Check if merged
 

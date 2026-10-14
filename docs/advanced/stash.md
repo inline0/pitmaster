@@ -12,7 +12,7 @@ meta_description: "Save and restore working directory changes using the stash st
 
 Git stash saves working directory and index changes so you can switch to another task, then restore them later. Pitmaster implements the stash using `refs/stash` and the reflog, in git's storage layout. There is no stash method on `Repository`; use the `Stash` class below.
 
-`drop()` rewrites the reflog and updates `refs/stash`; `pop()` removes the applied entry after success. `apply()` currently overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)). Apply stashes on a clean working tree.
+`drop()` rewrites the reflog and updates `refs/stash`; `pop()` removes the applied entry after success. `apply()` preserves staged and unstaged changes in files the stash does not touch. All affected paths are checked before any writes; a local edit or staged change in a touched path rejects apply and keeps the working tree and stash unchanged.
 
 ## How stash works
 
@@ -98,7 +98,7 @@ $stash->apply();      // Apply stash@{0}
 $stash->apply(2);     // Apply stash@{2}
 ```
 
-Apply merges the stash into the current HEAD file by file (stash base, current HEAD, stash tree). The stash entry remains in the stack, and the index is not touched. Conflicts leave markers labelled `Updated upstream` and `Stashed changes` in the files and throw `Pitmaster\Exceptions\MergeConflictException`; `pop()` then keeps the entry. Apply does not check for local changes first (see the note at the top).
+Apply merges the stash into the current HEAD file by file (stash base, current HEAD, stash tree). The stash entry remains in the stack, and the index is not touched. Conflicts leave markers labelled `Updated upstream` and `Stashed changes` in the files and throw `Pitmaster\Exceptions\MergeConflictException`; `pop()` then keeps the entry. Touched paths must be clean before this merge starts. A staged change in a touched path is rejected before writing, including a case where Git would begin merging that staged change and materialize conflicts.
 
 ## List entries
 

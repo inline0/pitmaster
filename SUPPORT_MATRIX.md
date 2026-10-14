@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **135/146 in-scope features fully implemented and oracle-verified within the declared parity scope (92.5%).**
-Partial support exists for **11/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **146/146 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
+Partial support exists for **0/146** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -29,17 +29,17 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
 | References | 9 | 0 | 0 | 0 | 0 | 9 |
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
-| Staging and Commits | 8 | 4 | 0 | 0 | 0 | 12 |
+| Staging and Commits | 12 | 0 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
 | Diff | 11 | 0 | 0 | 0 | 0 | 11 |
-| Merge | 4 | 6 | 0 | 0 | 0 | 10 |
+| Merge | 10 | 0 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
 | Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
-| Advanced Features | 14 | 1 | 0 | 0 | 0 | 15 |
-| **Total** | **135** | **11** | **0** | **0** | **0** | **146** |
+| Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
+| **Total** | **146** | **0** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -128,7 +128,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Bare repositories | `DONE` | `native` | `Repository` | Detected by HEAD presence |
 
 ### Staging and Commits
-*8/12 fully done (66.7%), 4 partial*
+*12/12 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -140,10 +140,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | git reset --mixed | `DONE` | `native` |  | Move HEAD + reset index |
 | git reset --hard | `DONE` | `native` |  | Move HEAD + reset index + worktree |
 | git restore | `DONE` | `native` |  | Restore files from tree/index |
-| git stash | `PART` | `native` | `Stash\Stash` | Local-change preservation during apply is being corrected (#11). |
-| git cherry-pick | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
-| git revert | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
-| git rebase | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| git stash | `DONE` | `native` | `Stash\Stash` | Two-parent commit stack; unrelated local changes preserved; touched local changes rejected before writes |
+| git cherry-pick | `DONE` | `native` |  | Clean-index commit replay with unrelated unstaged edits preserved and touched-path checks |
+| git revert | `DONE` | `native` |  | Clean-index inverse replay with unrelated unstaged edits preserved and touched-path checks |
+| git rebase | `DONE` | `native` |  | Requires clean tracked state; guarded conflict materialization and replay |
 
 ### Working Tree Status
 *6/6 fully done (100%), 0 partial*
@@ -175,20 +175,20 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Color diff output | `DONE` | `native` |  | Terminal ANSI colors |
 
 ### Merge
-*4/10 fully done (40%), 6 partial*
+*10/10 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
 | Merge base (LCA) | `DONE` | `native` | `Merge\MergeBase` | Lowest common ancestor |
 | Three-way merge (content) | `DONE` | `native` | `Merge\ThreeWayMerge` | Git-backed clean, conflicted, disjoint-edit, and diff3 content merge parity |
 | Conflict markers | `DONE` | `native` | `Merge\ConflictMarker` | Default and diff3 marker styles match Git for merge-family conflicts |
-| File-level merge (tree) | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
-| Recursive strategy | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
-| ORT strategy | `PART` | `native` | `Merge\RecursiveMerge` | Unrelated local-change preservation is being corrected (#2). |
-| Octopus merge | `PART` | `native` | `Merge\OctopusMerge` | Unrelated local-change preservation is being corrected (#2). |
+| File-level merge (tree) | `DONE` | `native` |  | Path-aware three-way results with local-change checks before materialization |
+| Recursive strategy | `DONE` | `native` |  | Recursive merge bases and conflict stages with unrelated worktree changes preserved |
+| ORT strategy | `DONE` | `native` | `Merge\RecursiveMerge` | Git-backed merge results with local-change guards and unrelated worktree preservation |
+| Octopus merge | `DONE` | `native` | `Merge\OctopusMerge` | Clean-index octopus merge protects changing paths and preserves unrelated unstaged files |
 | Ours strategy | `DONE` | `native` | `Merge\OursMerge` | Repository-level ours-strategy merge parity |
-| Fast-forward merge | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
-| Merge commit creation | `PART` | `native` |  | Unrelated local-change preservation is being corrected (#2). |
+| Fast-forward merge | `DONE` | `native` |  | Ancestor shortcut carries unrelated staged and unstaged changes |
+| Merge commit creation | `DONE` | `native` |  | Clean-index result-tree commit preserves unrelated unstaged worktree changes |
 
 ### Commit Graph
 *7/7 fully done (100%), 0 partial*
@@ -265,7 +265,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Circular delta detection | `DONE` | `native` |  | Max depth limit exists |
 
 ### Advanced Features
-*14/15 fully done (93.3%), 1 partial*
+*15/15 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -273,7 +273,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Worktrees | `DONE` | `native` | `Worktree\Worktree` | Multiple working trees, .git file indirection |
 | Rerere | `DONE` | `native` | `Merge\Rerere` | Git-compatible rr-cache preimage/postimage read and write parity |
 | Bisect | `DONE` | `native` | `Graph\Bisect` | Linear bisect start/good/bad/reset parity with Git-shaped BISECT state |
-| Stash | `PART` | `native` | `Stash\Stash` | Local-change preservation during apply is being corrected (#11). |
+| Stash | `DONE` | `native` | `Stash\Stash` | Two-parent commit stack; unrelated local changes preserved; touched local changes rejected before writes |
 | Sparse checkout | `DONE` | `native` | `Checkout\SparseCheckout` | Partial working tree via cone patterns |
 | Fsmonitor | `DONE` | `native` | `Status\Fsmonitor` | Canonical core.fsmonitor hook protocol parity with fallback scanning |
 | Hooks | `DONE` | `native` | `Hooks\HookRunner` | Commit, checkout, merge, rebase, and push hooks; shared worktree hooks, core.hooksPath and inherited environment |
@@ -288,10 +288,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ## Progress
 
 ```
-[#####################################---] 92.5% fully done
+[########################################] 100% fully done
 
-Full:     135 features
-Partial:  11 features
+Full:     146 features
+Partial:  0 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

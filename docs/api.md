@@ -439,7 +439,7 @@ Switch branches or detach HEAD. Updates HEAD, the index, and the working tree. `
 
 Throws `RuntimeException` when a local change (staged or not) or an untracked file sits in a path that differs between the current and the target tree.
 
-Uncommitted changes in other tracked files are not carried over: the index and working tree are rebuilt from the target tree, so edits to files that are identical on both sides are lost, where git would keep them ([#2](https://github.com/inline0/pitmaster/issues/2)). Commit or stash them first. `merge()`, `cherryPick()`, `revert()`, `rebase()` and the bisect methods rebuild the working tree the same way.
+Checkout and fast-forward merge carry staged and unstaged changes in paths that stay identical between the source and target trees. Changes that would be overwritten stop the operation before HEAD or files are updated. Commit-producing merges, cherry-pick and revert require a clean index and preserve unrelated unstaged files. Rebase requires a clean index and tracked working tree.
 
 ```php
 $repo->checkout('feature/login');
@@ -774,7 +774,7 @@ Merge a branch (or any revision) into HEAD. Detects fast-forward merges automati
 
 `$strategy` `'ours'` records a merge commit that keeps HEAD's tree; any other value uses the default recursive merge. `mergeOctopus()` merges two or more branches into one commit. If any branch conflicts, it returns an unclean result without writing merge state or creating a commit.
 
-Merging a branch already contained in HEAD returns `upToDate = true` without creating a commit or changing local files. Uncommitted changes in tracked files are overwritten as described under `checkout()`.
+Merging a branch already contained in HEAD returns `upToDate = true` without creating a commit or changing local files. The local-change checks and preservation rules are described under `checkout()`.
 
 Returns a `MergeResult` with:
 - `clean`: whether the merge succeeded without conflicts

@@ -518,11 +518,7 @@ final class Stash
             $currentHash = $currentEntries[$path] ?? null;
             $stashHash = $stashEntries[$path] ?? null;
 
-            if ($currentHash === $stashHash) {
-                if ($currentHash !== null) {
-                    $written[$path] = $this->readBlobContent(ObjectId::fromHex($currentHash));
-                }
-
+            if ($currentHash === $stashHash || $baseHash === $stashHash) {
                 continue;
             }
 
@@ -531,16 +527,6 @@ final class Stash
                     $deleted[] = $path;
                 } else {
                     $written[$path] = $this->readBlobContent(ObjectId::fromHex($stashHash));
-                }
-
-                continue;
-            }
-
-            if ($baseHash === $stashHash) {
-                if ($currentHash === null) {
-                    $deleted[] = $path;
-                } else {
-                    $written[$path] = $this->readBlobContent(ObjectId::fromHex($currentHash));
                 }
 
                 continue;
@@ -557,10 +543,32 @@ final class Stash
                 'Stashed changes',
             );
 
+            if ($merged['clean'] && $merged['content'] === $currentContent) {
+                continue;
+            }
+
             $written[$path] = $merged['content'];
 
             if (!$merged['clean']) {
                 $conflicts[] = $path;
+            }
+        }
+
+        $index = Index::open($this->gitDir . '/index', $this->hashBytes());
+        if ($index->hasUnmerged()) {
+            throw new \RuntimeException('Cannot apply stash with unmerged paths');
+        }
+        $indexEntries = $index->entries();
+        $headEntries = $this->flattenTreeEntries($headCommit->tree);
+        $dirtyPaths = $this->dirtyPathSet($index, $headCommit->id);
+        foreach (array_unique(array_merge(array_keys($written), $deleted)) as $path) {
+            $entry = $indexEntries[$path] ?? null;
+            $headEntry = $headEntries[$path] ?? null;
+            $staged = $entry === null ? $headEntry !== null
+                : ($headEntry === null || $entry->hash->hex !== $headEntry['hash'] || $entry->mode !== $headEntry['mode']);
+            $untracked = $headEntry === null && (file_exists($this->workDir . '/' . $path) || is_link($this->workDir . '/' . $path));
+            if ($staged || $untracked || isset($dirtyPaths[$path])) {
+                throw new \RuntimeException('Your local changes would be overwritten by stash apply: ' . $path);
             }
         }
 

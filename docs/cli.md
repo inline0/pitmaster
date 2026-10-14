@@ -206,7 +206,7 @@ pitmaster checkout v1.0.0
 pitmaster checkout HEAD~2
 ```
 
-Updates HEAD, the index, and the working tree to match the target, and prints `Switched to '<target>'`. It refuses when local changes or untracked files are in paths that differ between the two trees. Uncommitted changes in other tracked files are overwritten with the target's content, where git would keep them ([#2](https://github.com/inline0/pitmaster/issues/2)); commit or stash them first.
+Updates HEAD, the index, and the working tree to match the target, and prints `Switched to '<target>'`. It refuses when local changes or untracked files are in paths that differ between the two trees. Staged and unstaged changes in unchanged paths are carried to the new branch.
 
 ### `merge`
 
@@ -352,7 +352,7 @@ stash@{0}: On main: Work in progress on login
 stash@{1}: WIP on main: abc1234 Add new feature
 ```
 
-`drop` removes the selected entry from the reflog and updates `refs/stash`; `pop` drops its entry after a successful apply. `apply` currently overwrites uncommitted changes in files the stash does not touch ([#11](https://github.com/inline0/pitmaster/issues/11)).
+`drop` removes the selected entry from the reflog and updates `refs/stash`; `pop` drops its entry after a successful apply. `apply` keeps local changes in files the stash does not touch and checks every affected path before writing. A rejected apply or pop keeps the stash entry.
 
 ### `blame`
 

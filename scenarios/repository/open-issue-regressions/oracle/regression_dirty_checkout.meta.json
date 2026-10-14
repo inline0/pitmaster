@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "[[\" M a.txt\\n\",\"100644 78981922613b2afb6025042ff6bd878ac1994e85 0\\ta.txt\\n100644 587be6b4c3f93f93c489c0111bba5596147a26cb 0\\tdocs/x.txt\\n100644 7f8f011eb73d6043d2e6db9d2c101195ae2801f2 0\\ty.txt\\n\",\"local changes\\n\"],[\"M  a.txt\\n\",\"100644 2e962c2fc653192794d445532770a7bd84ed9036 0\\ta.txt\\n100644 587be6b4c3f93f93c489c0111bba5596147a26cb 0\\tdocs/x.txt\\n100644 7f8f011eb73d6043d2e6db9d2c101195ae2801f2 0\\ty.txt\\n\",\"local changes\\n\"]]\n",
+    "stderr": ""
+}

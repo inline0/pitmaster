@@ -103,10 +103,10 @@
                 {"feature": "git reset --mixed", "status": "full", "class": "", "notes": "Move HEAD + reset index"},
                 {"feature": "git reset --hard", "status": "full", "class": "", "notes": "Move HEAD + reset index + worktree"},
                 {"feature": "git restore", "status": "full", "class": "", "notes": "Restore files from tree/index"},
-                {"feature": "git stash", "status": "partial", "class": "Stash\\Stash", "notes": "Local-change preservation during apply is being corrected (#11)."},
-                {"feature": "git cherry-pick", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "git revert", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "git rebase", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."}
+                {"feature": "git stash", "status": "full", "class": "Stash\\Stash", "notes": "Two-parent commit stack; unrelated local changes preserved; touched local changes rejected before writes"},
+                {"feature": "git cherry-pick", "status": "full", "class": "", "notes": "Clean-index commit replay with unrelated unstaged edits preserved and touched-path checks"},
+                {"feature": "git revert", "status": "full", "class": "", "notes": "Clean-index inverse replay with unrelated unstaged edits preserved and touched-path checks"},
+                {"feature": "git rebase", "status": "full", "class": "", "notes": "Requires clean tracked state; guarded conflict materialization and replay"}
             ]
         },
         {
@@ -142,13 +142,13 @@
                 {"feature": "Merge base (LCA)", "status": "full", "class": "Merge\\MergeBase", "notes": "Lowest common ancestor"},
                 {"feature": "Three-way merge (content)", "status": "full", "class": "Merge\\ThreeWayMerge", "notes": "Git-backed clean, conflicted, disjoint-edit, and diff3 content merge parity"},
                 {"feature": "Conflict markers", "status": "full", "class": "Merge\\ConflictMarker", "notes": "Default and diff3 marker styles match Git for merge-family conflicts"},
-                {"feature": "File-level merge (tree)", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "Recursive strategy", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "ORT strategy", "status": "partial", "class": "Merge\\RecursiveMerge", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "Octopus merge", "status": "partial", "class": "Merge\\OctopusMerge", "notes": "Unrelated local-change preservation is being corrected (#2)."},
+                {"feature": "File-level merge (tree)", "status": "full", "class": "", "notes": "Path-aware three-way results with local-change checks before materialization"},
+                {"feature": "Recursive strategy", "status": "full", "class": "", "notes": "Recursive merge bases and conflict stages with unrelated worktree changes preserved"},
+                {"feature": "ORT strategy", "status": "full", "class": "Merge\\RecursiveMerge", "notes": "Git-backed merge results with local-change guards and unrelated worktree preservation"},
+                {"feature": "Octopus merge", "status": "full", "class": "Merge\\OctopusMerge", "notes": "Clean-index octopus merge protects changing paths and preserves unrelated unstaged files"},
                 {"feature": "Ours strategy", "status": "full", "class": "Merge\\OursMerge", "notes": "Repository-level ours-strategy merge parity"},
-                {"feature": "Fast-forward merge", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."},
-                {"feature": "Merge commit creation", "status": "partial", "class": "", "notes": "Unrelated local-change preservation is being corrected (#2)."}
+                {"feature": "Fast-forward merge", "status": "full", "class": "", "notes": "Ancestor shortcut carries unrelated staged and unstaged changes"},
+                {"feature": "Merge commit creation", "status": "full", "class": "", "notes": "Clean-index result-tree commit preserves unrelated unstaged worktree changes"}
             ]
         },
         {
@@ -227,7 +227,7 @@
                 {"feature": "Worktrees", "status": "full", "class": "Worktree\\Worktree", "notes": "Multiple working trees, .git file indirection"},
                 {"feature": "Rerere", "status": "full", "class": "Merge\\Rerere", "notes": "Git-compatible rr-cache preimage/postimage read and write parity"},
                 {"feature": "Bisect", "status": "full", "class": "Graph\\Bisect", "notes": "Linear bisect start/good/bad/reset parity with Git-shaped BISECT state"},
-                {"feature": "Stash", "status": "partial", "class": "Stash\\Stash", "notes": "Local-change preservation during apply is being corrected (#11)."},
+                {"feature": "Stash", "status": "full", "class": "Stash\\Stash", "notes": "Two-parent commit stack; unrelated local changes preserved; touched local changes rejected before writes"},
                 {"feature": "Sparse checkout", "status": "full", "class": "Checkout\\SparseCheckout", "notes": "Partial working tree via cone patterns"},
                 {"feature": "Fsmonitor", "status": "full", "class": "Status\\Fsmonitor", "notes": "Canonical core.fsmonitor hook protocol parity with fallback scanning"},
                 {"feature": "Hooks", "status": "full", "class": "Hooks\\HookRunner", "notes": "Commit, checkout, merge, rebase, and push hooks; shared worktree hooks, core.hooksPath and inherited environment"},

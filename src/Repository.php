@@ -693,7 +693,7 @@ final class Repository
         $branchId = $this->refs->resolve("refs/heads/{$target}");
 
         if ($branchId !== null) {
-            $this->assertSafeCheckout($branchId);
+            $preserved = $this->prepareCommitCheckout($branchId);
 
             // Switch to branch: update HEAD symbolic ref
             $this->refs->updateSymbolic('HEAD', "refs/heads/{$target}");
@@ -703,7 +703,7 @@ final class Repository
                 $branchId,
                 "checkout: moving from {$fromLabel} to {$target}",
             );
-            $this->resetWorktree($branchId, $trackedPaths);
+            $this->resetWorktree($branchId, $trackedPaths, preservedEntries: $preserved);
             $this->runPostCheckoutHook($oldHeadId, $branchId);
 
             return;
@@ -711,7 +711,7 @@ final class Repository
 
         // Try as tag or direct hash (detached HEAD)
         $id = $this->resolve($target);
-        $this->assertSafeCheckout($id);
+        $preserved = $this->prepareCommitCheckout($id);
         $this->refs->looseStore()->update('HEAD', $id);
         $this->appendReflogEntry(
             'HEAD',
@@ -719,7 +719,7 @@ final class Repository
             $id,
             "checkout: moving from {$fromLabel} to " . $this->targetLabel($target, $id),
         );
-        $this->resetWorktree($id, $trackedPaths);
+        $this->resetWorktree($id, $trackedPaths, preservedEntries: $preserved);
         $this->runPostCheckoutHook($oldHeadId, $id);
     }
 
@@ -1191,6 +1191,7 @@ final class Repository
         $parentTree = $commit->parents !== []
             ? $this->getCommitTree($commit->parents[0])
             : null;
+        $this->assertCleanIndex('cherry-pick');
         $trackedPaths = $this->index()->paths();
         $merge = $this->mergeTreeEntries(
             $parentTree,
@@ -1215,10 +1216,11 @@ final class Repository
             throw new MergeConflictException($merge['conflictPaths'], 'Cherry-pick stopped due to conflicts');
         }
 
+        $preserved = $this->prepareTreeTransition($merge['mergedEntries']);
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $commit->message, [$headId], $commit->author);
         $this->moveHeadTo($commitId, 'cherry-pick: ' . $this->subjectLine($commit->message));
-        $this->resetWorktree($commitId, $trackedPaths);
+        $this->resetWorktree($commitId, $trackedPaths, preservedEntries: $preserved);
 
         return $commitId;
     }
@@ -1282,6 +1284,7 @@ final class Repository
         }
 
         $message = "Revert \"{$this->subjectLine($commit->message)}\"\n\nThis reverts commit {$commit->id->hex}.\n";
+        $this->assertCleanIndex('revert');
         $trackedPaths = $this->index()->paths();
         $merge = $this->mergeTreeEntries(
             $commit->tree,
@@ -1306,10 +1309,11 @@ final class Repository
             throw new MergeConflictException($merge['conflictPaths'], 'Revert stopped due to conflicts');
         }
 
+        $preserved = $this->prepareTreeTransition($merge['mergedEntries']);
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $message, [$headId]);
         $this->moveHeadTo($commitId, 'revert: ' . $this->subjectLine($message));
-        $this->resetWorktree($commitId, $trackedPaths);
+        $this->resetWorktree($commitId, $trackedPaths, preservedEntries: $preserved);
 
         return $commitId;
     }
@@ -1366,6 +1370,7 @@ final class Repository
             throw new \RuntimeException('Cannot rebase: HEAD is not set');
         }
 
+        $this->assertCleanWorktree('rebase');
         $this->runPreRebaseHook($onto, $head);
 
         $ontoId = $this->resolve($onto);
@@ -2285,14 +2290,16 @@ final class Repository
         $baseId = $baseIds[0] ?? null;
 
         if ($mergeBaseFinder->isAncestor($oursId, $theirsId)) {
+            $preserved = $this->prepareCommitCheckout($theirsId);
             $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
             $this->moveHeadTo($theirsId, "merge {$branch}: Fast-forward");
-            $this->resetWorktree($theirsId, $trackedPaths);
+            $this->resetWorktree($theirsId, $trackedPaths, preservedEntries: $preserved);
             $this->runPostMergeHook();
 
             return new MergeResult(clean: true, commitId: $theirsId);
         }
 
+        $this->assertCleanIndex('merge');
         $oursCommit = $this->objects->read($oursId);
         $theirsCommit = $this->objects->read($theirsId);
 
@@ -2329,13 +2336,14 @@ final class Repository
             );
         }
 
+        $preserved = $this->prepareTreeTransition($merge['mergedEntries']);
         $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
         $treeId = $this->buildTreeFromEntries($merge['mergedEntries']);
         $commitId = $this->createCommitFromTree($treeId, $this->buildMergeSubject($branch), [$oursId, $theirsId]);
 
         $this->moveHeadTo($commitId, "merge {$branch}: Merge made by the 'ort' strategy.");
 
-        $this->resetWorktree($commitId, $trackedPaths);
+        $this->resetWorktree($commitId, $trackedPaths, preservedEntries: $preserved);
         $this->runPostMergeHook();
 
         return new MergeResult(clean: true, commitId: $commitId);
@@ -2358,6 +2366,7 @@ final class Repository
             throw new \RuntimeException('Cannot merge: HEAD is not set');
         }
 
+        $this->assertCleanIndex('merge');
         $trackedPaths = $this->index()->paths();
         $oursCommit = $this->objects->read($oursId);
 
@@ -2398,10 +2407,11 @@ final class Repository
             $parentIds[] = $theirsId;
         }
 
+        $preserved = $this->prepareTreeTransition($this->flattenTreeEntries($currentTreeId));
         $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
         $commitId = $this->createCommitFromTree($currentTreeId, $this->buildOctopusMergeMessage($branches), $parentIds);
         $this->moveHeadTo($commitId, "merge " . implode(' ', $branches) . ": Merge made by the 'octopus' strategy.");
-        $this->resetWorktree($commitId, $trackedPaths);
+        $this->resetWorktree($commitId, $trackedPaths, preservedEntries: $preserved);
         $this->runPostMergeHook();
 
         return new MergeResult(clean: true, commitId: $commitId);
@@ -2520,17 +2530,19 @@ final class Repository
         $branchTarget = $this->refs->resolve("refs/heads/{$start}");
 
         if ($branchTarget !== null) {
+            $preserved = $this->prepareCommitCheckout($branchTarget);
             $this->refs->updateSymbolic('HEAD', "refs/heads/{$start}");
             $this->appendReflogEntry('HEAD', null, $branchTarget, 'checkout: moving from bisect to ' . $start);
-            $this->resetWorktree($branchTarget, $this->index()->paths());
+            $this->resetWorktree($branchTarget, $this->index()->paths(), preservedEntries: $preserved);
 
             return;
         }
 
         if (ObjectId::looksLikeHex($start)) {
             $target = ObjectId::fromHex($start);
+            $preserved = $this->prepareCommitCheckout($target);
             $this->detachHeadTo($target, 'checkout: moving from bisect to ' . substr($target->hex, 0, 7));
-            $this->resetWorktree($target, $this->index()->paths());
+            $this->resetWorktree($target, $this->index()->paths(), preservedEntries: $preserved);
         }
     }
 
@@ -2733,8 +2745,9 @@ final class Repository
      *
      * @param array<int, string> $pathsToPrune
      * @param array<int, string> $preserveRefs
+     * @param array<string, IndexEntry|null> $preservedEntries
      */
-    private function resetWorktree(ObjectId $commitId, array $pathsToPrune = [], array $preserveRefs = []): void
+    private function resetWorktree(ObjectId $commitId, array $pathsToPrune = [], array $preserveRefs = [], array $preservedEntries = []): void
     {
         $commit = $this->objects->read($commitId);
 
@@ -2751,7 +2764,7 @@ final class Repository
                 $materializedEntries,
             ),
             $this->workDir,
-            $pathsToPrune,
+            array_values(array_filter($pathsToPrune, static fn (string $path): bool => !array_key_exists($path, $preservedEntries))),
         );
         $currentEntries = $this->index()->entries();
         $index = new Index($this->objectHashBytes());
@@ -2761,6 +2774,12 @@ final class Repository
         $nextEntries = [];
 
         foreach ($treeEntries as $path => $treeEntry) {
+            if (array_key_exists($path, $preservedEntries)) {
+                if ($preservedEntries[$path] !== null) {
+                    $nextEntries[] = $preservedEntries[$path];
+                }
+                continue;
+            }
             $extendedFlags = $sparseEnabled && !$sparse->includes($path)
                 ? IndexEntry::EXTENDED_SKIP_WORKTREE
                 : 0;
@@ -2806,6 +2825,12 @@ final class Repository
                 throw new \RuntimeException('Cannot write checkout file: ' . $fullPath);
             }
             $nextEntries[] = IndexEntry::fromStat($path, $blob->id, $fullPath, $extendedFlags);
+        }
+
+        foreach ($preservedEntries as $path => $entry) {
+            if ($entry !== null && !isset($treeEntries[$path])) {
+                $nextEntries[] = $entry;
+            }
         }
 
         $index->addEntries($nextEntries);
@@ -2969,8 +2994,18 @@ final class Repository
     {
         $fullPath = $this->workDir . '/' . $entry->path;
 
+        if ($entry->mode === 0160000) {
+            return false;
+        }
+
+        if (is_link($fullPath) || $entry->mode === 0120000) {
+            $target = is_link($fullPath) ? readlink($fullPath) : false;
+            return $entry->mode !== 0120000 || $target === false
+                || !ObjectId::compute(ObjectType::Blob, $target, $entry->hash->algo)->equals($entry->hash);
+        }
+
         if (!is_file($fullPath)) {
-            return true;
+            return !$entry->skipWorktree();
         }
 
         $stat = stat($fullPath);
@@ -2984,6 +3019,9 @@ final class Repository
         }
 
         $mode = is_executable($fullPath) ? 0100755 : 0100644;
+        if ($this->config->getBool('core.filemode', true) && $mode !== $entry->mode) {
+            return true;
+        }
         $scanTimeSec ??= time();
 
         if (
@@ -3431,6 +3469,8 @@ final class Repository
             throw new \RuntimeException('Cannot merge: invalid HEAD commit');
         }
 
+        $this->assertCleanIndex('merge');
+        $preserved = $this->prepareCommitCheckout($oursId);
         $this->refs->looseStore()->update('ORIG_HEAD', $oursId);
         $commitId = $this->createCommitFromTree(
             $oursCommit->tree,
@@ -3439,7 +3479,7 @@ final class Repository
         );
 
         $this->moveHeadTo($commitId, "merge {$branch}: Merge made by the 'ours' strategy");
-        $this->resetWorktree($commitId, $this->index()->paths());
+        $this->resetWorktree($commitId, $this->index()->paths(), preservedEntries: $preserved);
         $this->runPostMergeHook();
 
         return new MergeResult(clean: true, commitId: $commitId);
@@ -4003,18 +4043,37 @@ final class Repository
         string $message,
         ?ObjectId $origHead = null,
     ): void {
+        $safetyEntries = $mergedEntries;
+        foreach ($conflictEntries as $path => $stages) {
+            $stageEntry = $stages[2] ?? $stages[3] ?? $stages[1] ?? null;
+            $safetyEntries[$path] = [
+                'hash' => ObjectId::compute(ObjectType::Blob, $conflictContents[$path] ?? '', $this->objectHashAlgo())->hex,
+                'mode' => $stageEntry !== null ? $stageEntry['mode'] : 0100644,
+            ];
+        }
+        $preserved = $this->prepareTreeTransition($safetyEntries, array_keys($conflictEntries));
         $treeMap = [];
 
         foreach ($mergedEntries as $path => $entry) {
             $treeMap[$path] = $entry['hash'];
         }
 
-        $this->materializeTreeMap($treeMap, $this->workDir, $pathsToPrune);
+        $this->materializeTreeMap(
+            array_filter($treeMap, static fn (string $path): bool => !array_key_exists($path, $preserved), ARRAY_FILTER_USE_KEY),
+            $this->workDir,
+            array_values(array_filter($pathsToPrune, static fn (string $path): bool => !array_key_exists($path, $preserved))),
+        );
         $this->materializeConflictContents($conflictContents);
 
         $index = new Index($this->objectHashBytes());
 
         foreach ($mergedEntries as $path => $entry) {
+            if (array_key_exists($path, $preserved)) {
+                if ($preserved[$path] !== null) {
+                    $index->addEntry($preserved[$path]);
+                }
+                continue;
+            }
             $fullPath = $this->workDir . '/' . $path;
             $id = ObjectId::fromHex($entry['hash']);
 
@@ -4024,6 +4083,12 @@ final class Repository
             }
 
             $index->addEntry(IndexEntry::create($path, $id, $entry['mode']));
+        }
+
+        foreach ($preserved as $path => $entry) {
+            if ($entry !== null && !isset($mergedEntries[$path])) {
+                $index->addEntry($entry);
+            }
         }
 
         foreach ($conflictEntries as $path => $stages) {
@@ -4093,7 +4158,14 @@ final class Repository
             array_keys($this->flattenTree($this->getCommitTree($headId))),
         )));
 
-        $this->resetWorktree($headId, $trackedPaths);
+        $targetEntries = $this->flattenTreeEntries($this->getCommitTree($headId));
+        $preserved = [];
+        foreach ($this->index()->entries() as $path => $entry) {
+            if (!$this->entryDiffersFromTree($entry, $targetEntries[$path] ?? null)) {
+                $preserved[$path] = $entry;
+            }
+        }
+        $this->resetWorktree($headId, $trackedPaths, preservedEntries: $preserved);
 
         if ($headReflogMessage !== null) {
             $this->appendReflogEntry('HEAD', $headId, $headId, $headReflogMessage);
@@ -4369,9 +4441,10 @@ final class Repository
                 continue;
             }
 
+            $preserved = $this->prepareTreeTransition($merge['mergedEntries']);
             $commitId = $this->createCommitFromTree($treeId, $commit->message, [$headId], $commit->author);
             $this->moveDetachedHeadTo($commitId, 'rebase (pick): ' . $this->subjectLine($commit->message));
-            $this->resetWorktree($commitId, $trackedPaths);
+            $this->resetWorktree($commitId, $trackedPaths, preservedEntries: $preserved);
             $state['current']++;
             $this->writeRebaseState($state);
             $applied++;
@@ -5000,26 +5073,41 @@ final class Repository
         $this->detachHeadTo($target, $message);
     }
 
-    private function assertSafeCheckout(ObjectId $targetId): void
+    /** @return array<string, IndexEntry|null> */
+    private function prepareCommitCheckout(ObjectId $target): array
+    {
+        return $this->prepareTreeTransition($this->flattenTreeEntries($this->getCommitTree($target)));
+    }
+
+    /**
+     * @param array<string, array{hash: string, mode: int}> $targetTree
+     * @param list<string> $forcedPaths
+     * @return array<string, IndexEntry|null>
+     */
+    private function prepareTreeTransition(array $targetTree, array $forcedPaths = []): array
     {
         if ($this->isBare) {
-            return;
+            return [];
         }
 
         $headId = $this->refs->resolveHead();
-        $currentTree = $headId !== null ? $this->flattenTreeEntries($this->getCommitTree($headId)) : [];
-        $targetTree = $this->flattenTreeEntries($this->getCommitTree($targetId));
-        $currentEntries = $this->index()->entries();
+        $currentTree = $headId !== null && is_file($this->gitDir . '/index')
+            ? $this->flattenTreeEntries($this->getCommitTree($headId)) : [];
+        $index = $this->index();
+        if ($index->hasUnmerged()) {
+            throw new \RuntimeException('Cannot checkout with unmerged paths');
+        }
+        $currentEntries = $index->entries();
+        $preserved = [];
+        $forced = array_fill_keys($forcedPaths, true);
         $pathsChanging = [];
 
-        foreach (array_keys(array_merge($currentTree, $targetTree)) as $path) {
-            if (($currentTree[$path] ?? null) !== ($targetTree[$path] ?? null)) {
+        foreach (array_keys(array_merge($currentTree, $targetTree, $currentEntries)) as $path) {
+            if (isset($forced[$path]) || ($currentTree[$path] ?? null) !== ($targetTree[$path] ?? null)) {
                 $pathsChanging[$path] = true;
+            } else {
+                $preserved[$path] = $currentEntries[$path] ?? null;
             }
-        }
-
-        if ($pathsChanging === []) {
-            return;
         }
 
         $modified = [];
@@ -5047,7 +5135,7 @@ final class Repository
                 continue;
             }
 
-            if ($targetTreeEntry !== null && file_exists($this->workDir . '/' . $path)) {
+            if ($targetTreeEntry !== null && (file_exists($this->workDir . '/' . $path) || is_link($this->workDir . '/' . $path))) {
                 $untracked[] = $path;
             }
         }
@@ -5066,6 +5154,36 @@ final class Repository
             throw new \RuntimeException(
                 'The following untracked working tree files would be overwritten by checkout: ' . implode(', ', $untracked)
             );
+        }
+        return $preserved;
+    }
+
+    private function assertCleanIndex(string $operation): void
+    {
+        $index = $this->index();
+        if ($index->hasUnmerged()) {
+            throw new \RuntimeException('Cannot ' . $operation . ' with unmerged paths');
+        }
+        $head = $this->refs->resolveHead();
+        $headEntries = $head !== null ? $this->flattenTreeEntries($this->getCommitTree($head)) : [];
+        $entries = $index->entries();
+        foreach (array_keys(array_merge($headEntries, $entries)) as $path) {
+            $entry = $entries[$path] ?? null;
+            $treeEntry = $headEntries[$path] ?? null;
+            if ($entry === null ? $treeEntry !== null : $this->entryDiffersFromTree($entry, $treeEntry)) {
+                throw new \RuntimeException('Your staged changes would be overwritten by ' . $operation);
+            }
+        }
+    }
+
+    private function assertCleanWorktree(string $operation): void
+    {
+        $this->assertCleanIndex($operation);
+        $scanTime = time();
+        foreach ($this->index()->entries() as $entry) {
+            if ($this->worktreeDiffersFromIndex($entry, $scanTime)) {
+                throw new \RuntimeException('Your unstaged changes would be overwritten by ' . $operation);
+            }
         }
     }
 
@@ -5568,7 +5686,8 @@ final class Repository
     private function checkoutBisectCandidate(ObjectId $candidate, ?ObjectId $oldHeadId): void
     {
         $label = $this->branch() ?? ($oldHeadId !== null ? substr($oldHeadId->hex, 0, 7) : 'HEAD');
+        $preserved = $this->prepareCommitCheckout($candidate);
         $this->detachHeadTo($candidate, 'checkout: moving from ' . $label . ' to ' . substr($candidate->hex, 0, 7));
-        $this->resetWorktree($candidate, $this->index()->paths());
+        $this->resetWorktree($candidate, $this->index()->paths(), preservedEntries: $preserved);
     }
 }

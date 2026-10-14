@@ -3,6 +3,8 @@
 ## [0.2.12] - 2026-10-14
 
 ### Fixed
+- Checkout and fast-forward merge carry unrelated staged and unstaged changes; commit-producing merges, cherry-pick and revert protect the index and unrelated working files, and rebase rejects dirty tracked state
+- Stash apply and pop preserve local changes outside the stash and reject touched local changes before any file writes or stash removal
 - SSH2 verifies known host keys before authentication, honours the configured identity, and handles discovery and receive-pack advertisements; OpenSSH applies command overrides and key-learning modes
 - Diffs include new/deleted file modes, object IDs, binary paths, rename headers and mode-only changes; empty hunk ranges match Git, and redirected CLI output has no ANSI colour
 - Rename similarity counts copied bytes with bounded span occurrences, avoiding false matches between unrelated one-line files and repeated lines

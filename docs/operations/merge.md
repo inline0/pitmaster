@@ -42,7 +42,7 @@ $result->mergedContents;  // array: path => content with conflict markers (if co
 
 When the merge stops on conflicts, the conflict state is written to the index and working tree. Resolve the files, `add()` them, and call `$repo->mergeContinue()`, or call `$repo->mergeAbort()` to restore the pre-merge state.
 
-Before merging, commit or stash local changes: the merge rebuilds the working tree from the result and overwrites uncommitted changes in tracked files ([#2](https://github.com/inline0/pitmaster/issues/2)).
+Fast-forward merges carry staged and unstaged changes in paths that do not change. A merge that creates a commit requires a clean index and preserves unrelated unstaged edits. Any local edit in a path the result changes stops the operation before files or HEAD are updated. Conflict materialization and merge abort also keep unrelated unstaged files.
 
 ## Fast-forward merges
 
