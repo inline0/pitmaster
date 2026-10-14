@@ -2180,61 +2180,40 @@ final class Repository
             }
 
             $fullPath = $this->workDir . '/' . $entry->path;
-
-            if (!is_file($fullPath)) {
-                // Deleted in worktree
-                $oldContent = $this->readBlobContent($entry->hash);
-                $hunks = DiffAlgorithm::diff($oldContent, '', $algorithm);
-
-                if ($hunks !== []) {
-                    $results[] = new DiffResult(
-                        $entry->path,
-                        $entry->path,
-                        $hunks,
-                        false,
-                        $entry->hash->hex,
-                        null,
-                        $this->contentLacksTrailingNewline($oldContent),
-                        false,
-                    );
-                }
-
-                continue;
-            }
-
-            $worktreeContent = file_get_contents($fullPath);
+            $indexContent = $this->readBlobContent($entry->hash);
+            $oldMode = sprintf('%o', $entry->mode);
+            $exists = is_file($fullPath) || is_link($fullPath);
+            $worktreeContent = $exists ? (is_link($fullPath) ? readlink($fullPath) : file_get_contents($fullPath)) : '';
 
             if ($worktreeContent === false) {
                 continue;
             }
 
-            $indexContent = $this->readBlobContent($entry->hash);
+            $newMode = null;
 
-            if ($indexContent !== $worktreeContent) {
-                $newHash = ObjectId::compute(ObjectType::Blob, $worktreeContent, $this->objectHashAlgo());
+            if ($exists) {
+                $newMode = is_link($fullPath) ? '120000' : ((fileperms($fullPath) & 0111) !== 0 ? '100755' : '100644');
 
-                if (MyersDiff::isBinary($indexContent) || MyersDiff::isBinary($worktreeContent)) {
-                    $results[] = new DiffResult(
-                        $entry->path,
-                        $entry->path,
-                        [],
-                        true,
-                        $entry->hash->hex,
-                        $newHash->hex
-                    );
-                } else {
-                    $hunks = DiffAlgorithm::diff($indexContent, $worktreeContent, $algorithm);
-                    $results[] = new DiffResult(
-                        $entry->path,
-                        $entry->path,
-                        $hunks,
-                        false,
-                        $entry->hash->hex,
-                        $newHash->hex,
-                        $this->contentLacksTrailingNewline($indexContent),
-                        $this->contentLacksTrailingNewline($worktreeContent),
-                    );
+                if (!is_link($fullPath) && !$this->config->getBool('core.filemode', true)) {
+                    $newMode = $oldMode;
                 }
+            }
+
+            if (!$exists || $indexContent !== $worktreeContent || $oldMode !== $newMode) {
+                $newHash = $exists ? ObjectId::compute(ObjectType::Blob, $worktreeContent, $this->objectHashAlgo()) : null;
+                $binary = $indexContent !== $worktreeContent && (MyersDiff::isBinary($indexContent) || MyersDiff::isBinary($worktreeContent));
+                $results[] = new DiffResult(
+                    $entry->path,
+                    $entry->path,
+                    $binary ? [] : DiffAlgorithm::diff($indexContent, $worktreeContent, $algorithm),
+                    $binary,
+                    $entry->hash->hex,
+                    $newHash?->hex,
+                    $this->contentLacksTrailingNewline($indexContent),
+                    $this->contentLacksTrailingNewline($worktreeContent),
+                    $oldMode,
+                    $newMode,
+                );
             }
         }
 
@@ -2250,23 +2229,19 @@ final class Repository
     {
         $headId = $this->refs->resolveHead();
 
-        if ($headId === null) {
-            return [];
-        }
-
-        $commit = $this->objects->read($headId);
-
-        if (!$commit instanceof Commit) {
-            return [];
-        }
-
+        $commit = $headId === null ? null : $this->objects->read($headId);
         $index = $this->index();
         $treeDiff = new TreeDiff($this->objects, DiffAlgorithmName::normalize($algorithm));
 
         // Build a tree from the index
         $indexTreeId = $this->buildTreeFromIndex($index);
 
-        return $treeDiff->diff($commit->tree, $indexTreeId);
+        $results = $treeDiff->diff($commit instanceof Commit ? $commit->tree : null, $indexTreeId);
+
+        return $pathspec === null ? $results : array_values(array_filter(
+            $results,
+            static fn (DiffResult $result): bool => $result->oldPath === $pathspec || $result->newPath === $pathspec,
+        ));
     }
 
     /**

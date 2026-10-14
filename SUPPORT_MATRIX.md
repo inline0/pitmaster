@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **130/146 in-scope features fully implemented and oracle-verified within the declared parity scope (89%).**
-Partial support exists for **16/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **134/146 in-scope features fully implemented and oracle-verified within the declared parity scope (91.8%).**
+Partial support exists for **12/146** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -31,7 +31,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
 | Staging and Commits | 8 | 4 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
-| Diff | 7 | 4 | 0 | 0 | 0 | 11 |
+| Diff | 11 | 0 | 0 | 0 | 0 | 11 |
 | Merge | 4 | 6 | 0 | 0 | 0 | 10 |
 | Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
@@ -39,7 +39,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 14 | 1 | 0 | 0 | 0 | 15 |
-| **Total** | **130** | **16** | **0** | **0** | **0** | **146** |
+| **Total** | **134** | **12** | **0** | **0** | **0** | **146** |
 
 ## Details
 
@@ -158,7 +158,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Rename detection | `DONE` | `native` |  | Status-side staged rename reporting in porcelain and human status output |
 
 ### Diff
-*7/11 fully done (63.6%), 4 partial*
+*11/11 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -166,11 +166,11 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Patience diff algorithm | `DONE` | `native` | `Diff\PatienceDiff` | Dedicated patience anchor selection with Git-backed unified diff parity |
 | Histogram diff algorithm | `DONE` | `native` | `Diff\HistogramDiff` | Dedicated histogram anchor selection with Git-backed unified diff parity |
 | Minimal diff | `DONE` | `native` | `Diff\MinimalDiff` | Minimal Myers search path with Git-backed unified diff parity |
-| Tree-to-tree diff | `PART` | `native` | `Diff\TreeDiff` | Mode-only changes and extended diff headers are being corrected (#3). |
-| Unified diff output | `PART` | `native` | `Diff\DiffResult` | New, deleted, binary, renamed and mode-change headers are being corrected (#3). |
-| Hunk generation | `PART` | `native` | `Diff\Hunk` | Empty-side range origins are being corrected (#3). |
+| Tree-to-tree diff | `DONE` | `native` | `Diff\TreeDiff` | Recursive comparison includes mode-only changes and Git-backed extended headers |
+| Unified diff output | `DONE` | `native` | `Diff\DiffResult` | Git-backed new/deleted modes, index IDs, binary paths and rename headers |
+| Hunk generation | `DONE` | `native` | `Diff\Hunk` | Git-backed empty-side origins and unified hunk ranges |
 | Binary file detection | `DONE` | `native` |  | NUL byte detection |
-| Rename detection (diff) | `PART` | `native` |  | Similarity scoring for unrelated short files is being corrected (#4). |
+| Rename detection (diff) | `DONE` | `native` |  | Exact blobs or at least 50% copied bytes in bounded, occurrence-counted spans |
 | Word diff | `DONE` | `native` |  |  |
 | Color diff output | `DONE` | `native` |  | Terminal ANSI colors |
 
@@ -288,10 +288,10 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ## Progress
 
 ```
-[####################################----] 89% fully done
+[#####################################---] 91.8% fully done
 
-Full:     130 features
-Partial:  16 features
+Full:     134 features
+Partial:  12 features
 Todo:     0 features
 Deferred: 0 features
 N/A:      0 features

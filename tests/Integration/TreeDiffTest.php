@@ -157,7 +157,7 @@ final class TreeDiffTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertSame('old.txt', $results[0]->oldPath);
         $this->assertSame('new.txt', $results[0]->newPath);
-        $this->assertSame('', trim($results[0]->format()));
+        $this->assertSame($this->git("diff-tree -M -p --no-color {$tree1} {$tree2}"), $results[0]->format());
         $this->assertStringContainsString('rename old.txt => new.txt', $gitSummary);
     }
 }

@@ -3,6 +3,9 @@
 ## [0.2.12] - 2026-10-14
 
 ### Fixed
+- Diffs include new/deleted file modes, object IDs, binary paths, rename headers and mode-only changes; empty hunk ranges match Git, and redirected CLI output has no ANSI colour
+- Rename similarity counts copied bytes with bounded span occurrences, avoiding false matches between unrelated one-line files and repeated lines
+- Staged diffs honour an exact old or new path and show staged additions before the first commit
 - Merging a branch already contained in HEAD leaves the repository untouched and reports `Already up to date`; explicit merge strategies report conflicts with exit code 1
 - Path-filtered history walks until it finds the requested number of matches, including directory paths
 - New non-bare repositories record reflogs by default, and numeric reflog revisions can be resolved for recovery

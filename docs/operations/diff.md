@@ -12,13 +12,7 @@ meta_description: "Compute diffs between trees, index, and working tree using My
 
 Pitmaster computes diffs in git's unified format. The diff engine supports multiple algorithms, unified diff formatting, binary file detection, and tree-level recursive comparison.
 
-For a modified text file with mode `100644`, `format()` produces the same bytes as `git diff`. Other cases are formatted differently today ([#3](https://github.com/inline0/pitmaster/issues/3)):
-
-- New and deleted files have no `new file mode` / `deleted file mode` line, no `index` line, and no `/dev/null`: both sides are labelled `a/<path>` and `b/<path>`, and the empty side's hunk range is written as `-1,0` or `+1,0` where git writes `-0,0` or `+0,0`.
-- The `index` line always ends in `100644`, whatever the file mode.
-- Mode-only changes (for example `chmod +x`) produce no result.
-- Binary files print `Binary files differ` without an `index` line, where git prints `Binary files a/<path> and b/<path> differ`.
-- Renames are shown as one `diff --git a/<old> b/<new>` entry with a content diff, without `similarity index`, `rename from`, or `rename to` lines.
+`format()` includes Git's new/deleted file modes, object IDs, `/dev/null` labels, zero-length hunk ranges, mode changes, binary paths, and rename headers. The CLI emits colour when its output is a terminal and plain text when redirected.
 
 ## Diff operations
 
@@ -44,9 +38,9 @@ foreach ($diffs as $diff) {
 }
 ```
 
-Compares the current index against the HEAD commit's tree. Shows what will be included in the next commit. Deleted and added files with similar content are reported as one renamed entry. Before the first commit there is no HEAD, and the result is empty ([#5](https://github.com/inline0/pitmaster/issues/5)).
+Compares the current index against the HEAD commit's tree. Shows what will be included in the next commit. Deleted and added files with similar content are reported as one renamed entry. Before the first commit, the index is compared with an empty tree, so staged files appear as additions.
 
-Rename pairing currently also matches unrelated one-line files, because the trailing empty line counts as shared content ([#4](https://github.com/inline0/pitmaster/issues/4)).
+Rename detection first pairs identical blobs, then compares copied bytes in newline-delimited spans of at most 64 bytes. Repeated spans count only up to their occurrences in both files; a trailing newline does not create an extra empty line. Inexact renames require at least 50% similarity.
 
 ### Tree-to-tree diff
 
@@ -64,7 +58,7 @@ Compares two trees recursively. Pass tree IDs: commit IDs are not peeled to thei
 $diffs = $repo->diff('src/specific-file.php');
 ```
 
-The pathspec is one exact file path. `diffStaged()` accepts the same argument but ignores it at the moment, so it always returns every staged file ([#5](https://github.com/inline0/pitmaster/issues/5)).
+The pathspec is one exact file path. `diffStaged('src/specific-file.php')` returns entries whose old or new path matches that file, including a rename with that endpoint.
 
 ### Choose an algorithm
 
@@ -89,6 +83,9 @@ foreach ($diffs as $diff) {
     echo $diff->binary;     // true for binary files
     echo $diff->oldHash;    // Hex hash of the old blob (null for added files)
     echo $diff->newHash;    // Hex hash of the new blob (null for deleted files)
+    echo $diff->oldMode;    // Old Git file mode (null for added files)
+    echo $diff->newMode;    // New Git file mode (null for deleted files)
+    echo $diff->similarity; // Rename similarity percentage (null otherwise)
 
     foreach ($diff->hunks as $hunk) {
         echo $hunk->header();  // @@ -1,5 +1,7 @@
@@ -204,7 +201,8 @@ Binary files produce a `DiffResult` with `$binary = true` and an empty `$hunks` 
 
 ```
 diff --git a/image.png b/image.png
-Binary files differ
+index <old>..<new> 100644
+Binary files a/image.png and b/image.png differ
 ```
 
 ## Colorized output

@@ -691,7 +691,7 @@ public function diffStaged(?string $pathspec = null, string $algorithm = 'myers'
 
 Diff index against HEAD (staged changes). Returns `DiffResult[]`, with rename detection between deleted and added files.
 
-The `$pathspec` argument is currently ignored, so every staged file is returned, and the method returns an empty array before the first commit ([#5](https://github.com/inline0/pitmaster/issues/5)).
+The optional `$pathspec` filters entries whose old or new path matches that exact file. Before the first commit, staged files are compared with the empty tree and shown as additions.
 
 ```php
 $staged = $repo->diffStaged();

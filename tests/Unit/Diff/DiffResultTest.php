@@ -29,7 +29,7 @@ final class DiffResultTest extends TestCase
 
         $output = $result->format();
 
-        self::assertStringContainsString('Binary files differ', $output);
+        self::assertStringContainsString('Binary files a/image.png and b/image.png differ', $output);
         self::assertStringContainsString('diff --git a/image.png b/image.png', $output);
     }
 

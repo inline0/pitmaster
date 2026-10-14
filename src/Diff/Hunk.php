@@ -36,8 +36,10 @@ final readonly class Hunk
      */
     public function header(): string
     {
-        $old = $this->oldCount === 1 ? "-{$this->oldStart}" : "-{$this->oldStart},{$this->oldCount}";
-        $new = $this->newCount === 1 ? "+{$this->newStart}" : "+{$this->newStart},{$this->newCount}";
+        $oldStart = $this->oldCount === 0 ? max(0, $this->oldStart - 1) : $this->oldStart;
+        $newStart = $this->newCount === 0 ? max(0, $this->newStart - 1) : $this->newStart;
+        $old = $this->oldCount === 1 ? "-{$oldStart}" : "-{$oldStart},{$this->oldCount}";
+        $new = $this->newCount === 1 ? "+{$newStart}" : "+{$newStart},{$this->newCount}";
         $section = $this->section !== null && $this->section !== '' ? ' ' . $this->section : '';
 
         return "@@ {$old} {$new} @@{$section}";

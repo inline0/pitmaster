@@ -1427,7 +1427,8 @@
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1438,14 +1439,16 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Unified diff output": {
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1456,14 +1459,16 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Hunk generation": {
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1474,14 +1479,16 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Binary file detection": {
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1492,14 +1499,16 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Rename detection (diff)": {
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1510,7 +1519,8 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 },
                 "Word diff": {
@@ -1535,7 +1545,8 @@
                     "integration_tests": [
                         "tests/Integration/DiffAlgorithmParityTest.php",
                         "tests/Integration/DiffFormattingParityTest.php",
-                        "tests/Integration/TreeDiffTest.php"
+                        "tests/Integration/TreeDiffTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1546,7 +1557,8 @@
                         "diff/diff-modify-lines",
                         "diff/diff-multiple-hunks",
                         "diff/diff-no-newline",
-                        "diff/diff-staged"
+                        "diff/diff-staged",
+                        "repository/open-issue-regressions"
                     ]
                 }
             }
@@ -1917,7 +1929,8 @@
                         "tests/Integration/BisectParityTest.php",
                         "tests/Integration/BlameParityTest.php",
                         "tests/Integration/LogShowParityTest.php",
-                        "tests/Integration/RevisionParserTest.php"
+                        "tests/Integration/RevisionParserTest.php",
+                        "tests/Integration/OpenIssueDiffTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -1927,7 +1940,8 @@
                         "log/log-branched",
                         "log/log-linear",
                         "log/log-public-parity",
-                        "log/show-cli-parity"
+                        "log/show-cli-parity",
+                        "repository/open-issue-regressions"
                     ]
                 }
             }

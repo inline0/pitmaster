@@ -39,6 +39,31 @@ try {
         return new Stash($handle->objectDatabase(), $handle->refDatabase(), $handle->gitDir(), $dir);
     };
     switch ($case) {
+        case 'diff':
+            $fresh = $work . '/diff-fixture';
+            $git('init --initial-branch=main ' . escapeshellarg($fresh));
+            $git('config user.name Test', $fresh);
+            $git('config user.email test@example.com', $fresh);
+            $git('config core.filemode true', $fresh);
+            file_put_contents($fresh . '/one.txt', "one\n");
+            file_put_contents($fresh . '/two.txt', "two\n");
+            $git('add .', $fresh);
+            $format = static fn (array $entries): string => implode('', array_map(static fn ($entry): string => $entry->format(), $entries));
+            $out[] = $native ? $format(Pitmaster::open($fresh)->diffStaged()) : $git('diff --cached --no-color', $fresh);
+            $out[] = $native ? $format(Pitmaster::open($fresh)->diffStaged('one.txt')) : $git('diff --cached --no-color -- one.txt', $fresh);
+            $git('commit -m base', $fresh);
+            chmod($fresh . '/one.txt', 0755);
+            unlink($fresh . '/two.txt');
+            file_put_contents($fresh . '/binary.dat', "\0\1");
+            file_put_contents($fresh . '/new.txt', "new\n");
+            file_put_contents($fresh . '/empty.txt', '');
+            $git('add -A', $fresh);
+            $out[] = $native ? $format(Pitmaster::open($fresh)->diffStaged()) : $git('diff --cached --no-color', $fresh);
+            $git('reset --hard HEAD', $fresh);
+            rename($fresh . '/one.txt', $fresh . '/renamed.txt');
+            $git('add -A', $fresh);
+            $out[] = $native ? $format(Pitmaster::open($fresh)->diffStaged()) : $git('diff --cached --no-color', $fresh);
+            break;
         case 'log':
             foreach (['docs/x.txt', 'docs'] as $path) {
                 $out[] = $native

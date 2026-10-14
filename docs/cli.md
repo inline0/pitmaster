@@ -121,7 +121,7 @@ pitmaster diff --histogram
 pitmaster diff --minimal
 ```
 
-Output is a colorized unified diff, also when stdout is not a terminal. It matches `git diff` for modified text files; new, deleted, binary, renamed, and mode-changed files are formatted differently (see [Diff](/docs/operations/diff)). `diff --cached` prints nothing before the first commit ([#5](https://github.com/inline0/pitmaster/issues/5)).
+Output is a unified diff with file modes, object IDs, binary paths and rename headers (see [Diff](/docs/operations/diff)). Colour is used only when stdout is a terminal. Before the first commit, `diff --cached` shows staged files as additions.
 
 ### `add`
 

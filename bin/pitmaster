@@ -431,7 +431,8 @@ function commandDiff(Repository $repo, array $args): void
     $results = $cached ? $repo->diffStaged(null, $algorithm) : $repo->diff(null, $algorithm);
 
     foreach ($results as $diff) {
-        fwrite(STDOUT, ColorDiff::colorize($diff->format()));
+        $output = $diff->format();
+        fwrite(STDOUT, stream_isatty(STDOUT) ? ColorDiff::colorize($output) : $output);
     }
 }
 

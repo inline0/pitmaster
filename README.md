@@ -29,7 +29,7 @@ Pitmaster reads and writes Git repositories in pure PHP. Core repository operati
 - Read and write loose objects (blob, tree, commit, tag)
 - Read and write pack files with full delta chain resolution
 - Read and write the index (staging area)
-- Compute diffs (Myers O(ND), patience, histogram, minimal) in git's unified format; modified text files match `git diff` byte for byte, while new, deleted, binary, renamed and mode-changed files are formatted differently ([#3](https://github.com/inline0/pitmaster/issues/3))
+- Compute diffs (Myers O(ND), patience, histogram, minimal) in git's unified format; including file modes, additions, deletions, binary paths and rename headers
 - Three-way merge with conflict markers
 - Walk commit graphs, compute merge bases
 - Speak the Git smart HTTP protocol (clone, fetch, push)

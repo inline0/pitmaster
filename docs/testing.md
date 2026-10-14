@@ -50,7 +50,7 @@ scenarios/diff/diff-add-lines/
 
 A run copies the repository built by `setup.sh`, runs the oracle and the Pitmaster commands on separate copies, and compares outputs, objects, refs, and log. `fsck_clean` also requires `git fsck` to accept the repository Pitmaster wrote. The oracle output is captured from `git` when it is missing or refreshed; otherwise the committed `oracle/` files are used.
 
-A scenario covers exactly the cases its setup builds. The diff scenarios, for example, compare modified files, which is why the diff output differences for new, deleted, and binary files listed in [Diff](/docs/operations/diff) are not caught by them.
+A scenario covers exactly the cases its setup builds. The repository regression scenario also compares unborn staged additions, deleted and binary files, mode changes, and rename headers with live Git output. Integration tests cover empty files, symlinks, inexact renames, repeated spans, and piped CLI output.
 
 ### Working with scenarios
 

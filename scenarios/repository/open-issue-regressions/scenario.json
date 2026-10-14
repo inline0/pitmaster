@@ -1,7 +1,7 @@
 {
     "name": "open-issue-regressions",
     "category": "repository",
-    "description": "Git-backed checks for persisted reflogs, sparse path history, already-merged branches, v4 index writes, multiple stashes, linked handles and hook configuration",
+    "description": "Git-backed checks for persisted reflogs, sparse path history, already-merged branches, v4 index writes, multiple stashes, linked handles and hook configuration, and extended staged diffs",
     "operations": [
         "regression_log",
         "regression_merge",
@@ -10,7 +10,8 @@
         "regression_linked",
         "regression_hooks",
         "regression_rerere",
-        "regression_init"
+        "regression_init",
+        "regression_diff"
     ],
     "oracle_commands": {
         "regression_log": "php \"{{SCENARIO_DIR}}/check.php\" git log",
@@ -20,7 +21,8 @@
         "regression_linked": "php \"{{SCENARIO_DIR}}/check.php\" git linked",
         "regression_hooks": "php \"{{SCENARIO_DIR}}/check.php\" git hooks",
         "regression_rerere": "php \"{{SCENARIO_DIR}}/check.php\" git rerere",
-        "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" git init"
+        "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" git init",
+        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" git diff"
     },
     "actual_commands": {
         "regression_log": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster log",
@@ -30,7 +32,8 @@
         "regression_linked": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster linked",
         "regression_hooks": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster hooks",
         "regression_rerere": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster rerere",
-        "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster init"
+        "regression_init": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster init",
+        "regression_diff": "php \"{{SCENARIO_DIR}}/check.php\" pitmaster diff"
     },
     "expectations": {
         "runtime_exact_match": [
@@ -41,7 +44,8 @@
             "regression_linked",
             "regression_hooks",
             "regression_rerere",
-            "regression_init"
+            "regression_init",
+            "regression_diff"
         ],
         "fsck_clean": false
     }

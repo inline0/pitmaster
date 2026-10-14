@@ -54,9 +54,9 @@ final class TreeDiff
         $other = [];
 
         foreach ($results as $i => $result) {
-            if ($result->oldHash !== null && $result->newHash === null && !$result->binary) {
+            if ($result->oldHash !== null && $result->newHash === null) {
                 $deleted[$i] = $result;
-            } elseif ($result->oldHash === null && $result->newHash !== null && !$result->binary) {
+            } elseif ($result->oldHash === null && $result->newHash !== null) {
                 $added[$i] = $result;
             } else {
                 $other[$i] = $result;
@@ -74,7 +74,10 @@ final class TreeDiff
             $bestIdx = null;
 
             foreach ($added as $ai => $add) {
-                if (isset($matched[$ai]) || $add->newHash === null) {
+                if (
+                    isset($matched[$ai]) || $add->newHash === null
+                    || substr($del->oldMode ?? '', 0, 3) !== substr($add->newMode ?? '', 0, 3)
+                ) {
                     continue;
                 }
 
@@ -85,21 +88,18 @@ final class TreeDiff
                     break;
                 }
 
-                // Content similarity (simple: ratio of shared lines)
-                $oldContent = $this->readBlobContent($del->oldHash);
-                $newContent = $this->readBlobContent($add->newHash);
+                if ($del->oldMode !== '100644' && $del->oldMode !== '100755') {
+                    continue;
+                }
 
-                if ($oldContent !== '' && $newContent !== '') {
-                    $oldLines = explode("\n", $oldContent);
-                    $newLines = explode("\n", $newContent);
-                    $common = count(array_intersect($oldLines, $newLines));
-                    $total = max(count($oldLines), count($newLines));
-                    $score = (int) (($common / $total) * 100);
+                $score = $this->similarity(
+                    $this->readBlobContent($del->oldHash),
+                    $this->readBlobContent($add->newHash),
+                );
 
-                    if ($score > $bestScore && $score >= 50) {
-                        $bestScore = $score;
-                        $bestIdx = $ai;
-                    }
+                if ($score > $bestScore && $score >= 50) {
+                    $bestScore = $score;
+                    $bestIdx = $ai;
                 }
             }
 
@@ -118,9 +118,14 @@ final class TreeDiff
                     $del->oldPath,
                     $add->newPath,
                     $hunks,
-                    false,
+                    (MyersDiff::isBinary($oldContent) || MyersDiff::isBinary($newContent)) && $del->oldHash !== $add->newHash,
                     $del->oldHash,
                     $add->newHash,
+                    $this->contentLacksTrailingNewline($oldContent),
+                    $this->contentLacksTrailingNewline($newContent),
+                    $del->oldMode,
+                    $add->newMode,
+                    $bestScore,
                 );
 
                 $matched[$bestIdx] = true;
@@ -213,7 +218,7 @@ final class TreeDiff
                 if ($newEntry['isTree']) {
                     $this->diffInto(null, ObjectId::fromHex($newEntry['hash']), $path, $results);
                 } else {
-                    $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash']);
+                    $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash'], null, $newEntry['mode']);
                 }
 
                 continue;
@@ -223,7 +228,7 @@ final class TreeDiff
                 if ($oldEntry['isTree']) {
                     $this->diffInto(ObjectId::fromHex($oldEntry['hash']), null, $path, $results);
                 } else {
-                    $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null);
+                    $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null, $oldEntry['mode'], null);
                 }
 
                 continue;
@@ -233,7 +238,7 @@ final class TreeDiff
                 continue;
             }
 
-            if ($oldEntry['hash'] === $newEntry['hash']) {
+            if ($oldEntry['hash'] === $newEntry['hash'] && $oldEntry['mode'] === $newEntry['mode']) {
                 continue;
             }
 
@@ -249,6 +254,8 @@ final class TreeDiff
                     $this->readBlobContent($newEntry['hash']),
                     $oldEntry['hash'],
                     $newEntry['hash'],
+                    $oldEntry['mode'],
+                    $newEntry['mode'],
                 );
                 continue;
             }
@@ -256,13 +263,13 @@ final class TreeDiff
             if ($oldEntry['isTree']) {
                 $this->diffInto(ObjectId::fromHex($oldEntry['hash']), null, $path, $results);
             } else {
-                $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null);
+                $results[] = $this->makeDiffResult($path, $this->readBlobContent($oldEntry['hash']), '', $oldEntry['hash'], null, $oldEntry['mode'], null);
             }
 
             if ($newEntry['isTree']) {
                 $this->diffInto(null, ObjectId::fromHex($newEntry['hash']), $path, $results);
             } else {
-                $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash']);
+                $results[] = $this->makeDiffResult($path, '', $this->readBlobContent($newEntry['hash']), null, $newEntry['hash'], null, $newEntry['mode']);
             }
         }
     }
@@ -273,9 +280,11 @@ final class TreeDiff
         string $newContent,
         ?string $oldHash,
         ?string $newHash,
+        ?string $oldMode,
+        ?string $newMode,
     ): DiffResult {
-        if (MyersDiff::isBinary($oldContent) || MyersDiff::isBinary($newContent)) {
-            return new DiffResult($path, $path, [], true, $oldHash, $newHash);
+        if ($oldHash !== $newHash && (MyersDiff::isBinary($oldContent) || MyersDiff::isBinary($newContent))) {
+            return new DiffResult($path, $path, [], true, $oldHash, $newHash, false, false, $oldMode, $newMode);
         }
 
         $hunks = DiffAlgorithm::diff($oldContent, $newContent, $this->algorithm);
@@ -289,7 +298,57 @@ final class TreeDiff
             $newHash,
             $this->contentLacksTrailingNewline($oldContent),
             $this->contentLacksTrailingNewline($newContent),
+            $oldMode,
+            $newMode,
         );
+    }
+
+    private function similarity(string $oldContent, string $newContent): int
+    {
+        $size = max(strlen($oldContent), strlen($newContent));
+
+        if ($size === 0) {
+            return 0;
+        }
+
+        $oldSpans = $this->contentSpans($oldContent);
+        $newSpans = $this->contentSpans($newContent);
+        $copied = 0;
+
+        foreach ($oldSpans as $span => $bytes) {
+            $copied += min($bytes, $newSpans[$span] ?? 0);
+        }
+
+        return (int) ($copied * 100 / $size);
+    }
+
+    /** @return array<string, int> */
+    private function contentSpans(string $content): array
+    {
+        if (!MyersDiff::isBinary($content)) {
+            $content = str_replace("\r\n", "\n", $content);
+        }
+
+        $spans = [];
+        $span = '';
+        $size = strlen($content);
+
+        for ($i = 0; $i < $size; $i++) {
+            $span .= $content[$i];
+
+            if (strlen($span) === 64 || $content[$i] === "\n") {
+                $key = 's:' . $span;
+                $spans[$key] = ($spans[$key] ?? 0) + strlen($span);
+                $span = '';
+            }
+        }
+
+        if ($span !== '') {
+            $key = 's:' . $span;
+            $spans[$key] = ($spans[$key] ?? 0) + strlen($span);
+        }
+
+        return $spans;
     }
 
     private function contentLacksTrailingNewline(string $content): bool

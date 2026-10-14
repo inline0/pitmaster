@@ -127,11 +127,11 @@
                 {"feature": "Patience diff algorithm", "status": "full", "class": "Diff\\PatienceDiff", "notes": "Dedicated patience anchor selection with Git-backed unified diff parity"},
                 {"feature": "Histogram diff algorithm", "status": "full", "class": "Diff\\HistogramDiff", "notes": "Dedicated histogram anchor selection with Git-backed unified diff parity"},
                 {"feature": "Minimal diff", "status": "full", "class": "Diff\\MinimalDiff", "notes": "Minimal Myers search path with Git-backed unified diff parity"},
-                {"feature": "Tree-to-tree diff", "status": "partial", "class": "Diff\\TreeDiff", "notes": "Mode-only changes and extended diff headers are being corrected (#3)."},
-                {"feature": "Unified diff output", "status": "partial", "class": "Diff\\DiffResult", "notes": "New, deleted, binary, renamed and mode-change headers are being corrected (#3)."},
-                {"feature": "Hunk generation", "status": "partial", "class": "Diff\\Hunk", "notes": "Empty-side range origins are being corrected (#3)."},
+                {"feature": "Tree-to-tree diff", "status": "full", "class": "Diff\\TreeDiff", "notes": "Recursive comparison includes mode-only changes and Git-backed extended headers"},
+                {"feature": "Unified diff output", "status": "full", "class": "Diff\\DiffResult", "notes": "Git-backed new/deleted modes, index IDs, binary paths and rename headers"},
+                {"feature": "Hunk generation", "status": "full", "class": "Diff\\Hunk", "notes": "Git-backed empty-side origins and unified hunk ranges"},
                 {"feature": "Binary file detection", "status": "full", "class": "", "notes": "NUL byte detection"},
-                {"feature": "Rename detection (diff)", "status": "partial", "class": "", "notes": "Similarity scoring for unrelated short files is being corrected (#4)."},
+                {"feature": "Rename detection (diff)", "status": "full", "class": "", "notes": "Exact blobs or at least 50% copied bytes in bounded, occurrence-counted spans"},
                 {"feature": "Word diff", "status": "full", "class": "", "notes": ""},
                 {"feature": "Color diff output", "status": "full", "class": "", "notes": "Terminal ANSI colors"}
             ]
