@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.12] - 2026-10-14
+## [0.2.12] - 2026-10-15
 
 ### Fixed
 - Checkout and fast-forward merge carry unrelated staged and unstaged changes; commit-producing merges, cherry-pick and revert protect the index and unrelated working files, and rebase rejects dirty tracked state
