@@ -1,0 +1,18 @@
+[
+    {
+        "hash": "570bf18b4b08ae41aa1716be395dfbc63dd0ebc2",
+        "name": "refs/heads/main"
+    },
+    {
+        "hash": "83421044f0a83a812a9db3a37c59dbcce86c4b28",
+        "name": "refs/remotes/origin/HEAD"
+    },
+    {
+        "hash": "6229bcc7192d4310a82cd03a35243c08ec6eb977",
+        "name": "refs/remotes/origin/main"
+    },
+    {
+        "hash": "83421044f0a83a812a9db3a37c59dbcce86c4b28",
+        "name": "refs/remotes/origin/next"
+    }
+]

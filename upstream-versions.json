@@ -12,7 +12,9 @@
       "hierarchical conflict-marker-size and unspecified attributes",
       "SHA-1/SHA-256 resolve-undo extension preservation",
       "includeIf worktree[/i], gitdir[/i] and onbranch conditions",
-      "log --max-count-oldest including all refs and path-filtered history"
+      "log --max-count-oldest including all refs and path-filtered history",
+      "fetch.followRemoteHEAD default and per-remote overrides, bare mirrors, warning callbacks",
+      "Protect branch deletion across checked-out worktrees and active bisects"
     ],
     "scope": "See SUPPORT_MATRIX.md for the declared native and interoperability surface; this version does not claim the entire Git command line.",
     "nativeChecks": [
@@ -23,15 +25,16 @@
   },
   "verification": {
     "phpunit": {
-      "tests": 889,
-      "assertions": 19583,
+      "tests": 917,
+      "assertions": 20123,
       "skipped": 1
     },
     "scenarios": {
-      "passed": 765,
+      "passed": 767,
       "failed": 0
     },
-    "supportRows": 149,
-    "processCleanup": "All nine server-backed setup scenarios pass and leave no orphan services."
+    "supportRows": 150,
+    "processCleanup": "All nine server-backed setup scenarios pass and leave no orphan services.",
+    "latestWave": "Native Git 2.56: branch deletion and fetch HEAD policies pass, including smart/static HTTP, bare mirrors, callbacks and existing reflogs. Full gate passed."
   }
 }

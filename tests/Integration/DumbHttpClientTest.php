@@ -155,6 +155,33 @@ final class DumbHttpClientTest extends TestCase
         $this->assertSame('', trim($this->git('fsck --no-progress', $pitClone)));
     }
 
+    #[Test]
+    public function staticHttpFetchFollowsConfiguredRemoteHead(): void
+    {
+        preg_match('/(\d+\.\d+\.\d+)/', $this->git('--version', $this->tmpDir), $version);
+        if (version_compare($version[1] ?? '0', '2.56.0', '<')) {
+            self::markTestSkipped('Global followRemoteHEAD requires Git 2.56.');
+        }
+        [$source, $remote] = $this->seedDumbHttpRemote('HEAD follow');
+        $this->startStaticServer(dirname($remote));
+        $actual = $this->tmpDir . '/actual';
+        $native = $this->tmpDir . '/native';
+        foreach ([$actual, $native] as $path) {
+            $this->git('clone ' . escapeshellarg($this->baseUrl . '/remote.git') . ' ' . escapeshellarg($path), $this->tmpDir);
+            $this->git('config fetch.followRemoteHEAD always', $path);
+        }
+        $this->git('branch next', $source);
+        $this->git('push origin next', $source);
+        $this->git('symbolic-ref HEAD refs/heads/next', $remote);
+        $this->git('update-server-info', $remote);
+        $this->git('fetch origin', $native);
+        Pitmaster::open($actual)->fetch();
+        self::assertSame(
+            file_get_contents($native . '/.git/refs/remotes/origin/HEAD'),
+            file_get_contents($actual . '/.git/refs/remotes/origin/HEAD'),
+        );
+    }
+
     /**
      * @return array{0: string, 1: string}
      */

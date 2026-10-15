@@ -678,7 +678,7 @@
                     "feature": "Delete branch",
                     "status": "full",
                     "class": "Repository",
-                    "notes": ""
+                    "notes": "Protect checked-out branches and active bisects across main/linked worktrees; allow bare HEAD branch deletion"
                 },
                 {
                     "feature": "List tags",
@@ -804,6 +804,13 @@
                     "status": "full",
                     "class": "",
                     "notes": "Rare, smart HTTP covers all major hosts"
+                },
+                {
+                    "feature": "Remote HEAD following",
+                    "status": "full",
+                    "scope": "native",
+                    "class": "Repository",
+                    "notes": "Git 2.56 fetch-wide and per-remote policies, smart/static HTTP, bare mirrors, zero-object fetches and optional warning callbacks"
                 }
             ]
         },

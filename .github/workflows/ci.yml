@@ -195,7 +195,7 @@ jobs:
       - run: PITMASTER_TEST_GIT_BINARIES="$(command -v git):$HOME/git-${{ matrix.legacy-git }}/bin/git" vendor/bin/phpunit --filter MultiGitVersionSmokeTest
       - name: Verify Git 2.56 compatibility
         if: matrix.legacy-git == '2.56.0'
-        run: PATH="$HOME/git-${{ matrix.legacy-git }}/bin:$PATH" vendor/bin/phpunit tests/Integration/AddResolvedParityTest.php tests/Integration/ConditionalConfigParityTest.php tests/Integration/OldestHistoryParityTest.php
+        run: PATH="$HOME/git-${{ matrix.legacy-git }}/bin:$PATH" vendor/bin/phpunit tests/Integration/AddResolvedParityTest.php tests/Integration/ConditionalConfigParityTest.php tests/Integration/OldestHistoryParityTest.php tests/Integration/BranchInUseParityTest.php tests/Integration/IncrementalFetchParityTest.php
 
   benchmark-smoke:
     name: Benchmark Smoke

@@ -3,11 +3,13 @@
 ## [Unreleased]
 
 ### Added
+- Git 2.56 fetch-wide/per-remote HEAD following policies, bare mirror behavior and optional warning callbacks
 - Git 2.55 oldest-commit limiting through all public log methods and `pitmaster log --max-count-oldest`, including path and all-ref selection
 - Git 2.56 `includeIf` worktree conditions, including case-insensitive matching, plus Git-directory and branch conditions when opening repositories
 - Git 2.56 conflict-only staging through `Repository::addResolved()` and `pitmaster add --resolved`, with all-path marker validation before the index changes
 
 ### Fixed
+- Branch deletion protects checked-out branches and active bisects in every worktree; a bare repository can delete the branch named by its symbolic HEAD
 - Path history follows Git merge simplification and includes all refs when requested; annotated tags contribute reachable history
 - Integration test servers launch directly; scenario workspaces stop only their own marked HTTP servers and Git daemons before removing fixture data
 - Conflict resolutions retain Git-compatible resolve-undo (REUC) history across later index writes, so `git checkout -m` can recreate conflicts in SHA-1 and SHA-256 repositories

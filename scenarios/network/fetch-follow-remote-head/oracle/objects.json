@@ -1,0 +1,58 @@
+[
+    {
+        "hash": "0197ff88f7e1dd8f1434c725ebf1e3ef8e54a837",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob ba2906d0666cf726c7eaadd2cd3db615dedfdf3a\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "type": "tree",
+        "size": 0,
+        "content": "",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4fe90c5cf72fe5d93b47de437332c6e6cc7b7bbc",
+        "type": "tree",
+        "size": 36,
+        "content": "100644 blob c49197673ec63846690d9c973ff307ff04275a95\tfile.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "570bf18b4b08ae41aa1716be395dfbc63dd0ebc2",
+        "type": "commit",
+        "size": 153,
+        "content": "tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Test <test@example.com> 1709337600 +0000\ncommitter Test <test@example.com> 1709337600 +0000\n\nclient\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "6229bcc7192d4310a82cd03a35243c08ec6eb977",
+        "type": "commit",
+        "size": 151,
+        "content": "tree 0197ff88f7e1dd8f1434c725ebf1e3ef8e54a837\nauthor Test <test@example.com> 1709337601 +0000\ncommitter Test <test@example.com> 1709337601 +0000\n\nmain\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "83421044f0a83a812a9db3a37c59dbcce86c4b28",
+        "type": "commit",
+        "size": 199,
+        "content": "tree 4fe90c5cf72fe5d93b47de437332c6e6cc7b7bbc\nparent 6229bcc7192d4310a82cd03a35243c08ec6eb977\nauthor Test <test@example.com> 1709337602 +0000\ncommitter Test <test@example.com> 1709337602 +0000\n\nnext\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "ba2906d0666cf726c7eaadd2cd3db615dedfdf3a",
+        "type": "blob",
+        "size": 5,
+        "content": "main\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "c49197673ec63846690d9c973ff307ff04275a95",
+        "type": "blob",
+        "size": 10,
+        "content": "main\nnext\n",
+        "encoding": "utf-8"
+    }
+]

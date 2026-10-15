@@ -56,6 +56,12 @@ final class LooseRefStore implements RefStore
         return null;
     }
 
+    public function readSymbolic(string $name): ?SymbolicRef
+    {
+        $content = $this->readRefFile($name);
+        return $content === null ? null : SymbolicRef::parse($name, $content);
+    }
+
     public function exists(string $name): bool
     {
         return $this->readRefFile($name) !== null;

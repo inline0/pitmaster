@@ -1,0 +1,24 @@
+{
+    "name": "delete-active-bisect",
+    "category": "branch",
+    "description": "Git 2.56 rejects deleting the starting branch of an active detached bisect",
+    "operations": [
+        "protection"
+    ],
+    "oracle_commands": {
+        "protection": "cat .branch-protection"
+    },
+    "actual_commands": {
+        "protection": "cat .branch-protection"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "protection"
+        ],
+        "fsck_clean": true
+    }
+}

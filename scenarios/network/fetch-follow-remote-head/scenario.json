@@ -1,0 +1,24 @@
+{
+    "name": "fetch-follow-remote-head",
+    "category": "network",
+    "description": "Git 2.56 fetch-wide followRemoteHEAD updates remote tracking HEAD even when all objects already exist",
+    "operations": [
+        "remote_head"
+    ],
+    "oracle_commands": {
+        "remote_head": "git symbolic-ref refs/remotes/origin/HEAD"
+    },
+    "actual_commands": {
+        "remote_head": "git symbolic-ref refs/remotes/origin/HEAD"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "remote_head"
+        ],
+        "fsck_clean": true
+    }
+}

@@ -583,11 +583,22 @@ final class Repository
      */
     public function deleteBranch(string $name): void
     {
-        if ($this->branch() === $name) {
-            throw new \RuntimeException("Cannot delete checked out branch: {$name}");
-        }
-
         $refName = "refs/heads/{$name}";
+        foreach ($this->worktrees() as $worktree) {
+            if ($worktree->isMain && $this->config->getBool('core.bare')) {
+                continue;
+            }
+            if ($worktree->branch === $name) {
+                throw new \RuntimeException("Cannot delete checked out branch: {$name}");
+            }
+            $bisectStart = $worktree->gitDir . '/BISECT_START';
+            if (is_file($bisectStart)) {
+                $start = trim((string) file_get_contents($bisectStart));
+                if ($start === $name || $start === $refName) {
+                    throw new \RuntimeException("Cannot delete branch used by an active bisect: {$name}");
+                }
+            }
+        }
 
         if (!$this->refs->exists($refName)) {
             throw new \RuntimeException("Branch not found: {$name}");
@@ -1714,8 +1725,10 @@ final class Repository
 
     /**
      * Fetch from a remote.
+     *
+     * @param (callable(string): void)|null $onWarning Optional remote-HEAD diagnostics.
      */
-    public function fetch(string $remote = 'origin', ?int $depth = null): void
+    public function fetch(string $remote = 'origin', ?int $depth = null, ?callable $onWarning = null): void
     {
         $url = $this->config->get("remote.{$remote}.url");
 
@@ -1759,6 +1772,7 @@ final class Repository
 
             if ($wants === []) {
                 $this->updateFetchedRefs($trackedRefs, $discovery->refs());
+                $this->followFetchedHead($remote, $discovery->refs(), $discovery->headSymref(), $onWarning);
                 return;
             }
 
@@ -1787,12 +1801,13 @@ final class Repository
             );
 
             $this->updateFetchedRefs($trackedRefs, $discovery->refs());
+            $this->followFetchedHead($remote, $discovery->refs(), $discovery->headSymref(), $onWarning);
         } catch (ProtocolException $smartError) {
             if (!$this->isSmartHttpUrl($url)) {
                 throw $smartError;
             }
 
-            $this->fetchViaDumbHttp($remote, $url, $smartError);
+            $this->fetchViaDumbHttp($remote, $url, $smartError, $onWarning);
         }
     }
 
@@ -2003,7 +2018,69 @@ final class Repository
         return array_values($planned);
     }
 
-    private function fetchViaDumbHttp(string $remote, string $url, ProtocolException $smartError): void
+    /**
+     * @param array<string, ObjectId> $remoteRefs
+     * @param (callable(string): void)|null $onWarning
+     */
+    private function followFetchedHead(string $remote, array $remoteRefs, ?string $headSymref, ?callable $onWarning): void
+    {
+        $policy = 'create';
+        $noWarnBranch = null;
+        foreach (['fetch.followremotehead', "remote.{$remote}.followremotehead"] as $key) {
+            $value = $this->config->get($key);
+            if ($value === null) {
+                continue;
+            }
+            if (in_array($value, ['create', 'always', 'never', 'warn'], true)) {
+                $policy = $value;
+                $noWarnBranch = null;
+            } elseif (str_starts_with($key, 'remote.') && str_starts_with($value, 'warn-if-not-')) {
+                $policy = 'warn';
+                $noWarnBranch = substr($value, 12);
+            } elseif ($onWarning !== null) {
+                $onWarning("unrecognized {$key} value '{$value}' ignored");
+            }
+        }
+        if ($policy === 'never') {
+            return;
+        }
+        if ($headSymref === null && isset($remoteRefs['HEAD'])) {
+            $matches = [];
+            foreach ($remoteRefs as $name => $id) {
+                if (str_starts_with($name, 'refs/heads/') && $id->hex === $remoteRefs['HEAD']->hex) {
+                    $matches[] = $name;
+                }
+            }
+            $headSymref = count($matches) === 1 ? $matches[0] : null;
+        }
+        if ($headSymref === null || !str_starts_with($headSymref, 'refs/heads/') || !isset($remoteRefs[$headSymref])) {
+            return;
+        }
+        $branch = substr($headSymref, 11);
+        $bareMirror = $this->isBare && $this->config->getBool("remote.{$remote}.mirror");
+        $name = $bareMirror ? 'HEAD' : "refs/remotes/{$remote}/HEAD";
+        $target = $bareMirror ? $headSymref : "refs/remotes/{$remote}/{$branch}";
+        if (!$bareMirror && !$this->refs->exists($target)) {
+            return;
+        }
+        $previous = $this->refs->readSymbolic($name);
+        $exists = $this->refs->exists($name);
+        if ($policy === 'always' || !$exists || $bareMirror) {
+            $oldId = $this->refs->resolve($name);
+            $this->refs->updateSymbolic($name, $target);
+            $newId = $this->refs->resolve($target);
+            $logDir = $name === 'HEAD' ? $this->gitDir : $this->commonDir;
+            if ($newId !== null && is_file($logDir . '/logs/' . $name)) {
+                $this->appendReflogEntry($name, $oldId, $newId, 'fetch');
+            }
+        }
+        if ($policy === 'warn' && $exists && $previous?->target !== $target && $branch !== $noWarnBranch && $onWarning !== null) {
+            $onWarning("Remote '{$remote}' HEAD now points to '{$branch}'");
+        }
+    }
+
+    /** @param (callable(string): void)|null $onWarning */
+    private function fetchViaDumbHttp(string $remote, string $url, ProtocolException $smartError, ?callable $onWarning = null): void
     {
         try {
             $client = new DumbHttpClient();
@@ -2028,6 +2105,17 @@ final class Repository
             }
 
             $this->updateFetchedRefs($trackedRefs, $remoteRefs);
+            $head = null;
+            try {
+                $head = $client->fetchHead($url);
+            } catch (ProtocolException) {
+                // A static export may omit HEAD; its refs still fetched successfully.
+            }
+            $symref = $head === null ? null : SymbolicRef::parse('HEAD', $head);
+            if ($head !== null && ObjectId::looksLikeHex(trim($head))) {
+                $remoteRefs['HEAD'] = ObjectId::fromHex(trim($head));
+            }
+            $this->followFetchedHead($remote, $remoteRefs, $symref?->target, $onWarning);
         } catch (ProtocolException) {
             throw $smartError;
         }

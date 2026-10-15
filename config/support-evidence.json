@@ -2036,7 +2036,8 @@
                     "integration_tests": [
                         "tests/Integration/AnnotatedTagParityTest.php",
                         "tests/Integration/CheckoutParityTest.php",
-                        "tests/Integration/ReflogTest.php"
+                        "tests/Integration/ReflogTest.php",
+                        "tests/Integration/BranchInUseParityTest.php"
                     ],
                     "unit_tests": [],
                     "scenarios": [
@@ -2046,7 +2047,8 @@
                         "refs/lightweight-tag-create",
                         "refs/tag-delete",
                         "tags/tag-annotated-write",
-                        "tags/tag-verify"
+                        "tags/tag-verify",
+                        "branch/delete-active-bisect"
                     ]
                 },
                 "List tags": {
@@ -2619,6 +2621,16 @@
                         "protocol/v1-upload-pack",
                         "protocol/v2-fetch",
                         "protocol/v2-ls-refs"
+                    ]
+                },
+                "Remote HEAD following": {
+                    "integration_tests": [
+                        "tests/Integration/IncrementalFetchParityTest.php",
+                        "tests/Integration/DumbHttpClientTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "network/fetch-follow-remote-head"
                     ]
                 }
             }

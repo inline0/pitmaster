@@ -845,7 +845,7 @@ $repo->bisectReset();
 #### `fetch`
 
 ```php
-public function fetch(string $remote = 'origin', ?int $depth = null): void
+public function fetch(string $remote = 'origin', ?int $depth = null, ?callable $onWarning = null): void
 ```
 
 Fetch from a remote. Downloads new objects and updates remote tracking refs. Pass `$depth` to deepen or limit a shallow history.
@@ -1022,3 +1022,5 @@ $notes = new Notes($repo->objectDatabase(), $repo->refDatabase());
 $notes->set($repo->resolve('HEAD'), "Reviewed\n");
 echo $notes->get($repo->resolve('HEAD'));
 ```
+
+`fetch.followRemoteHEAD` supplies the fetch-wide default for `remote.<name>.followRemoteHEAD`: `create` (the default), `always`, `never` or `warn`. The remote setting also accepts `warn-if-not-<branch>`. Tracking HEAD follows advertised symbolic HEAD or a unique matching branch, including zero-object fetches and static HTTP. Bare mirrors update their own HEAD for every policy except `never`. Library diagnostics are delivered only through the optional `onWarning` callback.

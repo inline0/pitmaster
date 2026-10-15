@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **149/149 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
-Partial support exists for **0/149** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **150/150 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
+Partial support exists for **0/150** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -35,11 +35,11 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Merge | 10 | 0 | 0 | 0 | 0 | 10 |
 | Commit Graph | 8 | 0 | 0 | 0 | 0 | 8 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
-| Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
+| Network Protocol | 15 | 0 | 0 | 0 | 0 | 15 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
-| **Total** | **149** | **0** | **0** | **0** | **0** | **149** |
+| **Total** | **150** | **0** | **0** | **0** | **0** | **150** |
 
 ## Details
 
@@ -213,7 +213,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 |---------|--------|-------|-------|-------|
 | List branches | `DONE` | `native` | `Repository` |  |
 | Create branch | `DONE` | `native` | `Repository` |  |
-| Delete branch | `DONE` | `native` | `Repository` |  |
+| Delete branch | `DONE` | `native` | `Repository` | Protect checked-out branches and active bisects across main/linked worktrees; allow bare HEAD branch deletion |
 | List tags | `DONE` | `native` | `Repository` |  |
 | Create lightweight tag | `DONE` | `native` | `Repository` | Via updateRef |
 | Create annotated tag | `DONE` | `native` |  | Write tag object + ref |
@@ -222,7 +222,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Detached HEAD | `DONE` | `native` |  | HEAD points directly to commit |
 
 ### Network Protocol
-*14/14 fully done (100%), 0 partial*
+*15/15 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -240,6 +240,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | SSH transport | `DONE` | `native` | `Protocol\SshClient` | SSH2 pins known host keys before authentication; configured identities and OpenSSH overrides; Git-backed clone/fetch/push |
 | git:// transport | `DONE` | `native` | `Protocol\GitProtocolClient` | Raw TCP socket, pkt-line framing |
 | Dumb HTTP | `DONE` | `native` |  | Rare, smart HTTP covers all major hosts |
+| Remote HEAD following | `DONE` | `native` | `Repository` | Git 2.56 fetch-wide and per-remote policies, smart/static HTTP, bare mirrors, zero-object fetches and optional warning callbacks |
 
 ### Encoding
 *5/5 fully done (100%), 0 partial*
@@ -293,7 +294,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ```
 [########################################] 100% fully done
 
-Full:     149 features
+Full:     150 features
 Partial:  0 features
 Todo:     0 features
 Deferred: 0 features

@@ -66,6 +66,15 @@ final class RefDatabase implements RefStore
         return $this->packed->resolve($name);
     }
 
+    public function readSymbolic(string $name): ?SymbolicRef
+    {
+        if ($this->loose->exists($name)) {
+            return $this->loose->readSymbolic($name);
+        }
+        $target = $this->reftable?->resolveSymbolic($name);
+        return $target === null ? null : new SymbolicRef($name, $target);
+    }
+
     public function exists(string $name): bool
     {
         if ($name === 'HEAD') {

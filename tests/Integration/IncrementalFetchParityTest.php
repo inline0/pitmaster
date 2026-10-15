@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pitmaster\Tests\Integration;
 
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Pitmaster\Pitmaster;
 use Pitmaster\Tests\Integration\Support\GitTestRuntime;
@@ -96,6 +97,126 @@ final class IncrementalFetchParityTest extends TestCase
         $this->assertSame(trim($this->git('rev-parse refs/heads/main', $remoteDir)), trim($this->git('rev-parse refs/remotes/origin/main', $cloneDir)));
         $this->assertFileDoesNotExist($cloneDir . '/.git/refs/remotes/origin/feature');
         $this->assertStringContainsString('^refs/heads/feature', $this->git('config --get-all remote.origin.fetch', $cloneDir));
+    }
+
+    public static function remoteHeadPolicies(): array
+    {
+        return [
+            'default create' => [null, null, 'absent', false, false],
+            'default preserve' => [null, null, 'symbolic', false, false],
+            'global always' => ['always', null, 'symbolic', false, false],
+            'global always with new objects' => ['always', null, 'symbolic', true, false],
+            'global never' => ['never', null, 'absent', false, false],
+            'global create' => ['create', null, 'symbolic', false, false],
+            'global warn' => ['warn', null, 'symbolic', false, true],
+            'remote always overrides never' => ['never', 'always', 'symbolic', false, false],
+            'remote never overrides always' => ['always', 'never', 'absent', false, false],
+            'warn-if-not suppresses matching branch' => ['always', 'warn-if-not-next', 'symbolic', false, false],
+            'warn-if-not reports other branch' => [null, 'warn-if-not-main', 'symbolic', false, true],
+            'direct local head with create' => ['create', null, 'direct', false, false],
+            'direct local head with always' => ['always', null, 'direct', false, false],
+            'always with existing reflog' => ['always', null, 'symbolic', true, false, true],
+            'create with existing reflog' => ['create', null, 'absent', false, false, true],
+            'unknown global ignored' => ['invalid', null, 'absent', false, true],
+            'unknown remote falls back to global' => ['always', 'invalid', 'symbolic', false, true],
+        ];
+    }
+
+    #[DataProvider('remoteHeadPolicies')]
+    public function testFetchRemoteHeadPoliciesMatchGit256(?string $global, ?string $remote, string $existing, bool $advance, bool $warn, bool $existingLog = false): void
+    {
+        preg_match('/(\d+\.\d+\.\d+)/', $this->git('--version', $this->tmpDir), $version);
+        if (version_compare($version[1] ?? '0', '2.56.0', '<')) {
+            self::markTestSkipped('Global followRemoteHEAD requires Git 2.56.');
+        }
+        [$sourceDir, $actual, $remoteDir] = $this->seedClone();
+        $native = $this->tmpDir . '/native';
+        $this->git('clone ' . escapeshellarg($this->baseUrl . '/remote.git') . ' ' . escapeshellarg($native), $this->tmpDir);
+        foreach ([$actual, $native] as $path) {
+            $this->git('config user.name Test', $path);
+            $this->git('config user.email test@example.com', $path);
+            if ($global !== null) {
+                $this->git('config fetch.followRemoteHEAD ' . escapeshellarg($global), $path);
+            }
+            if ($remote !== null) {
+                $this->git('config remote.origin.followRemoteHEAD ' . escapeshellarg($remote), $path);
+            }
+            $head = $path . '/.git/refs/remotes/origin/HEAD';
+            if (is_file($head)) {
+                unlink($head);
+            }
+            if ($existing === 'symbolic') {
+                $this->git('symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main', $path);
+            } elseif ($existing === 'direct') {
+                $id = trim($this->git('rev-parse HEAD', $path));
+                $this->git('update-ref --no-deref refs/remotes/origin/HEAD ' . $id, $path);
+            }
+            $log = $path . '/.git/logs/refs/remotes/origin/HEAD';
+            if (is_file($log)) {
+                unlink($log);
+            }
+            if ($existingLog) {
+                if (!is_dir(dirname($log))) {
+                    mkdir(dirname($log), 0777, true);
+                }
+                file_put_contents($log, '');
+            }
+        }
+        $this->git('checkout -b next', $sourceDir);
+        if ($advance) {
+            file_put_contents($sourceDir . '/next.txt', "new branch\n");
+            $this->git('add next.txt', $sourceDir);
+            $this->git('commit -m next', $sourceDir);
+        }
+        $this->git('push origin next', $sourceDir);
+        $this->git('symbolic-ref HEAD refs/heads/next', $remoteDir);
+        $this->git('fetch origin', $native);
+        $warnings = [];
+        Pitmaster::open($actual)->fetch(onWarning: static function (string $message) use (&$warnings): void {
+            $warnings[] = $message;
+        });
+        $relative = '/.git/refs/remotes/origin/HEAD';
+        $expected = is_file($native . $relative) ? file_get_contents($native . $relative) : null;
+        $result = is_file($actual . $relative) ? file_get_contents($actual . $relative) : null;
+        self::assertSame($expected, $result);
+        self::assertSame($warn, $warnings !== []);
+        $relative = '/.git/logs/refs/remotes/origin/HEAD';
+        $normalize = static function (string $path): array {
+            if (!is_file($path)) {
+                return [];
+            }
+            return array_map(static function (string $line): string {
+                return substr($line, 0, 81) . substr($line, strpos($line, "\t"));
+            }, file($path, FILE_IGNORE_NEW_LINES) ?: []);
+        };
+        self::assertSame($normalize($native . $relative), $normalize($actual . $relative));
+    }
+
+    public static function mirrorHeadPolicies(): array
+    {
+        return [['create'], ['always'], ['never'], ['warn']];
+    }
+
+    #[DataProvider('mirrorHeadPolicies')]
+    public function testBareMirrorHeadMatchesGit256(string $policy): void
+    {
+        preg_match('/(\d+\.\d+\.\d+)/', $this->git('--version', $this->tmpDir), $version);
+        if (version_compare($version[1] ?? '0', '2.56.0', '<')) {
+            self::markTestSkipped('Global followRemoteHEAD requires Git 2.56.');
+        }
+        [$sourceDir, , $remoteDir] = $this->seedClone();
+        $actual = $this->tmpDir . '/actual-mirror.git';
+        $native = $this->tmpDir . '/native-mirror.git';
+        foreach ([$actual, $native] as $path) {
+            $this->git('clone --mirror ' . escapeshellarg($this->baseUrl . '/remote.git') . ' ' . escapeshellarg($path), $this->tmpDir);
+            $this->git('config fetch.followRemoteHEAD ' . $policy, $path);
+        }
+        $this->git('branch next', $sourceDir);
+        $this->git('push origin next', $sourceDir);
+        $this->git('symbolic-ref HEAD refs/heads/next', $remoteDir);
+        $this->git('fetch origin', $native);
+        Pitmaster::open($actual)->fetch();
+        self::assertSame(file_get_contents($native . '/HEAD'), file_get_contents($actual . '/HEAD'));
     }
 
     /**

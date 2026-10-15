@@ -1,0 +1,14 @@
+[
+    {
+        "hash": "9430ee0032d390eabad4b1085307fc856d8b54c2",
+        "name": "refs/bisect/bad"
+    },
+    {
+        "hash": "8843edbc82933a1adeb7ba5ee8723e86b89ddcc2",
+        "name": "refs/bisect/good-8843edbc82933a1adeb7ba5ee8723e86b89ddcc2"
+    },
+    {
+        "hash": "9430ee0032d390eabad4b1085307fc856d8b54c2",
+        "name": "refs/heads/main"
+    }
+]
