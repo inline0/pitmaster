@@ -25,8 +25,8 @@
   },
   "verification": {
     "phpunit": {
-      "tests": 917,
-      "assertions": 20123,
+      "tests": 919,
+      "assertions": 20129,
       "skipped": 1
     },
     "scenarios": {

@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.0] - 2026-10-16
 
 ### Added
 - Git 2.56 fetch-wide/per-remote HEAD following policies, bare mirror behavior and optional warning callbacks
@@ -9,6 +9,7 @@
 - Git 2.56 conflict-only staging through `Repository::addResolved()` and `pitmaster add --resolved`, with all-path marker validation before the index changes
 
 ### Fixed
+- Fetch remote-HEAD reflogs honor automatic creation settings and preserve existing logs even when automatic logging is disabled
 - Branch deletion protects checked-out branches and active bisects in every worktree; a bare repository can delete the branch named by its symbolic HEAD
 - Path history follows Git merge simplification and includes all refs when requested; annotated tags contribute reachable history
 - Integration test servers launch directly; scenario workspaces stop only their own marked HTTP servers and Git daemons before removing fixture data

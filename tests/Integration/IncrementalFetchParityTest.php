@@ -117,13 +117,15 @@ final class IncrementalFetchParityTest extends TestCase
             'direct local head with always' => ['always', null, 'direct', false, false],
             'always with existing reflog' => ['always', null, 'symbolic', true, false, true],
             'create with existing reflog' => ['create', null, 'absent', false, false, true],
+            'no automatic reflog' => ['always', null, 'absent', false, false, false, false],
+            'existing reflog with automatic logs disabled' => ['always', null, 'symbolic', false, false, true, false],
             'unknown global ignored' => ['invalid', null, 'absent', false, true],
             'unknown remote falls back to global' => ['always', 'invalid', 'symbolic', false, true],
         ];
     }
 
     #[DataProvider('remoteHeadPolicies')]
-    public function testFetchRemoteHeadPoliciesMatchGit256(?string $global, ?string $remote, string $existing, bool $advance, bool $warn, bool $existingLog = false): void
+    public function testFetchRemoteHeadPoliciesMatchGit256(?string $global, ?string $remote, string $existing, bool $advance, bool $warn, bool $existingLog = false, bool $autoLog = true): void
     {
         preg_match('/(\d+\.\d+\.\d+)/', $this->git('--version', $this->tmpDir), $version);
         if (version_compare($version[1] ?? '0', '2.56.0', '<')) {
@@ -133,6 +135,7 @@ final class IncrementalFetchParityTest extends TestCase
         $native = $this->tmpDir . '/native';
         $this->git('clone ' . escapeshellarg($this->baseUrl . '/remote.git') . ' ' . escapeshellarg($native), $this->tmpDir);
         foreach ([$actual, $native] as $path) {
+            $this->git('config core.logAllRefUpdates ' . ($autoLog ? 'true' : 'false'), $path);
             $this->git('config user.name Test', $path);
             $this->git('config user.email test@example.com', $path);
             if ($global !== null) {
@@ -180,6 +183,7 @@ final class IncrementalFetchParityTest extends TestCase
         $result = is_file($actual . $relative) ? file_get_contents($actual . $relative) : null;
         self::assertSame($expected, $result);
         self::assertSame($warn, $warnings !== []);
+        clearstatcache();
         $relative = '/.git/logs/refs/remotes/origin/HEAD';
         $normalize = static function (string $path): array {
             if (!is_file($path)) {

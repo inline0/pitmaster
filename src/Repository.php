@@ -2069,8 +2069,7 @@ final class Repository
             $oldId = $this->refs->resolve($name);
             $this->refs->updateSymbolic($name, $target);
             $newId = $this->refs->resolve($target);
-            $logDir = $name === 'HEAD' ? $this->gitDir : $this->commonDir;
-            if ($newId !== null && is_file($logDir . '/logs/' . $name)) {
+            if ($newId !== null) {
                 $this->appendReflogEntry($name, $oldId, $newId, 'fetch');
             }
         }
