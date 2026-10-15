@@ -36,6 +36,7 @@ if ($arguments === []) {
     fwrite(STDERR, "  diff                Show unstaged changes\n");
     fwrite(STDERR, "  diff --cached       Show staged changes\n");
     fwrite(STDERR, "  add <file...>       Stage files\n");
+    fwrite(STDERR, "  add --resolved [path...]  Stage conflict-resolved files only\n");
     fwrite(STDERR, "  commit [-m <msg>]   Create a commit\n");
     fwrite(STDERR, "  branch [name]       List or create branches\n");
     fwrite(STDERR, "  tag [name] [-m]     List or create tags\n");
@@ -132,6 +133,8 @@ try {
 function commandLog(Repository $repo, array $args): void
 {
     $limit = 10;
+    $oldest = false;
+    $normalLimit = false;
     $all = false;
     $oneline = false;
     $path = null;
@@ -149,15 +152,28 @@ function commandLog(Repository $repo, array $args): void
             continue;
         }
 
+        if ($arg === '--max-count-oldest' || str_starts_with($arg, '--max-count-oldest=')) {
+            $value = $arg === '--max-count-oldest' ? ($args[++$i] ?? '') : substr($arg, 19);
+            if ($value === '' || !ctype_digit($value) || (float) $value > 2147483647) {
+                fwrite(STDERR, "fatal: invalid value for --max-count-oldest: {$value}\n");
+                exit(128);
+            }
+            $limit = (int) $value;
+            $oldest = true;
+            continue;
+        }
+
         // Git's limit spellings. `-n` used to fall through to the path filter,
         // so `log -n 3` searched for a file named "-n" and printed nothing.
         if (($arg === '-n' || $arg === '--max-count') && isset($args[$i + 1])) {
             $limit = max(0, (int) $args[++$i]);
+            $normalLimit = true;
             continue;
         }
 
         if (preg_match('/^(?:-n|--max-count=|-)(\d+)$/', $arg, $matches) === 1) {
             $limit = (int) $matches[1];
+            $normalLimit = true;
             continue;
         }
 
@@ -169,6 +185,7 @@ function commandLog(Repository $repo, array $args): void
         // A bare number is pitmaster's own shorthand for the limit.
         if (ctype_digit($arg)) {
             $limit = (int) $arg;
+            $normalLimit = true;
             continue;
         }
 
@@ -182,8 +199,13 @@ function commandLog(Repository $repo, array $args): void
         }
     }
 
+    if ($oldest && $normalLimit) {
+        fwrite(STDERR, "fatal: options '--max-count' and '--max-count-oldest' cannot be used together\n");
+        exit(128);
+    }
+
     if ($oneline) {
-        foreach ($repo->logOneline($limit, $all, $path) as $line) {
+        foreach ($repo->logOneline($limit, $all, $path, $oldest) as $line) {
             fwrite(STDOUT, "{$line}\n");
         }
 
@@ -191,8 +213,8 @@ function commandLog(Repository $repo, array $args): void
     }
 
     $commits = $path !== null
-        ? $repo->logPath($path, $limit)
-        : ($all ? $repo->logAll($limit) : $repo->log($limit));
+        ? $repo->logPath($path, $limit, $oldest, $all)
+        : ($all ? $repo->logAll($limit, $oldest) : $repo->log($limit, oldest: $oldest));
 
     foreach ($commits as $commit) {
         fwrite(STDOUT, "\033[33mcommit {$commit->id->hex}\033[0m\n");
@@ -438,6 +460,20 @@ function commandDiff(Repository $repo, array $args): void
 
 function commandAdd(Repository $repo, array $args): void
 {
+    if (($args[0] ?? null) === '--resolved') {
+        array_shift($args);
+        if (($args[0] ?? null) === '--') {
+            array_shift($args);
+        } else {
+            foreach ($args as $argument) {
+                if (str_starts_with($argument, '-')) {
+                    throw new \RuntimeException("Unsupported add --resolved option: {$argument}");
+                }
+            }
+        }
+        $repo->addResolved(...$args);
+        return;
+    }
     if ($args === []) {
         fwrite(STDERR, "Usage: pitmaster add <file...>\n");
         exit(1);
