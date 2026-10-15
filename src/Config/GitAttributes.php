@@ -12,7 +12,7 @@ namespace Pitmaster\Config;
  */
 final class GitAttributes
 {
-    /** @var array<int, array{pattern: string, attrs: array<string, string|true|false>}> */
+    /** @var array<int, array{pattern: string, base: string, attrs: array<string, string|true|false|null>}> */
     private array $rules = [];
 
     public static function forRepo(string $workDir): self
@@ -28,7 +28,28 @@ final class GitAttributes
         return $attrs;
     }
 
-    public function addFile(string $path): void
+    /** Resolve attributes for one path, including directory and repository overrides. */
+    public static function forPath(string $workDir, string $path, string $gitDir): self
+    {
+        $attrs = self::forRepo($workDir);
+        $directory = dirname($path);
+        $prefix = '';
+        if ($directory !== '.') {
+            foreach (explode('/', $directory) as $part) {
+                $prefix .= $part . '/';
+                $file = $workDir . '/' . $prefix . '.gitattributes';
+                if (is_file($file)) {
+                    $attrs->addFile($file, $prefix);
+                }
+            }
+        }
+        if (is_file($gitDir . '/info/attributes')) {
+            $attrs->addFile($gitDir . '/info/attributes');
+        }
+        return $attrs;
+    }
+
+    public function addFile(string $path, string $base = ''): void
     {
         $content = file_get_contents($path);
 
@@ -56,8 +77,7 @@ final class GitAttributes
                 if (str_starts_with($attr, '-')) {
                     $attrs[substr($attr, 1)] = false;
                 } elseif (str_starts_with($attr, '!')) {
-                    // Unspecified: don't set anything
-                    continue;
+                    $attrs[substr($attr, 1)] = null;
                 } elseif (str_contains($attr, '=')) {
                     [$key, $value] = explode('=', $attr, 2);
                     $attrs[$key] = $value;
@@ -66,7 +86,7 @@ final class GitAttributes
                 }
             }
 
-            $this->rules[] = ['pattern' => $pattern, 'attrs' => $attrs];
+            $this->rules[] = ['pattern' => $pattern, 'base' => $base, 'attrs' => $attrs];
         }
     }
 
@@ -80,12 +100,16 @@ final class GitAttributes
         $result = [];
 
         foreach ($this->rules as $rule) {
-            if (fnmatch($rule['pattern'], $path) || fnmatch($rule['pattern'], basename($path))) {
+            if (!str_starts_with($path, $rule['base'])) {
+                continue;
+            }
+            $relative = substr($path, strlen($rule['base']));
+            if (fnmatch($rule['pattern'], $relative) || fnmatch($rule['pattern'], basename($relative))) {
                 $result = array_merge($result, $rule['attrs']);
             }
         }
 
-        return $result;
+        return array_filter($result, static fn (mixed $value): bool => $value !== null);
     }
 
     /**

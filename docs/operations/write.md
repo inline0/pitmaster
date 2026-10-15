@@ -46,6 +46,17 @@ Each argument is a file path relative to the working tree root. Directories and 
 3. Writes the blob to `.git/objects/` (zlib-compressed)
 4. Updates the index entry for that path with the new hash and file metadata
 
+### addResolved
+
+```php
+$repo->addResolved();               // All unmerged paths
+$repo->addResolved('src', 'a.txt'); // Literal files or directory prefixes
+```
+
+Like Git 2.56's `git add --resolved`, this stages conflict resolutions while leaving unrelated changes unstaged. Every selected regular file is checked for conflict markers before the index changes; any remaining marker aborts the operation. Deletions and symlinks are supported. `conflict-marker-size` follows root, directory and repository attribute overrides.
+
+The index retains resolve-undo history, including when another file is staged later, so `git checkout -m -- path` can recreate the original conflict. The CLI command is `pitmaster add --resolved [path ...]`.
+
 ### remove
 
 ```php

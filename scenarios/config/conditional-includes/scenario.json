@@ -1,0 +1,12 @@
+{
+    "name": "conditional-includes",
+    "category": "config",
+    "description": "Git 2.56 worktree conditions preserve include order and ignore nonmatching branch conditions",
+    "operations": ["values"],
+    "oracle_commands": { "values": "cat .git/conditional-values" },
+    "actual_commands": { "values": "cat .git/conditional-values" },
+    "expectations": {
+        "exact_match": ["objects", "refs", "log", "fsck", "values"],
+        "fsck_clean": true
+    }
+}

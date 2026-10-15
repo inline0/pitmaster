@@ -1,0 +1,20 @@
+{
+    "name": "add-resolved",
+    "category": "index",
+    "description": "Git 2.56 conflict-only staging resolves modified/deleted paths and leaves unrelated worktree changes unstaged",
+    "operations": ["index", "status", "unstaged"],
+    "oracle_commands": {
+        "index": "git ls-files --stage",
+        "status": "git status --porcelain=v2",
+        "unstaged": "git diff --name-only"
+    },
+    "actual_commands": {
+        "index": "git ls-files --stage",
+        "status": "php \"{{ROOT}}/bin/pitmaster\" status --porcelain=v2",
+        "unstaged": "git diff --name-only"
+    },
+    "expectations": {
+        "exact_match": ["objects", "refs", "log", "fsck", "index", "status", "unstaged"],
+        "fsck_clean": false
+    }
+}

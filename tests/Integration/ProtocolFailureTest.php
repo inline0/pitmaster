@@ -29,12 +29,7 @@ final class ProtocolFailureTest extends TestCase
         $this->routerLog = sys_get_temp_dir() . '/pitmaster-protocol-router-' . bin2hex(random_bytes(4)) . '.log';
         $this->routerErrLog = sys_get_temp_dir() . '/pitmaster-protocol-router-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s -S 127.0.0.1:%d %s',
-            escapeshellarg(PHP_BINARY),
-            $port,
-            escapeshellarg($router),
-        );
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router];
 
         $this->server = proc_open(
             $command,

@@ -464,11 +464,20 @@ Read and return the current index (staging area) from `.git/index`.
 public function add(string ...$paths): void
 ```
 
+
 Stage files. Reads each file from the working tree, creates a blob object, and updates the index. Each argument must be a file (or symlink) path relative to the working tree root; directories and globs are not expanded, and a missing file throws `RuntimeException`.
 
 ```php
 $repo->add('src/Feature.php', 'tests/FeatureTest.php');
 ```
+
+#### `addResolved`
+
+```php
+public function addResolved(string ...$paths): void
+```
+
+Stage only unmerged paths, with optional literal file or directory selectors. All selected files must pass conflict-marker validation before the index changes. Unrelated modifications remain unstaged, and Git-compatible resolve-undo history is retained. See [staging conflict resolutions](/docs/operations/write#addresolved).
 
 #### `remove`
 
@@ -718,19 +727,20 @@ $diffs = $repo->diffTree($old->tree, $new->tree);
 #### `log`
 
 ```php
-public function log(int $limit = 50, ?ObjectId $from = null): array
+public function log(int $limit = 50, ?ObjectId $from = null, bool $oldest = false): array
 ```
 
 Walk commit history, newest first by committer timestamp. Returns `Commit[]`. If `$from` is null, starts from HEAD. Returns an empty array when HEAD has no commit yet.
 
 ```php
 $commits = $repo->log(10);
+$oldest = $repo->log(10, oldest: true);
 ```
 
 #### `logAll`
 
 ```php
-public function logAll(int $limit = 50): array
+public function logAll(int $limit = 50, bool $oldest = false): array
 ```
 
 Walk commits reachable from every ref and HEAD, newest first. Returns `Commit[]`.
@@ -738,7 +748,7 @@ Walk commits reachable from every ref and HEAD, newest first. Returns `Commit[]`
 #### `logOneline`
 
 ```php
-public function logOneline(int $limit = 50, bool $all = false, ?string $path = null): array
+public function logOneline(int $limit = 50, bool $all = false, ?string $path = null, bool $oldest = false): array
 ```
 
 Return log lines in `git log --oneline` form (`abc1234 Subject`), from HEAD, from all refs (`$all`), or filtered by path.
@@ -746,12 +756,12 @@ Return log lines in `git log --oneline` form (`abc1234 Subject`), from HEAD, fro
 #### `logPath`
 
 ```php
-public function logPath(string $path, int $limit = 50): array
+public function logPath(string $path, int $limit = 50, bool $oldest = false, bool $all = false): array
 ```
 
-Log filtered by a file path. Returns only commits whose diff against their first parent adds, modifies, deletes, or renames that exact file. Directory paths do not match.
+Filter history by a file or directory path, using Git's default merge simplification: a merge follows a parent with the same selected tree, or keeps all parents if none match. `$all` includes every ref and HEAD.
 
-File and directory paths are supported. History is streamed until `$limit` matching commits are found or history ends.
+Set `$oldest` on any log method to select the oldest `$limit` matching commits while preserving their walk order. The default selects the newest matches; zero returns no commits.
 
 ```php
 $commits = $repo->logPath('src/Repository.php', 20);
@@ -913,6 +923,15 @@ foreach ($repo->worktrees() as $wt) {
 
 ```php
 public function config(): GitConfig
+```
+
+Repository configuration follows matching `worktree:`, `worktree/i:`, `gitdir:`, `gitdir/i:` and `onbranch:` includes in source order. Conditions use the repository state at open time. For a standalone config reader, pass that state explicitly:
+
+```php
+$config = Pitmaster\Config\GitConfig::fromFile(
+    '/repo/.git/config',
+    new Pitmaster\Config\IncludeContext('/repo/.git', '/repo', 'main'),
+);
 ```
 
 Access the repository's git config. Read and write config values.

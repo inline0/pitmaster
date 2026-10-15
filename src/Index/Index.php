@@ -27,6 +27,9 @@ final class Index
     /** @var list<array{signature: string, data: string}> */
     private array $extensions = [];
 
+    /** @var array<string, string>|null Serialized resolve-undo entries, loaded on the first resolution. */
+    private ?array $resolveUndo = null;
+
     private int $version = 2;
     private int $hashBytes;
 
@@ -203,6 +206,17 @@ final class Index
      */
     public function extensions(): array
     {
+        if ($this->resolveUndo !== null) {
+            $extensions = array_values(array_filter(
+                $this->extensions,
+                static fn (array $extension): bool => $extension['signature'] !== 'REUC',
+            ));
+            if ($this->resolveUndo !== []) {
+                ksort($this->resolveUndo, SORT_STRING);
+                $extensions[] = ['signature' => 'REUC', 'data' => implode('', $this->resolveUndo)];
+            }
+            return $extensions;
+        }
         return $this->extensions;
     }
 
@@ -364,8 +378,61 @@ final class Index
      */
     public function resolveConflict(string $path, IndexEntry $resolved): void
     {
+        $this->rememberConflict($path);
         $this->removeEntry($path);
         $this->addEntry($resolved);
+    }
+
+    /** Save higher stages so Git can recreate the conflict with checkout -m. */
+    public function rememberConflict(string $path): void
+    {
+        $stages = $this->stageEntries($path);
+        unset($stages[0]);
+        if ($stages === []) {
+            return;
+        }
+        if ($this->resolveUndo === null) {
+            $this->resolveUndo = [];
+            foreach ($this->extensions as $extension) {
+                if ($extension['signature'] !== 'REUC') {
+                    continue;
+                }
+                $data = $extension['data'];
+                $offset = 0;
+                while ($offset < strlen($data)) {
+                    $start = $offset;
+                    $fields = [];
+                    for ($i = 0; $i < 4; $i++) {
+                        $end = strpos($data, "\0", $offset);
+                        if ($end === false) {
+                            throw new IndexParseException('Truncated resolve-undo entry');
+                        }
+                        $fields[] = substr($data, $offset, $end - $offset);
+                        $offset = $end + 1;
+                    }
+                    for ($i = 1; $i <= 3; $i++) {
+                        if (preg_match('/^[0-7]+$/', $fields[$i]) !== 1) {
+                            throw new IndexParseException('Invalid resolve-undo mode');
+                        }
+                        if (octdec($fields[$i]) !== 0) {
+                            $offset += $this->hashBytes;
+                        }
+                    }
+                    if ($offset > strlen($data)) {
+                        throw new IndexParseException('Truncated resolve-undo object ID');
+                    }
+                    $this->resolveUndo[$fields[0]] = substr($data, $start, $offset - $start);
+                }
+            }
+        }
+        $modes = [];
+        $hashes = '';
+        for ($stage = 1; $stage <= 3; $stage++) {
+            $entry = $stages[$stage] ?? null;
+            $modes[] = $entry === null ? '0' : decoct($entry->mode);
+            $hashes .= $entry?->hash->binary ?? '';
+        }
+        $this->resolveUndo[$path] = $path . "\0" . implode("\0", $modes) . "\0" . $hashes;
     }
 
     /**
@@ -436,6 +503,10 @@ final class Index
 
     private function dropExtensions(): void
     {
-        $this->extensions = [];
+        // Cache extensions describe the old index; resolve-undo is persistent history.
+        $this->extensions = array_values(array_filter(
+            $this->extensions,
+            static fn (array $extension): bool => $extension['signature'] === 'REUC',
+        ));
     }
 }

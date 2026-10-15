@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-15",
+  "git": {
+    "version": "2.56.0",
+    "release": "https://github.com/git/git/tree/v2.56.0",
+    "releaseNotes": [
+      "https://github.com/git/git/blob/v2.55.0/Documentation/RelNotes/2.55.0.adoc",
+      "https://github.com/git/git/blob/v2.56.0/Documentation/RelNotes/2.56.0.adoc"
+    ],
+    "featuresRefreshed": [
+      "add --resolved for literal file/directory selections",
+      "hierarchical conflict-marker-size and unspecified attributes",
+      "SHA-1/SHA-256 resolve-undo extension preservation",
+      "includeIf worktree[/i], gitdir[/i] and onbranch conditions",
+      "log --max-count-oldest including all refs and path-filtered history"
+    ],
+    "scope": "See SUPPORT_MATRIX.md for the declared native and interoperability surface; this version does not claim the entire Git command line.",
+    "nativeChecks": [
+      "Git 2.54 system binary",
+      "Git 2.56.0 built from the official source tarball"
+    ],
+    "source": "https://www.kernel.org/pub/software/scm/git/git-2.56.0.tar.xz"
+  },
+  "verification": {
+    "phpunit": {
+      "tests": 889,
+      "assertions": 19583,
+      "skipped": 1
+    },
+    "scenarios": {
+      "passed": 765,
+      "failed": 0
+    },
+    "supportRows": 149,
+    "processCleanup": "All nine server-backed setup scenarios pass and leave no orphan services."
+  }
+}

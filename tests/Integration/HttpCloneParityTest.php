@@ -118,12 +118,7 @@ final class HttpCloneParityTest extends TestCase
         $this->serverLog = sys_get_temp_dir() . '/pitmaster-http-clone-' . bin2hex(random_bytes(4)) . '.log';
         $this->serverErrLog = sys_get_temp_dir() . '/pitmaster-http-clone-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s -S 127.0.0.1:%d %s',
-            escapeshellarg(PHP_BINARY),
-            $port,
-            escapeshellarg($router),
-        );
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router];
 
         $this->server = proc_open(
             $command,
@@ -156,12 +151,7 @@ final class HttpCloneParityTest extends TestCase
         $this->serverLog = sys_get_temp_dir() . '/pitmaster-http-clone-fail-' . bin2hex(random_bytes(4)) . '.log';
         $this->serverErrLog = sys_get_temp_dir() . '/pitmaster-http-clone-fail-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s -S 127.0.0.1:%d %s',
-            escapeshellarg(PHP_BINARY),
-            $port,
-            escapeshellarg($router),
-        );
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router];
 
         $this->server = proc_open(
             $command,

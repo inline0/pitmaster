@@ -484,3 +484,5 @@ Initialized empty Pitmaster repository in /path/to/new-project/.git/
 | 0 | Success |
 | 1 | Command error: usage error, unknown command, failed operation (`error: <message>`), or a merge that stopped on conflicts |
 | 128 | Not a git repository (`fatal: <message>`), an unrecognized `log` argument, or `--continue` / `--abort` / `--skip` with no operation in progress |
+
+`pitmaster log --max-count-oldest=10` selects the oldest ten matching commits in the normal history order. It accepts `--all`, `--oneline` and a path after `--`; it cannot be combined with `--max-count`.

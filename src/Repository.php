@@ -6,6 +6,8 @@ namespace Pitmaster;
 
 use Pitmaster\Checkout\SparseCheckout;
 use Pitmaster\Config\GitConfig;
+use Pitmaster\Config\GitAttributes;
+use Pitmaster\Config\IncludeContext;
 use Pitmaster\Diff\DiffAlgorithm;
 use Pitmaster\Diff\DiffAlgorithmName;
 use Pitmaster\Diff\DiffResult;
@@ -149,7 +151,16 @@ final class Repository
 
         // Objects and config come from common dir (shared)
         $this->objects = new ObjectDatabase($this->commonDir . '/objects');
-        $this->config = GitConfig::fromFile($this->commonDir . '/config');
+        $head = trim((string) @file_get_contents($this->gitDir . '/HEAD'));
+        $branch = str_starts_with($head, 'ref: refs/heads/') ? substr($head, 16) : null;
+        $this->config = GitConfig::fromFile(
+            $this->commonDir . '/config',
+            new IncludeContext(
+                realpath($this->gitDir) ?: $this->gitDir,
+                $this->isBare ? null : $this->workDir,
+                $branch,
+            ),
+        );
 
         // Refs use per-worktree gitDir for HEAD + loose refs,
         // but common dir for packed-refs
@@ -744,7 +755,7 @@ final class Repository
      *
      * @return array<int, Commit>
      */
-    public function log(int $limit = 50, ?ObjectId $from = null): array
+    public function log(int $limit = 50, ?ObjectId $from = null, bool $oldest = false): array
     {
         if ($from === null) {
             $from = $this->refs->resolveHead();
@@ -756,7 +767,7 @@ final class Repository
 
         $walker = new CommitWalker($this->objects);
 
-        return $walker->walk($from, $limit);
+        return $walker->walk($from, $limit, $oldest);
     }
 
     /**
@@ -764,7 +775,13 @@ final class Repository
      *
      * @return array<int, Commit>
      */
-    public function logAll(int $limit = 50): array
+    public function logAll(int $limit = 50, bool $oldest = false): array
+    {
+        return (new CommitWalker($this->objects))->walkAll($this->historyTips(), $limit, $oldest);
+    }
+
+    /** @return list<ObjectId> */
+    private function historyTips(): array
     {
         $tips = [];
 
@@ -778,13 +795,7 @@ final class Repository
             $tips[$headId->hex] = $headId;
         }
 
-        if ($tips === []) {
-            return [];
-        }
-
-        $walker = new CommitWalker($this->objects);
-
-        return $walker->walkAll(array_values($tips), $limit);
+        return array_values($tips);
     }
 
     /**
@@ -792,11 +803,11 @@ final class Repository
      *
      * @return list<string>
      */
-    public function logOneline(int $limit = 50, bool $all = false, ?string $path = null): array
+    public function logOneline(int $limit = 50, bool $all = false, ?string $path = null, bool $oldest = false): array
     {
         $commits = $path !== null
-            ? $this->logPath($path, $limit)
-            : ($all ? $this->logAll($limit) : $this->log($limit));
+            ? $this->logPath($path, $limit, $oldest, $all)
+            : ($all ? $this->logAll($limit, $oldest) : $this->log($limit, oldest: $oldest));
 
         return array_values(array_map(
             fn (Commit $commit): string => substr($commit->id->hex, 0, 7) . ' ' . $this->subjectLine($commit->message),
@@ -809,41 +820,62 @@ final class Repository
      *
      * @return array<int, Commit>
      */
-    public function logPath(string $path, int $limit = 50): array
+    public function logPath(string $path, int $limit = 50, bool $oldest = false, bool $all = false): array
     {
         $head = $this->refs->resolveHead();
-        if ($head === null || $limit <= 0) {
+        if ((!$all && $head === null) || $limit <= 0) {
             return [];
         }
         $path = rtrim($path, '/');
-        $allCommits = (new CommitWalker($this->objects))->iterate([$head]);
+        while (str_starts_with($path, './')) {
+            $path = substr($path, 2);
+        }
+        if ($path === '.') {
+            $path = '';
+        }
+        $tips = $all ? $this->historyTips() : ($head === null ? [] : [$head]);
         $treeDiff = new TreeDiff($this->objects);
-        $result = [];
+        /** @var array<string, array{changed: bool, parents: array<int, ObjectId>}> $states */
+        $states = [];
+        /** @var \Closure(Commit): array{changed: bool, parents: array<int, ObjectId>} $state */
+        $state = function (Commit $commit) use (&$states, $path, $treeDiff): array {
+            return $states[$commit->id->hex] ??= $this->pathHistoryState($commit, $path, $treeDiff);
+        };
+        $walker = new CommitWalker($this->objects);
+        $matching = static function () use ($walker, $tips, $state): \Generator {
+            foreach ($walker->iterate($tips, static fn (Commit $commit): array => $state($commit)['parents']) as $commit) {
+                if ($state($commit)['changed']) {
+                    yield $commit;
+                }
+            }
+        };
+        return CommitWalker::select($matching(), $limit, $oldest);
+    }
 
-        foreach ($allCommits as $commit) {
-            $parentTree = $commit->parents !== []
-                ? $this->getCommitTree($commit->parents[0])
-                : null;
-
-            $diffs = $treeDiff->diff($parentTree, $commit->tree);
-
-            foreach ($diffs as $diff) {
+    /** @return array{changed: bool, parents: array<int, ObjectId>} */
+    private function pathHistoryState(Commit $commit, string $path, TreeDiff $treeDiff): array
+    {
+        $parents = $commit->parents === [] ? [null] : $commit->parents;
+        foreach ($parents as $parent) {
+            $parentTree = $parent === null ? null : $this->getCommitTree($parent);
+            $changed = false;
+            foreach ($treeDiff->diff($parentTree, $commit->tree) as $diff) {
                 if (
-                    $diff->oldPath === $path || $diff->newPath === $path
+                    $path === '' || $diff->oldPath === $path || $diff->newPath === $path
                     || str_starts_with($diff->oldPath, $path . '/')
                     || str_starts_with($diff->newPath, $path . '/')
                 ) {
-                    $result[] = $commit;
+                    $changed = true;
                     break;
                 }
             }
-
-            if (count($result) >= $limit) {
-                break;
+            // Default Git path history follows a TREESAME parent and omits
+            // that merge, rather than retaining unrelated side histories.
+            if (!$changed) {
+                return ['changed' => false, 'parents' => $parent === null ? [] : [$parent]];
             }
         }
-
-        return $result;
+        return ['changed' => true, 'parents' => $commit->parents];
     }
 
     /**
@@ -913,6 +945,100 @@ final class Repository
         }
 
         IndexWriter::write($index, $this->gitDir . '/index');
+    }
+
+    /** Stage only unmerged paths after checking every selected file for leftover conflict markers. */
+    public function addResolved(string ...$paths): void
+    {
+        if ($this->isBare) {
+            throw new \RuntimeException('this operation must be run in a work tree');
+        }
+        $index = $this->index();
+        $selected = [];
+        foreach ($index->allEntries() as $entry) {
+            if ($entry->stage() === 0) {
+                continue;
+            }
+            if (
+                $entry->path === '' || str_starts_with($entry->path, '/')
+                || array_intersect(['', '.', '..', '.git'], explode('/', $entry->path)) !== []
+            ) {
+                throw new \RuntimeException('Invalid path in unmerged index: ' . $entry->path);
+            }
+            if ($paths !== []) {
+                $matches = false;
+                foreach ($paths as $path) {
+                    $path = rtrim($path, '/');
+                    if ($path === '.' || $entry->path === $path || str_starts_with($entry->path, $path . '/')) {
+                        $matches = true;
+                        break;
+                    }
+                }
+                if (!$matches) {
+                    continue;
+                }
+            }
+            $selected[$entry->path] = true;
+        }
+        $unresolved = [];
+        foreach (array_keys($selected) as $path) {
+            if ($this->hasConflictMarkers($path)) {
+                $unresolved[] = $path;
+            }
+        }
+        if ($unresolved !== []) {
+            throw new \RuntimeException("the following paths still have conflict markers:\n\t" . implode("\n\t", $unresolved));
+        }
+        foreach (array_keys($selected) as $path) {
+            $fullPath = $this->workDir . '/' . $path;
+            if (!file_exists($fullPath) && !is_link($fullPath)) {
+                $index->rememberConflict($path);
+                $index->removeEntry($path);
+                continue;
+            }
+            $blob = Blob::fromContent($this->worktreeBlobContent($fullPath), $this->objectHashAlgo());
+            $this->objects->write($blob);
+            $index->resolveConflict($path, IndexEntry::fromStat($path, $blob->id, $fullPath));
+        }
+        if ($selected !== []) {
+            IndexWriter::write($index, $this->gitDir . '/index');
+        }
+    }
+
+    private function hasConflictMarkers(string $path): bool
+    {
+        $fullPath = $this->workDir . '/' . $path;
+        if (!is_file($fullPath) || is_link($fullPath)) {
+            return false;
+        }
+        $attrs = GitAttributes::forPath($this->workDir, $path, $this->commonDir)->getAttributes($path);
+        $attribute = $attrs['conflict-marker-size'] ?? null;
+        $size = is_string($attribute) ? (int) $attribute : 7;
+        if ($size <= 0) {
+            $size = 7;
+        }
+        $file = @fopen($fullPath, 'rb');
+        if ($file === false) {
+            return false;
+        }
+        try {
+            while (($line = fgets($file)) !== false) {
+                if (strlen($line) > $size && str_contains('<>=|', $line[0])) {
+                    $marker = $line[0];
+                    if (strspn($line, $marker) === $size && ctype_space($line[$size])) {
+                        if (($marker !== '<' && $marker !== '>') || $line[$size] === ' ') {
+                            return true;
+                        }
+                    }
+                }
+                if (str_contains($line, "\0")) {
+                    break;
+                }
+            }
+        } finally {
+            fclose($file);
+        }
+        return false;
     }
 
     /**

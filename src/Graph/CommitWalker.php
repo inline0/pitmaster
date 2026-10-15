@@ -6,6 +6,7 @@ namespace Pitmaster\Graph;
 
 use Pitmaster\Object\Commit;
 use Pitmaster\Object\ObjectId;
+use Pitmaster\Object\Tag;
 use Pitmaster\Storage\ObjectDatabase;
 
 /**
@@ -26,9 +27,9 @@ final class CommitWalker
      *
      * @return array<int, Commit>
      */
-    public function walk(ObjectId $from, int $limit = 50): array
+    public function walk(ObjectId $from, int $limit = 50, bool $oldest = false): array
     {
-        return $this->walkAll([$from], $limit);
+        return $this->walkAll([$from], $limit, $oldest);
     }
 
     /**
@@ -37,29 +38,42 @@ final class CommitWalker
      * @param array<int, ObjectId> $from
      * @return array<int, Commit>
      */
-    public function walkAll(array $from, int $limit = 50): array
+    public function walkAll(array $from, int $limit = 50, bool $oldest = false): array
     {
-        $commits = [];
+        return self::select($this->iterate($from), $limit, $oldest);
+    }
+
+    /**
+     * @param iterable<Commit> $commits
+     * @return list<Commit>
+     */
+    public static function select(iterable $commits, int $limit, bool $oldest = false): array
+    {
         if ($limit <= 0) {
             return [];
         }
-
-        foreach ($this->iterate($from) as $commit) {
-            $commits[] = $commit;
-            if (count($commits) >= $limit) {
+        /** @var \SplQueue<Commit> $retained */
+        $retained = new \SplQueue();
+        foreach ($commits as $commit) {
+            $retained->enqueue($commit);
+            if ($retained->count() > $limit) {
+                $retained->dequeue();
+            }
+            if (!$oldest && $retained->count() === $limit) {
                 break;
             }
         }
-        return $commits;
+        return iterator_to_array($retained, false);
     }
 
     /**
      * Stream history until the caller has enough matching commits.
      *
      * @param array<int, ObjectId> $from
+     * @param (callable(Commit): array<int, ObjectId>)|null $selectParents
      * @return \Generator<int, Commit>
      */
-    public function iterate(array $from): \Generator
+    public function iterate(array $from, ?callable $selectParents = null): \Generator
     {
         $visited = [];
         $queue = [];
@@ -73,7 +87,7 @@ final class CommitWalker
             $object = $entry['commit'];
             yield $object;
 
-            foreach ($object->parents as $parentId) {
+            foreach ($selectParents === null ? $object->parents : $selectParents($object) as $parentId) {
                 $this->enqueue($queue, $parentId, $visited);
             }
         }
@@ -95,6 +109,11 @@ final class CommitWalker
         $visited[$id->hex] = true;
 
         $object = $this->objects->read($id);
+
+        if ($object instanceof Tag) {
+            $this->enqueue($queue, $object->object, $visited);
+            return;
+        }
 
         if (!$object instanceof Commit) {
             return;

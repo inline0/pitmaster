@@ -204,11 +204,7 @@ final class SshTransportParityTest extends TestCase
             '',
         ]));
 
-        $command = sprintf(
-            '/usr/sbin/sshd -D -f %s -E %s',
-            escapeshellarg($this->sshdConfig),
-            escapeshellarg($this->sshdLog),
-        );
+        $command = ['/usr/sbin/sshd', '-D', '-f', $this->sshdConfig, '-E', $this->sshdLog];
 
         $this->sshd = proc_open(
             $command,

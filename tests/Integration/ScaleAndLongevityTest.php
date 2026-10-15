@@ -425,7 +425,7 @@ final class ScaleAndLongevityTest extends TestCase
         $port = $this->freePort();
         $router = dirname(__DIR__) . '/Fixtures/git_http_backend_router.php';
         $process = proc_open(
-            sprintf('%s -S 127.0.0.1:%d %s', escapeshellarg(PHP_BINARY), $port, escapeshellarg($router)),
+            [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router],
             [
                 0 => ['file', '/dev/null', 'r'],
                 1 => ['file', $dir . '/server.out.log', 'a'],

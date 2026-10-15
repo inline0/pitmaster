@@ -176,7 +176,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        legacy-git: ['2.44.4', '2.46.2']
+        legacy-git: ['2.44.4', '2.46.2', '2.56.0']
     steps:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
@@ -191,8 +191,11 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install -y build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext zlib1g-dev curl
       - run: curl -fsSL https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.legacy-git }}.tar.xz | tar -xJ
-      - run: make -C git-${{ matrix.legacy-git }} prefix=$HOME/git-${{ matrix.legacy-git }} NO_GETTEXT=YesPlease NO_TCLTK=YesPlease -j2 all install
+      - run: make -C git-${{ matrix.legacy-git }} prefix=$HOME/git-${{ matrix.legacy-git }} NO_GETTEXT=YesPlease NO_TCLTK=YesPlease NO_RUST=YesPlease -j2 all install
       - run: PITMASTER_TEST_GIT_BINARIES="$(command -v git):$HOME/git-${{ matrix.legacy-git }}/bin/git" vendor/bin/phpunit --filter MultiGitVersionSmokeTest
+      - name: Verify Git 2.56 compatibility
+        if: matrix.legacy-git == '2.56.0'
+        run: PATH="$HOME/git-${{ matrix.legacy-git }}/bin:$PATH" vendor/bin/phpunit tests/Integration/AddResolvedParityTest.php tests/Integration/ConditionalConfigParityTest.php tests/Integration/OldestHistoryParityTest.php
 
   benchmark-smoke:
     name: Benchmark Smoke

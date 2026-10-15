@@ -189,12 +189,7 @@ final class DumbHttpClientTest extends TestCase
         $this->serverLog = sys_get_temp_dir() . '/pitmaster-dumb-http-' . bin2hex(random_bytes(4)) . '.log';
         $this->serverErrLog = sys_get_temp_dir() . '/pitmaster-dumb-http-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s -S 127.0.0.1:%d -t %s',
-            escapeshellarg(PHP_BINARY),
-            $port,
-            escapeshellarg($docRoot),
-        );
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", '-t', $docRoot];
 
         $this->server = proc_open(
             $command,

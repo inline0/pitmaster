@@ -71,10 +71,10 @@ final class GitConfig
         return $config;
     }
 
-    public static function fromFile(string $path): self
+    public static function fromFile(string $path, ?IncludeContext $context = null): self
     {
         $config = new self();
-        self::loadFile($config, $path, [], 0);
+        self::loadFile($config, $path, [], 0, $context);
 
         return $config;
     }
@@ -222,7 +222,7 @@ final class GitConfig
     /**
      * @param list<string> $stack
      */
-    private static function loadFile(self $config, string $path, array $stack, int $depth): void
+    private static function loadFile(self $config, string $path, array $stack, int $depth, ?IncludeContext $context): void
     {
         if (!is_file($path)) {
             return;
@@ -278,7 +278,13 @@ final class GitConfig
             }
 
             if ($key === 'include.path') {
-                self::loadFile($config, self::resolveIncludePath($realPath, $value), $stack, $depth + 1);
+                self::loadFile($config, self::resolveIncludePath($realPath, $value), $stack, $depth + 1, $context);
+                continue;
+            }
+            if (str_starts_with($currentSection, 'includeif.') && strtolower($matches[1]) === 'path') {
+                if ($context?->matches(substr($currentSection, 10), $realPath)) {
+                    self::loadFile($config, self::resolveIncludePath($realPath, $value), $stack, $depth + 1, $context);
+                }
                 continue;
             }
 

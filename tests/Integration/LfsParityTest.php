@@ -121,7 +121,7 @@ final class LfsParityTest extends TestCase
         $port = $this->freePort();
         $router = getcwd() . '/tests/Fixtures/lfs_router.php';
         $process = proc_open(
-            sprintf('%s -S 127.0.0.1:%d %s', escapeshellarg(PHP_BINARY), $port, escapeshellarg($router)),
+            [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router],
             [
                 0 => ['file', '/dev/null', 'r'],
                 1 => ['file', $root . '/server.out.log', 'a'],

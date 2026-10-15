@@ -219,7 +219,7 @@ final class TransportAbuseTest extends TestCase
         $port = $this->freePort();
         $stdout = $dir . '/server.out.log';
         $stderr = $dir . '/server.err.log';
-        $command = sprintf('%s -S 127.0.0.1:%d %s', escapeshellarg(PHP_BINARY), $port, escapeshellarg($router));
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router];
         $process = proc_open(
             $command,
             [

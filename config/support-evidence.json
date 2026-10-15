@@ -588,6 +588,17 @@
                         "index/index-v4-read",
                         "status/status-porcelain-v2"
                     ]
+                },
+                "Resolved conflict staging": {
+                    "integration_tests": [
+                        "tests/Integration/AddResolvedParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Config/GitAttributesTest.php"
+                    ],
+                    "scenarios": [
+                        "index/add-resolved"
+                    ]
                 }
             }
         },
@@ -865,6 +876,17 @@
                         "repository/bare-open",
                         "repository/init-basic",
                         "repository/sha256-roundtrip"
+                    ]
+                },
+                "Conditional path and branch includes": {
+                    "integration_tests": [
+                        "tests/Integration/ConditionalConfigParityTest.php"
+                    ],
+                    "unit_tests": [
+                        "tests/Unit/Config/GitConfigTest.php"
+                    ],
+                    "scenarios": [
+                        "config/conditional-includes"
                     ]
                 }
             }
@@ -1958,6 +1980,16 @@
                         "log/log-public-parity",
                         "log/show-cli-parity",
                         "repository/open-issue-regressions"
+                    ]
+                },
+                "Oldest history limiting": {
+                    "integration_tests": [
+                        "tests/Integration/OldestHistoryParityTest.php",
+                        "tests/Integration/LogShowParityTest.php"
+                    ],
+                    "unit_tests": [],
+                    "scenarios": [
+                        "log/max-count-oldest"
                     ]
                 }
             }

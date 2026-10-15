@@ -29,7 +29,7 @@ echo "http://127.0.0.1:$port/remote.git" > .remote-url
 git_exec_path="$(git --exec-path)"
 PITMASTER_GIT_HTTP_PROJECT_ROOT="$(pwd)/projects" \
 PITMASTER_GIT_HTTP_BACKEND="$git_exec_path/git-http-backend" \
-php -S "127.0.0.1:$port" "$PITMASTER_ROOT/tests/Fixtures/git_http_backend_router.php" \
+php -d "pitmaster.test.workspace=$(pwd)" -S "127.0.0.1:$port" "$PITMASTER_ROOT/tests/Fixtures/git_http_backend_router.php" \
     > .scenario-server.log 2> .scenario-server.err &
 
 echo $! > .scenario-server.pid

@@ -130,12 +130,7 @@ final class RefDiscoveryParityTest extends TestCase
         $this->httpServerLog = sys_get_temp_dir() . '/pitmaster-ref-http-' . bin2hex(random_bytes(4)) . '.log';
         $this->httpServerErrLog = sys_get_temp_dir() . '/pitmaster-ref-http-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s -S 127.0.0.1:%d %s',
-            escapeshellarg(PHP_BINARY),
-            $port,
-            escapeshellarg($router),
-        );
+        $command = [PHP_BINARY, '-S', "127.0.0.1:{$port}", $router];
 
         $this->httpServer = proc_open(
             $command,
@@ -166,13 +161,12 @@ final class RefDiscoveryParityTest extends TestCase
         $this->daemonLog = sys_get_temp_dir() . '/pitmaster-ref-daemon-' . bin2hex(random_bytes(4)) . '.log';
         $this->daemonErrLog = sys_get_temp_dir() . '/pitmaster-ref-daemon-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s --verbose --reuseaddr --export-all --base-path=%s --listen=127.0.0.1 --port=%d %s',
-            GitTestRuntime::gitDaemonCommand(),
-            escapeshellarg($exportRoot),
-            $port,
-            escapeshellarg($exportRoot),
-        );
+        $command = [
+            GitTestRuntime::gitDaemonBinary(),
+            '--verbose', '--reuseaddr', '--export-all',
+            '--base-path=' . $exportRoot, '--listen=127.0.0.1', '--port=' . $port,
+            $exportRoot,
+        ];
 
         $this->daemon = proc_open(
             $command,

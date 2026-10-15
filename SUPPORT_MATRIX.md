@@ -1,7 +1,7 @@
 # Pitmaster Support Matrix
 
-Git feature coverage for Pitmaster. **146/146 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
-Partial support exists for **0/146** additional in-scope features (100% supported to some degree).
+Git feature coverage for Pitmaster. **149/149 in-scope features fully implemented and oracle-verified within the declared parity scope (100%).**
+Partial support exists for **0/149** additional in-scope features (100% supported to some degree).
 
 Every `DONE`/`PART` row is backed by concrete tests and oracle scenarios via `config/support-evidence.json`, validated by `bin/verify-support-evidence`.
 
@@ -26,20 +26,20 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Object Model | 11 | 0 | 0 | 0 | 0 | 11 |
 | Object Storage | 4 | 0 | 0 | 0 | 0 | 4 |
 | Pack Files | 11 | 0 | 0 | 0 | 0 | 11 |
-| Index (Staging Area) | 7 | 0 | 0 | 0 | 0 | 7 |
+| Index (Staging Area) | 8 | 0 | 0 | 0 | 0 | 8 |
 | References | 9 | 0 | 0 | 0 | 0 | 9 |
-| Repository Operations | 6 | 0 | 0 | 0 | 0 | 6 |
+| Repository Operations | 7 | 0 | 0 | 0 | 0 | 7 |
 | Staging and Commits | 12 | 0 | 0 | 0 | 0 | 12 |
 | Working Tree Status | 6 | 0 | 0 | 0 | 0 | 6 |
 | Diff | 11 | 0 | 0 | 0 | 0 | 11 |
 | Merge | 10 | 0 | 0 | 0 | 0 | 10 |
-| Commit Graph | 7 | 0 | 0 | 0 | 0 | 7 |
+| Commit Graph | 8 | 0 | 0 | 0 | 0 | 8 |
 | Branch and Tag Operations | 9 | 0 | 0 | 0 | 0 | 9 |
 | Network Protocol | 14 | 0 | 0 | 0 | 0 | 14 |
 | Encoding | 5 | 0 | 0 | 0 | 0 | 5 |
 | Error Handling | 9 | 0 | 0 | 0 | 0 | 9 |
 | Advanced Features | 15 | 0 | 0 | 0 | 0 | 15 |
-| **Total** | **146** | **0** | **0** | **0** | **0** | **146** |
+| **Total** | **149** | **0** | **0** | **0** | **0** | **149** |
 
 ## Details
 
@@ -88,10 +88,11 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Commit-graph file | `DONE` | `interop` | `Pack\CommitGraph` | Interop scope: reads Git-generated commit-graph metadata |
 
 ### Index (Staging Area)
-*7/7 fully done (100%), 0 partial*
+*8/8 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
+| Resolved conflict staging | `DONE` | `native` | `Repository` | Git 2.56 addResolved() / add --resolved for literal files and directory prefixes; checks conflict markers before any index update and preserves unrelated changes |
 | Index v2 read | `DONE` | `native` | `Index\Index` | Most common format |
 | Index v2 write | `DONE` | `native` | `Index\IndexWriter` | Required for add/commit |
 | Index v3 read (extended flags) | `DONE` | `native` |  |  |
@@ -116,10 +117,11 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Reftable format | `DONE` | `interop` | `Ref\Reftable` | Interop scope: Git-generated reftable read/open parity through RefDatabase and Repository |
 
 ### Repository Operations
-*6/6 fully done (100%), 0 partial*
+*7/7 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
+| Conditional path and branch includes | `DONE` | `native` | `Config\IncludeContext` | Git 2.56 worktree[/i], gitdir[/i] and onbranch conditions when opening a repository; globstars, relative prefixes, linked worktrees and bare repositories |
 | Open existing repo | `DONE` | `native` | `Pitmaster` |  |
 | Init new repo | `DONE` | `native` | `Pitmaster` | Creates .git structure |
 | Clone (remote) | `DONE` | `native` | `Pitmaster` | Via smart HTTP |
@@ -191,7 +193,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Merge commit creation | `DONE` | `native` |  | Clean-index result-tree commit preserves unrelated unstaged worktree changes |
 
 ### Commit Graph
-*7/7 fully done (100%), 0 partial*
+*8/8 fully done (100%), 0 partial*
 
 | Feature | Status | Scope | Class | Notes |
 |---------|--------|-------|-------|-------|
@@ -202,6 +204,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 | Log with path filter | `DONE` | `native` |  | Only commits touching path |
 | Log --oneline format | `DONE` | `native` |  | Short hash + first line |
 | git show | `DONE` | `native` |  | Git-shaped CLI/API parity for single-parent, annotated-tag, and merge commits |
+| Oldest history limiting | `DONE` | `native` | `Graph\CommitWalker` | Git 2.55 --max-count-oldest across HEAD/all refs and file/directory history, including merge simplification |
 
 ### Branch and Tag Operations
 *9/9 fully done (100%), 0 partial*
@@ -290,7 +293,7 @@ Source of truth: `config/support-matrix.json` + `config/support-evidence.json`.
 ```
 [########################################] 100% fully done
 
-Full:     146 features
+Full:     149 features
 Partial:  0 features
 Todo:     0 features
 Deferred: 0 features

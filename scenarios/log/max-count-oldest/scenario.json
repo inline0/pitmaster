@@ -1,0 +1,44 @@
+{
+    "name": "max-count-oldest",
+    "category": "log",
+    "description": "Git 2.55 oldest-count history limiting for public APIs and CLI, including all refs and path filtering",
+    "operations": [
+        "oldest_head",
+        "oldest_all",
+        "oldest_path",
+        "oldest_zero",
+        "oldest_oneline",
+        "oldest_cli_path"
+    ],
+    "oracle_commands": {
+        "oldest_head": "git log --max-count-oldest=2 --format=%H",
+        "oldest_all": "git log --all --max-count-oldest=2 --format=%H",
+        "oldest_path": "git log --max-count-oldest=2 --format=%H -- app",
+        "oldest_zero": "git log --max-count-oldest=0 --format=%H",
+        "oldest_oneline": "git log --max-count-oldest=2 --oneline --abbrev=7",
+        "oldest_cli_path": "git log --all --max-count-oldest=2 --oneline --abbrev=7 -- app"
+    },
+    "actual_commands": {
+        "oldest_head": "php \"{{SCENARIO_DIR}}/history.php\" head",
+        "oldest_all": "php \"{{SCENARIO_DIR}}/history.php\" all",
+        "oldest_path": "php \"{{SCENARIO_DIR}}/history.php\" path",
+        "oldest_zero": "php \"{{SCENARIO_DIR}}/history.php\" zero",
+        "oldest_oneline": "php \"{{ROOT}}/bin/pitmaster\" log --max-count-oldest=2 --oneline",
+        "oldest_cli_path": "php \"{{ROOT}}/bin/pitmaster\" log --all --max-count-oldest=2 --oneline -- app"
+    },
+    "expectations": {
+        "exact_match": [
+            "objects",
+            "refs",
+            "log",
+            "fsck",
+            "oldest_head",
+            "oldest_all",
+            "oldest_path",
+            "oldest_zero",
+            "oldest_oneline",
+            "oldest_cli_path"
+        ],
+        "fsck_clean": true
+    }
+}

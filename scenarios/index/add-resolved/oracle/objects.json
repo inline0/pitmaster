@@ -1,0 +1,44 @@
+[
+    {
+        "hash": "2ab19ae607aabda796309682e0448237aab03047",
+        "type": "blob",
+        "size": 9,
+        "content": "resolved\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "2d60f881b6fce0fba06db3e540af615e2062b347",
+        "type": "commit",
+        "size": 165,
+        "content": "tree 4ca66bcf4f01b92e925883399849a30d6665f931\nauthor Test User <test@pitmaster.dev> 1792058400 +0000\ncommitter Test User <test@pitmaster.dev> 1792058400 +0000\n\nbase\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "4ca66bcf4f01b92e925883399849a30d6665f931",
+        "type": "tree",
+        "size": 41,
+        "content": "100644 blob df967b96a579e45a18b8251732d16804b2e56a55\tunrelated.txt\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "950b81b7eee953d050aa05a641f8e056c85dd1bd",
+        "type": "blob",
+        "size": 7,
+        "content": "theirs\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "b19a1e93bec1317dc6097229e12afaffbfa74dc2",
+        "type": "blob",
+        "size": 5,
+        "content": "ours\n",
+        "encoding": "utf-8"
+    },
+    {
+        "hash": "df967b96a579e45a18b8251732d16804b2e56a55",
+        "type": "blob",
+        "size": 5,
+        "content": "base\n",
+        "encoding": "utf-8"
+    }
+]

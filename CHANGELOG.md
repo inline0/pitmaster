@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- Git 2.55 oldest-commit limiting through all public log methods and `pitmaster log --max-count-oldest`, including path and all-ref selection
+- Git 2.56 `includeIf` worktree conditions, including case-insensitive matching, plus Git-directory and branch conditions when opening repositories
+- Git 2.56 conflict-only staging through `Repository::addResolved()` and `pitmaster add --resolved`, with all-path marker validation before the index changes
+
+### Fixed
+- Path history follows Git merge simplification and includes all refs when requested; annotated tags contribute reachable history
+- Integration test servers launch directly; scenario workspaces stop only their own marked HTTP servers and Git daemons before removing fixture data
+- Conflict resolutions retain Git-compatible resolve-undo (REUC) history across later index writes, so `git checkout -m` can recreate conflicts in SHA-1 and SHA-256 repositories
+- Unspecified Git attributes now clear earlier assignments; conflict marker size resolution includes nested and repository attribute overrides
+
 ## [0.2.12] - 2026-10-15
 
 ### Fixed

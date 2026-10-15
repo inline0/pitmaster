@@ -1,0 +1,5 @@
+{
+    "exit_code": 0,
+    "stdout": "100644 2ab19ae607aabda796309682e0448237aab03047 0\tresolved.txt\n100644 df967b96a579e45a18b8251732d16804b2e56a55 0\tunrelated.txt\n",
+    "stderr": ""
+}

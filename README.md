@@ -55,6 +55,7 @@ $repo = Pitmaster::open('/path/to/project', Pitmaster::processFreeOptions());
 // Read
 $head = $repo->head();                    // Current HEAD commit
 $log  = $repo->log(10);                   // Last 10 commits
+$oldest = $repo->log(10, oldest: true);   // Oldest 10 commits
 $refs = $repo->allRefs();                 // All branches and tags
 $obj  = $repo->readObject($hash);         // Any object by hash
 
@@ -98,6 +99,7 @@ Pitmaster ships with a CLI that mirrors a subset of `git` commands:
 ./vendor/bin/pitmaster diff
 ./vendor/bin/pitmaster show HEAD
 ./vendor/bin/pitmaster add file.txt
+./vendor/bin/pitmaster add --resolved
 ./vendor/bin/pitmaster commit -m "message"
 ./vendor/bin/pitmaster branch feature
 ./vendor/bin/pitmaster checkout feature
@@ -254,3 +256,9 @@ src/
 ## License
 
 MIT
+
+`Repository::addResolved(string ...$paths)` stages only unmerged index paths after all selected regular files pass the conflict-marker check. Deletions and symlinks follow Git 2.56 behavior, unrelated changes stay unstaged, and `conflict-marker-size` honors root, directory and `.git/info/attributes` overrides. Optional selectors are literal files or directory prefixes. The CLI exposes the same operation as `pitmaster add --resolved [path ...]`.
+
+Conditional config includes support `worktree:`, `worktree/i:`, `gitdir:`, `gitdir/i:` and `onbranch:`. Conditions are resolved when a repository is opened, with Git-compatible globstars and include order. Linked worktrees use their own checkout location and branch; bare repositories have no worktree match. `GitConfig::fromFile()` also accepts an explicit `Pitmaster\Config\IncludeContext`.
+
+Git 2.55 oldest-count history limiting is available as `pitmaster log --max-count-oldest=10`, including `--all`, `--oneline` and file or directory filters. The public log methods accept `oldest: true`.

@@ -35,9 +35,9 @@ final class GitTestRuntime
         return self::gitExecPath() . '/git-http-backend';
     }
 
-    public static function gitDaemonCommand(): string
+    public static function gitDaemonBinary(): string
     {
-        return escapeshellarg(self::gitBinary()) . ' daemon';
+        return self::gitExecPath() . '/git-daemon';
     }
 
     private static function gitExecPath(): string

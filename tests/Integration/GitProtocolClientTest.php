@@ -136,13 +136,12 @@ final class GitProtocolClientTest extends TestCase
         $this->daemonLog = sys_get_temp_dir() . '/pitmaster-git-daemon-' . bin2hex(random_bytes(4)) . '.log';
         $this->daemonErrLog = sys_get_temp_dir() . '/pitmaster-git-daemon-' . bin2hex(random_bytes(4)) . '.err.log';
 
-        $command = sprintf(
-            '%s --verbose --reuseaddr --export-all --base-path=%s --listen=127.0.0.1 --port=%d %s',
-            GitTestRuntime::gitDaemonCommand(),
-            escapeshellarg($exportRoot),
-            $port,
-            escapeshellarg($exportRoot),
-        );
+        $command = [
+            GitTestRuntime::gitDaemonBinary(),
+            '--verbose', '--reuseaddr', '--export-all',
+            '--base-path=' . $exportRoot, '--listen=127.0.0.1', '--port=' . $port,
+            $exportRoot,
+        ];
 
         $this->daemon = proc_open(
             $command,
