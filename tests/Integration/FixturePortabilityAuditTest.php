@@ -84,7 +84,7 @@ final class FixturePortabilityAuditTest extends TestCase
     #[Test]
     public function guidanceDocsDoNotInstructContributorsToUseTmpFixtureRoots(): void
     {
-        foreach ([$this->root . '/README.md', $this->root . '/CLAUDE.md'] as $path) {
+        foreach ([$this->root . '/README.md', $this->root . '/AGENTS.md'] as $path) {
             $contents = file_get_contents($path);
             $this->assertNotFalse($contents);
             $this->assertDoesNotMatchRegularExpression(

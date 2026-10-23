@@ -48,7 +48,7 @@ final class PackFileStore implements ObjectStore
 
     public function write(GitObject $object): ObjectId
     {
-        // Pack file writing is deferred per CLAUDE.md: "write loose objects and let git gc repack"
+        // Pack file writing is deferred per AGENTS.md: "write loose objects and let git gc repack"
         throw new \RuntimeException('Pack file writing is not supported. Write to loose object store.');
     }
 
