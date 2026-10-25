@@ -26,3 +26,11 @@
 # in composer.json, so it ships.
 /bin/*                export-ignore
 /bin/pitmaster        -export-ignore
+
+# Node tooling is used only in the source checkout.
+/package.json         export-ignore
+/pnpm-lock.yaml       export-ignore
+/pnpm-workspace.yaml  export-ignore
+/tsconfig.scripts.json export-ignore
+/.node-version        export-ignore
+/.nvmrc               export-ignore

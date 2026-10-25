@@ -61,19 +61,16 @@
         "verify:drift": "php ./bin/audit-upstream-drift",
         "verify:proof": "php ./bin/build-proof-artifact .pitmaster/proof/proof-artifact.json",
         "audit:composer": "composer audit --locked --no-interaction",
-        "verify": [
-            "@verify:evidence",
-            "@verify:drift",
-            "@verify:proof",
-            "@test:mutation",
-            "@audit:composer",
-            "@analyse",
-            "@cs",
-            "@test"
-        ],
+        "verify": "node scripts/verify.ts",
         "analyse": "phpstan analyse --configuration=phpstan.neon.dist --memory-limit=512M",
         "cs": "phpcs --warning-severity=0",
-        "cs:fix": "phpcbf"
+        "cs:fix": "phpcbf",
+        "verify:tooling": [
+            "pnpm typecheck",
+            "pnpm test:scripts",
+            "pnpm docs:check"
+        ],
+        "docs:check": "node scripts/check-docs-content.ts"
     },
     "bin": [
         "bin/pitmaster"

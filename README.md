@@ -262,3 +262,12 @@ MIT
 Conditional config includes support `worktree:`, `worktree/i:`, `gitdir:`, `gitdir/i:` and `onbranch:`. Conditions are resolved when a repository is opened, with Git-compatible globstars and include order. Linked worktrees use their own checkout location and branch; bare repositories have no worktree match. `GitConfig::fromFile()` also accepts an explicit `Pitmaster\Config\IncludeContext`.
 
 Git 2.55 oldest-count history limiting is available as `pitmaster log --max-count-oldest=10`, including `--all`, `--oneline` and file or directory filters. The public log methods accept `oldest: true`.
+
+Development tooling runs as TypeScript directly on Node 26.12+ with pnpm 12.14.
+Install it with `pnpm install --frozen-lockfile`; run `pnpm typecheck`,
+`pnpm test:scripts`, and `pnpm docs:check` to check the tooling.
+`node scripts/verify.ts` runs the complete PHP verification sequence.
+Every tooling command supports `--help`, `--json`, `--dry-run`, and
+`--log-level`. Verification children belong to an Effect scope and are stopped
+on interruption. The Node dependencies are development-only and are excluded
+from Composer archives.

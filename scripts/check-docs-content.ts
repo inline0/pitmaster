@@ -1,30 +1,29 @@
-#!/usr/bin/env node
+import { basename, dirname, extname, join, normalize, relative, resolve, sep } from "node:path";
+import * as Console from "effect/Console";
+import * as Effect from "effect/Effect";
+import * as FileSystem from "effect/FileSystem";
+import * as Flag from "effect/cli/Flag";
+import { fail, main, script } from "./lib/cli.ts";
 
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { basename, dirname, extname, join, normalize, relative, resolve, sep } from 'node:path';
-
-const args = process.argv.slice(2);
-const option = (name, fallback = '') => {
-	const index = args.indexOf(name);
-	return index >= 0 && typeof args[index + 1] === 'string' ? args[index + 1] : fallback;
-};
-
-const cwd = process.cwd();
-const configuredRoot = option('--root');
-const root = configuredRoot
-	? resolve(cwd, configuredRoot)
-	: resolve(cwd, 'docs');
-const expectedDocs = Number.parseInt(option('--expected-docs', '0'), 10) || 0;
-const expectedNav = Number.parseInt(option('--expected-nav', '0'), 10) || 0;
-
-if (!root || !existsSync(root)) {
-	console.error('Could not resolve a documentation content root.');
-	process.exit(1);
+export interface DocumentationFiles {
+    readonly read: (path: string) => string;
+    readonly exists: (path: string) => boolean;
+    readonly directories: ReadonlySet<string>;
+    readonly children: ReadonlyMap<string, ReadonlyArray<{ name: string; directory: boolean; file: boolean }>>;
 }
 
-const normalizePath = (value) => value.split(sep).join('/');
-const walk = (directory) => {
-	const files = [];
+// Validation is pure. Tests supply an in-memory tree; only the live loader
+// below reaches the filesystem, through the Effect FileSystem service.
+export function auditDocumentation(root: string, tree: DocumentationFiles, expectedDocs = 0, expectedNav = 0) {
+    const readFileSync = (path: string, _encoding: string) => tree.read(path);
+    const existsSync = tree.exists;
+    const statSync = (path: string) => ({ isDirectory: () => tree.directories.has(path) });
+    const readdirSync = (path: string, _options: unknown) => (tree.children.get(path) ?? []).map((entry) => ({
+        name: entry.name, isDirectory: () => entry.directory, isFile: () => entry.file,
+    }));
+const normalizePath = (value: string) => value.split(sep).join('/');
+const walk = (directory: string): string[] => {
+	const files: string[] = [];
 	for (const entry of readdirSync(directory, { withFileTypes: true })) {
 		const path = join(directory, entry.name);
 		if (entry.isDirectory()) {
@@ -40,7 +39,7 @@ const files = walk(root);
 const markdownFiles = files.filter((file) => extname(file) === '.md').sort();
 const mdxFiles = files.filter((file) => extname(file) === '.mdx').sort();
 const metaFiles = files.filter((file) => basename(file) === 'meta.json').sort();
-const problems = [];
+const problems: string[] = [];
 
 if (mdxFiles.length > 0) {
 	for (const file of mdxFiles) {
@@ -55,7 +54,7 @@ if (expectedNav > 0 && metaFiles.length !== expectedNav) {
 	problems.push(`expected ${expectedNav} navigation files, found ${metaFiles.length}`);
 }
 
-const unquote = (value) => {
+const unquote = (value: string): string => {
 	const trimmed = value.trim();
 	if (
 		(trimmed.startsWith('"') && trimmed.endsWith('"')) ||
@@ -70,7 +69,7 @@ const unquote = (value) => {
 	return trimmed;
 };
 
-const parseDocument = (file) => {
+const parseDocument = (file: string) => {
 	const source = readFileSync(file, 'utf8').replaceAll('\r\n', '\n');
 	const match = source.match(/^---\n([\s\S]*?)\n---\n?/);
 	if (!match) {
@@ -78,7 +77,7 @@ const parseDocument = (file) => {
 		return { source, body: source, data: {} };
 	}
 
-	const data = {};
+	const data: Record<string, string> = {};
 	for (const line of match[1].split('\n')) {
 		if (line.trim() === '' || line.trimStart().startsWith('#')) {
 			continue;
@@ -98,8 +97,8 @@ const parseDocument = (file) => {
 	return { source, body: source.slice(match[0].length), data };
 };
 
-const stripInlineCode = (line) => line.replace(/`[^`]*`/g, '');
-const inspectPortableBody = (file, body) => {
+const stripInlineCode = (line: string) => line.replace(/`[^`]*`/g, '');
+const inspectPortableBody = (file: string, body: string) => {
 	let fence = '';
 	const lines = body.split('\n');
 	for (let index = 0; index < lines.length; index += 1) {
@@ -139,9 +138,9 @@ const requiredFields = [
 	'meta_title',
 	'meta_description',
 ];
-const routeOwners = new Map();
-const orderOwners = new Map();
-const documentByRelativePath = new Map();
+const routeOwners = new Map<string, string>();
+const orderOwners = new Map<string, string>();
+const documentByRelativePath = new Map<string, string>();
 
 for (const file of markdownFiles) {
 	const parsed = parseDocument(file);
@@ -177,11 +176,11 @@ for (const file of markdownFiles) {
 	inspectPortableBody(file, parsed.body);
 }
 
-const referencedDocuments = new Set();
-const visitedMeta = new Set();
+const referencedDocuments = new Set<string>();
+const visitedMeta = new Set<string>();
 const separator = /^---.+---$/;
 
-const resolveDocumentEntry = (directory, entry, metaFile) => {
+const resolveDocumentEntry = (directory: string, entry: string, metaFile: string): void => {
 	const markdown = join(directory, `${entry}.md`);
 	const indexMarkdown = join(directory, entry, 'index.md');
 	const childDirectory = join(directory, entry);
@@ -207,18 +206,18 @@ const resolveDocumentEntry = (directory, entry, metaFile) => {
 	problems.push(`${normalizePath(relative(root, metaFile))}: unresolved navigation entry ${JSON.stringify(entry)}`);
 };
 
-const validateMeta = (metaFile) => {
+const validateMeta = (metaFile: string): void => {
 	const normalizedMeta = normalizePath(relative(root, metaFile));
 	if (visitedMeta.has(normalizedMeta)) {
 		return;
 	}
 	visitedMeta.add(normalizedMeta);
 
-	let data;
+	let data: Record<string, unknown>;
 	try {
 		data = JSON.parse(readFileSync(metaFile, 'utf8'));
 	} catch (error) {
-		problems.push(`${normalizedMeta}: invalid JSON (${error.message})`);
+		problems.push(`${normalizedMeta}: invalid JSON (${error instanceof Error ? error.message : String(error)})`);
 		return;
 	}
 
@@ -262,7 +261,7 @@ for (const file of markdownFiles) {
 	}
 }
 
-const resolveRelativeLink = (sourceFile, target) => {
+const resolveRelativeLink = (sourceFile: string, target: string) => {
 	const clean = target.split('#')[0].split('?')[0];
 	if (
 		clean === '' ||
@@ -272,7 +271,8 @@ const resolveRelativeLink = (sourceFile, target) => {
 	) {
 		return true;
 	}
-	const decoded = decodeURIComponent(clean);
+	let decoded: string;
+	try { decoded = decodeURIComponent(clean); } catch { return false; }
 	const candidate = normalize(resolve(dirname(sourceFile), decoded));
 	const options = extname(candidate)
 		? [candidate]
@@ -289,18 +289,65 @@ for (const file of markdownFiles) {
 	}
 }
 
-if (problems.length > 0) {
-	console.error(`Documentation content check failed with ${problems.length} problem(s):`);
-	for (const problem of problems) {
-		console.error(`- ${problem}`);
-	}
-	process.exit(1);
+    return { root: normalizePath(root), documents: markdownFiles.length,
+        uniqueRoutes: routeOwners.size, navigationFiles: metaFiles.length, problems };
 }
 
-console.log(JSON.stringify({
-	root: normalizePath(root),
-	documents: markdownFiles.length,
-	uniqueRoutes: routeOwners.size,
-	navigationFiles: metaFiles.length,
-	problems: 0,
-}));
+export const loadDocumentation = (root: string) => Effect.gen(function* () {
+    const fs = yield* FileSystem.FileSystem;
+    const contents = new Map<string, string>();
+    const present = new Set<string>();
+    const directories = new Set<string>();
+    const children = new Map<string, Array<{ name: string; directory: boolean; file: boolean }>>();
+    const walk = (directory: string): Effect.Effect<void, unknown> => Effect.gen(function* () {
+        directories.add(directory);
+        present.add(directory);
+        const entries: Array<{ name: string; directory: boolean; file: boolean }> = [];
+        for (const name of yield* fs.readDirectory(directory)) {
+            const path = join(directory, name);
+            const info = yield* fs.stat(path);
+            present.add(path);
+            entries.push({ name, directory: info.type === "Directory", file: info.type === "File" });
+            if (info.type === "Directory") yield* walk(path);
+            else if (info.type === "File" && (extname(path) === ".md" || basename(path) === "meta.json")) {
+                contents.set(path, yield* fs.readFileString(path, "utf-8"));
+            }
+        }
+        children.set(directory, entries);
+    });
+    yield* walk(root);
+    // Relative Markdown links may point outside docs, so include those targets
+    // without recursively reading unrelated repository content.
+    for (const [source, text] of contents) {
+        if (extname(source) !== ".md") continue;
+        for (const match of text.matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g)) {
+            const clean = match[1].split("#")[0].split("?")[0];
+            if (!clean || clean.startsWith("/") || /^[a-z][a-z0-9+.-]*:/i.test(clean)) continue;
+            let decoded: string;
+            try { decoded = decodeURIComponent(clean); } catch { continue; }
+            const candidate = normalize(resolve(dirname(source), decoded));
+            for (const path of extname(candidate) ? [candidate] : [candidate, `${candidate}.md`, join(candidate, "index.md")]) {
+                if (yield* fs.exists(path)) present.add(path);
+            }
+        }
+    }
+    return { read: (path: string) => contents.get(path) ?? "", exists: (path: string) => present.has(path), directories, children } satisfies DocumentationFiles;
+});
+
+export const run = (root: string, expectedDocs = 0, expectedNav = 0) => Effect.gen(function* () {
+    const tree = yield* loadDocumentation(root);
+    const result = auditDocumentation(root, tree, expectedDocs, expectedNav);
+    if (result.problems.length) return yield* fail(`Documentation content check failed with ${result.problems.length} problem(s):\n${result.problems.map((problem) => `- ${problem}`).join("\n")}`);
+    yield* Console.log(JSON.stringify({ ...result, problems: 0 }));
+});
+
+export const command = script("check-docs-content", {
+    description: "Validate portable Markdown, frontmatter, navigation and relative links.",
+    flags: {
+        root: Flag.String("root").pipe(Flag.withDefault("docs")),
+        expectedDocs: Flag.Int("expected-docs").pipe(Flag.withDefault(0)),
+        expectedNav: Flag.Int("expected-nav").pipe(Flag.withDefault(0)),
+    },
+    run: (input) => run(resolve(input.root), input.expectedDocs, input.expectedNav),
+});
+if (import.meta.main) main(command);

@@ -822,3 +822,12 @@ Build bottom-up. Each phase unlocks new scenario categories. Write the scenarios
 ## Comment Policy
 
 Same as queuety. PHPDoc on public APIs. Inline comments explain why, not what. No decorative separators. No em dashes. Use periods, commas, colons, or rewrite.
+
+## TypeScript tooling
+
+Use plain Node 26.12+ for `scripts/*.ts` and pnpm 12.14 with the committed
+lockfile. Follow the Effect CLI and scoped Command service in `scripts/lib`.
+Keep validation logic testable with supplied services or in-memory inputs.
+Run `pnpm typecheck`, `pnpm test:scripts`, and `pnpm docs:check` after tooling
+changes. PHP semantic oracle and inspection helpers remain PHP. Scenario shell
+programs and vendored upstream assets retain their required source languages.

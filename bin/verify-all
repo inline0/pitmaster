@@ -1,4 +1,2 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-composer verify
+#!/bin/sh
+exec node "$(dirname "$0")/../scripts/verify.ts" "$@"
