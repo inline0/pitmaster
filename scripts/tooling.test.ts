@@ -96,3 +96,17 @@ test("JSON child output is structured stderr and previews redact environment val
     assert.equal(preview.status, 0, preview.stderr);
     assert.ok(!preview.stderr.includes("never-log-this"));
 });
+
+test("documentation snapshots retain relative links outside the content root", async () => {
+    const checkout = mkdtempSync(join(tmpdir(), "inline0-external-docs-"));
+    const root = join(checkout, "docs");
+    try {
+        mkdirSync(root);
+        writeFileSync(join(checkout, "README.md"), "Repository readme.");
+        writeFileSync(join(checkout, "asset.txt"), "Repository asset.");
+        writeFileSync(join(root, "meta.json"), '{"pages":["index"]}');
+        writeFileSync(join(root, "index.md"), "---\ntitle: Test\ndescription: Test\npath: /test\norder: 0\nmeta_title: Test\nmeta_description: Test\n---\n[Readme](../README.md)\n[Asset](../asset.txt)\n");
+        const tree = await Effect.runPromise(loadDocumentation(root).pipe(Effect.provide(runtimeLayer({ json: false, dryRun: false }))));
+        assert.deepEqual(auditDocumentation(root, tree, 1, 1).problems, []);
+    } finally { rmSync(checkout, { recursive: true, force: true }); }
+});
